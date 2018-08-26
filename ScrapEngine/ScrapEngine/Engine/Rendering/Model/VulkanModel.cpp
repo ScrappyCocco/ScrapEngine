@@ -5,14 +5,12 @@
 #include <assimp/postprocess.h>     // Post processing flags
 #include <unordered_map>
 #include <iostream>
-#define TINYOBJLOADER_IMPLEMENTATION
-#include <tiny_obj_loader.h>
 
 ScrapEngine::VulkanModel::VulkanModel(std::string input_MODEL_PATH, std::string input_TEXTURE_PATH) 
 	: MODEL_PATH(input_MODEL_PATH), TEXTURE_PATH(input_TEXTURE_PATH)
 {
 	DebugLog::printToConsoleLog("Loading 3D model...");
-
+	DebugLog::printToConsoleLog("Loading assimp...");
 	Assimp::Importer importer;
 	const aiScene* scene = importer.ReadFile(MODEL_PATH,
 		aiProcess_CalcTangentSpace |
@@ -25,98 +23,40 @@ ScrapEngine::VulkanModel::VulkanModel(std::string input_MODEL_PATH, std::string 
 	{
 		throw std::runtime_error(importer.GetErrorString());
 	}
-	std::cout << " NUM MESHES: " << scene->mNumMeshes << std::endl;
-	std::cout << " NUM TEXTURES: " << scene->mNumTextures << std::endl;
-	std::cout << " NUM MATERIALS: " << scene->mNumMaterials << std::endl;
-	std::cout << " NUM FACES: " << scene->mMeshes[0]->mNumFaces << std::endl;
-	for (unsigned int x = 0; x < scene->mMeshes[0]->mNumFaces; ++x) {
 
-		const struct aiFace* face = &scene->mMeshes[0]->mFaces[x];
-
-		for (unsigned int y = 0; y < face->mNumIndices; ++y) {
-			Vertex vertex = {};
-
-			int vertexIndex = face->mIndices[y];
-
-			vertex.pos = {
-				scene->mMeshes[0]->mVertices[vertexIndex].x,
-				scene->mMeshes[0]->mVertices[vertexIndex].y,
-				scene->mMeshes[0]->mVertices[vertexIndex].z
-			};
-			if (scene->mMeshes[0]->HasTextureCoords(0))		//HasTextureCoords(texture_coordinates_set)
-			{
-				vertex.texCoord = {
-					scene->mMeshes[0]->mTextureCoords[0][vertexIndex].x,
-					1 - scene->mMeshes[0]->mTextureCoords[0][vertexIndex].y
-				};
-			}
-			vertex.color = { 1.0f, 1.0f, 1.0f };
-			/*if (scene->mMeshes[0]->mColors[0] != NULL){
-				vertex.color = {
-					scene->mMeshes[0]->mColors[0][vertexIndex].r,
-					scene->mMeshes[0]->mColors[0][vertexIndex].g,
-					scene->mMeshes[0]->mColors[0][vertexIndex].b
-				};
-			}else{
-				vertex.color = { 1.0f, 1.0f, 1.0f };
-			}*/
-			vertices.push_back(vertex);
-			indices.push_back(face->mNumIndices);
-		}
-		
+	const aiVector3D Zero3D(0.0f, 0.0f, 0.0f);
+	DebugLog::printToConsoleLog("Loading vertices...");
+	for (unsigned int i = 0; i < scene->mMeshes[0]->mNumVertices; i++) {
+		const aiVector3D* pPos = &(scene->mMeshes[0]->mVertices[i]);
+		const aiVector3D* pNormal = scene->mMeshes[0]->HasNormals() ? &(scene->mMeshes[0]->mNormals[i]) : &Zero3D;
+		const aiVector3D* pTexCoord = scene->mMeshes[0]->HasTextureCoords(0) ? &(scene->mMeshes[0]->mTextureCoords[0][i]) : &Zero3D;
+		Vertex vertex = {};
+		vertex.pos = { pPos->x, pPos->y, pPos->z };
+		vertex.texCoord = { pTexCoord->x, 1 - pTexCoord->y };
+		vertex.color = { pNormal->x, pNormal->y, pNormal->z};
+		vertices.push_back(vertex);
 	}
-
-	/*tinyobj::attrib_t attrib;
-	std::vector<tinyobj::shape_t> shapes;
-	std::vector<tinyobj::material_t> materials;
-	std::string err;
-
-	if (!tinyobj::LoadObj(&attrib, &shapes, &materials, &err, MODEL_PATH.c_str())) {
-		throw std::runtime_error(err);
+	DebugLog::printToConsoleLog("Loading indices...");
+	for (unsigned int i = 0; i < scene->mMeshes[0]->mNumFaces; i++) {
+		const aiFace& Face = scene->mMeshes[0]->mFaces[i];
+		assert(Face.mNumIndices == 3);
+		indices.push_back(Face.mIndices[0]);
+		indices.push_back(Face.mIndices[1]);
+		indices.push_back(Face.mIndices[2]);
 	}
-	bool considerMaterials = true;
-	if (attrib.texcoords.size() == 0) {
-		considerMaterials = false;
-		DebugLog::printToConsoleLog("Ignoring model materials");
-	}
-	
-	std::unordered_map<Vertex, uint32_t> uniqueVertices = {};
-
-	for (const auto& shape : shapes) {
-		for (const auto& index : shape.mesh.indices) {
-			Vertex vertex = {};
-
-			vertex.pos = {
-				attrib.vertices[3 * index.vertex_index + 0],
-				attrib.vertices[3 * index.vertex_index + 1],
-				attrib.vertices[3 * index.vertex_index + 2]
-			};
-			if(considerMaterials){
-				vertex.texCoord = {
-					attrib.texcoords[2 * index.texcoord_index + 0],
-					1.0f - attrib.texcoords[2 * index.texcoord_index + 1]
-				};
-			}
-			else {
-				
-			}
-
-			vertex.color = { 1.0f, 1.0f, 1.0f };
-
-			if (uniqueVertices.count(vertex) == 0) {
-				uniqueVertices[vertex] = static_cast<uint32_t>(vertices.size());
-				vertices.push_back(vertex);
-			}
-
-			indices.push_back(uniqueVertices[vertex]);
-		}
-	}*/
 	DebugLog::printToConsoleLog("Vertex and Index model info loaded");
 }
 
 ScrapEngine::VulkanModel::~VulkanModel()
 {
 
+}
+
+void ScrapEngine::VulkanModel::SimpleTranslate(glm::vec3 input_vector)
+{
+	for (std::vector<ScrapEngine::Vertex>::iterator it = vertices.begin(); it != vertices.end(); it++) {
+		(*it).pos = { (*it).pos.x + input_vector.x, (*it).pos.y + input_vector.y, (*it).pos.z + input_vector.z};
+	}
 }
 
 const std::vector<ScrapEngine::Vertex>* ScrapEngine::VulkanModel::getVertices()

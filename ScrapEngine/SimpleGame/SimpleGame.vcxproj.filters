@@ -22,8 +22,5 @@
     <ClInclude Include="..\..\external\stb\stb_image.h">
       <Filter>File di origine\External</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\external\VulkanSDK\Include\tiny_obj_loader.h">
-      <Filter>File di origine\External</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
