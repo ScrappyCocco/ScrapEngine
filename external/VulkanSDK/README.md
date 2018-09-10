@@ -1,2 +1,2 @@
-# ScrapEngine
-A simple real-time rendering framework
+# Vulkan SDK
+A folder used for the Vulkan SDK
