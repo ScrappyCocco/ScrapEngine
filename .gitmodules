@@ -13,3 +13,6 @@
 [submodule "external/openal-soft"]
 	path = external/openal-soft
 	url = https://github.com/kcat/openal-soft
+[submodule "external/VulkanSDK/Vulkan-Headers"]
+	path = external/VulkanSDK/Vulkan-Headers
+	url = https://github.com/KhronosGroup/Vulkan-Headers
