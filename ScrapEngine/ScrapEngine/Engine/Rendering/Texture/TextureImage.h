@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vulkan/vulkan.h>
+#include <vulkan/vulkan.hpp>
 #include <string>
 #include "../Buffer/Staging/StagingBuffer.h"
 
@@ -10,31 +10,30 @@ namespace ScrapEngine {
 	class TextureImage
 	{
 	private:
-		VkImage textureImage;
-		VkDeviceMemory textureImageMemory;
+		vk::Image textureImage;
+		vk::DeviceMemory textureImageMemory;
 		uint32_t mipLevels;
 
-		VkDevice deviceRef;
-		VkPhysicalDevice PhysicalDeviceRef;
-		VkCommandPool CommandPoolRef;
-		VkQueue graphicsQueueRerf;
+		vk::Device* deviceRef;
+		vk::PhysicalDevice* PhysicalDeviceRef;
+		vk::CommandPool* CommandPoolRef;
+		vk::Queue* graphicsQueueRerf;
 		ScrapEngine::StagingBuffer* StaginfBufferRef = nullptr;
 
 	public:
-		TextureImage(std::string file_path, VkDevice input_deviceRef, VkPhysicalDevice PhysicalDevice, VkCommandPool CommandPool, VkQueue graphicsQueue);
+		TextureImage(std::string file_path, vk::Device* input_deviceRef, vk::PhysicalDevice* PhysicalDevice, vk::CommandPool* CommandPool, vk::Queue* graphicsQueue);
 		~TextureImage();
 
-		void createImage(uint32_t width, uint32_t height, VkFormat format, VkImageTiling tiling, VkImageUsageFlags usage, VkMemoryPropertyFlags properties, VkImage& image, VkDeviceMemory& imageMemory);
-		static void createImage(VkDevice deviceRef, VkPhysicalDevice PhysicalDeviceRef, uint32_t width, uint32_t height, VkFormat format, VkImageTiling tiling, VkImageUsageFlags usage, 
-			VkMemoryPropertyFlags properties, VkImage& image, VkDeviceMemory& imageMemory, uint32_t mipLevelsData, VkSampleCountFlagBits numSamples);
+		void createImage(uint32_t width, uint32_t height, vk::Format format, vk::ImageTiling tiling, vk::ImageUsageFlags usage, vk::MemoryPropertyFlags properties, vk::Image& image, vk::DeviceMemory& imageMemory);
+		static void createImage(vk::Device* deviceRef, vk::PhysicalDevice* PhysicalDeviceRef, uint32_t width, uint32_t height, vk::Format format, vk::ImageTiling tiling, vk::ImageUsageFlags usage, 
+			vk::MemoryPropertyFlags properties, vk::Image& image, vk::DeviceMemory& imageMemory, uint32_t mipLevelsData, vk::SampleCountFlagBits numSamples);
 		
-		void transitionImageLayout(VkImage image, VkFormat format, VkImageLayout oldLayout, VkImageLayout newLayout);
-		static void transitionImageLayout(VkDevice deviceRef, VkImage image, VkFormat format, VkImageLayout oldLayout, VkImageLayout newLayout, VkCommandPool CommandPool, VkQueue graphicsQueue, uint32_t mipLevelsData);
+		void transitionImageLayout(vk::Image* image, vk::Format format, vk::ImageLayout oldLayout, vk::ImageLayout newLayout);
+		static void transitionImageLayout(vk::Device* deviceRef, vk::Image* image, vk::Format format, vk::ImageLayout oldLayout, vk::ImageLayout newLayout, vk::CommandPool* CommandPool, vk::Queue* graphicsQueue, uint32_t mipLevelsData);
 
-		void generateMipmaps(VkImage image, VkFormat imageFormat, int32_t texWidth, int32_t texHeight, uint32_t mipLevels);
+		void generateMipmaps(vk::Image* image, vk::Format imageFormat, int32_t texWidth, int32_t texHeight, uint32_t mipLevels);
 
-
-		VkImage getTextureImage() const;
+		vk::Image* getTextureImage();
 		uint32_t getMipLevels() const;
 	};
 

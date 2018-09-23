@@ -2,31 +2,31 @@
 #include "TextureImage.h"
 #include "TextureImageView.h"
 
-ScrapEngine::VulkanColorResources::VulkanColorResources(VkDevice input_deviceRef, VkPhysicalDevice input_PhysicalDeviceRef, VkCommandPool CommandPool, VkQueue graphicsQueue, VkSampleCountFlagBits msaaSamples, ScrapEngine::VulkanSwapChain* swapChainRef) 
+ScrapEngine::VulkanColorResources::VulkanColorResources(vk::Device* input_deviceRef, vk::PhysicalDevice* input_PhysicalDeviceRef, vk::CommandPool* CommandPool, vk::Queue* graphicsQueue, vk::SampleCountFlagBits msaaSamples, ScrapEngine::VulkanSwapChain* swapChainRef)
 	: deviceRef(input_deviceRef)
 {
-	VkFormat colorFormat = swapChainRef->getSwapChainImageFormat();
+	vk::Format colorFormat = swapChainRef->getSwapChainImageFormat();
 
-	ScrapEngine::TextureImage::createImage(deviceRef, input_PhysicalDeviceRef, swapChainRef->getSwapChainExtent().width, swapChainRef->getSwapChainExtent().height, colorFormat, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT | VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, colorImage, colorImageMemory, 1, msaaSamples);
-	colorImageView = ScrapEngine::TextureImageView::createImageView(deviceRef, colorImage, colorFormat, VK_IMAGE_ASPECT_COLOR_BIT, 1);
+	ScrapEngine::TextureImage::createImage(deviceRef, input_PhysicalDeviceRef, swapChainRef->getSwapChainExtent().width, swapChainRef->getSwapChainExtent().height, colorFormat, vk::ImageTiling::eOptimal, vk::ImageUsageFlagBits::eTransientAttachment | vk::ImageUsageFlagBits::eColorAttachment, vk::MemoryPropertyFlagBits::eDeviceLocal, colorImage, colorImageMemory, 1, msaaSamples);
+	colorImageView = ScrapEngine::TextureImageView::createImageView(deviceRef, &colorImage, colorFormat, vk::ImageAspectFlagBits::eColor, 1);
 
-	ScrapEngine::TextureImage::transitionImageLayout(deviceRef, colorImage, colorFormat, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, CommandPool, graphicsQueue, 1);
+	ScrapEngine::TextureImage::transitionImageLayout(deviceRef, &colorImage, colorFormat, vk::ImageLayout::eUndefined, vk::ImageLayout::eColorAttachmentOptimal, CommandPool, graphicsQueue, 1);
 }
 
 
 ScrapEngine::VulkanColorResources::~VulkanColorResources()
 {
-	vkDestroyImageView(deviceRef, colorImageView, nullptr);
-	vkDestroyImage(deviceRef, colorImage, nullptr);
-	vkFreeMemory(deviceRef, colorImageMemory, nullptr);
+	deviceRef->destroyImageView(colorImageView);
+	deviceRef->destroyImage(colorImage);
+	deviceRef->freeMemory(colorImageMemory);
 }
 
-VkImage ScrapEngine::VulkanColorResources::getColorImage() const
+vk::Image* ScrapEngine::VulkanColorResources::getColorImage()
 {
-	return colorImage;
+	return &colorImage;
 }
 
-VkImageView ScrapEngine::VulkanColorResources::getColorImageView() const
+vk::ImageView* ScrapEngine::VulkanColorResources::getColorImageView()
 {
-	return colorImageView;
+	return &colorImageView;
 }

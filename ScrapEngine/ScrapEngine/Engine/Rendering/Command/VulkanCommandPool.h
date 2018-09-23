@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vulkan/vulkan.h>
+#include <vulkan/vulkan.hpp>
 #include "../Queue/GraphicsQueue.h"
 
 namespace ScrapEngine {
@@ -8,14 +8,14 @@ namespace ScrapEngine {
 	class VulkanCommandPool
 	{
 	private:
-		VkCommandPool commandPool;
+		vk::CommandPool commandPool;
 
-		VkDevice deviceRef;
+		vk::Device* deviceRef;
 	public:
-		VulkanCommandPool(GraphicsQueue::QueueFamilyIndices queueFamilyIndices, VkDevice input_deviceRef);
+		VulkanCommandPool(GraphicsQueue::QueueFamilyIndices queueFamilyIndices, vk::Device* input_deviceRef);
 		~VulkanCommandPool();
 
-		VkCommandPool getCommandPool() const;
+		vk::CommandPool* getCommandPool();
 	};
 
 }

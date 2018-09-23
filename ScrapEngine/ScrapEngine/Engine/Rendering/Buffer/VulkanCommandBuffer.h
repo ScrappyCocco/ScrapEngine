@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vulkan/vulkan.h>
+#include <vulkan/vulkan.hpp>
 #include "VulkanFrameBuffer.h"
 #include <vector>
 #include "../Base/Vertex.h"
@@ -11,16 +11,16 @@ namespace ScrapEngine {
 	class VulkanCommandBuffer
 	{
 	private:
-		std::vector<VkCommandBuffer> commandBuffers;
+		std::vector<vk::CommandBuffer> commandBuffers;
 
-		VkDevice deviceRef;
+		vk::Device* deviceRef;
 	public:
-		VulkanCommandBuffer(ScrapEngine::VulkanFrameBuffer* SwapChainFrameBuffer, VkDevice input_deviceRef, VkCommandPool input_commandPoolRef, 
-			VkRenderPass input_renderPassRef, VkExtent2D input_swapChainExtentRef, const ScrapEngine::VulkanGraphicsPipeline* input_vulkanPipelineRef,
-			const std::vector<VkDescriptorSet>* descriptorSets, simple_buffer<Vertex> vertexBuffer, simple_buffer<uint32_t> indexBuffer);
+		VulkanCommandBuffer(ScrapEngine::VulkanFrameBuffer* SwapChainFrameBuffer, vk::Device* input_deviceRef, vk::CommandPool* input_commandPoolRef, 
+			vk::RenderPass* input_renderPassRef, vk::Extent2D* input_swapChainExtentRef, ScrapEngine::VulkanGraphicsPipeline* input_vulkanPipelineRef,
+			const std::vector<vk::DescriptorSet>* descriptorSets, simple_buffer<Vertex> vertexBuffer, simple_buffer<uint32_t> indexBuffer);
 		~VulkanCommandBuffer();
 
-		const std::vector<VkCommandBuffer>* getCommandBuffersVector();
+		const std::vector<vk::CommandBuffer>* getCommandBuffersVector();
 	};
 
 }

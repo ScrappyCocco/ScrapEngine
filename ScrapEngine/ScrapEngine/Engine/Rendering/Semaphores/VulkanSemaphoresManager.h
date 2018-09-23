@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vulkan/vulkan.h>
+#include <vulkan/vulkan.hpp>
 #include <vector>
 
 namespace ScrapEngine {
@@ -8,22 +8,22 @@ namespace ScrapEngine {
 	class VulkanSemaphoresManager
 	{
 	private:
-		std::vector<VkSemaphore> imageAvailableSemaphores;
-		std::vector<VkSemaphore> renderFinishedSemaphores;
-		std::vector<VkFence> inFlightFences;
+		std::vector<vk::Semaphore> imageAvailableSemaphores;
+		std::vector<vk::Semaphore> renderFinishedSemaphores;
+		std::vector<vk::Fence> inFlightFences;
 
-		VkDevice deviceRef;
+		vk::Device* deviceRef;
 
 		const unsigned short int MAX_FRAMES_IN_FLIGHT = 2;
 	public:
-		VulkanSemaphoresManager(VkDevice input_deviceRef, unsigned short int INPUT_MAX_FRAMES_IN_FLIGHT = 2);
+		VulkanSemaphoresManager(vk::Device* input_deviceRef, unsigned short int INPUT_MAX_FRAMES_IN_FLIGHT = 2);
 		~VulkanSemaphoresManager();
 
 		int getMaxFramesInFlight() const;
 
-		const std::vector<VkSemaphore>* getImageAvailableSemaphoresVector();
-		const std::vector<VkSemaphore>* getRenderFinishedSemaphoresVector();
-		const std::vector<VkFence>* getInFlightFencesVector();
+		const std::vector<vk::Semaphore>* getImageAvailableSemaphoresVector();
+		const std::vector<vk::Semaphore>* getRenderFinishedSemaphoresVector();
+		const std::vector<vk::Fence>* getInFlightFencesVector();
 	};
 
 }

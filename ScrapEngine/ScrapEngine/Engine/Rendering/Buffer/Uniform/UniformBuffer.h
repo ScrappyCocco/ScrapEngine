@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vulkan/vulkan.h>
+#include <vulkan/vulkan.hpp>
 #include <vector>
 #include <glm/glm.hpp>
 
@@ -14,18 +14,20 @@ namespace ScrapEngine {
 	class UniformBuffer
 	{
 	private:
-		std::vector<VkBuffer> uniformBuffers;
-		std::vector<VkDeviceMemory> uniformBuffersMemory;
+		std::vector<vk::Buffer> uniformBuffers;
+		std::vector<vk::DeviceMemory> uniformBuffersMemory;
 
-		VkDevice deviceRef;
+		vk::Device* deviceRef;
 		size_t swapChainImagesSize;
+
+		int called = 0;
 	public:
-		UniformBuffer(VkDevice input_deviceRef, VkPhysicalDevice PhysicalDevice, const std::vector<VkImage>* swapChainImages);
+		UniformBuffer(vk::Device* input_deviceRef, vk::PhysicalDevice* PhysicalDevice, const std::vector<vk::Image>* swapChainImages);
 		~UniformBuffer();
 
-		void updateUniformBuffer(uint32_t currentImage, VkExtent2D* swapChainExtent);
-		const std::vector<VkBuffer>* getUniformBuffers();
-		const std::vector<VkDeviceMemory>* getUniformBuffersMemory();
+		void updateUniformBuffer(uint32_t currentImage, vk::Extent2D* swapChainExtent);
+		const std::vector<vk::Buffer>* getUniformBuffers();
+		const std::vector<vk::DeviceMemory>* getUniformBuffersMemory();
 	};
 
 }

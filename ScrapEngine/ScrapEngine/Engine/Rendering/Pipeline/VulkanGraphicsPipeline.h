@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vulkan/vulkan.h>
+#include <vulkan/vulkan.hpp>
 #include "../Shader/ShaderManager.h"
 
 namespace ScrapEngine {
@@ -9,17 +9,17 @@ namespace ScrapEngine {
 	{
 	private:
 		ShaderManager* ShaderManagerRef = nullptr;
-		VkPipelineLayout pipelineLayout;
-		VkPipeline graphicsPipeline;
+		vk::PipelineLayout pipelineLayout;
+		vk::Pipeline graphicsPipeline;
 
-		VkDevice deviceRef;
+		vk::Device* deviceRef;
 	public:
-		VulkanGraphicsPipeline(const char* vertexShader, const char* fragmentShader, VkDevice input_deviceRef, VkExtent2D swapChainExtent, VkRenderPass input_renderPassRef, 
-			VkDescriptorSetLayout descriptorSetLayout, VkSampleCountFlagBits msaaSamples);
+		VulkanGraphicsPipeline(const char* vertexShader, const char* fragmentShader, vk::Device* input_deviceRef, vk::Extent2D* swapChainExtent, vk::RenderPass* input_renderPassRef,
+			vk::DescriptorSetLayout* descriptorSetLayout, vk::SampleCountFlagBits msaaSamples);
 		~VulkanGraphicsPipeline();
 
-		VkPipeline getGraphicsPipeline() const;
-		VkPipelineLayout getPipelineLayout() const;
+		vk::Pipeline* getGraphicsPipeline();
+		vk::PipelineLayout* getPipelineLayout();
 	};
 
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vulkan/vulkan.h>
+#include <vulkan/vulkan.hpp>
 #include <string>
 #include <vector>
 
@@ -9,7 +9,7 @@ namespace ScrapEngine {
 	class VukanInstance
 	{
 	private:
-		VkInstance instance; //Vulkan Instance of the engine - connection between the application and the Vulkan library
+		vk::Instance instance; //Vulkan Instance of the engine - connection between the application and the Vulkan library
 	public:
 		VukanInstance(std::string app_name, int app_version, std::string engine_name = "No Engine", int engine_version = 1);
 
@@ -20,7 +20,7 @@ namespace ScrapEngine {
 		void createVulkanInstance(std::string app_name, int app_version, std::string engine_name = "No Engine", int engine_version = 1);
 
 		//Return the current Vulkan Instance (if created)
-		VkInstance getVulkanInstance() const;
+		vk::Instance* getVulkanInstance();
 	private:
 		std::vector<const char*> getRequiredExtensions();
 	};

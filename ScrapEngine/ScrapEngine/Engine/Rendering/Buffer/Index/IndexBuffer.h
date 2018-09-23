@@ -1,23 +1,22 @@
 #pragma once
 
-#include <vulkan/vulkan.h>
+#include <vulkan/vulkan.hpp>
 #include <vector>
 #include "../../Base/Vertex.h"
 
 namespace ScrapEngine {
-
 	class IndexBuffer
 	{
 	private:
-		VkBuffer indexBuffer;
-		VkDeviceMemory indexBufferMemory;
+		vk::Buffer indexBuffer;
+		vk::DeviceMemory indexBufferMemory;
 
-		VkDevice deviceRef;
+		vk::Device* deviceRef;
 	public:
-		IndexBuffer(VkDevice input_deviceRef, VkPhysicalDevice PhysicalDevice, const std::vector<uint32_t>* indices, VkCommandPool commandPool, VkQueue graphicsQueue);
+		IndexBuffer(vk::Device* input_deviceRef, vk::PhysicalDevice* PhysicalDevice, const std::vector<uint32_t>* indices, vk::CommandPool* commandPool, vk::Queue* graphicsQueue);
 		~IndexBuffer();
 
-		VkBuffer getIndexBuffer() const;
+		vk::Buffer* getIndexBuffer();
 	};
 
 }

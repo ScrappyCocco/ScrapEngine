@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vulkan/vulkan.h>
+#include <vulkan/vulkan.hpp>
 #include <vector>
 
 namespace ScrapEngine {
@@ -8,14 +8,14 @@ namespace ScrapEngine {
 	class VulkanDescriptorPool
 	{
 	private:
-		VkDescriptorPool descriptorPool;
+		vk::DescriptorPool descriptorPool;
 
-		VkDevice deviceRef;
+		vk::Device* deviceRef;
 	public:
-		VulkanDescriptorPool(VkDevice input_deviceRef, const std::vector<VkImage>* swapChainImages);
+		VulkanDescriptorPool(vk::Device* input_deviceRef, const std::vector<vk::Image>* swapChainImages);
 		~VulkanDescriptorPool();
 
-		VkDescriptorPool getDescriptorPool() const;
+		vk::DescriptorPool* getDescriptorPool();
 	};
 
 }

@@ -1,4 +1,5 @@
 #include "GameWindow.h"
+#include <stb_image.h>
 
 ScrapEngine::GameWindow::GameWindow(uint32_t input_WIDTH, uint32_t input_HEIGHT, std::string input_window_title) : WIDTH(input_WIDTH), HEIGHT(input_HEIGHT), window_title(input_window_title)
 {
@@ -27,14 +28,21 @@ void ScrapEngine::GameWindow::setWindowSize(int input_WIDTH, int input_HEIGHT)
 	glfwSetWindowSize(window, input_WIDTH, input_HEIGHT);
 }
 
-void ScrapEngine::GameWindow::setWindowTitle(std::string title)
+void ScrapEngine::GameWindow::setWindowTitle(const std::string& title)
 {
 	glfwSetWindowTitle(window, title.c_str());
 }
 
-void ScrapEngine::GameWindow::setWindowIcon(GLFWimage images[2])
+GLFWimage ScrapEngine::GameWindow::loadIcon(const std::string & path_to_file) const
 {
-	glfwSetWindowIcon(window, 2, images);
+	GLFWimage icon;
+	icon.pixels = stbi_load(path_to_file.c_str(), &icon.width, &icon.height, 0, 4);
+	return icon;
+}
+
+void ScrapEngine::GameWindow::setWindowIcon(const int& number_of_images, GLFWimage* images) const
+{
+	glfwSetWindowIcon(window, number_of_images, images);
 }
 
 GLFWwindow * ScrapEngine::GameWindow::getWindowRef() const

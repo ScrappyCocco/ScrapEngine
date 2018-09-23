@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vulkan/vulkan.h>
+#include <vulkan/vulkan.hpp>
 #include "GraphicsQueue.h"
 
 namespace ScrapEngine {
@@ -8,12 +8,12 @@ namespace ScrapEngine {
 	class PresentQueue
 	{
 	private:
-		VkQueue presentationQueue;
+		vk::Queue presentationQueue;
 	public:
-		PresentQueue(VkDevice device, GraphicsQueue::QueueFamilyIndices indices);
+		PresentQueue(vk::Device* device, GraphicsQueue::QueueFamilyIndices indices);
 		~PresentQueue();
 
-		VkQueue getPresentQueue() const;
+		vk::Queue* getPresentQueue();
 	};
 
 }

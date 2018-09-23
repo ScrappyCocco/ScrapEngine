@@ -3,35 +3,35 @@
 #include "../Texture/TextureImage.h"
 #include "../Texture/TextureImageView.h"
 
-ScrapEngine::VulkanDepthResources::VulkanDepthResources(VkDevice input_deviceRef, VkPhysicalDevice PhysicalDeviceRef, VkCommandPool CommandPool, VkQueue graphicsQueue, const VkExtent2D* swapChainExtent, VkSampleCountFlagBits msaaSamples)
+ScrapEngine::VulkanDepthResources::VulkanDepthResources(vk::Device* input_deviceRef, vk::PhysicalDevice* PhysicalDeviceRef, vk::CommandPool* CommandPool, vk::Queue* graphicsQueue, const vk::Extent2D* swapChainExtent, vk::SampleCountFlagBits msaaSamples)
 	: deviceRef(input_deviceRef)
 {
-	VkFormat depthFormat = findDepthFormat(PhysicalDeviceRef);
+	vk::Format depthFormat = findDepthFormat(PhysicalDeviceRef);
 
-	TextureImage::createImage(deviceRef, PhysicalDeviceRef, swapChainExtent->width, swapChainExtent->height, depthFormat, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, depthImage, depthImageMemory, 1, msaaSamples);
-	depthImageView = TextureImageView::createImageView(deviceRef, depthImage, depthFormat, VK_IMAGE_ASPECT_DEPTH_BIT, 1);
+	TextureImage::createImage(deviceRef, PhysicalDeviceRef, swapChainExtent->width, swapChainExtent->height, depthFormat, vk::ImageTiling::eOptimal, vk::ImageUsageFlagBits::eDepthStencilAttachment, vk::MemoryPropertyFlagBits::eDeviceLocal, depthImage, depthImageMemory, 1, msaaSamples);
+	depthImageView = TextureImageView::createImageView(deviceRef, &depthImage, depthFormat, vk::ImageAspectFlagBits::eDepth, 1);
 
-	TextureImage::transitionImageLayout(deviceRef, depthImage, depthFormat, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL, CommandPool, graphicsQueue, 1);
+	TextureImage::transitionImageLayout(deviceRef, &depthImage, depthFormat, vk::ImageLayout::eUndefined, vk::ImageLayout::eDepthStencilAttachmentOptimal, CommandPool, graphicsQueue, 1);
 }
 
 
 ScrapEngine::VulkanDepthResources::~VulkanDepthResources()
 {
-	vkDestroyImageView(deviceRef, depthImageView, nullptr);
-	vkDestroyImage(deviceRef, depthImage, nullptr);
-	vkFreeMemory(deviceRef, depthImageMemory, nullptr);
+	deviceRef->destroyImageView(depthImageView);
+	deviceRef->destroyImage(depthImage);
+	deviceRef->freeMemory(depthImageMemory);
 }
 
-VkFormat ScrapEngine::VulkanDepthResources::findSupportedFormat(VkPhysicalDevice PhysicalDevice, const std::vector<VkFormat>& candidates, VkImageTiling tiling, VkFormatFeatureFlags features)
+vk::Format ScrapEngine::VulkanDepthResources::findSupportedFormat(vk::PhysicalDevice* PhysicalDevice, const std::vector<vk::Format>& candidates, vk::ImageTiling tiling, vk::FormatFeatureFlags features)
 {
-	for (VkFormat format : candidates) {
-		VkFormatProperties props;
-		vkGetPhysicalDeviceFormatProperties(PhysicalDevice, format, &props);
+	for (vk::Format format : candidates) {
+		vk::FormatProperties props;
+		PhysicalDevice->getFormatProperties(format, &props);
 
-		if (tiling == VK_IMAGE_TILING_LINEAR && (props.linearTilingFeatures & features) == features) {
+		if (tiling == vk::ImageTiling::eLinear && (props.linearTilingFeatures & features) == features) {
 			return format;
 		}
-		else if (tiling == VK_IMAGE_TILING_OPTIMAL && (props.optimalTilingFeatures & features) == features) {
+		else if (tiling == vk::ImageTiling::eOptimal && (props.optimalTilingFeatures & features) == features) {
 			return format;
 		}
 	}
@@ -39,31 +39,31 @@ VkFormat ScrapEngine::VulkanDepthResources::findSupportedFormat(VkPhysicalDevice
 	throw std::runtime_error("failed to find supported format!");
 }
 
-VkFormat ScrapEngine::VulkanDepthResources::findDepthFormat(VkPhysicalDevice PhysicalDevice)
+vk::Format ScrapEngine::VulkanDepthResources::findDepthFormat(vk::PhysicalDevice* PhysicalDevice)
 {
 	return findSupportedFormat(PhysicalDevice, 
-		{ VK_FORMAT_D32_SFLOAT, VK_FORMAT_D32_SFLOAT_S8_UINT, VK_FORMAT_D24_UNORM_S8_UINT },
-		VK_IMAGE_TILING_OPTIMAL,
-		VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT
+		{ vk::Format::eD32Sfloat , vk::Format::eD32SfloatS8Uint , vk::Format::eD24UnormS8Uint },
+		vk::ImageTiling::eOptimal,
+		vk::FormatFeatureFlagBits::eDepthStencilAttachment
 	);
 }
 
-bool ScrapEngine::VulkanDepthResources::hasStencilComponent(VkFormat format)
+bool ScrapEngine::VulkanDepthResources::hasStencilComponent(vk::Format format)
 {
-	return format == VK_FORMAT_D32_SFLOAT_S8_UINT || format == VK_FORMAT_D24_UNORM_S8_UINT;;
+	return format == vk::Format::eD32SfloatS8Uint || format == vk::Format::eD24UnormS8Uint;
 }
 
-VkImage ScrapEngine::VulkanDepthResources::getDepthImage() const
+vk::Image* ScrapEngine::VulkanDepthResources::getDepthImage()
 {
-	return depthImage;
+	return &depthImage;
 }
 
-VkDeviceMemory ScrapEngine::VulkanDepthResources::getDepthImageMemory() const
+vk::DeviceMemory* ScrapEngine::VulkanDepthResources::getDepthImageMemory()
 {
-	return depthImageMemory;
+	return &depthImageMemory;
 }
 
-VkImageView ScrapEngine::VulkanDepthResources::getDepthImageView()
+vk::ImageView* ScrapEngine::VulkanDepthResources::getDepthImageView()
 {
-	return depthImageView;
+	return &depthImageView;
 }

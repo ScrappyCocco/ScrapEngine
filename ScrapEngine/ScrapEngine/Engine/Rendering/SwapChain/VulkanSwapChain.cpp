@@ -2,52 +2,52 @@
 
 #include <algorithm>
 
-ScrapEngine::VulkanSwapChain::VulkanSwapChain(SwapChainSupportDetails swapChainSupport, GraphicsQueue::QueueFamilyIndices indices, VkDevice input_deviceRef, VkSurfaceKHR input_surfaceRef, uint32_t WIDTH, uint32_t HEIGHT)
+ScrapEngine::VulkanSwapChain::VulkanSwapChain(SwapChainSupportDetails swapChainSupport, GraphicsQueue::QueueFamilyIndices indices, vk::Device* input_deviceRef, vk::SurfaceKHR* input_surfaceRef, uint32_t WIDTH, uint32_t HEIGHT)
 	: deviceRef(input_deviceRef), surfaceRef(input_surfaceRef)
 {
-	VkSurfaceFormatKHR surfaceFormat = chooseSwapSurfaceFormat(swapChainSupport.formats);
-	VkPresentModeKHR presentMode = chooseSwapPresentMode(swapChainSupport.presentModes);
-	VkExtent2D extent = chooseSwapExtent(swapChainSupport.capabilities, WIDTH, HEIGHT);
+	vk::SurfaceFormatKHR surfaceFormat = chooseSwapSurfaceFormat(swapChainSupport.formats);
+	vk::PresentModeKHR presentMode = chooseSwapPresentMode(swapChainSupport.presentModes);
+	vk::Extent2D extent = chooseSwapExtent(swapChainSupport.capabilities, WIDTH, HEIGHT);
 
 	uint32_t imageCount = swapChainSupport.capabilities.minImageCount + 1;
 	if (swapChainSupport.capabilities.maxImageCount > 0 && imageCount > swapChainSupport.capabilities.maxImageCount) {
 		imageCount = swapChainSupport.capabilities.maxImageCount;
 	}
 
-	VkSwapchainCreateInfoKHR createInfo = {};
-	createInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
-	createInfo.surface = surfaceRef;
-
-	createInfo.minImageCount = imageCount;
-	createInfo.imageFormat = surfaceFormat.format;
-	createInfo.imageColorSpace = surfaceFormat.colorSpace;
-	createInfo.imageExtent = extent;
-	createInfo.imageArrayLayers = 1;
-	createInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
+	vk::SwapchainCreateInfoKHR createInfo(
+		vk::SwapchainCreateFlagsKHR(),
+		*surfaceRef,
+		imageCount,
+		surfaceFormat.format,
+		surfaceFormat.colorSpace,
+		extent,
+		1,
+		vk::ImageUsageFlagBits::eColorAttachment
+	);
 
 	uint32_t queueFamilyIndices[] = { (uint32_t)indices.graphicsFamily, (uint32_t)indices.presentFamily };
 
 	if (indices.graphicsFamily != indices.presentFamily) {
-		createInfo.imageSharingMode = VK_SHARING_MODE_CONCURRENT;
-		createInfo.queueFamilyIndexCount = 2;
-		createInfo.pQueueFamilyIndices = queueFamilyIndices;
+		createInfo.setImageSharingMode(vk::SharingMode::eConcurrent);
+		createInfo.setQueueFamilyIndexCount(2);
+		createInfo.setPQueueFamilyIndices(queueFamilyIndices);
 	}
 	else {
-		createInfo.imageSharingMode = VK_SHARING_MODE_EXCLUSIVE;
+		createInfo.setImageSharingMode(vk::SharingMode::eExclusive);
 	}
 
-	createInfo.preTransform = swapChainSupport.capabilities.currentTransform;
-	createInfo.compositeAlpha = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR;
-	createInfo.presentMode = presentMode;
-	createInfo.clipped = VK_TRUE;
+	createInfo.setPreTransform(swapChainSupport.capabilities.currentTransform);
+	createInfo.setCompositeAlpha(vk::CompositeAlphaFlagBitsKHR::eOpaque);
+	createInfo.setPresentMode(presentMode);
+	createInfo.setClipped(true);
 
-	if (vkCreateSwapchainKHR(deviceRef, &createInfo, nullptr, &swapChain) != VK_SUCCESS) {
+	if (deviceRef->createSwapchainKHR(&createInfo, nullptr, &swapChain) != vk::Result::eSuccess) {
 		throw std::runtime_error("failed to create swap chain!");
 	}
 
-	vkGetSwapchainImagesKHR(deviceRef, swapChain, &imageCount, nullptr);
+	deviceRef->getSwapchainImagesKHR(swapChain, &imageCount, nullptr);
 	swapChainImages.resize(imageCount);
-	vkGetSwapchainImagesKHR(deviceRef, swapChain, &imageCount, swapChainImages.data());
+	deviceRef->getSwapchainImagesKHR(swapChain, &imageCount, swapChainImages.data());
 
 	swapChainImageFormat = surfaceFormat.format;
 	swapChainExtent = extent;
@@ -55,17 +55,17 @@ ScrapEngine::VulkanSwapChain::VulkanSwapChain(SwapChainSupportDetails swapChainS
 
 ScrapEngine::VulkanSwapChain::~VulkanSwapChain()
 {
-	vkDestroySwapchainKHR(deviceRef, swapChain, nullptr);
+	deviceRef->destroySwapchainKHR(swapChain);
 }
 
-VkSurfaceFormatKHR ScrapEngine::VulkanSwapChain::chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR>& availableFormats)
+vk::SurfaceFormatKHR ScrapEngine::VulkanSwapChain::chooseSwapSurfaceFormat(const std::vector<vk::SurfaceFormatKHR>& availableFormats)
 {
-	if (availableFormats.size() == 1 && availableFormats[0].format == VK_FORMAT_UNDEFINED) {
-		return { VK_FORMAT_B8G8R8A8_UNORM, VK_COLOR_SPACE_SRGB_NONLINEAR_KHR };
+	if (availableFormats.size() == 1 && availableFormats[0].format == vk::Format::eUndefined) {
+		return { vk::Format::eB8G8R8A8Unorm , vk::ColorSpaceKHR::eSrgbNonlinear};
 	}
 
 	for (const auto& availableFormat : availableFormats) {
-		if (availableFormat.format == VK_FORMAT_B8G8R8A8_UNORM && availableFormat.colorSpace == VK_COLOR_SPACE_SRGB_NONLINEAR_KHR) {
+		if (availableFormat.format == vk::Format::eB8G8R8A8Unorm  && availableFormat.colorSpace == vk::ColorSpaceKHR::eSrgbNonlinear) {
 			return availableFormat;
 		}
 	}
@@ -73,15 +73,15 @@ VkSurfaceFormatKHR ScrapEngine::VulkanSwapChain::chooseSwapSurfaceFormat(const s
 	return availableFormats[0];
 }
 
-VkPresentModeKHR ScrapEngine::VulkanSwapChain::chooseSwapPresentMode(const std::vector<VkPresentModeKHR> availablePresentModes)
+vk::PresentModeKHR ScrapEngine::VulkanSwapChain::chooseSwapPresentMode(const std::vector<vk::PresentModeKHR> availablePresentModes)
 {
-	VkPresentModeKHR bestMode = VK_PRESENT_MODE_FIFO_KHR;
+	vk::PresentModeKHR bestMode = vk::PresentModeKHR::eFifo;
 
 	for (const auto& availablePresentMode : availablePresentModes) {
-		if (availablePresentMode == VK_PRESENT_MODE_MAILBOX_KHR) {
+		if (availablePresentMode == vk::PresentModeKHR::eMailbox) {
 			return availablePresentMode;
 		}
-		else if (availablePresentMode == VK_PRESENT_MODE_IMMEDIATE_KHR) {
+		else if (availablePresentMode == vk::PresentModeKHR::eImmediate) {
 			bestMode = availablePresentMode;
 		}
 	}
@@ -89,7 +89,7 @@ VkPresentModeKHR ScrapEngine::VulkanSwapChain::chooseSwapPresentMode(const std::
 	return bestMode;
 }
 
-VkExtent2D ScrapEngine::VulkanSwapChain::chooseSwapExtent(const VkSurfaceCapabilitiesKHR & capabilities, uint32_t WIDTH, uint32_t HEIGHT)
+vk::Extent2D ScrapEngine::VulkanSwapChain::chooseSwapExtent(const vk::SurfaceCapabilitiesKHR& capabilities, uint32_t WIDTH, uint32_t HEIGHT)
 {
 	if (capabilities.currentExtent.width != std::numeric_limits<uint32_t>::max()) {
 		return capabilities.currentExtent;
@@ -104,22 +104,22 @@ VkExtent2D ScrapEngine::VulkanSwapChain::chooseSwapExtent(const VkSurfaceCapabil
 	}
 }
 
-VkSwapchainKHR ScrapEngine::VulkanSwapChain::getSwapChain() const
+vk::SwapchainKHR ScrapEngine::VulkanSwapChain::getSwapChain() const
 {
 	return swapChain;
 }
 
-const std::vector<VkImage>* ScrapEngine::VulkanSwapChain::getSwapChainImagesVector()
+const std::vector<vk::Image>* ScrapEngine::VulkanSwapChain::getSwapChainImagesVector()
 {
 	return &swapChainImages;
 }
 
-VkFormat ScrapEngine::VulkanSwapChain::getSwapChainImageFormat() const
+vk::Format ScrapEngine::VulkanSwapChain::getSwapChainImageFormat() const
 {
 	return swapChainImageFormat;
 }
 
-VkExtent2D ScrapEngine::VulkanSwapChain::getSwapChainExtent() const
+vk::Extent2D ScrapEngine::VulkanSwapChain::getSwapChainExtent() const
 {
 	return swapChainExtent;
 }

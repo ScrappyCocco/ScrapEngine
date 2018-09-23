@@ -2,26 +2,22 @@
 
 #include <stdexcept>
 
-ScrapEngine::VulkanCommandPool::VulkanCommandPool(GraphicsQueue::QueueFamilyIndices queueFamilyIndices, VkDevice input_deviceRef) 
+ScrapEngine::VulkanCommandPool::VulkanCommandPool(GraphicsQueue::QueueFamilyIndices queueFamilyIndices, vk::Device* input_deviceRef)
 	: deviceRef(input_deviceRef)
 {
-	VkCommandPoolCreateInfo poolInfo = {};
-	poolInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
-	poolInfo.queueFamilyIndex = queueFamilyIndices.graphicsFamily;
-	poolInfo.flags = 0; // Optional
+	vk::CommandPoolCreateInfo poolInfo(vk::CommandPoolCreateFlags(), queueFamilyIndices.graphicsFamily);
 
-	if (vkCreateCommandPool(deviceRef, &poolInfo, nullptr, &commandPool) != VK_SUCCESS) {
+	if (deviceRef->createCommandPool(&poolInfo, nullptr, &commandPool) != vk::Result::eSuccess) {
 		throw std::runtime_error("failed to create command pool!");
 	}
 }
 
-
 ScrapEngine::VulkanCommandPool::~VulkanCommandPool()
 {
-	vkDestroyCommandPool(deviceRef, commandPool, nullptr);
+	deviceRef->destroyCommandPool(commandPool);
 }
 
-VkCommandPool ScrapEngine::VulkanCommandPool::getCommandPool() const
+vk::CommandPool* ScrapEngine::VulkanCommandPool::getCommandPool()
 {
-	return commandPool;
+	return &commandPool;
 }

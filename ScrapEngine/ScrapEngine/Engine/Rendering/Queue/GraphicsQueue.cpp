@@ -1,15 +1,16 @@
 #include "GraphicsQueue.h"
 
-ScrapEngine::GraphicsQueue::GraphicsQueue(VkDevice device, QueueFamilyIndices indices)
+ScrapEngine::GraphicsQueue::GraphicsQueue(vk::Device* device, QueueFamilyIndices indices)
 {
-	vkGetDeviceQueue(device, indices.graphicsFamily, 0, &graphicsQueue);
+	device->getQueue(indices.graphicsFamily, 0, &graphicsQueue);
 }
 
 ScrapEngine::GraphicsQueue::~GraphicsQueue()
 {
+
 }
 
-VkQueue ScrapEngine::GraphicsQueue::getgraphicsQueue() const
+vk::Queue* ScrapEngine::GraphicsQueue::getgraphicsQueue()
 {
-	return graphicsQueue;
+	return &graphicsQueue;
 }

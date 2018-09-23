@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vulkan/vulkan.h>
+#include <vulkan/vulkan.hpp>
 #include "../Instance/VukanInstance.h"
 #include "../Window/VulkanSurface.h"
 #include "../../Debug/DebugLog.h"
@@ -12,22 +12,22 @@ namespace ScrapEngine {
 	class VulkanDevice
 	{
 	private:
-		VkInstance instanceRef;
-		VkSurfaceKHR VulkanSurfaceRef;
+		vk::Instance* instanceRef;
+		vk::SurfaceKHR* VulkanSurfaceRef;
 
-		VkSampleCountFlagBits msaaSamples = VK_SAMPLE_COUNT_1_BIT;
+		vk::SampleCountFlagBits msaaSamples = vk::SampleCountFlagBits::e1;
 
 		GraphicsQueue::QueueFamilyIndices cached_indices;
 
-		VkPhysicalDevice physicalDevice = VK_NULL_HANDLE; //physical graphics card
-		VkDevice device; //logical connection to graphics card
+		vk::PhysicalDevice physicalDevice; //physical graphics card
+		vk::Device device; //logical connection to graphics card
 
 		//List of Extensions to check
 		const std::vector<const char*> deviceExtensions = {
 			VK_KHR_SWAPCHAIN_EXTENSION_NAME
 		};
 	public:
-		VulkanDevice(VkInstance VulkanInstanceInputRef, VkSurfaceKHR VulkanSurfaceInputRef);
+		VulkanDevice(vk::Instance* VulkanInstanceInputRef, vk::SurfaceKHR* VulkanSurfaceInputRef);
 
 		//Turn off the logical device
 		~VulkanDevice();
@@ -39,25 +39,25 @@ namespace ScrapEngine {
 		void createLogicalDevice();
 
 		//Return a reference to physicalDevice
-		VkPhysicalDevice getPhysicalDevice() const;
+		vk::PhysicalDevice* getPhysicalDevice();
 
 		//Return a reference to logical device
-		VkDevice getLogicalDevice() const;
+		vk::Device* getLogicalDevice();
 
 		GraphicsQueue::QueueFamilyIndices getCachedQueueFamilyIndices() const;
 
 		//Which queue families are supported by the device
-		ScrapEngine::GraphicsQueue::QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device, VkSurfaceKHR surface);
+		ScrapEngine::GraphicsQueue::QueueFamilyIndices findQueueFamilies(vk::PhysicalDevice* device, vk::SurfaceKHR* surface);
 
-		VulkanSwapChain::SwapChainSupportDetails querySwapChainSupport(VkPhysicalDevice device);
+		VulkanSwapChain::SwapChainSupportDetails querySwapChainSupport(vk::PhysicalDevice* device);
 
-		VkSampleCountFlagBits getMaxUsableSampleCount();
+		vk::SampleCountFlagBits getMaxUsableSampleCount();
 
-		VkSampleCountFlagBits getMsaaSamples() const;
+		vk::SampleCountFlagBits getMsaaSamples() const;
 	private:
-		bool isDeviceSuitable(VkPhysicalDevice device, VkSurfaceKHR surface);
+		bool isDeviceSuitable(vk::PhysicalDevice* device, vk::SurfaceKHR* surface);
 
-		bool checkDeviceExtensionSupport(VkPhysicalDevice device);
+		bool checkDeviceExtensionSupport(vk::PhysicalDevice* device);
 	};
 }
 

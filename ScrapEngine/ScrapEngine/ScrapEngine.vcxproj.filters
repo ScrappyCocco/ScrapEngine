@@ -80,6 +80,12 @@
     <Filter Include="Engine\Rendering\Model">
       <UniqueIdentifier>{b0df1695-167b-47ab-a9bc-229352c00980}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\External">
+      <UniqueIdentifier>{71f67bf8-7ef1-46a8-a234-5e6ec0cccb5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Manager">
+      <UniqueIdentifier>{1994db62-631b-47b0-8e51-f971caab2bd9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Manager\EngineManager.cpp">
@@ -171,6 +177,9 @@
     </ClCompile>
     <ClCompile Include="Engine\Rendering\Texture\VulkanColorResources.cpp">
       <Filter>Engine\Rendering\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Manager\RenderManager.cpp">
+      <Filter>Engine\Rendering\Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -272,6 +281,15 @@
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Texture\VulkanColorResources.h">
       <Filter>Engine\Rendering\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\stb\stb_image.h">
+      <Filter>Engine\External</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Manager\RenderManager.h">
+      <Filter>Engine\Rendering\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Manager\UsefulTypes.h">
+      <Filter>Engine\Manager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

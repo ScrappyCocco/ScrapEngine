@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vulkan/vulkan.h>
+#include <vulkan/vulkan.hpp>
 #include <vector>
 
 #include "VulkanSwapChain.h"
@@ -10,14 +10,14 @@ namespace ScrapEngine {
 	class VulkanImageView
 	{
 	private:
-		std::vector<VkImageView> swapChainImageViews;
+		std::vector<vk::ImageView> swapChainImageViews;
 
-		VkDevice deviceRef;
+		vk::Device* deviceRef;
 	public:
-		VulkanImageView(VkDevice input_deviceRef, ScrapEngine::VulkanSwapChain* SwapChainRef);
+		VulkanImageView(vk::Device* input_deviceRef, ScrapEngine::VulkanSwapChain* SwapChainRef);
 		~VulkanImageView();
 
-		const std::vector<VkImageView>* getSwapChainImageViewsVector();
+		const std::vector<vk::ImageView>* getSwapChainImageViewsVector();
 	};
 
 }

@@ -5,7 +5,7 @@
 #include <set>
 #include <algorithm>
 
-ScrapEngine::VulkanDevice::VulkanDevice(VkInstance VulkanInstanceInputRef, VkSurfaceKHR VulkanSurfaceInputRef)
+ScrapEngine::VulkanDevice::VulkanDevice(vk::Instance* VulkanInstanceInputRef, vk::SurfaceKHR* VulkanSurfaceInputRef)
 	: instanceRef(VulkanInstanceInputRef), VulkanSurfaceRef(VulkanSurfaceInputRef)
 {
 	choosePhysicalDevice();
@@ -14,81 +14,78 @@ ScrapEngine::VulkanDevice::VulkanDevice(VkInstance VulkanInstanceInputRef, VkSur
 
 ScrapEngine::VulkanDevice::~VulkanDevice()
 {
-	vkDestroyDevice(device, nullptr);
+	device.destroy();
 }
 
 void ScrapEngine::VulkanDevice::choosePhysicalDevice()
 {
 	uint32_t deviceCount = 0;
-	vkEnumeratePhysicalDevices(instanceRef, &deviceCount, nullptr);
+	instanceRef->enumeratePhysicalDevices(&deviceCount, nullptr);
 
 	if (deviceCount == 0) {
 		throw std::runtime_error("failed to find GPUs with Vulkan support!");
 	}
 
-	std::vector<VkPhysicalDevice> devices(deviceCount);
-	vkEnumeratePhysicalDevices(instanceRef, &deviceCount, devices.data());
+	std::vector<vk::PhysicalDevice> devices(deviceCount);
+	instanceRef->enumeratePhysicalDevices(&deviceCount, devices.data());
 
-	for (const auto& device : devices) {
-		if (isDeviceSuitable(device, VulkanSurfaceRef)) {
-			physicalDevice = device;
+	for (auto& entry_device : devices) {
+		if (isDeviceSuitable(&entry_device, VulkanSurfaceRef)) {
+			physicalDevice = entry_device;
 			msaaSamples = getMaxUsableSampleCount();
 			break;
 		}
 	}
 
-	if (physicalDevice == VK_NULL_HANDLE) {
+	if (!physicalDevice) {
 		throw std::runtime_error("failed to find a suitable GPU!");
 	}
 }
 
 void ScrapEngine::VulkanDevice::createLogicalDevice()
 {
-	cached_indices = findQueueFamilies(physicalDevice, VulkanSurfaceRef);
+	cached_indices = findQueueFamilies(&physicalDevice, VulkanSurfaceRef);
 
-	std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
+	std::vector<vk::DeviceQueueCreateInfo> queueCreateInfos;
 	std::set<int> uniqueQueueFamilies = { cached_indices.graphicsFamily, cached_indices.presentFamily };
 
 	float queuePriority = 1.0f;
 	for (int queueFamily : uniqueQueueFamilies) {
-		VkDeviceQueueCreateInfo queueCreateInfo = {};
-		queueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-		queueCreateInfo.queueFamilyIndex = queueFamily;
-		queueCreateInfo.queueCount = 1;
-		queueCreateInfo.pQueuePriorities = &queuePriority;
+		vk::DeviceQueueCreateInfo queueCreateInfo(
+			vk::DeviceQueueCreateFlags(), 
+			queueFamily, 
+			1, 
+			&queuePriority
+		);
 		queueCreateInfos.push_back(queueCreateInfo);
 	}
 
-	VkPhysicalDeviceFeatures deviceFeatures = {};
-	deviceFeatures.samplerAnisotropy = VK_TRUE;
-	deviceFeatures.sampleRateShading = VK_TRUE; // enable sample shading feature for the device
+	vk::PhysicalDeviceFeatures deviceFeatures;
+	deviceFeatures.setSamplerAnisotropy(true);
+	deviceFeatures.setSampleRateShading(true);
 
-	VkDeviceCreateInfo createInfo = {};
-	createInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
+	vk::DeviceCreateInfo createInfo(
+		vk::DeviceCreateFlags(),
+		static_cast<uint32_t>(queueCreateInfos.size()), 
+		queueCreateInfos.data(), 
+		0, nullptr, 
+		static_cast<uint32_t>(deviceExtensions.size()), deviceExtensions.data(), 
+		&deviceFeatures
+	);
 
-	createInfo.queueCreateInfoCount = static_cast<uint32_t>(queueCreateInfos.size());
-	createInfo.pQueueCreateInfos = queueCreateInfos.data();
-
-	createInfo.pEnabledFeatures = &deviceFeatures;
-
-	createInfo.enabledExtensionCount = static_cast<uint32_t>(deviceExtensions.size());
-	createInfo.ppEnabledExtensionNames = deviceExtensions.data();
-
-	createInfo.enabledLayerCount = 0;
-
-	if (vkCreateDevice(physicalDevice, &createInfo, nullptr, &device) != VK_SUCCESS) {
+	if (physicalDevice.createDevice(&createInfo, nullptr, &device) != vk::Result::eSuccess) {
 		throw std::runtime_error("failed to create logical device!");
 	}
 }
 
-VkPhysicalDevice ScrapEngine::VulkanDevice::getPhysicalDevice() const
+vk::PhysicalDevice* ScrapEngine::VulkanDevice::getPhysicalDevice()
 {
-	return physicalDevice;
+	return &physicalDevice;
 }
 
-VkDevice ScrapEngine::VulkanDevice::getLogicalDevice() const
+vk::Device* ScrapEngine::VulkanDevice::getLogicalDevice()
 {
-	return device;
+	return &device;
 }
 
 ScrapEngine::GraphicsQueue::QueueFamilyIndices ScrapEngine::VulkanDevice::getCachedQueueFamilyIndices() const
@@ -96,40 +93,36 @@ ScrapEngine::GraphicsQueue::QueueFamilyIndices ScrapEngine::VulkanDevice::getCac
 	return cached_indices;
 }
 
-bool ScrapEngine::VulkanDevice::isDeviceSuitable(VkPhysicalDevice device, VkSurfaceKHR surface) {
-	VkPhysicalDeviceProperties deviceProperties;
-	VkPhysicalDeviceFeatures deviceFeatures;
-	vkGetPhysicalDeviceProperties(device, &deviceProperties);
-	vkGetPhysicalDeviceFeatures(device, &deviceFeatures);
+bool ScrapEngine::VulkanDevice::isDeviceSuitable(vk::PhysicalDevice* physical_device_input, vk::SurfaceKHR* surface) {
+	vk::PhysicalDeviceProperties deviceProperties = physical_device_input->getProperties();
+	vk::PhysicalDeviceFeatures deviceFeatures = physical_device_input->getFeatures();
 
 	std::string gpu_name(deviceProperties.deviceName);
 	DebugLog::printToConsoleLog("GPU Selected:" + gpu_name);
 
-	GraphicsQueue::QueueFamilyIndices cached_indices = findQueueFamilies(device, surface);
+	GraphicsQueue::QueueFamilyIndices cached_indices = findQueueFamilies(physical_device_input, surface);
 
-	VkPhysicalDeviceFeatures supportedFeatures;
-	vkGetPhysicalDeviceFeatures(device, &supportedFeatures);
+	vk::PhysicalDeviceFeatures supportedFeatures = physical_device_input->getFeatures();
 
-
-	bool extensionsSupported = checkDeviceExtensionSupport(device);
+	bool extensionsSupported = checkDeviceExtensionSupport(physical_device_input);
 
 	bool swapChainAdequate = false;
 	if (extensionsSupported) {
-		ScrapEngine::VulkanSwapChain::SwapChainSupportDetails swapChainSupport = querySwapChainSupport(device);
+		ScrapEngine::VulkanSwapChain::SwapChainSupportDetails swapChainSupport = querySwapChainSupport(physical_device_input);
 		swapChainAdequate = !swapChainSupport.formats.empty() && !swapChainSupport.presentModes.empty();
 	}
 
-	return deviceProperties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU && deviceFeatures.geometryShader
+	return deviceProperties.deviceType == vk::PhysicalDeviceType::eDiscreteGpu && deviceFeatures.geometryShader
 		&& cached_indices.isComplete() && extensionsSupported && swapChainAdequate && supportedFeatures.samplerAnisotropy;
 }
 
-bool ScrapEngine::VulkanDevice::checkDeviceExtensionSupport(VkPhysicalDevice device)
+bool ScrapEngine::VulkanDevice::checkDeviceExtensionSupport(vk::PhysicalDevice* device)
 {
 	uint32_t extensionCount;
-	vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, nullptr);
+	device->enumerateDeviceExtensionProperties(nullptr, &extensionCount, nullptr);
 
-	std::vector<VkExtensionProperties> availableExtensions(extensionCount);
-	vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, availableExtensions.data());
+	std::vector<vk::ExtensionProperties> availableExtensions(extensionCount);
+	device->enumerateDeviceExtensionProperties(nullptr, &extensionCount, availableExtensions.data());
 
 	std::set<std::string> requiredExtensions(deviceExtensions.begin(), deviceExtensions.end());
 
@@ -140,70 +133,79 @@ bool ScrapEngine::VulkanDevice::checkDeviceExtensionSupport(VkPhysicalDevice dev
 	return requiredExtensions.empty();
 }
 
-ScrapEngine::VulkanSwapChain::SwapChainSupportDetails ScrapEngine::VulkanDevice::querySwapChainSupport(VkPhysicalDevice device)
+ScrapEngine::VulkanSwapChain::SwapChainSupportDetails ScrapEngine::VulkanDevice::querySwapChainSupport(vk::PhysicalDevice* physical_device_input)
 {
 	ScrapEngine::VulkanSwapChain::SwapChainSupportDetails details;
 
-	vkGetPhysicalDeviceSurfaceCapabilitiesKHR(device, VulkanSurfaceRef, &details.capabilities);
+	physical_device_input->getSurfaceCapabilitiesKHR(*VulkanSurfaceRef, &details.capabilities);
 
 	uint32_t formatCount;
-	vkGetPhysicalDeviceSurfaceFormatsKHR(device, VulkanSurfaceRef, &formatCount, nullptr);
+	physical_device_input->getSurfaceFormatsKHR(*VulkanSurfaceRef, &formatCount, nullptr);
 
 	if (formatCount != 0) {
 		details.formats.resize(formatCount);
-		vkGetPhysicalDeviceSurfaceFormatsKHR(device, VulkanSurfaceRef, &formatCount, details.formats.data());
+		physical_device_input->getSurfaceFormatsKHR(*VulkanSurfaceRef, &formatCount, details.formats.data());
 	}
 
 	uint32_t presentModeCount;
-	vkGetPhysicalDeviceSurfacePresentModesKHR(device, VulkanSurfaceRef, &presentModeCount, nullptr);
+	physical_device_input->getSurfacePresentModesKHR(*VulkanSurfaceRef, &presentModeCount, nullptr);
 
 	if (presentModeCount != 0) {
 		details.presentModes.resize(presentModeCount);
-		vkGetPhysicalDeviceSurfacePresentModesKHR(device, VulkanSurfaceRef, &presentModeCount, details.presentModes.data());
+		physical_device_input->getSurfacePresentModesKHR(*VulkanSurfaceRef, &presentModeCount, details.presentModes.data());
 	}
 
 	return details;
 }
 
-VkSampleCountFlagBits ScrapEngine::VulkanDevice::getMaxUsableSampleCount()
+vk::SampleCountFlagBits ScrapEngine::VulkanDevice::getMaxUsableSampleCount()
 {
-	VkPhysicalDeviceProperties physicalDeviceProperties;
-	vkGetPhysicalDeviceProperties(physicalDevice, &physicalDeviceProperties);
+	vk::PhysicalDeviceProperties physicalDeviceProperties = physicalDevice.getProperties();
 
-	VkSampleCountFlags counts = std::min(physicalDeviceProperties.limits.framebufferColorSampleCounts, physicalDeviceProperties.limits.framebufferDepthSampleCounts);
-	if (counts & VK_SAMPLE_COUNT_64_BIT) { return VK_SAMPLE_COUNT_64_BIT; }
-	if (counts & VK_SAMPLE_COUNT_32_BIT) { return VK_SAMPLE_COUNT_32_BIT; }
-	if (counts & VK_SAMPLE_COUNT_16_BIT) { return VK_SAMPLE_COUNT_16_BIT; }
-	if (counts & VK_SAMPLE_COUNT_8_BIT) { return VK_SAMPLE_COUNT_8_BIT; }
-	if (counts & VK_SAMPLE_COUNT_4_BIT) { return VK_SAMPLE_COUNT_4_BIT; }
-	if (counts & VK_SAMPLE_COUNT_2_BIT) { return VK_SAMPLE_COUNT_2_BIT; }
+	vk::SampleCountFlags counts;
+	if (
+		static_cast<uint32_t>(physicalDeviceProperties.limits.framebufferColorSampleCounts) <
+		static_cast<uint32_t>(physicalDeviceProperties.limits.framebufferDepthSampleCounts)
+	) {
+		counts = physicalDeviceProperties.limits.framebufferColorSampleCounts;
+	}
+	else {
+		counts = physicalDeviceProperties.limits.framebufferDepthSampleCounts;
+	}
 
-	return VK_SAMPLE_COUNT_1_BIT;
+	if (counts & vk::SampleCountFlagBits::e64) { return vk::SampleCountFlagBits::e64; }
+	if (counts & vk::SampleCountFlagBits::e32) { return vk::SampleCountFlagBits::e32; }
+	if (counts & vk::SampleCountFlagBits::e16) { return vk::SampleCountFlagBits::e16; }
+	if (counts & vk::SampleCountFlagBits::e8) { return vk::SampleCountFlagBits::e8; }
+	if (counts & vk::SampleCountFlagBits::e4) { return vk::SampleCountFlagBits::e4; }
+	if (counts & vk::SampleCountFlagBits::e2) { return vk::SampleCountFlagBits::e2; }
+
+	return vk::SampleCountFlagBits::e1;
 }
 
-VkSampleCountFlagBits ScrapEngine::VulkanDevice::getMsaaSamples() const
+vk::SampleCountFlagBits ScrapEngine::VulkanDevice::getMsaaSamples() const
 {
 	return msaaSamples;
 }
 
-ScrapEngine::GraphicsQueue::QueueFamilyIndices ScrapEngine::VulkanDevice::findQueueFamilies(VkPhysicalDevice device, VkSurfaceKHR surface)
+ScrapEngine::GraphicsQueue::QueueFamilyIndices ScrapEngine::VulkanDevice::findQueueFamilies(vk::PhysicalDevice* device, vk::SurfaceKHR* surface)
 {
 	GraphicsQueue::QueueFamilyIndices indices;
 
 	uint32_t queueFamilyCount = 0;
-	vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, nullptr);
+	device->getQueueFamilyProperties(&queueFamilyCount, nullptr);
 
-	std::vector<VkQueueFamilyProperties> queueFamilies(queueFamilyCount);
-	vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, queueFamilies.data());
+	std::vector<vk::QueueFamilyProperties> queueFamilies(queueFamilyCount);
+	device->getQueueFamilyProperties(&queueFamilyCount, queueFamilies.data());
 
 	int i = 0;
 	for (const auto& queueFamily : queueFamilies) {
-		if (queueFamily.queueCount > 0 && queueFamily.queueFlags & VK_QUEUE_GRAPHICS_BIT) {
+		if (queueFamily.queueCount > 0 && queueFamily.queueFlags & vk::QueueFlagBits::eGraphics) {
 			indices.graphicsFamily = i;
 		}
 
 		VkBool32 presentSupport = false;
-		vkGetPhysicalDeviceSurfaceSupportKHR(device, i, surface, &presentSupport);
+		device->getSurfaceSupportKHR(i, *surface, &presentSupport);
 
 		if (queueFamily.queueCount > 0 && presentSupport) {
 			indices.presentFamily = i;

@@ -4,28 +4,27 @@
 #include "../BaseBuffer.h"
 #include "../Staging/StagingBuffer.h"
 
-ScrapEngine::VertexBuffer::VertexBuffer(VkDevice input_deviceRef, VkPhysicalDevice PhysicalDevice, const std::vector<ScrapEngine::Vertex>* vertices, VkCommandPool commandPool, VkQueue graphicsQueue)
+ScrapEngine::VertexBuffer::VertexBuffer(vk::Device* input_deviceRef, vk::PhysicalDevice* PhysicalDevice, const std::vector<ScrapEngine::Vertex>* vertices, vk::CommandPool* commandPool, vk::Queue* graphicsQueue)
 	: deviceRef(input_deviceRef)
 {
-	VkDeviceSize bufferSize = sizeof((*vertices)[0]) * vertices->size();
+	vk::DeviceSize bufferSize(sizeof((*vertices)[0]) * vertices->size());
 
+	StagingBuffer* Staging = new StagingBuffer(deviceRef, PhysicalDevice, &bufferSize, vertices);
 
-	StagingBuffer* Staging = new StagingBuffer(deviceRef, PhysicalDevice, bufferSize, vertices);
+	BaseBuffer::createBuffer(deviceRef, PhysicalDevice, &bufferSize, vk::BufferUsageFlagBits::eTransferDst | vk::BufferUsageFlagBits::eVertexBuffer, vk::MemoryPropertyFlagBits::eDeviceLocal, vertexBuffer, vertexBufferMemory);
 
-	BaseBuffer::createBuffer(deviceRef, PhysicalDevice, bufferSize, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, vertexBuffer, vertexBufferMemory);
-
-	BaseBuffer::copyBuffer(deviceRef, commandPool, graphicsQueue, Staging->getStagingBuffer(), vertexBuffer, bufferSize);
+	BaseBuffer::copyBuffer(deviceRef, commandPool, graphicsQueue, Staging->getStagingBuffer(), vertexBuffer, &bufferSize);
 
 	delete Staging;
 }
 
 ScrapEngine::VertexBuffer::~VertexBuffer()
 {
-	vkDestroyBuffer(deviceRef, vertexBuffer, nullptr);
-	vkFreeMemory(deviceRef, vertexBufferMemory, nullptr);
+	deviceRef->destroyBuffer(vertexBuffer);
+	deviceRef->freeMemory(vertexBufferMemory);
 }
 
-VkBuffer ScrapEngine::VertexBuffer::getVertexBuffer() const
+vk::Buffer* ScrapEngine::VertexBuffer::getVertexBuffer()
 {
-	return vertexBuffer;
+	return &vertexBuffer;
 }

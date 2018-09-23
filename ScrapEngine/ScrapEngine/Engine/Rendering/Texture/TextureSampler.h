@@ -1,20 +1,20 @@
 #pragma once
 
-#include <vulkan/vulkan.h>
+#include <vulkan/vulkan.hpp>
 
 namespace ScrapEngine {
 
 	class TextureSampler
 	{
 	private:
-		VkSampler textureSampler;
+		vk::Sampler textureSampler;
 
-		VkDevice deviceRef;
+		vk::Device* deviceRef;
 	public:
-		TextureSampler(VkDevice input_deviceRef, uint32_t mipLevels);
+		TextureSampler(vk::Device* input_deviceRef, uint32_t mipLevels);
 		~TextureSampler();
 
-		VkSampler getTextureSampler() const;
+		vk::Sampler* getTextureSampler();
 	};
 
 }

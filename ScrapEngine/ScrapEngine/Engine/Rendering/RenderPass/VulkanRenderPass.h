@@ -1,20 +1,20 @@
 #pragma once
 
-#include <vulkan/vulkan.h>
+#include <vulkan/vulkan.hpp>
 
 namespace ScrapEngine {
 
 	class VulkanRenderPass
 	{
 	private:
-		VkRenderPass renderPass;
+		vk::RenderPass renderPass;
 
-		VkDevice deviceRef;
+		vk::Device* deviceRef;
 	public:
-		VulkanRenderPass(VkDevice input_deviceRef, VkFormat swapChainImageFormat, VkPhysicalDevice PhysicalDeviceRef, VkSampleCountFlagBits msaaSamples);
+		VulkanRenderPass(vk::Device* input_deviceRef, vk::Format swapChainImageFormat, vk::PhysicalDevice* PhysicalDeviceRef, vk::SampleCountFlagBits msaaSamples);
 		~VulkanRenderPass();
 
-		VkRenderPass getRenderPass() const;
+		vk::RenderPass* getRenderPass();
 	};
 
 }

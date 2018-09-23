@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vulkan/vulkan.h>
+#include <vulkan/vulkan.hpp>
 #include "../SwapChain/VulkanSwapChain.h"
 
 namespace ScrapEngine{
@@ -8,17 +8,17 @@ namespace ScrapEngine{
 	class VulkanColorResources
 	{
 	private:
-		VkImage colorImage;
-		VkDeviceMemory colorImageMemory;
-		VkImageView colorImageView;
+		vk::Image colorImage;
+		vk::DeviceMemory colorImageMemory;
+		vk::ImageView colorImageView;
 
-		VkDevice deviceRef;
+		vk::Device* deviceRef;
 	public:
-		VulkanColorResources(VkDevice input_deviceRef, VkPhysicalDevice input_PhysicalDeviceRef, VkCommandPool CommandPool, VkQueue graphicsQueue, VkSampleCountFlagBits msaaSamples, ScrapEngine::VulkanSwapChain* swapChainRef);
+		VulkanColorResources(vk::Device* input_deviceRef, vk::PhysicalDevice* input_PhysicalDeviceRef, vk::CommandPool* CommandPool, vk::Queue* graphicsQueue, vk::SampleCountFlagBits msaaSamples, ScrapEngine::VulkanSwapChain* swapChainRef);
 		~VulkanColorResources();
 
-		VkImage getColorImage() const;
-		VkImageView getColorImageView() const;
+		vk::Image* getColorImage();
+		vk::ImageView* getColorImageView();
 	};
 
 }

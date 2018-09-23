@@ -11,15 +11,15 @@ namespace ScrapEngine {
 	class VulkanSurface
 	{
 	private:
-		VkSurfaceKHR surface; //represents an abstract type of surface to present rendered images to.
-		VkInstance instanceRef; //Reference to vulkan instance
+		vk::SurfaceKHR surface; //represents an abstract type of surface to present rendered images to.
+		vk::Instance* instanceRef; //Reference to vulkan instance
 	public:
 		VulkanSurface(ScrapEngine::VukanInstance* input_instanceRef, ScrapEngine::GameWindow* windowRef);
 		~VulkanSurface();
 
 		void createSurface(ScrapEngine::GameWindow* windowRef);
 
-		VkSurfaceKHR getSurface() const;
+		vk::SurfaceKHR* getSurface();
 	};
 
 }

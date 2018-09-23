@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vulkan/vulkan.h>
+#include <vulkan/vulkan.hpp>
 #include <vector>
 #include "../../Base/Vertex.h"
 
@@ -9,15 +9,15 @@ namespace ScrapEngine {
 	class VertexBuffer
 	{
 	private:
-		VkBuffer vertexBuffer;
-		VkDeviceMemory vertexBufferMemory;
+		vk::Buffer vertexBuffer;
+		vk::DeviceMemory vertexBufferMemory;
 
-		VkDevice deviceRef;
+		vk::Device* deviceRef;
 	public:
-		VertexBuffer(VkDevice input_deviceRef, VkPhysicalDevice PhysicalDevice, const std::vector<ScrapEngine::Vertex>* vertices, VkCommandPool commandPool, VkQueue graphicsQueue);
+		VertexBuffer(vk::Device* input_deviceRef, vk::PhysicalDevice* PhysicalDevice, const std::vector<ScrapEngine::Vertex>* vertices, vk::CommandPool* commandPool, vk::Queue* graphicsQueue);
 		~VertexBuffer();
 
-		VkBuffer getVertexBuffer() const;
+		vk::Buffer* getVertexBuffer();
 	};
 
 }

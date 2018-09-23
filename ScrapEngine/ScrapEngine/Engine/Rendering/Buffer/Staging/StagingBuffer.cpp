@@ -2,52 +2,40 @@
 #include "../BaseBuffer.h"
 #include "../../../Debug/DebugLog.h"
 
-ScrapEngine::StagingBuffer::StagingBuffer(VkDevice input_deviceRef, VkPhysicalDevice PhysicalDevice, VkDeviceSize imageSize, stbi_uc* pixels)
+ScrapEngine::StagingBuffer::StagingBuffer(vk::Device* input_deviceRef, vk::PhysicalDevice* PhysicalDevice, vk::DeviceSize* imageSize, stbi_uc* pixels)
 	: deviceRef(input_deviceRef)
 {
-	BaseBuffer::createBuffer(deviceRef, PhysicalDevice, imageSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, stagingBuffer, stagingBufferMemory);
+	BaseBuffer::createBuffer(deviceRef, PhysicalDevice, imageSize, vk::BufferUsageFlagBits::eTransferSrc, vk::MemoryPropertyFlagBits::eHostVisible | vk::MemoryPropertyFlagBits::eHostCoherent, stagingBuffer, stagingBufferMemory);
 	void* data;
-	vkMapMemory(deviceRef, stagingBufferMemory, 0, imageSize, 0, &data);
-	memcpy(data, pixels, static_cast<size_t>(imageSize));
-	vkUnmapMemory(deviceRef, stagingBufferMemory);
+	deviceRef->mapMemory(stagingBufferMemory, 0, *imageSize, vk::MemoryMapFlags(), &data);
+	//vkMapMemory(deviceRef, stagingBufferMemory, 0, imageSize, 0, &data);
+	memcpy(data, pixels, static_cast<size_t>(*imageSize));
+	deviceRef->unmapMemory(stagingBufferMemory);
 }
 
 ScrapEngine::StagingBuffer::~StagingBuffer()
 {
-	vkDestroyBuffer(deviceRef, stagingBuffer, nullptr);
-	vkFreeMemory(deviceRef, stagingBufferMemory, nullptr);
+	deviceRef->destroyBuffer(stagingBuffer);
+	deviceRef->freeMemory(stagingBufferMemory);
 }
 
-void ScrapEngine::StagingBuffer::copyBufferToImage(VkDevice input_deviceRef, VkBuffer buffer, VkImage image, uint32_t width, uint32_t height, VkCommandPool commandPool, VkQueue graphicsQueue)
+void ScrapEngine::StagingBuffer::copyBufferToImage(vk::Device* input_deviceRef, vk::Buffer* buffer, vk::Image* image, uint32_t width, uint32_t height, vk::CommandPool* commandPool, vk::Queue* graphicsQueue)
 {
-	VkCommandBuffer commandBuffer = BaseBuffer::beginSingleTimeCommands(input_deviceRef, commandPool);
+	vk::CommandBuffer* commandBuffer = BaseBuffer::beginSingleTimeCommands(input_deviceRef, commandPool);
 
-	VkBufferImageCopy region = {};
-	region.bufferOffset = 0;
-	region.bufferRowLength = 0;
-	region.bufferImageHeight = 0;
-	region.imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-	region.imageSubresource.mipLevel = 0;
-	region.imageSubresource.baseArrayLayer = 0;
-	region.imageSubresource.layerCount = 1;
-	region.imageOffset = { 0, 0, 0 };
-	region.imageExtent = {
-		width,
-		height,
-		1
-	};
+	vk::BufferImageCopy region(0, 0, 0, vk::ImageSubresourceLayers(vk::ImageAspectFlagBits::eColor, 0, 0, 1), vk::Offset3D(), vk::Extent3D(width, height, 1));
 
-	vkCmdCopyBufferToImage(commandBuffer, buffer, image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &region);
+	commandBuffer->copyBufferToImage(*buffer, *image, vk::ImageLayout::eTransferDstOptimal, 1, &region);
 
 	BaseBuffer::endSingleTimeCommands(input_deviceRef, commandBuffer, commandPool, graphicsQueue);
 }
 
-VkBuffer ScrapEngine::StagingBuffer::getStagingBuffer() const
+vk::Buffer* ScrapEngine::StagingBuffer::getStagingBuffer()
 {
-	return stagingBuffer;
+	return &stagingBuffer;
 }
 
-VkDeviceMemory ScrapEngine::StagingBuffer::getStagingBufferMemory() const
+vk::DeviceMemory* ScrapEngine::StagingBuffer::getStagingBufferMemory()
 {
-	return stagingBufferMemory;
+	return &stagingBufferMemory;
 }

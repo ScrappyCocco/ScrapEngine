@@ -1,13 +1,13 @@
 #pragma once
 
-#include <vulkan/vulkan.h>
+#include <vulkan/vulkan.hpp>
 
 namespace ScrapEngine {
 
 	class GraphicsQueue
 	{
 	private:
-		VkQueue graphicsQueue;
+		vk::Queue graphicsQueue;
 	public:
 		struct QueueFamilyIndices {
 			int graphicsFamily = -1;
@@ -18,10 +18,10 @@ namespace ScrapEngine {
 			}
 		};
 
-		GraphicsQueue(VkDevice device, QueueFamilyIndices indices);
+		GraphicsQueue(vk::Device* device, QueueFamilyIndices indices);
 		~GraphicsQueue();
 
-		VkQueue getgraphicsQueue() const;
+		vk::Queue* getgraphicsQueue();
 	};
 
 }

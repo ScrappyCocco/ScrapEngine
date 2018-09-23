@@ -34,6 +34,7 @@
     <ClCompile Include="Engine\Rendering\Descriptor\VulkanDescriptorSet.cpp" />
     <ClCompile Include="Engine\Rendering\Device\VulkanDevice.cpp" />
     <ClCompile Include="Engine\Rendering\Instance\VukanInstance.cpp" />
+    <ClCompile Include="Engine\Rendering\Manager\RenderManager.cpp" />
     <ClCompile Include="Engine\Rendering\Model\VulkanModel.cpp" />
     <ClCompile Include="Engine\Rendering\Pipeline\VulkanGraphicsPipeline.cpp" />
     <ClCompile Include="Engine\Rendering\Queue\GraphicsQueue.cpp" />
@@ -51,8 +52,10 @@
     <ClCompile Include="Engine\Rendering\Window\VulkanSurface.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\external\stb\stb_image.h" />
     <ClInclude Include="Engine\Debug\DebugLog.h" />
     <ClInclude Include="Engine\Manager\EngineManager.h" />
+    <ClInclude Include="Engine\Manager\UsefulTypes.h" />
     <ClInclude Include="Engine\Rendering\Base\SimpleTestData.h" />
     <ClInclude Include="Engine\Rendering\Base\Vertex.h" />
     <ClInclude Include="Engine\Rendering\Buffer\BaseBuffer.h" />
@@ -68,6 +71,7 @@
     <ClInclude Include="Engine\Rendering\Descriptor\VulkanDescriptorSet.h" />
     <ClInclude Include="Engine\Rendering\Device\VulkanDevice.h" />
     <ClInclude Include="Engine\Rendering\Instance\VukanInstance.h" />
+    <ClInclude Include="Engine\Rendering\Manager\RenderManager.h" />
     <ClInclude Include="Engine\Rendering\Memory\MemoryManager.h" />
     <ClInclude Include="Engine\Rendering\Model\VulkanModel.h" />
     <ClInclude Include="Engine\Rendering\Pipeline\VulkanGraphicsPipeline.h" />
@@ -143,7 +147,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)..\external\VulkanSDK\Include;$(SolutionDir)..\external\glm;$(SolutionDir)..\external\stb;$(SolutionDir)..\external\gli;$(SolutionDir)..\external\glfw\include;$(SolutionDir)..\external\assimp\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\external\VulkanSDK\Vulkan-Headers\include;$(SolutionDir)..\external\glm;$(SolutionDir)..\external\stb;$(SolutionDir)..\external\gli;$(SolutionDir)..\external\glfw\include;$(SolutionDir)..\external\assimp\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -151,7 +155,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)..\external\VulkanSDK\Include;$(SolutionDir)..\external\glm;$(SolutionDir)..\external\stb;$(SolutionDir)..\external\gli;$(SolutionDir)..\external\glfw\include;$(SolutionDir)..\external\assimp\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\external\VulkanSDK\Vulkan-Headers\include;$(SolutionDir)..\external\glm;$(SolutionDir)..\external\stb;$(SolutionDir)..\external\gli;$(SolutionDir)..\external\glfw\include;$(SolutionDir)..\external\assimp\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

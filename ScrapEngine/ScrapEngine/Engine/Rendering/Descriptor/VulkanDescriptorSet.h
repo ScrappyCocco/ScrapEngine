@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vulkan/vulkan.h>
+#include <vulkan/vulkan.hpp>
 #include <vector>
 
 namespace ScrapEngine {
@@ -8,20 +8,20 @@ namespace ScrapEngine {
 	class VulkanDescriptorSet
 	{
 	private:
-		VkDescriptorSetLayout descriptorSetLayout;
-		VkPipelineLayout pipelineLayout;
-		std::vector<VkDescriptorSet> descriptorSets;
+		vk::DescriptorSetLayout descriptorSetLayout;
+		vk::PipelineLayout pipelineLayout;
+		std::vector<vk::DescriptorSet> descriptorSets;
 
-		VkDevice deviceRef;
+		vk::Device* deviceRef;
 	public:
-		VulkanDescriptorSet(VkDevice input_deviceRef);
+		VulkanDescriptorSet(vk::Device* input_deviceRef);
 		~VulkanDescriptorSet();
 
-		void createDescriptorSets(VkDescriptorPool descriptorPool, const std::vector<VkImage>* swapChainImages, const std::vector<VkBuffer>* uniformBuffers, VkImageView textureImageView, VkSampler textureSampler);
+		void createDescriptorSets(vk::DescriptorPool* descriptorPool, const std::vector<vk::Image>* swapChainImages, const std::vector<vk::Buffer>* uniformBuffers, vk::ImageView* textureImageView, vk::Sampler* textureSampler);
 
-		VkDescriptorSetLayout getDescriptorSetLayout() const;
-		VkPipelineLayout getPipelineLayout() const;
-		const std::vector<VkDescriptorSet>* getDescriptorSets();
+		vk::DescriptorSetLayout* getDescriptorSetLayout();
+		vk::PipelineLayout* getPipelineLayout();
+		const std::vector<vk::DescriptorSet>* getDescriptorSets();
 	};
 
 }

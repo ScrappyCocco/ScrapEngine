@@ -1,21 +1,21 @@
 #pragma once
 
-#include <vulkan/vulkan.h>
+#include <vulkan/vulkan.hpp>
 
 namespace ScrapEngine {
 
 	class TextureImageView
 	{
 	private:
-		VkImageView textureImageView;
+		vk::ImageView textureImageView;
 
-		VkDevice deviceRef;
+		vk::Device* deviceRef;
 	public:
-		TextureImageView(VkDevice input_deviceRef, VkImage textureImage, uint32_t mipLevelsData);
+		TextureImageView(vk::Device* input_deviceRef, vk::Image* textureImage, uint32_t mipLevelsData);
 		~TextureImageView();
 
-		static VkImageView createImageView(VkDevice input_deviceRef, VkImage image, VkFormat format, VkImageAspectFlags aspectFlags, uint32_t mipLevelsData);
-		VkImageView getTextureImageView() const;
+		static vk::ImageView createImageView(vk::Device* input_deviceRef, vk::Image* image, vk::Format format, vk::ImageAspectFlags aspectFlags, uint32_t mipLevelsData);
+		vk::ImageView* getTextureImageView();
 	};
 
 }

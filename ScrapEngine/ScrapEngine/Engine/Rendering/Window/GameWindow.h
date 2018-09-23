@@ -6,8 +6,6 @@
 #include <string>
 
 namespace ScrapEngine {
-
-
 	class GameWindow
 	{
 	private:
@@ -24,8 +22,9 @@ namespace ScrapEngine {
 		void initializeWindow();
 
 		void setWindowSize(int input_WIDTH, int input_HEIGHT);
-		void setWindowTitle(std::string title);
-		void setWindowIcon(GLFWimage images[2]);
+		void setWindowTitle(const std::string& title);
+		GLFWimage loadIcon(const std::string& path_to_file) const;
+		void setWindowIcon(const int& number_of_images, GLFWimage* images) const;
 
 		GLFWwindow* getWindowRef() const;
 		bool checkWindowShouldClose() const;

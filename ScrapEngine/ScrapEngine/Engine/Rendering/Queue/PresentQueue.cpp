@@ -1,8 +1,8 @@
 #include "PresentQueue.h"
 
-ScrapEngine::PresentQueue::PresentQueue(VkDevice device, GraphicsQueue::QueueFamilyIndices indices)
+ScrapEngine::PresentQueue::PresentQueue(vk::Device* device, GraphicsQueue::QueueFamilyIndices indices)
 {
-	vkGetDeviceQueue(device, indices.presentFamily, 0, &presentationQueue);
+	device->getQueue(indices.presentFamily, 0, &presentationQueue);
 }
 
 ScrapEngine::PresentQueue::~PresentQueue()
@@ -10,7 +10,7 @@ ScrapEngine::PresentQueue::~PresentQueue()
 
 }
 
-VkQueue ScrapEngine::PresentQueue::getPresentQueue() const
+vk::Queue* ScrapEngine::PresentQueue::getPresentQueue()
 {
-	return presentationQueue;
+	return &presentationQueue;
 }

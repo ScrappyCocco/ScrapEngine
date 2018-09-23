@@ -15,32 +15,20 @@ ScrapEngine::VukanInstance::~VukanInstance()
 
 void ScrapEngine::VukanInstance::createVulkanInstance(std::string app_name, int app_version, std::string engine_name, int engine_version)
 {
-	VkApplicationInfo appInfo = {};
-	appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
-	appInfo.pApplicationName = app_name.c_str();
-	appInfo.applicationVersion = VK_MAKE_VERSION(app_version, 0, 0);
-	appInfo.pEngineName = engine_name.c_str();
-	appInfo.engineVersion = VK_MAKE_VERSION(engine_version, 0, 0);
-	appInfo.apiVersion = VK_API_VERSION_1_0;
-
-	VkInstanceCreateInfo createInfo = {};
-	createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
-	createInfo.pApplicationInfo = &appInfo;
+	vk::ApplicationInfo appInfo(app_name.c_str(), app_version, engine_name.c_str(), engine_version, VK_API_VERSION_1_0);
 
 	auto extensions = getRequiredExtensions();
-	createInfo.enabledExtensionCount = static_cast<uint32_t>(extensions.size());
-	createInfo.ppEnabledExtensionNames = extensions.data();
 
-	createInfo.enabledLayerCount = 0;
+	vk::InstanceCreateInfo createInfo(vk::InstanceCreateFlags(), &appInfo, 0, nullptr, static_cast<uint32_t>(extensions.size()), extensions.data());
 
-	if (vkCreateInstance(&createInfo, nullptr, &instance) != VK_SUCCESS) {
+	if (vk::createInstance(&createInfo, nullptr, &instance) != vk::Result::eSuccess) {
 		throw std::runtime_error("failed to create instance!");
 	}
 }
 
-VkInstance ScrapEngine::VukanInstance::getVulkanInstance() const
+vk::Instance* ScrapEngine::VukanInstance::getVulkanInstance()
 {
-	return instance;
+	return &instance;
 }
 
 std::vector<const char*> ScrapEngine::VukanInstance::getRequiredExtensions()

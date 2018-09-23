@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vulkan/vulkan.h>
+#include <vulkan/vulkan.hpp>
 #include <vector>
 
 namespace ScrapEngine {
@@ -8,22 +8,22 @@ namespace ScrapEngine {
 	class VulkanDepthResources
 	{
 	private:
-		VkImage depthImage;
-		VkDeviceMemory depthImageMemory;
-		VkImageView depthImageView;
+		vk::Image depthImage;
+		vk::DeviceMemory depthImageMemory;
+		vk::ImageView depthImageView;
 
-		VkDevice deviceRef;
+		vk::Device* deviceRef;
 	public:
-		VulkanDepthResources(VkDevice input_deviceRef, VkPhysicalDevice PhysicalDeviceRef, VkCommandPool CommandPool, VkQueue graphicsQueue, const VkExtent2D* swapChainExtent, VkSampleCountFlagBits msaaSamples);
+		VulkanDepthResources(vk::Device* input_deviceRef, vk::PhysicalDevice* PhysicalDeviceRef, vk::CommandPool* CommandPool, vk::Queue* graphicsQueue, const vk::Extent2D* swapChainExtent, vk::SampleCountFlagBits msaaSamples);
 		~VulkanDepthResources();
 
-		static VkFormat findSupportedFormat(VkPhysicalDevice PhysicalDevice, const std::vector<VkFormat>& candidates, VkImageTiling tiling, VkFormatFeatureFlags features);
-		static VkFormat findDepthFormat(VkPhysicalDevice PhysicalDevice);
-		static bool hasStencilComponent(VkFormat format);
+		static vk::Format findSupportedFormat(vk::PhysicalDevice* PhysicalDevice, const std::vector<vk::Format>& candidates, vk::ImageTiling tiling, vk::FormatFeatureFlags features);
+		static vk::Format findDepthFormat(vk::PhysicalDevice* PhysicalDevice);
+		static bool hasStencilComponent(vk::Format format);
 
-		VkImage getDepthImage() const;
-		VkDeviceMemory getDepthImageMemory() const;
-		VkImageView getDepthImageView();
+		vk::Image* getDepthImage();
+		vk::DeviceMemory* getDepthImageMemory();
+		vk::ImageView* getDepthImageView();
 
 	};
 

@@ -1,4 +1,3 @@
-#define STB_IMAGE_IMPLEMENTATION
 #include "Engine/Manager/EngineManager.h"
 
 int main() {
@@ -6,7 +5,9 @@ int main() {
 	ScrapEngine::EngineManager* ScrapEngineManager = nullptr;
 	try {
 		//init engine
-		ScrapEngineManager = new ScrapEngine::EngineManager("ScrapEngine Simple Game", 0);
+		ScrapEngineManager = new ScrapEngine::EngineManager("ScrapEngine Simple Chess Game", 0);
+		const ScrapEngine::GameWindow* gameWindowRef = ScrapEngineManager->getRenderManager()->getGameWindow();
+		gameWindowRef->setWindowIcon(1, &gameWindowRef->loadIcon("../assets/game_icon/chess_game_icon_png.png"));
 		//More stuff
 
 		//Begin gameplay

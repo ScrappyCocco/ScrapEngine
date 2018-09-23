@@ -8,17 +8,18 @@ ScrapEngine::VulkanSurface::VulkanSurface(ScrapEngine::VukanInstance* input_inst
 
 ScrapEngine::VulkanSurface::~VulkanSurface()
 {
-	vkDestroySurfaceKHR(instanceRef, surface, nullptr);
+	instanceRef->destroySurfaceKHR(surface);
 }
 
 void ScrapEngine::VulkanSurface::createSurface(ScrapEngine::GameWindow* windowRef)
 {
-	if (glfwCreateWindowSurface(instanceRef, windowRef->getWindowRef(), nullptr, &surface) != VK_SUCCESS) {
+	surface = vk::SurfaceKHR();
+	if (glfwCreateWindowSurface(*instanceRef, windowRef->getWindowRef(), nullptr, reinterpret_cast<VkSurfaceKHR*>(&surface)) != VK_SUCCESS) {
 		throw std::runtime_error("failed to create window surface!");
 	}
 }
 
-VkSurfaceKHR ScrapEngine::VulkanSurface::getSurface() const
+vk::SurfaceKHR* ScrapEngine::VulkanSurface::getSurface()
 {
-	return surface;
+	return &surface;
 }

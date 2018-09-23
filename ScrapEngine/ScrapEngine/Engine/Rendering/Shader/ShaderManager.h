@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vulkan/vulkan.h>
+#include <vulkan/vulkan.hpp>
 #include <vector>
 #include <fstream>
 
@@ -9,12 +9,12 @@ namespace ScrapEngine {
 	class ShaderManager
 	{
 	private:
-		VkDevice deviceRef;
+		vk::Device* deviceRef;
 	public:
-		ShaderManager(VkDevice input_deviceRef);
+		ShaderManager(vk::Device* input_deviceRef);
 		~ShaderManager();
 
-		VkShaderModule createShaderModule(const std::vector<char>& code);
+		vk::ShaderModule createShaderModule(const std::vector<char>& code);
 
 		static std::vector<char> readFile(const std::string& filename);
 	};

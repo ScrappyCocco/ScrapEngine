@@ -3,75 +3,64 @@
 #include <stdexcept>
 #include "../Memory/MemoryManager.h"
 
-void ScrapEngine::BaseBuffer::createBuffer(VkDevice input_deviceRef, VkPhysicalDevice PhysicalDevice, VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, VkBuffer & buffer, VkDeviceMemory & bufferMemory)
+void ScrapEngine::BaseBuffer::createBuffer(vk::Device* input_deviceRef, vk::PhysicalDevice* PhysicalDevice, vk::DeviceSize* size, vk::BufferUsageFlags usage, vk::MemoryPropertyFlags properties, vk::Buffer & buffer, vk::DeviceMemory & bufferMemory)
 {
-	VkBufferCreateInfo bufferInfo = {};
-	bufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
-	bufferInfo.size = size;
-	bufferInfo.usage = usage;
-	bufferInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+	vk::BufferCreateInfo bufferInfo(
+		vk::BufferCreateFlags(), 
+		*size, 
+		usage, 
+		vk::SharingMode::eExclusive);
 
-	if (vkCreateBuffer(input_deviceRef, &bufferInfo, nullptr, &buffer) != VK_SUCCESS) {
-		throw std::runtime_error("failed to create buffer!");
+	if (input_deviceRef->createBuffer(&bufferInfo, nullptr, &buffer) != vk::Result::eSuccess) {
+		throw std::runtime_error("BaseBuffer: Failed to create buffer!");
 	}
 
-	VkMemoryRequirements memRequirements;
-	vkGetBufferMemoryRequirements(input_deviceRef, buffer, &memRequirements);
+	vk::MemoryRequirements memRequirements;
+	input_deviceRef->getBufferMemoryRequirements(buffer, &memRequirements);
 
-	VkMemoryAllocateInfo allocInfo = {};
-	allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
-	allocInfo.allocationSize = memRequirements.size;
-	allocInfo.memoryTypeIndex = findMemoryType(memRequirements.memoryTypeBits, properties, PhysicalDevice);
+	vk::MemoryAllocateInfo allocInfo(memRequirements.size, findMemoryType(memRequirements.memoryTypeBits, properties, PhysicalDevice));
 
-	if (vkAllocateMemory(input_deviceRef, &allocInfo, nullptr, &bufferMemory) != VK_SUCCESS) {
+	if (input_deviceRef->allocateMemory(&allocInfo, nullptr, &bufferMemory) != vk::Result::eSuccess) {
 		throw std::runtime_error("failed to allocate buffer memory!");
 	}
 
-	vkBindBufferMemory(input_deviceRef, buffer, bufferMemory, 0);
+	input_deviceRef->bindBufferMemory(buffer, bufferMemory, 0);
 }
 
-void ScrapEngine::BaseBuffer::copyBuffer(VkDevice input_deviceRef, VkCommandPool commandPool, VkQueue graphicsQueue, VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size)
+void ScrapEngine::BaseBuffer::copyBuffer(vk::Device* input_deviceRef, vk::CommandPool* commandPool, vk::Queue* graphicsQueue, vk::Buffer* srcBuffer, vk::Buffer& dstBuffer, vk::DeviceSize* size)
 {
-	VkCommandBuffer commandBuffer = beginSingleTimeCommands(input_deviceRef, commandPool);
+	vk::CommandBuffer* commandBuffer = beginSingleTimeCommands(input_deviceRef, commandPool);
 
-	VkBufferCopy copyRegion = {};
-	copyRegion.size = size;
-	vkCmdCopyBuffer(commandBuffer, srcBuffer, dstBuffer, 1, &copyRegion);
+	vk::BufferCopy copyRegion(0, 0, *size);
+
+	commandBuffer->copyBuffer(*srcBuffer, dstBuffer, 1, &copyRegion);
 
 	endSingleTimeCommands(input_deviceRef, commandBuffer, commandPool, graphicsQueue);
 }
 
-VkCommandBuffer ScrapEngine::BaseBuffer::beginSingleTimeCommands(VkDevice deviceRef, VkCommandPool commandPool)
+vk::CommandBuffer* ScrapEngine::BaseBuffer::beginSingleTimeCommands(vk::Device* deviceRef, vk::CommandPool* CommandPool)
 {
-	VkCommandBufferAllocateInfo allocInfo = {};
-	allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
-	allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-	allocInfo.commandPool = commandPool;
-	allocInfo.commandBufferCount = 1;
+	vk::CommandBufferAllocateInfo allocInfo(*CommandPool, vk::CommandBufferLevel::ePrimary, 1);
 
-	VkCommandBuffer commandBuffer;
-	vkAllocateCommandBuffers(deviceRef, &allocInfo, &commandBuffer);
+	vk::CommandBuffer* commandBuffer = new vk::CommandBuffer();
+	deviceRef->allocateCommandBuffers(&allocInfo, commandBuffer);
 
-	VkCommandBufferBeginInfo beginInfo = {};
-	beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
-	beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
+	vk::CommandBufferBeginInfo beginInfo(vk::CommandBufferUsageFlagBits::eOneTimeSubmit);
 
-	vkBeginCommandBuffer(commandBuffer, &beginInfo);
+	commandBuffer->begin(beginInfo);
 
 	return commandBuffer;
 }
 
-void ScrapEngine::BaseBuffer::endSingleTimeCommands(VkDevice deviceRef, VkCommandBuffer commandBuffer, VkCommandPool CommandPool, VkQueue graphicsQueue)
+void ScrapEngine::BaseBuffer::endSingleTimeCommands(vk::Device* deviceRef, vk::CommandBuffer* commandBuffer, vk::CommandPool* CommandPool, vk::Queue* graphicsQueue)
 {
-	vkEndCommandBuffer(commandBuffer);
+	commandBuffer->end();
 
-	VkSubmitInfo submitInfo = {};
-	submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
-	submitInfo.commandBufferCount = 1;
-	submitInfo.pCommandBuffers = &commandBuffer;
+	vk::SubmitInfo submitInfo(0, nullptr, nullptr, 1, commandBuffer);
+	graphicsQueue->submit(1, &submitInfo, nullptr);
 
-	vkQueueSubmit(graphicsQueue, 1, &submitInfo, VK_NULL_HANDLE);
-	vkQueueWaitIdle(graphicsQueue);
+	graphicsQueue->waitIdle();
 
-	vkFreeCommandBuffers(deviceRef, CommandPool, 1, &commandBuffer);
+	deviceRef->freeCommandBuffers(*CommandPool, 1, commandBuffer);
+	delete commandBuffer;
 }
