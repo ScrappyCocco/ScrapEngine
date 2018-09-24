@@ -67,22 +67,17 @@ void ScrapEngine::RenderManager::initializeVulkan(const ScrapEngine::game_base_i
 	VulkanRenderFrameBuffer = new VulkanFrameBuffer(VulkanRenderImageView, &deviceRef, &VulkanRenderSwapChain->getSwapChainExtent(), VulkanRenderDepth->getDepthImageView(), VulkanRenderingPass->getRenderPass(), VulkanRenderColor->getColorImageView());
 	DebugLog::printToConsoleLog("VulkanFrameBuffer created");
 	//Yes, I'd say that you'd have something like a pipeline per material type, and vertex buffers + uniform buffers + command buffers per model.
-	//VulkanTextureImage = new TextureImage("../assets/texture/statue.jpg", deviceRef, VulkanRenderDevice->getPhysicalDevice(), VulkanRenderCommandPool->getCommandPool(), VulkanGraphicsQueue->getgraphicsQueue());
-	//VulkanTextureImage = new TextureImage("../assets/textures/chalet.jpg", deviceRef, VulkanRenderDevice->getPhysicalDevice(), VulkanRenderCommandPool->getCommandPool(), VulkanGraphicsQueue->getgraphicsQueue());
 	VulkanTextureImage = new TextureImage("../assets/textures/SimpleGreenTexture.png", &deviceRef, VulkanRenderDevice->getPhysicalDevice(), VulkanRenderCommandPool->getCommandPool(), VulkanGraphicsQueue->getgraphicsQueue());
 	DebugLog::printToConsoleLog("TextureImage created");
 	VulkanTextureImageView = new TextureImageView(&deviceRef, VulkanTextureImage->getTextureImage(), VulkanTextureImage->getMipLevels());
 	DebugLog::printToConsoleLog("TextureImageView created");
 	VulkanTextureSampler = new TextureSampler(&deviceRef, VulkanTextureImage->getMipLevels());
 	DebugLog::printToConsoleLog("TextureSampler created");
-	//VulkanRenderModel = new VulkanModel("../assets/models/SimpleCube.obj", "../assets/textures/SimpleTexture.png");
-	VulkanRenderModel = new VulkanModel("../assets/models/chess/ChessPieces/Queen.fbx", "../assets/textures/SimpleGreenTexture.png");
+	VulkanRenderModel = new VulkanModel("../assets/models/chess/ChessPieces/Queen.fbx");
 	DebugLog::printToConsoleLog("VulkanModel loaded");
 	//POSSIBLE TO MOVE getPhysicalDevice IN MEMORY MANAGER AND CREATE A CLASS FOR IT?
-	//VulkanRenderVertexBuffer = new VertexBuffer(deviceRef, VulkanRenderDevice->getPhysicalDevice(), &vertices, VulkanRenderCommandPool->getCommandPool(), VulkanGraphicsQueue->getgraphicsQueue());
 	VulkanRenderVertexBuffer = new VertexBuffer(&deviceRef, VulkanRenderDevice->getPhysicalDevice(), VulkanRenderModel->getVertices(), VulkanRenderCommandPool->getCommandPool(), VulkanGraphicsQueue->getgraphicsQueue());
 	DebugLog::printToConsoleLog("VertexBuffer created");
-	//VulkanRenderIndexBuffer = new IndexBuffer(deviceRef, VulkanRenderDevice->getPhysicalDevice(), &indices, VulkanRenderCommandPool->getCommandPool(), VulkanGraphicsQueue->getgraphicsQueue());
 	VulkanRenderIndexBuffer = new IndexBuffer(&deviceRef, VulkanRenderDevice->getPhysicalDevice(), VulkanRenderModel->getIndices(), VulkanRenderCommandPool->getCommandPool(), VulkanGraphicsQueue->getgraphicsQueue());
 	DebugLog::printToConsoleLog("IndexBuffer created");
 	VulkanRenderUniformBuffer = new UniformBuffer(&deviceRef, VulkanRenderDevice->getPhysicalDevice(), VulkanRenderSwapChain->getSwapChainImagesVector());

@@ -23,7 +23,7 @@ void ScrapEngine::VulkanDevice::choosePhysicalDevice()
 	instanceRef->enumeratePhysicalDevices(&deviceCount, nullptr);
 
 	if (deviceCount == 0) {
-		throw std::runtime_error("failed to find GPUs with Vulkan support!");
+		throw std::runtime_error("VulkanDevice: Failed to find GPUs with Vulkan support!");
 	}
 
 	std::vector<vk::PhysicalDevice> devices(deviceCount);
@@ -38,7 +38,7 @@ void ScrapEngine::VulkanDevice::choosePhysicalDevice()
 	}
 
 	if (!physicalDevice) {
-		throw std::runtime_error("failed to find a suitable GPU!");
+		throw std::runtime_error("VulkanDevice: Failed to find a suitable GPU!");
 	}
 }
 
@@ -74,7 +74,7 @@ void ScrapEngine::VulkanDevice::createLogicalDevice()
 	);
 
 	if (physicalDevice.createDevice(&createInfo, nullptr, &device) != vk::Result::eSuccess) {
-		throw std::runtime_error("failed to create logical device!");
+		throw std::runtime_error("VulkanDevice: Failed to create logical device!");
 	}
 }
 

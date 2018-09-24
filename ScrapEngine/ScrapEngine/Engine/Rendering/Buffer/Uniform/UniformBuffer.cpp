@@ -39,11 +39,13 @@ void ScrapEngine::UniformBuffer::updateUniformBuffer(uint32_t currentImage, vk::
 	ubo.model = glm::scale(glm::mat4(1.0f), glm::vec3(0.5f));
 	//ubo.view = glm::lookAt(glm::vec3(2.0f, 2.0f, 2.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	//float Translate = 1.0f * time; moving forward
-	float Translate = 10.0f;
+	float z_translate = -10.0f; //(forward/backward)
+	float x_translate = 0.0f; //(left-right)
+	float y_translate = 0.0f; //(up-down)
 	//ubo.view = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -2.0f, -Translate));
 	//ubo.view = glm::rotate(ubo.view, 3.14f, glm::vec3(0.0f, 1.0f, 0.0f));
-	ubo.view = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -Translate));
-	ubo.view = glm::rotate(ubo.view, time * glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 1.0f));
+	ubo.view = glm::translate(glm::mat4(1.0f), glm::vec3(x_translate, y_translate, z_translate));
+	ubo.view = glm::rotate(ubo.view, time * glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	ubo.proj = glm::perspective(glm::radians(45.0f), swapChainExtent->width / (float)swapChainExtent->height, 0.1f, 10.0f);
 	ubo.proj[1][1] *= -1;
 

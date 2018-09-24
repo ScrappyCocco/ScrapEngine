@@ -19,10 +19,17 @@ void ScrapEngine::VukanInstance::createVulkanInstance(std::string app_name, int 
 
 	auto extensions = getRequiredExtensions();
 
-	vk::InstanceCreateInfo createInfo(vk::InstanceCreateFlags(), &appInfo, 0, nullptr, static_cast<uint32_t>(extensions.size()), extensions.data());
+	vk::InstanceCreateInfo createInfo(
+		vk::InstanceCreateFlags(), 
+		&appInfo, 
+		0, 
+		nullptr, 
+		static_cast<uint32_t>(extensions.size()), 
+		extensions.data()
+	);
 
 	if (vk::createInstance(&createInfo, nullptr, &instance) != vk::Result::eSuccess) {
-		throw std::runtime_error("failed to create instance!");
+		throw std::runtime_error("VukanInstance: Failed to create instance!");
 	}
 }
 

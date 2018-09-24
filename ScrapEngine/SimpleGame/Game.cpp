@@ -12,11 +12,11 @@ int main() {
 
 		//Begin gameplay
 		ScrapEngineManager->StartGameLoop();
-		//End
-		std::cout << "EXIT_SUCCESS - Press to exit...";
+		//End gameplay
+		std::cout << "EXIT_SUCCESS - Press to exit..." << std::endl;
 	}catch (const std::exception& e) {
 		std::cerr << e.what() << std::endl;
-		std::cout << "EXIT_FAILURE - Press to exit...";
+		std::cout << "EXIT_FAILURE - Press to exit..." << std::endl;
 		exit_value = EXIT_FAILURE;
 	}
 	delete ScrapEngineManager;

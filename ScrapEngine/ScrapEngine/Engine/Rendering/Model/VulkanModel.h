@@ -11,12 +11,11 @@ namespace ScrapEngine {
 	{
 	private:
 		const std::string MODEL_PATH;
-		const std::string TEXTURE_PATH;
 
 		std::vector<ScrapEngine::Vertex> vertices;
 		std::vector<uint32_t> indices;
 	public:
-		VulkanModel(std::string input_MODEL_PATH, std::string input_TEXTURE_PATH);
+		VulkanModel(std::string input_MODEL_PATH);
 		~VulkanModel();
 
 		void SimpleTranslate(glm::vec3 input_vector);
