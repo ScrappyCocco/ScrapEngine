@@ -11,6 +11,12 @@ namespace ScrapEngine {
 		glm::mat4 proj;
 	};
 
+	struct Transform {
+		glm::vec3 location;
+		glm::vec3 rotation;
+		glm::vec3 scale;
+	};
+
 	class UniformBuffer
 	{
 	private:
@@ -25,7 +31,7 @@ namespace ScrapEngine {
 		UniformBuffer(vk::Device* input_deviceRef, vk::PhysicalDevice* PhysicalDevice, const std::vector<vk::Image>* swapChainImages);
 		~UniformBuffer();
 
-		void updateUniformBuffer(uint32_t currentImage, vk::Extent2D* swapChainExtent);
+		void updateUniformBuffer(uint32_t currentImage, vk::Extent2D* swapChainExtent, ScrapEngine::Transform object_transform);
 		const std::vector<vk::Buffer>* getUniformBuffers();
 		const std::vector<vk::DeviceMemory>* getUniformBuffersMemory();
 	};

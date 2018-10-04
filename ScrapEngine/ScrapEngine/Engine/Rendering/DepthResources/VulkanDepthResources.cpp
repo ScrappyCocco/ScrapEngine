@@ -36,7 +36,7 @@ vk::Format ScrapEngine::VulkanDepthResources::findSupportedFormat(vk::PhysicalDe
 		}
 	}
 
-	throw std::runtime_error("failed to find supported format!");
+	throw std::runtime_error("VulkanDepthResources: Failed to find supported format!");
 }
 
 vk::Format ScrapEngine::VulkanDepthResources::findDepthFormat(vk::PhysicalDevice* PhysicalDevice)

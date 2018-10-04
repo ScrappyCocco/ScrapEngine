@@ -20,7 +20,7 @@ vk::ShaderModule ScrapEngine::ShaderManager::createShaderModule(const std::vecto
 
 	vk::ShaderModule shaderModule;
 	if (deviceRef->createShaderModule(&createInfo, nullptr, &shaderModule) != vk::Result::eSuccess) {
-		throw std::runtime_error("Failed to create shader module!");
+		throw std::runtime_error("ShaderManager: Failed to create shader module!");
 	}
 
 	return shaderModule;
@@ -30,7 +30,7 @@ std::vector<char> ScrapEngine::ShaderManager::readFile(const std::string& filena
 	std::ifstream file(filename, std::ios::ate | std::ios::binary);
 
 	if (!file.is_open()) {
-		throw std::runtime_error("Failed to open file " + filename + "!");
+		throw std::runtime_error("ShaderManager: Failed to open file " + filename + "!");
 	}
 
 	size_t fileSize = (size_t)file.tellg();

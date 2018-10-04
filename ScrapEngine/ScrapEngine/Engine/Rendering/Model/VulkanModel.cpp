@@ -6,7 +6,7 @@
 #include <unordered_map>
 #include <iostream>
 
-ScrapEngine::VulkanModel::VulkanModel(std::string input_MODEL_PATH) 
+ScrapEngine::VulkanModel::VulkanModel(const std::string& input_MODEL_PATH)
 	: MODEL_PATH(input_MODEL_PATH)
 {
 	DebugLog::printToConsoleLog("Loading 3D model...");

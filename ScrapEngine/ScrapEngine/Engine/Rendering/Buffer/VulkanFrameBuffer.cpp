@@ -19,7 +19,7 @@ ScrapEngine::VulkanFrameBuffer::VulkanFrameBuffer(ScrapEngine::VulkanImageView* 
 		vk::FramebufferCreateInfo framebufferInfo(vk::FramebufferCreateFlags(), *renderPass, static_cast<uint32_t>(attachments.size()), attachments.data(), input_swapChainExtent->width, input_swapChainExtent->height, 1);
 		
 		if (deviceRef->createFramebuffer(&framebufferInfo, nullptr, &swapChainFramebuffers[i]) != vk::Result::eSuccess) {
-			throw std::runtime_error("failed to create framebuffer!");
+			throw std::runtime_error("VulkanFrameBuffer: Failed to create framebuffer!");
 		}
 	}
 }

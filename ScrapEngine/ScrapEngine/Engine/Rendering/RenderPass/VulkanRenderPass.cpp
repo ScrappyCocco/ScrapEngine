@@ -89,7 +89,7 @@ ScrapEngine::VulkanRenderPass::VulkanRenderPass(vk::Device* input_deviceRef, vk:
 	);
 
 	if (deviceRef->createRenderPass(&renderPassInfo, nullptr, &renderPass) != vk::Result::eSuccess) {
-		throw std::runtime_error("failed to create render pass!");
+		throw std::runtime_error("VulkanRenderPass: Failed to create render pass!");
 	}
 }
 

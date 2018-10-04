@@ -42,7 +42,7 @@ ScrapEngine::VulkanSwapChain::VulkanSwapChain(SwapChainSupportDetails swapChainS
 	createInfo.setClipped(true);
 
 	if (deviceRef->createSwapchainKHR(&createInfo, nullptr, &swapChain) != vk::Result::eSuccess) {
-		throw std::runtime_error("failed to create swap chain!");
+		throw std::runtime_error("VulkanSwapChain: Failed to create swap chain!");
 	}
 
 	deviceRef->getSwapchainImagesKHR(swapChain, &imageCount, nullptr);

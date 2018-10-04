@@ -18,7 +18,7 @@ ScrapEngine::TextureImage::TextureImage(std::string file_path, vk::Device* input
 	mipLevels = static_cast<uint32_t>(std::floor(std::log2(std::max(texWidth, texHeight)))) + 1;
 
 	if (!pixels) {
-		throw std::runtime_error("Failed to load texture image! (pixels not valid)");
+		throw std::runtime_error("TextureImage: Failed to load texture image! (pixels not valid)");
 	}
 
 	StaginfBufferRef = new StagingBuffer(deviceRef, PhysicalDeviceRef, &imageSize, pixels);
@@ -64,7 +64,7 @@ void ScrapEngine::TextureImage::createImage(vk::Device* deviceRef, vk::PhysicalD
 	);
 
 	if (deviceRef->createImage(&imageInfo, nullptr, &image) != vk::Result::eSuccess) {
-		throw std::runtime_error("failed to create image!");
+		throw std::runtime_error("TextureImage: Failed to create image!");
 	}
 
 	vk::MemoryRequirements memRequirements;
@@ -76,7 +76,7 @@ void ScrapEngine::TextureImage::createImage(vk::Device* deviceRef, vk::PhysicalD
 	);
 
 	if (deviceRef->allocateMemory(&allocInfo, nullptr, &imageMemory) != vk::Result::eSuccess) {
-		throw std::runtime_error("failed to allocate image memory!");
+		throw std::runtime_error("TextureImage: Failed to allocate image memory!");
 	}
 
 	deviceRef->bindImageMemory(image, imageMemory, 0);
@@ -161,7 +161,7 @@ void ScrapEngine::TextureImage::generateMipmaps(vk::Image* image, vk::Format ima
 	vk::FormatProperties formatProperties = PhysicalDeviceRef->getFormatProperties(imageFormat);
 
 	if (!(formatProperties.optimalTilingFeatures & vk::FormatFeatureFlagBits::eSampledImageFilterLinear)) {
-		throw std::runtime_error("texture image format does not support linear blitting!");
+		throw std::runtime_error("TextureImage: Texture image format does not support linear blitting!");
 	}
 
 	vk::CommandBuffer* commandBuffer = BaseBuffer::beginSingleTimeCommands(deviceRef, CommandPoolRef);

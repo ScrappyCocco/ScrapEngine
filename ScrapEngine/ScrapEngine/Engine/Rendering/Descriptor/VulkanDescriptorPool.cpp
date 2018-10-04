@@ -17,7 +17,7 @@ ScrapEngine::VulkanDescriptorPool::VulkanDescriptorPool(vk::Device* input_device
 	);
 
 	if (deviceRef->createDescriptorPool(&poolInfo, nullptr, &descriptorPool) != vk::Result::eSuccess) {
-		throw std::runtime_error("failed to create descriptor pool!");
+		throw std::runtime_error("VulkanDescriptorPool: Failed to create descriptor pool!");
 	}
 }
 

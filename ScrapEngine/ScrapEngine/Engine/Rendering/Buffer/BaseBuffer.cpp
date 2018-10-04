@@ -21,7 +21,7 @@ void ScrapEngine::BaseBuffer::createBuffer(vk::Device* input_deviceRef, vk::Phys
 	vk::MemoryAllocateInfo allocInfo(memRequirements.size, findMemoryType(memRequirements.memoryTypeBits, properties, PhysicalDevice));
 
 	if (input_deviceRef->allocateMemory(&allocInfo, nullptr, &bufferMemory) != vk::Result::eSuccess) {
-		throw std::runtime_error("failed to allocate buffer memory!");
+		throw std::runtime_error("BaseBuffer: Failed to allocate buffer memory!");
 	}
 
 	input_deviceRef->bindBufferMemory(buffer, bufferMemory, 0);

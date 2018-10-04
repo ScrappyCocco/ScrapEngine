@@ -35,6 +35,7 @@
     <ClCompile Include="Engine\Rendering\Device\VulkanDevice.cpp" />
     <ClCompile Include="Engine\Rendering\Instance\VukanInstance.cpp" />
     <ClCompile Include="Engine\Rendering\Manager\RenderManager.cpp" />
+    <ClCompile Include="Engine\Rendering\Model\VulkanMeshInstance.cpp" />
     <ClCompile Include="Engine\Rendering\Model\VulkanModel.cpp" />
     <ClCompile Include="Engine\Rendering\Pipeline\VulkanGraphicsPipeline.cpp" />
     <ClCompile Include="Engine\Rendering\Queue\GraphicsQueue.cpp" />
@@ -73,6 +74,7 @@
     <ClInclude Include="Engine\Rendering\Instance\VukanInstance.h" />
     <ClInclude Include="Engine\Rendering\Manager\RenderManager.h" />
     <ClInclude Include="Engine\Rendering\Memory\MemoryManager.h" />
+    <ClInclude Include="Engine\Rendering\Model\VulkanMeshInstance.h" />
     <ClInclude Include="Engine\Rendering\Model\VulkanModel.h" />
     <ClInclude Include="Engine\Rendering\Pipeline\VulkanGraphicsPipeline.h" />
     <ClInclude Include="Engine\Rendering\Queue\GraphicsQueue.h" />

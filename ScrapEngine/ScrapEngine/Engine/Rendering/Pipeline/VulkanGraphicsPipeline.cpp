@@ -119,7 +119,7 @@ ScrapEngine::VulkanGraphicsPipeline::VulkanGraphicsPipeline(const char* vertexSh
 	);
 	
 	if (deviceRef->createPipelineLayout(&pipelineLayoutInfo, nullptr, &pipelineLayout) != vk::Result::eSuccess) {
-		throw std::runtime_error("failed to create pipeline layout!");
+		throw std::runtime_error("VulkanGraphicsPipeline: Failed to create pipeline layout!");
 	}
 
 	vk::GraphicsPipelineCreateInfo pipelineInfo(
@@ -141,7 +141,7 @@ ScrapEngine::VulkanGraphicsPipeline::VulkanGraphicsPipeline(const char* vertexSh
 	);
 
 	if (input_deviceRef->createGraphicsPipelines(nullptr, 1, &pipelineInfo, nullptr, &graphicsPipeline) != vk::Result::eSuccess) {
-		throw std::runtime_error("failed to create graphics pipeline!");
+		throw std::runtime_error("VulkanGraphicsPipeline: Failed to create graphics pipeline!");
 	}
 
 	input_deviceRef->destroyShaderModule(fragShaderModule);

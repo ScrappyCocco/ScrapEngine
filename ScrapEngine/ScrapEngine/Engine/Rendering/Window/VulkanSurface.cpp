@@ -15,7 +15,7 @@ void ScrapEngine::VulkanSurface::createSurface(ScrapEngine::GameWindow* windowRe
 {
 	surface = vk::SurfaceKHR();
 	if (glfwCreateWindowSurface(*instanceRef, windowRef->getWindowRef(), nullptr, reinterpret_cast<VkSurfaceKHR*>(&surface)) != VK_SUCCESS) {
-		throw std::runtime_error("failed to create window surface!");
+		throw std::runtime_error("VulkanSurface: Failed to create window surface!");
 	}
 }
 

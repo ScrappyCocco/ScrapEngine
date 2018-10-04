@@ -8,7 +8,7 @@ ScrapEngine::VulkanCommandPool::VulkanCommandPool(GraphicsQueue::QueueFamilyIndi
 	vk::CommandPoolCreateInfo poolInfo(vk::CommandPoolCreateFlags(), queueFamilyIndices.graphicsFamily);
 
 	if (deviceRef->createCommandPool(&poolInfo, nullptr, &commandPool) != vk::Result::eSuccess) {
-		throw std::runtime_error("failed to create command pool!");
+		throw std::runtime_error("VulkanCommandPool: Failed to create command pool!");
 	}
 }
 

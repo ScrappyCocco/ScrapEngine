@@ -32,7 +32,7 @@ ScrapEngine::VulkanDescriptorSet::VulkanDescriptorSet(vk::Device* input_deviceRe
 	);
 
 	if (deviceRef->createDescriptorSetLayout(&layoutInfo, nullptr, &descriptorSetLayout) != vk::Result::eSuccess) {
-		throw std::runtime_error("failed to create descriptor set layout!");
+		throw std::runtime_error("VulkanDescriptorSet: Failed to create descriptor set layout!");
 	}
 }
 
@@ -54,7 +54,7 @@ void ScrapEngine::VulkanDescriptorSet::createDescriptorSets(vk::DescriptorPool* 
 	
 	
 	if (deviceRef->allocateDescriptorSets(&allocInfo, &descriptorSets[0]) != vk::Result::eSuccess) {
-		throw std::runtime_error("failed to allocate descriptor sets!");
+		throw std::runtime_error("DescriptorSetLayout: Failed to allocate descriptor sets!");
 	}
 
 	for (size_t i = 0; i < swapChainImages->size(); i++) {

@@ -27,25 +27,15 @@ ScrapEngine::UniformBuffer::~UniformBuffer()
 	}
 }
 
-void ScrapEngine::UniformBuffer::updateUniformBuffer(uint32_t currentImage, vk::Extent2D* swapChainExtent)
+void ScrapEngine::UniformBuffer::updateUniformBuffer(uint32_t currentImage, vk::Extent2D* swapChainExtent, ScrapEngine::Transform object_transform)
 {
-	static auto startTime = std::chrono::high_resolution_clock::now();
-
-	auto currentTime = std::chrono::high_resolution_clock::now();
-	float time = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - startTime).count();
-
 	UniformBufferObject ubo = {};
-	//ubo.model = glm::rotate(glm::mat4(1.0f), time * glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-	ubo.model = glm::scale(glm::mat4(1.0f), glm::vec3(0.5f));
 	//ubo.view = glm::lookAt(glm::vec3(2.0f, 2.0f, 2.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-	//float Translate = 1.0f * time; moving forward
-	float z_translate = -10.0f; //(forward/backward)
-	float x_translate = 0.0f; //(left-right)
-	float y_translate = 0.0f; //(up-down)
-	//ubo.view = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -2.0f, -Translate));
-	//ubo.view = glm::rotate(ubo.view, 3.14f, glm::vec3(0.0f, 1.0f, 0.0f));
-	ubo.view = glm::translate(glm::mat4(1.0f), glm::vec3(x_translate, y_translate, z_translate));
-	ubo.view = glm::rotate(ubo.view, time * glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	ubo.model = glm::scale(glm::mat4(1.0f), object_transform.scale);
+	ubo.view = glm::translate(glm::mat4(1.0f), object_transform.location);
+	if (object_transform.rotation.x != 0 || object_transform.rotation.y != 0 || object_transform.rotation.z != 0) {
+		ubo.view = glm::rotate(ubo.view, glm::radians(90.0f), object_transform.rotation);
+	}
 	ubo.proj = glm::perspective(glm::radians(45.0f), swapChainExtent->width / (float)swapChainExtent->height, 0.1f, 10.0f);
 	ubo.proj[1][1] *= -1;
 

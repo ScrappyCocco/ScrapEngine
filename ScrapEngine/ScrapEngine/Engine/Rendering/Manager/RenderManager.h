@@ -27,6 +27,7 @@
 #include "../DepthResources/VulkanDepthResources.h"
 #include "../Texture/VulkanColorResources.h"
 #include "../Model/VulkanModel.h"
+#include "../Model/VulkanMeshInstance.h"
 
 namespace ScrapEngine {
 	class RenderManager
@@ -37,7 +38,6 @@ namespace ScrapEngine {
 		ScrapEngine::VulkanDevice* VulkanRenderDevice = nullptr;
 		ScrapEngine::VulkanSwapChain* VulkanRenderSwapChain = nullptr;
 		ScrapEngine::VulkanImageView* VulkanRenderImageView = nullptr;
-		ScrapEngine::VulkanGraphicsPipeline* VulkanRenderGraphicsPipeline = nullptr;
 		ScrapEngine::VulkanRenderPass* VulkanRenderingPass = nullptr;
 		ScrapEngine::VulkanFrameBuffer* VulkanRenderFrameBuffer = nullptr;
 		ScrapEngine::VulkanCommandPool* VulkanRenderCommandPool = nullptr;
@@ -46,17 +46,10 @@ namespace ScrapEngine {
 		ScrapEngine::PresentQueue* VulkanPresentationQueue = nullptr;
 		ScrapEngine::VulkanSemaphoresManager* VulkanRenderSemaphores = nullptr;
 		ScrapEngine::VulkanSurface* VulkanWindowSurface = nullptr;
-		ScrapEngine::VertexBuffer* VulkanRenderVertexBuffer = nullptr;
-		ScrapEngine::IndexBuffer* VulkanRenderIndexBuffer = nullptr;
-		ScrapEngine::UniformBuffer* VulkanRenderUniformBuffer = nullptr;
-		ScrapEngine::VulkanDescriptorSet* VulkanRenderDescriptorSet = nullptr;
-		ScrapEngine::VulkanDescriptorPool* VulkanRenderDescriptorPool = nullptr;
-		ScrapEngine::TextureImage* VulkanTextureImage = nullptr;
-		ScrapEngine::TextureImageView* VulkanTextureImageView = nullptr;
-		ScrapEngine::TextureSampler* VulkanTextureSampler = nullptr;
 		ScrapEngine::VulkanDepthResources* VulkanRenderDepth = nullptr;
 		ScrapEngine::VulkanColorResources* VulkanRenderColor = nullptr;
-		ScrapEngine::VulkanModel* VulkanRenderModel = nullptr;
+
+		std::vector<ScrapEngine::VulkanMeshInstance*> LoadedModels;
 
 		size_t currentFrame = 0;
 
@@ -74,6 +67,12 @@ namespace ScrapEngine {
 
 		void createQueues();
 		void deleteQueues();
+
+		void createCommandBuffers();
+		void deleteCommandBuffers();
+
+		ScrapEngine::VulkanMeshInstance* loadMesh(const std::string& vertex_shader_path, const std::string& fragment_shader_path, const std::string& model_path, const std::string& texture_path);
+		//void unloadMesh(); TODO
 
 		void cleanupSwapChain();
 

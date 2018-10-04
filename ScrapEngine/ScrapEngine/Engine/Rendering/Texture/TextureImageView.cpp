@@ -25,7 +25,7 @@ vk::ImageView ScrapEngine::TextureImageView::createImageView(vk::Device* input_d
 
 	vk::ImageView imageView;
 	if (input_deviceRef->createImageView(&viewInfo, nullptr, &imageView) != vk::Result::eSuccess) {
-		throw std::runtime_error("failed to create texture image view!");
+		throw std::runtime_error("TextureImageView: Failed to create texture image view!");
 	}
 
 	return imageView;
