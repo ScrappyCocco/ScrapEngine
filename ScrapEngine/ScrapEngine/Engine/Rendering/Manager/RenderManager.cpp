@@ -31,8 +31,7 @@ void ScrapEngine::RenderManager::cleanupSwapChain()
 	delete VulkanRenderColor;
 	delete VulkanRenderDepth;
 	delete VulkanRenderFrameBuffer;
-	deviceRef.freeCommandBuffers(*VulkanRenderCommandPool->getCommandPool(), static_cast<uint32_t>(VulkanRenderCommandBuffer->getCommandBuffersVector()->size()), VulkanRenderCommandBuffer->getCommandBuffersVector()->data());
-	delete VulkanRenderCommandBuffer;
+	deleteCommandBuffers();
 	for (int i = 0; i < LoadedModels.size(); i++) {
 		LoadedModels[i]->deleteGraphicsPipeline();
 	}
@@ -50,7 +49,7 @@ void ScrapEngine::RenderManager::deleteQueues()
 
 void ScrapEngine::RenderManager::deleteCommandBuffers()
 {
-	deviceRef.freeCommandBuffers(*VulkanRenderCommandPool->getCommandPool(), static_cast<uint32_t>(VulkanRenderCommandBuffer->getCommandBuffersVector()->size()), VulkanRenderCommandBuffer->getCommandBuffersVector()->data());
+	VulkanRenderCommandBuffer->freeCommandBuffers(VulkanRenderCommandPool->getCommandPool());
 	delete VulkanRenderCommandBuffer;
 }
 
@@ -89,15 +88,15 @@ void ScrapEngine::RenderManager::initializeVulkan(const ScrapEngine::game_base_i
 	LoadedModels.push_back(new VulkanMeshInstance("../assets/shader/vert.spv", "../assets/shader/frag.spv", "../assets/models/chess/ChessPieces/Queen.fbx", "../assets/textures/SimpleGreenTexture.png",
 		VulkanRenderDevice, VulkanRenderCommandPool->getCommandPool(), VulkanGraphicsQueue->getgraphicsQueue(), VulkanRenderSwapChain, VulkanRenderingPass
 	));
-	LoadedModels[0]->setObjectLocation(0, 0, -10.0f);
-	LoadedModels[0]->setObjectRotation(0, 0, 0);
-	LoadedModels[0]->setObjectScale(0.5f, 0.5f, 0.5f);
+	LoadedModels[0]->setMeshLocation(0, 0, -10.0f);
+	LoadedModels[0]->setMeshRotation(0, 0, 0);
+	LoadedModels[0]->setMeshScale(0.5f, 0.5f, 0.5f);
 	LoadedModels.push_back(new VulkanMeshInstance("../assets/shader/vert.spv", "../assets/shader/frag.spv", "../assets/models/chess/ChessPieces/King.fbx", "../assets/textures/SimpleRedTexture.png",
 		VulkanRenderDevice, VulkanRenderCommandPool->getCommandPool(), VulkanGraphicsQueue->getgraphicsQueue(), VulkanRenderSwapChain, VulkanRenderingPass
 	));
-	LoadedModels[1]->setObjectLocation(1, 0, -10.0f);
-	LoadedModels[1]->setObjectRotation(0, 0, 0);
-	LoadedModels[1]->setObjectScale(0.5f, 0.5f, 0.5f);
+	LoadedModels[1]->setMeshLocation(1, 0, -10.0f);
+	LoadedModels[1]->setMeshRotation(0, 0, 0);
+	LoadedModels[1]->setMeshScale(0.5f, 0.5f, 0.5f);
 	//Test model init
 	createCommandBuffers();
 	//Vulkan Semaphores
@@ -153,6 +152,18 @@ ScrapEngine::VulkanMeshInstance* ScrapEngine::RenderManager::loadMesh(const std:
 	return LoadedModels.back();
 }
 
+void ScrapEngine::RenderManager::unloadMesh(ScrapEngine::VulkanMeshInstance* meshToUnload)
+{
+	std::vector<ScrapEngine::VulkanMeshInstance*>::iterator element = find(LoadedModels.begin(), LoadedModels.end(), meshToUnload);
+	if (element != LoadedModels.end())
+	{
+		delete *element;
+		LoadedModels.erase(element);
+		deleteCommandBuffers();
+		createCommandBuffers();
+	}
+}
+
 void ScrapEngine::RenderManager::drawFrame()
 {
 	deviceRef.waitForFences(1, &(*inFlightFencesRef)[currentFrame], true, std::numeric_limits<uint64_t>::max());
@@ -182,7 +193,6 @@ void ScrapEngine::RenderManager::drawFrame()
 	submitInfo.setPWaitDstStageMask(waitStages);
 
 	submitInfo.setCommandBufferCount(1);
-	//submitInfo.setPCommandBuffers(&((*LoadedModels[0]->getVulkanRenderCommandBuffer()->getCommandBuffersVector())[imageIndex]));
 	submitInfo.setPCommandBuffers(&(*VulkanRenderCommandBuffer->getCommandBuffersVector())[imageIndex]);
 
 	vk::Semaphore signalSemaphores[] = { (*renderFinishedSemaphoresRef)[currentFrame] };

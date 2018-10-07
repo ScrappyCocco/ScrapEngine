@@ -86,6 +86,24 @@
     <Filter Include="Engine\Rendering\Manager">
       <UniqueIdentifier>{1994db62-631b-47b0-8e51-f971caab2bd9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\LogicCore">
+      <UniqueIdentifier>{4b228d58-4825-43cb-a21e-c5b95226d9f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\LogicCore\Components">
+      <UniqueIdentifier>{03ff07d4-2e0f-464b-bbd9-e46b4ff9f11e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\LogicCore\GameObject">
+      <UniqueIdentifier>{7404bbe4-8728-4702-a473-c172eada490d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\LogicCore\Manager">
+      <UniqueIdentifier>{7cbf16de-432c-4588-80d1-cc41c4348676}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Input">
+      <UniqueIdentifier>{74d5970c-b515-473c-907c-72216277d9fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Input\Manager">
+      <UniqueIdentifier>{f6932fd1-e7ef-44a5-9ee9-0f029384da08}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Manager\EngineManager.cpp">
@@ -183,6 +201,21 @@
     </ClCompile>
     <ClCompile Include="Engine\Rendering\Model\VulkanMeshInstance.cpp">
       <Filter>Engine\Rendering\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\LogicCore\SObject.cpp">
+      <Filter>Engine\LogicCore</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\LogicCore\GameObject\SGameObject.cpp">
+      <Filter>Engine\LogicCore\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\LogicCore\Manager\LogicManager.cpp">
+      <Filter>Engine\LogicCore\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\LogicCore\Components\SComponent.cpp">
+      <Filter>Engine\LogicCore\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Input\Manager\InputManager.cpp">
+      <Filter>Engine\Input\Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -296,6 +329,21 @@
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Model\VulkanMeshInstance.h">
       <Filter>Engine\Rendering\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\LogicCore\SObject.h">
+      <Filter>Engine\LogicCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\LogicCore\GameObject\SGameObject.h">
+      <Filter>Engine\LogicCore\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\LogicCore\Manager\LogicManager.h">
+      <Filter>Engine\LogicCore\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\LogicCore\Components\SComponent.h">
+      <Filter>Engine\LogicCore\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Input\Manager\InputManager.h">
+      <Filter>Engine\Input\Manager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

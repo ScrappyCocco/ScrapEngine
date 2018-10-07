@@ -6,7 +6,7 @@ int main() {
 	try {
 		//init engine
 		ScrapEngineManager = new ScrapEngine::EngineManager("ScrapEngine Simple Chess Game", 0);
-		const ScrapEngine::GameWindow* gameWindowRef = ScrapEngineManager->getRenderManager()->getGameWindow();
+		const ScrapEngine::GameWindow* gameWindowRef = ScrapEngineManager->getGameWindow();
 		gameWindowRef->setWindowIcon(1, &gameWindowRef->loadIcon("../assets/game_icon/chess_game_icon_png.png"));
 		//More stuff
 

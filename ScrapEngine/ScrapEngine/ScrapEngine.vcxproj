@@ -20,6 +20,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Debug\DebugLog.cpp" />
+    <ClCompile Include="Engine\Input\Manager\InputManager.cpp" />
+    <ClCompile Include="Engine\LogicCore\Components\SComponent.cpp" />
+    <ClCompile Include="Engine\LogicCore\GameObject\SGameObject.cpp" />
+    <ClCompile Include="Engine\LogicCore\Manager\LogicManager.cpp" />
+    <ClCompile Include="Engine\LogicCore\SObject.cpp" />
     <ClCompile Include="Engine\Manager\EngineManager.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\BaseBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\Index\IndexBuffer.cpp" />
@@ -55,6 +60,11 @@
   <ItemGroup>
     <ClInclude Include="..\..\external\stb\stb_image.h" />
     <ClInclude Include="Engine\Debug\DebugLog.h" />
+    <ClInclude Include="Engine\Input\Manager\InputManager.h" />
+    <ClInclude Include="Engine\LogicCore\Components\SComponent.h" />
+    <ClInclude Include="Engine\LogicCore\GameObject\SGameObject.h" />
+    <ClInclude Include="Engine\LogicCore\Manager\LogicManager.h" />
+    <ClInclude Include="Engine\LogicCore\SObject.h" />
     <ClInclude Include="Engine\Manager\EngineManager.h" />
     <ClInclude Include="Engine\Manager\UsefulTypes.h" />
     <ClInclude Include="Engine\Rendering\Base\SimpleTestData.h" />

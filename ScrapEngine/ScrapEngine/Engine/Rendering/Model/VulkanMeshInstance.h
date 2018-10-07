@@ -13,6 +13,7 @@
 #include "../SwapChain/VulkanSwapChain.h"
 #include "../RenderPass/VulkanRenderPass.h"
 #include "../Buffer/VulkanFrameBuffer.h"
+#include "../../Manager/UsefulTypes.h"
 
 namespace ScrapEngine {
 
@@ -34,16 +35,15 @@ namespace ScrapEngine {
 		simple_buffer<uint32_t>* indexbuffer = nullptr;
 
 		ScrapEngine::Transform object_location;
-		float change = 0.0f;
 	public:
 		VulkanMeshInstance(const std::string& vertex_shader_path, const std::string& fragment_shader_path, const std::string& model_path, const std::string& texture_path,
 			ScrapEngine::VulkanDevice* RenderDevice, vk::CommandPool* CommandPool, vk::Queue* graphicsQueue, ScrapEngine::VulkanSwapChain* SwapChain, 
 			ScrapEngine::VulkanRenderPass* RenderingPass);
 		~VulkanMeshInstance();
 
-		void setObjectLocation(float x, float y, float z);
-		void setObjectRotation(float x, float y, float z);
-		void setObjectScale(float x, float y, float z);
+		void setMeshLocation(float x, float y, float z);
+		void setMeshRotation(float x, float y, float z);
+		void setMeshScale(float x, float y, float z);
 
 		void updateUniformBuffer(uint32_t currentImage, vk::Extent2D* swapChainExtent);
 		void deleteGraphicsPipeline();

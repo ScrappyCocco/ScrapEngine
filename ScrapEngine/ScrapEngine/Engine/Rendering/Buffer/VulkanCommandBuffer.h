@@ -25,6 +25,8 @@ namespace ScrapEngine {
 
 		~VulkanCommandBuffer();
 
+		void freeCommandBuffers(vk::CommandPool* commandPool);
+
 		const std::vector<vk::CommandBuffer>* getCommandBuffersVector();
 	};
 

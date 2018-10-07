@@ -108,6 +108,12 @@ ScrapEngine::VulkanCommandBuffer::~VulkanCommandBuffer()
 
 }
 
+void ScrapEngine::VulkanCommandBuffer::freeCommandBuffers(vk::CommandPool* commandPool)
+{
+	deviceRef->freeCommandBuffers(*commandPool, static_cast<uint32_t>(commandBuffers.size()), commandBuffers.data());
+
+}
+
 const std::vector<vk::CommandBuffer>* ScrapEngine::VulkanCommandBuffer::getCommandBuffersVector()
 {
 	return &commandBuffers;

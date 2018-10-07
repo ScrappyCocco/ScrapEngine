@@ -72,7 +72,7 @@ namespace ScrapEngine {
 		void deleteCommandBuffers();
 
 		ScrapEngine::VulkanMeshInstance* loadMesh(const std::string& vertex_shader_path, const std::string& fragment_shader_path, const std::string& model_path, const std::string& texture_path);
-		//void unloadMesh(); TODO
+		void unloadMesh(ScrapEngine::VulkanMeshInstance* meshToUnload);
 
 		void cleanupSwapChain();
 

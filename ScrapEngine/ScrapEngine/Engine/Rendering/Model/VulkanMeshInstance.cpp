@@ -47,17 +47,17 @@ ScrapEngine::VulkanMeshInstance::~VulkanMeshInstance()
 	delete VulkanRenderModel;
 }
 
-void ScrapEngine::VulkanMeshInstance::setObjectLocation(float x, float y, float z)
+void ScrapEngine::VulkanMeshInstance::setMeshLocation(float x, float y, float z)
 {
 	object_location.location = glm::vec3(x, y, z);
 }
 
-void ScrapEngine::VulkanMeshInstance::setObjectRotation(float x, float y, float z)
+void ScrapEngine::VulkanMeshInstance::setMeshRotation(float x, float y, float z)
 {
 	object_location.rotation = glm::vec3(x, y, z);
 }
 
-void ScrapEngine::VulkanMeshInstance::setObjectScale(float x, float y, float z)
+void ScrapEngine::VulkanMeshInstance::setMeshScale(float x, float y, float z)
 {
 	object_location.scale = glm::vec3(x, y, z);
 }
