@@ -1,5 +1,6 @@
 #include "GameWindow.h"
 #include <stb_image.h>
+#include "../../Utility/UsefulMethods.h"
 
 ScrapEngine::GameWindow::GameWindow(uint32_t input_WIDTH, uint32_t input_HEIGHT, std::string input_window_title) : WIDTH(input_WIDTH), HEIGHT(input_HEIGHT), window_title(input_window_title)
 {
@@ -33,21 +34,19 @@ void ScrapEngine::GameWindow::setWindowTitle(const std::string& title)
 	glfwSetWindowTitle(window, title.c_str());
 }
 
-GLFWimage ScrapEngine::GameWindow::loadIcon(const std::string & path_to_file) const
+void ScrapEngine::GameWindow::setWindowIcon(const std::string& path_to_file) const
 {
-	GLFWimage icon;
-	icon.pixels = stbi_load(path_to_file.c_str(), &icon.width, &icon.height, 0, 4);
-	return icon;
+	glfwSetWindowIcon(window, 1, &UsefulMethods::loadIcon(path_to_file));
 }
 
-void ScrapEngine::GameWindow::setWindowIcon(const int& number_of_images, GLFWimage* images) const
-{
-	glfwSetWindowIcon(window, number_of_images, images);
-}
-
-GLFWwindow * ScrapEngine::GameWindow::getWindowRef() const
+GLFWwindow * ScrapEngine::GameWindow::getWindowReference()
 {
 	return window;
+}
+
+ScrapEngine::InputManager * ScrapEngine::GameWindow::createWindowInputManager() const
+{
+	return new ScrapEngine::InputManager(window);
 }
 
 bool ScrapEngine::GameWindow::checkWindowShouldClose() const

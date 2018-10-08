@@ -2,7 +2,7 @@
 
 #include <vulkan/vulkan.hpp>
 #include <vector>
-#include "../../../Manager/UsefulTypes.h"
+#include "../../../Utility/UsefulTypes.h"
 
 namespace ScrapEngine {
 	struct UniformBufferObject {

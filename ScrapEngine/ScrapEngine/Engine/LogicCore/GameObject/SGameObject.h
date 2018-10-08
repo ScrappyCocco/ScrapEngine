@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../Manager/UsefulTypes.h"
+#include "../../Utility/UsefulTypes.h"
 #include "../SObject.h"
 #include "../Components/SComponent.h"
 #include <vector>

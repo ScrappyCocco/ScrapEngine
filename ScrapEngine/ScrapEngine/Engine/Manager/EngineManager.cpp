@@ -31,6 +31,11 @@ const ScrapEngine::GameWindow* ScrapEngine::EngineManager::getGameWindow() const
 	return ScrapRenderManager->getGameWindow();
 }
 
+ScrapEngine::LogicManager * ScrapEngine::EngineManager::getLogicManager() const
+{
+	return ScrapLogicManager;
+}
+
 void ScrapEngine::EngineManager::initializeEngine()
 {
 	DebugLog::printToConsoleLog("---initializeEngine()---");

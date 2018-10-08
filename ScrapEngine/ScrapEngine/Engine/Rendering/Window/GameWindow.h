@@ -2,7 +2,7 @@
 
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
-
+#include "../../Input/Manager/InputManager.h"
 #include <string>
 
 namespace ScrapEngine {
@@ -23,10 +23,12 @@ namespace ScrapEngine {
 
 		void setWindowSize(int input_WIDTH, int input_HEIGHT);
 		void setWindowTitle(const std::string& title);
-		GLFWimage loadIcon(const std::string& path_to_file) const;
-		void setWindowIcon(const int& number_of_images, GLFWimage* images) const;
+		void setWindowIcon(const std::string& path_to_file) const;
 
-		GLFWwindow* getWindowRef() const;
+		GLFWwindow* getWindowReference();
+
+		ScrapEngine::InputManager* createWindowInputManager() const;
+
 		bool checkWindowShouldClose() const;
 	};
 

@@ -1,4 +1,6 @@
 #include "Engine/Manager/EngineManager.h"
+#include "Engine/Input/Manager/InputManager.h"
+#include "GameObjects/TestGameObject.h"
 
 int main() {
 	short exit_value = EXIT_SUCCESS;
@@ -7,9 +9,11 @@ int main() {
 		//init engine
 		ScrapEngineManager = new ScrapEngine::EngineManager("ScrapEngine Simple Chess Game", 0);
 		const ScrapEngine::GameWindow* gameWindowRef = ScrapEngineManager->getGameWindow();
-		gameWindowRef->setWindowIcon(1, &gameWindowRef->loadIcon("../assets/game_icon/chess_game_icon_png.png"));
+		gameWindowRef->setWindowIcon("../assets/game_icon/chess_game_icon_png.png");
 		//More stuff
-
+		ScrapEngine::InputManager* inputmanager = gameWindowRef->createWindowInputManager();
+		TestGameObject* FirstGameObject = new TestGameObject(inputmanager);
+		ScrapEngineManager->getLogicManager()->RegisterGameObject(FirstGameObject);
 		//Begin gameplay
 		ScrapEngineManager->StartGameLoop();
 		//End gameplay

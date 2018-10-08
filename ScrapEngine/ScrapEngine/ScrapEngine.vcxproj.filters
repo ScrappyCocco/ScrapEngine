@@ -104,6 +104,9 @@
     <Filter Include="Engine\Input\Manager">
       <UniqueIdentifier>{f6932fd1-e7ef-44a5-9ee9-0f029384da08}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Utility">
+      <UniqueIdentifier>{9ac5a011-de22-42f8-b2d2-964ab20d20b8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Manager\EngineManager.cpp">
@@ -217,6 +220,9 @@
     <ClCompile Include="Engine\Input\Manager\InputManager.cpp">
       <Filter>Engine\Input\Manager</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Utility\UsefulMethods.cpp">
+      <Filter>Engine\Utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Manager\EngineManager.h">
@@ -324,9 +330,6 @@
     <ClInclude Include="Engine\Rendering\Manager\RenderManager.h">
       <Filter>Engine\Rendering\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Manager\UsefulTypes.h">
-      <Filter>Engine\Manager</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Rendering\Model\VulkanMeshInstance.h">
       <Filter>Engine\Rendering\Model</Filter>
     </ClInclude>
@@ -344,6 +347,12 @@
     </ClInclude>
     <ClInclude Include="Engine\Input\Manager\InputManager.h">
       <Filter>Engine\Input\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utility\UsefulMethods.h">
+      <Filter>Engine\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utility\UsefulTypes.h">
+      <Filter>Engine\Utility</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../Debug/DebugLog.h"
-#include "UsefulTypes.h"
+#include "../Utility/UsefulTypes.h"
 #include "../Rendering/Manager/RenderManager.h"
 #include "../LogicCore/Manager/LogicManager.h"
 
@@ -20,6 +20,7 @@ namespace ScrapEngine {
 		void StartGameLoop();
 
 		const ScrapEngine::GameWindow* getGameWindow() const;
+		ScrapEngine::LogicManager* getLogicManager() const;
 	private:
 		ScrapEngine::game_base_info received_base_game_info;
 

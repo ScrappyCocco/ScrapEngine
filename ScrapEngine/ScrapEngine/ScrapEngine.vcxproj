@@ -56,6 +56,7 @@
     <ClCompile Include="Engine\Rendering\Texture\VulkanColorResources.cpp" />
     <ClCompile Include="Engine\Rendering\Window\GameWindow.cpp" />
     <ClCompile Include="Engine\Rendering\Window\VulkanSurface.cpp" />
+    <ClCompile Include="Engine\Utility\UsefulMethods.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\external\stb\stb_image.h" />
@@ -66,7 +67,6 @@
     <ClInclude Include="Engine\LogicCore\Manager\LogicManager.h" />
     <ClInclude Include="Engine\LogicCore\SObject.h" />
     <ClInclude Include="Engine\Manager\EngineManager.h" />
-    <ClInclude Include="Engine\Manager\UsefulTypes.h" />
     <ClInclude Include="Engine\Rendering\Base\SimpleTestData.h" />
     <ClInclude Include="Engine\Rendering\Base\Vertex.h" />
     <ClInclude Include="Engine\Rendering\Buffer\BaseBuffer.h" />
@@ -100,6 +100,8 @@
     <ClInclude Include="Engine\Rendering\Texture\VulkanColorResources.h" />
     <ClInclude Include="Engine\Rendering\Window\GameWindow.h" />
     <ClInclude Include="Engine\Rendering\Window\VulkanSurface.h" />
+    <ClInclude Include="Engine\Utility\UsefulMethods.h" />
+    <ClInclude Include="Engine\Utility\UsefulTypes.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

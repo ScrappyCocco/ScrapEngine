@@ -12,14 +12,23 @@
     <Filter Include="File di origine\External">
       <UniqueIdentifier>{209cfcc1-6912-422e-8cd2-2d187570f067}</UniqueIdentifier>
     </Filter>
+    <Filter Include="File di origine\GameObjects">
+      <UniqueIdentifier>{44a01f9c-dfaf-48a4-b6f2-490d8fc9033a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
+    <ClCompile Include="GameObjects\TestGameObject.cpp">
+      <Filter>File di origine\GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
+    <ClInclude Include="GameObjects\TestGameObject.h">
+      <Filter>File di origine\GameObjects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SimpleGame.rc">

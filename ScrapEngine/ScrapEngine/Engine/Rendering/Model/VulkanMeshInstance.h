@@ -13,7 +13,7 @@
 #include "../SwapChain/VulkanSwapChain.h"
 #include "../RenderPass/VulkanRenderPass.h"
 #include "../Buffer/VulkanFrameBuffer.h"
-#include "../../Manager/UsefulTypes.h"
+#include "../../Utility/UsefulTypes.h"
 
 namespace ScrapEngine {
 

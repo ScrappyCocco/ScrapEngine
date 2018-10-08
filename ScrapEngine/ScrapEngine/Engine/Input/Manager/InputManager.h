@@ -32,6 +32,14 @@ namespace ScrapEngine {
 		cursor_input_beam_shape
 	};
 
+	enum KeyboardKeyState {
+		released, pressed
+	};
+
+	enum KeyboardKeysList {
+		keyboard_key_w
+	};
+
 	class InputManager
 	{
 	private:
@@ -48,9 +56,9 @@ namespace ScrapEngine {
 		void LoadSystemCursor(ScrapEngine::SystemCursorShapes NewShape);
 		void ResetCursorToSystemDefault();
 
-	private:
-		GLFWimage loadIcon(const std::string & path_to_file);
+		int getKeyboardKeyStatus(ScrapEngine::KeyboardKeysList key_to_check);
 
+	private:
 		static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 		static void cursor_position_callback(GLFWwindow* window, double xpos, double ypos);
 	};

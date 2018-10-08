@@ -1,7 +1,7 @@
 #include "InputManager.h"
 #include "../../Rendering/Window/GameWindow.h"
 #include <stb_image.h>
-
+#include "../../Utility/UsefulMethods.h"
 
 ScrapEngine::InputManager::InputManager(GLFWwindow* window) : windowRef(window)
 {
@@ -36,19 +36,12 @@ void ScrapEngine::InputManager::SetCursorInputMode(ScrapEngine::CursorMode NewMo
 	}
 }
 
-GLFWimage ScrapEngine::InputManager::loadIcon(const std::string & path_to_file)
-{
-	GLFWimage icon;
-	icon.pixels = stbi_load(path_to_file.c_str(), &icon.width, &icon.height, 0, 4);
-	return icon;
-}
-
 void ScrapEngine::InputManager::LoadNewCursor(const std::string & path_to_file, int xhot, int yhot)
 {
 	glfwSetCursor(windowRef, NULL);
 	glfwDestroyCursor(cursor);
 
-	cursor = glfwCreateCursor(&loadIcon(path_to_file), xhot, yhot);
+	cursor = glfwCreateCursor(&UsefulMethods::loadIcon(path_to_file), xhot, yhot);
 
 	glfwSetCursor(windowRef, cursor);
 }
@@ -85,6 +78,11 @@ void ScrapEngine::InputManager::LoadSystemCursor(ScrapEngine::SystemCursorShapes
 void ScrapEngine::InputManager::ResetCursorToSystemDefault()
 {
 	LoadSystemCursor(ScrapEngine::SystemCursorShapes::cursor_regular_arrow);
+}
+
+int ScrapEngine::InputManager::getKeyboardKeyStatus(ScrapEngine::KeyboardKeysList key_to_check)
+{
+	return glfwGetKey(windowRef, GLFW_KEY_W);
 }
 
 void ScrapEngine::InputManager::key_callback(GLFWwindow * window, int key, int scancode, int action, int mods)

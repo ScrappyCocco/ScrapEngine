@@ -1,7 +1,7 @@
 #pragma once
 #include "../../Debug/DebugLog.h"
 
-#include "../../Manager/UsefulTypes.h"
+#include "../../Utility/UsefulTypes.h"
 #include "../Window/GameWindow.h"
 #include "../Window/VulkanSurface.h"
 #include "../Instance/VukanInstance.h"
@@ -71,15 +71,15 @@ namespace ScrapEngine {
 		void createCommandBuffers();
 		void deleteCommandBuffers();
 
-		ScrapEngine::VulkanMeshInstance* loadMesh(const std::string& vertex_shader_path, const std::string& fragment_shader_path, const std::string& model_path, const std::string& texture_path);
-		void unloadMesh(ScrapEngine::VulkanMeshInstance* meshToUnload);
-
 		void cleanupSwapChain();
 
 		void recreateSwapChain();
 	public:
 		void drawFrame();
 		void waitDeviceIdle();
+
+		ScrapEngine::VulkanMeshInstance* loadMesh(const std::string& vertex_shader_path, const std::string& fragment_shader_path, const std::string& model_path, const std::string& texture_path);
+		void unloadMesh(ScrapEngine::VulkanMeshInstance* meshToUnload);
 
 		const ScrapEngine::GameWindow* getGameWindow() const;
 	};
