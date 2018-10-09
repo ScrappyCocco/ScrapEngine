@@ -8,12 +8,15 @@ int main() {
 	try {
 		//init engine
 		ScrapEngineManager = new ScrapEngine::EngineManager("ScrapEngine Simple Chess Game", 0);
-		const ScrapEngine::GameWindow* gameWindowRef = ScrapEngineManager->getGameWindow();
+		ScrapEngine::GameWindow* gameWindowRef = ScrapEngineManager->RenderManagerView->getGameWindow();
 		gameWindowRef->setWindowIcon("../assets/game_icon/chess_game_icon_png.png");
-		//More stuff
+		//Create the input manager
 		ScrapEngine::InputManager* inputmanager = gameWindowRef->createWindowInputManager();
-		TestGameObject* FirstGameObject = new TestGameObject(inputmanager);
-		ScrapEngineManager->getLogicManager()->RegisterGameObject(FirstGameObject);
+		//Get the component manager
+		ScrapEngine::ComponentsManager* ComponentManagerRef = ScrapEngineManager->LogicManagerView->getComponentsManager();
+		//Create the first game object
+		TestGameObject* FirstGameObject = new TestGameObject(inputmanager, ComponentManagerRef);
+		ScrapEngineManager->LogicManagerView->RegisterGameObject(FirstGameObject);
 		//Begin gameplay
 		ScrapEngineManager->StartGameLoop();
 		//End gameplay

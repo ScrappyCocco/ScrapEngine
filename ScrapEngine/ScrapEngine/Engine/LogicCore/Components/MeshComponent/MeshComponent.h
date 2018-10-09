@@ -1,19 +1,16 @@
 #pragma once
-
-#include "../SObject.h"
-#include "../GameObject/SGameObject.h"
+#include "../SComponent.h"
+#include "../../../Rendering/Model/VulkanMeshInstance.h"
 
 namespace ScrapEngine {
 
-	class SGameObject;
-
-	class SComponent : public SObject
+	class MeshComponent : public SComponent
 	{
 	private:
-
+		VulkanMeshInstance* VulkanMesh;
 	public:
-		SComponent(std::string componentName);
-		~SComponent() = 0;
+		MeshComponent(VulkanMeshInstance* input_VulkanMesh);
+		~MeshComponent() = default;
 
 		virtual void setComponentLocation(glm::vec3 location);
 		virtual void setComponentRotation(glm::vec3 rotation);

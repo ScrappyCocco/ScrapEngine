@@ -18,8 +18,8 @@ namespace ScrapEngine {
 	};
 
 	struct Transform {
-		glm::vec3 location;
-		glm::vec3 rotation;
-		glm::vec3 scale;
+		glm::vec3 location = glm::vec3();
+		glm::vec3 rotation = glm::vec3();
+		glm::vec3 scale = glm::vec3(1, 1, 1);;
 	};
 }

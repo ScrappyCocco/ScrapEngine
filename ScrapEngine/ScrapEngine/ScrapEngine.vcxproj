@@ -21,9 +21,12 @@
   <ItemGroup>
     <ClCompile Include="Engine\Debug\DebugLog.cpp" />
     <ClCompile Include="Engine\Input\Manager\InputManager.cpp" />
+    <ClCompile Include="Engine\LogicCore\Components\Manager\ComponentsManager.cpp" />
+    <ClCompile Include="Engine\LogicCore\Components\MeshComponent\MeshComponent.cpp" />
     <ClCompile Include="Engine\LogicCore\Components\SComponent.cpp" />
     <ClCompile Include="Engine\LogicCore\GameObject\SGameObject.cpp" />
     <ClCompile Include="Engine\LogicCore\Manager\LogicManager.cpp" />
+    <ClCompile Include="Engine\LogicCore\Manager\LogicManagerView.cpp" />
     <ClCompile Include="Engine\LogicCore\SObject.cpp" />
     <ClCompile Include="Engine\Manager\EngineManager.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\BaseBuffer.cpp" />
@@ -40,6 +43,7 @@
     <ClCompile Include="Engine\Rendering\Device\VulkanDevice.cpp" />
     <ClCompile Include="Engine\Rendering\Instance\VukanInstance.cpp" />
     <ClCompile Include="Engine\Rendering\Manager\RenderManager.cpp" />
+    <ClCompile Include="Engine\Rendering\Manager\RenderManagerView.cpp" />
     <ClCompile Include="Engine\Rendering\Model\VulkanMeshInstance.cpp" />
     <ClCompile Include="Engine\Rendering\Model\VulkanModel.cpp" />
     <ClCompile Include="Engine\Rendering\Pipeline\VulkanGraphicsPipeline.cpp" />
@@ -61,10 +65,14 @@
   <ItemGroup>
     <ClInclude Include="..\..\external\stb\stb_image.h" />
     <ClInclude Include="Engine\Debug\DebugLog.h" />
+    <ClInclude Include="Engine\Input\KeyboardKeys.h" />
     <ClInclude Include="Engine\Input\Manager\InputManager.h" />
+    <ClInclude Include="Engine\LogicCore\Components\Manager\ComponentsManager.h" />
+    <ClInclude Include="Engine\LogicCore\Components\MeshComponent\MeshComponent.h" />
     <ClInclude Include="Engine\LogicCore\Components\SComponent.h" />
     <ClInclude Include="Engine\LogicCore\GameObject\SGameObject.h" />
     <ClInclude Include="Engine\LogicCore\Manager\LogicManager.h" />
+    <ClInclude Include="Engine\LogicCore\Manager\LogicManagerView.h" />
     <ClInclude Include="Engine\LogicCore\SObject.h" />
     <ClInclude Include="Engine\Manager\EngineManager.h" />
     <ClInclude Include="Engine\Rendering\Base\SimpleTestData.h" />
@@ -83,6 +91,7 @@
     <ClInclude Include="Engine\Rendering\Device\VulkanDevice.h" />
     <ClInclude Include="Engine\Rendering\Instance\VukanInstance.h" />
     <ClInclude Include="Engine\Rendering\Manager\RenderManager.h" />
+    <ClInclude Include="Engine\Rendering\Manager\RenderManagerView.h" />
     <ClInclude Include="Engine\Rendering\Memory\MemoryManager.h" />
     <ClInclude Include="Engine\Rendering\Model\VulkanMeshInstance.h" />
     <ClInclude Include="Engine\Rendering\Model\VulkanModel.h" />

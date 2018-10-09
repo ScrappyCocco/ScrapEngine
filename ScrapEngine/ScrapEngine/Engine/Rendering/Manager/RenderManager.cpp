@@ -53,7 +53,7 @@ void ScrapEngine::RenderManager::deleteCommandBuffers()
 	delete VulkanRenderCommandBuffer;
 }
 
-const ScrapEngine::GameWindow * ScrapEngine::RenderManager::getGameWindow() const
+ScrapEngine::GameWindow* ScrapEngine::RenderManager::getGameWindow() const
 {
 	return GameWindow;
 }
@@ -85,18 +85,18 @@ void ScrapEngine::RenderManager::initializeVulkan(const ScrapEngine::game_base_i
 	DebugLog::printToConsoleLog("VulkanDepthResources created");
 	VulkanRenderFrameBuffer = new VulkanFrameBuffer(VulkanRenderImageView, &deviceRef, &VulkanRenderSwapChain->getSwapChainExtent(), VulkanRenderDepth->getDepthImageView(), VulkanRenderingPass->getRenderPass(), VulkanRenderColor->getColorImageView());
 	DebugLog::printToConsoleLog("VulkanFrameBuffer created");
-	LoadedModels.push_back(new VulkanMeshInstance("../assets/shader/vert.spv", "../assets/shader/frag.spv", "../assets/models/chess/ChessPieces/Queen.fbx", "../assets/textures/SimpleGreenTexture.png",
+	/*LoadedModels.push_back(new VulkanMeshInstance("../assets/shader/vert.spv", "../assets/shader/frag.spv", "../assets/models/chess/ChessPieces/Queen.fbx", "../assets/textures/SimpleGreenTexture.png",
 		VulkanRenderDevice, VulkanRenderCommandPool->getCommandPool(), VulkanGraphicsQueue->getgraphicsQueue(), VulkanRenderSwapChain, VulkanRenderingPass
 	));
-	LoadedModels[0]->setMeshLocation(0, 0, -10.0f);
-	LoadedModels[0]->setMeshRotation(0, 0, 0);
-	LoadedModels[0]->setMeshScale(0.5f, 0.5f, 0.5f);
+	LoadedModels[0]->setMeshLocation(glm::vec3(0, 0, -10.0f));
+	LoadedModels[0]->setMeshRotation(glm::vec3(0, 0, 0));
+	LoadedModels[0]->setMeshScale(glm::vec3(0.5f, 0.5f, 0.5f));
 	LoadedModels.push_back(new VulkanMeshInstance("../assets/shader/vert.spv", "../assets/shader/frag.spv", "../assets/models/chess/ChessPieces/King.fbx", "../assets/textures/SimpleRedTexture.png",
 		VulkanRenderDevice, VulkanRenderCommandPool->getCommandPool(), VulkanGraphicsQueue->getgraphicsQueue(), VulkanRenderSwapChain, VulkanRenderingPass
 	));
-	LoadedModels[1]->setMeshLocation(1, 0, -10.0f);
-	LoadedModels[1]->setMeshRotation(0, 0, 0);
-	LoadedModels[1]->setMeshScale(0.5f, 0.5f, 0.5f);
+	LoadedModels[1]->setMeshLocation(glm::vec3(1, 0, -10.0f));
+	LoadedModels[1]->setMeshRotation(glm::vec3(0, 0, 0));
+	LoadedModels[1]->setMeshScale(glm::vec3(0.5f, 0.5f, 0.5f));*/
 	//Test model init
 	createCommandBuffers();
 	//Vulkan Semaphores
@@ -150,6 +150,11 @@ ScrapEngine::VulkanMeshInstance* ScrapEngine::RenderManager::loadMesh(const std:
 	deleteCommandBuffers();
 	createCommandBuffers();
 	return LoadedModels.back();
+}
+
+ScrapEngine::VulkanMeshInstance * ScrapEngine::RenderManager::loadMesh(const std::string & model_path, const std::string & texture_path)
+{
+	return loadMesh("../assets/shader/vert.spv", "../assets/shader/frag.spv", model_path, texture_path);
 }
 
 void ScrapEngine::RenderManager::unloadMesh(ScrapEngine::VulkanMeshInstance* meshToUnload)

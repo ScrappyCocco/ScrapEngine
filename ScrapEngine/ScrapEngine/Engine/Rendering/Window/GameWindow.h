@@ -8,6 +8,8 @@
 namespace ScrapEngine {
 	class GameWindow
 	{
+		friend class VulkanSurface;
+
 	private:
 		const uint32_t WIDTH = 800;
 		const uint32_t HEIGHT = 600;
@@ -25,7 +27,7 @@ namespace ScrapEngine {
 		void setWindowTitle(const std::string& title);
 		void setWindowIcon(const std::string& path_to_file) const;
 
-		GLFWwindow* getWindowReference();
+		void closeWindow();
 
 		ScrapEngine::InputManager* createWindowInputManager() const;
 

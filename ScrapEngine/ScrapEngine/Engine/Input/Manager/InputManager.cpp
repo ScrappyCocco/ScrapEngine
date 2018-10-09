@@ -5,8 +5,7 @@
 
 ScrapEngine::InputManager::InputManager(GLFWwindow* window) : windowRef(window)
 {
-	glfwSetKeyCallback(window, key_callback);
-	glfwSetCursorPosCallback(window, cursor_position_callback);
+
 }
 
 ScrapEngine::InputManager::~InputManager()
@@ -80,15 +79,8 @@ void ScrapEngine::InputManager::ResetCursorToSystemDefault()
 	LoadSystemCursor(ScrapEngine::SystemCursorShapes::cursor_regular_arrow);
 }
 
-int ScrapEngine::InputManager::getKeyboardKeyStatus(ScrapEngine::KeyboardKeysList key_to_check)
+int ScrapEngine::InputManager::getKeyboardKeyStatus(int key_to_check)
 {
-	return glfwGetKey(windowRef, GLFW_KEY_W);
+	return glfwGetKey(windowRef, key_to_check);
 }
 
-void ScrapEngine::InputManager::key_callback(GLFWwindow * window, int key, int scancode, int action, int mods)
-{
-}
-
-void ScrapEngine::InputManager::cursor_position_callback(GLFWwindow * window, double xpos, double ypos)
-{
-}

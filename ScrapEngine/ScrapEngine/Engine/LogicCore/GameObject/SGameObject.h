@@ -23,6 +23,14 @@ namespace ScrapEngine {
 		virtual void GameStart();
 		virtual void GameUpdate();
 
+		void setObjectLocation(glm::vec3 location);
+		void setObjectRotation(glm::vec3 rotation);
+		void setObjectScale(glm::vec3 scale);
+
+		glm::vec3 getObjectLocation();
+		glm::vec3 getObjectRotation();
+		glm::vec3 getObjectScale();
+
 		void AddComponent(SComponent* Component);
 		const std::vector<SComponent*>* GetComponents();
 	};

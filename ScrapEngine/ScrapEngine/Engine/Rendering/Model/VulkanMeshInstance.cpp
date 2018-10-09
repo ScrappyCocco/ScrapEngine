@@ -47,19 +47,34 @@ ScrapEngine::VulkanMeshInstance::~VulkanMeshInstance()
 	delete VulkanRenderModel;
 }
 
-void ScrapEngine::VulkanMeshInstance::setMeshLocation(float x, float y, float z)
+void ScrapEngine::VulkanMeshInstance::setMeshLocation(glm::vec3 location)
 {
-	object_location.location = glm::vec3(x, y, z);
+	object_location.location = location;
 }
 
-void ScrapEngine::VulkanMeshInstance::setMeshRotation(float x, float y, float z)
+void ScrapEngine::VulkanMeshInstance::setMeshRotation(glm::vec3 rotation)
 {
-	object_location.rotation = glm::vec3(x, y, z);
+	object_location.rotation = rotation;
 }
 
-void ScrapEngine::VulkanMeshInstance::setMeshScale(float x, float y, float z)
+void ScrapEngine::VulkanMeshInstance::setMeshScale(glm::vec3 scale)
 {
-	object_location.scale = glm::vec3(x, y, z);
+	object_location.scale = scale;
+}
+
+glm::vec3 ScrapEngine::VulkanMeshInstance::getMeshLocation()
+{
+	return object_location.location;
+}
+
+glm::vec3 ScrapEngine::VulkanMeshInstance::getMeshRotation()
+{
+	return object_location.rotation;
+}
+
+glm::vec3 ScrapEngine::VulkanMeshInstance::getMeshScale()
+{
+	return object_location.scale;
 }
 
 void ScrapEngine::VulkanMeshInstance::updateUniformBuffer(uint32_t currentImage, vk::Extent2D * swapChainExtent)

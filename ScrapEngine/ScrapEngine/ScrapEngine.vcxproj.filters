@@ -107,6 +107,12 @@
     <Filter Include="Engine\Utility">
       <UniqueIdentifier>{9ac5a011-de22-42f8-b2d2-964ab20d20b8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\LogicCore\Components\MeshComponent">
+      <UniqueIdentifier>{b90411e5-6a40-4da7-a47d-85db5ad7abe9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\LogicCore\Components\Manager">
+      <UniqueIdentifier>{d43e6fa8-af17-42fe-9d55-4b6cea336900}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Manager\EngineManager.cpp">
@@ -222,6 +228,18 @@
     </ClCompile>
     <ClCompile Include="Engine\Utility\UsefulMethods.cpp">
       <Filter>Engine\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\LogicCore\Components\MeshComponent\MeshComponent.cpp">
+      <Filter>Engine\LogicCore\Components\MeshComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Manager\RenderManagerView.cpp">
+      <Filter>Engine\Rendering\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\LogicCore\Manager\LogicManagerView.cpp">
+      <Filter>Engine\LogicCore\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\LogicCore\Components\Manager\ComponentsManager.cpp">
+      <Filter>Engine\LogicCore\Components\Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -353,6 +371,21 @@
     </ClInclude>
     <ClInclude Include="Engine\Utility\UsefulTypes.h">
       <Filter>Engine\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Input\KeyboardKeys.h">
+      <Filter>Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\LogicCore\Components\MeshComponent\MeshComponent.h">
+      <Filter>Engine\LogicCore\Components\MeshComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Manager\RenderManagerView.h">
+      <Filter>Engine\Rendering\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\LogicCore\Manager\LogicManagerView.h">
+      <Filter>Engine\LogicCore\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\LogicCore\Components\Manager\ComponentsManager.h">
+      <Filter>Engine\LogicCore\Components\Manager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

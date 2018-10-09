@@ -26,21 +26,12 @@ void ScrapEngine::EngineManager::StartGameLoop()
 	DebugLog::printToConsoleLog("---Engine Execution ended---");
 }
 
-const ScrapEngine::GameWindow* ScrapEngine::EngineManager::getGameWindow() const
-{
-	return ScrapRenderManager->getGameWindow();
-}
-
-ScrapEngine::LogicManager * ScrapEngine::EngineManager::getLogicManager() const
-{
-	return ScrapLogicManager;
-}
-
 void ScrapEngine::EngineManager::initializeEngine()
 {
 	DebugLog::printToConsoleLog("---initializeEngine()---");
-	initializeRenderManager(&received_base_game_info);
-	initializeLogicManager();
+	initializeRenderManager(&received_base_game_info); //Create the base rendering module
+	initializeLogicManager(); //Create the base logic manager
+	initializeViews(); //Create the views for the user
 	DebugLog::printToConsoleLog("---initializeEngine() completed---");
 }
 
@@ -52,6 +43,12 @@ void ScrapEngine::EngineManager::initializeRenderManager(const ScrapEngine::game
 void ScrapEngine::EngineManager::initializeLogicManager()
 {
 	ScrapLogicManager = new LogicManager();
+}
+
+void ScrapEngine::EngineManager::initializeViews()
+{
+	RenderManagerView = new ScrapEngine::RenderManagerView(ScrapRenderManager);
+	LogicManagerView = new ScrapEngine::LogicManagerView(ScrapRenderManager, ScrapLogicManager);
 }
 
 void ScrapEngine::EngineManager::mainGameLoop()
@@ -71,6 +68,8 @@ void ScrapEngine::EngineManager::cleanupEngine()
 	DebugLog::printToConsoleLog("---cleanupEngine()---");
 	
 	delete ScrapRenderManager;
+	delete RenderManagerView;
+	delete LogicManagerView;
 	delete ScrapLogicManager;
 	
 	cleanupDone = true;

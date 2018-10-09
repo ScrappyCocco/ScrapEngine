@@ -79,9 +79,10 @@ namespace ScrapEngine {
 		void waitDeviceIdle();
 
 		ScrapEngine::VulkanMeshInstance* loadMesh(const std::string& vertex_shader_path, const std::string& fragment_shader_path, const std::string& model_path, const std::string& texture_path);
+		ScrapEngine::VulkanMeshInstance* loadMesh(const std::string& model_path, const std::string& texture_path);
 		void unloadMesh(ScrapEngine::VulkanMeshInstance* meshToUnload);
 
-		const ScrapEngine::GameWindow* getGameWindow() const;
+		ScrapEngine::GameWindow* getGameWindow() const;
 	};
 }
 

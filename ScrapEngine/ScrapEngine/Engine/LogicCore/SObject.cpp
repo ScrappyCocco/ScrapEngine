@@ -7,7 +7,7 @@ ScrapEngine::SObject::SObject(std::string input_object_name) : object_name(input
 
 ScrapEngine::SObject::~SObject()
 {
-
+	//Empty here
 }
 
 std::string ScrapEngine::SObject::toString() const

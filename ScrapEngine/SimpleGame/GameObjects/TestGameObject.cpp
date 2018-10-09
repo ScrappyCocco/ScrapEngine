@@ -1,14 +1,19 @@
 #include "TestGameObject.h"
 #include "Engine/Debug/DebugLog.h"
 
-TestGameObject::TestGameObject(ScrapEngine::InputManager* CreatedInputManager) : SGameObject("Test game object"), InputManagerRef(CreatedInputManager)
+TestGameObject::TestGameObject(ScrapEngine::InputManager* CreatedInputManager, ScrapEngine::ComponentsManager* input_ComponentManager)
+	: SGameObject("Test game object"), InputManagerRef(CreatedInputManager)
 {
-
-}
-
-TestGameObject::~TestGameObject()
-{
-
+	//Add mesh to that GameObject
+	AddComponent(input_ComponentManager->createNewMeshComponent(
+		"../assets/shader/vert.spv", 
+		"../assets/shader/frag.spv", 
+		"../assets/models/chess/ChessPieces/Queen.fbx", 
+		"../assets/textures/SimpleGreenTexture.png"
+	));
+	setObjectLocation(glm::vec3(0, 0, -10.0f));
+	setObjectRotation(glm::vec3(0, 0, 0));
+	setObjectScale(glm::vec3(0.5f, 0.5f, 0.5f));
 }
 
 void TestGameObject::GameStart()
@@ -19,12 +24,22 @@ void TestGameObject::GameStart()
 void TestGameObject::GameUpdate()
 {
 	//ScrapEngine::DebugLog::printToConsoleLog("GAMEOBJECT: UPDATE");
-	if (InputManagerRef->getKeyboardKeyStatus(ScrapEngine::KeyboardKeysList::keyboard_key_w) == ScrapEngine::KeyboardKeyState::pressed) {
-		ScrapEngine::DebugLog::printToConsoleLog("GAMEOBJECT: Key Pressed");
+	if (InputManagerRef->getKeyboardKeyStatus(keyboard_key_W) == ScrapEngine::KeyboardKeyState::pressed){
+		(*GetComponents())[0]->setComponentLocation((*GetComponents())[0]->getComponentLocation() + glm::vec3(0, 0, 0.001f));
 	}
-	else {
-		ScrapEngine::DebugLog::printToConsoleLog("GAMEOBJECT: Key Released");
+	if (InputManagerRef->getKeyboardKeyStatus(keyboard_key_S) == ScrapEngine::KeyboardKeyState::pressed) {
+		(*GetComponents())[0]->setComponentLocation((*GetComponents())[0]->getComponentLocation() + glm::vec3(0, 0, -0.001f));
 	}
-	ScrapEngine::MouseLocation location = InputManagerRef->getLastMouseLocation();
-	ScrapEngine::DebugLog::printToConsoleLog("Location:" + std::to_string(location.xpos) + " - " + std::to_string(location.ypos));
+	if (InputManagerRef->getKeyboardKeyStatus(keyboard_key_E) == ScrapEngine::KeyboardKeyState::pressed) {
+		(*GetComponents())[0]->setComponentLocation((*GetComponents())[0]->getComponentLocation() + glm::vec3(0, 0.001f, 0));
+	}
+	if (InputManagerRef->getKeyboardKeyStatus(keyboard_key_Q) == ScrapEngine::KeyboardKeyState::pressed) {
+		(*GetComponents())[0]->setComponentLocation((*GetComponents())[0]->getComponentLocation() + glm::vec3(0, -0.001f, 0));
+	}
+	if (InputManagerRef->getKeyboardKeyStatus(keyboard_key_D) == ScrapEngine::KeyboardKeyState::pressed) {
+		(*GetComponents())[0]->setComponentLocation((*GetComponents())[0]->getComponentLocation() + glm::vec3(0.001f, 0, 0));
+	}
+	if (InputManagerRef->getKeyboardKeyStatus(keyboard_key_A) == ScrapEngine::KeyboardKeyState::pressed) {
+		(*GetComponents())[0]->setComponentLocation((*GetComponents())[0]->getComponentLocation() + glm::vec3(-0.001f, 0, 0));
+	}
 }

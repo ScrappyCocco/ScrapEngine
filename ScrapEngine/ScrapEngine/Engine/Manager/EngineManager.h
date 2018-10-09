@@ -3,13 +3,17 @@
 #include "../Debug/DebugLog.h"
 #include "../Utility/UsefulTypes.h"
 #include "../Rendering/Manager/RenderManager.h"
+#include "../Rendering/Manager/RenderManagerView.h"
 #include "../LogicCore/Manager/LogicManager.h"
+#include "../LogicCore/Manager/LogicManagerView.h"
 
 namespace ScrapEngine {
 	class EngineManager
 	{
 	private:
 		bool cleanupDone = false;
+
+		ScrapEngine::game_base_info received_base_game_info;
 
 		ScrapEngine::RenderManager* ScrapRenderManager = nullptr;
 		ScrapEngine::LogicManager* ScrapLogicManager = nullptr;
@@ -19,15 +23,14 @@ namespace ScrapEngine {
 
 		void StartGameLoop();
 
-		const ScrapEngine::GameWindow* getGameWindow() const;
-		ScrapEngine::LogicManager* getLogicManager() const;
+		ScrapEngine::LogicManagerView* LogicManagerView;
+		ScrapEngine::RenderManagerView* RenderManagerView;
 	private:
-		ScrapEngine::game_base_info received_base_game_info;
-
 		void initializeEngine();
 
 		void initializeRenderManager(const ScrapEngine::game_base_info* game_info);
 		void initializeLogicManager();
+		void initializeViews();
 
 		void mainGameLoop();
 

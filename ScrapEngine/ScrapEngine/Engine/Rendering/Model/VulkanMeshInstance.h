@@ -41,9 +41,13 @@ namespace ScrapEngine {
 			ScrapEngine::VulkanRenderPass* RenderingPass);
 		~VulkanMeshInstance();
 
-		void setMeshLocation(float x, float y, float z);
-		void setMeshRotation(float x, float y, float z);
-		void setMeshScale(float x, float y, float z);
+		void setMeshLocation(glm::vec3 location);
+		void setMeshRotation(glm::vec3 rotation);
+		void setMeshScale(glm::vec3 scale);
+
+		glm::vec3 getMeshLocation();
+		glm::vec3 getMeshRotation();
+		glm::vec3 getMeshScale();
 
 		void updateUniformBuffer(uint32_t currentImage, vk::Extent2D* swapChainExtent);
 		void deleteGraphicsPipeline();
