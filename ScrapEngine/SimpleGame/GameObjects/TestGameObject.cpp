@@ -25,21 +25,21 @@ void TestGameObject::GameUpdate()
 {
 	//ScrapEngine::DebugLog::printToConsoleLog("GAMEOBJECT: UPDATE");
 	if (InputManagerRef->getKeyboardKeyStatus(keyboard_key_W) == ScrapEngine::KeyboardKeyState::pressed){
-		(*GetComponents())[0]->setComponentLocation((*GetComponents())[0]->getComponentLocation() + glm::vec3(0, 0, 0.001f));
+		setObjectLocation(getObjectLocation() + glm::vec3(0, 0, 0.001f));
 	}
 	if (InputManagerRef->getKeyboardKeyStatus(keyboard_key_S) == ScrapEngine::KeyboardKeyState::pressed) {
-		(*GetComponents())[0]->setComponentLocation((*GetComponents())[0]->getComponentLocation() + glm::vec3(0, 0, -0.001f));
+		setObjectLocation(getObjectLocation() + glm::vec3(0, 0, -0.001f));
 	}
 	if (InputManagerRef->getKeyboardKeyStatus(keyboard_key_E) == ScrapEngine::KeyboardKeyState::pressed) {
-		(*GetComponents())[0]->setComponentLocation((*GetComponents())[0]->getComponentLocation() + glm::vec3(0, 0.001f, 0));
+		setObjectLocation(getObjectLocation() + glm::vec3(0, 0.001f, 0));
 	}
 	if (InputManagerRef->getKeyboardKeyStatus(keyboard_key_Q) == ScrapEngine::KeyboardKeyState::pressed) {
-		(*GetComponents())[0]->setComponentLocation((*GetComponents())[0]->getComponentLocation() + glm::vec3(0, -0.001f, 0));
+		setObjectLocation(getObjectLocation() + glm::vec3(0, -0.001f, 0));
 	}
 	if (InputManagerRef->getKeyboardKeyStatus(keyboard_key_D) == ScrapEngine::KeyboardKeyState::pressed) {
-		(*GetComponents())[0]->setComponentLocation((*GetComponents())[0]->getComponentLocation() + glm::vec3(0.001f, 0, 0));
+		setObjectLocation(getObjectLocation() + glm::vec3(0.001f, 0, 0));
 	}
 	if (InputManagerRef->getKeyboardKeyStatus(keyboard_key_A) == ScrapEngine::KeyboardKeyState::pressed) {
-		(*GetComponents())[0]->setComponentLocation((*GetComponents())[0]->getComponentLocation() + glm::vec3(-0.001f, 0, 0));
+		setObjectLocation(getObjectLocation() + glm::vec3(-0.001f, 0, 0));
 	}
 }

@@ -4,7 +4,8 @@
 ScrapEngine::TextureSampler::TextureSampler(vk::Device* input_deviceRef, uint32_t mipLevels)
 	: deviceRef(input_deviceRef)
 {
-	vk::SamplerCreateInfo samplerInfo(vk::SamplerCreateFlags(), 
+	vk::SamplerCreateInfo samplerInfo(
+		vk::SamplerCreateFlags(), 
 		vk::Filter::eLinear, 
 		vk::Filter::eLinear, 
 		vk::SamplerMipmapMode::eLinear,
@@ -17,7 +18,8 @@ ScrapEngine::TextureSampler::TextureSampler(vk::Device* input_deviceRef, uint32_
 		false, 
 		vk::CompareOp::eAlways, 
 		0, 
-		static_cast<float>(mipLevels));
+		static_cast<float>(mipLevels)
+	);
 
 	if (deviceRef->createSampler(&samplerInfo, nullptr, &textureSampler) != vk::Result::eSuccess) {
 		throw std::runtime_error("TextureSampler: Failed to create texture sampler!");
