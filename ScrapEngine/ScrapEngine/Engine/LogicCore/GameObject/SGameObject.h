@@ -21,7 +21,7 @@ namespace ScrapEngine {
 		~SGameObject() = 0;
 
 		virtual void GameStart();
-		virtual void GameUpdate();
+		virtual void GameUpdate(float time);
 
 		void setObjectLocation(glm::vec3 location);
 		void setObjectRotation(glm::vec3 rotation);

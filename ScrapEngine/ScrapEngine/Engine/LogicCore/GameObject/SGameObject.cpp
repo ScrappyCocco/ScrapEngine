@@ -17,7 +17,7 @@ void ScrapEngine::SGameObject::GameStart()
 	//This will be defined by the user when is necessary, otherwise it will have no effect
 }
 
-void ScrapEngine::SGameObject::GameUpdate()
+void ScrapEngine::SGameObject::GameUpdate(float time)
 {
 	//This will be defined by the user when is necessary, otherwise it will have no effect
 }

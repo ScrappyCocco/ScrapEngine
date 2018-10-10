@@ -20,6 +20,12 @@ namespace ScrapEngine {
 	struct Transform {
 		glm::vec3 location = glm::vec3();
 		glm::vec3 rotation = glm::vec3();
-		glm::vec3 scale = glm::vec3(1, 1, 1);;
+		glm::vec3 scale = glm::vec3(1, 1, 1);
+
+		std::string toString() const {
+			return "Loc:(" + std::to_string(location.x) + ", " + std::to_string(location.y) + ", " + std::to_string(location.z) + "), " +
+				"Rot:(" + std::to_string(rotation.x) + ", " + std::to_string(rotation.y) + ", " + std::to_string(rotation.z) + "), " +
+				"Scale:(" + std::to_string(scale.x) + ", " + std::to_string(scale.y) + ", " + std::to_string(scale.z) + ")";
+		}
 	};
 }

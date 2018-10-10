@@ -44,7 +44,7 @@ void ScrapEngine::GameWindow::closeWindow()
 	glfwSetWindowShouldClose(window, GLFW_TRUE);
 }
 
-ScrapEngine::InputManager * ScrapEngine::GameWindow::createWindowInputManager() const
+ScrapEngine::InputManager* ScrapEngine::GameWindow::createWindowInputManager() const
 {
 	return new ScrapEngine::InputManager(window);
 }

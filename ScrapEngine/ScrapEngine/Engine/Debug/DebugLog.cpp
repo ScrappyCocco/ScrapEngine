@@ -8,6 +8,11 @@ void ScrapEngine::DebugLog::printToConsoleLog(std::string logString)
 	std::cout << NowToString().c_str() << logString.c_str() << std::endl;
 }
 
+void ScrapEngine::DebugLog::printToConsoleLog(glm::vec3 vector)
+{
+	std::cout << NowToString().c_str() << "Vec3: (" << vector.x << ", " << vector.y << ", " << vector.z << ")" << std::endl;
+}
+
 std::string ScrapEngine::DebugLog::NowToString()
 {
 	struct tm timeinfo;

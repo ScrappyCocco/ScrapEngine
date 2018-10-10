@@ -27,8 +27,6 @@ int main() {
 		exit_value = EXIT_FAILURE;
 	}
 	delete ScrapEngineManager;
-	getchar();
-	fflush(stdin);
 	return exit_value;
 
 }

@@ -1,5 +1,5 @@
 #include "EngineManager.h"
-
+#include <chrono>
 #include "../Rendering/Base/SimpleTestData.h"
 
 ScrapEngine::EngineManager::EngineManager(std::string app_name, int app_version, uint32_t window_WIDTH, uint32_t window_HEIGHT, bool fullscreen)
@@ -54,10 +54,15 @@ void ScrapEngine::EngineManager::initializeViews()
 void ScrapEngine::EngineManager::mainGameLoop()
 {
 	DebugLog::printToConsoleLog("---mainGameLoop() started---");
+	std::chrono::time_point<std::chrono::steady_clock> startTime, currentTime;
+	float time;
 	const ScrapEngine::GameWindow* window_ref = ScrapRenderManager->getGameWindow();
 	while (!window_ref->checkWindowShouldClose()) {
-		ScrapLogicManager->ExecuteGameObjectsUpdateEvent();
+		time = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - startTime).count();
+		ScrapLogicManager->ExecuteGameObjectsUpdateEvent(time);
+		startTime = std::chrono::high_resolution_clock::now();
 		ScrapRenderManager->drawFrame();
+		currentTime = std::chrono::high_resolution_clock::now();
 	}
 	ScrapRenderManager->waitDeviceIdle();
 	DebugLog::printToConsoleLog("---mainGameLoop() ended---");

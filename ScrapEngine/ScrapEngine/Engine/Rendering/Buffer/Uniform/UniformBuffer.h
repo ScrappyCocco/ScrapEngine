@@ -19,8 +19,6 @@ namespace ScrapEngine {
 
 		vk::Device* deviceRef;
 		size_t swapChainImagesSize;
-
-		int called = 0;
 	public:
 		UniformBuffer(vk::Device* input_deviceRef, vk::PhysicalDevice* PhysicalDevice, const std::vector<vk::Image>* swapChainImages);
 		~UniformBuffer();

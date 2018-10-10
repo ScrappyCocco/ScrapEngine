@@ -8,10 +8,10 @@ TestGameObject::TestGameObject(ScrapEngine::InputManager* CreatedInputManager, S
 	AddComponent(input_ComponentManager->createNewMeshComponent(
 		"../assets/shader/vert.spv", 
 		"../assets/shader/frag.spv", 
-		"../assets/models/chess/ChessPieces/Queen.fbx", 
+		"../assets/models/chess/ChessPieces/King.fbx", 
 		"../assets/textures/SimpleGreenTexture.png"
 	));
-	setObjectLocation(glm::vec3(0, 0, -10.0f));
+	setObjectLocation(glm::vec3(0, 0, -20.0f));
 	setObjectRotation(glm::vec3(0, 0, 0));
 	setObjectScale(glm::vec3(0.5f, 0.5f, 0.5f));
 }
@@ -21,7 +21,7 @@ void TestGameObject::GameStart()
 	//ScrapEngine::DebugLog::printToConsoleLog("GAMEOBJECT: START");
 }
 
-void TestGameObject::GameUpdate()
+void TestGameObject::GameUpdate(float time)
 {
 	//ScrapEngine::DebugLog::printToConsoleLog("GAMEOBJECT: UPDATE");
 	if (InputManagerRef->getKeyboardKeyStatus(keyboard_key_W) == ScrapEngine::KeyboardKeyState::pressed){
@@ -42,4 +42,5 @@ void TestGameObject::GameUpdate()
 	if (InputManagerRef->getKeyboardKeyStatus(keyboard_key_A) == ScrapEngine::KeyboardKeyState::pressed) {
 		setObjectLocation(getObjectLocation() + glm::vec3(-0.001f, 0, 0));
 	}
+	ScrapEngine::DebugLog::printToConsoleLog("Time:" + std::to_string(time));
 }

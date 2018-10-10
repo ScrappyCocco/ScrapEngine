@@ -16,7 +16,7 @@ public:
 	TestGameObject(ScrapEngine::InputManager* CreatedInputManager, ScrapEngine::ComponentsManager* input_ComponentManager);
 	~TestGameObject() = default;
 
-	virtual void GameStart();
-	virtual void GameUpdate();
+	virtual void GameStart() override;
+	virtual void GameUpdate(float time) override;
 };
 
