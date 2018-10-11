@@ -3,6 +3,7 @@
 #include <vulkan/vulkan.hpp>
 #include <vector>
 #include "../../../Utility/UsefulTypes.h"
+#include "../../Camera/Camera.h"
 
 namespace ScrapEngine {
 	struct UniformBufferObject {
@@ -18,12 +19,13 @@ namespace ScrapEngine {
 		std::vector<vk::DeviceMemory> uniformBuffersMemory;
 
 		vk::Device* deviceRef;
+		vk::Extent2D swapChainExtent;
 		size_t swapChainImagesSize;
 	public:
-		UniformBuffer(vk::Device* input_deviceRef, vk::PhysicalDevice* PhysicalDevice, const std::vector<vk::Image>* swapChainImages);
+		UniformBuffer(vk::Device* input_deviceRef, vk::PhysicalDevice* PhysicalDevice, const std::vector<vk::Image>* swapChainImages, vk::Extent2D input_swapChainExtent);
 		~UniformBuffer();
 
-		void updateUniformBuffer(uint32_t currentImage, vk::Extent2D* swapChainExtent, ScrapEngine::Transform object_transform);
+		void updateUniformBuffer(uint32_t currentImage, ScrapEngine::Transform object_transform, ScrapEngine::Camera* RenderCamera);
 		const std::vector<vk::Buffer>* getUniformBuffers();
 		const std::vector<vk::DeviceMemory>* getUniformBuffersMemory();
 	};

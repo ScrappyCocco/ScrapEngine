@@ -2,8 +2,8 @@
 #include "../../Debug/DebugLog.h"
 
 ScrapEngine::VulkanMeshInstance::VulkanMeshInstance(const std::string& vertex_shader_path, const std::string& fragment_shader_path, const std::string& model_path, const std::string& texture_path,
-	ScrapEngine::VulkanDevice * RenderDevice, vk::CommandPool * CommandPool, vk::Queue * graphicsQueue, ScrapEngine::VulkanSwapChain * SwapChain, 
-	ScrapEngine::VulkanRenderPass * RenderingPass)
+	ScrapEngine::VulkanDevice* RenderDevice, vk::CommandPool* CommandPool, vk::Queue* graphicsQueue, ScrapEngine::VulkanSwapChain* SwapChain, 
+	ScrapEngine::VulkanRenderPass* RenderingPass)
 {
 	vk::Device* device_ref = RenderDevice->getLogicalDevice();
 	vk::PhysicalDevice* physical_device_ref = RenderDevice->getPhysicalDevice();
@@ -23,7 +23,7 @@ ScrapEngine::VulkanMeshInstance::VulkanMeshInstance(const std::string& vertex_sh
 	DebugLog::printToConsoleLog("VertexBuffer created");
 	VulkanRenderIndexBuffer = new IndexBuffer(device_ref, physical_device_ref, VulkanRenderModel->getIndices(), CommandPool, graphicsQueue);
 	DebugLog::printToConsoleLog("IndexBuffer created");
-	VulkanRenderUniformBuffer = new UniformBuffer(device_ref, physical_device_ref, SwapChain->getSwapChainImagesVector());
+	VulkanRenderUniformBuffer = new UniformBuffer(device_ref, physical_device_ref, SwapChain->getSwapChainImagesVector(), SwapChain->getSwapChainExtent());
 	DebugLog::printToConsoleLog("UniformBuffer created");
 	VulkanRenderDescriptorPool = new VulkanDescriptorPool(device_ref, SwapChain->getSwapChainImagesVector());
 	DebugLog::printToConsoleLog("VulkanDescriptorPool created");
@@ -77,22 +77,22 @@ glm::vec3 ScrapEngine::VulkanMeshInstance::getMeshScale()
 	return object_location.scale;
 }
 
-void ScrapEngine::VulkanMeshInstance::updateUniformBuffer(uint32_t currentImage, vk::Extent2D * swapChainExtent)
+void ScrapEngine::VulkanMeshInstance::updateUniformBuffer(uint32_t currentImage, ScrapEngine::Camera* RenderCamera)
 {
-	VulkanRenderUniformBuffer->updateUniformBuffer(currentImage, swapChainExtent, object_location);
+	VulkanRenderUniformBuffer->updateUniformBuffer(currentImage, object_location, RenderCamera);
 }
 
-ScrapEngine::UniformBuffer * ScrapEngine::VulkanMeshInstance::getVulkanRenderUniformBuffer()
+ScrapEngine::UniformBuffer* ScrapEngine::VulkanMeshInstance::getVulkanRenderUniformBuffer()
 {
 	return VulkanRenderUniformBuffer;
 }
 
-ScrapEngine::VulkanGraphicsPipeline * ScrapEngine::VulkanMeshInstance::getVulkanRenderGraphicsPipeline()
+ScrapEngine::VulkanGraphicsPipeline* ScrapEngine::VulkanMeshInstance::getVulkanRenderGraphicsPipeline()
 {
 	return VulkanRenderGraphicsPipeline;
 }
 
-ScrapEngine::VulkanDescriptorSet * ScrapEngine::VulkanMeshInstance::getVulkanRenderDescriptorSet()
+ScrapEngine::VulkanDescriptorSet* ScrapEngine::VulkanMeshInstance::getVulkanRenderDescriptorSet()
 {
 	return VulkanRenderDescriptorSet;
 }

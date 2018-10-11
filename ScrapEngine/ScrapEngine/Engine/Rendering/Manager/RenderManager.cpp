@@ -12,6 +12,7 @@ ScrapEngine::RenderManager::~RenderManager()
 	DebugLog::printToConsoleLog("Deleting ~RenderManager");
 	deleteQueues();
 	cleanupSwapChain();
+	delete RenderCamera;
 
 	for (ScrapEngine::VulkanMeshInstance* current_model : LoadedModels) {
 		delete current_model;
@@ -58,6 +59,11 @@ ScrapEngine::GameWindow* ScrapEngine::RenderManager::getGameWindow() const
 	return GameWindow;
 }
 
+ScrapEngine::Camera* ScrapEngine::RenderManager::getRenderCamera() const
+{
+	return RenderCamera;
+}
+
 void ScrapEngine::RenderManager::initializeVulkan(const ScrapEngine::game_base_info* received_base_game_info)
 {
 	DebugLog::printToConsoleLog("---initializeVulkan()---");
@@ -71,7 +77,7 @@ void ScrapEngine::RenderManager::initializeVulkan(const ScrapEngine::game_base_i
 	createQueues();
 	VulkanRenderSwapChain = new VulkanSwapChain(VulkanRenderDevice->querySwapChainSupport(VulkanRenderDevice->getPhysicalDevice()),
 		VulkanRenderDevice->getCachedQueueFamilyIndices(),
-		&deviceRef, VulkanWindowSurface->getSurface(), received_base_game_info->window_WIDTH, received_base_game_info->window_HEIGHT);
+		&deviceRef, VulkanWindowSurface->getSurface(), received_base_game_info->window_WIDTH, received_base_game_info->window_HEIGHT, received_base_game_info->vsync);
 	DebugLog::printToConsoleLog("VulkanSwapChain created");
 	VulkanRenderImageView = new VulkanImageView(&deviceRef, VulkanRenderSwapChain);
 	DebugLog::printToConsoleLog("VulkanImageView created");
@@ -85,19 +91,7 @@ void ScrapEngine::RenderManager::initializeVulkan(const ScrapEngine::game_base_i
 	DebugLog::printToConsoleLog("VulkanDepthResources created");
 	VulkanRenderFrameBuffer = new VulkanFrameBuffer(VulkanRenderImageView, &deviceRef, &VulkanRenderSwapChain->getSwapChainExtent(), VulkanRenderDepth->getDepthImageView(), VulkanRenderingPass->getRenderPass(), VulkanRenderColor->getColorImageView());
 	DebugLog::printToConsoleLog("VulkanFrameBuffer created");
-	/*LoadedModels.push_back(new VulkanMeshInstance("../assets/shader/vert.spv", "../assets/shader/frag.spv", "../assets/models/chess/ChessPieces/Queen.fbx", "../assets/textures/SimpleGreenTexture.png",
-		VulkanRenderDevice, VulkanRenderCommandPool->getCommandPool(), VulkanGraphicsQueue->getgraphicsQueue(), VulkanRenderSwapChain, VulkanRenderingPass
-	));
-	LoadedModels[0]->setMeshLocation(glm::vec3(0, 0, -10.0f));
-	LoadedModels[0]->setMeshRotation(glm::vec3(0, 0, 0));
-	LoadedModels[0]->setMeshScale(glm::vec3(0.5f, 0.5f, 0.5f));
-	LoadedModels.push_back(new VulkanMeshInstance("../assets/shader/vert.spv", "../assets/shader/frag.spv", "../assets/models/chess/ChessPieces/King.fbx", "../assets/textures/SimpleRedTexture.png",
-		VulkanRenderDevice, VulkanRenderCommandPool->getCommandPool(), VulkanGraphicsQueue->getgraphicsQueue(), VulkanRenderSwapChain, VulkanRenderingPass
-	));
-	LoadedModels[1]->setMeshLocation(glm::vec3(1, 0, -10.0f));
-	LoadedModels[1]->setMeshRotation(glm::vec3(0, 0, 0));
-	LoadedModels[1]->setMeshScale(glm::vec3(0.5f, 0.5f, 0.5f));*/
-	//Test model init
+	//Create empty CommandBuffers
 	createCommandBuffers();
 	//Vulkan Semaphores
 	VulkanRenderSemaphores = new VulkanSemaphoresManager(&deviceRef);
@@ -105,6 +99,8 @@ void ScrapEngine::RenderManager::initializeVulkan(const ScrapEngine::game_base_i
 	renderFinishedSemaphoresRef = VulkanRenderSemaphores->getRenderFinishedSemaphoresVector();
 	inFlightFencesRef = VulkanRenderSemaphores->getInFlightFencesVector();
 	DebugLog::printToConsoleLog("VulkanSemaphoresManager created");
+	createCamera();
+	DebugLog::printToConsoleLog("User View Camera created");
 	DebugLog::printToConsoleLog("---initializeVulkan() completed---");
 }
 
@@ -152,7 +148,7 @@ ScrapEngine::VulkanMeshInstance* ScrapEngine::RenderManager::loadMesh(const std:
 	return LoadedModels.back();
 }
 
-ScrapEngine::VulkanMeshInstance * ScrapEngine::RenderManager::loadMesh(const std::string & model_path, const std::string & texture_path)
+ScrapEngine::VulkanMeshInstance* ScrapEngine::RenderManager::loadMesh(const std::string & model_path, const std::string & texture_path)
 {
 	return loadMesh("../assets/shader/vert.spv", "../assets/shader/frag.spv", model_path, texture_path);
 }
@@ -185,7 +181,7 @@ void ScrapEngine::RenderManager::drawFrame()
 		throw std::runtime_error("RenderManager: Failed to acquire swap chain image!");
 	}
 	for (int i = 0;i < LoadedModels.size(); i++) {
-		LoadedModels[i]->updateUniformBuffer(imageIndex, &VulkanRenderSwapChain->getSwapChainExtent());
+		LoadedModels[i]->updateUniformBuffer(imageIndex, RenderCamera);
 	}
 	vk::SubmitInfo submitInfo;
 
@@ -246,4 +242,9 @@ void ScrapEngine::RenderManager::recreateSwapChain()
 {
 	deviceRef.waitIdle();
 	//TODO https://vulkan-tutorial.com/Drawing_a_triangle/Swap_chain_recreation
+}
+
+void ScrapEngine::RenderManager::createCamera()
+{
+	RenderCamera = new Camera();
 }

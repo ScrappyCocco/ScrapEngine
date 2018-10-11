@@ -2,11 +2,11 @@
 
 #include <algorithm>
 
-ScrapEngine::VulkanSwapChain::VulkanSwapChain(SwapChainSupportDetails swapChainSupport, GraphicsQueue::QueueFamilyIndices indices, vk::Device* input_deviceRef, vk::SurfaceKHR* input_surfaceRef, uint32_t WIDTH, uint32_t HEIGHT)
+ScrapEngine::VulkanSwapChain::VulkanSwapChain(SwapChainSupportDetails swapChainSupport, GraphicsQueue::QueueFamilyIndices indices, vk::Device* input_deviceRef, vk::SurfaceKHR* input_surfaceRef, uint32_t WIDTH, uint32_t HEIGHT, bool vsync)
 	: deviceRef(input_deviceRef), surfaceRef(input_surfaceRef)
 {
 	vk::SurfaceFormatKHR surfaceFormat = chooseSwapSurfaceFormat(swapChainSupport.formats);
-	vk::PresentModeKHR presentMode = chooseSwapPresentMode(swapChainSupport.presentModes);
+	vk::PresentModeKHR presentMode = chooseSwapPresentMode(swapChainSupport.presentModes, vsync);
 	vk::Extent2D extent = chooseSwapExtent(swapChainSupport.capabilities, WIDTH, HEIGHT);
 
 	uint32_t imageCount = swapChainSupport.capabilities.minImageCount + 1;
@@ -73,11 +73,14 @@ vk::SurfaceFormatKHR ScrapEngine::VulkanSwapChain::chooseSwapSurfaceFormat(const
 	return availableFormats[0];
 }
 
-vk::PresentModeKHR ScrapEngine::VulkanSwapChain::chooseSwapPresentMode(const std::vector<vk::PresentModeKHR> availablePresentModes)
+vk::PresentModeKHR ScrapEngine::VulkanSwapChain::chooseSwapPresentMode(const std::vector<vk::PresentModeKHR> availablePresentModes, bool vsync)
 {
 	vk::PresentModeKHR bestMode = vk::PresentModeKHR::eFifo;
 
 	for (const auto& availablePresentMode : availablePresentModes) {
+		if (vsync && (availablePresentMode == vk::PresentModeKHR::eFifoRelaxed || availablePresentMode == vk::PresentModeKHR::eFifo)) {
+			return availablePresentMode;
+		}
 		if (availablePresentMode == vk::PresentModeKHR::eMailbox) {
 			return availablePresentMode;
 		}

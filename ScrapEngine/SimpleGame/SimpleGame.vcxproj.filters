@@ -15,6 +15,9 @@
     <Filter Include="File di origine\GameObjects">
       <UniqueIdentifier>{44a01f9c-dfaf-48a4-b6f2-490d8fc9033a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="File di origine\GameObjects\Camera">
+      <UniqueIdentifier>{5bac9f45-3d9c-434e-830a-705dc5f29923}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -23,11 +26,17 @@
     <ClCompile Include="GameObjects\TestGameObject.cpp">
       <Filter>File di origine\GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="GameObjects\Camera\GameCamera.cpp">
+      <Filter>File di origine\GameObjects\Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
     <ClInclude Include="GameObjects\TestGameObject.h">
       <Filter>File di origine\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\Camera\GameCamera.h">
+      <Filter>File di origine\GameObjects\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

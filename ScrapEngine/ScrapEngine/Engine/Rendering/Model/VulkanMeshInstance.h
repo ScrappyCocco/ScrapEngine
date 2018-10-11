@@ -49,7 +49,7 @@ namespace ScrapEngine {
 		glm::vec3 getMeshRotation();
 		glm::vec3 getMeshScale();
 
-		void updateUniformBuffer(uint32_t currentImage, vk::Extent2D* swapChainExtent);
+		void updateUniformBuffer(uint32_t currentImage, ScrapEngine::Camera* RenderCamera);
 		void deleteGraphicsPipeline();
 
 		ScrapEngine::UniformBuffer* getVulkanRenderUniformBuffer();

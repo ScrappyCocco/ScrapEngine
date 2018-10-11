@@ -113,6 +113,9 @@
     <Filter Include="Engine\LogicCore\Components\Manager">
       <UniqueIdentifier>{d43e6fa8-af17-42fe-9d55-4b6cea336900}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Rendering\Camera">
+      <UniqueIdentifier>{07ca6137-0264-48b0-a4dc-0387193119aa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Manager\EngineManager.cpp">
@@ -240,6 +243,9 @@
     </ClCompile>
     <ClCompile Include="Engine\LogicCore\Components\Manager\ComponentsManager.cpp">
       <Filter>Engine\LogicCore\Components\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Camera\Camera.cpp">
+      <Filter>Engine\Rendering\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -386,6 +392,9 @@
     </ClInclude>
     <ClInclude Include="Engine\LogicCore\Components\Manager\ComponentsManager.h">
       <Filter>Engine\LogicCore\Components\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Camera\Camera.h">
+      <Filter>Engine\Rendering\Camera</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

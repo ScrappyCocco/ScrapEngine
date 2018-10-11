@@ -67,6 +67,10 @@ glm::vec3 ScrapEngine::SGameObject::getObjectScale()
 void ScrapEngine::SGameObject::AddComponent(SComponent* Component)
 {
 	ObjectComponents.push_back(Component);
+	//Set component default values same as object
+	Component->setComponentLocation(ObjectTransform.location);
+	Component->setComponentRotation(ObjectTransform.rotation);
+	Component->setComponentScale(ObjectTransform.scale);
 }
 
 const std::vector<ScrapEngine::SComponent*>* ScrapEngine::SGameObject::GetComponents()

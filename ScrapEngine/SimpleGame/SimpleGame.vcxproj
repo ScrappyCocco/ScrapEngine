@@ -156,9 +156,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameObjects\Camera\GameCamera.cpp" />
     <ClCompile Include="GameObjects\TestGameObject.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameObjects\Camera\GameCamera.h" />
     <ClInclude Include="GameObjects\TestGameObject.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>

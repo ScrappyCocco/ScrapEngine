@@ -36,6 +36,7 @@
     <ClCompile Include="Engine\Rendering\Buffer\Vertex\VertexBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\VulkanCommandBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\VulkanFrameBuffer.cpp" />
+    <ClCompile Include="Engine\Rendering\Camera\Camera.cpp" />
     <ClCompile Include="Engine\Rendering\Command\VulkanCommandPool.cpp" />
     <ClCompile Include="Engine\Rendering\DepthResources\VulkanDepthResources.cpp" />
     <ClCompile Include="Engine\Rendering\Descriptor\VulkanDescriptorPool.cpp" />
@@ -84,6 +85,7 @@
     <ClInclude Include="Engine\Rendering\Buffer\Vertex\VertexBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\VulkanCommandBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\VulkanFrameBuffer.h" />
+    <ClInclude Include="Engine\Rendering\Camera\Camera.h" />
     <ClInclude Include="Engine\Rendering\Command\VulkanCommandPool.h" />
     <ClInclude Include="Engine\Rendering\DepthResources\VulkanDepthResources.h" />
     <ClInclude Include="Engine\Rendering\Descriptor\VulkanDescriptorPool.h" />

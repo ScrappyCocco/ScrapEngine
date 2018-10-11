@@ -1,7 +1,7 @@
 #include "VulkanCommandBuffer.h"
 #include "../../Debug/DebugLog.h"
 
-ScrapEngine::VulkanCommandBuffer::VulkanCommandBuffer(ScrapEngine::VulkanFrameBuffer * SwapChainFrameBuffer, vk::Device * input_deviceRef, vk::CommandPool * input_commandPoolRef, vk::RenderPass * input_renderPassRef, vk::Extent2D * input_swapChainExtentRef, 
+ScrapEngine::VulkanCommandBuffer::VulkanCommandBuffer(ScrapEngine::VulkanFrameBuffer* SwapChainFrameBuffer, vk::Device* input_deviceRef, vk::CommandPool* input_commandPoolRef, vk::RenderPass* input_renderPassRef, vk::Extent2D* input_swapChainExtentRef, 
 	ScrapEngine::VulkanGraphicsPipeline* input_vulkanPipelineRef, const std::vector<vk::DescriptorSet>* descriptorSets, simple_buffer<Vertex> vertexBuffer, simple_buffer<uint32_t> indexBuffer)
 	: deviceRef(input_deviceRef)
 {
@@ -51,8 +51,8 @@ ScrapEngine::VulkanCommandBuffer::VulkanCommandBuffer(ScrapEngine::VulkanFrameBu
 	}
 }
 
-ScrapEngine::VulkanCommandBuffer::VulkanCommandBuffer(ScrapEngine::VulkanFrameBuffer * SwapChainFrameBuffer, vk::Device * input_deviceRef, vk::CommandPool * input_commandPoolRef, 
-	vk::RenderPass * input_renderPassRef, vk::Extent2D * input_swapChainExtentRef, std::vector<ScrapEngine::VulkanGraphicsPipeline*> input_vulkanPipelineRef, 
+ScrapEngine::VulkanCommandBuffer::VulkanCommandBuffer(ScrapEngine::VulkanFrameBuffer* SwapChainFrameBuffer, vk::Device* input_deviceRef, vk::CommandPool* input_commandPoolRef, 
+	vk::RenderPass* input_renderPassRef, vk::Extent2D* input_swapChainExtentRef, std::vector<ScrapEngine::VulkanGraphicsPipeline*> input_vulkanPipelineRef, 
 	const std::vector<const std::vector<vk::DescriptorSet>*> descriptorSets, std::vector<simple_buffer<Vertex>*> vertexBuffer, std::vector<simple_buffer<uint32_t>*> indexBuffer)
 	:deviceRef(input_deviceRef)
 {

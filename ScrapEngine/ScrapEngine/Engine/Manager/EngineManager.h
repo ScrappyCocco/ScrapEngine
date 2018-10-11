@@ -18,7 +18,7 @@ namespace ScrapEngine {
 		ScrapEngine::RenderManager* ScrapRenderManager = nullptr;
 		ScrapEngine::LogicManager* ScrapLogicManager = nullptr;
 	public:
-		EngineManager(std::string app_name = "ScrapEngine Game", int app_version = 1, uint32_t window_WIDTH = 800, uint32_t window_HEIGHT = 600, bool fullscreen = false);
+		EngineManager(std::string app_name = "ScrapEngine Game", int app_version = 1, uint32_t window_WIDTH = 800, uint32_t window_HEIGHT = 600, bool fullscreen = false, bool vsync = true);
 		~EngineManager();
 
 		void StartGameLoop();

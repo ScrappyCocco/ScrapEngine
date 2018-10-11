@@ -10,3 +10,8 @@ ScrapEngine::GameWindow* ScrapEngine::RenderManagerView::getGameWindow() const
 	return RenderManagerRef->getGameWindow();
 }
 
+ScrapEngine::Camera * ScrapEngine::RenderManagerView::getRenderCamera() const
+{
+	return RenderManagerRef->getRenderCamera();
+}
+

@@ -2,8 +2,8 @@
 #include <chrono>
 #include "../Rendering/Base/SimpleTestData.h"
 
-ScrapEngine::EngineManager::EngineManager(std::string app_name, int app_version, uint32_t window_WIDTH, uint32_t window_HEIGHT, bool fullscreen)
-	: received_base_game_info(app_name, app_version, window_WIDTH, window_HEIGHT, fullscreen)
+ScrapEngine::EngineManager::EngineManager(std::string app_name, int app_version, uint32_t window_WIDTH, uint32_t window_HEIGHT, bool fullscreen, bool vsync)
+	: received_base_game_info(app_name, app_version, window_WIDTH, window_HEIGHT, fullscreen, vsync)
 {
 	initializeEngine();
 }

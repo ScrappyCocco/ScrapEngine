@@ -4,18 +4,18 @@
 #include "Engine/Rendering/Manager/RenderManager.h"
 #include "Engine/Input/Manager/InputManager.h"
 #include "Engine/Input/KeyboardKeys.h"
-#include "Engine/LogicCore/Components/Manager/ComponentsManager.h"
 
-class TestGameObject : public ScrapEngine::SGameObject
+class GameCamera : public ScrapEngine::SGameObject
 {
 private:
+	ScrapEngine::Camera* GameCameraRef;
 	ScrapEngine::InputManager* InputManagerRef;
 
-	bool flipflop = false;
-	float rotation = 1;
+	float lastX = 400, lastY = 300;
+	bool firstMouseRead = true;
 public:
-	TestGameObject(ScrapEngine::InputManager* CreatedInputManager, ScrapEngine::ComponentsManager* input_ComponentManager);
-	~TestGameObject() = default;
+	GameCamera(ScrapEngine::InputManager* CreatedInputManagerf, ScrapEngine::Camera* input_GameCameraRef);
+	~GameCamera() = default;
 
 	virtual void GameStart() override;
 	virtual void GameUpdate(float time) override;
