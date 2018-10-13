@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ScrapEngine", "ScrapEngine\ScrapEngine.vcxproj", "{1FAD33BE-87CF-4A6F-B81F-C3D33D2EB1D4}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimpleGame", "SimpleGame\SimpleGame.vcxproj", "{AF72F436-3963-43B7-9BEF-78B34B836958}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1FAD33BE-87CF-4A6F-B81F-C3D33D2EB1D4} = {1FAD33BE-87CF-4A6F-B81F-C3D33D2EB1D4}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

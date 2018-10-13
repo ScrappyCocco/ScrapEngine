@@ -64,6 +64,16 @@ ScrapEngine::Camera* ScrapEngine::RenderManager::getRenderCamera() const
 	return RenderCamera;
 }
 
+ScrapEngine::Camera* ScrapEngine::RenderManager::getDefaultRenderCamera() const
+{
+	return defaultCamera;
+}
+
+void ScrapEngine::RenderManager::setRenderCamera(ScrapEngine::Camera* newCamera)
+{
+	RenderCamera = newCamera;
+}
+
 void ScrapEngine::RenderManager::initializeVulkan(const ScrapEngine::game_base_info* received_base_game_info)
 {
 	DebugLog::printToConsoleLog("---initializeVulkan()---");
@@ -247,4 +257,5 @@ void ScrapEngine::RenderManager::recreateSwapChain()
 void ScrapEngine::RenderManager::createCamera()
 {
 	RenderCamera = new Camera();
+	defaultCamera = RenderCamera;
 }

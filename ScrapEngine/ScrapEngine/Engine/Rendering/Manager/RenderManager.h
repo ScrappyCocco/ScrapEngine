@@ -50,6 +50,7 @@ namespace ScrapEngine {
 		ScrapEngine::VulkanColorResources* VulkanRenderColor = nullptr;
 
 		ScrapEngine::Camera* RenderCamera = nullptr;
+		ScrapEngine::Camera* defaultCamera = nullptr;
 
 		std::vector<ScrapEngine::VulkanMeshInstance*> LoadedModels;
 
@@ -81,12 +82,18 @@ namespace ScrapEngine {
 		void drawFrame();
 		void waitDeviceIdle();
 
+		//3D mesh stuff
 		ScrapEngine::VulkanMeshInstance* loadMesh(const std::string& vertex_shader_path, const std::string& fragment_shader_path, const std::string& model_path, const std::string& texture_path);
 		ScrapEngine::VulkanMeshInstance* loadMesh(const std::string& model_path, const std::string& texture_path);
 		void unloadMesh(ScrapEngine::VulkanMeshInstance* meshToUnload);
 
+		//User-Window stuff
 		ScrapEngine::GameWindow* getGameWindow() const;
+
+		//View-Camera stuff
 		ScrapEngine::Camera* getRenderCamera() const;
+		ScrapEngine::Camera* getDefaultRenderCamera() const;
+		void setRenderCamera(ScrapEngine::Camera* newCamera);
 	};
 }
 

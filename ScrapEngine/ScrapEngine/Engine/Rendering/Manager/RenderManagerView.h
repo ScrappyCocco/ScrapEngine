@@ -12,7 +12,10 @@ namespace ScrapEngine {
 		~RenderManagerView() = default;
 
 		ScrapEngine::GameWindow* getGameWindow() const;
-		ScrapEngine::Camera* getRenderCamera() const;
+
+		ScrapEngine::Camera* getDefaultRenderCamera() const;
+		ScrapEngine::Camera* getCurrentRenderCamera() const;
+		void setRenderCamera(ScrapEngine::Camera*) const;
 	};
 
 }

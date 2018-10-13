@@ -11,8 +11,7 @@ private:
 	ScrapEngine::Camera* GameCameraRef;
 	ScrapEngine::InputManager* InputManagerRef;
 
-	float lastX = 400, lastY = 300;
-	bool firstMouseRead = true;
+	float cameraSpeed = 0.5f;
 public:
 	GameCamera(ScrapEngine::InputManager* CreatedInputManagerf, ScrapEngine::Camera* input_GameCameraRef);
 	~GameCamera() = default;

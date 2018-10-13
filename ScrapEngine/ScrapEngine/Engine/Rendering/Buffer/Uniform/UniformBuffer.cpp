@@ -30,7 +30,7 @@ ScrapEngine::UniformBuffer::~UniformBuffer()
 void ScrapEngine::UniformBuffer::updateUniformBuffer(uint32_t currentImage, ScrapEngine::Transform object_transform, ScrapEngine::Camera* RenderCamera)
 {
 
-	glm::mat4 view = glm::lookAt(RenderCamera->getCameraTransform().location, RenderCamera->getCameraTransform().location * RenderCamera->getCameraFront(), RenderCamera->getCameraUp());;
+	glm::mat4 view = glm::lookAt(RenderCamera->getCameraLocation(), RenderCamera->getCameraLocation() + RenderCamera->getCameraFront(), RenderCamera->getCameraUp());;
 
 	UniformBufferObject ubo = {};
 	ubo.model = glm::translate(glm::mat4(1.0f), object_transform.location);

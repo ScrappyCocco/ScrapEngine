@@ -1,9 +1,8 @@
 #include "Camera.h"
 
-ScrapEngine::Camera::Camera(ScrapEngine::Transform input_CameraTransform, glm::vec3 input_cameraTarget, float input_minDrawDistance, float input_maxDrawDistance)
+ScrapEngine::Camera::Camera(glm::vec3 input_cameraLocation, float input_minDrawDistance, float input_maxDrawDistance)
 {
-	CameraTransform = input_CameraTransform;
-	cameraTarget = input_cameraTarget;
+	cameraLocation = input_cameraLocation;
 	minDrawDistance = input_minDrawDistance;
 	maxDrawDistance = input_maxDrawDistance;
 
@@ -11,28 +10,23 @@ ScrapEngine::Camera::Camera(ScrapEngine::Transform input_CameraTransform, glm::v
 	Pitch = 0.0f;
 }
 
-void ScrapEngine::Camera::setCameraTransform(ScrapEngine::Transform input_CameraTransform)
+void ScrapEngine::Camera::setCameraLocation(glm::vec3 newCameraLocation)
 {
-	CameraTransform = input_CameraTransform;
+	cameraLocation = newCameraLocation;
 }
 
-void ScrapEngine::Camera::setCameraLocation(glm::vec3 location)
+void ScrapEngine::Camera::ProcessMouseMovement(float xpos, float ypos, bool constrainPitch)
 {
-	CameraTransform.location = location;
-}
+	if (firstMouseRead) {
+		firstMouseRead = false;
+		lastX = xpos;
+		lastY = ypos;
+	}
+	float xoffset = xpos - lastX;
+	float yoffset = lastY - ypos; // reversed since y-coordinates range from bottom to top
+	lastX = xpos;
+	lastY = ypos;
 
-void ScrapEngine::Camera::setCameraRotation(glm::vec3 rotation)
-{
-	CameraTransform.rotation = rotation;
-}
-
-void ScrapEngine::Camera::setCameraTarget(glm::vec3 target)
-{
-	cameraTarget = target;
-}
-
-void ScrapEngine::Camera::ProcessMouseMovement(float xoffset, float yoffset, bool constrainPitch)
-{
 	xoffset *= mouseSensivity;
 	yoffset *= mouseSensivity;
 
@@ -56,16 +50,23 @@ void ScrapEngine::Camera::updateCameraVectors()
 	glm::vec3 front;
 	front.x = cos(glm::radians(Yaw)) * cos(glm::radians(Pitch));
 	front.y = sin(glm::radians(Pitch));
-	front.z = sin(glm::radians(-Yaw)) * cos(glm::radians(Pitch));
+	front.z = sin(glm::radians(Yaw)) * cos(glm::radians(-Pitch));
 	cameraFront = glm::normalize(front);
-	// Also re-calculate the Right and Up vector
-	cameraRight = glm::normalize(glm::cross(cameraFront, glm::vec3(0.0f, 1.0f, 0.0f)));  // Normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
-	cameraUp = glm::normalize(glm::cross(cameraRight, cameraFront));
 }
 
 void ScrapEngine::Camera::setMouseSensivity(float newSensivity)
 {
 	mouseSensivity = newSensivity;
+}
+
+void ScrapEngine::Camera::setMinRenderDistance(float newRenderDistance)
+{
+	minDrawDistance = newRenderDistance;
+}
+
+void ScrapEngine::Camera::setMaxRenderDistance(float newRenderDistance)
+{
+	maxDrawDistance = newRenderDistance;
 }
 
 float ScrapEngine::Camera::getMouseSensivity()
@@ -90,20 +91,10 @@ glm::vec3 ScrapEngine::Camera::getCameraFront() const
 
 glm::vec3 ScrapEngine::Camera::getCameraUp() const
 {
-	return up;
+	return cameraUp;
 }
 
-ScrapEngine::Transform ScrapEngine::Camera::getCameraTransform() const
+glm::vec3 ScrapEngine::Camera::getCameraLocation() const
 {
-	return CameraTransform;
-}
-
-glm::vec3 ScrapEngine::Camera::getCameraTarget() const
-{
-	return cameraTarget;
-}
-
-glm::vec3 ScrapEngine::Camera::getCameraDirection() const
-{
-	return cameraDirection;
+	return cameraLocation;
 }
