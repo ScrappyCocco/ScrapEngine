@@ -1,5 +1,6 @@
 #include "RenderManager.h"
 
+
 ScrapEngine::RenderManager::RenderManager(const ScrapEngine::game_base_info* received_base_game_info)
 {
 	GameWindow = new ScrapEngine::GameWindow(received_base_game_info->window_WIDTH, received_base_game_info->window_HEIGHT, received_base_game_info->app_name);
@@ -102,6 +103,8 @@ void ScrapEngine::RenderManager::initializeVulkan(const ScrapEngine::game_base_i
 	VulkanRenderFrameBuffer = new VulkanFrameBuffer(VulkanRenderImageView, &deviceRef, &VulkanRenderSwapChain->getSwapChainExtent(), VulkanRenderDepth->getDepthImageView(), VulkanRenderingPass->getRenderPass(), VulkanRenderColor->getColorImageView());
 	DebugLog::printToConsoleLog("VulkanFrameBuffer created");
 	//Create empty CommandBuffers
+	//REMOVE THIS
+	Skybox = new VulkanSkyboxInstance("../assets/shader/skybox.vert.spv", "../assets/shader/skybox.frag.spv", "../assets/models/cube.obj", "", VulkanRenderDevice, VulkanRenderCommandPool->getCommandPool(), VulkanGraphicsQueue->getgraphicsQueue(), VulkanRenderSwapChain, VulkanRenderingPass);
 	createCommandBuffers();
 	//Vulkan Semaphores
 	VulkanRenderSemaphores = new VulkanSemaphoresManager(&deviceRef);
@@ -143,7 +146,8 @@ void ScrapEngine::RenderManager::createCommandBuffers()
 		pipelines,
 		descriptorSets,
 		vertexbuffers,
-		indexbuffers
+		indexbuffers,
+		Skybox
 	);
 	DebugLog::printToConsoleLog("VulkanRenderCommandBuffer created");
 }
@@ -190,9 +194,14 @@ void ScrapEngine::RenderManager::drawFrame()
 	else if (result != vk::Result::eSuccess && result != vk::Result::eSuboptimalKHR) {
 		throw std::runtime_error("RenderManager: Failed to acquire swap chain image!");
 	}
+	//Update uniform buffer
 	for (int i = 0;i < LoadedModels.size(); i++) {
 		LoadedModels[i]->updateUniformBuffer(imageIndex, RenderCamera);
 	}
+	if (Skybox) {
+		Skybox->updateUniformBuffer(imageIndex, RenderCamera);
+	}
+	//Submit the frame
 	vk::SubmitInfo submitInfo;
 
 	vk::Semaphore waitSemaphores[] = { (*imageAvailableSemaphoresRef)[currentFrame] };;
@@ -210,7 +219,7 @@ void ScrapEngine::RenderManager::drawFrame()
 	submitInfo.setSignalSemaphoreCount(1);
 	submitInfo.setPSignalSemaphores(signalSemaphores);
 	
-	//DebugLog::printToConsoleLog("---HELLO---PRE---SUBMIT---");
+	DebugLog::printToConsoleLog("---HELLO---PRE---SUBMIT---");
 	deviceRef.resetFences(1, &(*inFlightFencesRef)[currentFrame]);
 
 	if (VulkanGraphicsQueue->getgraphicsQueue()->submit(1, &submitInfo, (*inFlightFencesRef)[currentFrame]) != vk::Result::eSuccess) {

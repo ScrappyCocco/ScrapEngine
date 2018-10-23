@@ -8,10 +8,9 @@
 #include "../SwapChain/VulkanSwapChain.h"
 #include "TextureImageView.h"
 
-ScrapEngine::TextureImage::TextureImage(std::string file_path, vk::Device* input_deviceRef, vk::PhysicalDevice* input_PhysicalDeviceRef, vk::CommandPool* CommandPool, vk::Queue* graphicsQueue)
+ScrapEngine::TextureImage::TextureImage(std::string file_path, vk::Device* input_deviceRef, vk::PhysicalDevice* input_PhysicalDeviceRef, vk::CommandPool* CommandPool, vk::Queue* graphicsQueue, bool shouldCopyFromStaging)
 	: deviceRef(input_deviceRef), PhysicalDeviceRef(input_PhysicalDeviceRef), CommandPoolRef(CommandPool), graphicsQueueRerf(graphicsQueue)
 {
-	int texWidth, texHeight, texChannels;
 	stbi_uc* pixels = stbi_load(file_path.c_str(), &texWidth, &texHeight, &texChannels, STBI_rgb_alpha);
 
 	vk::DeviceSize imageSize = texWidth * texHeight * 4;
@@ -28,15 +27,22 @@ ScrapEngine::TextureImage::TextureImage(std::string file_path, vk::Device* input
 	createImage(texWidth, texHeight, vk::Format::eR8G8B8A8Unorm, vk::ImageTiling::eOptimal, vk::ImageUsageFlagBits::eTransferSrc | vk::ImageUsageFlagBits::eTransferDst | vk::ImageUsageFlagBits::eSampled, vk::MemoryPropertyFlagBits::eDeviceLocal, textureImage, textureImageMemory);
 
 	transitionImageLayout(&textureImage, vk::Format::eR8G8B8A8Unorm, vk::ImageLayout::eUndefined, vk::ImageLayout::eTransferDstOptimal);
-	StagingBuffer::copyBufferToImage(deviceRef ,StaginfBufferRef->getStagingBuffer(), &textureImage, static_cast<uint32_t>(texWidth), static_cast<uint32_t>(texHeight), CommandPool, graphicsQueue);
 
-	delete StaginfBufferRef;
+	if(shouldCopyFromStaging){
+		StagingBuffer::copyBufferToImage(deviceRef ,StaginfBufferRef->getStagingBuffer(), &textureImage, static_cast<uint32_t>(texWidth), static_cast<uint32_t>(texHeight), CommandPool, graphicsQueue);
 
-	generateMipmaps(&textureImage, vk::Format::eR8G8B8A8Unorm, texWidth, texHeight, mipLevels);
+		delete StaginfBufferRef;
+		StaginfBufferRef = nullptr;
+
+		generateMipmaps(&textureImage, vk::Format::eR8G8B8A8Unorm, texWidth, texHeight, mipLevels);
+	}
 }
 
 ScrapEngine::TextureImage::~TextureImage()
 {
+	if (StaginfBufferRef) {
+		delete StaginfBufferRef;
+	}
 	deviceRef->destroyImage(textureImage);
 	deviceRef->freeMemory(textureImageMemory);
 }
@@ -86,7 +92,7 @@ void ScrapEngine::TextureImage::transitionImageLayout(vk::Image* image, vk::Form
 	transitionImageLayout(deviceRef, image, format, oldLayout, newLayout, CommandPoolRef, graphicsQueueRerf, mipLevels);
 }
 
-void ScrapEngine::TextureImage::transitionImageLayout(vk::Device* deviceRef, vk::Image* image, vk::Format format, vk::ImageLayout oldLayout, vk::ImageLayout newLayout, vk::CommandPool* CommandPool, vk::Queue* graphicsQueue, uint32_t mipLevelsData)
+void ScrapEngine::TextureImage::transitionImageLayout(vk::Device* deviceRef, vk::Image* image, vk::Format format, vk::ImageLayout oldLayout, vk::ImageLayout newLayout, vk::CommandPool* CommandPool, vk::Queue* graphicsQueue, uint32_t mipLevelsData, int layercount)
 {
 	vk::CommandBuffer* commandBuffer = BaseBuffer::beginSingleTimeCommands(deviceRef, CommandPool);
 
@@ -106,7 +112,7 @@ void ScrapEngine::TextureImage::transitionImageLayout(vk::Device* deviceRef, vk:
 	barrier.subresourceRange.baseMipLevel = 0;
 	barrier.subresourceRange.levelCount = mipLevelsData;
 	barrier.subresourceRange.baseArrayLayer = 0;
-	barrier.subresourceRange.layerCount = 1;
+	barrier.subresourceRange.layerCount = layercount;
 
 	vk::PipelineStageFlags sourceStage;
 	vk::PipelineStageFlags destinationStage;
@@ -243,8 +249,33 @@ vk::Image* ScrapEngine::TextureImage::getTextureImage()
 	return &textureImage;
 }
 
+ScrapEngine::StagingBuffer* ScrapEngine::TextureImage::getTextureStagingBuffer()
+{
+	return StaginfBufferRef;
+}
+
+vk::DeviceMemory* ScrapEngine::TextureImage::getTextureImageMemory()
+{
+	return &textureImageMemory;
+}
+
 uint32_t ScrapEngine::TextureImage::getMipLevels() const
 {
 	return mipLevels;
+}
+
+int ScrapEngine::TextureImage::getTextureWidth() const
+{
+	return texWidth;
+}
+
+int ScrapEngine::TextureImage::getTextureHeight() const
+{
+	return texHeight;
+}
+
+int ScrapEngine::TextureImage::getTextureChannels() const
+{
+	return texChannels;
 }
 

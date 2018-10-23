@@ -28,6 +28,7 @@
 #include "../Texture/VulkanColorResources.h"
 #include "../Model/VulkanModel.h"
 #include "../Model/VulkanMeshInstance.h"
+#include "../Model/VulkanSkyboxInstance.h"
 
 namespace ScrapEngine {
 	class RenderManager
@@ -51,6 +52,8 @@ namespace ScrapEngine {
 
 		ScrapEngine::Camera* RenderCamera = nullptr;
 		ScrapEngine::Camera* defaultCamera = nullptr;
+
+		ScrapEngine::VulkanSkyboxInstance* Skybox = nullptr;
 
 		std::vector<ScrapEngine::VulkanMeshInstance*> LoadedModels;
 

@@ -247,6 +247,15 @@
     <ClCompile Include="Engine\Rendering\Camera\Camera.cpp">
       <Filter>Engine\Rendering\Camera</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Rendering\Texture\SkyboxTexture.cpp">
+      <Filter>Engine\Rendering\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Model\VulkanSkyboxInstance.cpp">
+      <Filter>Engine\Rendering\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Buffer\Uniform\SkyboxUniformBuffer.cpp">
+      <Filter>Engine\Rendering\Buffer\Uniform</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Manager\EngineManager.h">
@@ -395,6 +404,15 @@
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Camera\Camera.h">
       <Filter>Engine\Rendering\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Texture\SkyboxTexture.h">
+      <Filter>Engine\Rendering\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Model\VulkanSkyboxInstance.h">
+      <Filter>Engine\Rendering\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Buffer\Uniform\SkyboxUniformBuffer.h">
+      <Filter>Engine\Rendering\Buffer\Uniform</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

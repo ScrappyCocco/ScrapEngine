@@ -32,6 +32,7 @@
     <ClCompile Include="Engine\Rendering\Buffer\BaseBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\Index\IndexBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\Staging\StagingBuffer.cpp" />
+    <ClCompile Include="Engine\Rendering\Buffer\Uniform\SkyboxUniformBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\Uniform\UniformBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\Vertex\VertexBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\VulkanCommandBuffer.cpp" />
@@ -47,6 +48,7 @@
     <ClCompile Include="Engine\Rendering\Manager\RenderManagerView.cpp" />
     <ClCompile Include="Engine\Rendering\Model\VulkanMeshInstance.cpp" />
     <ClCompile Include="Engine\Rendering\Model\VulkanModel.cpp" />
+    <ClCompile Include="Engine\Rendering\Model\VulkanSkyboxInstance.cpp" />
     <ClCompile Include="Engine\Rendering\Pipeline\VulkanGraphicsPipeline.cpp" />
     <ClCompile Include="Engine\Rendering\Queue\GraphicsQueue.cpp" />
     <ClCompile Include="Engine\Rendering\Queue\PresentQueue.cpp" />
@@ -55,6 +57,7 @@
     <ClCompile Include="Engine\Rendering\Shader\ShaderManager.cpp" />
     <ClCompile Include="Engine\Rendering\SwapChain\VulkanImageView.cpp" />
     <ClCompile Include="Engine\Rendering\SwapChain\VulkanSwapChain.cpp" />
+    <ClCompile Include="Engine\Rendering\Texture\SkyboxTexture.cpp" />
     <ClCompile Include="Engine\Rendering\Texture\TextureImage.cpp" />
     <ClCompile Include="Engine\Rendering\Texture\TextureImageView.cpp" />
     <ClCompile Include="Engine\Rendering\Texture\TextureSampler.cpp" />
@@ -81,6 +84,7 @@
     <ClInclude Include="Engine\Rendering\Buffer\BaseBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\Index\IndexBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\Staging\StagingBuffer.h" />
+    <ClInclude Include="Engine\Rendering\Buffer\Uniform\SkyboxUniformBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\Uniform\UniformBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\Vertex\VertexBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\VulkanCommandBuffer.h" />
@@ -97,6 +101,7 @@
     <ClInclude Include="Engine\Rendering\Memory\MemoryManager.h" />
     <ClInclude Include="Engine\Rendering\Model\VulkanMeshInstance.h" />
     <ClInclude Include="Engine\Rendering\Model\VulkanModel.h" />
+    <ClInclude Include="Engine\Rendering\Model\VulkanSkyboxInstance.h" />
     <ClInclude Include="Engine\Rendering\Pipeline\VulkanGraphicsPipeline.h" />
     <ClInclude Include="Engine\Rendering\Queue\GraphicsQueue.h" />
     <ClInclude Include="Engine\Rendering\Queue\PresentQueue.h" />
@@ -105,6 +110,7 @@
     <ClInclude Include="Engine\Rendering\Shader\ShaderManager.h" />
     <ClInclude Include="Engine\Rendering\SwapChain\VulkanImageView.h" />
     <ClInclude Include="Engine\Rendering\SwapChain\VulkanSwapChain.h" />
+    <ClInclude Include="Engine\Rendering\Texture\SkyboxTexture.h" />
     <ClInclude Include="Engine\Rendering\Texture\TextureImage.h" />
     <ClInclude Include="Engine\Rendering\Texture\TextureImageView.h" />
     <ClInclude Include="Engine\Rendering\Texture\TextureSampler.h" />

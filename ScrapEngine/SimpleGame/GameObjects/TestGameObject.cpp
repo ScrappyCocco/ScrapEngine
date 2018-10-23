@@ -19,32 +19,32 @@ TestGameObject::TestGameObject(ScrapEngine::InputManager* CreatedInputManager, S
 	setObjectScale(glm::vec3(0.1f, 0.1f, 0.1f));
 
 	AddComponent(input_ComponentManager->createNewMeshComponent(
-		"../assets/shader/vert.spv",
-		"../assets/shader/frag.spv",
+		"../assets/shader/shader_base.vert.spv",
+		"../assets/shader/shader_base.frag.spv",
 		"../assets/models/Simple_Wood_Crate.fbx",
 		"../assets/textures/Simple_Wood_Crate_Color.png"
 	));
 	AddComponent(input_ComponentManager->createNewMeshComponent(
-		"../assets/shader/vert.spv",
-		"../assets/shader/frag.spv",
+		"../assets/shader/shader_base.vert.spv",
+		"../assets/shader/shader_base.frag.spv",
 		"../assets/models/Simple_Wood_Crate.fbx",
 		"../assets/textures/Simple_Wood_Crate_Color.png"
 	));
 	AddComponent(input_ComponentManager->createNewMeshComponent(
-		"../assets/shader/vert.spv",
-		"../assets/shader/frag.spv",
+		"../assets/shader/shader_base.vert.spv",
+		"../assets/shader/shader_base.frag.spv",
 		"../assets/models/Simple_Wood_Crate.fbx",
 		"../assets/textures/Simple_Wood_Crate_Color.png"
 	));
 	AddComponent(input_ComponentManager->createNewMeshComponent(
-		"../assets/shader/vert.spv",
-		"../assets/shader/frag.spv",
+		"../assets/shader/shader_base.vert.spv",
+		"../assets/shader/shader_base.frag.spv",
 		"../assets/models/Simple_Wood_Crate.fbx",
 		"../assets/textures/Simple_Wood_Crate_Color.png"
 	));
 	AddComponent(input_ComponentManager->createNewMeshComponent(
-		"../assets/shader/vert.spv",
-		"../assets/shader/frag.spv",
+		"../assets/shader/shader_base.vert.spv",
+		"../assets/shader/shader_base.frag.spv",
 		"../assets/models/Simple_Wood_Crate.fbx",
 		"../assets/textures/Simple_Wood_Crate_Color.png"
 	));
@@ -53,6 +53,16 @@ TestGameObject::TestGameObject(ScrapEngine::InputManager* CreatedInputManager, S
 	(*GetComponents())[2]->setComponentLocation(glm::vec3(20, -7, -70.0f));
 	(*GetComponents())[3]->setComponentLocation(glm::vec3(-10, 10, -10.0f));
 	(*GetComponents())[4]->setComponentLocation(glm::vec3(-20, -15, -20.0f));
+
+	//Test skybox 3d model
+	/*AddComponent(input_ComponentManager->createNewMeshComponent(
+		"../assets/shader/shader_base.vert.spv",
+		"../assets/shader/shader_base.frag.spv",
+		"../assets/models/cube.obj",
+		"../assets/textures/SimpleGreenTexture.png"
+	));
+	(*GetComponents())[5]->setComponentLocation(glm::vec3(-30, -25, -10.0f));
+	(*GetComponents())[5]->setComponentScale(glm::vec3(3, 3, 3));*/
 }
 
 void TestGameObject::GameStart()
