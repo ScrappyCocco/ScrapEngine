@@ -15,12 +15,18 @@ ScrapEngine::SkyboxUniformBuffer::SkyboxUniformBuffer(vk::Device* input_deviceRe
 	for (size_t i = 0; i < swapChainImagesSize; i++) {
 		BaseBuffer::createBuffer(deviceRef, PhysicalDevice, &bufferSize, vk::BufferUsageFlagBits::eUniformBuffer, vk::MemoryPropertyFlagBits::eHostVisible | vk::MemoryPropertyFlagBits::eHostCoherent, uniformBuffers[i], uniformBuffersMemory[i]);
 	}
+	//Map memory
+	mappedMemory.resize(swapChainImagesSize);
+	for (size_t i = 0; i < swapChainImagesSize; i++) {
+		deviceRef->mapMemory(uniformBuffersMemory[i], 0, sizeof(SkyboxUniformBufferObject), vk::MemoryMapFlags(), &mappedMemory[i]);
+	}
 }
 
 ScrapEngine::SkyboxUniformBuffer::~SkyboxUniformBuffer()
 {
 	for (size_t i = 0; i < swapChainImagesSize; i++) {
 		deviceRef->destroyBuffer(uniformBuffers[i]);
+		deviceRef->unmapMemory(uniformBuffersMemory[i]);
 		deviceRef->freeMemory(uniformBuffersMemory[i]);
 	}
 }
@@ -40,10 +46,11 @@ void ScrapEngine::SkyboxUniformBuffer::updateUniformBuffer(uint32_t currentImage
 	uboVS.model = glm::rotate(uboVS.model, glm::radians(rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
 	uboVS.model = glm::rotate(uboVS.model, glm::radians(rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
 	
-	void* data;
+	/*void* data;
 	vkMapMemory(*deviceRef, uniformBuffersMemory[currentImage], 0, sizeof(uboVS), 0, &data);
 	memcpy(data, &uboVS, sizeof(uboVS));
-	vkUnmapMemory(*deviceRef, uniformBuffersMemory[currentImage]);
+	vkUnmapMemory(*deviceRef, uniformBuffersMemory[currentImage]);*/
+	memcpy(mappedMemory[currentImage], &uboVS, sizeof(uboVS));
 }
 
 const std::vector<vk::Buffer>* ScrapEngine::SkyboxUniformBuffer::getUniformBuffers()

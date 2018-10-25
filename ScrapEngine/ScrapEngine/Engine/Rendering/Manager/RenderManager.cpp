@@ -103,7 +103,7 @@ void ScrapEngine::RenderManager::initializeVulkan(const ScrapEngine::game_base_i
 	VulkanRenderFrameBuffer = new VulkanFrameBuffer(VulkanRenderImageView, &deviceRef, &VulkanRenderSwapChain->getSwapChainExtent(), VulkanRenderDepth->getDepthImageView(), VulkanRenderingPass->getRenderPass(), VulkanRenderColor->getColorImageView());
 	DebugLog::printToConsoleLog("VulkanFrameBuffer created");
 	//Create empty CommandBuffers
-	//REMOVE THIS
+	//Comment this line to make the game execute
 	Skybox = new VulkanSkyboxInstance("../assets/shader/skybox.vert.spv", "../assets/shader/skybox.frag.spv", "../assets/models/cube.obj", "", VulkanRenderDevice, VulkanRenderCommandPool->getCommandPool(), VulkanGraphicsQueue->getgraphicsQueue(), VulkanRenderSwapChain, VulkanRenderingPass);
 	createCommandBuffers();
 	//Vulkan Semaphores
@@ -219,13 +219,13 @@ void ScrapEngine::RenderManager::drawFrame()
 	submitInfo.setSignalSemaphoreCount(1);
 	submitInfo.setPSignalSemaphores(signalSemaphores);
 	
-	DebugLog::printToConsoleLog("---HELLO---PRE---SUBMIT---");
+	DebugLog::printToConsoleLog("---PRE submit CommandBuffer to GraphicsQueue---");
 	deviceRef.resetFences(1, &(*inFlightFencesRef)[currentFrame]);
 
 	if (VulkanGraphicsQueue->getgraphicsQueue()->submit(1, &submitInfo, (*inFlightFencesRef)[currentFrame]) != vk::Result::eSuccess) {
 		throw std::runtime_error("RenderManager: Failed to submit draw command buffer!");
 	}
-	//DebugLog::printToConsoleLog("---HELLO---AFTER---SUBMIT---");
+	DebugLog::printToConsoleLog("---AFTER submit CommandBuffer to GraphicsQueue---");
 
 	vk::PresentInfoKHR presentInfo;
 

@@ -17,6 +17,7 @@ namespace ScrapEngine {
 	private:
 		std::vector<vk::Buffer> uniformBuffers;
 		std::vector<vk::DeviceMemory> uniformBuffersMemory;
+		std::vector<void*> mappedMemory;
 
 		vk::Device* deviceRef;
 		vk::Extent2D swapChainExtent;

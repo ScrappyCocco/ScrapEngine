@@ -25,13 +25,21 @@ int main() {
 		//Begin gameplay
 		ScrapEngineManager->StartGameLoop();
 		//End gameplay
-		std::cout << "EXIT_SUCCESS - Press to exit..." << std::endl;
 	}catch (const std::exception& e) {
-		std::cerr << e.what() << std::endl;
-		std::cout << "EXIT_FAILURE - Press to exit..." << std::endl;
+		std::cerr << "EXCEPTION MESSAGE-->" << e.what() << std::endl;
 		exit_value = EXIT_FAILURE;
 	}
+	//Delete
 	delete ScrapEngineManager;
+	//Display error message
+	if (exit_value == EXIT_FAILURE) { //Exit failure, whait to close
+		std::cout << std::endl << "EXIT_FAILURE - Press to exit..." << std::endl;
+		fflush(stdin);
+		getchar();
+	}
+	else {
+		std::cout << std::endl << "EXIT_SUCCESS" << std::endl;
+	}
+	//End of program
 	return exit_value;
-
 }

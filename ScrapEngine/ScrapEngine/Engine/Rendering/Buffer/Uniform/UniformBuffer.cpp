@@ -15,12 +15,18 @@ ScrapEngine::UniformBuffer::UniformBuffer(vk::Device* input_deviceRef, vk::Physi
 	for (size_t i = 0; i < swapChainImagesSize; i++) {
 		BaseBuffer::createBuffer(deviceRef, PhysicalDevice, &bufferSize, vk::BufferUsageFlagBits::eUniformBuffer, vk::MemoryPropertyFlagBits::eHostVisible | vk::MemoryPropertyFlagBits::eHostCoherent, uniformBuffers[i], uniformBuffersMemory[i]);
 	}
+	//Map memory
+	mappedMemory.resize(swapChainImagesSize);
+	for (size_t i = 0; i < swapChainImagesSize; i++) {
+		deviceRef->mapMemory(uniformBuffersMemory[i], 0, sizeof(UniformBufferObject), vk::MemoryMapFlags(), &mappedMemory[i]);
+	}
 }
 
 ScrapEngine::UniformBuffer::~UniformBuffer()
 {
 	for (size_t i = 0; i < swapChainImagesSize; i++) {
 		deviceRef->destroyBuffer(uniformBuffers[i]);
+		deviceRef->unmapMemory(uniformBuffersMemory[i]);
 		deviceRef->freeMemory(uniformBuffersMemory[i]);
 	}
 }
@@ -39,10 +45,13 @@ void ScrapEngine::UniformBuffer::updateUniformBuffer(uint32_t currentImage, Scra
 	ubo.view = view;
 	ubo.proj[1][1] *= -1;
 	
-	void* data;
+	/*void* data;
+	deviceRef->mapMemory(uniformBuffersMemory[currentImage], 0, sizeof(ubo), vk::MemoryMapFlags(), &data);
 	vkMapMemory(*deviceRef, uniformBuffersMemory[currentImage], 0, sizeof(ubo), 0, &data);
 	memcpy(data, &ubo, sizeof(ubo));
 	vkUnmapMemory(*deviceRef, uniformBuffersMemory[currentImage]);
+	deviceRef->unmapMemory(uniformBuffersMemory[currentImage]);*/
+	memcpy(mappedMemory[currentImage], &ubo, sizeof(ubo));
 }
 
 const std::vector<vk::Buffer>* ScrapEngine::UniformBuffer::getUniformBuffers()
