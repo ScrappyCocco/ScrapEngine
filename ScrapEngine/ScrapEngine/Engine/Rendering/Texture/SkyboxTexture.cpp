@@ -19,7 +19,8 @@ ScrapEngine::SkyboxTexture::SkyboxTexture(std::vector<std::string> files_path, v
 	// create cubemap base image
 	//-----------------------
 
-	vk::DeviceSize imageSize = images[0]->getTextureWidth() * images[0]->getTextureHeight() * 4;
+	//Not used?
+	vk::DeviceSize imageSize = images[0]->getTextureWidth() * images[0]->getTextureHeight() * 4 * 6;
 	mipLevels = static_cast<uint32_t>(std::floor(std::log2(std::max(images[0]->getTextureWidth(), images[0]->getTextureHeight())))) + 1;
 	mipLevels = 1; //Override for testing purpose...
 

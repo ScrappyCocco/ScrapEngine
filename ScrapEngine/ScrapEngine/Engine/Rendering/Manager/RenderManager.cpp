@@ -104,7 +104,7 @@ void ScrapEngine::RenderManager::initializeVulkan(const ScrapEngine::game_base_i
 	DebugLog::printToConsoleLog("VulkanFrameBuffer created");
 	//Create empty CommandBuffers
 	//Comment this line to make the game execute
-	Skybox = new VulkanSkyboxInstance("../assets/shader/skybox.vert.spv", "../assets/shader/skybox.frag.spv", "../assets/models/cube.obj", "", VulkanRenderDevice, VulkanRenderCommandPool->getCommandPool(), VulkanGraphicsQueue->getgraphicsQueue(), VulkanRenderSwapChain, VulkanRenderingPass);
+	Skybox = new VulkanSkyboxInstance("../assets/shader/skyboxtest2.vert.spv", "../assets/shader/skyboxtest2.frag.spv", "../assets/models/cube.obj", "", VulkanRenderDevice, VulkanRenderCommandPool->getCommandPool(), VulkanGraphicsQueue->getgraphicsQueue(), VulkanRenderSwapChain, VulkanRenderingPass);
 	createCommandBuffers();
 	//Vulkan Semaphores
 	VulkanRenderSemaphores = new VulkanSemaphoresManager(&deviceRef);

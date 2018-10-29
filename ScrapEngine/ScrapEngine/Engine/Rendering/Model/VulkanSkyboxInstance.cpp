@@ -28,15 +28,20 @@ ScrapEngine::VulkanSkyboxInstance::VulkanSkyboxInstance(const std::string & vert
 	VulkanRenderIndexBuffer = new IndexBuffer(device_ref, physical_device_ref, VulkanRenderModel->getIndices(), CommandPool, graphicsQueue);
 	DebugLog::printToConsoleLog("IndexBuffer created");
 	//---
-	VulkanRenderUniformBuffer = new SkyboxUniformBuffer(device_ref, physical_device_ref, SwapChain->getSwapChainImagesVector(), SwapChain->getSwapChainExtent());
-	//VulkanRenderUniformBuffer = new UniformBuffer(device_ref, physical_device_ref, SwapChain->getSwapChainImagesVector(), SwapChain->getSwapChainExtent());
+	//VulkanRenderUniformBuffer = new SkyboxUniformBuffer(device_ref, physical_device_ref, SwapChain->getSwapChainImagesVector(), SwapChain->getSwapChainExtent());
+	VulkanRenderUniformBuffer = new UniformBuffer(device_ref, physical_device_ref, SwapChain->getSwapChainImagesVector(), SwapChain->getSwapChainExtent());
 	//---
 	DebugLog::printToConsoleLog("UniformBuffer created");
 	VulkanRenderDescriptorPool = new VulkanDescriptorPool(device_ref, SwapChain->getSwapChainImagesVector());
 	DebugLog::printToConsoleLog("VulkanDescriptorPool created");
-	VulkanRenderDescriptorSet->createDescriptorSets(VulkanRenderDescriptorPool->getDescriptorPool(), SwapChain->getSwapChainImagesVector(), VulkanRenderUniformBuffer->getUniformBuffers(),
+	//---
+	/*VulkanRenderDescriptorSet->createDescriptorSets(VulkanRenderDescriptorPool->getDescriptorPool(), SwapChain->getSwapChainImagesVector(), VulkanRenderUniformBuffer->getUniformBuffers(),
 		VulkanTextureImageView->getTextureImageView(), VulkanTextureSampler->getTextureSampler(), sizeof(SkyboxUniformBufferObject));
+	DebugLog::printToConsoleLog("(DescriptorSets created)");*/
+	VulkanRenderDescriptorSet->createDescriptorSets(VulkanRenderDescriptorPool->getDescriptorPool(), SwapChain->getSwapChainImagesVector(), VulkanRenderUniformBuffer->getUniformBuffers(),
+		VulkanTextureImageView->getTextureImageView(), VulkanTextureSampler->getTextureSampler());
 	DebugLog::printToConsoleLog("(DescriptorSets created)");
+	//---
 	vertexbuffer = new simple_buffer<Vertex>(VulkanRenderVertexBuffer->getVertexBuffer(), VulkanRenderModel->getVertices());
 	indexbuffer = new simple_buffer<uint32_t>(VulkanRenderIndexBuffer->getIndexBuffer(), VulkanRenderModel->getIndices());
 }
@@ -47,7 +52,8 @@ ScrapEngine::VulkanSkyboxInstance::~VulkanSkyboxInstance()
 
 void ScrapEngine::VulkanSkyboxInstance::updateUniformBuffer(uint32_t currentImage, ScrapEngine::Camera* RenderCamera)
 {
-	VulkanRenderUniformBuffer->updateUniformBuffer(currentImage, ScrapEngine::Transform(), RenderCamera);
+	//VulkanRenderUniformBuffer->updateUniformBuffer(currentImage, ScrapEngine::Transform(), RenderCamera);
+	VulkanRenderUniformBuffer->updateUniformBuffer(currentImage, ScrapEngine::Transform(), nullptr);
 }
 
 void ScrapEngine::VulkanSkyboxInstance::deleteGraphicsPipeline()
@@ -55,7 +61,7 @@ void ScrapEngine::VulkanSkyboxInstance::deleteGraphicsPipeline()
 	delete VulkanRenderGraphicsPipeline;
 }
 
-ScrapEngine::SkyboxUniformBuffer* ScrapEngine::VulkanSkyboxInstance::getVulkanRenderUniformBuffer()
+ScrapEngine::UniformBuffer* ScrapEngine::VulkanSkyboxInstance::getVulkanRenderUniformBuffer()
 {
 	return VulkanRenderUniformBuffer;
 }

@@ -33,17 +33,32 @@ ScrapEngine::UniformBuffer::~UniformBuffer()
 
 void ScrapEngine::UniformBuffer::updateUniformBuffer(uint32_t currentImage, ScrapEngine::Transform object_transform, ScrapEngine::Camera* RenderCamera)
 {
-	glm::mat4 view = glm::lookAt(RenderCamera->getCameraLocation(), RenderCamera->getCameraLocation() + RenderCamera->getCameraFront(), RenderCamera->getCameraUp());;
-
 	UniformBufferObject ubo = {};
-	ubo.model = glm::translate(glm::mat4(1.0f), object_transform.location);
-	ubo.model = glm::scale(ubo.model, object_transform.scale);
-	if (object_transform.rotation.x != 0 || object_transform.rotation.y != 0 || object_transform.rotation.z != 0) {
-		ubo.model = glm::rotate(ubo.model, glm::radians(90.0f), object_transform.rotation);
+	if (RenderCamera) {
+
+		glm::mat4 view = glm::lookAt(RenderCamera->getCameraLocation(), RenderCamera->getCameraLocation() + RenderCamera->getCameraFront(), RenderCamera->getCameraUp());;
+
+		ubo.model = glm::translate(glm::mat4(1.0f), object_transform.location);
+		ubo.model = glm::scale(ubo.model, object_transform.scale);
+		if (object_transform.rotation.x != 0 || object_transform.rotation.y != 0 || object_transform.rotation.z != 0) {
+			ubo.model = glm::rotate(ubo.model, glm::radians(90.0f), object_transform.rotation);
+		}
+		ubo.proj = glm::perspective(glm::radians(45.0f), swapChainExtent.width / (float)swapChainExtent.height, RenderCamera->getCameraMinDrawDistance(), RenderCamera->getCameraMaxDrawDistance());
+		ubo.view = view;
+		ubo.proj[1][1] *= -1;
 	}
-	ubo.proj = glm::perspective(glm::radians(45.0f), swapChainExtent.width / (float)swapChainExtent.height, RenderCamera->getCameraMinDrawDistance(), RenderCamera->getCameraMaxDrawDistance());
-	ubo.view = view;
-	ubo.proj[1][1] *= -1;
+	else { //Skybox uniform buffer - testing purpose
+		ubo.model = glm::translate(glm::mat4(1.0f), glm::vec3(0,0,0));
+		ubo.model = glm::scale(ubo.model, glm::vec3(1,1,1));
+		ubo.model = glm::rotate(ubo.model, glm::radians(-7.25f), glm::vec3(1.0f, 0.0f, 0.0f));
+		ubo.model = glm::rotate(ubo.model, glm::radians(-120.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		ubo.model = glm::rotate(ubo.model, glm::radians(0.f), glm::vec3(0.0f, 0.0f, 1.0f));
+		ubo.proj = glm::perspective(glm::radians(60.0f), swapChainExtent.width / (float)swapChainExtent.height, 0.1f, 500.f);
+		//Why it crash without this(?)
+		ubo.proj[1][1] *= -1;
+		//Not used in the shader
+		ubo.view = glm::lookAt(glm::vec3(0, 0, 0), glm::vec3(0, 0, 1), glm::vec3(0.0f, 1.0f, 0.0f));
+	}
 	
 	/*void* data;
 	deviceRef->mapMemory(uniformBuffersMemory[currentImage], 0, sizeof(ubo), vk::MemoryMapFlags(), &data);

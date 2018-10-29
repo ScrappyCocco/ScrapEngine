@@ -27,8 +27,8 @@ namespace ScrapEngine {
 		ScrapEngine::VulkanModel* VulkanRenderModel = nullptr;
 		ScrapEngine::VertexBuffer* VulkanRenderVertexBuffer = nullptr;
 		ScrapEngine::IndexBuffer* VulkanRenderIndexBuffer = nullptr;
-		//ScrapEngine::UniformBuffer* VulkanRenderUniformBuffer = nullptr;
-		ScrapEngine::SkyboxUniformBuffer* VulkanRenderUniformBuffer = nullptr;
+		ScrapEngine::UniformBuffer* VulkanRenderUniformBuffer = nullptr;
+		//ScrapEngine::SkyboxUniformBuffer* VulkanRenderUniformBuffer = nullptr;
 		ScrapEngine::VulkanDescriptorPool* VulkanRenderDescriptorPool = nullptr;
 		ScrapEngine::VulkanDescriptorSet* VulkanRenderDescriptorSet = nullptr;
 
@@ -42,7 +42,7 @@ namespace ScrapEngine {
 
 		void updateUniformBuffer(uint32_t currentImage, ScrapEngine::Camera* RenderCamera);
 		void deleteGraphicsPipeline();
-		ScrapEngine::SkyboxUniformBuffer* getVulkanRenderUniformBuffer();
+		ScrapEngine::UniformBuffer* getVulkanRenderUniformBuffer();
 		ScrapEngine::VulkanGraphicsPipeline* getVulkanRenderGraphicsPipeline();
 		ScrapEngine::VulkanDescriptorSet* getVulkanRenderDescriptorSet();
 		ScrapEngine::simple_buffer<ScrapEngine::Vertex>* getVertexbuffer();
