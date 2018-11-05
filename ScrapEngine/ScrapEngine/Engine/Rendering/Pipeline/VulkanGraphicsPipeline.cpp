@@ -3,7 +3,7 @@
 #include "../Base/Vertex.h"
 
 ScrapEngine::VulkanGraphicsPipeline::VulkanGraphicsPipeline(const char* vertexShader, const char* fragmentShader, vk::Device* input_deviceRef, vk::Extent2D* swapChainExtent, vk::RenderPass* input_renderPassRef,
-	vk::DescriptorSetLayout* descriptorSetLayout, vk::SampleCountFlagBits msaaSamples)
+	vk::DescriptorSetLayout* descriptorSetLayout, vk::SampleCountFlagBits msaaSamples, bool isSkybox)
 	: deviceRef(input_deviceRef)
 {
 	ShaderManagerRef = new ShaderManager(input_deviceRef);
@@ -81,6 +81,10 @@ ScrapEngine::VulkanGraphicsPipeline::VulkanGraphicsPipeline(const char* vertexSh
 		0,
 		1.0f
 	);
+
+	if (isSkybox) {
+		//rasterizer.setCullMode(vk::CullModeFlagBits::eFront);
+	}
 
 	vk::PipelineMultisampleStateCreateInfo multisampling(
 		vk::PipelineMultisampleStateCreateFlags(),

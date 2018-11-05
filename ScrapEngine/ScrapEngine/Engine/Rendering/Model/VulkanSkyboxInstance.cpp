@@ -6,7 +6,8 @@ ScrapEngine::VulkanSkyboxInstance::VulkanSkyboxInstance(const std::string & vert
 	vk::PhysicalDevice* physical_device_ref = RenderDevice->getPhysicalDevice();
 	VulkanRenderDescriptorSet = new VulkanDescriptorSet(device_ref);
 	DebugLog::printToConsoleLog("VulkanDescriptorSet created");
-	VulkanRenderGraphicsPipeline = new VulkanGraphicsPipeline(vertex_shader_path.c_str(), fragment_shader_path.c_str(), device_ref, &SwapChain->getSwapChainExtent(), RenderingPass->getRenderPass(), VulkanRenderDescriptorSet->getDescriptorSetLayout(), RenderDevice->getMsaaSamples());
+	VulkanRenderGraphicsPipeline = new VulkanGraphicsPipeline(vertex_shader_path.c_str(), fragment_shader_path.c_str(), device_ref, &SwapChain->getSwapChainExtent(), RenderingPass->getRenderPass(), VulkanRenderDescriptorSet->getDescriptorSetLayout(), RenderDevice->getMsaaSamples(), true);
+	//VulkanRenderGraphicsPipeline = new VulkanGraphicsPipeline(vertex_shader_path.c_str(), fragment_shader_path.c_str(), device_ref, &SwapChain->getSwapChainExtent(), RenderingPass->getRenderPass(), VulkanRenderDescriptorSet->getDescriptorSetLayout(), RenderDevice->getMsaaSamples());
 	DebugLog::printToConsoleLog("VulkanGraphicsPipeline created");
 	SkyboxTexture = new ScrapEngine::SkyboxTexture(std::vector<std::string>{
 			"../assets/skybox/back.png",

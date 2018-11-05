@@ -15,7 +15,7 @@ namespace ScrapEngine {
 		vk::Device* deviceRef;
 	public:
 		VulkanGraphicsPipeline(const char* vertexShader, const char* fragmentShader, vk::Device* input_deviceRef, vk::Extent2D* swapChainExtent, vk::RenderPass* input_renderPassRef,
-			vk::DescriptorSetLayout* descriptorSetLayout, vk::SampleCountFlagBits msaaSamples);
+			vk::DescriptorSetLayout* descriptorSetLayout, vk::SampleCountFlagBits msaaSamples, bool isSkybox = false);
 		~VulkanGraphicsPipeline();
 
 		vk::Pipeline* getGraphicsPipeline();
