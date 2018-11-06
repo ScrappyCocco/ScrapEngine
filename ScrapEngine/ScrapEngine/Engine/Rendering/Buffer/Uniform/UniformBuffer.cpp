@@ -53,7 +53,7 @@ void ScrapEngine::UniformBuffer::updateUniformBuffer(uint32_t currentImage, Scra
 		/*ubo.model = glm::rotate(ubo.model, glm::radians(-7.25f), glm::vec3(1.0f, 0.0f, 0.0f));
 		ubo.model = glm::rotate(ubo.model, glm::radians(-120.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		ubo.model = glm::rotate(ubo.model, glm::radians(0.f), glm::vec3(0.0f, 0.0f, 1.0f));*/
-		ubo.proj = glm::perspective(glm::radians(60.0f), swapChainExtent.width / (float)swapChainExtent.height, 0.1f, 500.f);
+		ubo.proj = glm::perspective(glm::radians(60.0f), (float)swapChainExtent.width / (float)swapChainExtent.height, 0.1f, 500.f);
 		//Why it crash without this(?)
 		ubo.proj[1][1] *= -1;
 		//Not used in the shader

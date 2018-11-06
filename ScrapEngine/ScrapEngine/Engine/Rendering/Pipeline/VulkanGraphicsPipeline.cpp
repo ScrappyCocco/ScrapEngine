@@ -43,7 +43,7 @@ ScrapEngine::VulkanGraphicsPipeline::VulkanGraphicsPipeline(const char* vertexSh
 
 	vk::PipelineInputAssemblyStateCreateInfo inputAssembly(
 		vk::PipelineInputAssemblyStateCreateFlags(), 
-		vk::PrimitiveTopology::eTriangleList, 
+		vk::PrimitiveTopology::eTriangleList,
 		false
 	);
 
@@ -82,10 +82,6 @@ ScrapEngine::VulkanGraphicsPipeline::VulkanGraphicsPipeline(const char* vertexSh
 		1.0f
 	);
 
-	if (isSkybox) {
-		//rasterizer.setCullMode(vk::CullModeFlagBits::eFront);
-	}
-
 	vk::PipelineMultisampleStateCreateInfo multisampling(
 		vk::PipelineMultisampleStateCreateFlags(),
 		msaaSamples,
@@ -121,6 +117,12 @@ ScrapEngine::VulkanGraphicsPipeline::VulkanGraphicsPipeline(const char* vertexSh
 		1,
 		&(*descriptorSetLayout)
 	);
+
+	if (isSkybox) {
+		rasterizer.setCullMode(vk::CullModeFlagBits::eFront);
+		depthStencil.setDepthWriteEnable(false);
+		depthStencil.setDepthTestEnable(false);
+	}
 	
 	if (deviceRef->createPipelineLayout(&pipelineLayoutInfo, nullptr, &pipelineLayout) != vk::Result::eSuccess) {
 		throw std::runtime_error("VulkanGraphicsPipeline: Failed to create pipeline layout!");

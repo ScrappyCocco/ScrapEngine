@@ -183,8 +183,7 @@ void ScrapEngine::RenderManager::drawFrame()
 {
 	deviceRef.waitForFences(1, &(*inFlightFencesRef)[currentFrame], true, std::numeric_limits<uint64_t>::max());
 
-	uint32_t imageIndex;
-	vk::Result result = deviceRef.acquireNextImageKHR(VulkanRenderSwapChain->getSwapChain(), std::numeric_limits<uint64_t>::max(), (*imageAvailableSemaphoresRef)[currentFrame], vk::Fence(), &imageIndex);
+	result = deviceRef.acquireNextImageKHR(VulkanRenderSwapChain->getSwapChain(), std::numeric_limits<uint64_t>::max(), (*imageAvailableSemaphoresRef)[currentFrame], vk::Fence(), &imageIndex);
 
 	if (result == vk::Result::eErrorOutOfDateKHR) {
 		//recreateSwapChain();
@@ -222,7 +221,9 @@ void ScrapEngine::RenderManager::drawFrame()
 	DebugLog::printToConsoleLog("---PRE submit CommandBuffer to GraphicsQueue---");
 	deviceRef.resetFences(1, &(*inFlightFencesRef)[currentFrame]);
 
-	if (VulkanGraphicsQueue->getgraphicsQueue()->submit(1, &submitInfo, (*inFlightFencesRef)[currentFrame]) != vk::Result::eSuccess) {
+	result = VulkanGraphicsQueue->getgraphicsQueue()->submit(1, &submitInfo, (*inFlightFencesRef)[currentFrame]);
+	if (result != vk::Result::eSuccess) {
+		std::cout << "RESULT TYPE:" << result << std::endl;
 		throw std::runtime_error("RenderManager: Failed to submit draw command buffer!");
 	}
 	DebugLog::printToConsoleLog("---AFTER submit CommandBuffer to GraphicsQueue---");

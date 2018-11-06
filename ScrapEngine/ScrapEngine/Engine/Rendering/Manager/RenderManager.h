@@ -58,6 +58,8 @@ namespace ScrapEngine {
 		std::vector<ScrapEngine::VulkanMeshInstance*> LoadedModels;
 
 		size_t currentFrame = 0;
+		uint32_t imageIndex;
+		vk::Result result;
 
 		vk::Device deviceRef;
 		unsigned short int MAX_FRAMES_IN_FLIGHT = 2;
