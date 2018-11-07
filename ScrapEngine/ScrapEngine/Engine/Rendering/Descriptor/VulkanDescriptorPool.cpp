@@ -12,7 +12,7 @@ ScrapEngine::VulkanDescriptorPool::VulkanDescriptorPool(vk::Device* input_device
 
 	vk::DescriptorPoolCreateInfo poolInfo(
 		vk::DescriptorPoolCreateFlags(),
-		static_cast<uint32_t>(swapChainImages->size()), 
+		static_cast<uint32_t>(swapChainImages->size()),
 		static_cast<uint32_t>(poolSizes.size()), poolSizes.data()
 	);
 

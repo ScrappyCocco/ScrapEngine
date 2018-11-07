@@ -29,11 +29,11 @@ void ScrapEngine::StagingBuffer::copyBufferToImage(vk::Device* input_deviceRef, 
 	BaseBuffer::endSingleTimeCommands(input_deviceRef, commandBuffer, commandPool, graphicsQueue);
 }
 
-void ScrapEngine::StagingBuffer::copyBufferToImage(vk::Device* input_deviceRef, vk::Buffer* buffer, vk::Image* image, uint32_t width, uint32_t height, vk::CommandPool* commandPool, vk::Queue* graphicsQueue, vk::BufferImageCopy region, int regioncount, vk::ImageLayout layout)
+void ScrapEngine::StagingBuffer::copyBufferToImage(vk::Device* input_deviceRef, vk::Buffer* buffer, vk::Image* image, uint32_t width, uint32_t height, vk::CommandPool* commandPool, vk::Queue* graphicsQueue, vk::BufferImageCopy* region, int regioncount, vk::ImageLayout layout)
 {
 	vk::CommandBuffer* commandBuffer = BaseBuffer::beginSingleTimeCommands(input_deviceRef, commandPool);
 
-	commandBuffer->copyBufferToImage(*buffer, *image, layout, regioncount, &region);
+	commandBuffer->copyBufferToImage(*buffer, *image, layout, regioncount, region);
 
 	BaseBuffer::endSingleTimeCommands(input_deviceRef, commandBuffer, commandPool, graphicsQueue);
 }

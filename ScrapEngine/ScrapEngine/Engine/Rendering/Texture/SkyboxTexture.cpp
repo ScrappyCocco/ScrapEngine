@@ -19,8 +19,6 @@ ScrapEngine::SkyboxTexture::SkyboxTexture(std::vector<std::string> files_path, v
 	// create cubemap base image
 	//-----------------------
 
-	//Not used?
-	vk::DeviceSize imageSize = images[0]->getTextureWidth() * images[0]->getTextureHeight() * 4 * 6;
 	mipLevels = static_cast<uint32_t>(std::floor(std::log2(std::max(images[0]->getTextureWidth(), images[0]->getTextureHeight())))) + 1;
 	mipLevels = 1; //Override for testing purpose...
 
@@ -82,7 +80,7 @@ ScrapEngine::SkyboxTexture::SkyboxTexture(std::vector<std::string> files_path, v
 	ScrapEngine::TextureImage::transitionImageLayout(deviceRef, &cubemap, vk::Format::eR8G8B8A8Unorm, vk::ImageLayout::eUndefined, vk::ImageLayout::eTransferDstOptimal, CommandPoolRef, graphicsQueue, mipLevels, 6);
 
 	for (int i = 0; i < bufferCopyRegions.size(); i++) {
-		ScrapEngine::StagingBuffer::copyBufferToImage(deviceRef, images[i]->getTextureStagingBuffer()->getStagingBuffer(), &cubemap, images[i]->getTextureWidth(), images[i]->getTextureHeight(), CommandPoolRef, graphicsQueue, bufferCopyRegions[i], 1);
+		ScrapEngine::StagingBuffer::copyBufferToImage(deviceRef, images[i]->getTextureStagingBuffer()->getStagingBuffer(), &cubemap, images[i]->getTextureWidth(), images[i]->getTextureHeight(), CommandPoolRef, graphicsQueue, &bufferCopyRegions[i], 1);
 	}
 
 	ScrapEngine::TextureImage::transitionImageLayout(deviceRef, &cubemap, vk::Format::eR8G8B8A8Unorm, vk::ImageLayout::eTransferDstOptimal, vk::ImageLayout::eShaderReadOnlyOptimal, CommandPoolRef, graphicsQueue, mipLevels, 6);

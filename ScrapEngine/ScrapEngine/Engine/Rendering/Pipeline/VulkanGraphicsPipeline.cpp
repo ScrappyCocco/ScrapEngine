@@ -30,14 +30,14 @@ ScrapEngine::VulkanGraphicsPipeline::VulkanGraphicsPipeline(const char* vertexSh
 
 	vk::PipelineShaderStageCreateInfo shaderStages[] = { vertShaderStageInfo, fragShaderStageInfo };
 
-	auto bindingDescription = Vertex::getBindingDescription();
 	auto attributeDescriptions = Vertex::getAttributeDescriptions();
+	auto bindingDescription = Vertex::getBindingDescription();
 
 	vk::PipelineVertexInputStateCreateInfo vertexInputInfo(
-		vk::PipelineVertexInputStateCreateFlags(), 
-		1, 
-		&bindingDescription, 
-		static_cast<uint32_t>(attributeDescriptions.size()), 
+		vk::PipelineVertexInputStateCreateFlags(),
+		1,
+		&bindingDescription,
+		static_cast<uint32_t>(attributeDescriptions.size()),
 		attributeDescriptions.data()
 	);
 
@@ -62,7 +62,7 @@ ScrapEngine::VulkanGraphicsPipeline::VulkanGraphicsPipeline(const char* vertexSh
 
 	vk::PipelineViewportStateCreateInfo viewportState(
 		vk::PipelineViewportStateCreateFlags(), 
-		1, 
+		1,
 		&viewport, 
 		1, 
 		&scissor
@@ -74,33 +74,22 @@ ScrapEngine::VulkanGraphicsPipeline::VulkanGraphicsPipeline(const char* vertexSh
 		false,
 		vk::PolygonMode::eFill,
 		vk::CullModeFlagBits::eBack,
-		vk::FrontFace::eCounterClockwise,
-		false,
-		0,
-		0,
-		0,
-		1.0f
+		vk::FrontFace::eCounterClockwise
 	);
 
 	vk::PipelineMultisampleStateCreateInfo multisampling(
 		vk::PipelineMultisampleStateCreateFlags(),
-		msaaSamples,
-		true, // enable sample shading in the pipeline
-		.2f // min fraction for sample shading; closer to one is smoother
+		msaaSamples
 	);
 
 	vk::PipelineDepthStencilStateCreateInfo depthStencil(
 		vk::PipelineDepthStencilStateCreateFlags(),
 		true,
 		true,
-		vk::CompareOp::eLess,
-		false,
-		false
+		vk::CompareOp::eLessOrEqual
 	);
 
-	vk::PipelineColorBlendAttachmentState colorBlendAttachment(
-		false
-	);
+	vk::PipelineColorBlendAttachmentState colorBlendAttachment;
 	colorBlendAttachment.setColorWriteMask(vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB | vk::ColorComponentFlagBits::eA);
 
 	vk::PipelineColorBlendStateCreateInfo colorBlending(
@@ -108,8 +97,7 @@ ScrapEngine::VulkanGraphicsPipeline::VulkanGraphicsPipeline(const char* vertexSh
 		false,
 		vk::LogicOp::eCopy,
 		1,
-		&colorBlendAttachment,
-		std::array<float, 4>{0.0f,0.0f,0.0f,0.0f}
+		&colorBlendAttachment
 	);
 
 	vk::PipelineLayoutCreateInfo pipelineLayoutInfo(
@@ -150,9 +138,9 @@ ScrapEngine::VulkanGraphicsPipeline::VulkanGraphicsPipeline(const char* vertexSh
 		throw std::runtime_error("VulkanGraphicsPipeline: Failed to create graphics pipeline!");
 	}
 
-	input_deviceRef->destroyShaderModule(fragShaderModule);
-	input_deviceRef->destroyShaderModule(vertShaderModule);
-	delete ShaderManagerRef;
+	//input_deviceRef->destroyShaderModule(fragShaderModule);
+	//input_deviceRef->destroyShaderModule(vertShaderModule);
+	//delete ShaderManagerRef;
 }
 
 

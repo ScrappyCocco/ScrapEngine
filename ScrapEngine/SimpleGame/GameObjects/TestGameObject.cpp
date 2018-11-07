@@ -18,7 +18,7 @@ TestGameObject::TestGameObject(ScrapEngine::InputManager* CreatedInputManager, S
 	setObjectRotation(glm::vec3(0, 0, 0));
 	setObjectScale(glm::vec3(0.1f, 0.1f, 0.1f));
 
-	/*AddComponent(input_ComponentManager->createNewMeshComponent(
+	AddComponent(input_ComponentManager->createNewMeshComponent(
 		"../assets/shader/shader_base.vert.spv",
 		"../assets/shader/shader_base.frag.spv",
 		"../assets/models/Simple_Wood_Crate.fbx",
@@ -52,7 +52,7 @@ TestGameObject::TestGameObject(ScrapEngine::InputManager* CreatedInputManager, S
 	(*GetComponents())[1]->setComponentLocation(glm::vec3(10, 5, -55.0f));
 	(*GetComponents())[2]->setComponentLocation(glm::vec3(20, -7, -70.0f));
 	(*GetComponents())[3]->setComponentLocation(glm::vec3(-10, 10, -10.0f));
-	(*GetComponents())[4]->setComponentLocation(glm::vec3(-20, -15, -20.0f));*/
+	(*GetComponents())[4]->setComponentLocation(glm::vec3(-20, -15, -20.0f));
 
 	//Test skybox 3d model
 	/*AddComponent(input_ComponentManager->createNewMeshComponent(

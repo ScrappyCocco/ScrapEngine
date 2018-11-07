@@ -21,7 +21,9 @@ ScrapEngine::VulkanSkyboxInstance::VulkanSkyboxInstance(const std::string & vert
 	DebugLog::printToConsoleLog("TextureImage created");
 	VulkanTextureImageView = new TextureImageView(device_ref, SkyboxTexture->getTextureImage(), SkyboxTexture->getMipLevels(), true, 6);
 	DebugLog::printToConsoleLog("TextureImageView created");
-	VulkanTextureSampler = new TextureSampler(device_ref, SkyboxTexture->getMipLevels());
+	VulkanTextureSampler = new TextureSampler(device_ref, SkyboxTexture->getMipLevels(), vk::Filter::eLinear, vk::Filter::eLinear, vk::SamplerMipmapMode::eLinear,
+		vk::SamplerAddressMode::eClampToEdge, vk::SamplerAddressMode::eClampToEdge, vk::SamplerAddressMode::eClampToEdge, 
+		false, vk::CompareOp::eNever, true, 16, vk::BorderColor::eFloatOpaqueWhite);
 	VulkanRenderModel = new VulkanModel(model_path);
 	DebugLog::printToConsoleLog("VulkanModel loaded");
 	VulkanRenderVertexBuffer = new VertexBuffer(device_ref, physical_device_ref, VulkanRenderModel->getVertices(), CommandPool, graphicsQueue);
