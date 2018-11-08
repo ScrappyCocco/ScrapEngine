@@ -87,10 +87,11 @@ namespace ScrapEngine {
 		void drawFrame();
 		void waitDeviceIdle();
 
-		//3D mesh stuff
+		//3D mesh and scene stuff
 		ScrapEngine::VulkanMeshInstance* loadMesh(const std::string& vertex_shader_path, const std::string& fragment_shader_path, const std::string& model_path, const std::string& texture_path);
 		ScrapEngine::VulkanMeshInstance* loadMesh(const std::string& model_path, const std::string& texture_path);
 		void unloadMesh(ScrapEngine::VulkanMeshInstance* meshToUnload);
+		ScrapEngine::VulkanSkyboxInstance* loadSkybox(const std::vector<std::string>& files_path);
 
 		//User-Window stuff
 		ScrapEngine::GameWindow* getGameWindow() const;

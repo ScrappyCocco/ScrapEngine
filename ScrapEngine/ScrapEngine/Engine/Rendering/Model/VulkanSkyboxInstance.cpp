@@ -1,6 +1,7 @@
 #include "VulkanSkyboxInstance.h"
 
-ScrapEngine::VulkanSkyboxInstance::VulkanSkyboxInstance(const std::string & vertex_shader_path, const std::string & fragment_shader_path, const std::string & model_path, const std::string & texture_path, ScrapEngine::VulkanDevice * RenderDevice, vk::CommandPool * CommandPool, vk::Queue * graphicsQueue, ScrapEngine::VulkanSwapChain * SwapChain, ScrapEngine::VulkanRenderPass * RenderingPass)
+ScrapEngine::VulkanSkyboxInstance::VulkanSkyboxInstance(const std::string& vertex_shader_path, const std::string& fragment_shader_path, const std::string& model_path, const std::vector<std::string>& texture_path, 
+	ScrapEngine::VulkanDevice* RenderDevice, vk::CommandPool* CommandPool, vk::Queue* graphicsQueue, ScrapEngine::VulkanSwapChain* SwapChain, ScrapEngine::VulkanRenderPass* RenderingPass)
 {
 	vk::Device* device_ref = RenderDevice->getLogicalDevice();
 	vk::PhysicalDevice* physical_device_ref = RenderDevice->getPhysicalDevice();
@@ -8,15 +9,7 @@ ScrapEngine::VulkanSkyboxInstance::VulkanSkyboxInstance(const std::string & vert
 	DebugLog::printToConsoleLog("VulkanDescriptorSet created");
 	VulkanRenderGraphicsPipeline = new VulkanGraphicsPipeline(vertex_shader_path.c_str(), fragment_shader_path.c_str(), device_ref, &SwapChain->getSwapChainExtent(), RenderingPass->getRenderPass(), VulkanRenderDescriptorSet->getDescriptorSetLayout(), RenderDevice->getMsaaSamples(), true);
 	DebugLog::printToConsoleLog("VulkanGraphicsPipeline created");
-	SkyboxTexture = new ScrapEngine::SkyboxTexture(std::vector<std::string>{
-			"../assets/skybox/right.png",
-			"../assets/skybox/left.png",
-			"../assets/skybox/top.png",
-			"../assets/skybox/bottom.png",
-			"../assets/skybox/back.png",
-			"../assets/skybox/front.png"
-	}, 
-		device_ref, physical_device_ref, CommandPool, graphicsQueue);
+	SkyboxTexture = new ScrapEngine::SkyboxTexture(texture_path, device_ref, physical_device_ref, CommandPool, graphicsQueue);
 	DebugLog::printToConsoleLog("TextureImage created");
 	VulkanTextureImageView = new TextureImageView(device_ref, SkyboxTexture->getTextureImage(), SkyboxTexture->getMipLevels(), true, 6);
 	DebugLog::printToConsoleLog("TextureImageView created");
@@ -44,7 +37,18 @@ ScrapEngine::VulkanSkyboxInstance::VulkanSkyboxInstance(const std::string & vert
 
 ScrapEngine::VulkanSkyboxInstance::~VulkanSkyboxInstance()
 {
-	//TO DO
+	delete vertexbuffer;
+	delete indexbuffer;
+	deleteGraphicsPipeline();
+	delete VulkanTextureSampler;
+	delete VulkanTextureImageView;
+	delete SkyboxTexture;
+	delete VulkanRenderDescriptorPool;
+	delete VulkanRenderDescriptorSet;
+	delete VulkanRenderUniformBuffer;
+	delete VulkanRenderIndexBuffer;
+	delete VulkanRenderVertexBuffer;
+	delete VulkanRenderModel;
 }
 
 void ScrapEngine::VulkanSkyboxInstance::updateUniformBuffer(uint32_t currentImage, ScrapEngine::Camera* RenderCamera)
@@ -55,6 +59,16 @@ void ScrapEngine::VulkanSkyboxInstance::updateUniformBuffer(uint32_t currentImag
 void ScrapEngine::VulkanSkyboxInstance::deleteGraphicsPipeline()
 {
 	delete VulkanRenderGraphicsPipeline;
+}
+
+int ScrapEngine::VulkanSkyboxInstance::getCubemapSize()
+{
+	return (int)skyboxTransform.scale.x;
+}
+
+void ScrapEngine::VulkanSkyboxInstance::setCubemapSize(unsigned int newSize)
+{
+	skyboxTransform.scale = glm::vec3(newSize, newSize, newSize);
 }
 
 ScrapEngine::UniformBuffer* ScrapEngine::VulkanSkyboxInstance::getVulkanRenderUniformBuffer()

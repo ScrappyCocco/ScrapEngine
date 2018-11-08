@@ -15,6 +15,7 @@ ScrapEngine::RenderManager::~RenderManager()
 	cleanupSwapChain();
 	delete RenderCamera;
 
+	delete Skybox;
 	for (ScrapEngine::VulkanMeshInstance* current_model : LoadedModels) {
 		delete current_model;
 	}
@@ -103,8 +104,6 @@ void ScrapEngine::RenderManager::initializeVulkan(const ScrapEngine::game_base_i
 	VulkanRenderFrameBuffer = new VulkanFrameBuffer(VulkanRenderImageView, &deviceRef, &VulkanRenderSwapChain->getSwapChainExtent(), VulkanRenderDepth->getDepthImageView(), VulkanRenderingPass->getRenderPass(), VulkanRenderColor->getColorImageView());
 	DebugLog::printToConsoleLog("VulkanFrameBuffer created");
 	//Create empty CommandBuffers
-	//Comment this line to make the game execute
-	Skybox = new VulkanSkyboxInstance("../assets/shader/skyboxtest2.vert.spv", "../assets/shader/skyboxtest2.frag.spv", "../assets/models/cube.obj", "", VulkanRenderDevice, VulkanRenderCommandPool->getCommandPool(), VulkanGraphicsQueue->getgraphicsQueue(), VulkanRenderSwapChain, VulkanRenderingPass);
 	createCommandBuffers();
 	//Vulkan Semaphores
 	VulkanRenderSemaphores = new VulkanSemaphoresManager(&deviceRef);
@@ -177,6 +176,12 @@ void ScrapEngine::RenderManager::unloadMesh(ScrapEngine::VulkanMeshInstance* mes
 		deleteCommandBuffers();
 		createCommandBuffers();
 	}
+}
+
+ScrapEngine::VulkanSkyboxInstance* ScrapEngine::RenderManager::loadSkybox(const std::vector<std::string>& files_path)
+{
+	Skybox = new VulkanSkyboxInstance("../assets/shader/skybox.vert.spv", "../assets/shader/skybox.frag.spv", "../assets/models/cube.obj", files_path, VulkanRenderDevice, VulkanRenderCommandPool->getCommandPool(), VulkanGraphicsQueue->getgraphicsQueue(), VulkanRenderSwapChain, VulkanRenderingPass);
+	return Skybox;
 }
 
 void ScrapEngine::RenderManager::drawFrame()

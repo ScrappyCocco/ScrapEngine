@@ -1,7 +1,7 @@
 #include "SkyboxTexture.h"
 #include "../Memory/MemoryManager.h"
 
-ScrapEngine::SkyboxTexture::SkyboxTexture(std::vector<std::string> files_path, vk::Device* input_deviceRef, vk::PhysicalDevice* PhysicalDevice, vk::CommandPool* CommandPool, vk::Queue* graphicsQueue)
+ScrapEngine::SkyboxTexture::SkyboxTexture(const std::vector<std::string>& files_path, vk::Device* input_deviceRef, vk::PhysicalDevice* PhysicalDevice, vk::CommandPool* CommandPool, vk::Queue* graphicsQueue)
 	: deviceRef(input_deviceRef), PhysicalDeviceRef(PhysicalDevice), CommandPoolRef(CommandPool), graphicsQueueRerf(graphicsQueue)
 {
 	//-----------------------
@@ -84,12 +84,25 @@ ScrapEngine::SkyboxTexture::SkyboxTexture(std::vector<std::string> files_path, v
 	}
 
 	ScrapEngine::TextureImage::transitionImageLayout(deviceRef, &cubemap, vk::Format::eR8G8B8A8Unorm, vk::ImageLayout::eTransferDstOptimal, vk::ImageLayout::eShaderReadOnlyOptimal, CommandPoolRef, graphicsQueue, mipLevels, 6);
-
+	
+	//Delete all the images since they've been copied
+	deleteTemporaryImages();
 }
 
 ScrapEngine::SkyboxTexture::~SkyboxTexture()
 {
+	//Double-check that the images has been erased
+	deleteTemporaryImages();
+	deviceRef->destroyImage(cubemap);
+	deviceRef->freeMemory(cubemapImageMemory);
+}
 
+void ScrapEngine::SkyboxTexture::deleteTemporaryImages()
+{
+	for (ScrapEngine::TextureImage* cubeSingleImage : images) {
+		delete cubeSingleImage;
+	}
+	images.clear();
 }
 
 vk::Image* ScrapEngine::SkyboxTexture::getTextureImage()

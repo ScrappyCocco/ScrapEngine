@@ -23,11 +23,11 @@ namespace ScrapEngine {
 		vk::PhysicalDevice* PhysicalDeviceRef;
 		vk::CommandPool* CommandPoolRef;
 		vk::Queue* graphicsQueueRerf;
-		ScrapEngine::StagingBuffer* StaginfBufferRef = nullptr;
 	public:
-		SkyboxTexture(std::vector<std::string> files_path, vk::Device* input_deviceRef, vk::PhysicalDevice* PhysicalDevice, vk::CommandPool* CommandPool, vk::Queue* graphicsQueue);
+		SkyboxTexture(const std::vector<std::string>& files_path, vk::Device* input_deviceRef, vk::PhysicalDevice* PhysicalDevice, vk::CommandPool* CommandPool, vk::Queue* graphicsQueue);
 		~SkyboxTexture();
 
+		void deleteTemporaryImages();
 		vk::Image* getTextureImage();
 		uint32_t getMipLevels() const;
 	};

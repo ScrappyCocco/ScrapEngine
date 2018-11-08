@@ -34,13 +34,17 @@ namespace ScrapEngine {
 		simple_buffer<uint32_t>* indexbuffer = nullptr;
 		ScrapEngine::Transform skyboxTransform;
 	public:
-		VulkanSkyboxInstance(const std::string& vertex_shader_path, const std::string& fragment_shader_path, const std::string& model_path, const std::string& texture_path,
+		VulkanSkyboxInstance(const std::string& vertex_shader_path, const std::string& fragment_shader_path, const std::string& model_path, const std::vector<std::string>& texture_path,
 			ScrapEngine::VulkanDevice* RenderDevice, vk::CommandPool* CommandPool, vk::Queue* graphicsQueue, ScrapEngine::VulkanSwapChain* SwapChain,
 			ScrapEngine::VulkanRenderPass* RenderingPass);
 		~VulkanSkyboxInstance();
 
 		void updateUniformBuffer(uint32_t currentImage, ScrapEngine::Camera* RenderCamera);
 		void deleteGraphicsPipeline();
+
+		int getCubemapSize();
+		void setCubemapSize(unsigned int newSize);
+
 		ScrapEngine::UniformBuffer* getVulkanRenderUniformBuffer();
 		ScrapEngine::VulkanGraphicsPipeline* getVulkanRenderGraphicsPipeline();
 		ScrapEngine::VulkanDescriptorSet* getVulkanRenderDescriptorSet();

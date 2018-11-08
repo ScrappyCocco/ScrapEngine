@@ -36,6 +36,9 @@ ScrapEngine::VulkanMeshInstance::VulkanMeshInstance(const std::string& vertex_sh
 
 ScrapEngine::VulkanMeshInstance::~VulkanMeshInstance()
 {
+	delete vertexbuffer;
+	delete indexbuffer;
+	deleteGraphicsPipeline();
 	delete VulkanTextureSampler;
 	delete VulkanTextureImageView;
 	delete VulkanTextureImage;
@@ -45,7 +48,6 @@ ScrapEngine::VulkanMeshInstance::~VulkanMeshInstance()
 	delete VulkanRenderIndexBuffer;
 	delete VulkanRenderVertexBuffer;
 	delete VulkanRenderModel;
-	//TO CHECK
 }
 
 void ScrapEngine::VulkanMeshInstance::setMeshLocation(glm::vec3 location)
@@ -111,4 +113,5 @@ ScrapEngine::simple_buffer<uint32_t>* ScrapEngine::VulkanMeshInstance::getIndexb
 void ScrapEngine::VulkanMeshInstance::deleteGraphicsPipeline()
 {
 	delete VulkanRenderGraphicsPipeline;
+	VulkanRenderGraphicsPipeline = nullptr;
 }

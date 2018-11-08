@@ -3,24 +3,23 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
-layout (location = 0) in vec3 inPos;
-
-layout (binding = 0) uniform UBO 
-{
-	mat4 projection;
-	mat4 model;
+layout(binding = 0) uniform UniformBufferObject {
+    mat4 model;
+    mat4 view;
+    mat4 proj;
 } ubo;
 
-layout (location = 0) out vec3 outUVW;
+layout(location = 0) in vec3 inPosition;
+layout(location = 1) in vec3 inColor;
+layout(location = 2) in vec2 inTexCoord;
 
-out gl_PerVertex 
-{
-	vec4 gl_Position;
+layout(location = 0) out vec3 fragColor;
+
+out gl_PerVertex {
+    vec4 gl_Position;
 };
 
-void main() 
-{
-	outUVW = inPos;
-	outUVW.x *= -1.0;
-	gl_Position = ubo.projection * ubo.model * vec4(inPos.xyz, 1.0);
+void main() {
+    gl_Position = ubo.proj * ubo.view * ubo.model * vec4(inPosition.xyz, 1.0);
+    fragColor = inPosition;
 }
