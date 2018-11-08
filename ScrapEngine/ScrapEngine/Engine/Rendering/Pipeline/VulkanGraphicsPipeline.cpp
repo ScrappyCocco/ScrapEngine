@@ -139,9 +139,9 @@ ScrapEngine::VulkanGraphicsPipeline::VulkanGraphicsPipeline(const char* vertexSh
 		throw std::runtime_error("VulkanGraphicsPipeline: Failed to create graphics pipeline!");
 	}
 
-	//input_deviceRef->destroyShaderModule(fragShaderModule);
-	//input_deviceRef->destroyShaderModule(vertShaderModule);
-	//delete ShaderManagerRef;
+	input_deviceRef->destroyShaderModule(fragShaderModule);
+	input_deviceRef->destroyShaderModule(vertShaderModule);
+	delete ShaderManagerRef;
 }
 
 
