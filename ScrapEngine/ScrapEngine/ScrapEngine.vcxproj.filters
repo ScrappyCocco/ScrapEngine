@@ -256,9 +256,6 @@
     <ClCompile Include="Engine\Rendering\Model\VulkanSkyboxInstance.cpp">
       <Filter>Engine\Rendering\Model</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Rendering\Buffer\Uniform\SkyboxUniformBuffer.cpp">
-      <Filter>Engine\Rendering\Buffer\Uniform</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Rendering\ValidationLayers\VulkanValidationLayers.cpp">
       <Filter>Engine\Rendering\ValidationLayers</Filter>
     </ClCompile>
@@ -416,9 +413,6 @@
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Model\VulkanSkyboxInstance.h">
       <Filter>Engine\Rendering\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Rendering\Buffer\Uniform\SkyboxUniformBuffer.h">
-      <Filter>Engine\Rendering\Buffer\Uniform</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Rendering\ValidationLayers\VulkanValidationLayers.h">
       <Filter>Engine\Rendering\ValidationLayers</Filter>

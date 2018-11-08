@@ -84,6 +84,17 @@ ScrapEngine::VulkanCommandBuffer::VulkanCommandBuffer(ScrapEngine::VulkanFrameBu
 		commandBuffers[i].beginRenderPass(&renderPassInfo, vk::SubpassContents::eInline);
 
 		vk::DeviceSize offsets[] = { 0 };
+
+		//Skybox render
+		if (SkyboxRef) {
+			commandBuffers[i].bindPipeline(vk::PipelineBindPoint::eGraphics, *SkyboxRef->getVulkanRenderGraphicsPipeline()->getGraphicsPipeline());
+			vk::Buffer buff[] = { *SkyboxRef->getVertexbuffer()->buffer };
+			commandBuffers[i].bindVertexBuffers(0, 1, buff, offsets);
+			commandBuffers[i].bindIndexBuffer(*SkyboxRef->getIndexbuffer()->buffer, 0, vk::IndexType::eUint32);
+			commandBuffers[i].bindDescriptorSets(vk::PipelineBindPoint::eGraphics, *SkyboxRef->getVulkanRenderGraphicsPipeline()->getPipelineLayout(), 0, 1, &(*SkyboxRef->getVulkanRenderDescriptorSet()->getDescriptorSets())[i], 0, nullptr);
+			commandBuffers[i].drawIndexed(static_cast<uint32_t>((*SkyboxRef->getIndexbuffer()).vectorData->size()), 1, 0, 0, 0);
+		}
+		//Scene render
 		for (int k = 0; k < vertexBuffer.size(); k++) {
 			commandBuffers[i].bindPipeline(vk::PipelineBindPoint::eGraphics, *input_vulkanPipelineRef[k]->getGraphicsPipeline());
 
@@ -96,14 +107,6 @@ ScrapEngine::VulkanCommandBuffer::VulkanCommandBuffer(ScrapEngine::VulkanFrameBu
 			commandBuffers[i].bindDescriptorSets(vk::PipelineBindPoint::eGraphics, *input_vulkanPipelineRef[k]->getPipelineLayout(), 0, 1, &(*descriptorSets[k])[i], 0, nullptr);
 
 			commandBuffers[i].drawIndexed(static_cast<uint32_t>((*indexBuffer[k]).vectorData->size()), 1, 0, 0, 0);
-		}
-		if (SkyboxRef) {
-			commandBuffers[i].bindPipeline(vk::PipelineBindPoint::eGraphics, *SkyboxRef->getVulkanRenderGraphicsPipeline()->getGraphicsPipeline());
-			vk::Buffer buff[] = { *SkyboxRef->getVertexbuffer()->buffer };
-			commandBuffers[i].bindVertexBuffers(0, 1, buff, offsets);
-			commandBuffers[i].bindIndexBuffer(*SkyboxRef->getIndexbuffer()->buffer, 0, vk::IndexType::eUint32);
-			commandBuffers[i].bindDescriptorSets(vk::PipelineBindPoint::eGraphics, *SkyboxRef->getVulkanRenderGraphicsPipeline()->getPipelineLayout(), 0, 1, &(*SkyboxRef->getVulkanRenderDescriptorSet()->getDescriptorSets())[i], 0, nullptr);
-			commandBuffers[i].drawIndexed(static_cast<uint32_t>((*SkyboxRef->getIndexbuffer()).vectorData->size()), 1, 0, 0, 0);
 		}
 
 		commandBuffers[i].endRenderPass();

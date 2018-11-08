@@ -4,7 +4,6 @@
 #include "../Texture/TextureSampler.h"
 #include "../Buffer/Vertex/VertexBuffer.h"
 #include "../Buffer/Index/IndexBuffer.h"
-#include "../Buffer/Uniform/SkyboxUniformBuffer.h"
 #include "../Model/VulkanModel.h"
 #include "../Descriptor/VulkanDescriptorPool.h"
 #include "../Descriptor/VulkanDescriptorSet.h"
@@ -28,12 +27,12 @@ namespace ScrapEngine {
 		ScrapEngine::VertexBuffer* VulkanRenderVertexBuffer = nullptr;
 		ScrapEngine::IndexBuffer* VulkanRenderIndexBuffer = nullptr;
 		ScrapEngine::UniformBuffer* VulkanRenderUniformBuffer = nullptr;
-		//ScrapEngine::SkyboxUniformBuffer* VulkanRenderUniformBuffer = nullptr;
 		ScrapEngine::VulkanDescriptorPool* VulkanRenderDescriptorPool = nullptr;
 		ScrapEngine::VulkanDescriptorSet* VulkanRenderDescriptorSet = nullptr;
 
 		simple_buffer<Vertex>* vertexbuffer = nullptr;
 		simple_buffer<uint32_t>* indexbuffer = nullptr;
+		ScrapEngine::Transform skyboxTransform;
 	public:
 		VulkanSkyboxInstance(const std::string& vertex_shader_path, const std::string& fragment_shader_path, const std::string& model_path, const std::string& texture_path,
 			ScrapEngine::VulkanDevice* RenderDevice, vk::CommandPool* CommandPool, vk::Queue* graphicsQueue, ScrapEngine::VulkanSwapChain* SwapChain,

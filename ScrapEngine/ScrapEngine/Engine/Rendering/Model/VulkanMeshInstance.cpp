@@ -45,6 +45,7 @@ ScrapEngine::VulkanMeshInstance::~VulkanMeshInstance()
 	delete VulkanRenderIndexBuffer;
 	delete VulkanRenderVertexBuffer;
 	delete VulkanRenderModel;
+	//TO CHECK
 }
 
 void ScrapEngine::VulkanMeshInstance::setMeshLocation(glm::vec3 location)

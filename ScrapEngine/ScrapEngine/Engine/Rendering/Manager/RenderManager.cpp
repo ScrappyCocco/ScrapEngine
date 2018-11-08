@@ -218,7 +218,6 @@ void ScrapEngine::RenderManager::drawFrame()
 	submitInfo.setSignalSemaphoreCount(1);
 	submitInfo.setPSignalSemaphores(signalSemaphores);
 	
-	DebugLog::printToConsoleLog("---PRE submit CommandBuffer to GraphicsQueue---");
 	deviceRef.resetFences(1, &(*inFlightFencesRef)[currentFrame]);
 
 	result = VulkanGraphicsQueue->getgraphicsQueue()->submit(1, &submitInfo, (*inFlightFencesRef)[currentFrame]);
@@ -226,7 +225,6 @@ void ScrapEngine::RenderManager::drawFrame()
 		std::cout << "RESULT TYPE:" << result << std::endl;
 		throw std::runtime_error("RenderManager: Failed to submit draw command buffer!");
 	}
-	DebugLog::printToConsoleLog("---AFTER submit CommandBuffer to GraphicsQueue---");
 
 	vk::PresentInfoKHR presentInfo;
 

@@ -32,7 +32,6 @@
     <ClCompile Include="Engine\Rendering\Buffer\BaseBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\Index\IndexBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\Staging\StagingBuffer.cpp" />
-    <ClCompile Include="Engine\Rendering\Buffer\Uniform\SkyboxUniformBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\Uniform\UniformBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\Vertex\VertexBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\VulkanCommandBuffer.cpp" />
@@ -85,7 +84,6 @@
     <ClInclude Include="Engine\Rendering\Buffer\BaseBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\Index\IndexBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\Staging\StagingBuffer.h" />
-    <ClInclude Include="Engine\Rendering\Buffer\Uniform\SkyboxUniformBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\Uniform\UniformBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\Vertex\VertexBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\VulkanCommandBuffer.h" />

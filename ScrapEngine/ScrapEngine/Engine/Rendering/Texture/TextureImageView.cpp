@@ -44,7 +44,7 @@ vk::ImageView ScrapEngine::TextureImageView::createCubeMapImageView(vk::Device *
 		vk::ImageViewType::eCube,
 		format,
 		vk::ComponentMapping(vk::ComponentSwizzle::eR, vk::ComponentSwizzle::eG, vk::ComponentSwizzle::eB, vk::ComponentSwizzle::eA),
-		vk::ImageSubresourceRange(aspectFlags, 0, mipLevelsData, layerCount)
+		vk::ImageSubresourceRange(aspectFlags, 0, mipLevelsData, 0, layerCount)
 	);
 
 	vk::ImageView imageView;
