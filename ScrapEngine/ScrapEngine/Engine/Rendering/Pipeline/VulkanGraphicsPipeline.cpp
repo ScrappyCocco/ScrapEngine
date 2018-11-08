@@ -76,6 +76,7 @@ ScrapEngine::VulkanGraphicsPipeline::VulkanGraphicsPipeline(const char* vertexSh
 		vk::CullModeFlagBits::eBack,
 		vk::FrontFace::eCounterClockwise
 	);
+	rasterizer.setLineWidth(1.0f);
 
 	vk::PipelineMultisampleStateCreateInfo multisampling(
 		vk::PipelineMultisampleStateCreateFlags(),

@@ -13,6 +13,11 @@ void ScrapEngine::DebugLog::printToConsoleLog(glm::vec3 vector)
 	std::cout << NowToString().c_str() << "Vec3: (" << vector.x << ", " << vector.y << ", " << vector.z << ")" << std::endl;
 }
 
+void ScrapEngine::DebugLog::printExceptionToConsoleLog(std::string messageSeverity, std::string exceptionString)
+{
+	std::cout << std::endl << NowToString().c_str() << messageSeverity << exceptionString << std::endl << std::endl;
+}
+
 std::string ScrapEngine::DebugLog::NowToString()
 {
 	struct tm timeinfo;
