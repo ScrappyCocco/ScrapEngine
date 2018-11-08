@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vulkan/vulkan.hpp>
+#include "../ValidationLayers/VulkanValidationLayers.h"
 #include <string>
 #include <vector>
 
@@ -10,6 +11,9 @@ namespace ScrapEngine {
 	{
 	private:
 		vk::Instance instance; //Vulkan Instance of the engine - connection between the application and the Vulkan library
+
+		//Reference to ValidationLayersManager that display vulkan warning/errors
+		ScrapEngine::VulkanValidationLayers* ValidationLayersManager = nullptr;
 	public:
 		VukanInstance(std::string app_name, int app_version, std::string engine_name = "No Engine", int engine_version = 1);
 

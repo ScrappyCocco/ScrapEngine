@@ -62,6 +62,7 @@
     <ClCompile Include="Engine\Rendering\Texture\TextureImageView.cpp" />
     <ClCompile Include="Engine\Rendering\Texture\TextureSampler.cpp" />
     <ClCompile Include="Engine\Rendering\Texture\VulkanColorResources.cpp" />
+    <ClCompile Include="Engine\Rendering\ValidationLayers\VulkanValidationLayers.cpp" />
     <ClCompile Include="Engine\Rendering\Window\GameWindow.cpp" />
     <ClCompile Include="Engine\Rendering\Window\VulkanSurface.cpp" />
     <ClCompile Include="Engine\Utility\UsefulMethods.cpp" />
@@ -115,6 +116,7 @@
     <ClInclude Include="Engine\Rendering\Texture\TextureImageView.h" />
     <ClInclude Include="Engine\Rendering\Texture\TextureSampler.h" />
     <ClInclude Include="Engine\Rendering\Texture\VulkanColorResources.h" />
+    <ClInclude Include="Engine\Rendering\ValidationLayers\VulkanValidationLayers.h" />
     <ClInclude Include="Engine\Rendering\Window\GameWindow.h" />
     <ClInclude Include="Engine\Rendering\Window\VulkanSurface.h" />
     <ClInclude Include="Engine\Utility\UsefulMethods.h" />

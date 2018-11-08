@@ -5,11 +5,20 @@
 
 ScrapEngine::VukanInstance::VukanInstance(std::string app_name, int app_version, std::string engine_name, int engine_version)
 {
+	if (VulkanValidationLayers::areValidationLayersEnabled()) {
+		ValidationLayersManager = new VulkanValidationLayers();
+	}
 	createVulkanInstance(app_name, app_version, engine_name, engine_version);
+	if (ValidationLayersManager) {
+		ValidationLayersManager->setupDebugCallback(&instance);
+	}
 }
 
 ScrapEngine::VukanInstance::~VukanInstance()
 {
+	if (ValidationLayersManager) {
+		delete ValidationLayersManager;
+	}
 	vkDestroyInstance(instance, nullptr);
 }
 
@@ -28,6 +37,13 @@ void ScrapEngine::VukanInstance::createVulkanInstance(std::string app_name, int 
 		extensions.data()
 	);
 
+	std::vector<const char*> layers;
+	if (ValidationLayersManager) {
+		layers = ValidationLayersManager->getValidationLayers();
+		createInfo.setEnabledLayerCount(static_cast<uint32_t>(layers.size()));
+		createInfo.setPpEnabledLayerNames(layers.data());
+	}
+
 	if (vk::createInstance(&createInfo, nullptr, &instance) != vk::Result::eSuccess) {
 		throw std::runtime_error("VukanInstance: Failed to create instance!");
 	}
@@ -45,6 +61,10 @@ std::vector<const char*> ScrapEngine::VukanInstance::getRequiredExtensions()
 	glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
 
 	std::vector<const char*> extensions(glfwExtensions, glfwExtensions + glfwExtensionCount);
+
+	if (ValidationLayersManager) {
+		extensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
+	}
 
 	return extensions;
 }

@@ -116,6 +116,9 @@
     <Filter Include="Engine\Rendering\Camera">
       <UniqueIdentifier>{07ca6137-0264-48b0-a4dc-0387193119aa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Rendering\ValidationLayers">
+      <UniqueIdentifier>{58c483d9-4579-4979-8acf-e3e149e4991c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Manager\EngineManager.cpp">
@@ -255,6 +258,9 @@
     </ClCompile>
     <ClCompile Include="Engine\Rendering\Buffer\Uniform\SkyboxUniformBuffer.cpp">
       <Filter>Engine\Rendering\Buffer\Uniform</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\ValidationLayers\VulkanValidationLayers.cpp">
+      <Filter>Engine\Rendering\ValidationLayers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -413,6 +419,9 @@
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Buffer\Uniform\SkyboxUniformBuffer.h">
       <Filter>Engine\Rendering\Buffer\Uniform</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\ValidationLayers\VulkanValidationLayers.h">
+      <Filter>Engine\Rendering\ValidationLayers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
