@@ -1,6 +1,6 @@
 #include "VulkanSkyboxInstance.h"
 
-ScrapEngine::VulkanSkyboxInstance::VulkanSkyboxInstance(const std::string& vertex_shader_path, const std::string& fragment_shader_path, const std::string& model_path, const std::vector<std::string>& texture_path, 
+ScrapEngine::VulkanSkyboxInstance::VulkanSkyboxInstance(const std::string& vertex_shader_path, const std::string& fragment_shader_path, const std::string& model_path, const std::array<std::string, 6>& texture_path,
 	ScrapEngine::VulkanDevice* RenderDevice, vk::CommandPool* CommandPool, vk::Queue* graphicsQueue, ScrapEngine::VulkanSwapChain* SwapChain, ScrapEngine::VulkanRenderPass* RenderingPass)
 {
 	vk::Device* device_ref = RenderDevice->getLogicalDevice();

@@ -178,9 +178,14 @@ void ScrapEngine::RenderManager::unloadMesh(ScrapEngine::VulkanMeshInstance* mes
 	}
 }
 
-ScrapEngine::VulkanSkyboxInstance* ScrapEngine::RenderManager::loadSkybox(const std::vector<std::string>& files_path)
+ScrapEngine::VulkanSkyboxInstance* ScrapEngine::RenderManager::loadSkybox(const std::array<std::string, 6>& files_path)
 {
+	if (Skybox) {
+		delete Skybox;
+	}
 	Skybox = new VulkanSkyboxInstance("../assets/shader/skybox.vert.spv", "../assets/shader/skybox.frag.spv", "../assets/models/cube.obj", files_path, VulkanRenderDevice, VulkanRenderCommandPool->getCommandPool(), VulkanGraphicsQueue->getgraphicsQueue(), VulkanRenderSwapChain, VulkanRenderingPass);
+	deleteCommandBuffers();
+	createCommandBuffers();
 	return Skybox;
 }
 

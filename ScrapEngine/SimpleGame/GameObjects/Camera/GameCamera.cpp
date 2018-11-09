@@ -4,7 +4,7 @@
 GameCamera::GameCamera(ScrapEngine::InputManager* CreatedInputManagerf, ScrapEngine::Camera* input_GameCameraRef) : 
 	GameCameraRef(input_GameCameraRef), SGameObject("Camera-Controller Object"), InputManagerRef(CreatedInputManagerf)
 {
-	GameCameraRef->setMaxRenderDistance(500);
+	GameCameraRef->setMaxRenderDistance(10000);
 }
 
 void GameCamera::GameStart()

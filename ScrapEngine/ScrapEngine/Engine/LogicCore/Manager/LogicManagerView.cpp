@@ -4,6 +4,7 @@ ScrapEngine::LogicManagerView::LogicManagerView(ScrapEngine::RenderManager* inpu
 	: RenderManagerRef(input_RenderManagerRef), LogicManagerRef(input_LogicManagerRef)
 {
 	ComponentManager = new ComponentsManager(input_RenderManagerRef);
+	SceneManager = new ScrapEngine::SceneManager(input_RenderManagerRef);
 }
 
 ScrapEngine::LogicManagerView::~LogicManagerView()
@@ -24,4 +25,9 @@ void ScrapEngine::LogicManagerView::UnRegisterGameObject(SGameObject* input_Game
 ScrapEngine::ComponentsManager* ScrapEngine::LogicManagerView::getComponentsManager() const
 {
 	return ComponentManager;
+}
+
+ScrapEngine::SceneManager * ScrapEngine::LogicManagerView::getSceneManager() const
+{
+	return SceneManager;
 }

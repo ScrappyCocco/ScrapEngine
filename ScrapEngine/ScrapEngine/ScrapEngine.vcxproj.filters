@@ -119,6 +119,9 @@
     <Filter Include="Engine\Rendering\ValidationLayers">
       <UniqueIdentifier>{58c483d9-4579-4979-8acf-e3e149e4991c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\LogicCore\Scene">
+      <UniqueIdentifier>{734a6ac2-768b-46c2-b5d1-5b8746fad671}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Manager\EngineManager.cpp">
@@ -258,6 +261,9 @@
     </ClCompile>
     <ClCompile Include="Engine\Rendering\ValidationLayers\VulkanValidationLayers.cpp">
       <Filter>Engine\Rendering\ValidationLayers</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\LogicCore\Scene\SceneManager.cpp">
+      <Filter>Engine\LogicCore\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -416,6 +422,9 @@
     </ClInclude>
     <ClInclude Include="Engine\Rendering\ValidationLayers\VulkanValidationLayers.h">
       <Filter>Engine\Rendering\ValidationLayers</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\LogicCore\Scene\SceneManager.h">
+      <Filter>Engine\LogicCore\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

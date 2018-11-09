@@ -1,7 +1,7 @@
 #include "SkyboxTexture.h"
 #include "../Memory/MemoryManager.h"
 
-ScrapEngine::SkyboxTexture::SkyboxTexture(const std::vector<std::string>& files_path, vk::Device* input_deviceRef, vk::PhysicalDevice* PhysicalDevice, vk::CommandPool* CommandPool, vk::Queue* graphicsQueue)
+ScrapEngine::SkyboxTexture::SkyboxTexture(const std::array<std::string, 6>& files_path, vk::Device* input_deviceRef, vk::PhysicalDevice* PhysicalDevice, vk::CommandPool* CommandPool, vk::Queue* graphicsQueue)
 	: deviceRef(input_deviceRef), PhysicalDeviceRef(PhysicalDevice), CommandPoolRef(CommandPool), graphicsQueueRerf(graphicsQueue)
 {
 	//-----------------------

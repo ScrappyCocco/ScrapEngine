@@ -17,7 +17,7 @@ ScrapEngine::TextureImage::TextureImage(std::string file_path, vk::Device* input
 	mipLevels = static_cast<uint32_t>(std::floor(std::log2(std::max(texWidth, texHeight)))) + 1;
 
 	if (!pixels) {
-		throw std::runtime_error("TextureImage: Failed to load texture image! (pixels not valid)");
+		throw std::runtime_error("TextureImage: Failed to load texture image! (pixels not valid) - " + file_path);
 	}
 
 	StaginfBufferRef = new StagingBuffer(deviceRef, PhysicalDeviceRef, &imageSize, pixels);

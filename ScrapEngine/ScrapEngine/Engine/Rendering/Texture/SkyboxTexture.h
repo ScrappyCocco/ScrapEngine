@@ -24,7 +24,7 @@ namespace ScrapEngine {
 		vk::CommandPool* CommandPoolRef;
 		vk::Queue* graphicsQueueRerf;
 	public:
-		SkyboxTexture(const std::vector<std::string>& files_path, vk::Device* input_deviceRef, vk::PhysicalDevice* PhysicalDevice, vk::CommandPool* CommandPool, vk::Queue* graphicsQueue);
+		SkyboxTexture(const std::array<std::string, 6>& files_path, vk::Device* input_deviceRef, vk::PhysicalDevice* PhysicalDevice, vk::CommandPool* CommandPool, vk::Queue* graphicsQueue);
 		~SkyboxTexture();
 
 		void deleteTemporaryImages();
