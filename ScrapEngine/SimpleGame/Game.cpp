@@ -33,7 +33,7 @@ int main() {
 		TestGameObject* FirstGameObject = new TestGameObject(inputmanager, ComponentManagerRef);
 		ScrapEngineManager->LogicManagerView->RegisterGameObject(FirstGameObject);
 		//Create the camera
-		GameCamera* GameCameraRef = new GameCamera(inputmanager, ScrapEngineManager->RenderManagerView->getDefaultRenderCamera());
+		GameCamera* GameCameraRef = new GameCamera(inputmanager, ScrapEngineManager->RenderManagerView->getDefaultRenderCamera(), FirstGameObject);
 		ScrapEngineManager->LogicManagerView->RegisterGameObject(GameCameraRef);
 		//Begin gameplay
 		ScrapEngineManager->StartGameLoop();

@@ -10,6 +10,7 @@ class TestGameObject : public ScrapEngine::SGameObject
 {
 private:
 	ScrapEngine::InputManager* InputManagerRef;
+	ScrapEngine::ComponentsManager* ComponentManagerRef;
 
 	bool flipflop = false;
 	float rotation = 1;
@@ -19,5 +20,7 @@ public:
 
 	virtual void GameStart() override;
 	virtual void GameUpdate(float time) override;
+
+	void SpawnCrateAtLocation(glm::vec3 pos);
 };
 

@@ -2,7 +2,7 @@
 #include "Engine/Debug/DebugLog.h"
 
 TestGameObject::TestGameObject(ScrapEngine::InputManager* CreatedInputManager, ScrapEngine::ComponentsManager* input_ComponentManager)
-	: SGameObject("Test game object"), InputManagerRef(CreatedInputManager)
+	: SGameObject("Test game object"), InputManagerRef(CreatedInputManager), ComponentManagerRef(input_ComponentManager)
 {
 	//Add mesh to that GameObject
 	/*AddComponent(input_ComponentManager->createNewMeshComponent(
@@ -53,24 +53,24 @@ TestGameObject::TestGameObject(ScrapEngine::InputManager* CreatedInputManager, S
 	(*GetComponents())[2]->setComponentLocation(glm::vec3(20, -7, -70.0f));
 	(*GetComponents())[3]->setComponentLocation(glm::vec3(-10, 10, -10.0f));
 	(*GetComponents())[4]->setComponentLocation(glm::vec3(-20, -15, -20.0f));
-
-	//Test skybox 3d model
-	/*AddComponent(input_ComponentManager->createNewMeshComponent(
-		"../assets/shader/shader_base.vert.spv",
-		"../assets/shader/shader_base.frag.spv",
-		"../assets/models/cube.obj",
-		"../assets/textures/SimpleGreenTexture.png"
-	));
-	(*GetComponents())[5]->setComponentLocation(glm::vec3(-30, -25, -10.0f));
-	(*GetComponents())[5]->setComponentScale(glm::vec3(3, 3, 3));*/
 }
 
 void TestGameObject::GameStart()
 {
-	//ScrapEngine::DebugLog::printToConsoleLog("GAMEOBJECT: START");
 }
 
 void TestGameObject::GameUpdate(float time)
 {
 	
+}
+
+void TestGameObject::SpawnCrateAtLocation(glm::vec3 pos)
+{
+	AddComponent(ComponentManagerRef->createNewMeshComponent(
+		"../assets/shader/shader_base.vert.spv",
+		"../assets/shader/shader_base.frag.spv",
+		"../assets/models/Simple_Wood_Crate.fbx",
+		"../assets/textures/Simple_Wood_Crate_Color.png"
+	));
+	(*GetComponents())[GetComponents()->size()-1]->setComponentLocation(pos);
 }

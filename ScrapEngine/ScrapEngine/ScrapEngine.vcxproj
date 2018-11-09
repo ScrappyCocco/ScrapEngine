@@ -72,6 +72,7 @@
     <ClInclude Include="Engine\Debug\DebugLog.h" />
     <ClInclude Include="Engine\Input\KeyboardKeys.h" />
     <ClInclude Include="Engine\Input\Manager\InputManager.h" />
+    <ClInclude Include="Engine\Input\MouseButtons.h" />
     <ClInclude Include="Engine\LogicCore\Components\Manager\ComponentsManager.h" />
     <ClInclude Include="Engine\LogicCore\Components\MeshComponent\MeshComponent.h" />
     <ClInclude Include="Engine\LogicCore\Components\SComponent.h" />

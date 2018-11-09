@@ -1,8 +1,9 @@
 #include "GameCamera.h"
 #include "Engine/Debug/DebugLog.h"
+#include "../Camera/GameCamera.h"
 
-GameCamera::GameCamera(ScrapEngine::InputManager* CreatedInputManagerf, ScrapEngine::Camera* input_GameCameraRef) : 
-	GameCameraRef(input_GameCameraRef), SGameObject("Camera-Controller Object"), InputManagerRef(CreatedInputManagerf)
+GameCamera::GameCamera(ScrapEngine::InputManager* CreatedInputManagerf, ScrapEngine::Camera* input_GameCameraRef, TestGameObject* input_GameObjectRef) :
+	GameCameraRef(input_GameCameraRef), SGameObject("Camera-Controller Object"), InputManagerRef(CreatedInputManagerf), GameObjectRef(input_GameObjectRef)
 {
 	GameCameraRef->setMaxRenderDistance(10000);
 }
@@ -19,17 +20,20 @@ void GameCamera::GameUpdate(float time)
 	GameCameraRef->ProcessMouseMovement((float)mouse.xpos, (float)mouse.ypos, true);
 
 	cameraSpeed = 10.f * time;
-	if (InputManagerRef->getKeyboardKeyStatus(keyboard_key_W) == ScrapEngine::KeyboardKeyState::pressed) {
+	if (InputManagerRef->getKeyboardKeyPressed(keyboard_key_W)) {
 		GameCameraRef->setCameraLocation(GameCameraRef->getCameraLocation() + (cameraSpeed * GameCameraRef->getCameraFront()));
 	}
-	if (InputManagerRef->getKeyboardKeyStatus(keyboard_key_S) == ScrapEngine::KeyboardKeyState::pressed) {
+	if (InputManagerRef->getKeyboardKeyPressed(keyboard_key_S)) {
 		GameCameraRef->setCameraLocation(GameCameraRef->getCameraLocation() - (cameraSpeed * GameCameraRef->getCameraFront()));
 	}
-	if (InputManagerRef->getKeyboardKeyStatus(keyboard_key_D) == ScrapEngine::KeyboardKeyState::pressed) {
+	if (InputManagerRef->getKeyboardKeyPressed(keyboard_key_D)) {
 		GameCameraRef->setCameraLocation(GameCameraRef->getCameraLocation() + (cameraSpeed * (glm::normalize(glm::cross(GameCameraRef->getCameraFront(), GameCameraRef->getCameraUp())))));
 	}
-	if (InputManagerRef->getKeyboardKeyStatus(keyboard_key_A) == ScrapEngine::KeyboardKeyState::pressed) {
+	if (InputManagerRef->getKeyboardKeyPressed(keyboard_key_A)) {
 		GameCameraRef->setCameraLocation(GameCameraRef->getCameraLocation() - (cameraSpeed * (glm::normalize(glm::cross(GameCameraRef->getCameraFront(), GameCameraRef->getCameraUp())))));
+	}
+	if (InputManagerRef->getMouseButtonPressed(mouse_button_left)) {
+		GameObjectRef->SpawnCrateAtLocation(GameCameraRef->getCameraLocation());
 	}
 }
 

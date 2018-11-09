@@ -84,3 +84,28 @@ int ScrapEngine::InputManager::getKeyboardKeyStatus(int key_to_check)
 	return glfwGetKey(windowRef, key_to_check);
 }
 
+int ScrapEngine::InputManager::getKeyboardKeyPressed(int key_to_check)
+{
+	return getKeyboardKeyStatus(key_to_check) == ScrapEngine::ButtonState::pressed;
+}
+
+int ScrapEngine::InputManager::getKeyboardKeyReleased(int key_to_check)
+{
+	return getKeyboardKeyStatus(key_to_check) == ScrapEngine::ButtonState::released;
+}
+
+int ScrapEngine::InputManager::getMouseButtonStatus(int button_to_check)
+{
+	return glfwGetMouseButton(windowRef, button_to_check);
+}
+
+int ScrapEngine::InputManager::getMouseButtonPressed(int button_to_check)
+{
+	return getMouseButtonStatus(button_to_check) == ScrapEngine::ButtonState::pressed;
+}
+
+int ScrapEngine::InputManager::getMouseButtonReleased(int button_to_check)
+{
+	return getMouseButtonStatus(button_to_check) == ScrapEngine::ButtonState::released;
+}
+

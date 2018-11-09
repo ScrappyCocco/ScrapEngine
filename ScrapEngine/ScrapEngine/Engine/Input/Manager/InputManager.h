@@ -32,7 +32,7 @@ namespace ScrapEngine {
 		cursor_input_beam_shape
 	};
 
-	enum KeyboardKeyState {
+	enum ButtonState {
 		released, pressed
 	};
 
@@ -53,6 +53,12 @@ namespace ScrapEngine {
 		void ResetCursorToSystemDefault();
 
 		int getKeyboardKeyStatus(int key_to_check);
+		int getKeyboardKeyPressed(int key_to_check);
+		int getKeyboardKeyReleased(int key_to_check);
+
+		int getMouseButtonStatus(int button_to_check);
+		int getMouseButtonPressed(int button_to_check);
+		int getMouseButtonReleased(int button_to_check);
 	};
 
 }

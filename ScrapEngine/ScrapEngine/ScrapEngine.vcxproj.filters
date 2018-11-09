@@ -426,5 +426,8 @@
     <ClInclude Include="Engine\LogicCore\Scene\SceneManager.h">
       <Filter>Engine\LogicCore\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Input\MouseButtons.h">
+      <Filter>Engine\Input</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
