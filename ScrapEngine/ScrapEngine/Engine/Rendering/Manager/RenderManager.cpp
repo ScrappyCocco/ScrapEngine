@@ -1,5 +1,6 @@
 #include "RenderManager.h"
 
+
 ScrapEngine::RenderManager::RenderManager(const ScrapEngine::game_base_info* received_base_game_info)
 {
 	GameWindow = new ScrapEngine::GameWindow(received_base_game_info->window_WIDTH, received_base_game_info->window_HEIGHT, received_base_game_info->app_name);
@@ -14,6 +15,7 @@ ScrapEngine::RenderManager::~RenderManager()
 	cleanupSwapChain();
 	delete RenderCamera;
 
+	delete Skybox;
 	for (ScrapEngine::VulkanMeshInstance* current_model : LoadedModels) {
 		delete current_model;
 	}
@@ -143,7 +145,8 @@ void ScrapEngine::RenderManager::createCommandBuffers()
 		pipelines,
 		descriptorSets,
 		vertexbuffers,
-		indexbuffers
+		indexbuffers,
+		Skybox
 	);
 	DebugLog::printToConsoleLog("VulkanRenderCommandBuffer created");
 }
@@ -175,12 +178,22 @@ void ScrapEngine::RenderManager::unloadMesh(ScrapEngine::VulkanMeshInstance* mes
 	}
 }
 
+ScrapEngine::VulkanSkyboxInstance* ScrapEngine::RenderManager::loadSkybox(const std::array<std::string, 6>& files_path)
+{
+	if (Skybox) {
+		delete Skybox;
+	}
+	Skybox = new VulkanSkyboxInstance("../assets/shader/skybox.vert.spv", "../assets/shader/skybox.frag.spv", "../assets/models/cube.obj", files_path, VulkanRenderDevice, VulkanRenderCommandPool->getCommandPool(), VulkanGraphicsQueue->getgraphicsQueue(), VulkanRenderSwapChain, VulkanRenderingPass);
+	deleteCommandBuffers();
+	createCommandBuffers();
+	return Skybox;
+}
+
 void ScrapEngine::RenderManager::drawFrame()
 {
 	deviceRef.waitForFences(1, &(*inFlightFencesRef)[currentFrame], true, std::numeric_limits<uint64_t>::max());
 
-	uint32_t imageIndex;
-	vk::Result result = deviceRef.acquireNextImageKHR(VulkanRenderSwapChain->getSwapChain(), std::numeric_limits<uint64_t>::max(), (*imageAvailableSemaphoresRef)[currentFrame], vk::Fence(), &imageIndex);
+	result = deviceRef.acquireNextImageKHR(VulkanRenderSwapChain->getSwapChain(), std::numeric_limits<uint64_t>::max(), (*imageAvailableSemaphoresRef)[currentFrame], vk::Fence(), &imageIndex);
 
 	if (result == vk::Result::eErrorOutOfDateKHR) {
 		//recreateSwapChain();
@@ -190,9 +203,14 @@ void ScrapEngine::RenderManager::drawFrame()
 	else if (result != vk::Result::eSuccess && result != vk::Result::eSuboptimalKHR) {
 		throw std::runtime_error("RenderManager: Failed to acquire swap chain image!");
 	}
+	//Update uniform buffer
 	for (int i = 0;i < LoadedModels.size(); i++) {
 		LoadedModels[i]->updateUniformBuffer(imageIndex, RenderCamera);
 	}
+	if (Skybox) {
+		Skybox->updateUniformBuffer(imageIndex, RenderCamera);
+	}
+	//Submit the frame
 	vk::SubmitInfo submitInfo;
 
 	vk::Semaphore waitSemaphores[] = { (*imageAvailableSemaphoresRef)[currentFrame] };;
@@ -210,13 +228,13 @@ void ScrapEngine::RenderManager::drawFrame()
 	submitInfo.setSignalSemaphoreCount(1);
 	submitInfo.setPSignalSemaphores(signalSemaphores);
 	
-	//DebugLog::printToConsoleLog("---HELLO---PRE---SUBMIT---");
 	deviceRef.resetFences(1, &(*inFlightFencesRef)[currentFrame]);
 
-	if (VulkanGraphicsQueue->getgraphicsQueue()->submit(1, &submitInfo, (*inFlightFencesRef)[currentFrame]) != vk::Result::eSuccess) {
+	result = VulkanGraphicsQueue->getgraphicsQueue()->submit(1, &submitInfo, (*inFlightFencesRef)[currentFrame]);
+	if (result != vk::Result::eSuccess) {
+		std::cout << "RESULT TYPE:" << result << std::endl;
 		throw std::runtime_error("RenderManager: Failed to submit draw command buffer!");
 	}
-	//DebugLog::printToConsoleLog("---HELLO---AFTER---SUBMIT---");
 
 	vk::PresentInfoKHR presentInfo;
 

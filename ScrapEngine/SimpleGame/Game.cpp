@@ -16,6 +16,19 @@ int main() {
 		inputmanager->SetCursorInputMode(ScrapEngine::CursorMode::cursor_grabbed_mode);
 		//Get the component manager
 		ScrapEngine::ComponentsManager* ComponentManagerRef = ScrapEngineManager->LogicManagerView->getComponentsManager();
+		//Set the world skybox
+		ScrapEngine::SceneManager* SceneManagerRef = ScrapEngineManager->LogicManagerView->getSceneManager();
+		SceneManagerRef->setSkybox(
+			std::array<std::string, 6>{
+				"../assets/skybox/spires_ft.png", //FRONT TEXTURE
+				"../assets/skybox/spires_bk.png", //BACK TEXTURE
+				"../assets/skybox/spires_up.png", //UP TEXTURE
+				"../assets/skybox/spires_dn.png", //DOWN TEXTURE
+				"../assets/skybox/spires_rt.png", //RIGHT TEXTURE
+				"../assets/skybox/spires_lf.png", //LEFT TEXTURE
+			}
+		);
+		SceneManagerRef->setSkyboxSize(150);
 		//Create the first game object
 		TestGameObject* FirstGameObject = new TestGameObject(inputmanager, ComponentManagerRef);
 		ScrapEngineManager->LogicManagerView->RegisterGameObject(FirstGameObject);
@@ -25,13 +38,21 @@ int main() {
 		//Begin gameplay
 		ScrapEngineManager->StartGameLoop();
 		//End gameplay
-		std::cout << "EXIT_SUCCESS - Press to exit..." << std::endl;
 	}catch (const std::exception& e) {
-		std::cerr << e.what() << std::endl;
-		std::cout << "EXIT_FAILURE - Press to exit..." << std::endl;
+		std::cerr << "EXCEPTION MESSAGE-->" << e.what() << std::endl;
 		exit_value = EXIT_FAILURE;
 	}
+	//Delete
 	delete ScrapEngineManager;
+	//Display error message
+	if (exit_value == EXIT_FAILURE) { //Exit failure, whait to close
+		std::cout << std::endl << "EXIT_FAILURE - Press to exit..." << std::endl;
+		fflush(stdin);
+		getchar();
+	}
+	else {
+		std::cout << std::endl << "EXIT_SUCCESS" << std::endl;
+	}
+	//End of program
 	return exit_value;
-
 }

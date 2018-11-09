@@ -1,7 +1,5 @@
 #include "VulkanDescriptorSet.h"
-
 #include <stdexcept>
-#include "../Buffer/Uniform/UniformBuffer.h"
 #include <array>
 
 ScrapEngine::VulkanDescriptorSet::VulkanDescriptorSet(vk::Device* input_deviceRef)
@@ -41,7 +39,7 @@ ScrapEngine::VulkanDescriptorSet::~VulkanDescriptorSet()
 	deviceRef->destroyDescriptorSetLayout(descriptorSetLayout);
 }
 
-void ScrapEngine::VulkanDescriptorSet::createDescriptorSets(vk::DescriptorPool* descriptorPool, const std::vector<vk::Image>* swapChainImages, const std::vector<vk::Buffer>* uniformBuffers, vk::ImageView* textureImageView, vk::Sampler* textureSampler)
+void ScrapEngine::VulkanDescriptorSet::createDescriptorSets(vk::DescriptorPool* descriptorPool, const std::vector<vk::Image>* swapChainImages, const std::vector<vk::Buffer>* uniformBuffers, vk::ImageView* textureImageView, vk::Sampler* textureSampler, vk::DeviceSize BufferInfoSize)
 {
 	std::vector<vk::DescriptorSetLayout> layouts(swapChainImages->size(), descriptorSetLayout);
 
@@ -52,7 +50,6 @@ void ScrapEngine::VulkanDescriptorSet::createDescriptorSets(vk::DescriptorPool* 
 
 	descriptorSets.resize(swapChainImages->size());
 	
-	
 	if (deviceRef->allocateDescriptorSets(&allocInfo, &descriptorSets[0]) != vk::Result::eSuccess) {
 		throw std::runtime_error("DescriptorSetLayout: Failed to allocate descriptor sets!");
 	}
@@ -61,7 +58,7 @@ void ScrapEngine::VulkanDescriptorSet::createDescriptorSets(vk::DescriptorPool* 
 		vk::DescriptorBufferInfo bufferInfo(
 			(*uniformBuffers)[i], 
 			0, 
-			sizeof(UniformBufferObject)
+			BufferInfoSize
 		);
 
 		vk::DescriptorImageInfo imageInfo(
@@ -73,7 +70,7 @@ void ScrapEngine::VulkanDescriptorSet::createDescriptorSets(vk::DescriptorPool* 
 		std::array<vk::WriteDescriptorSet, 2> descriptorWrites = {
 			vk::WriteDescriptorSet(
 				descriptorSets[i], 
-				0, 
+				0,
 				0, 
 				1, 
 				vk::DescriptorType::eUniformBuffer, 

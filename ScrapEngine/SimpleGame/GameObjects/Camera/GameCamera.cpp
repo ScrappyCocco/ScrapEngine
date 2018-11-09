@@ -4,7 +4,7 @@
 GameCamera::GameCamera(ScrapEngine::InputManager* CreatedInputManagerf, ScrapEngine::Camera* input_GameCameraRef) : 
 	GameCameraRef(input_GameCameraRef), SGameObject("Camera-Controller Object"), InputManagerRef(CreatedInputManagerf)
 {
-	GameCameraRef->setMaxRenderDistance(500);
+	GameCameraRef->setMaxRenderDistance(10000);
 }
 
 void GameCamera::GameStart()
@@ -16,7 +16,7 @@ void GameCamera::GameUpdate(float time)
 {
 	ScrapEngine::MouseLocation mouse = InputManagerRef->getLastMouseLocation();
 	
-	GameCameraRef->ProcessMouseMovement(mouse.xpos, mouse.ypos, true);
+	GameCameraRef->ProcessMouseMovement((float)mouse.xpos, (float)mouse.ypos, true);
 
 	cameraSpeed = 10.f * time;
 	if (InputManagerRef->getKeyboardKeyStatus(keyboard_key_W) == ScrapEngine::KeyboardKeyState::pressed) {

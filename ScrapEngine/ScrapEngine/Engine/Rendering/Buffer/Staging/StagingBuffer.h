@@ -23,6 +23,9 @@ namespace ScrapEngine {
 		~StagingBuffer();
 
 		static void copyBufferToImage(vk::Device* input_deviceRef, vk::Buffer* buffer, vk::Image* image, uint32_t width, uint32_t height, vk::CommandPool* commandPool, vk::Queue* graphicsQueue);
+		static void copyBufferToImage(vk::Device* input_deviceRef, vk::Buffer* buffer, vk::Image* image, uint32_t width, uint32_t height, vk::CommandPool* commandPool, vk::Queue* graphicsQueue, vk::BufferImageCopy* region, int regioncount = 1, vk::ImageLayout layout = vk::ImageLayout::eTransferDstOptimal);
+
+
 		vk::Buffer* getStagingBuffer();
 		vk::DeviceMemory* getStagingBufferMemory();
 

@@ -28,6 +28,7 @@
 #include "../Texture/VulkanColorResources.h"
 #include "../Model/VulkanModel.h"
 #include "../Model/VulkanMeshInstance.h"
+#include "../Model/VulkanSkyboxInstance.h"
 
 namespace ScrapEngine {
 	class RenderManager
@@ -52,9 +53,13 @@ namespace ScrapEngine {
 		ScrapEngine::Camera* RenderCamera = nullptr;
 		ScrapEngine::Camera* defaultCamera = nullptr;
 
+		ScrapEngine::VulkanSkyboxInstance* Skybox = nullptr;
+
 		std::vector<ScrapEngine::VulkanMeshInstance*> LoadedModels;
 
 		size_t currentFrame = 0;
+		uint32_t imageIndex;
+		vk::Result result;
 
 		vk::Device deviceRef;
 		unsigned short int MAX_FRAMES_IN_FLIGHT = 2;
@@ -82,10 +87,11 @@ namespace ScrapEngine {
 		void drawFrame();
 		void waitDeviceIdle();
 
-		//3D mesh stuff
+		//3D mesh and scene stuff
 		ScrapEngine::VulkanMeshInstance* loadMesh(const std::string& vertex_shader_path, const std::string& fragment_shader_path, const std::string& model_path, const std::string& texture_path);
 		ScrapEngine::VulkanMeshInstance* loadMesh(const std::string& model_path, const std::string& texture_path);
 		void unloadMesh(ScrapEngine::VulkanMeshInstance* meshToUnload);
+		ScrapEngine::VulkanSkyboxInstance* loadSkybox(const std::array<std::string, 6>& files_path);
 
 		//User-Window stuff
 		ScrapEngine::GameWindow* getGameWindow() const;

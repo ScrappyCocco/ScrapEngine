@@ -116,6 +116,12 @@
     <Filter Include="Engine\Rendering\Camera">
       <UniqueIdentifier>{07ca6137-0264-48b0-a4dc-0387193119aa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Rendering\ValidationLayers">
+      <UniqueIdentifier>{58c483d9-4579-4979-8acf-e3e149e4991c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\LogicCore\Scene">
+      <UniqueIdentifier>{734a6ac2-768b-46c2-b5d1-5b8746fad671}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Manager\EngineManager.cpp">
@@ -246,6 +252,18 @@
     </ClCompile>
     <ClCompile Include="Engine\Rendering\Camera\Camera.cpp">
       <Filter>Engine\Rendering\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Texture\SkyboxTexture.cpp">
+      <Filter>Engine\Rendering\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Model\VulkanSkyboxInstance.cpp">
+      <Filter>Engine\Rendering\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\ValidationLayers\VulkanValidationLayers.cpp">
+      <Filter>Engine\Rendering\ValidationLayers</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\LogicCore\Scene\SceneManager.cpp">
+      <Filter>Engine\LogicCore\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -395,6 +413,18 @@
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Camera\Camera.h">
       <Filter>Engine\Rendering\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Texture\SkyboxTexture.h">
+      <Filter>Engine\Rendering\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Model\VulkanSkyboxInstance.h">
+      <Filter>Engine\Rendering\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\ValidationLayers\VulkanValidationLayers.h">
+      <Filter>Engine\Rendering\ValidationLayers</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\LogicCore\Scene\SceneManager.h">
+      <Filter>Engine\LogicCore\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

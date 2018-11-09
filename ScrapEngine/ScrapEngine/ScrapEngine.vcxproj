@@ -27,6 +27,7 @@
     <ClCompile Include="Engine\LogicCore\GameObject\SGameObject.cpp" />
     <ClCompile Include="Engine\LogicCore\Manager\LogicManager.cpp" />
     <ClCompile Include="Engine\LogicCore\Manager\LogicManagerView.cpp" />
+    <ClCompile Include="Engine\LogicCore\Scene\SceneManager.cpp" />
     <ClCompile Include="Engine\LogicCore\SObject.cpp" />
     <ClCompile Include="Engine\Manager\EngineManager.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\BaseBuffer.cpp" />
@@ -47,6 +48,7 @@
     <ClCompile Include="Engine\Rendering\Manager\RenderManagerView.cpp" />
     <ClCompile Include="Engine\Rendering\Model\VulkanMeshInstance.cpp" />
     <ClCompile Include="Engine\Rendering\Model\VulkanModel.cpp" />
+    <ClCompile Include="Engine\Rendering\Model\VulkanSkyboxInstance.cpp" />
     <ClCompile Include="Engine\Rendering\Pipeline\VulkanGraphicsPipeline.cpp" />
     <ClCompile Include="Engine\Rendering\Queue\GraphicsQueue.cpp" />
     <ClCompile Include="Engine\Rendering\Queue\PresentQueue.cpp" />
@@ -55,10 +57,12 @@
     <ClCompile Include="Engine\Rendering\Shader\ShaderManager.cpp" />
     <ClCompile Include="Engine\Rendering\SwapChain\VulkanImageView.cpp" />
     <ClCompile Include="Engine\Rendering\SwapChain\VulkanSwapChain.cpp" />
+    <ClCompile Include="Engine\Rendering\Texture\SkyboxTexture.cpp" />
     <ClCompile Include="Engine\Rendering\Texture\TextureImage.cpp" />
     <ClCompile Include="Engine\Rendering\Texture\TextureImageView.cpp" />
     <ClCompile Include="Engine\Rendering\Texture\TextureSampler.cpp" />
     <ClCompile Include="Engine\Rendering\Texture\VulkanColorResources.cpp" />
+    <ClCompile Include="Engine\Rendering\ValidationLayers\VulkanValidationLayers.cpp" />
     <ClCompile Include="Engine\Rendering\Window\GameWindow.cpp" />
     <ClCompile Include="Engine\Rendering\Window\VulkanSurface.cpp" />
     <ClCompile Include="Engine\Utility\UsefulMethods.cpp" />
@@ -74,6 +78,7 @@
     <ClInclude Include="Engine\LogicCore\GameObject\SGameObject.h" />
     <ClInclude Include="Engine\LogicCore\Manager\LogicManager.h" />
     <ClInclude Include="Engine\LogicCore\Manager\LogicManagerView.h" />
+    <ClInclude Include="Engine\LogicCore\Scene\SceneManager.h" />
     <ClInclude Include="Engine\LogicCore\SObject.h" />
     <ClInclude Include="Engine\Manager\EngineManager.h" />
     <ClInclude Include="Engine\Rendering\Base\SimpleTestData.h" />
@@ -97,6 +102,7 @@
     <ClInclude Include="Engine\Rendering\Memory\MemoryManager.h" />
     <ClInclude Include="Engine\Rendering\Model\VulkanMeshInstance.h" />
     <ClInclude Include="Engine\Rendering\Model\VulkanModel.h" />
+    <ClInclude Include="Engine\Rendering\Model\VulkanSkyboxInstance.h" />
     <ClInclude Include="Engine\Rendering\Pipeline\VulkanGraphicsPipeline.h" />
     <ClInclude Include="Engine\Rendering\Queue\GraphicsQueue.h" />
     <ClInclude Include="Engine\Rendering\Queue\PresentQueue.h" />
@@ -105,10 +111,12 @@
     <ClInclude Include="Engine\Rendering\Shader\ShaderManager.h" />
     <ClInclude Include="Engine\Rendering\SwapChain\VulkanImageView.h" />
     <ClInclude Include="Engine\Rendering\SwapChain\VulkanSwapChain.h" />
+    <ClInclude Include="Engine\Rendering\Texture\SkyboxTexture.h" />
     <ClInclude Include="Engine\Rendering\Texture\TextureImage.h" />
     <ClInclude Include="Engine\Rendering\Texture\TextureImageView.h" />
     <ClInclude Include="Engine\Rendering\Texture\TextureSampler.h" />
     <ClInclude Include="Engine\Rendering\Texture\VulkanColorResources.h" />
+    <ClInclude Include="Engine\Rendering\ValidationLayers\VulkanValidationLayers.h" />
     <ClInclude Include="Engine\Rendering\Window\GameWindow.h" />
     <ClInclude Include="Engine\Rendering\Window\VulkanSurface.h" />
     <ClInclude Include="Engine\Utility\UsefulMethods.h" />
