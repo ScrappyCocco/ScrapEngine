@@ -59,7 +59,7 @@ void TestGameObject::GameStart()
 {
 }
 
-void TestGameObject::GameUpdate(float time)
+void TestGameObject::GameUpdate(const float& time)
 {
 	
 }

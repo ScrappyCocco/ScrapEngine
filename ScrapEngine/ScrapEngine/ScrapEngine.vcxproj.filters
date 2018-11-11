@@ -333,9 +333,6 @@
     <ClInclude Include="Engine\Rendering\Buffer\Index\IndexBuffer.h">
       <Filter>Engine\Rendering\Buffer\Index</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Rendering\Base\SimpleTestData.h">
-      <Filter>Engine\Rendering\Base</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Rendering\Descriptor\VulkanDescriptorSet.h">
       <Filter>Engine\Rendering\Descriptor</Filter>
     </ClInclude>

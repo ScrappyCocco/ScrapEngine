@@ -19,7 +19,7 @@ public:
 	~TestGameObject() = default;
 
 	virtual void GameStart() override;
-	virtual void GameUpdate(float time) override;
+	virtual void GameUpdate(const float& time) override;
 
 	void SpawnCrateAtLocation(glm::vec3 pos);
 };

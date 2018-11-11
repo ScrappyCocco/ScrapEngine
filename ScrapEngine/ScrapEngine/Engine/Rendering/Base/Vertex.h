@@ -11,10 +11,12 @@
 
 namespace ScrapEngine {
 
-	struct Vertex {
+	class Vertex {
+	public:
 		glm::vec3 pos;
 		glm::vec3 color;
 		glm::vec2 texCoord;
+
 		static vk::VertexInputBindingDescription getBindingDescription() {
 			vk::VertexInputBindingDescription bindingDescription(0, sizeof(Vertex), vk::VertexInputRate::eVertex);
 
