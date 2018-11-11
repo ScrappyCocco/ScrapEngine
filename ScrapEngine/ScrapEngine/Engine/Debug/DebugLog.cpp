@@ -3,17 +3,17 @@
 #include <chrono>
 #include <string>
 
-void ScrapEngine::DebugLog::printToConsoleLog(std::string logString)
+void ScrapEngine::DebugLog::printToConsoleLog(const std::string& logString)
 {
 	std::cout << NowToString().c_str() << logString.c_str() << std::endl;
 }
 
-void ScrapEngine::DebugLog::printToConsoleLog(glm::vec3 vector)
+void ScrapEngine::DebugLog::printToConsoleLog(const glm::vec3& vector)
 {
 	std::cout << NowToString().c_str() << "Vec3: (" << vector.x << ", " << vector.y << ", " << vector.z << ")" << std::endl;
 }
 
-void ScrapEngine::DebugLog::printExceptionToConsoleLog(std::string messageSeverity, std::string exceptionString)
+void ScrapEngine::DebugLog::printExceptionToConsoleLog(const std::string& messageSeverity, const std::string& exceptionString)
 {
 	std::cout << std::endl << NowToString().c_str() << messageSeverity << exceptionString << std::endl << std::endl;
 }

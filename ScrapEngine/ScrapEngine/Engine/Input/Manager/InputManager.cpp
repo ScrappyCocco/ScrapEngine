@@ -3,7 +3,7 @@
 #include <stb_image.h>
 #include "../../Utility/UsefulMethods.h"
 
-ScrapEngine::InputManager::InputManager(GLFWwindow* window) : windowRef(window)
+ScrapEngine::InputManager::InputManager(GLFWwindow* input_windowRef) : windowRef(input_windowRef)
 {
 
 }
@@ -13,14 +13,14 @@ ScrapEngine::InputManager::~InputManager()
 	glfwDestroyCursor(cursor);
 }
 
-ScrapEngine::MouseLocation ScrapEngine::InputManager::getLastMouseLocation()
+ScrapEngine::MouseLocation ScrapEngine::InputManager::getLastMouseLocation() const
 {
-	MouseLocation cursorPos;
-	glfwGetCursorPos(windowRef, &cursorPos.xpos, &cursorPos.ypos);
-	return cursorPos;
+	double xPosition, yPosition;
+	glfwGetCursorPos(windowRef, &xPosition, &yPosition);
+	return MouseLocation(xPosition, yPosition);
 }
 
-void ScrapEngine::InputManager::SetCursorInputMode(ScrapEngine::CursorMode NewMode)
+void ScrapEngine::InputManager::SetCursorInputMode(ScrapEngine::CursorMode NewMode) const
 {
 	switch (NewMode) {
 	case ScrapEngine::CursorMode::cursor_normal_mode:
@@ -35,7 +35,7 @@ void ScrapEngine::InputManager::SetCursorInputMode(ScrapEngine::CursorMode NewMo
 	}
 }
 
-void ScrapEngine::InputManager::LoadNewCursor(const std::string & path_to_file, int xhot, int yhot)
+void ScrapEngine::InputManager::LoadNewCursor(const std::string& path_to_file, int xhot, int yhot)
 {
 	glfwSetCursor(windowRef, NULL);
 	glfwDestroyCursor(cursor);
@@ -45,7 +45,7 @@ void ScrapEngine::InputManager::LoadNewCursor(const std::string & path_to_file, 
 	glfwSetCursor(windowRef, cursor);
 }
 
-void ScrapEngine::InputManager::LoadSystemCursor(ScrapEngine::SystemCursorShapes NewShape)
+void ScrapEngine::InputManager::LoadSystemCursor(const ScrapEngine::SystemCursorShapes& NewShape)
 {
 	glfwSetCursor(windowRef, NULL);
 	glfwDestroyCursor(cursor);
@@ -79,33 +79,32 @@ void ScrapEngine::InputManager::ResetCursorToSystemDefault()
 	LoadSystemCursor(ScrapEngine::SystemCursorShapes::cursor_regular_arrow);
 }
 
-int ScrapEngine::InputManager::getKeyboardKeyStatus(int key_to_check)
+ScrapEngine::ButtonState ScrapEngine::InputManager::getKeyboardKeyStatus(const int& key_to_check) const
 {
-	return glfwGetKey(windowRef, key_to_check);
+	return (ScrapEngine::ButtonState)glfwGetKey(windowRef, key_to_check);
 }
 
-int ScrapEngine::InputManager::getKeyboardKeyPressed(int key_to_check)
+bool ScrapEngine::InputManager::getKeyboardKeyPressed(const int& key_to_check) const
 {
 	return getKeyboardKeyStatus(key_to_check) == ScrapEngine::ButtonState::pressed;
 }
 
-int ScrapEngine::InputManager::getKeyboardKeyReleased(int key_to_check)
+bool ScrapEngine::InputManager::getKeyboardKeyReleased(const int& key_to_check) const
 {
 	return getKeyboardKeyStatus(key_to_check) == ScrapEngine::ButtonState::released;
 }
 
-int ScrapEngine::InputManager::getMouseButtonStatus(int button_to_check)
+ScrapEngine::ButtonState ScrapEngine::InputManager::getMouseButtonStatus(const int& button_to_check) const
 {
-	return glfwGetMouseButton(windowRef, button_to_check);
+	return (ScrapEngine::ButtonState)glfwGetMouseButton(windowRef, button_to_check);
 }
 
-int ScrapEngine::InputManager::getMouseButtonPressed(int button_to_check)
+bool ScrapEngine::InputManager::getMouseButtonPressed(const int& button_to_check) const
 {
 	return getMouseButtonStatus(button_to_check) == ScrapEngine::ButtonState::pressed;
 }
 
-int ScrapEngine::InputManager::getMouseButtonReleased(int button_to_check)
+bool ScrapEngine::InputManager::getMouseButtonReleased(const int& button_to_check) const
 {
 	return getMouseButtonStatus(button_to_check) == ScrapEngine::ButtonState::released;
 }
-

@@ -1,20 +1,16 @@
 #pragma once
+
 #include <GLFW/glfw3.h>
 #include <string>
 
 namespace ScrapEngine {
 
 	struct MouseLocation {
-		double xpos, ypos;
+		const double xpos, ypos;
 
-		MouseLocation() {
-			xpos = 0;
-			ypos = 0;
-		}
-		MouseLocation(double x, double y) {
-			xpos = x;
-			ypos = y;
-		}
+		MouseLocation() : xpos(0), ypos(0) {}
+
+		MouseLocation(double x, double y) : xpos(x), ypos(y) {}
 	};
 
 	enum CursorMode {
@@ -42,24 +38,23 @@ namespace ScrapEngine {
 		GLFWwindow* windowRef;
 		GLFWcursor* cursor = nullptr;
 	public:
-		InputManager(GLFWwindow* window);
+		InputManager(GLFWwindow* input_windowRef);
 		~InputManager();
 
-		MouseLocation getLastMouseLocation();
-		void SetCursorInputMode(ScrapEngine::CursorMode NewMode);
+		MouseLocation getLastMouseLocation() const;
+		void SetCursorInputMode(ScrapEngine::CursorMode NewMode) const;
 
 		void LoadNewCursor(const std::string& path_to_file, int xhot = 0, int yhot = 0);
-		void LoadSystemCursor(ScrapEngine::SystemCursorShapes NewShape);
+		void LoadSystemCursor(const ScrapEngine::SystemCursorShapes& NewShape);
 		void ResetCursorToSystemDefault();
 
-		int getKeyboardKeyStatus(int key_to_check);
-		int getKeyboardKeyPressed(int key_to_check);
-		int getKeyboardKeyReleased(int key_to_check);
+		ScrapEngine::ButtonState getKeyboardKeyStatus(const int& key_to_check) const;
+		bool getKeyboardKeyPressed(const int& key_to_check) const;
+		bool getKeyboardKeyReleased(const int& key_to_check) const;
 
-		int getMouseButtonStatus(int button_to_check);
-		int getMouseButtonPressed(int button_to_check);
-		int getMouseButtonReleased(int button_to_check);
+		ScrapEngine::ButtonState getMouseButtonStatus(const int& button_to_check) const;
+		bool getMouseButtonPressed(const int& button_to_check) const;
+		bool getMouseButtonReleased(const int& button_to_check) const;
 	};
 
 }
-
