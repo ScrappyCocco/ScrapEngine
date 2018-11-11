@@ -12,6 +12,8 @@ namespace ScrapEngine {
 
 		vk::Device* deviceRef;
 	public:
+		static const vk::CommandPool* StaticCommandPoolRef;
+
 		VulkanCommandPool(GraphicsQueue::QueueFamilyIndices queueFamilyIndices, vk::Device* input_deviceRef);
 		~VulkanCommandPool();
 

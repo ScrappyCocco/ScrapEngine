@@ -1,9 +1,16 @@
 #include "VulkanSurface.h"
 
+//Init Static Members
+
+const vk::SurfaceKHR* ScrapEngine::VulkanSurface::StaticSurfaceRef = nullptr;
+
+//Class
+
 ScrapEngine::VulkanSurface::VulkanSurface(ScrapEngine::VukanInstance* input_instanceRef, ScrapEngine::GameWindow* windowRef) 
 	: instanceRef(input_instanceRef->getVulkanInstance())
 {
 	createSurface(windowRef);
+	StaticSurfaceRef = &surface;
 }
 
 ScrapEngine::VulkanSurface::~VulkanSurface()

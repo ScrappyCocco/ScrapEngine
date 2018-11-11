@@ -13,7 +13,7 @@ namespace ScrapEngine {
 		bool window_fullscreen = false;
 		bool vsync = true;
 
-		game_base_info(std::string input_app_name, int input_app_version, uint32_t input_window_WIDTH, uint32_t input_window_HEIGHT, bool input_window_fullscreen, bool input_vsync)
+		game_base_info(const std::string& input_app_name, const int& input_app_version, uint32_t input_window_WIDTH, uint32_t input_window_HEIGHT, bool input_window_fullscreen, bool input_vsync)
 			: app_name(input_app_name), app_version(input_app_version), window_WIDTH(input_window_WIDTH), window_HEIGHT(input_window_HEIGHT), window_fullscreen(input_window_fullscreen), vsync(input_vsync)
 		{}
 	};

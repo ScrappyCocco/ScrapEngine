@@ -3,12 +3,21 @@
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
+//Init Static Members
+
+const vk::Instance* ScrapEngine::VukanInstance::StaticInstanceRef = nullptr;
+
+//Class
+
 ScrapEngine::VukanInstance::VukanInstance(std::string app_name, int app_version, std::string engine_name, int engine_version)
 {
 	if (VulkanValidationLayers::areValidationLayersEnabled()) {
 		ValidationLayersManager = new VulkanValidationLayers();
 	}
+
 	createVulkanInstance(app_name, app_version, engine_name, engine_version);
+	StaticInstanceRef = &instance;
+
 	if (ValidationLayersManager) {
 		ValidationLayersManager->setupDebugCallback(&instance);
 	}

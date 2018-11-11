@@ -14,6 +14,8 @@ namespace ScrapEngine {
 		vk::SurfaceKHR surface; //represents an abstract type of surface to present rendered images to.
 		vk::Instance* instanceRef; //Reference to vulkan instance
 	public:
+		static const vk::SurfaceKHR* StaticSurfaceRef;
+
 		VulkanSurface(ScrapEngine::VukanInstance* input_instanceRef, ScrapEngine::GameWindow* windowRef);
 		~VulkanSurface();
 

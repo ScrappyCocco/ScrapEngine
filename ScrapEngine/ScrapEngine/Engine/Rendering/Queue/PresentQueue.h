@@ -10,6 +10,8 @@ namespace ScrapEngine {
 	private:
 		vk::Queue presentationQueue;
 	public:
+		static const vk::Queue* StaticPresentationQueueRef;
+
 		PresentQueue(vk::Device* device, GraphicsQueue::QueueFamilyIndices indices);
 		~PresentQueue();
 

@@ -27,6 +27,9 @@ namespace ScrapEngine {
 			VK_KHR_SWAPCHAIN_EXTENSION_NAME
 		};
 	public:
+		static const vk::Device* StaticLogicDeviceRef;
+		static const vk::PhysicalDevice* StaticPhysicalDeviceRef;
+
 		VulkanDevice(vk::Instance* VulkanInstanceInputRef, vk::SurfaceKHR* VulkanSurfaceInputRef);
 
 		//Turn off the logical device

@@ -5,11 +5,21 @@
 #include <set>
 #include <algorithm>
 
+//Init Static Members
+
+const vk::Device* ScrapEngine::VulkanDevice::StaticLogicDeviceRef = nullptr;
+const vk::PhysicalDevice* ScrapEngine::VulkanDevice::StaticPhysicalDeviceRef = nullptr;
+
+//Class
+
 ScrapEngine::VulkanDevice::VulkanDevice(vk::Instance* VulkanInstanceInputRef, vk::SurfaceKHR* VulkanSurfaceInputRef)
 	: instanceRef(VulkanInstanceInputRef), VulkanSurfaceRef(VulkanSurfaceInputRef)
 {
 	choosePhysicalDevice();
 	createLogicalDevice();
+
+	ScrapEngine::VulkanDevice::StaticLogicDeviceRef = &device;
+	ScrapEngine::VulkanDevice::StaticPhysicalDeviceRef = &physicalDevice;
 }
 
 ScrapEngine::VulkanDevice::~VulkanDevice()

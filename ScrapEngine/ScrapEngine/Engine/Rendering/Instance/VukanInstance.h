@@ -15,6 +15,8 @@ namespace ScrapEngine {
 		//Reference to ValidationLayersManager that display vulkan warning/errors
 		ScrapEngine::VulkanValidationLayers* ValidationLayersManager = nullptr;
 	public:
+		static const vk::Instance* StaticInstanceRef;
+
 		VukanInstance(std::string app_name, int app_version, std::string engine_name = "No Engine", int engine_version = 1);
 
 		//Destroy the Vulkan Instance

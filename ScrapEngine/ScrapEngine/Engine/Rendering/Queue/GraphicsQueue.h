@@ -18,6 +18,8 @@ namespace ScrapEngine {
 			}
 		};
 
+		static const vk::Queue* StaticGraphicsQueueRef;
+
 		GraphicsQueue(vk::Device* device, QueueFamilyIndices indices);
 		~GraphicsQueue();
 
