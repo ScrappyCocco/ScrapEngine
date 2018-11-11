@@ -4,7 +4,6 @@
 #include "../GameObject/SGameObject.h"
 
 namespace ScrapEngine {
-
 	class LogicManager
 	{
 	private:
@@ -16,8 +15,7 @@ namespace ScrapEngine {
 		SGameObject* RegisterGameObject(SGameObject* input_GameObject);
 		void UnRegisterGameObject(SGameObject* input_GameObject);
 		void ExecuteGameObjectsStartEvent();
-		void ExecuteGameObjectsUpdateEvent(float time);
+		void ExecuteGameObjectsUpdateEvent(const float& time);
 	};
-
 }
 

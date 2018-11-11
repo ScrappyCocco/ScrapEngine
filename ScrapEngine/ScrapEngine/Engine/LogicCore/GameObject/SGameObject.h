@@ -6,9 +6,6 @@
 #include <vector>
 
 namespace ScrapEngine {
-
-	class SComponent;
-
 	class SGameObject : public SObject
 	{
 	private:
@@ -17,23 +14,21 @@ namespace ScrapEngine {
 
 		std::vector<ScrapEngine::SComponent*> ObjectComponents;
 	public:
-		SGameObject(std::string objectName, ScrapEngine::Transform input_ObjectTransform = ScrapEngine::Transform(), bool isStaticObject = false);
+		SGameObject(const std::string& objectName, ScrapEngine::Transform input_ObjectTransform = ScrapEngine::Transform(), bool isStaticObject = false);
 		~SGameObject() = 0;
 
 		virtual void GameStart();
-		virtual void GameUpdate(float time);
+		virtual void GameUpdate(const float& time);
 
-		void setObjectLocation(glm::vec3 location);
-		void setObjectRotation(glm::vec3 rotation);
-		void setObjectScale(glm::vec3 scale);
+		void setObjectLocation(const glm::vec3& location);
+		void setObjectRotation(const glm::vec3& rotation);
+		void setObjectScale(const glm::vec3& scale);
 
-		glm::vec3 getObjectLocation();
-		glm::vec3 getObjectRotation();
-		glm::vec3 getObjectScale();
+		glm::vec3 getObjectLocation() const;
+		glm::vec3 getObjectRotation() const;
+		glm::vec3 getObjectScale() const;
 
 		void AddComponent(SComponent* Component);
 		const std::vector<SComponent*>* GetComponents();
 	};
-
 }
-

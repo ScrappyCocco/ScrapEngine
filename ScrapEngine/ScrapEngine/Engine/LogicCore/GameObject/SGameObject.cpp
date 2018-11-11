@@ -1,6 +1,6 @@
 #include "SGameObject.h"
 
-ScrapEngine::SGameObject::SGameObject(std::string objectName, ScrapEngine::Transform input_ObjectTransform, bool isStaticObject) : 
+ScrapEngine::SGameObject::SGameObject(const std::string& objectName, ScrapEngine::Transform input_ObjectTransform, bool isStaticObject) : 
 	SObject(objectName), ObjectTransform(input_ObjectTransform), isStatic(isStaticObject)
 {
 }
@@ -17,12 +17,12 @@ void ScrapEngine::SGameObject::GameStart()
 	//This will be defined by the user when is necessary, otherwise it will have no effect
 }
 
-void ScrapEngine::SGameObject::GameUpdate(float time)
+void ScrapEngine::SGameObject::GameUpdate(const float& time)
 {
 	//This will be defined by the user when is necessary, otherwise it will have no effect
 }
 
-void ScrapEngine::SGameObject::setObjectLocation(glm::vec3 location)
+void ScrapEngine::SGameObject::setObjectLocation(const glm::vec3& location)
 {
 	ObjectTransform.location = location;
 	//Update the transform of every component
@@ -31,7 +31,7 @@ void ScrapEngine::SGameObject::setObjectLocation(glm::vec3 location)
 	}
 }
 
-void ScrapEngine::SGameObject::setObjectRotation(glm::vec3 rotation)
+void ScrapEngine::SGameObject::setObjectRotation(const glm::vec3& rotation)
 {
 	ObjectTransform.rotation = rotation;
 	//Update the transform of every component
@@ -40,7 +40,7 @@ void ScrapEngine::SGameObject::setObjectRotation(glm::vec3 rotation)
 	}
 }
 
-void ScrapEngine::SGameObject::setObjectScale(glm::vec3 scale)
+void ScrapEngine::SGameObject::setObjectScale(const glm::vec3& scale)
 {
 	ObjectTransform.scale = scale;
 	//Update the transform of every component
@@ -49,17 +49,17 @@ void ScrapEngine::SGameObject::setObjectScale(glm::vec3 scale)
 	}
 }
 
-glm::vec3 ScrapEngine::SGameObject::getObjectLocation()
+glm::vec3 ScrapEngine::SGameObject::getObjectLocation() const
 {
 	return ObjectTransform.location;
 }
 
-glm::vec3 ScrapEngine::SGameObject::getObjectRotation()
+glm::vec3 ScrapEngine::SGameObject::getObjectRotation() const
 {
 	return ObjectTransform.rotation;
 }
 
-glm::vec3 ScrapEngine::SGameObject::getObjectScale()
+glm::vec3 ScrapEngine::SGameObject::getObjectScale() const
 {
 	return ObjectTransform.scale;
 }

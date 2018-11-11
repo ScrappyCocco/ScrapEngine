@@ -27,7 +27,7 @@ ScrapEngine::ComponentsManager* ScrapEngine::LogicManagerView::getComponentsMana
 	return ComponentManager;
 }
 
-ScrapEngine::SceneManager * ScrapEngine::LogicManagerView::getSceneManager() const
+ScrapEngine::SceneManager* ScrapEngine::LogicManagerView::getSceneManager() const
 {
 	return SceneManager;
 }

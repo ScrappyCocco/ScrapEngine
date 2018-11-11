@@ -1,8 +1,8 @@
 #pragma once
+
 #include <string>
 
 namespace ScrapEngine {
-
 	class SObject
 	{
 	private:
@@ -13,6 +13,5 @@ namespace ScrapEngine {
 
 		virtual std::string toString() const;
 	};
-
 }
 
