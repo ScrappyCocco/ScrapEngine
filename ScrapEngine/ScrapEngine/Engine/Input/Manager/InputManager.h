@@ -48,13 +48,13 @@ namespace ScrapEngine {
 		void LoadSystemCursor(const ScrapEngine::SystemCursorShapes& NewShape);
 		void ResetCursorToSystemDefault();
 
-		ScrapEngine::ButtonState getKeyboardKeyStatus(const int& key_to_check) const;
-		bool getKeyboardKeyPressed(const int& key_to_check) const;
-		bool getKeyboardKeyReleased(const int& key_to_check) const;
+		ScrapEngine::ButtonState getKeyboardKeyStatus(int key_to_check) const;
+		bool getKeyboardKeyPressed(int key_to_check) const;
+		bool getKeyboardKeyReleased(int key_to_check) const;
 
-		ScrapEngine::ButtonState getMouseButtonStatus(const int& button_to_check) const;
-		bool getMouseButtonPressed(const int& button_to_check) const;
-		bool getMouseButtonReleased(const int& button_to_check) const;
+		ScrapEngine::ButtonState getMouseButtonStatus(int button_to_check) const;
+		bool getMouseButtonPressed(int button_to_check) const;
+		bool getMouseButtonReleased(int button_to_check) const;
 	};
 
 }

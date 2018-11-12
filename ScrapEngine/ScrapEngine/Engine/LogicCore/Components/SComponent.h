@@ -9,7 +9,7 @@ namespace ScrapEngine {
 	private:
 
 	public:
-		SComponent(std::string componentName);
+		SComponent(const std::string& componentName);
 		~SComponent() = 0;
 
 		virtual void setComponentLocation(const glm::vec3& location);

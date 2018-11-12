@@ -79,32 +79,32 @@ void ScrapEngine::InputManager::ResetCursorToSystemDefault()
 	LoadSystemCursor(ScrapEngine::SystemCursorShapes::cursor_regular_arrow);
 }
 
-ScrapEngine::ButtonState ScrapEngine::InputManager::getKeyboardKeyStatus(const int& key_to_check) const
+ScrapEngine::ButtonState ScrapEngine::InputManager::getKeyboardKeyStatus(int key_to_check) const
 {
 	return (ScrapEngine::ButtonState)glfwGetKey(windowRef, key_to_check);
 }
 
-bool ScrapEngine::InputManager::getKeyboardKeyPressed(const int& key_to_check) const
+bool ScrapEngine::InputManager::getKeyboardKeyPressed(int key_to_check) const
 {
 	return getKeyboardKeyStatus(key_to_check) == ScrapEngine::ButtonState::pressed;
 }
 
-bool ScrapEngine::InputManager::getKeyboardKeyReleased(const int& key_to_check) const
+bool ScrapEngine::InputManager::getKeyboardKeyReleased(int key_to_check) const
 {
 	return getKeyboardKeyStatus(key_to_check) == ScrapEngine::ButtonState::released;
 }
 
-ScrapEngine::ButtonState ScrapEngine::InputManager::getMouseButtonStatus(const int& button_to_check) const
+ScrapEngine::ButtonState ScrapEngine::InputManager::getMouseButtonStatus(int button_to_check) const
 {
 	return (ScrapEngine::ButtonState)glfwGetMouseButton(windowRef, button_to_check);
 }
 
-bool ScrapEngine::InputManager::getMouseButtonPressed(const int& button_to_check) const
+bool ScrapEngine::InputManager::getMouseButtonPressed(int button_to_check) const
 {
 	return getMouseButtonStatus(button_to_check) == ScrapEngine::ButtonState::pressed;
 }
 
-bool ScrapEngine::InputManager::getMouseButtonReleased(const int& button_to_check) const
+bool ScrapEngine::InputManager::getMouseButtonReleased(int button_to_check) const
 {
 	return getMouseButtonStatus(button_to_check) == ScrapEngine::ButtonState::released;
 }

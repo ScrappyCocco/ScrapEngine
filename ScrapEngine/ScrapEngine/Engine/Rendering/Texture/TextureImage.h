@@ -28,7 +28,7 @@ namespace ScrapEngine {
 			vk::MemoryPropertyFlags properties, vk::Image& image, vk::DeviceMemory& imageMemory, uint32_t mipLevelsData, vk::SampleCountFlagBits numSamples);
 		
 		void transitionImageLayout(vk::Image* image, const vk::Format& format, const vk::ImageLayout& oldLayout, const vk::ImageLayout& newLayout);
-		static void transitionImageLayout(vk::Image* image, const vk::Format& format, const vk::ImageLayout& oldLayout, const vk::ImageLayout& newLayout, const uint32_t& mipLevelsData, const int& layercount = 1);
+		static void transitionImageLayout(vk::Image* image, const vk::Format& format, const vk::ImageLayout& oldLayout, const vk::ImageLayout& newLayout, const uint32_t& mipLevelsData, int layercount = 1);
 
 		void generateMipmaps(vk::Image* image, const vk::Format& imageFormat, const int32_t& texWidth, const int32_t& texHeight, const uint32_t& mipLevels);
 

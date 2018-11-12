@@ -3,7 +3,7 @@
 #include <stdexcept>
 #include "../Base/StaticTypes.h"
 
-ScrapEngine::TextureImageView::TextureImageView(vk::Image* textureImage, const uint32_t& mipLevelsData, bool iscubemap, const int& layerCount)
+ScrapEngine::TextureImageView::TextureImageView(vk::Image* textureImage, const uint32_t& mipLevelsData, bool iscubemap, int layerCount)
 {
 	if (iscubemap) {
 		textureImageView = createCubeMapImageView(textureImage, vk::Format::eR8G8B8A8Unorm, vk::ImageAspectFlagBits::eColor, mipLevelsData, layerCount);

@@ -6,7 +6,6 @@
 
 void ScrapEngine::BaseBuffer::createBuffer(const vk::DeviceSize& size, vk::BufferUsageFlags usage, vk::MemoryPropertyFlags properties, vk::Buffer& buffer, vk::DeviceMemory& bufferMemory)
 {
-	
 	vk::BufferCreateInfo bufferInfo(
 		vk::BufferCreateFlags(), 
 		size, 

@@ -1,6 +1,6 @@
 #include "SComponent.h"
 
-ScrapEngine::SComponent::SComponent(std::string componentName) : SObject(componentName)
+ScrapEngine::SComponent::SComponent(const std::string& componentName) : SObject(componentName)
 {
 
 }

@@ -1,6 +1,6 @@
 #include "SObject.h"
 
-ScrapEngine::SObject::SObject(std::string input_object_name) : object_name(input_object_name)
+ScrapEngine::SObject::SObject(const std::string& input_object_name) : object_name(input_object_name)
 {
 
 }

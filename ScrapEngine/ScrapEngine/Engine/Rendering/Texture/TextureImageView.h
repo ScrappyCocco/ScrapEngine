@@ -9,7 +9,7 @@ namespace ScrapEngine {
 	private:
 		vk::ImageView textureImageView;
 	public:
-		TextureImageView(vk::Image* textureImage, const uint32_t& mipLevelsData, bool iscubemap = false, const int& layerCount = 1);
+		TextureImageView(vk::Image* textureImage, const uint32_t& mipLevelsData, bool iscubemap = false, int layerCount = 1);
 		~TextureImageView();
 
 		static vk::ImageView createImageView(vk::Image* image, vk::Format format, vk::ImageAspectFlags aspectFlags, uint32_t mipLevelsData);

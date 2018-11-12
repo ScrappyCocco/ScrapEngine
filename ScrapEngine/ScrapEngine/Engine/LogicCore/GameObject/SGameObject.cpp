@@ -1,6 +1,6 @@
 #include "SGameObject.h"
 
-ScrapEngine::SGameObject::SGameObject(const std::string& objectName, ScrapEngine::Transform input_ObjectTransform, bool isStaticObject) : 
+ScrapEngine::SGameObject::SGameObject(const std::string& objectName, const ScrapEngine::Transform& input_ObjectTransform, bool isStaticObject) :
 	SObject(objectName), ObjectTransform(input_ObjectTransform), isStatic(isStaticObject)
 {
 }

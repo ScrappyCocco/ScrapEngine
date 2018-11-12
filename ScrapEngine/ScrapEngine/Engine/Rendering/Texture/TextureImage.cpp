@@ -91,7 +91,7 @@ void ScrapEngine::TextureImage::transitionImageLayout(vk::Image* image, const vk
 	transitionImageLayout(image, format, oldLayout, newLayout, mipLevels);
 }
 
-void ScrapEngine::TextureImage::transitionImageLayout(vk::Image* image, const vk::Format& format, const vk::ImageLayout& oldLayout, const vk::ImageLayout& newLayout, const uint32_t& mipLevelsData, const int& layercount)
+void ScrapEngine::TextureImage::transitionImageLayout(vk::Image* image, const vk::Format& format, const vk::ImageLayout& oldLayout, const vk::ImageLayout& newLayout, const uint32_t& mipLevelsData, int layercount)
 {
 	vk::CommandBuffer* commandBuffer = BaseBuffer::beginSingleTimeCommands();
 

@@ -14,7 +14,7 @@ namespace ScrapEngine {
 
 		std::vector<ScrapEngine::SComponent*> ObjectComponents;
 	public:
-		SGameObject(const std::string& objectName, ScrapEngine::Transform input_ObjectTransform = ScrapEngine::Transform(), bool isStaticObject = false);
+		SGameObject(const std::string& objectName, const ScrapEngine::Transform& input_ObjectTransform = ScrapEngine::Transform(), bool isStaticObject = false);
 		~SGameObject() = 0;
 
 		virtual void GameStart();
