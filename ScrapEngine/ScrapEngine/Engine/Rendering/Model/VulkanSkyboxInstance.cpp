@@ -1,30 +1,28 @@
 #include "VulkanSkyboxInstance.h"
 
 ScrapEngine::VulkanSkyboxInstance::VulkanSkyboxInstance(const std::string& vertex_shader_path, const std::string& fragment_shader_path, const std::string& model_path, const std::array<std::string, 6>& texture_path,
-	ScrapEngine::VulkanDevice* RenderDevice, vk::CommandPool* CommandPool, vk::Queue* graphicsQueue, ScrapEngine::VulkanSwapChain* SwapChain, ScrapEngine::VulkanRenderPass* RenderingPass)
+	ScrapEngine::VulkanDevice* RenderDevice, ScrapEngine::VulkanSwapChain* SwapChain)
 {
-	vk::Device* device_ref = RenderDevice->getLogicalDevice();
-	vk::PhysicalDevice* physical_device_ref = RenderDevice->getPhysicalDevice();
-	VulkanRenderDescriptorSet = new VulkanDescriptorSet(device_ref);
+	VulkanRenderDescriptorSet = new VulkanDescriptorSet();
 	DebugLog::printToConsoleLog("VulkanDescriptorSet created");
-	VulkanRenderGraphicsPipeline = new VulkanGraphicsPipeline(vertex_shader_path.c_str(), fragment_shader_path.c_str(), device_ref, &SwapChain->getSwapChainExtent(), RenderingPass->getRenderPass(), VulkanRenderDescriptorSet->getDescriptorSetLayout(), RenderDevice->getMsaaSamples(), true);
+	VulkanRenderGraphicsPipeline = new VulkanGraphicsPipeline(vertex_shader_path.c_str(), fragment_shader_path.c_str(), &SwapChain->getSwapChainExtent(), VulkanRenderDescriptorSet->getDescriptorSetLayout(), RenderDevice->getMsaaSamples(), true);
 	DebugLog::printToConsoleLog("VulkanGraphicsPipeline created");
-	SkyboxTexture = new ScrapEngine::SkyboxTexture(texture_path, device_ref, physical_device_ref, CommandPool, graphicsQueue);
+	SkyboxTexture = new ScrapEngine::SkyboxTexture(texture_path);
 	DebugLog::printToConsoleLog("TextureImage created");
-	VulkanTextureImageView = new TextureImageView(device_ref, SkyboxTexture->getTextureImage(), SkyboxTexture->getMipLevels(), true, 6);
+	VulkanTextureImageView = new TextureImageView(SkyboxTexture->getTextureImage(), SkyboxTexture->getMipLevels(), true, 6);
 	DebugLog::printToConsoleLog("TextureImageView created");
-	VulkanTextureSampler = new TextureSampler(device_ref, SkyboxTexture->getMipLevels(), vk::Filter::eLinear, vk::Filter::eLinear, vk::SamplerMipmapMode::eLinear,
+	VulkanTextureSampler = new TextureSampler(SkyboxTexture->getMipLevels(), vk::Filter::eLinear, vk::Filter::eLinear, vk::SamplerMipmapMode::eLinear,
 		vk::SamplerAddressMode::eClampToEdge, vk::SamplerAddressMode::eClampToEdge, vk::SamplerAddressMode::eClampToEdge, 
 		false, vk::CompareOp::eNever, true, 16, vk::BorderColor::eFloatOpaqueWhite);
 	VulkanRenderModel = new VulkanModel(model_path);
 	DebugLog::printToConsoleLog("VulkanModel loaded");
-	VulkanRenderVertexBuffer = new VertexBuffer(device_ref, physical_device_ref, VulkanRenderModel->getVertices(), CommandPool, graphicsQueue);
+	VulkanRenderVertexBuffer = new VertexBuffer(VulkanRenderModel->getVertices());
 	DebugLog::printToConsoleLog("VertexBuffer created");
-	VulkanRenderIndexBuffer = new IndexBuffer(device_ref, physical_device_ref, VulkanRenderModel->getIndices(), CommandPool, graphicsQueue);
+	VulkanRenderIndexBuffer = new IndexBuffer(VulkanRenderModel->getIndices());
 	DebugLog::printToConsoleLog("IndexBuffer created");
-	VulkanRenderUniformBuffer = new UniformBuffer(device_ref, physical_device_ref, SwapChain->getSwapChainImagesVector(), SwapChain->getSwapChainExtent());
+	VulkanRenderUniformBuffer = new UniformBuffer(SwapChain->getSwapChainImagesVector(), SwapChain->getSwapChainExtent());
 	DebugLog::printToConsoleLog("UniformBuffer created");
-	VulkanRenderDescriptorPool = new VulkanDescriptorPool(device_ref, SwapChain->getSwapChainImagesVector());
+	VulkanRenderDescriptorPool = new VulkanDescriptorPool(SwapChain->getSwapChainImagesVector());
 	DebugLog::printToConsoleLog("VulkanDescriptorPool created");
 	VulkanRenderDescriptorSet->createDescriptorSets(VulkanRenderDescriptorPool->getDescriptorPool(), SwapChain->getSwapChainImagesVector(), VulkanRenderUniformBuffer->getUniformBuffers(),
 		VulkanTextureImageView->getTextureImageView(), VulkanTextureSampler->getTextureSampler());
@@ -51,7 +49,7 @@ ScrapEngine::VulkanSkyboxInstance::~VulkanSkyboxInstance()
 	delete VulkanRenderModel;
 }
 
-void ScrapEngine::VulkanSkyboxInstance::updateUniformBuffer(uint32_t currentImage, ScrapEngine::Camera* RenderCamera)
+void ScrapEngine::VulkanSkyboxInstance::updateUniformBuffer(const uint32_t& currentImage, ScrapEngine::Camera* RenderCamera)
 {
 	VulkanRenderUniformBuffer->updateUniformBuffer(currentImage, skyboxTransform, RenderCamera);
 }

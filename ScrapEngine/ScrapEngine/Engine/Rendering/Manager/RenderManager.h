@@ -61,7 +61,6 @@ namespace ScrapEngine {
 		uint32_t imageIndex;
 		vk::Result result;
 
-		vk::Device deviceRef;
 		unsigned short int MAX_FRAMES_IN_FLIGHT = 2;
 		bool framebufferResized = false;
 		const std::vector<vk::Semaphore>* imageAvailableSemaphoresRef;

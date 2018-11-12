@@ -8,10 +8,8 @@ namespace ScrapEngine {
 
 	class ShaderManager
 	{
-	private:
-		vk::Device* deviceRef;
 	public:
-		ShaderManager(vk::Device* input_deviceRef);
+		ShaderManager();
 		~ShaderManager();
 
 		vk::ShaderModule createShaderModule(const std::vector<char>& code);

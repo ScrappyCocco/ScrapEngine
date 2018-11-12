@@ -426,5 +426,8 @@
     <ClInclude Include="Engine\Input\MouseButtons.h">
       <Filter>Engine\Input</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Rendering\Base\StaticTypes.h">
+      <Filter>Engine\Rendering\Base</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

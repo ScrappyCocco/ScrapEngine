@@ -1,4 +1,5 @@
 #include "GraphicsQueue.h"
+#include "../Base/StaticTypes.h"
 
 //Init Static Members
 
@@ -6,9 +7,9 @@ const vk::Queue* ScrapEngine::GraphicsQueue::StaticGraphicsQueueRef = nullptr;
 
 //Class
 
-ScrapEngine::GraphicsQueue::GraphicsQueue(vk::Device* device, QueueFamilyIndices indices)
+ScrapEngine::GraphicsQueue::GraphicsQueue(QueueFamilyIndices indices)
 {
-	device->getQueue(indices.graphicsFamily, 0, &graphicsQueue);
+	VulkanDevice::StaticLogicDeviceRef->getQueue(indices.graphicsFamily, 0, &graphicsQueue);
 	StaticGraphicsQueueRef = &graphicsQueue;
 }
 

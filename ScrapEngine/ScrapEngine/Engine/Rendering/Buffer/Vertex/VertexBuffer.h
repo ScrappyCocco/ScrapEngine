@@ -11,10 +11,8 @@ namespace ScrapEngine {
 	private:
 		vk::Buffer vertexBuffer;
 		vk::DeviceMemory vertexBufferMemory;
-
-		vk::Device* deviceRef;
 	public:
-		VertexBuffer(vk::Device* input_deviceRef, vk::PhysicalDevice* PhysicalDevice, const std::vector<ScrapEngine::Vertex>* vertices, vk::CommandPool* commandPool, vk::Queue* graphicsQueue);
+		VertexBuffer(const std::vector<ScrapEngine::Vertex>* vertices);
 		~VertexBuffer();
 
 		vk::Buffer* getVertexBuffer();

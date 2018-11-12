@@ -1,13 +1,12 @@
 #include "VulkanSurface.h"
-
+#include "../Base/StaticTypes.h"
 //Init Static Members
 
 const vk::SurfaceKHR* ScrapEngine::VulkanSurface::StaticSurfaceRef = nullptr;
 
 //Class
 
-ScrapEngine::VulkanSurface::VulkanSurface(ScrapEngine::VukanInstance* input_instanceRef, ScrapEngine::GameWindow* windowRef) 
-	: instanceRef(input_instanceRef->getVulkanInstance())
+ScrapEngine::VulkanSurface::VulkanSurface(ScrapEngine::GameWindow* windowRef) 
 {
 	createSurface(windowRef);
 	StaticSurfaceRef = &surface;
@@ -15,13 +14,13 @@ ScrapEngine::VulkanSurface::VulkanSurface(ScrapEngine::VukanInstance* input_inst
 
 ScrapEngine::VulkanSurface::~VulkanSurface()
 {
-	instanceRef->destroySurfaceKHR(surface);
+	VukanInstance::StaticInstanceRef->destroySurfaceKHR(surface);
 }
 
 void ScrapEngine::VulkanSurface::createSurface(ScrapEngine::GameWindow* windowRef)
 {
 	surface = vk::SurfaceKHR();
-	if (glfwCreateWindowSurface(*instanceRef, windowRef->window, nullptr, reinterpret_cast<VkSurfaceKHR*>(&surface)) != VK_SUCCESS) {
+	if (glfwCreateWindowSurface(*VukanInstance::StaticInstanceRef, windowRef->window, nullptr, reinterpret_cast<VkSurfaceKHR*>(&surface)) != VK_SUCCESS) {
 		throw std::runtime_error("VulkanSurface: Failed to create window surface!");
 	}
 }

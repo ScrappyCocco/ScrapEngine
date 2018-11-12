@@ -19,7 +19,7 @@ ScrapEngine::VukanInstance::VukanInstance(std::string app_name, int app_version,
 	StaticInstanceRef = &instance;
 
 	if (ValidationLayersManager) {
-		ValidationLayersManager->setupDebugCallback(&instance);
+		ValidationLayersManager->setupDebugCallback();
 	}
 }
 

@@ -35,11 +35,10 @@ namespace ScrapEngine {
 		ScrapEngine::Transform skyboxTransform;
 	public:
 		VulkanSkyboxInstance(const std::string& vertex_shader_path, const std::string& fragment_shader_path, const std::string& model_path, const std::array<std::string, 6>& texture_path,
-			ScrapEngine::VulkanDevice* RenderDevice, vk::CommandPool* CommandPool, vk::Queue* graphicsQueue, ScrapEngine::VulkanSwapChain* SwapChain,
-			ScrapEngine::VulkanRenderPass* RenderingPass);
+			ScrapEngine::VulkanDevice* RenderDevice, ScrapEngine::VulkanSwapChain* SwapChain);
 		~VulkanSkyboxInstance();
 
-		void updateUniformBuffer(uint32_t currentImage, ScrapEngine::Camera* RenderCamera);
+		void updateUniformBuffer(const uint32_t& currentImage, ScrapEngine::Camera* RenderCamera);
 		void deleteGraphicsPipeline();
 
 		int getCubemapSize();

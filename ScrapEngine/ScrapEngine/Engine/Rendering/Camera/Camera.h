@@ -27,14 +27,14 @@ namespace ScrapEngine {
 		Camera(glm::vec3 input_cameraLocation = glm::vec3(0.0f, 0.0f, 1.0f), float input_minDrawDistance = 0.1f, float input_maxDrawDistance = 100.f);
 		~Camera() = default;
 
-		virtual void ProcessMouseMovement(float xpos, float ypos, bool constrainPitch = true);
+		virtual void ProcessMouseMovement(const float& xpos, const float& ypos, bool constrainPitch = true);
 
-		void setCameraLocation(glm::vec3 newCameraLocation);
-		void setMouseSensivity(float newSensivity);
-		void setMinRenderDistance(float newRenderDistance);
-		void setMaxRenderDistance(float newRenderDistance);
+		void setCameraLocation(const glm::vec3& newCameraLocation);
+		void setMouseSensivity(const float& newSensivity);
+		void setMinRenderDistance(const float& newRenderDistance);
+		void setMaxRenderDistance(const float& newRenderDistance);
 
-		float getMouseSensivity();
+		float getMouseSensivity() const;
 		float getCameraMinDrawDistance() const;
 		float getCameraMaxDrawDistance() const;
 		glm::vec3 getCameraFront() const;

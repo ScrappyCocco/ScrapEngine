@@ -10,12 +10,12 @@ ScrapEngine::Camera::Camera(glm::vec3 input_cameraLocation, float input_minDrawD
 	Pitch = 0.0f;
 }
 
-void ScrapEngine::Camera::setCameraLocation(glm::vec3 newCameraLocation)
+void ScrapEngine::Camera::setCameraLocation(const glm::vec3& newCameraLocation)
 {
 	cameraLocation = newCameraLocation;
 }
 
-void ScrapEngine::Camera::ProcessMouseMovement(float xpos, float ypos, bool constrainPitch)
+void ScrapEngine::Camera::ProcessMouseMovement(const float& xpos, const float& ypos, bool constrainPitch)
 {
 	if (firstMouseRead) {
 		firstMouseRead = false;
@@ -54,22 +54,22 @@ void ScrapEngine::Camera::updateCameraVectors()
 	cameraFront = glm::normalize(front);
 }
 
-void ScrapEngine::Camera::setMouseSensivity(float newSensivity)
+void ScrapEngine::Camera::setMouseSensivity(const float& newSensivity)
 {
 	mouseSensivity = newSensivity;
 }
 
-void ScrapEngine::Camera::setMinRenderDistance(float newRenderDistance)
+void ScrapEngine::Camera::setMinRenderDistance(const float& newRenderDistance)
 {
 	minDrawDistance = newRenderDistance;
 }
 
-void ScrapEngine::Camera::setMaxRenderDistance(float newRenderDistance)
+void ScrapEngine::Camera::setMaxRenderDistance(const float& newRenderDistance)
 {
 	maxDrawDistance = newRenderDistance;
 }
 
-float ScrapEngine::Camera::getMouseSensivity()
+float ScrapEngine::Camera::getMouseSensivity() const
 {
 	return mouseSensivity;
 }

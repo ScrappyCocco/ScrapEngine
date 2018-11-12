@@ -3,9 +3,15 @@
 #include <stdexcept>
 #include <array>
 #include "../DepthResources/VulkanDepthResources.h"
+#include "../Base/StaticTypes.h"
 
-ScrapEngine::VulkanRenderPass::VulkanRenderPass(vk::Device* input_deviceRef, vk::Format swapChainImageFormat, vk::PhysicalDevice* PhysicalDeviceRef, vk::SampleCountFlagBits msaaSamples)
-	: deviceRef(input_deviceRef)
+//Init Static Members
+
+const vk::RenderPass* ScrapEngine::VulkanRenderPass::StaticRenderPassRef = nullptr;
+
+//Class
+
+ScrapEngine::VulkanRenderPass::VulkanRenderPass(const vk::Format& swapChainImageFormat, vk::SampleCountFlagBits msaaSamples)
 {
 	vk::AttachmentDescription colorAttachment(
 		vk::AttachmentDescriptionFlags(),
@@ -21,7 +27,7 @@ ScrapEngine::VulkanRenderPass::VulkanRenderPass(vk::Device* input_deviceRef, vk:
 
 	vk::AttachmentDescription depthAttachment(
 		vk::AttachmentDescriptionFlags(),
-		VulkanDepthResources::findDepthFormat(PhysicalDeviceRef),
+		VulkanDepthResources::findDepthFormat(),
 		msaaSamples,
 		vk::AttachmentLoadOp::eClear,
 		vk::AttachmentStoreOp::eDontCare,
@@ -88,14 +94,16 @@ ScrapEngine::VulkanRenderPass::VulkanRenderPass(vk::Device* input_deviceRef, vk:
 		&dependency
 	);
 
-	if (deviceRef->createRenderPass(&renderPassInfo, nullptr, &renderPass) != vk::Result::eSuccess) {
+	if (VulkanDevice::StaticLogicDeviceRef->createRenderPass(&renderPassInfo, nullptr, &renderPass) != vk::Result::eSuccess) {
 		throw std::runtime_error("VulkanRenderPass: Failed to create render pass!");
 	}
+
+	StaticRenderPassRef = &renderPass;
 }
 
 ScrapEngine::VulkanRenderPass::~VulkanRenderPass()
 {
-	deviceRef->destroyRenderPass(renderPass);
+	VulkanDevice::StaticLogicDeviceRef->destroyRenderPass(renderPass);
 }
 
 vk::RenderPass* ScrapEngine::VulkanRenderPass::getRenderPass()

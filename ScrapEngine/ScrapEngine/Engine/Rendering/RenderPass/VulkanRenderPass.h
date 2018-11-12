@@ -8,10 +8,10 @@ namespace ScrapEngine {
 	{
 	private:
 		vk::RenderPass renderPass;
-
-		vk::Device* deviceRef;
 	public:
-		VulkanRenderPass(vk::Device* input_deviceRef, vk::Format swapChainImageFormat, vk::PhysicalDevice* PhysicalDeviceRef, vk::SampleCountFlagBits msaaSamples);
+		static const vk::RenderPass* StaticRenderPassRef;
+
+		VulkanRenderPass(const vk::Format& swapChainImageFormat, vk::SampleCountFlagBits msaaSamples);
 		~VulkanRenderPass();
 
 		vk::RenderPass* getRenderPass();

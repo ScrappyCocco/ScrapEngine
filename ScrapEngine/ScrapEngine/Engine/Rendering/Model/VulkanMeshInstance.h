@@ -37,19 +37,18 @@ namespace ScrapEngine {
 		ScrapEngine::Transform object_location;
 	public:
 		VulkanMeshInstance(const std::string& vertex_shader_path, const std::string& fragment_shader_path, const std::string& model_path, const std::string& texture_path,
-			ScrapEngine::VulkanDevice* RenderDevice, vk::CommandPool* CommandPool, vk::Queue* graphicsQueue, ScrapEngine::VulkanSwapChain* SwapChain, 
-			ScrapEngine::VulkanRenderPass* RenderingPass);
+			ScrapEngine::VulkanDevice* RenderDevice, ScrapEngine::VulkanSwapChain* SwapChain);
 		~VulkanMeshInstance();
 
-		void setMeshLocation(glm::vec3 location);
-		void setMeshRotation(glm::vec3 rotation);
-		void setMeshScale(glm::vec3 scale);
+		void setMeshLocation(const glm::vec3& location);
+		void setMeshRotation(const glm::vec3& rotation);
+		void setMeshScale(const glm::vec3& scale);
 
-		glm::vec3 getMeshLocation();
-		glm::vec3 getMeshRotation();
-		glm::vec3 getMeshScale();
+		glm::vec3 getMeshLocation() const;
+		glm::vec3 getMeshRotation() const;
+		glm::vec3 getMeshScale() const;
 
-		void updateUniformBuffer(uint32_t currentImage, ScrapEngine::Camera* RenderCamera);
+		void updateUniformBuffer(const uint32_t& currentImage, ScrapEngine::Camera* RenderCamera);
 		void deleteGraphicsPipeline();
 
 		ScrapEngine::UniformBuffer* getVulkanRenderUniformBuffer();

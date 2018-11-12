@@ -8,14 +8,12 @@ namespace ScrapEngine {
 	{
 	private:
 		vk::ImageView textureImageView;
-
-		vk::Device* deviceRef;
 	public:
-		TextureImageView(vk::Device* input_deviceRef, vk::Image* textureImage, uint32_t mipLevelsData, bool iscubemap = false, int layerCount = 1);
+		TextureImageView(vk::Image* textureImage, const uint32_t& mipLevelsData, bool iscubemap = false, const int& layerCount = 1);
 		~TextureImageView();
 
-		static vk::ImageView createImageView(vk::Device* input_deviceRef, vk::Image* image, vk::Format format, vk::ImageAspectFlags aspectFlags, uint32_t mipLevelsData);
-		static vk::ImageView createCubeMapImageView(vk::Device* input_deviceRef, vk::Image* image, vk::Format format, vk::ImageAspectFlags aspectFlags, uint32_t mipLevelsData, int layerCount);
+		static vk::ImageView createImageView(vk::Image* image, vk::Format format, vk::ImageAspectFlags aspectFlags, uint32_t mipLevelsData);
+		static vk::ImageView createCubeMapImageView(vk::Image* image, vk::Format format, vk::ImageAspectFlags aspectFlags, uint32_t mipLevelsData, int layerCount);
 		vk::ImageView* getTextureImageView();
 	};
 

@@ -12,11 +12,9 @@ namespace ScrapEngine {
 		std::vector<vk::Semaphore> renderFinishedSemaphores;
 		std::vector<vk::Fence> inFlightFences;
 
-		vk::Device* deviceRef;
-
 		const unsigned short int MAX_FRAMES_IN_FLIGHT = 2;
 	public:
-		VulkanSemaphoresManager(vk::Device* input_deviceRef, unsigned short int INPUT_MAX_FRAMES_IN_FLIGHT = 2);
+		VulkanSemaphoresManager(unsigned short int INPUT_MAX_FRAMES_IN_FLIGHT = 2);
 		~VulkanSemaphoresManager();
 
 		int getMaxFramesInFlight() const;

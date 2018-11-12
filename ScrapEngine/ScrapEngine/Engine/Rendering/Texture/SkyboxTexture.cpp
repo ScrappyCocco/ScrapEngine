@@ -1,8 +1,7 @@
 #include "SkyboxTexture.h"
 #include "../Memory/MemoryManager.h"
 
-ScrapEngine::SkyboxTexture::SkyboxTexture(const std::array<std::string, 6>& files_path, vk::Device* input_deviceRef, vk::PhysicalDevice* PhysicalDevice, vk::CommandPool* CommandPool, vk::Queue* graphicsQueue)
-	: deviceRef(input_deviceRef), PhysicalDeviceRef(PhysicalDevice), CommandPoolRef(CommandPool), graphicsQueueRerf(graphicsQueue)
+ScrapEngine::SkyboxTexture::SkyboxTexture(const std::array<std::string, 6>& files_path)
 {
 	//-----------------------
 	// load images
@@ -11,7 +10,7 @@ ScrapEngine::SkyboxTexture::SkyboxTexture(const std::array<std::string, 6>& file
 
 	for (std::string file : files_path) {
 		DebugLog::printToConsoleLog("Loading skybox texture:" + file);
-		images.push_back(new TextureImage(file, input_deviceRef, PhysicalDevice, CommandPool, graphicsQueue, false));
+		images.push_back(new TextureImage(file, false));
 		DebugLog::printToConsoleLog("A skybox texture has loaded (" + file + ")");
 	}
 	DebugLog::printToConsoleLog("Textures loaded...");
@@ -39,23 +38,23 @@ ScrapEngine::SkyboxTexture::SkyboxTexture(const std::array<std::string, 6>& file
 	// allocate cubemap space memory
 	//-----------------------
 
-	if (deviceRef->createImage(&imageCreateInfo, nullptr, &cubemap) != vk::Result::eSuccess) {
+	if (VulkanDevice::StaticLogicDeviceRef->createImage(&imageCreateInfo, nullptr, &cubemap) != vk::Result::eSuccess) {
 		throw std::runtime_error("TextureImage: Failed to create image!");
 	}
 
 	vk::MemoryRequirements memRequirements;
-	deviceRef->getImageMemoryRequirements(cubemap, &memRequirements);
+	VulkanDevice::StaticLogicDeviceRef->getImageMemoryRequirements(cubemap, &memRequirements);
 
 	vk::MemoryAllocateInfo allocInfo(
 		memRequirements.size,
-		findMemoryType(memRequirements.memoryTypeBits, vk::MemoryPropertyFlagBits::eDeviceLocal, PhysicalDeviceRef)
+		findMemoryType(memRequirements.memoryTypeBits, vk::MemoryPropertyFlagBits::eDeviceLocal)
 	);
 
-	if (deviceRef->allocateMemory(&allocInfo, nullptr, &cubemapImageMemory) != vk::Result::eSuccess) {
+	if (VulkanDevice::StaticLogicDeviceRef->allocateMemory(&allocInfo, nullptr, &cubemapImageMemory) != vk::Result::eSuccess) {
 		throw std::runtime_error("TextureImage: Failed to allocate image memory!");
 	}
 
-	deviceRef->bindImageMemory(cubemap, cubemapImageMemory, 0);
+	VulkanDevice::StaticLogicDeviceRef->bindImageMemory(cubemap, cubemapImageMemory, 0);
 
 	//-----------------------
 	// copy images
@@ -77,13 +76,13 @@ ScrapEngine::SkyboxTexture::SkyboxTexture(const std::array<std::string, 6>& file
 
 	}
 
-	ScrapEngine::TextureImage::transitionImageLayout(deviceRef, &cubemap, vk::Format::eR8G8B8A8Unorm, vk::ImageLayout::eUndefined, vk::ImageLayout::eTransferDstOptimal, CommandPoolRef, graphicsQueue, mipLevels, 6);
+	ScrapEngine::TextureImage::transitionImageLayout(&cubemap, vk::Format::eR8G8B8A8Unorm, vk::ImageLayout::eUndefined, vk::ImageLayout::eTransferDstOptimal, mipLevels, 6);
 
 	for (int i = 0; i < bufferCopyRegions.size(); i++) {
-		ScrapEngine::StagingBuffer::copyBufferToImage(deviceRef, images[i]->getTextureStagingBuffer()->getStagingBuffer(), &cubemap, images[i]->getTextureWidth(), images[i]->getTextureHeight(), CommandPoolRef, graphicsQueue, &bufferCopyRegions[i], 1);
+		ScrapEngine::StagingBuffer::copyBufferToImage(images[i]->getTextureStagingBuffer()->getStagingBuffer(), &cubemap, images[i]->getTextureWidth(), images[i]->getTextureHeight(), &bufferCopyRegions[i], 1);
 	}
 
-	ScrapEngine::TextureImage::transitionImageLayout(deviceRef, &cubemap, vk::Format::eR8G8B8A8Unorm, vk::ImageLayout::eTransferDstOptimal, vk::ImageLayout::eShaderReadOnlyOptimal, CommandPoolRef, graphicsQueue, mipLevels, 6);
+	ScrapEngine::TextureImage::transitionImageLayout(&cubemap, vk::Format::eR8G8B8A8Unorm, vk::ImageLayout::eTransferDstOptimal, vk::ImageLayout::eShaderReadOnlyOptimal, mipLevels, 6);
 	
 	//Delete all the images since they've been copied
 	deleteTemporaryImages();
@@ -93,8 +92,8 @@ ScrapEngine::SkyboxTexture::~SkyboxTexture()
 {
 	//Double-check that the images has been erased
 	deleteTemporaryImages();
-	deviceRef->destroyImage(cubemap);
-	deviceRef->freeMemory(cubemapImageMemory);
+	VulkanDevice::StaticLogicDeviceRef->destroyImage(cubemap);
+	VulkanDevice::StaticLogicDeviceRef->freeMemory(cubemapImageMemory);
 }
 
 void ScrapEngine::SkyboxTexture::deleteTemporaryImages()

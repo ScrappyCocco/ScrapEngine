@@ -7,12 +7,11 @@
 #include <iostream>
 
 ScrapEngine::VulkanModel::VulkanModel(const std::string& input_MODEL_PATH)
-	: MODEL_PATH(input_MODEL_PATH)
 {
 	DebugLog::printToConsoleLog("Loading 3D model...");
 	DebugLog::printToConsoleLog("Loading assimp...");
 	Assimp::Importer importer;
-	const aiScene* scene = importer.ReadFile(MODEL_PATH,
+	const aiScene* scene = importer.ReadFile(input_MODEL_PATH,
 		aiProcess_CalcTangentSpace |
 		aiProcess_Triangulate |
 		aiProcess_JoinIdenticalVertices |

@@ -1,13 +1,12 @@
 #include "VulkanDescriptorPool.h"
 #include <array>
+#include "../Base/StaticTypes.h"
 
-ScrapEngine::VulkanDescriptorPool::VulkanDescriptorPool(vk::Device* input_deviceRef, const std::vector<vk::Image>* swapChainImages)
-	: deviceRef(input_deviceRef)
+ScrapEngine::VulkanDescriptorPool::VulkanDescriptorPool(const std::vector<vk::Image>* swapChainImages)
 {
 	std::array<vk::DescriptorPoolSize, 2> poolSizes = {
 		vk::DescriptorPoolSize(vk::DescriptorType::eUniformBuffer, static_cast<uint32_t>(swapChainImages->size())),
 		vk::DescriptorPoolSize(vk::DescriptorType::eCombinedImageSampler, static_cast<uint32_t>(swapChainImages->size())),
-	
 	};
 
 	vk::DescriptorPoolCreateInfo poolInfo(
@@ -16,14 +15,14 @@ ScrapEngine::VulkanDescriptorPool::VulkanDescriptorPool(vk::Device* input_device
 		static_cast<uint32_t>(poolSizes.size()), poolSizes.data()
 	);
 
-	if (deviceRef->createDescriptorPool(&poolInfo, nullptr, &descriptorPool) != vk::Result::eSuccess) {
+	if (VulkanDevice::StaticLogicDeviceRef->createDescriptorPool(&poolInfo, nullptr, &descriptorPool) != vk::Result::eSuccess) {
 		throw std::runtime_error("VulkanDescriptorPool: Failed to create descriptor pool!");
 	}
 }
 
 ScrapEngine::VulkanDescriptorPool::~VulkanDescriptorPool()
 {
-	deviceRef->destroyDescriptorPool(descriptorPool);
+	VulkanDevice::StaticLogicDeviceRef->destroyDescriptorPool(descriptorPool);
 }
 
 vk::DescriptorPool* ScrapEngine::VulkanDescriptorPool::getDescriptorPool()

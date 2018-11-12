@@ -1,4 +1,5 @@
 #include "PresentQueue.h"
+#include "../Base/StaticTypes.h"
 
 //Init Static Members
 
@@ -6,9 +7,9 @@ const vk::Queue* ScrapEngine::PresentQueue::StaticPresentationQueueRef = nullptr
 
 //Class
 
-ScrapEngine::PresentQueue::PresentQueue(vk::Device* device, GraphicsQueue::QueueFamilyIndices indices)
+ScrapEngine::PresentQueue::PresentQueue(GraphicsQueue::QueueFamilyIndices indices)
 {
-	device->getQueue(indices.presentFamily, 0, &presentationQueue);
+	VulkanDevice::StaticLogicDeviceRef->getQueue(indices.presentFamily, 0, &presentationQueue);
 	StaticPresentationQueueRef = &presentationQueue;
 }
 

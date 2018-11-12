@@ -12,7 +12,7 @@ namespace ScrapEngine {
 	public:
 		static const vk::Queue* StaticPresentationQueueRef;
 
-		PresentQueue(vk::Device* device, GraphicsQueue::QueueFamilyIndices indices);
+		PresentQueue(GraphicsQueue::QueueFamilyIndices indices);
 		~PresentQueue();
 
 		vk::Queue* getPresentQueue();

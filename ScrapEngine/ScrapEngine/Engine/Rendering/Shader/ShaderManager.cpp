@@ -1,7 +1,7 @@
 #include "ShaderManager.h"
+#include "../Base/StaticTypes.h"
 
-ScrapEngine::ShaderManager::ShaderManager(vk::Device* input_deviceRef)
-	: deviceRef(input_deviceRef)
+ScrapEngine::ShaderManager::ShaderManager()
 {
 
 }
@@ -19,7 +19,7 @@ vk::ShaderModule ScrapEngine::ShaderManager::createShaderModule(const std::vecto
 	);
 
 	vk::ShaderModule shaderModule;
-	if (deviceRef->createShaderModule(&createInfo, nullptr, &shaderModule) != vk::Result::eSuccess) {
+	if (VulkanDevice::StaticLogicDeviceRef->createShaderModule(&createInfo, nullptr, &shaderModule) != vk::Result::eSuccess) {
 		throw std::runtime_error("ShaderManager: Failed to create shader module!");
 	}
 

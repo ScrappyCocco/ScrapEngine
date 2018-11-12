@@ -8,12 +8,10 @@ namespace ScrapEngine {
 	{
 	private:
 		vk::Sampler textureSampler;
-
-		vk::Device* deviceRef;
 	public:
-		TextureSampler(vk::Device* input_deviceRef, uint32_t mipLevels);
+		TextureSampler(const uint32_t& mipLevels);
 
-		TextureSampler(vk::Device* input_deviceRef, uint32_t mipLevels, vk::Filter magFilter, vk::Filter minFilter,
+		TextureSampler(const uint32_t& mipLevels, vk::Filter magFilter, vk::Filter minFilter,
 			vk::SamplerMipmapMode minimapMode = vk::SamplerMipmapMode::eLinear,
 			vk::SamplerAddressMode addressModeU = vk::SamplerAddressMode::eRepeat,
 			vk::SamplerAddressMode addressModeV = vk::SamplerAddressMode::eRepeat,

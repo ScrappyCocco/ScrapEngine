@@ -1,5 +1,6 @@
 #include "VulkanValidationLayers.h"
 #include "../../Debug/DebugLog.h"
+#include "../Base/StaticTypes.h"
 
 ScrapEngine::VulkanValidationLayers::VulkanValidationLayers()
 {
@@ -10,13 +11,12 @@ ScrapEngine::VulkanValidationLayers::VulkanValidationLayers()
 
 ScrapEngine::VulkanValidationLayers::~VulkanValidationLayers()
 {
-	instanceRef->destroyDebugUtilsMessengerEXT(callback, nullptr, dispatcher);
+	VukanInstance::StaticInstanceRef->destroyDebugUtilsMessengerEXT(callback, nullptr, dispatcher);
 }
 
-void ScrapEngine::VulkanValidationLayers::setupDebugCallback(vk::Instance* instance)
+void ScrapEngine::VulkanValidationLayers::setupDebugCallback()
 {
 	if (!enableValidationLayers) return;
-	instanceRef = instance;
 
 	vk::DebugUtilsMessengerCreateInfoEXT createInfo(
 		vk::DebugUtilsMessengerCreateFlagsEXT(),
@@ -25,9 +25,9 @@ void ScrapEngine::VulkanValidationLayers::setupDebugCallback(vk::Instance* insta
 		debugCallback
 	);
 
-	dispatcher.init(*instance);
+	dispatcher.init(*VukanInstance::StaticInstanceRef);
 
-	callback = instance->createDebugUtilsMessengerEXT(createInfo, nullptr, dispatcher);
+	callback = VukanInstance::StaticInstanceRef->createDebugUtilsMessengerEXT(createInfo, nullptr, dispatcher);
 }
 
 bool ScrapEngine::VulkanValidationLayers::checkValidationLayerSupport()

@@ -11,10 +11,8 @@ namespace ScrapEngine {
 	{
 	private:
 		std::vector<vk::ImageView> swapChainImageViews;
-
-		vk::Device* deviceRef;
 	public:
-		VulkanImageView(vk::Device* input_deviceRef, ScrapEngine::VulkanSwapChain* SwapChainRef);
+		VulkanImageView(ScrapEngine::VulkanSwapChain* SwapChainRef);
 		~VulkanImageView();
 
 		const std::vector<vk::ImageView>* getSwapChainImageViewsVector();

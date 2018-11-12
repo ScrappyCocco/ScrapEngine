@@ -12,18 +12,16 @@ namespace ScrapEngine {
 	private:
 		vk::Buffer stagingBuffer;
 		vk::DeviceMemory stagingBufferMemory;
-
-		vk::Device* deviceRef;
 	public:
-		StagingBuffer(vk::Device* input_deviceRef, vk::PhysicalDevice* PhysicalDevice, vk::DeviceSize* imageSize, stbi_uc* pixels);
+		StagingBuffer(const vk::DeviceSize& imageSize, stbi_uc* pixels);
 
 		template <class T> 
-		StagingBuffer(vk::Device* input_deviceRef, vk::PhysicalDevice* PhysicalDevice, vk::DeviceSize* bufferSize, const std::vector<T>* vectorData);
+		StagingBuffer(const vk::DeviceSize& bufferSize, const std::vector<T>* vectorData);
 
 		~StagingBuffer();
 
-		static void copyBufferToImage(vk::Device* input_deviceRef, vk::Buffer* buffer, vk::Image* image, uint32_t width, uint32_t height, vk::CommandPool* commandPool, vk::Queue* graphicsQueue);
-		static void copyBufferToImage(vk::Device* input_deviceRef, vk::Buffer* buffer, vk::Image* image, uint32_t width, uint32_t height, vk::CommandPool* commandPool, vk::Queue* graphicsQueue, vk::BufferImageCopy* region, int regioncount = 1, vk::ImageLayout layout = vk::ImageLayout::eTransferDstOptimal);
+		static void copyBufferToImage(vk::Buffer* buffer, vk::Image* image, const uint32_t& width, const uint32_t& height);
+		static void copyBufferToImage(vk::Buffer* buffer, vk::Image* image, const uint32_t& width, const uint32_t& height, vk::BufferImageCopy* region, int regioncount = 1, vk::ImageLayout layout = vk::ImageLayout::eTransferDstOptimal);
 
 
 		vk::Buffer* getStagingBuffer();
@@ -31,14 +29,13 @@ namespace ScrapEngine {
 
 	};
 	template<class T>
-	inline StagingBuffer::StagingBuffer(vk::Device* input_deviceRef, vk::PhysicalDevice* PhysicalDevice, vk::DeviceSize* bufferSize, const std::vector<T>* vectorData)
-		: deviceRef(input_deviceRef)
+	inline StagingBuffer::StagingBuffer(const vk::DeviceSize& bufferSize, const std::vector<T>* vectorData)
 	{
-		BaseBuffer::createBuffer(input_deviceRef, PhysicalDevice, bufferSize, vk::BufferUsageFlagBits::eTransferSrc, vk::MemoryPropertyFlagBits::eHostVisible | vk::MemoryPropertyFlagBits::eHostCoherent, stagingBuffer, stagingBufferMemory);
+		BaseBuffer::createBuffer(bufferSize, vk::BufferUsageFlagBits::eTransferSrc, vk::MemoryPropertyFlagBits::eHostVisible | vk::MemoryPropertyFlagBits::eHostCoherent, stagingBuffer, stagingBufferMemory);
 		void* data;
-		deviceRef->mapMemory(stagingBufferMemory, 0, *bufferSize, vk::MemoryMapFlags(), &data);
-		memcpy(data, vectorData->data(), static_cast<size_t>(*bufferSize));
-		deviceRef->unmapMemory(stagingBufferMemory);
+		VulkanDevice::StaticLogicDeviceRef->mapMemory(stagingBufferMemory, 0, bufferSize, vk::MemoryMapFlags(), &data);
+		memcpy(data, vectorData->data(), static_cast<size_t>(bufferSize));
+		VulkanDevice::StaticLogicDeviceRef->unmapMemory(stagingBufferMemory);
 	}
 }
 

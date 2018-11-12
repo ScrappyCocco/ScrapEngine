@@ -1,12 +1,12 @@
 #include "VulkanGraphicsPipeline.h"
 
 #include "../Base/Vertex.h"
+#include "../Base/StaticTypes.h"
 
-ScrapEngine::VulkanGraphicsPipeline::VulkanGraphicsPipeline(const char* vertexShader, const char* fragmentShader, vk::Device* input_deviceRef, vk::Extent2D* swapChainExtent, vk::RenderPass* input_renderPassRef,
+ScrapEngine::VulkanGraphicsPipeline::VulkanGraphicsPipeline(const char* vertexShader, const char* fragmentShader, vk::Extent2D* swapChainExtent,
 	vk::DescriptorSetLayout* descriptorSetLayout, vk::SampleCountFlagBits msaaSamples, bool isSkybox)
-	: deviceRef(input_deviceRef)
 {
-	ShaderManagerRef = new ShaderManager(input_deviceRef);
+	ShaderManagerRef = new ShaderManager();
 
 	auto vertShaderCode = ShaderManager::readFile(vertexShader);
 	auto fragShaderCode = ShaderManager::readFile(fragmentShader);
@@ -113,7 +113,7 @@ ScrapEngine::VulkanGraphicsPipeline::VulkanGraphicsPipeline(const char* vertexSh
 		depthStencil.setDepthTestEnable(false);
 	}
 	
-	if (deviceRef->createPipelineLayout(&pipelineLayoutInfo, nullptr, &pipelineLayout) != vk::Result::eSuccess) {
+	if (VulkanDevice::StaticLogicDeviceRef->createPipelineLayout(&pipelineLayoutInfo, nullptr, &pipelineLayout) != vk::Result::eSuccess) {
 		throw std::runtime_error("VulkanGraphicsPipeline: Failed to create pipeline layout!");
 	}
 
@@ -131,24 +131,24 @@ ScrapEngine::VulkanGraphicsPipeline::VulkanGraphicsPipeline(const char* vertexSh
 		&colorBlending,
 		nullptr,
 		pipelineLayout,
-		*input_renderPassRef,
+		*VulkanRenderPass::StaticRenderPassRef,
 		0
 	);
 
-	if (input_deviceRef->createGraphicsPipelines(nullptr, 1, &pipelineInfo, nullptr, &graphicsPipeline) != vk::Result::eSuccess) {
+	if (VulkanDevice::StaticLogicDeviceRef->createGraphicsPipelines(nullptr, 1, &pipelineInfo, nullptr, &graphicsPipeline) != vk::Result::eSuccess) {
 		throw std::runtime_error("VulkanGraphicsPipeline: Failed to create graphics pipeline!");
 	}
 
-	input_deviceRef->destroyShaderModule(fragShaderModule);
-	input_deviceRef->destroyShaderModule(vertShaderModule);
+	VulkanDevice::StaticLogicDeviceRef->destroyShaderModule(fragShaderModule);
+	VulkanDevice::StaticLogicDeviceRef->destroyShaderModule(vertShaderModule);
 	delete ShaderManagerRef;
 }
 
 
 ScrapEngine::VulkanGraphicsPipeline::~VulkanGraphicsPipeline()
 {
-	deviceRef->destroyPipeline(graphicsPipeline);
-	deviceRef->destroyPipelineLayout(pipelineLayout);
+	VulkanDevice::StaticLogicDeviceRef->destroyPipeline(graphicsPipeline);
+	VulkanDevice::StaticLogicDeviceRef->destroyPipelineLayout(pipelineLayout);
 }
 
 vk::Pipeline* ScrapEngine::VulkanGraphicsPipeline::getGraphicsPipeline()

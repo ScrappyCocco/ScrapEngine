@@ -8,8 +8,7 @@
 #include "../SwapChain/VulkanSwapChain.h"
 #include "TextureImageView.h"
 
-ScrapEngine::TextureImage::TextureImage(std::string file_path, vk::Device* input_deviceRef, vk::PhysicalDevice* input_PhysicalDeviceRef, vk::CommandPool* CommandPool, vk::Queue* graphicsQueue, bool shouldCopyFromStaging)
-	: deviceRef(input_deviceRef), PhysicalDeviceRef(input_PhysicalDeviceRef), CommandPoolRef(CommandPool), graphicsQueueRerf(graphicsQueue)
+ScrapEngine::TextureImage::TextureImage(const std::string& file_path, bool shouldCopyFromStaging)
 {
 	stbi_uc* pixels = stbi_load(file_path.c_str(), &texWidth, &texHeight, &texChannels, STBI_rgb_alpha);
 
@@ -20,7 +19,7 @@ ScrapEngine::TextureImage::TextureImage(std::string file_path, vk::Device* input
 		throw std::runtime_error("TextureImage: Failed to load texture image! (pixels not valid) - " + file_path);
 	}
 
-	StaginfBufferRef = new StagingBuffer(deviceRef, PhysicalDeviceRef, &imageSize, pixels);
+	StaginfBufferRef = new StagingBuffer(imageSize, pixels);
 
 	stbi_image_free(pixels);
 
@@ -29,7 +28,7 @@ ScrapEngine::TextureImage::TextureImage(std::string file_path, vk::Device* input
 	transitionImageLayout(&textureImage, vk::Format::eR8G8B8A8Unorm, vk::ImageLayout::eUndefined, vk::ImageLayout::eTransferDstOptimal);
 
 	if(shouldCopyFromStaging){
-		StagingBuffer::copyBufferToImage(deviceRef ,StaginfBufferRef->getStagingBuffer(), &textureImage, static_cast<uint32_t>(texWidth), static_cast<uint32_t>(texHeight), CommandPool, graphicsQueue);
+		StagingBuffer::copyBufferToImage(StaginfBufferRef->getStagingBuffer(), &textureImage, static_cast<uint32_t>(texWidth), static_cast<uint32_t>(texHeight));
 
 		delete StaginfBufferRef;
 		StaginfBufferRef = nullptr;
@@ -43,16 +42,16 @@ ScrapEngine::TextureImage::~TextureImage()
 	if (StaginfBufferRef) {
 		delete StaginfBufferRef;
 	}
-	deviceRef->destroyImage(textureImage);
-	deviceRef->freeMemory(textureImageMemory);
+	VulkanDevice::StaticLogicDeviceRef->destroyImage(textureImage);
+	VulkanDevice::StaticLogicDeviceRef->freeMemory(textureImageMemory);
 }
 
-void ScrapEngine::TextureImage::createImage(uint32_t width, uint32_t height, vk::Format format, vk::ImageTiling tiling, vk::ImageUsageFlags usage, vk::MemoryPropertyFlags properties, vk::Image& image, vk::DeviceMemory& imageMemory)
+void ScrapEngine::TextureImage::createImage(const uint32_t& width, const uint32_t& height, const vk::Format& format, vk::ImageTiling tiling, vk::ImageUsageFlags usage, vk::MemoryPropertyFlags properties, vk::Image& image, vk::DeviceMemory& imageMemory)
 {
-	createImage(deviceRef, PhysicalDeviceRef, width, height, format, tiling, usage, properties, image, imageMemory, mipLevels, vk::SampleCountFlagBits::e1);
+	createImage(width, height, format, tiling, usage, properties, image, imageMemory, mipLevels, vk::SampleCountFlagBits::e1);
 }
 
-void ScrapEngine::TextureImage::createImage(vk::Device* deviceRef, vk::PhysicalDevice* PhysicalDeviceRef, uint32_t width, uint32_t height, vk::Format format, vk::ImageTiling tiling, vk::ImageUsageFlags usage,
+void ScrapEngine::TextureImage::createImage(const uint32_t& width, const uint32_t& height, const vk::Format& format, vk::ImageTiling tiling, vk::ImageUsageFlags usage,
 	vk::MemoryPropertyFlags properties, vk::Image& image, vk::DeviceMemory& imageMemory, uint32_t mipLevelsData, vk::SampleCountFlagBits numSamples)
 {
 	vk::ImageCreateInfo imageInfo(
@@ -68,33 +67,33 @@ void ScrapEngine::TextureImage::createImage(vk::Device* deviceRef, vk::PhysicalD
 		vk::SharingMode::eExclusive
 	);
 
-	if (deviceRef->createImage(&imageInfo, nullptr, &image) != vk::Result::eSuccess) {
+	if (VulkanDevice::StaticLogicDeviceRef->createImage(&imageInfo, nullptr, &image) != vk::Result::eSuccess) {
 		throw std::runtime_error("TextureImage: Failed to create image!");
 	}
 
 	vk::MemoryRequirements memRequirements;
-	deviceRef->getImageMemoryRequirements(image, &memRequirements);
+	VulkanDevice::StaticLogicDeviceRef->getImageMemoryRequirements(image, &memRequirements);
 
 	vk::MemoryAllocateInfo allocInfo(
 		memRequirements.size, 
-		findMemoryType(memRequirements.memoryTypeBits, properties, PhysicalDeviceRef)
+		findMemoryType(memRequirements.memoryTypeBits, properties)
 	);
 
-	if (deviceRef->allocateMemory(&allocInfo, nullptr, &imageMemory) != vk::Result::eSuccess) {
+	if (VulkanDevice::StaticLogicDeviceRef->allocateMemory(&allocInfo, nullptr, &imageMemory) != vk::Result::eSuccess) {
 		throw std::runtime_error("TextureImage: Failed to allocate image memory!");
 	}
 
-	deviceRef->bindImageMemory(image, imageMemory, 0);
+	VulkanDevice::StaticLogicDeviceRef->bindImageMemory(image, imageMemory, 0);
 }
 
-void ScrapEngine::TextureImage::transitionImageLayout(vk::Image* image, vk::Format format, vk::ImageLayout oldLayout, vk::ImageLayout newLayout)
+void ScrapEngine::TextureImage::transitionImageLayout(vk::Image* image, const vk::Format& format, const vk::ImageLayout& oldLayout, const vk::ImageLayout& newLayout)
 {
-	transitionImageLayout(deviceRef, image, format, oldLayout, newLayout, CommandPoolRef, graphicsQueueRerf, mipLevels);
+	transitionImageLayout(image, format, oldLayout, newLayout, mipLevels);
 }
 
-void ScrapEngine::TextureImage::transitionImageLayout(vk::Device* deviceRef, vk::Image* image, vk::Format format, vk::ImageLayout oldLayout, vk::ImageLayout newLayout, vk::CommandPool* CommandPool, vk::Queue* graphicsQueue, uint32_t mipLevelsData, int layercount)
+void ScrapEngine::TextureImage::transitionImageLayout(vk::Image* image, const vk::Format& format, const vk::ImageLayout& oldLayout, const vk::ImageLayout& newLayout, const uint32_t& mipLevelsData, const int& layercount)
 {
-	vk::CommandBuffer* commandBuffer = BaseBuffer::beginSingleTimeCommands(deviceRef, CommandPool);
+	vk::CommandBuffer* commandBuffer = BaseBuffer::beginSingleTimeCommands();
 
 	vk::ImageMemoryBarrier barrier(vk::AccessFlags(), vk::AccessFlags(), oldLayout, newLayout, 0, 0, *image);
 
@@ -157,19 +156,19 @@ void ScrapEngine::TextureImage::transitionImageLayout(vk::Device* deviceRef, vk:
 		1, &barrier
 	);
 
-	BaseBuffer::endSingleTimeCommands(deviceRef, commandBuffer, CommandPool, graphicsQueue);
+	BaseBuffer::endSingleTimeCommands(commandBuffer);
 }
 
-void ScrapEngine::TextureImage::generateMipmaps(vk::Image* image, vk::Format imageFormat, int32_t texWidth, int32_t texHeight, uint32_t mipLevels)
+void ScrapEngine::TextureImage::generateMipmaps(vk::Image* image, const vk::Format& imageFormat, const int32_t& texWidth, const int32_t& texHeight, const uint32_t& mipLevels)
 {
 	// Check if image format supports linear blitting
-	vk::FormatProperties formatProperties = PhysicalDeviceRef->getFormatProperties(imageFormat);
+	vk::FormatProperties formatProperties = VulkanDevice::StaticPhysicalDeviceRef->getFormatProperties(imageFormat);
 
 	if (!(formatProperties.optimalTilingFeatures & vk::FormatFeatureFlagBits::eSampledImageFilterLinear)) {
 		throw std::runtime_error("TextureImage: Texture image format does not support linear blitting!");
 	}
 
-	vk::CommandBuffer* commandBuffer = BaseBuffer::beginSingleTimeCommands(deviceRef, CommandPoolRef);
+	vk::CommandBuffer* commandBuffer = BaseBuffer::beginSingleTimeCommands();
 
 	vk::ImageMemoryBarrier barrier(
 		vk::AccessFlags(), 
@@ -241,7 +240,7 @@ void ScrapEngine::TextureImage::generateMipmaps(vk::Image* image, vk::Format ima
 
 	commandBuffer->pipelineBarrier(vk::PipelineStageFlagBits::eTransfer, vk::PipelineStageFlagBits::eFragmentShader, vk::DependencyFlags(), 0, nullptr, 0, nullptr, 1, &barrier);
 
-	BaseBuffer::endSingleTimeCommands(deviceRef, commandBuffer, CommandPoolRef, graphicsQueueRerf);
+	BaseBuffer::endSingleTimeCommands(commandBuffer);
 }
 
 vk::Image* ScrapEngine::TextureImage::getTextureImage()

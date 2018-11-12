@@ -11,10 +11,8 @@ namespace ScrapEngine{
 		vk::Image colorImage;
 		vk::DeviceMemory colorImageMemory;
 		vk::ImageView colorImageView;
-
-		vk::Device* deviceRef;
 	public:
-		VulkanColorResources(vk::Device* input_deviceRef, vk::PhysicalDevice* input_PhysicalDeviceRef, vk::CommandPool* CommandPool, vk::Queue* graphicsQueue, vk::SampleCountFlagBits msaaSamples, ScrapEngine::VulkanSwapChain* swapChainRef);
+		VulkanColorResources(vk::SampleCountFlagBits msaaSamples, ScrapEngine::VulkanSwapChain* swapChainRef);
 		~VulkanColorResources();
 
 		vk::Image* getColorImage();

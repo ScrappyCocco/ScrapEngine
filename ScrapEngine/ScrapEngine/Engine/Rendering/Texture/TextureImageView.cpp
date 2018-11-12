@@ -1,24 +1,24 @@
 #include "TextureImageView.h"
 
 #include <stdexcept>
+#include "../Base/StaticTypes.h"
 
-ScrapEngine::TextureImageView::TextureImageView(vk::Device* input_deviceRef, vk::Image* textureImage, uint32_t mipLevelsData, bool iscubemap, int layerCount)
-	: deviceRef(input_deviceRef)
+ScrapEngine::TextureImageView::TextureImageView(vk::Image* textureImage, const uint32_t& mipLevelsData, bool iscubemap, const int& layerCount)
 {
 	if (iscubemap) {
-		textureImageView = createCubeMapImageView(deviceRef, textureImage, vk::Format::eR8G8B8A8Unorm, vk::ImageAspectFlagBits::eColor, mipLevelsData, layerCount);
+		textureImageView = createCubeMapImageView(textureImage, vk::Format::eR8G8B8A8Unorm, vk::ImageAspectFlagBits::eColor, mipLevelsData, layerCount);
 	}
 	else {
-		textureImageView = createImageView(deviceRef, textureImage, vk::Format::eR8G8B8A8Unorm, vk::ImageAspectFlagBits::eColor, mipLevelsData);
+		textureImageView = createImageView(textureImage, vk::Format::eR8G8B8A8Unorm, vk::ImageAspectFlagBits::eColor, mipLevelsData);
 	}
 }
 
 ScrapEngine::TextureImageView::~TextureImageView()
 {
-	deviceRef->destroyImageView(textureImageView);
+	VulkanDevice::StaticLogicDeviceRef->destroyImageView(textureImageView);
 }
 
-vk::ImageView ScrapEngine::TextureImageView::createImageView(vk::Device* input_deviceRef, vk::Image* image, vk::Format format, vk::ImageAspectFlags aspectFlags, uint32_t mipLevelsData) {
+vk::ImageView ScrapEngine::TextureImageView::createImageView(vk::Image* image, vk::Format format, vk::ImageAspectFlags aspectFlags, uint32_t mipLevelsData) {
 	vk::ImageViewCreateInfo viewInfo(
 		vk::ImageViewCreateFlags(), 
 		*image, 
@@ -29,14 +29,14 @@ vk::ImageView ScrapEngine::TextureImageView::createImageView(vk::Device* input_d
 	);
 
 	vk::ImageView imageView;
-	if (input_deviceRef->createImageView(&viewInfo, nullptr, &imageView) != vk::Result::eSuccess) {
+	if (VulkanDevice::StaticLogicDeviceRef->createImageView(&viewInfo, nullptr, &imageView) != vk::Result::eSuccess) {
 		throw std::runtime_error("TextureImageView: Failed to create texture image view!");
 	}
 
 	return imageView;
 }
 
-vk::ImageView ScrapEngine::TextureImageView::createCubeMapImageView(vk::Device * input_deviceRef, vk::Image * image, vk::Format format, vk::ImageAspectFlags aspectFlags, uint32_t mipLevelsData, int layerCount)
+vk::ImageView ScrapEngine::TextureImageView::createCubeMapImageView(vk::Image* image, vk::Format format, vk::ImageAspectFlags aspectFlags, uint32_t mipLevelsData, int layerCount)
 {
 	vk::ImageViewCreateInfo viewInfo(
 		vk::ImageViewCreateFlags(),
@@ -48,7 +48,7 @@ vk::ImageView ScrapEngine::TextureImageView::createCubeMapImageView(vk::Device *
 	);
 
 	vk::ImageView imageView;
-	if (input_deviceRef->createImageView(&viewInfo, nullptr, &imageView) != vk::Result::eSuccess) {
+	if (VulkanDevice::StaticLogicDeviceRef->createImageView(&viewInfo, nullptr, &imageView) != vk::Result::eSuccess) {
 		throw std::runtime_error("TextureImageView: Failed to create texture image view!");
 	}
 

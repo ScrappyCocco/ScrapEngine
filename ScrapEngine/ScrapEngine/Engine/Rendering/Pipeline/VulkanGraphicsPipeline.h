@@ -11,10 +11,8 @@ namespace ScrapEngine {
 		ShaderManager* ShaderManagerRef = nullptr;
 		vk::PipelineLayout pipelineLayout;
 		vk::Pipeline graphicsPipeline;
-
-		vk::Device* deviceRef;
 	public:
-		VulkanGraphicsPipeline(const char* vertexShader, const char* fragmentShader, vk::Device* input_deviceRef, vk::Extent2D* swapChainExtent, vk::RenderPass* input_renderPassRef,
+		VulkanGraphicsPipeline(const char* vertexShader, const char* fragmentShader, vk::Extent2D* swapChainExtent,
 			vk::DescriptorSetLayout* descriptorSetLayout, vk::SampleCountFlagBits msaaSamples, bool isSkybox = false);
 		~VulkanGraphicsPipeline();
 

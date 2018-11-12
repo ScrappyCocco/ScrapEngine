@@ -3,8 +3,8 @@
 #include "../BaseBuffer.h"
 #include <glm/gtc/matrix_transform.hpp>
 
-ScrapEngine::UniformBuffer::UniformBuffer(vk::Device* input_deviceRef, vk::PhysicalDevice* PhysicalDevice, const std::vector<vk::Image>* swapChainImages, vk::Extent2D input_swapChainExtent) 
-	: deviceRef(input_deviceRef), swapChainExtent(input_swapChainExtent)
+ScrapEngine::UniformBuffer::UniformBuffer(const std::vector<vk::Image>* swapChainImages, const vk::Extent2D& input_swapChainExtent)
+	: swapChainExtent(input_swapChainExtent)
 {
 	vk::DeviceSize bufferSize(sizeof(UniformBufferObject));
 
@@ -13,29 +13,27 @@ ScrapEngine::UniformBuffer::UniformBuffer(vk::Device* input_deviceRef, vk::Physi
 	uniformBuffersMemory.resize(swapChainImagesSize);
 
 	for (size_t i = 0; i < swapChainImagesSize; i++) {
-		BaseBuffer::createBuffer(deviceRef, PhysicalDevice, &bufferSize, vk::BufferUsageFlagBits::eUniformBuffer, vk::MemoryPropertyFlagBits::eHostVisible | vk::MemoryPropertyFlagBits::eHostCoherent, uniformBuffers[i], uniformBuffersMemory[i]);
+		BaseBuffer::createBuffer(bufferSize, vk::BufferUsageFlagBits::eUniformBuffer, vk::MemoryPropertyFlagBits::eHostVisible | vk::MemoryPropertyFlagBits::eHostCoherent, uniformBuffers[i], uniformBuffersMemory[i]);
 	}
 	//Map memory
 	mappedMemory.resize(swapChainImagesSize);
 	for (size_t i = 0; i < swapChainImagesSize; i++) {
-		deviceRef->mapMemory(uniformBuffersMemory[i], 0, sizeof(UniformBufferObject), vk::MemoryMapFlags(), &mappedMemory[i]);
+		VulkanDevice::StaticLogicDeviceRef->mapMemory(uniformBuffersMemory[i], 0, sizeof(UniformBufferObject), vk::MemoryMapFlags(), &mappedMemory[i]);
 	}
 }
 
 ScrapEngine::UniformBuffer::~UniformBuffer()
 {
 	for (size_t i = 0; i < swapChainImagesSize; i++) {
-		deviceRef->destroyBuffer(uniformBuffers[i]);
-		deviceRef->unmapMemory(uniformBuffersMemory[i]);
-		deviceRef->freeMemory(uniformBuffersMemory[i]);
+		VulkanDevice::StaticLogicDeviceRef->destroyBuffer(uniformBuffers[i]);
+		VulkanDevice::StaticLogicDeviceRef->unmapMemory(uniformBuffersMemory[i]);
+		VulkanDevice::StaticLogicDeviceRef->freeMemory(uniformBuffersMemory[i]);
 	}
 }
 
-void ScrapEngine::UniformBuffer::updateUniformBuffer(uint32_t currentImage, ScrapEngine::Transform object_transform, ScrapEngine::Camera* RenderCamera)
+void ScrapEngine::UniformBuffer::updateUniformBuffer(const uint32_t& currentImage, const ScrapEngine::Transform& object_transform, ScrapEngine::Camera* RenderCamera)
 {
 	UniformBufferObject ubo = {};
-
-	glm::mat4 view = glm::lookAt(RenderCamera->getCameraLocation(), RenderCamera->getCameraLocation() + RenderCamera->getCameraFront(), RenderCamera->getCameraUp());;
 
 	ubo.model = glm::translate(glm::mat4(1.0f), object_transform.location);
 	ubo.model = glm::scale(ubo.model, object_transform.scale);
@@ -43,8 +41,8 @@ void ScrapEngine::UniformBuffer::updateUniformBuffer(uint32_t currentImage, Scra
 		ubo.model = glm::rotate(ubo.model, glm::radians(90.0f), object_transform.rotation);
 	}
 	ubo.proj = glm::perspective(glm::radians(45.0f), swapChainExtent.width / (float)swapChainExtent.height, RenderCamera->getCameraMinDrawDistance(), RenderCamera->getCameraMaxDrawDistance());
-	ubo.view = view;
-	ubo.proj[1][1] *= -1;
+	ubo.view = glm::lookAt(RenderCamera->getCameraLocation(), RenderCamera->getCameraLocation() + RenderCamera->getCameraFront(), RenderCamera->getCameraUp());
+	ubo.proj[1][1] *= -1; //Invert image for openGL style
 	
 	memcpy(mappedMemory[currentImage], &ubo, sizeof(ubo));
 }

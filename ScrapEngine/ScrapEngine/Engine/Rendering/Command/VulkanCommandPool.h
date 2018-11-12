@@ -9,12 +9,10 @@ namespace ScrapEngine {
 	{
 	private:
 		vk::CommandPool commandPool;
-
-		vk::Device* deviceRef;
 	public:
 		static const vk::CommandPool* StaticCommandPoolRef;
 
-		VulkanCommandPool(GraphicsQueue::QueueFamilyIndices queueFamilyIndices, vk::Device* input_deviceRef);
+		VulkanCommandPool(GraphicsQueue::QueueFamilyIndices queueFamilyIndices);
 		~VulkanCommandPool();
 
 		vk::CommandPool* getCommandPool();

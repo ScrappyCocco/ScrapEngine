@@ -1,9 +1,9 @@
 #include "VulkanFrameBuffer.h"
 #include <array>
+#include "../Base/StaticTypes.h"
 
-ScrapEngine::VulkanFrameBuffer::VulkanFrameBuffer(ScrapEngine::VulkanImageView* input_imageViewRef, vk::Device* input_deviceRef, const vk::Extent2D* input_swapChainExtent,
-	vk::ImageView* depthImageView, vk::RenderPass* renderPass, vk::ImageView* colorImageView)
-	: deviceRef(input_deviceRef)
+ScrapEngine::VulkanFrameBuffer::VulkanFrameBuffer(ScrapEngine::VulkanImageView* input_imageViewRef, const vk::Extent2D* input_swapChainExtent,
+	vk::ImageView* depthImageView, vk::ImageView* colorImageView)
 {
 	const std::vector<vk::ImageView>* swapChainImageViews = input_imageViewRef->getSwapChainImageViewsVector();
 
@@ -16,9 +16,17 @@ ScrapEngine::VulkanFrameBuffer::VulkanFrameBuffer(ScrapEngine::VulkanImageView* 
 			(*swapChainImageViews)[i]
 		};
 
-		vk::FramebufferCreateInfo framebufferInfo(vk::FramebufferCreateFlags(), *renderPass, static_cast<uint32_t>(attachments.size()), attachments.data(), input_swapChainExtent->width, input_swapChainExtent->height, 1);
+		vk::FramebufferCreateInfo framebufferInfo(
+			vk::FramebufferCreateFlags(), 
+			*VulkanRenderPass::StaticRenderPassRef, 
+			static_cast<uint32_t>(attachments.size()), 
+			attachments.data(), 
+			input_swapChainExtent->width, 
+			input_swapChainExtent->height, 
+			1
+		);
 		
-		if (deviceRef->createFramebuffer(&framebufferInfo, nullptr, &swapChainFramebuffers[i]) != vk::Result::eSuccess) {
+		if (VulkanDevice::StaticLogicDeviceRef->createFramebuffer(&framebufferInfo, nullptr, &swapChainFramebuffers[i]) != vk::Result::eSuccess) {
 			throw std::runtime_error("VulkanFrameBuffer: Failed to create framebuffer!");
 		}
 	}
@@ -27,7 +35,7 @@ ScrapEngine::VulkanFrameBuffer::VulkanFrameBuffer(ScrapEngine::VulkanImageView* 
 ScrapEngine::VulkanFrameBuffer::~VulkanFrameBuffer()
 {
 	for (auto framebuffer : swapChainFramebuffers) {
-		deviceRef->destroyFramebuffer(framebuffer);
+		VulkanDevice::StaticLogicDeviceRef->destroyFramebuffer(framebuffer);
 	}
 }
 

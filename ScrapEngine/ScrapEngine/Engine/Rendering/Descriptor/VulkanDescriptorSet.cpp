@@ -1,9 +1,9 @@
 #include "VulkanDescriptorSet.h"
 #include <stdexcept>
 #include <array>
+#include "../Base/StaticTypes.h"
 
-ScrapEngine::VulkanDescriptorSet::VulkanDescriptorSet(vk::Device* input_deviceRef)
-	: deviceRef(input_deviceRef)
+ScrapEngine::VulkanDescriptorSet::VulkanDescriptorSet()
 {
 	vk::DescriptorSetLayoutBinding uboLayoutBinding(
 		0, 
@@ -29,28 +29,29 @@ ScrapEngine::VulkanDescriptorSet::VulkanDescriptorSet(vk::Device* input_deviceRe
 		bindings.data()
 	);
 
-	if (deviceRef->createDescriptorSetLayout(&layoutInfo, nullptr, &descriptorSetLayout) != vk::Result::eSuccess) {
+	if (VulkanDevice::StaticLogicDeviceRef->createDescriptorSetLayout(&layoutInfo, nullptr, &descriptorSetLayout) != vk::Result::eSuccess) {
 		throw std::runtime_error("VulkanDescriptorSet: Failed to create descriptor set layout!");
 	}
 }
 
 ScrapEngine::VulkanDescriptorSet::~VulkanDescriptorSet()
 {
-	deviceRef->destroyDescriptorSetLayout(descriptorSetLayout);
+	VulkanDevice::StaticLogicDeviceRef->destroyDescriptorSetLayout(descriptorSetLayout);
 }
 
-void ScrapEngine::VulkanDescriptorSet::createDescriptorSets(vk::DescriptorPool* descriptorPool, const std::vector<vk::Image>* swapChainImages, const std::vector<vk::Buffer>* uniformBuffers, vk::ImageView* textureImageView, vk::Sampler* textureSampler, vk::DeviceSize BufferInfoSize)
+void ScrapEngine::VulkanDescriptorSet::createDescriptorSets(vk::DescriptorPool* descriptorPool, const std::vector<vk::Image>* swapChainImages, const std::vector<vk::Buffer>* uniformBuffers, vk::ImageView* textureImageView, vk::Sampler* textureSampler, const vk::DeviceSize& BufferInfoSize)
 {
 	std::vector<vk::DescriptorSetLayout> layouts(swapChainImages->size(), descriptorSetLayout);
 
 	vk::DescriptorSetAllocateInfo allocInfo(
 		*descriptorPool, 
 		static_cast<uint32_t>(swapChainImages->size()), 
-		layouts.data());
+		layouts.data()
+	);
 
 	descriptorSets.resize(swapChainImages->size());
 	
-	if (deviceRef->allocateDescriptorSets(&allocInfo, &descriptorSets[0]) != vk::Result::eSuccess) {
+	if (VulkanDevice::StaticLogicDeviceRef->allocateDescriptorSets(&allocInfo, &descriptorSets[0]) != vk::Result::eSuccess) {
 		throw std::runtime_error("DescriptorSetLayout: Failed to allocate descriptor sets!");
 	}
 
@@ -87,7 +88,7 @@ void ScrapEngine::VulkanDescriptorSet::createDescriptorSets(vk::DescriptorPool* 
 			)
 		};
 
-		deviceRef->updateDescriptorSets(static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
+		VulkanDevice::StaticLogicDeviceRef->updateDescriptorSets(static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 	}
 }
 

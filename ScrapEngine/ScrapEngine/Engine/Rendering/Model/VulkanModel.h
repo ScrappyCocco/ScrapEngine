@@ -10,8 +10,6 @@ namespace ScrapEngine {
 	class VulkanModel
 	{
 	private:
-		const std::string MODEL_PATH;
-
 		std::vector<ScrapEngine::Vertex> vertices;
 		std::vector<uint32_t> indices;
 	public:

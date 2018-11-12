@@ -1,6 +1,7 @@
 #include "VulkanCommandPool.h"
 
 #include <stdexcept>
+#include "../Base/StaticTypes.h"
 
 //Init Static Members
 
@@ -8,12 +9,11 @@ const vk::CommandPool* ScrapEngine::VulkanCommandPool::StaticCommandPoolRef = nu
 
 //Class
 
-ScrapEngine::VulkanCommandPool::VulkanCommandPool(GraphicsQueue::QueueFamilyIndices queueFamilyIndices, vk::Device* input_deviceRef)
-	: deviceRef(input_deviceRef)
+ScrapEngine::VulkanCommandPool::VulkanCommandPool(GraphicsQueue::QueueFamilyIndices queueFamilyIndices)
 {
 	vk::CommandPoolCreateInfo poolInfo(vk::CommandPoolCreateFlags(), queueFamilyIndices.graphicsFamily);
 
-	if (deviceRef->createCommandPool(&poolInfo, nullptr, &commandPool) != vk::Result::eSuccess) {
+	if (VulkanDevice::StaticLogicDeviceRef->createCommandPool(&poolInfo, nullptr, &commandPool) != vk::Result::eSuccess) {
 		throw std::runtime_error("VulkanCommandPool: Failed to create command pool!");
 	}
 
@@ -22,7 +22,7 @@ ScrapEngine::VulkanCommandPool::VulkanCommandPool(GraphicsQueue::QueueFamilyIndi
 
 ScrapEngine::VulkanCommandPool::~VulkanCommandPool()
 {
-	deviceRef->destroyCommandPool(commandPool);
+	VulkanDevice::StaticLogicDeviceRef->destroyCommandPool(commandPool);
 }
 
 vk::CommandPool* ScrapEngine::VulkanCommandPool::getCommandPool()

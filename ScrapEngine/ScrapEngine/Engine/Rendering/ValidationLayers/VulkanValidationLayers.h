@@ -10,13 +10,12 @@ namespace ScrapEngine {
 		VulkanValidationLayers();
 		~VulkanValidationLayers();
 
-		void setupDebugCallback(vk::Instance* instance);
+		void setupDebugCallback();
 		bool checkValidationLayerSupport();
 		static bool areValidationLayersEnabled();
 		std::vector<const char*> getValidationLayers();
 
 	private:
-		vk::Instance* instanceRef;
 		vk::DispatchLoaderDynamic dispatcher;
 
 		//List of validationLayers to load and use

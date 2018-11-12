@@ -14,7 +14,6 @@ namespace ScrapEngine {
 		vk::Format swapChainImageFormat;
 		vk::Extent2D swapChainExtent;
 
-		vk::Device* deviceRef;
 		vk::SurfaceKHR* surfaceRef;
 	public:
 		struct SwapChainSupportDetails {
@@ -23,14 +22,14 @@ namespace ScrapEngine {
 			std::vector<vk::PresentModeKHR> presentModes;
 		};
 
-		VulkanSwapChain(SwapChainSupportDetails swapChainSupport, GraphicsQueue::QueueFamilyIndices indices, vk::Device* input_deviceRef, vk::SurfaceKHR* input_surfaceRef, uint32_t WIDTH, uint32_t HEIGHT, bool vsync);
+		VulkanSwapChain(SwapChainSupportDetails swapChainSupport, GraphicsQueue::QueueFamilyIndices indices, vk::SurfaceKHR* input_surfaceRef, const uint32_t& WIDTH, const uint32_t& HEIGHT, bool vsync);
 		~VulkanSwapChain();
 
 		vk::SurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<vk::SurfaceFormatKHR>& availableFormats);
 
 		vk::PresentModeKHR chooseSwapPresentMode(const std::vector<vk::PresentModeKHR> availablePresentModes, bool vsync);
 
-		vk::Extent2D chooseSwapExtent(const vk::SurfaceCapabilitiesKHR& capabilities, uint32_t WIDTH, uint32_t HEIGHT);
+		vk::Extent2D chooseSwapExtent(const vk::SurfaceCapabilitiesKHR& capabilities, const uint32_t& WIDTH, const uint32_t& HEIGHT);
 
 		vk::SwapchainKHR getSwapChain() const;
 
