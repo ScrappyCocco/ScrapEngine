@@ -3,7 +3,7 @@
 #include "../Base/StaticTypes.h"
 
 ScrapEngine::VulkanCommandBuffer::VulkanCommandBuffer(ScrapEngine::VulkanFrameBuffer* SwapChainFrameBuffer, vk::Extent2D* input_swapChainExtentRef, std::vector<ScrapEngine::VulkanGraphicsPipeline*> input_vulkanPipelineRef,
-	const std::vector<const std::vector<vk::DescriptorSet>*> descriptorSets, std::vector<simple_buffer<Vertex>*> vertexBuffer, std::vector<simple_buffer<uint32_t>*> indexBuffer
+	const std::vector<const std::vector<vk::DescriptorSet>*>& descriptorSets, std::vector<simple_buffer<Vertex>*> vertexBuffer, std::vector<simple_buffer<uint32_t>*> indexBuffer
 	, ScrapEngine::VulkanSkyboxInstance* SkyboxRef)
 {
 	const std::vector<vk::Framebuffer>* swapChainFramebuffers = SwapChainFrameBuffer->getSwapChainFramebuffersVector();

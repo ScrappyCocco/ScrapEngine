@@ -9,7 +9,7 @@ const vk::Instance* ScrapEngine::VukanInstance::StaticInstanceRef = nullptr;
 
 //Class
 
-ScrapEngine::VukanInstance::VukanInstance(std::string app_name, int app_version, std::string engine_name, int engine_version)
+ScrapEngine::VukanInstance::VukanInstance(const std::string& app_name, int app_version, const std::string& engine_name, int engine_version)
 {
 	if (VulkanValidationLayers::areValidationLayersEnabled()) {
 		ValidationLayersManager = new VulkanValidationLayers();

@@ -1,8 +1,7 @@
 #include "Camera.h"
 
-ScrapEngine::Camera::Camera(glm::vec3 input_cameraLocation, float input_minDrawDistance, float input_maxDrawDistance)
+ScrapEngine::Camera::Camera(glm::vec3 input_cameraLocation, float input_minDrawDistance, float input_maxDrawDistance) : cameraLocation(input_cameraLocation)
 {
-	cameraLocation = input_cameraLocation;
 	minDrawDistance = input_minDrawDistance;
 	maxDrawDistance = input_maxDrawDistance;
 

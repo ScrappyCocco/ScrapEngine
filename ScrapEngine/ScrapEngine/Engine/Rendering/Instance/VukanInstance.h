@@ -17,13 +17,13 @@ namespace ScrapEngine {
 	public:
 		static const vk::Instance* StaticInstanceRef;
 
-		VukanInstance(std::string app_name, int app_version, std::string engine_name = "No Engine", int engine_version = 1);
+		VukanInstance(const std::string& app_name, int app_version, const std::string& engine_name = "ScrapEngine", int engine_version = 1);
 
 		//Destroy the Vulkan Instance
 		~VukanInstance(); 
 
 		//Create the Vulkan Instance with the given data
-		void createVulkanInstance(std::string app_name, int app_version, std::string engine_name = "No Engine", int engine_version = 1);
+		void createVulkanInstance(std::string app_name, int app_version, std::string engine_name = "ScrapEngine", int engine_version = 1);
 
 		//Return the current Vulkan Instance (if created)
 		vk::Instance* getVulkanInstance();

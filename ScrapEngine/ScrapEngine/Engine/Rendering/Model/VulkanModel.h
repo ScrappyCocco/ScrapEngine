@@ -16,8 +16,6 @@ namespace ScrapEngine {
 		VulkanModel(const std::string& input_MODEL_PATH);
 		~VulkanModel();
 
-		void SimpleTranslate(glm::vec3 input_vector);
-
 		const std::vector<ScrapEngine::Vertex>* getVertices();
 		const std::vector<uint32_t>* getIndices();
 	};

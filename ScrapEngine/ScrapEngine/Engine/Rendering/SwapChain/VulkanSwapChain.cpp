@@ -74,7 +74,7 @@ vk::SurfaceFormatKHR ScrapEngine::VulkanSwapChain::chooseSwapSurfaceFormat(const
 	return availableFormats[0];
 }
 
-vk::PresentModeKHR ScrapEngine::VulkanSwapChain::chooseSwapPresentMode(const std::vector<vk::PresentModeKHR> availablePresentModes, bool vsync)
+vk::PresentModeKHR ScrapEngine::VulkanSwapChain::chooseSwapPresentMode(const std::vector<vk::PresentModeKHR>& availablePresentModes, bool vsync)
 {
 	vk::PresentModeKHR bestMode = vk::PresentModeKHR::eFifo;
 

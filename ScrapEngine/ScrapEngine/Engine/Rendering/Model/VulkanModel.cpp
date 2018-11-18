@@ -51,13 +51,6 @@ ScrapEngine::VulkanModel::~VulkanModel()
 
 }
 
-void ScrapEngine::VulkanModel::SimpleTranslate(glm::vec3 input_vector)
-{
-	for (std::vector<ScrapEngine::Vertex>::iterator it = vertices.begin(); it != vertices.end(); it++) {
-		(*it).pos = { (*it).pos.x + input_vector.x, (*it).pos.y + input_vector.y, (*it).pos.z + input_vector.z};
-	}
-}
-
 const std::vector<ScrapEngine::Vertex>* ScrapEngine::VulkanModel::getVertices()
 {
 	return &vertices;
