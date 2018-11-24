@@ -4,8 +4,6 @@
 #include "../BaseBuffer.h"
 #include "../Staging/StagingBuffer.h"
 
-#include <iostream>
-
 ScrapEngine::IndexBuffer::IndexBuffer(const std::vector<uint32_t>* indices)
 {
 	vk::DeviceSize bufferSize = sizeof((*indices)[0]) * indices->size();

@@ -75,13 +75,13 @@ ScrapEngine::VulkanCommandBuffer::VulkanCommandBuffer(ScrapEngine::VulkanFrameBu
 
 ScrapEngine::VulkanCommandBuffer::~VulkanCommandBuffer()
 {
-
+	freeCommandBuffers();
 }
 
 void ScrapEngine::VulkanCommandBuffer::freeCommandBuffers()
 {
 	VulkanDevice::StaticLogicDeviceRef->freeCommandBuffers(*VulkanCommandPool::StaticCommandPoolRef, static_cast<uint32_t>(commandBuffers.size()), commandBuffers.data());
-
+	commandBuffers.clear();
 }
 
 const std::vector<vk::CommandBuffer>* ScrapEngine::VulkanCommandBuffer::getCommandBuffersVector()

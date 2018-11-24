@@ -1,6 +1,5 @@
 #include "VertexBuffer.h"
 
-#include "../../Memory/MemoryManager.h"
 #include "../BaseBuffer.h"
 #include "../Staging/StagingBuffer.h"
 

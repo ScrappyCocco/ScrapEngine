@@ -1,6 +1,5 @@
 #include "StagingBuffer.h"
 #include "../BaseBuffer.h"
-#include "../../../Debug/DebugLog.h"
 
 ScrapEngine::StagingBuffer::StagingBuffer(const vk::DeviceSize& imageSize, stbi_uc* pixels)
 {

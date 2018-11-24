@@ -28,6 +28,8 @@ void ScrapEngine::VulkanValidationLayers::setupDebugCallback()
 	dispatcher.init(*VukanInstance::StaticInstanceRef);
 
 	callback = VukanInstance::StaticInstanceRef->createDebugUtilsMessengerEXT(createInfo, nullptr, dispatcher);
+
+	DebugLog::printToConsoleLog("VulkanValidationLayers: VulkanValidationLayers ENABLED!");
 }
 
 bool ScrapEngine::VulkanValidationLayers::checkValidationLayerSupport()
