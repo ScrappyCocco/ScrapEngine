@@ -20,6 +20,6 @@ public:
 	~GameCamera() = default;
 
 	virtual void GameStart() override;
-	virtual void GameUpdate(const float& time) override;
+	virtual void GameUpdate(float time) override;
 };
 

@@ -15,7 +15,7 @@ namespace ScrapEngine {
 		SGameObject* RegisterGameObject(SGameObject* input_GameObject);
 		void UnRegisterGameObject(SGameObject* input_GameObject);
 		void ExecuteGameObjectsStartEvent();
-		void ExecuteGameObjectsUpdateEvent(const float& time);
+		void ExecuteGameObjectsUpdateEvent(float time);
 	};
 }
 

@@ -13,7 +13,7 @@ void GameCamera::GameStart()
 
 }
 
-void GameCamera::GameUpdate(const float& time)
+void GameCamera::GameUpdate(float time)
 {
 	ScrapEngine::MouseLocation mouse = InputManagerRef->getLastMouseLocation();
 	
