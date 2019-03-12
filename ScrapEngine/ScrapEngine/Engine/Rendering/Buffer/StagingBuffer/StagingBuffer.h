@@ -1,9 +1,8 @@
 #pragma once
 
 #include <vulkan/vulkan.hpp>
-#include "../VulkanCommandBuffer.h"
-
 #include <stb_image.h>
+#include "Engine/Rendering/Buffer/CommandBuffer/VulkanCommandBuffer.h"
 
 namespace ScrapEngine {
 

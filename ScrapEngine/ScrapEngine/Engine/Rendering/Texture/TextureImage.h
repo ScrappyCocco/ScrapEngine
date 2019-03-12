@@ -2,7 +2,7 @@
 
 #include <vulkan/vulkan.hpp>
 #include <string>
-#include "../Buffer/Staging/StagingBuffer.h"
+#include "Engine/Rendering/Buffer/StagingBuffer/StagingBuffer.h"
 
 
 namespace ScrapEngine {

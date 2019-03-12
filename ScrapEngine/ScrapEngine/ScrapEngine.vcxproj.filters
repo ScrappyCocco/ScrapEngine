@@ -53,26 +53,14 @@
     <Filter Include="Engine\Rendering\Base">
       <UniqueIdentifier>{e3c1406c-4763-4fee-a57c-42fcd2be6aa2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Rendering\Buffer\Vertex">
-      <UniqueIdentifier>{0c87728b-56c4-4671-959b-521ed238372c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Rendering\Memory">
       <UniqueIdentifier>{432dd445-8b65-41b0-81da-3219e42b8fa8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Rendering\Buffer\Index">
-      <UniqueIdentifier>{729a4985-480f-43ab-a37a-7a676a9d14b2}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\Rendering\Descriptor">
       <UniqueIdentifier>{d309b4e1-6351-4f01-896d-69a2810af592}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Rendering\Buffer\Uniform">
-      <UniqueIdentifier>{24120aef-5c62-41fb-b668-b405c73219b8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Rendering\Texture">
       <UniqueIdentifier>{f88ea798-eb41-4284-9c39-f93095eb67d0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Rendering\Buffer\Staging">
-      <UniqueIdentifier>{24441930-3cd0-48fa-a495-b84806c65408}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\Rendering\DepthResources">
       <UniqueIdentifier>{4b2fb98a-0f66-4d1b-bcac-2fbe8d15d20e}</UniqueIdentifier>
@@ -122,6 +110,24 @@
     <Filter Include="Engine\LogicCore\Scene">
       <UniqueIdentifier>{734a6ac2-768b-46c2-b5d1-5b8746fad671}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Rendering\Buffer\CommandBuffer">
+      <UniqueIdentifier>{94356326-907d-484e-a70a-67c068a57b12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Buffer\FrameBuffer">
+      <UniqueIdentifier>{0785b2b3-136e-4a81-a899-617037e8e24f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Buffer\IndexBuffer">
+      <UniqueIdentifier>{67c9bd6f-0cea-4607-bbcf-1af4a8718541}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Buffer\StagingBuffer">
+      <UniqueIdentifier>{bc57663c-3259-47cc-86ed-f75a6c415257}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Buffer\UniformBuffer">
+      <UniqueIdentifier>{20539712-5f1c-4106-a2bd-f0f64d7477bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Buffer\VertexBuffer">
+      <UniqueIdentifier>{9aea26f4-8672-4846-b2af-d586e192b452}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Manager\EngineManager.cpp">
@@ -163,41 +169,23 @@
     <ClCompile Include="Engine\Rendering\RenderPass\VulkanRenderPass.cpp">
       <Filter>Engine\Rendering\RenderPass</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Rendering\Buffer\VulkanFrameBuffer.cpp">
-      <Filter>Engine\Rendering\Buffer</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Rendering\Command\VulkanCommandPool.cpp">
       <Filter>Engine\Rendering\Command</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Rendering\Buffer\VulkanCommandBuffer.cpp">
-      <Filter>Engine\Rendering\Buffer</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Rendering\Semaphores\VulkanSemaphoresManager.cpp">
       <Filter>Engine\Rendering\Semaphores</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Rendering\Buffer\Vertex\VertexBuffer.cpp">
-      <Filter>Engine\Rendering\Buffer\Vertex</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Rendering\Buffer\BaseBuffer.cpp">
       <Filter>Engine\Rendering\Buffer</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Rendering\Buffer\Index\IndexBuffer.cpp">
-      <Filter>Engine\Rendering\Buffer\Index</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Rendering\Descriptor\VulkanDescriptorSet.cpp">
       <Filter>Engine\Rendering\Descriptor</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Rendering\Buffer\Uniform\UniformBuffer.cpp">
-      <Filter>Engine\Rendering\Buffer\Uniform</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Rendering\Descriptor\VulkanDescriptorPool.cpp">
       <Filter>Engine\Rendering\Descriptor</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Rendering\Texture\TextureImage.cpp">
       <Filter>Engine\Rendering\Texture</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Rendering\Buffer\Staging\StagingBuffer.cpp">
-      <Filter>Engine\Rendering\Buffer\Staging</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Rendering\Texture\TextureImageView.cpp">
       <Filter>Engine\Rendering\Texture</Filter>
@@ -265,6 +253,24 @@
     <ClCompile Include="Engine\LogicCore\Scene\SceneManager.cpp">
       <Filter>Engine\LogicCore\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Rendering\Buffer\CommandBuffer\VulkanCommandBuffer.cpp">
+      <Filter>Engine\Rendering\Buffer\CommandBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Buffer\FrameBuffer\VulkanFrameBuffer.cpp">
+      <Filter>Engine\Rendering\Buffer\FrameBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Buffer\IndexBuffer\IndexBuffer.cpp">
+      <Filter>Engine\Rendering\Buffer\IndexBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Buffer\VertexBuffer\VertexBuffer.cpp">
+      <Filter>Engine\Rendering\Buffer\VertexBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Buffer\UniformBuffer\UniformBuffer.cpp">
+      <Filter>Engine\Rendering\Buffer\UniformBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Buffer\StagingBuffer\StagingBuffer.cpp">
+      <Filter>Engine\Rendering\Buffer\StagingBuffer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Manager\EngineManager.h">
@@ -306,23 +312,11 @@
     <ClInclude Include="Engine\Rendering\RenderPass\VulkanRenderPass.h">
       <Filter>Engine\Rendering\RenderPass</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Rendering\Buffer\VulkanFrameBuffer.h">
-      <Filter>Engine\Rendering\Buffer</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Rendering\Command\VulkanCommandPool.h">
       <Filter>Engine\Rendering\Command</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Rendering\Buffer\VulkanCommandBuffer.h">
-      <Filter>Engine\Rendering\Buffer</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Rendering\Semaphores\VulkanSemaphoresManager.h">
       <Filter>Engine\Rendering\Semaphores</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Rendering\Base\Vertex.h">
-      <Filter>Engine\Rendering\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Rendering\Buffer\Vertex\VertexBuffer.h">
-      <Filter>Engine\Rendering\Buffer\Vertex</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Memory\MemoryManager.h">
       <Filter>Engine\Rendering\Memory</Filter>
@@ -330,23 +324,14 @@
     <ClInclude Include="Engine\Rendering\Buffer\BaseBuffer.h">
       <Filter>Engine\Rendering\Buffer</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Rendering\Buffer\Index\IndexBuffer.h">
-      <Filter>Engine\Rendering\Buffer\Index</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Rendering\Descriptor\VulkanDescriptorSet.h">
       <Filter>Engine\Rendering\Descriptor</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Rendering\Buffer\Uniform\UniformBuffer.h">
-      <Filter>Engine\Rendering\Buffer\Uniform</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Descriptor\VulkanDescriptorPool.h">
       <Filter>Engine\Rendering\Descriptor</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Texture\TextureImage.h">
       <Filter>Engine\Rendering\Texture</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Rendering\Buffer\Staging\StagingBuffer.h">
-      <Filter>Engine\Rendering\Buffer\Staging</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Texture\TextureImageView.h">
       <Filter>Engine\Rendering\Texture</Filter>
@@ -428,6 +413,27 @@
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Base\StaticTypes.h">
       <Filter>Engine\Rendering\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Base\Vertex.h">
+      <Filter>Engine\Rendering\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Buffer\CommandBuffer\VulkanCommandBuffer.h">
+      <Filter>Engine\Rendering\Buffer\CommandBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Buffer\FrameBuffer\VulkanFrameBuffer.h">
+      <Filter>Engine\Rendering\Buffer\FrameBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Buffer\IndexBuffer\IndexBuffer.h">
+      <Filter>Engine\Rendering\Buffer\IndexBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Buffer\VertexBuffer\VertexBuffer.h">
+      <Filter>Engine\Rendering\Buffer\VertexBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Buffer\UniformBuffer\UniformBuffer.h">
+      <Filter>Engine\Rendering\Buffer\UniformBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Buffer\StagingBuffer\StagingBuffer.h">
+      <Filter>Engine\Rendering\Buffer\StagingBuffer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

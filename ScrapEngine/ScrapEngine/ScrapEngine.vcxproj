@@ -31,12 +31,12 @@
     <ClCompile Include="Engine\LogicCore\SObject.cpp" />
     <ClCompile Include="Engine\Manager\EngineManager.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\BaseBuffer.cpp" />
-    <ClCompile Include="Engine\Rendering\Buffer\Index\IndexBuffer.cpp" />
-    <ClCompile Include="Engine\Rendering\Buffer\Staging\StagingBuffer.cpp" />
-    <ClCompile Include="Engine\Rendering\Buffer\Uniform\UniformBuffer.cpp" />
-    <ClCompile Include="Engine\Rendering\Buffer\Vertex\VertexBuffer.cpp" />
-    <ClCompile Include="Engine\Rendering\Buffer\VulkanCommandBuffer.cpp" />
-    <ClCompile Include="Engine\Rendering\Buffer\VulkanFrameBuffer.cpp" />
+    <ClCompile Include="Engine\Rendering\Buffer\CommandBuffer\VulkanCommandBuffer.cpp" />
+    <ClCompile Include="Engine\Rendering\Buffer\FrameBuffer\VulkanFrameBuffer.cpp" />
+    <ClCompile Include="Engine\Rendering\Buffer\IndexBuffer\IndexBuffer.cpp" />
+    <ClCompile Include="Engine\Rendering\Buffer\StagingBuffer\StagingBuffer.cpp" />
+    <ClCompile Include="Engine\Rendering\Buffer\UniformBuffer\UniformBuffer.cpp" />
+    <ClCompile Include="Engine\Rendering\Buffer\VertexBuffer\VertexBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Camera\Camera.cpp" />
     <ClCompile Include="Engine\Rendering\Command\VulkanCommandPool.cpp" />
     <ClCompile Include="Engine\Rendering\DepthResources\VulkanDepthResources.cpp" />
@@ -85,12 +85,12 @@
     <ClInclude Include="Engine\Rendering\Base\StaticTypes.h" />
     <ClInclude Include="Engine\Rendering\Base\Vertex.h" />
     <ClInclude Include="Engine\Rendering\Buffer\BaseBuffer.h" />
-    <ClInclude Include="Engine\Rendering\Buffer\Index\IndexBuffer.h" />
-    <ClInclude Include="Engine\Rendering\Buffer\Staging\StagingBuffer.h" />
-    <ClInclude Include="Engine\Rendering\Buffer\Uniform\UniformBuffer.h" />
-    <ClInclude Include="Engine\Rendering\Buffer\Vertex\VertexBuffer.h" />
-    <ClInclude Include="Engine\Rendering\Buffer\VulkanCommandBuffer.h" />
-    <ClInclude Include="Engine\Rendering\Buffer\VulkanFrameBuffer.h" />
+    <ClInclude Include="Engine\Rendering\Buffer\CommandBuffer\VulkanCommandBuffer.h" />
+    <ClInclude Include="Engine\Rendering\Buffer\FrameBuffer\VulkanFrameBuffer.h" />
+    <ClInclude Include="Engine\Rendering\Buffer\IndexBuffer\IndexBuffer.h" />
+    <ClInclude Include="Engine\Rendering\Buffer\StagingBuffer\StagingBuffer.h" />
+    <ClInclude Include="Engine\Rendering\Buffer\UniformBuffer\UniformBuffer.h" />
+    <ClInclude Include="Engine\Rendering\Buffer\VertexBuffer\VertexBuffer.h" />
     <ClInclude Include="Engine\Rendering\Camera\Camera.h" />
     <ClInclude Include="Engine\Rendering\Command\VulkanCommandPool.h" />
     <ClInclude Include="Engine\Rendering\DepthResources\VulkanDepthResources.h" />
@@ -181,7 +181,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)..\external\VulkanSDK\Vulkan-Headers\include;$(SolutionDir)..\external\glm;$(SolutionDir)..\external\stb;$(SolutionDir)..\external\gli;$(SolutionDir)..\external\glfw\include;$(SolutionDir)..\external\assimp\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)ScrapEngine;$(SolutionDir)..\external\VulkanSDK\Vulkan-Headers\include;$(SolutionDir)..\external\glm;$(SolutionDir)..\external\stb;$(SolutionDir)..\external\gli;$(SolutionDir)..\external\glfw\include;$(SolutionDir)..\external\assimp\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -189,7 +189,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)..\external\VulkanSDK\Vulkan-Headers\include;$(SolutionDir)..\external\glm;$(SolutionDir)..\external\stb;$(SolutionDir)..\external\gli;$(SolutionDir)..\external\glfw\include;$(SolutionDir)..\external\assimp\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)ScrapEngine;$(SolutionDir)..\external\VulkanSDK\Vulkan-Headers\include;$(SolutionDir)..\external\glm;$(SolutionDir)..\external\stb;$(SolutionDir)..\external\gli;$(SolutionDir)..\external\glfw\include;$(SolutionDir)..\external\assimp\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

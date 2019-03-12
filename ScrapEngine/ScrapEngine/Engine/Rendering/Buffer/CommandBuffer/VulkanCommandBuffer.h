@@ -1,11 +1,11 @@
 #pragma once
 
 #include <vulkan/vulkan.hpp>
-#include "VulkanFrameBuffer.h"
 #include <vector>
-#include "../Base/Vertex.h"
-#include "../Pipeline/VulkanGraphicsPipeline.h"
-#include "../Model/VulkanSkyboxInstance.h"
+#include "Engine/Rendering/Buffer/FrameBuffer/VulkanFrameBuffer.h"
+#include "Engine/Rendering/Base/Vertex.h"
+#include "Engine/Rendering/Pipeline/VulkanGraphicsPipeline.h"
+#include "Engine/Rendering/Model/VulkanSkyboxInstance.h"
 
 namespace ScrapEngine {
 	class VulkanSkyboxInstance;

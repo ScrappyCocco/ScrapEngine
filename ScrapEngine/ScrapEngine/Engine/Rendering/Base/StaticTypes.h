@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../Instance/VukanInstance.h"
-#include "../Device/VulkanDevice.h"
-#include "../Queue/GraphicsQueue.h"
-#include "../Queue/PresentQueue.h"
-#include "../Command/VulkanCommandPool.h"
-#include "../RenderPass/VulkanRenderPass.h"
+#include "Engine/Rendering/Instance/VukanInstance.h"
+#include "Engine/Rendering/Device/VulkanDevice.h"
+#include "Engine/Rendering/Queue/GraphicsQueue.h"
+#include "Engine/Rendering/Queue/PresentQueue.h"
+#include "Engine/Rendering/Command/VulkanCommandPool.h"
+#include "Engine/Rendering/RenderPass/VulkanRenderPass.h"

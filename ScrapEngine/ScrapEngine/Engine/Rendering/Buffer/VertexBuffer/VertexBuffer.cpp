@@ -1,7 +1,7 @@
 #include "VertexBuffer.h"
 
-#include "../BaseBuffer.h"
-#include "../Staging/StagingBuffer.h"
+#include "Engine/Rendering/Buffer/BaseBuffer.h"
+#include "Engine/Rendering/Buffer/StagingBuffer/StagingBuffer.h"
 
 ScrapEngine::VertexBuffer::VertexBuffer(const std::vector<ScrapEngine::Vertex>* vertices)
 {

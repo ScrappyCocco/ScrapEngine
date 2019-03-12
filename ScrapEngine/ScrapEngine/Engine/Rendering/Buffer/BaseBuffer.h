@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vulkan/vulkan.hpp>
-#include "VulkanCommandBuffer.h"
+#include "Engine/Rendering/Buffer/CommandBuffer/VulkanCommandBuffer.h"
 
 namespace ScrapEngine {
 

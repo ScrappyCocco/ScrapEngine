@@ -1,6 +1,6 @@
 #include "VulkanFrameBuffer.h"
 #include <array>
-#include "../Base/StaticTypes.h"
+#include "Engine/Rendering/Base/StaticTypes.h"
 
 ScrapEngine::VulkanFrameBuffer::VulkanFrameBuffer(ScrapEngine::VulkanImageView* input_imageViewRef, const vk::Extent2D* input_swapChainExtent,
 	vk::ImageView* depthImageView, vk::ImageView* colorImageView)

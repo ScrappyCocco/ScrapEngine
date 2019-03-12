@@ -2,7 +2,7 @@
 
 #include <vulkan/vulkan.hpp>
 #include <vector>
-#include "../Buffer/Uniform/UniformBuffer.h"
+#include "Engine/Rendering/Buffer/UniformBuffer/UniformBuffer.h"
 
 namespace ScrapEngine {
 
