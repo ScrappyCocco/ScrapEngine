@@ -1,110 +1,110 @@
 #include "InputManager.h"
 #include "../../Rendering/Window/GameWindow.h"
-#include <stb_image.h>
 #include "../../Utility/UsefulMethods.h"
 
-ScrapEngine::InputManager::InputManager(GLFWwindow* input_windowRef) : windowRef(input_windowRef)
+ScrapEngine::Input::InputManager::InputManager(GLFWwindow* input_window_ref) : window_ref_(input_window_ref)
 {
-
 }
 
-ScrapEngine::InputManager::~InputManager()
+ScrapEngine::Input::InputManager::~InputManager()
 {
-	glfwDestroyCursor(cursor);
+	glfwDestroyCursor(cursor_);
 }
 
-ScrapEngine::MouseLocation ScrapEngine::InputManager::getLastMouseLocation() const
+ScrapEngine::Input::mouse_location ScrapEngine::Input::InputManager::get_last_mouse_location() const
 {
-	double xPosition, yPosition;
-	glfwGetCursorPos(windowRef, &xPosition, &yPosition);
-	return MouseLocation(xPosition, yPosition);
+	double x_position, y_position;
+	glfwGetCursorPos(window_ref_, &x_position, &y_position);
+	return mouse_location(x_position, y_position);
 }
 
-void ScrapEngine::InputManager::SetCursorInputMode(ScrapEngine::CursorMode NewMode) const
+void ScrapEngine::Input::InputManager::set_cursor_input_mode(const ScrapEngine::Input::cursor_mode new_mode) const
 {
-	switch (NewMode) {
-	case ScrapEngine::CursorMode::cursor_normal_mode:
-		glfwSetInputMode(windowRef, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+	switch (new_mode)
+	{
+	case ScrapEngine::Input::cursor_mode::cursor_normal_mode:
+		glfwSetInputMode(window_ref_, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 		break;
-	case ScrapEngine::CursorMode::cursor_hidden_mode:
-		glfwSetInputMode(windowRef, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+	case ScrapEngine::Input::cursor_mode::cursor_hidden_mode:
+		glfwSetInputMode(window_ref_, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 		break;
-	case ScrapEngine::CursorMode::cursor_grabbed_mode:
-		glfwSetInputMode(windowRef, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-		break;
-	}
-}
-
-void ScrapEngine::InputManager::LoadNewCursor(const std::string& path_to_file, int xhot, int yhot)
-{
-	glfwSetCursor(windowRef, NULL);
-	glfwDestroyCursor(cursor);
-
-	cursor = glfwCreateCursor(&UsefulMethods::loadIcon(path_to_file), xhot, yhot);
-
-	glfwSetCursor(windowRef, cursor);
-}
-
-void ScrapEngine::InputManager::LoadSystemCursor(const ScrapEngine::SystemCursorShapes& NewShape)
-{
-	glfwSetCursor(windowRef, NULL);
-	glfwDestroyCursor(cursor);
-
-	switch (NewShape) {
-	case ScrapEngine::SystemCursorShapes::cursor_regular_arrow:
-		cursor = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);
-		break;
-	case ScrapEngine::SystemCursorShapes::cursor_crosshair_shape:
-		cursor = glfwCreateStandardCursor(GLFW_CROSSHAIR_CURSOR);
-		break;
-	case ScrapEngine::SystemCursorShapes::cursor_hand_shape:
-		cursor = glfwCreateStandardCursor(GLFW_HAND_CURSOR);
-		break;
-	case ScrapEngine::SystemCursorShapes::cursor_horizontal_resize_arrow_shape:
-		cursor = glfwCreateStandardCursor(GLFW_HRESIZE_CURSOR);
-		break;
-	case ScrapEngine::SystemCursorShapes::cursor_vertical_resize_arrow_shape:
-		cursor = glfwCreateStandardCursor(GLFW_VRESIZE_CURSOR);
-		break;
-	case ScrapEngine::SystemCursorShapes::cursor_input_beam_shape:
-		cursor = glfwCreateStandardCursor(GLFW_IBEAM_CURSOR);
+	case ScrapEngine::Input::cursor_mode::cursor_grabbed_mode:
+		glfwSetInputMode(window_ref_, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 		break;
 	}
-
-	glfwSetCursor(windowRef, cursor);
 }
 
-void ScrapEngine::InputManager::ResetCursorToSystemDefault()
+void ScrapEngine::Input::InputManager::load_new_cursor(const std::string& path_to_file, const int xhot, const int yhot)
 {
-	LoadSystemCursor(ScrapEngine::SystemCursorShapes::cursor_regular_arrow);
+	glfwSetCursor(window_ref_, nullptr);
+	glfwDestroyCursor(cursor_);
+
+	cursor_ = glfwCreateCursor(&UsefulMethods::loadIcon(path_to_file), xhot, yhot);
+
+	glfwSetCursor(window_ref_, cursor_);
 }
 
-ScrapEngine::ButtonState ScrapEngine::InputManager::getKeyboardKeyStatus(int key_to_check) const
+void ScrapEngine::Input::InputManager::load_system_cursor(const ScrapEngine::Input::system_cursor_shapes& new_shape)
 {
-	return (ScrapEngine::ButtonState)glfwGetKey(windowRef, key_to_check);
+	glfwSetCursor(window_ref_, nullptr);
+	glfwDestroyCursor(cursor_);
+
+	switch (new_shape)
+	{
+	case ScrapEngine::Input::system_cursor_shapes::cursor_regular_arrow:
+		cursor_ = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);
+		break;
+	case ScrapEngine::Input::system_cursor_shapes::cursor_crosshair_shape:
+		cursor_ = glfwCreateStandardCursor(GLFW_CROSSHAIR_CURSOR);
+		break;
+	case ScrapEngine::Input::system_cursor_shapes::cursor_hand_shape:
+		cursor_ = glfwCreateStandardCursor(GLFW_HAND_CURSOR);
+		break;
+	case ScrapEngine::Input::system_cursor_shapes::cursor_horizontal_resize_arrow_shape:
+		cursor_ = glfwCreateStandardCursor(GLFW_HRESIZE_CURSOR);
+		break;
+	case ScrapEngine::Input::system_cursor_shapes::cursor_vertical_resize_arrow_shape:
+		cursor_ = glfwCreateStandardCursor(GLFW_VRESIZE_CURSOR);
+		break;
+	case ScrapEngine::Input::system_cursor_shapes::cursor_input_beam_shape:
+		cursor_ = glfwCreateStandardCursor(GLFW_IBEAM_CURSOR);
+		break;
+	}
+
+	glfwSetCursor(window_ref_, cursor_);
 }
 
-bool ScrapEngine::InputManager::getKeyboardKeyPressed(int key_to_check) const
+void ScrapEngine::Input::InputManager::reset_cursor_to_system_default()
 {
-	return getKeyboardKeyStatus(key_to_check) == ScrapEngine::ButtonState::pressed;
+	load_system_cursor(ScrapEngine::Input::system_cursor_shapes::cursor_regular_arrow);
 }
 
-bool ScrapEngine::InputManager::getKeyboardKeyReleased(int key_to_check) const
+ScrapEngine::Input::button_state ScrapEngine::Input::InputManager::get_keyboard_key_status(const int key_to_check) const
 {
-	return getKeyboardKeyStatus(key_to_check) == ScrapEngine::ButtonState::released;
+	return static_cast<ScrapEngine::Input::button_state>(glfwGetKey(window_ref_, key_to_check));
 }
 
-ScrapEngine::ButtonState ScrapEngine::InputManager::getMouseButtonStatus(int button_to_check) const
+bool ScrapEngine::Input::InputManager::get_keyboard_key_pressed(const int key_to_check) const
 {
-	return (ScrapEngine::ButtonState)glfwGetMouseButton(windowRef, button_to_check);
+	return get_keyboard_key_status(key_to_check) == ScrapEngine::Input::button_state::pressed;
 }
 
-bool ScrapEngine::InputManager::getMouseButtonPressed(int button_to_check) const
+bool ScrapEngine::Input::InputManager::get_keyboard_key_released(const int key_to_check) const
 {
-	return getMouseButtonStatus(button_to_check) == ScrapEngine::ButtonState::pressed;
+	return get_keyboard_key_status(key_to_check) == ScrapEngine::Input::button_state::released;
 }
 
-bool ScrapEngine::InputManager::getMouseButtonReleased(int button_to_check) const
+ScrapEngine::Input::button_state ScrapEngine::Input::InputManager::get_mouse_button_status(const int button_to_check) const
 {
-	return getMouseButtonStatus(button_to_check) == ScrapEngine::ButtonState::released;
+	return static_cast<ScrapEngine::Input::button_state>(glfwGetMouseButton(window_ref_, button_to_check));
+}
+
+bool ScrapEngine::Input::InputManager::get_mouse_button_pressed(const int button_to_check) const
+{
+	return get_mouse_button_status(button_to_check) == ScrapEngine::Input::button_state::pressed;
+}
+
+bool ScrapEngine::Input::InputManager::get_mouse_button_released(const int button_to_check) const
+{
+	return get_mouse_button_status(button_to_check) == ScrapEngine::Input::button_state::released;
 }

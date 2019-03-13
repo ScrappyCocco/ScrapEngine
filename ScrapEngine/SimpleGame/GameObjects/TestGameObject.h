@@ -9,13 +9,13 @@
 class TestGameObject : public ScrapEngine::SGameObject
 {
 private:
-	ScrapEngine::InputManager* InputManagerRef;
+	ScrapEngine::Input::InputManager* InputManagerRef;
 	ScrapEngine::ComponentsManager* ComponentManagerRef;
 
 	bool flipflop = false;
 	float rotation = 1;
 public:
-	TestGameObject(ScrapEngine::InputManager* CreatedInputManager, ScrapEngine::ComponentsManager* input_ComponentManager);
+	TestGameObject(ScrapEngine::Input::InputManager* CreatedInputManager, ScrapEngine::ComponentsManager* input_ComponentManager);
 	~TestGameObject() = default;
 
 	virtual void GameStart() override;

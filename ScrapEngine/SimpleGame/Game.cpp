@@ -12,8 +12,8 @@ int main() {
 		ScrapEngine::GameWindow* gameWindowRef = ScrapEngineManager->RenderManagerView->getGameWindow();
 		gameWindowRef->setWindowIcon("../assets/game_icon/chess_game_icon_png.png");
 		//Create the input manager
-		ScrapEngine::InputManager* inputmanager = gameWindowRef->createWindowInputManager();
-		inputmanager->SetCursorInputMode(ScrapEngine::CursorMode::cursor_grabbed_mode);
+		ScrapEngine::Input::InputManager* inputmanager = gameWindowRef->createWindowInputManager();
+		inputmanager->set_cursor_input_mode(ScrapEngine::Input::cursor_mode::cursor_grabbed_mode);
 		//Get the component manager
 		ScrapEngine::ComponentsManager* ComponentManagerRef = ScrapEngineManager->LogicManagerView->getComponentsManager();
 		//Set the world skybox

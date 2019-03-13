@@ -29,7 +29,7 @@ namespace ScrapEngine {
 
 		void closeWindow();
 
-		ScrapEngine::InputManager* createWindowInputManager() const;
+		ScrapEngine::Input::InputManager* createWindowInputManager() const;
 
 		bool checkWindowShouldClose() const;
 	};
