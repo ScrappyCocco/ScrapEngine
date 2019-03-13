@@ -29,7 +29,7 @@ void ScrapEngine::VulkanValidationLayers::setupDebugCallback()
 
 	callback = VukanInstance::StaticInstanceRef->createDebugUtilsMessengerEXT(createInfo, nullptr, dispatcher);
 
-	DebugLog::printToConsoleLog("VulkanValidationLayers: VulkanValidationLayers ENABLED!");
+	Debug::DebugLog::print_to_console_log("VulkanValidationLayers: VulkanValidationLayers ENABLED!");
 }
 
 bool ScrapEngine::VulkanValidationLayers::checkValidationLayerSupport()
@@ -89,7 +89,7 @@ VKAPI_ATTR VkBool32 VKAPI_CALL ScrapEngine::VulkanValidationLayers::debugCallbac
 		break;
 	}
 
-	DebugLog::printExceptionToConsoleLog(messageSeverityString, pCallbackData->pMessage);
+	Debug::DebugLog::print_exception_to_console_log(messageSeverityString, pCallbackData->pMessage);
 
 	return VK_FALSE;
 }

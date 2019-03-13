@@ -6,14 +6,14 @@ ScrapEngine::SkyboxTexture::SkyboxTexture(const std::array<std::string, 6>& file
 	//-----------------------
 	// load images
 	//-----------------------
-	DebugLog::printToConsoleLog("Start loading textures...");
+	Debug::DebugLog::print_to_console_log("Start loading textures...");
 
 	for (std::string file : files_path) {
-		DebugLog::printToConsoleLog("Loading skybox texture:" + file);
+		Debug::DebugLog::print_to_console_log("Loading skybox texture:" + file);
 		images.push_back(new TextureImage(file, false));
-		DebugLog::printToConsoleLog("A skybox texture has loaded (" + file + ")");
+		Debug::DebugLog::print_to_console_log("A skybox texture has loaded (" + file + ")");
 	}
-	DebugLog::printToConsoleLog("Textures loaded...");
+	Debug::DebugLog::print_to_console_log("Textures loaded...");
 	//-----------------------
 	// create cubemap base image
 	//-----------------------

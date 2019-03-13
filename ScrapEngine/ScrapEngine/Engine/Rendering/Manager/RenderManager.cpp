@@ -4,13 +4,13 @@
 ScrapEngine::RenderManager::RenderManager(const ScrapEngine::game_base_info* received_base_game_info)
 {
 	GameWindow = new ScrapEngine::GameWindow(received_base_game_info->window_WIDTH, received_base_game_info->window_HEIGHT, received_base_game_info->app_name);
-	DebugLog::printToConsoleLog("GameWindow created");
+	Debug::DebugLog::print_to_console_log("GameWindow created");
 	initializeVulkan(received_base_game_info);
 }
 
 ScrapEngine::RenderManager::~RenderManager()
 {
-	DebugLog::printToConsoleLog("Deleting ~RenderManager");
+	Debug::DebugLog::print_to_console_log("Deleting ~RenderManager");
 	deleteQueues();
 	cleanupSwapChain();
 	delete RenderCamera;
@@ -25,12 +25,12 @@ ScrapEngine::RenderManager::~RenderManager()
 	delete VulkanWindowSurface;
 	delete VulkanInstance;
 	delete GameWindow;
-	DebugLog::printToConsoleLog("Deleting ~RenderManager completed");
+	Debug::DebugLog::print_to_console_log("Deleting ~RenderManager completed");
 }
 
 void ScrapEngine::RenderManager::cleanupSwapChain()
 {
-	DebugLog::printToConsoleLog("---cleanupSwapChain()---");
+	Debug::DebugLog::print_to_console_log("---cleanupSwapChain()---");
 	delete VulkanRenderColor;
 	delete VulkanRenderDepth;
 	delete VulkanRenderFrameBuffer;
@@ -41,7 +41,7 @@ void ScrapEngine::RenderManager::cleanupSwapChain()
 	delete VulkanRenderingPass;
 	delete VulkanRenderImageView;
 	delete VulkanRenderSwapChain;
-	DebugLog::printToConsoleLog("---cleanupSwapChain() completed---");
+	Debug::DebugLog::print_to_console_log("---cleanupSwapChain() completed---");
 }
 
 void ScrapEngine::RenderManager::deleteQueues()
@@ -78,30 +78,30 @@ void ScrapEngine::RenderManager::setRenderCamera(ScrapEngine::Camera* newCamera)
 
 void ScrapEngine::RenderManager::initializeVulkan(const ScrapEngine::game_base_info* received_base_game_info)
 {
-	DebugLog::printToConsoleLog("---initializeVulkan()---");
+	Debug::DebugLog::print_to_console_log("---initializeVulkan()---");
 	VulkanInstance = new VukanInstance(received_base_game_info->app_name, received_base_game_info->app_version, "ScrapEngine");
-	DebugLog::printToConsoleLog("VulkanInstance created");
+	Debug::DebugLog::print_to_console_log("VulkanInstance created");
 	VulkanWindowSurface = new VulkanSurface(GameWindow);
-	DebugLog::printToConsoleLog("VulkanWindowSurface created");
+	Debug::DebugLog::print_to_console_log("VulkanWindowSurface created");
 	VulkanRenderDevice = new VulkanDevice(VulkanInstance->getVulkanInstance(), VulkanWindowSurface->getSurface());
-	DebugLog::printToConsoleLog("VulkanRenderDevice created");
+	Debug::DebugLog::print_to_console_log("VulkanRenderDevice created");
 	createQueues();
 	VulkanRenderSwapChain = new VulkanSwapChain(VulkanRenderDevice->querySwapChainSupport(VulkanRenderDevice->getPhysicalDevice()),
 		VulkanRenderDevice->getCachedQueueFamilyIndices(),
 		VulkanWindowSurface->getSurface(), received_base_game_info->window_WIDTH, received_base_game_info->window_HEIGHT, received_base_game_info->vsync);
-	DebugLog::printToConsoleLog("VulkanSwapChain created");
+	Debug::DebugLog::print_to_console_log("VulkanSwapChain created");
 	VulkanRenderImageView = new VulkanImageView(VulkanRenderSwapChain);
-	DebugLog::printToConsoleLog("VulkanImageView created");
+	Debug::DebugLog::print_to_console_log("VulkanImageView created");
 	VulkanRenderingPass = new VulkanRenderPass(VulkanRenderSwapChain->getSwapChainImageFormat(), VulkanRenderDevice->getMsaaSamples());
-	DebugLog::printToConsoleLog("VulkanRenderPass created");
+	Debug::DebugLog::print_to_console_log("VulkanRenderPass created");
 	VulkanRenderCommandPool = new VulkanCommandPool(VulkanRenderDevice->getCachedQueueFamilyIndices());
-	DebugLog::printToConsoleLog("VulkanCommandPool created");
+	Debug::DebugLog::print_to_console_log("VulkanCommandPool created");
 	VulkanRenderColor = new VulkanColorResources(VulkanRenderDevice->getMsaaSamples(), VulkanRenderSwapChain);
-	DebugLog::printToConsoleLog("VulkanRenderColor created");
+	Debug::DebugLog::print_to_console_log("VulkanRenderColor created");
 	VulkanRenderDepth = new VulkanDepthResources(&VulkanRenderSwapChain->getSwapChainExtent(), VulkanRenderDevice->getMsaaSamples());
-	DebugLog::printToConsoleLog("VulkanDepthResources created");
+	Debug::DebugLog::print_to_console_log("VulkanDepthResources created");
 	VulkanRenderFrameBuffer = new VulkanFrameBuffer(VulkanRenderImageView, &VulkanRenderSwapChain->getSwapChainExtent(), VulkanRenderDepth->getDepthImageView(), VulkanRenderColor->getColorImageView());
-	DebugLog::printToConsoleLog("VulkanFrameBuffer created");
+	Debug::DebugLog::print_to_console_log("VulkanFrameBuffer created");
 	//Create empty CommandBuffers
 	createCommandBuffers();
 	//Vulkan Semaphores
@@ -109,18 +109,18 @@ void ScrapEngine::RenderManager::initializeVulkan(const ScrapEngine::game_base_i
 	imageAvailableSemaphoresRef = VulkanRenderSemaphores->getImageAvailableSemaphoresVector();
 	renderFinishedSemaphoresRef = VulkanRenderSemaphores->getRenderFinishedSemaphoresVector();
 	inFlightFencesRef = VulkanRenderSemaphores->getInFlightFencesVector();
-	DebugLog::printToConsoleLog("VulkanSemaphoresManager created");
+	Debug::DebugLog::print_to_console_log("VulkanSemaphoresManager created");
 	createCamera();
-	DebugLog::printToConsoleLog("User View Camera created");
-	DebugLog::printToConsoleLog("---initializeVulkan() completed---");
+	Debug::DebugLog::print_to_console_log("User View Camera created");
+	Debug::DebugLog::print_to_console_log("---initializeVulkan() completed---");
 }
 
 void ScrapEngine::RenderManager::createQueues()
 {
-	DebugLog::printToConsoleLog("---Begin queues creation---");
+	Debug::DebugLog::print_to_console_log("---Begin queues creation---");
 	VulkanGraphicsQueue = new GraphicsQueue(VulkanRenderDevice->getCachedQueueFamilyIndices());
 	VulkanPresentationQueue = new PresentQueue(VulkanRenderDevice->getCachedQueueFamilyIndices());
-	DebugLog::printToConsoleLog("---Ended queues creation---");
+	Debug::DebugLog::print_to_console_log("---Ended queues creation---");
 }
 
 void ScrapEngine::RenderManager::createCommandBuffers()
@@ -144,7 +144,7 @@ void ScrapEngine::RenderManager::createCommandBuffers()
 		indexbuffers,
 		Skybox
 	);
-	DebugLog::printToConsoleLog("VulkanRenderCommandBuffer created");
+	Debug::DebugLog::print_to_console_log("VulkanRenderCommandBuffer created");
 }
 
 ScrapEngine::VulkanMeshInstance* ScrapEngine::RenderManager::loadMesh(const std::string & vertex_shader_path, const std::string & fragment_shader_path, const std::string & model_path, const std::string & texture_path)

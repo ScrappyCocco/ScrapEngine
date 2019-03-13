@@ -4,29 +4,29 @@ ScrapEngine::VulkanSkyboxInstance::VulkanSkyboxInstance(const std::string& verte
 	ScrapEngine::VulkanDevice* RenderDevice, ScrapEngine::VulkanSwapChain* SwapChain)
 {
 	VulkanRenderDescriptorSet = new VulkanDescriptorSet();
-	DebugLog::printToConsoleLog("VulkanDescriptorSet created");
+	Debug::DebugLog::print_to_console_log("VulkanDescriptorSet created");
 	VulkanRenderGraphicsPipeline = new VulkanGraphicsPipeline(vertex_shader_path.c_str(), fragment_shader_path.c_str(), &SwapChain->getSwapChainExtent(), VulkanRenderDescriptorSet->getDescriptorSetLayout(), RenderDevice->getMsaaSamples(), true);
-	DebugLog::printToConsoleLog("VulkanGraphicsPipeline created");
+	Debug::DebugLog::print_to_console_log("VulkanGraphicsPipeline created");
 	SkyboxTexture = new ScrapEngine::SkyboxTexture(texture_path);
-	DebugLog::printToConsoleLog("TextureImage created");
+	Debug::DebugLog::print_to_console_log("TextureImage created");
 	VulkanTextureImageView = new TextureImageView(SkyboxTexture->getTextureImage(), SkyboxTexture->getMipLevels(), true, 6);
-	DebugLog::printToConsoleLog("TextureImageView created");
+	Debug::DebugLog::print_to_console_log("TextureImageView created");
 	VulkanTextureSampler = new TextureSampler(SkyboxTexture->getMipLevels(), vk::Filter::eLinear, vk::Filter::eLinear, vk::SamplerMipmapMode::eLinear,
 		vk::SamplerAddressMode::eClampToEdge, vk::SamplerAddressMode::eClampToEdge, vk::SamplerAddressMode::eClampToEdge, 
 		false, vk::CompareOp::eNever, true, 16, vk::BorderColor::eFloatOpaqueWhite);
 	VulkanRenderModel = new VulkanModel(model_path);
-	DebugLog::printToConsoleLog("VulkanModel loaded");
+	Debug::DebugLog::print_to_console_log("VulkanModel loaded");
 	VulkanRenderVertexBuffer = new VertexBuffer(VulkanRenderModel->getVertices());
-	DebugLog::printToConsoleLog("VertexBuffer created");
+	Debug::DebugLog::print_to_console_log("VertexBuffer created");
 	VulkanRenderIndexBuffer = new IndexBuffer(VulkanRenderModel->getIndices());
-	DebugLog::printToConsoleLog("IndexBuffer created");
+	Debug::DebugLog::print_to_console_log("IndexBuffer created");
 	VulkanRenderUniformBuffer = new UniformBuffer(SwapChain->getSwapChainImagesVector(), SwapChain->getSwapChainExtent());
-	DebugLog::printToConsoleLog("UniformBuffer created");
+	Debug::DebugLog::print_to_console_log("UniformBuffer created");
 	VulkanRenderDescriptorPool = new VulkanDescriptorPool(SwapChain->getSwapChainImagesVector());
-	DebugLog::printToConsoleLog("VulkanDescriptorPool created");
+	Debug::DebugLog::print_to_console_log("VulkanDescriptorPool created");
 	VulkanRenderDescriptorSet->createDescriptorSets(VulkanRenderDescriptorPool->getDescriptorPool(), SwapChain->getSwapChainImagesVector(), VulkanRenderUniformBuffer->getUniformBuffers(),
 		VulkanTextureImageView->getTextureImageView(), VulkanTextureSampler->getTextureSampler());
-	DebugLog::printToConsoleLog("(DescriptorSets created)");
+	Debug::DebugLog::print_to_console_log("(DescriptorSets created)");
 	vertexbuffer = new simple_buffer<Vertex>(VulkanRenderVertexBuffer->getVertexBuffer(), VulkanRenderModel->getVertices());
 	indexbuffer = new simple_buffer<uint32_t>(VulkanRenderIndexBuffer->getIndexBuffer(), VulkanRenderModel->getIndices());
 	skyboxTransform.location = glm::vec3(0, 0, 0);

@@ -22,16 +22,16 @@ void ScrapEngine::EngineManager::StartGameLoop()
 	mainGameLoop();
 	//Execution ended, close the engine
 	cleanupEngine();
-	DebugLog::printToConsoleLog("---Engine Execution ended---");
+	Debug::DebugLog::print_to_console_log("---Engine Execution ended---");
 }
 
 void ScrapEngine::EngineManager::initializeEngine()
 {
-	DebugLog::printToConsoleLog("---initializeEngine()---");
+	Debug::DebugLog::print_to_console_log("---initializeEngine()---");
 	initializeRenderManager(&received_base_game_info); //Create the base rendering module
 	initializeLogicManager(); //Create the base logic manager
 	initializeViews(); //Create the views for the user
-	DebugLog::printToConsoleLog("---initializeEngine() completed---");
+	Debug::DebugLog::print_to_console_log("---initializeEngine() completed---");
 }
 
 void ScrapEngine::EngineManager::initializeRenderManager(const ScrapEngine::game_base_info* game_info)
@@ -52,7 +52,7 @@ void ScrapEngine::EngineManager::initializeViews()
 
 void ScrapEngine::EngineManager::mainGameLoop()
 {
-	DebugLog::printToConsoleLog("---mainGameLoop() started---");
+	Debug::DebugLog::print_to_console_log("---mainGameLoop() started---");
 	std::chrono::time_point<std::chrono::steady_clock> startTime, currentTime;
 	float time;
 	const ScrapEngine::GameWindow* window_ref = ScrapRenderManager->getGameWindow();
@@ -64,12 +64,12 @@ void ScrapEngine::EngineManager::mainGameLoop()
 		currentTime = std::chrono::high_resolution_clock::now();
 	}
 	ScrapRenderManager->waitDeviceIdle();
-	DebugLog::printToConsoleLog("---mainGameLoop() ended---");
+	Debug::DebugLog::print_to_console_log("---mainGameLoop() ended---");
 }
 
 void ScrapEngine::EngineManager::cleanupEngine()
 {
-	DebugLog::printToConsoleLog("---cleanupEngine()---");
+	Debug::DebugLog::print_to_console_log("---cleanupEngine()---");
 	
 	delete ScrapRenderManager;
 	delete RenderManagerView;
@@ -77,5 +77,5 @@ void ScrapEngine::EngineManager::cleanupEngine()
 	delete ScrapLogicManager;
 	
 	cleanupDone = true;
-	DebugLog::printToConsoleLog("---cleanupEngine() completed---");
+	Debug::DebugLog::print_to_console_log("---cleanupEngine() completed---");
 }

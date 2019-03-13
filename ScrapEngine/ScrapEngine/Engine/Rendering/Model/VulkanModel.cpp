@@ -8,8 +8,8 @@
 
 ScrapEngine::VulkanModel::VulkanModel(const std::string& input_MODEL_PATH)
 {
-	DebugLog::printToConsoleLog("Loading 3D model...");
-	DebugLog::printToConsoleLog("Loading assimp...");
+	Debug::DebugLog::print_to_console_log("Loading 3D model...");
+	Debug::DebugLog::print_to_console_log("Loading assimp...");
 	Assimp::Importer importer;
 	const aiScene* scene = importer.ReadFile(input_MODEL_PATH,
 		aiProcess_CalcTangentSpace |
@@ -24,10 +24,10 @@ ScrapEngine::VulkanModel::VulkanModel(const std::string& input_MODEL_PATH)
 	}
 
 	const aiVector3D Zero3D(0.0f, 0.0f, 0.0f);
-	DebugLog::printToConsoleLog("Begin model loading...");
-	DebugLog::printToConsoleLog("Number of meshes to load:" + std::to_string(scene->mNumMeshes));
+	Debug::DebugLog::print_to_console_log("Begin model loading...");
+	Debug::DebugLog::print_to_console_log("Number of meshes to load:" + std::to_string(scene->mNumMeshes));
 	for (unsigned int k = 0; k < scene->mNumMeshes; k++) {
-		DebugLog::printToConsoleLog("Mesh " + std::to_string(k) + " - Loading vertices...");
+		Debug::DebugLog::print_to_console_log("Mesh " + std::to_string(k) + " - Loading vertices...");
 		for (unsigned int i = 0; i < scene->mMeshes[k]->mNumVertices; i++) {
 			const aiVector3D* pPos = &(scene->mMeshes[k]->mVertices[i]);
 			const aiVector3D* pNormal = scene->mMeshes[k]->HasNormals() ? &(scene->mMeshes[k]->mNormals[i]) : &Zero3D;
@@ -38,7 +38,7 @@ ScrapEngine::VulkanModel::VulkanModel(const std::string& input_MODEL_PATH)
 			vertex.color = { pNormal->x, pNormal->y, pNormal->z };
 			vertices.push_back(vertex);
 		}
-		DebugLog::printToConsoleLog("Mesh " + std::to_string(k) + " - Loading indices...");
+		Debug::DebugLog::print_to_console_log("Mesh " + std::to_string(k) + " - Loading indices...");
 		for (unsigned int i = 0; i < scene->mMeshes[k]->mNumFaces; i++) {
 			const aiFace& Face = scene->mMeshes[k]->mFaces[i];
 			assert(Face.mNumIndices == 3);
@@ -47,7 +47,7 @@ ScrapEngine::VulkanModel::VulkanModel(const std::string& input_MODEL_PATH)
 			indices.push_back(Face.mIndices[2]);
 		}
 	}
-	DebugLog::printToConsoleLog("Vertex and Index model info loaded");
+	Debug::DebugLog::print_to_console_log("Vertex and Index model info loaded");
 }
 
 ScrapEngine::VulkanModel::~VulkanModel()

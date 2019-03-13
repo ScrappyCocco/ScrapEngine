@@ -108,7 +108,7 @@ bool ScrapEngine::VulkanDevice::isDeviceSuitable(vk::PhysicalDevice* physical_de
 	vk::PhysicalDeviceFeatures deviceFeatures = physical_device_input->getFeatures();
 
 	std::string gpu_name(deviceProperties.deviceName);
-	DebugLog::printToConsoleLog("GPU Selected:" + gpu_name);
+	Debug::DebugLog::print_to_console_log("GPU Selected:" + gpu_name);
 
 	GraphicsQueue::QueueFamilyIndices cached_indices = findQueueFamilies(physical_device_input, surface);
 
