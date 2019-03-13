@@ -39,7 +39,7 @@ void ScrapEngine::Input::InputManager::load_new_cursor(const std::string& path_t
 	glfwSetCursor(window_ref_, nullptr);
 	glfwDestroyCursor(cursor_);
 
-	cursor_ = glfwCreateCursor(&UsefulMethods::loadIcon(path_to_file), xhot, yhot);
+	cursor_ = glfwCreateCursor(&Utility::UsefulMethods::load_icon(path_to_file), xhot, yhot);
 
 	glfwSetCursor(window_ref_, cursor_);
 }
@@ -94,7 +94,8 @@ bool ScrapEngine::Input::InputManager::get_keyboard_key_released(const int key_t
 	return get_keyboard_key_status(key_to_check) == ScrapEngine::Input::button_state::released;
 }
 
-ScrapEngine::Input::button_state ScrapEngine::Input::InputManager::get_mouse_button_status(const int button_to_check) const
+ScrapEngine::Input::button_state ScrapEngine::Input::InputManager::get_mouse_button_status(
+	const int button_to_check) const
 {
 	return static_cast<ScrapEngine::Input::button_state>(glfwGetMouseButton(window_ref_, button_to_check));
 }

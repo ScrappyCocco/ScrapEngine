@@ -36,7 +36,7 @@ void ScrapEngine::GameWindow::setWindowTitle(const std::string& title)
 
 void ScrapEngine::GameWindow::setWindowIcon(const std::string& path_to_file) const
 {
-	glfwSetWindowIcon(window, 1, &UsefulMethods::loadIcon(path_to_file));
+	glfwSetWindowIcon(window, 1, &Utility::UsefulMethods::load_icon(path_to_file));
 }
 
 void ScrapEngine::GameWindow::closeWindow()

@@ -3,13 +3,14 @@
 #include <GLFW/glfw3.h>
 #include <string>
 
-namespace ScrapEngine {
-
-	class UsefulMethods
+namespace ScrapEngine
+{
+	namespace Utility
 	{
-	public:
-		static GLFWimage loadIcon(const std::string& path_to_file);
-	};
-
+		class UsefulMethods
+		{
+		public:
+			static GLFWimage load_icon(const std::string& path_to_file);
+		};
+	}
 }
-

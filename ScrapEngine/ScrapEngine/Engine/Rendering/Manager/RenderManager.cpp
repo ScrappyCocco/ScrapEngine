@@ -3,7 +3,7 @@
 
 ScrapEngine::RenderManager::RenderManager(const ScrapEngine::game_base_info* received_base_game_info)
 {
-	GameWindow = new ScrapEngine::GameWindow(received_base_game_info->window_WIDTH, received_base_game_info->window_HEIGHT, received_base_game_info->app_name);
+	GameWindow = new ScrapEngine::GameWindow(received_base_game_info->window_width, received_base_game_info->window_height, received_base_game_info->app_name);
 	Debug::DebugLog::print_to_console_log("GameWindow created");
 	initializeVulkan(received_base_game_info);
 }
@@ -88,7 +88,7 @@ void ScrapEngine::RenderManager::initializeVulkan(const ScrapEngine::game_base_i
 	createQueues();
 	VulkanRenderSwapChain = new VulkanSwapChain(VulkanRenderDevice->querySwapChainSupport(VulkanRenderDevice->getPhysicalDevice()),
 		VulkanRenderDevice->getCachedQueueFamilyIndices(),
-		VulkanWindowSurface->getSurface(), received_base_game_info->window_WIDTH, received_base_game_info->window_HEIGHT, received_base_game_info->vsync);
+		VulkanWindowSurface->getSurface(), received_base_game_info->window_width, received_base_game_info->window_height, received_base_game_info->vsync);
 	Debug::DebugLog::print_to_console_log("VulkanSwapChain created");
 	VulkanRenderImageView = new VulkanImageView(VulkanRenderSwapChain);
 	Debug::DebugLog::print_to_console_log("VulkanImageView created");
