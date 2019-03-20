@@ -17,7 +17,7 @@ ScrapEngine::EngineManager::~EngineManager()
 void ScrapEngine::EngineManager::StartGameLoop()
 {
 	//Execute Game Objects start events
-	ScrapLogicManager->ExecuteGameObjectsStartEvent();
+	ScrapLogicManager->execute_game_objects_start_event();
 	//Execute game loop until end
 	mainGameLoop();
 	//Execution ended, close the engine
@@ -41,13 +41,13 @@ void ScrapEngine::EngineManager::initializeRenderManager(const ScrapEngine::game
 
 void ScrapEngine::EngineManager::initializeLogicManager()
 {
-	ScrapLogicManager = new LogicManager();
+	ScrapLogicManager = new Core::LogicManager();
 }
 
 void ScrapEngine::EngineManager::initializeViews()
 {
 	RenderManagerView = new ScrapEngine::RenderManagerView(ScrapRenderManager);
-	LogicManagerView = new ScrapEngine::LogicManagerView(ScrapRenderManager, ScrapLogicManager);
+	LogicManagerView = new ScrapEngine::Core::LogicManagerView(ScrapRenderManager, ScrapLogicManager);
 }
 
 void ScrapEngine::EngineManager::mainGameLoop()
@@ -58,7 +58,7 @@ void ScrapEngine::EngineManager::mainGameLoop()
 	const ScrapEngine::GameWindow* window_ref = ScrapRenderManager->getGameWindow();
 	while (!window_ref->checkWindowShouldClose()) {
 		time = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - startTime).count();
-		ScrapLogicManager->ExecuteGameObjectsUpdateEvent(time);
+		ScrapLogicManager->execute_game_objects_update_event(time);
 		startTime = std::chrono::high_resolution_clock::now();
 		ScrapRenderManager->drawFrame();
 		currentTime = std::chrono::high_resolution_clock::now();

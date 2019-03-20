@@ -1,33 +1,36 @@
 #include "LogicManagerView.h"
 
-ScrapEngine::LogicManagerView::LogicManagerView(ScrapEngine::RenderManager* input_RenderManagerRef, ScrapEngine::LogicManager* input_LogicManagerRef)
-	: RenderManagerRef(input_RenderManagerRef), LogicManagerRef(input_LogicManagerRef)
+ScrapEngine::Core::LogicManagerView::LogicManagerView(ScrapEngine::RenderManager* input_RenderManagerRef,
+                                                      ScrapEngine::Core::LogicManager* input_LogicManagerRef)
+	: render_manager_ref_(input_RenderManagerRef), logic_manager_ref_(input_LogicManagerRef)
 {
-	ComponentManager = new ComponentsManager(input_RenderManagerRef);
-	SceneManager = new ScrapEngine::SceneManager(input_RenderManagerRef);
+	component_manager_ = new ComponentsManager(input_RenderManagerRef);
+	scene_manager_ = new ScrapEngine::Core::SceneManager(input_RenderManagerRef);
 }
 
-ScrapEngine::LogicManagerView::~LogicManagerView()
+ScrapEngine::Core::LogicManagerView::~LogicManagerView()
 {
-	delete ComponentManager;
+	delete component_manager_;
 }
 
-ScrapEngine::SGameObject* ScrapEngine::LogicManagerView::RegisterGameObject(SGameObject* input_GameObject)
+ScrapEngine::Core::SGameObject* ScrapEngine::Core::LogicManagerView::register_game_object(
+	ScrapEngine::Core::SGameObject* input_game_object) const
 {
-	return LogicManagerRef->RegisterGameObject(input_GameObject);
+	return logic_manager_ref_->register_game_object(input_game_object);
 }
 
-void ScrapEngine::LogicManagerView::UnRegisterGameObject(SGameObject* input_GameObject)
+void ScrapEngine::Core::LogicManagerView::un_register_game_object(
+	ScrapEngine::Core::SGameObject* input_game_object) const
 {
-	LogicManagerRef->UnRegisterGameObject(input_GameObject);
+	logic_manager_ref_->un_register_game_object(input_game_object);
 }
 
-ScrapEngine::ComponentsManager* ScrapEngine::LogicManagerView::getComponentsManager() const
+ScrapEngine::Core::ComponentsManager* ScrapEngine::Core::LogicManagerView::getComponentsManager() const
 {
-	return ComponentManager;
+	return component_manager_;
 }
 
-ScrapEngine::SceneManager* ScrapEngine::LogicManagerView::getSceneManager() const
+ScrapEngine::Core::SceneManager* ScrapEngine::Core::LogicManagerView::getSceneManager() const
 {
-	return SceneManager;
+	return scene_manager_;
 }

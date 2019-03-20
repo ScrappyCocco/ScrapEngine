@@ -2,16 +2,19 @@
 
 #include <string>
 
-namespace ScrapEngine {
-	class SObject
+namespace ScrapEngine
+{
+	namespace Core
 	{
-	private:
-		std::string object_name;
-	public:
-		SObject(const std::string& input_object_name = "SObject");
-		virtual ~SObject() = 0;
+		class SObject
+		{
+		private:
+			std::string object_name_;
+		public:
+			explicit SObject(const std::string& input_object_name = "SObject");
+			virtual ~SObject();
 
-		virtual std::string toString() const;
-	};
+			virtual std::string to_string() const;
+		};
+	}
 }
-

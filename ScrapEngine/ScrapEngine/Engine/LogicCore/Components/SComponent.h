@@ -3,22 +3,25 @@
 #include "../SObject.h"
 #include <glm/glm.hpp>
 
-namespace ScrapEngine {
-	class SComponent : public SObject
+namespace ScrapEngine
+{
+	namespace Core
 	{
-	private:
+		class SComponent : public Core::SObject
+		{
+		private:
 
-	public:
-		SComponent(const std::string& componentName);
-		~SComponent() = 0;
+		public:
+			explicit SComponent(const std::string& component_name);
+			virtual ~SComponent() = 0;
 
-		virtual void setComponentLocation(const glm::vec3& location);
-		virtual void setComponentRotation(const glm::vec3& rotation);
-		virtual void setComponentScale(const glm::vec3& scale);
+			virtual void set_component_location(const glm::vec3& location);
+			virtual void set_component_rotation(const glm::vec3& rotation);
+			virtual void set_component_scale(const glm::vec3& scale);
 
-		virtual glm::vec3 getComponentLocation() const;
-		virtual glm::vec3 getComponentRotation() const;
-		virtual glm::vec3 getComponentScale() const;
-	};
+			virtual glm::vec3 get_component_location() const;
+			virtual glm::vec3 get_component_rotation() const;
+			virtual glm::vec3 get_component_scale() const;
+		};
+	}
 }
-

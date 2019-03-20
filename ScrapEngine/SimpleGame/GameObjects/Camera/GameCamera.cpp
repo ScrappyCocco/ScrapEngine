@@ -8,12 +8,12 @@ GameCamera::GameCamera(ScrapEngine::Input::InputManager* CreatedInputManagerf, S
 	GameCameraRef->setMaxRenderDistance(10000);
 }
 
-void GameCamera::GameStart()
+void GameCamera::game_start()
 {
 
 }
 
-void GameCamera::GameUpdate(float time)
+void GameCamera::game_update(float time)
 {
 	ScrapEngine::Input::mouse_location mouse = InputManagerRef->get_last_mouse_location();
 	
@@ -31,9 +31,6 @@ void GameCamera::GameUpdate(float time)
 	}
 	if (InputManagerRef->get_keyboard_key_pressed(KEYBOARD_KEY_A)) {
 		GameCameraRef->setCameraLocation(GameCameraRef->getCameraLocation() - (cameraSpeed * (glm::normalize(glm::cross(GameCameraRef->getCameraFront(), GameCameraRef->getCameraUp())))));
-	}
-	if (InputManagerRef->get_keyboard_key_pressed(MOUSE_BUTTON_LEFT)) {
-		GameObjectRef->SpawnCrateAtLocation(GameCameraRef->getCameraLocation());
 	}
 }
 

@@ -4,22 +4,26 @@
 #include "../MeshComponent/MeshComponent.h"
 #include <map>
 
-namespace ScrapEngine {
-
-	class ComponentsManager
+namespace ScrapEngine
+{
+	namespace Core
 	{
-	private:
-		ScrapEngine::RenderManager* RenderManagerRef;
+		class ComponentsManager
+		{
+		private:
+			ScrapEngine::RenderManager* render_manager_ref_;
 
-		std::map<ScrapEngine::MeshComponent*, ScrapEngine::VulkanMeshInstance*> loadedMeshes;
-	public:
-		ComponentsManager(ScrapEngine::RenderManager* input_RenderManagerRef);
-		~ComponentsManager() = default;
+			std::map<ScrapEngine::Core::MeshComponent*, ScrapEngine::VulkanMeshInstance*> loaded_meshes_;
+		public:
+			explicit ComponentsManager(ScrapEngine::RenderManager* input_render_manager_ref);
+			~ComponentsManager() = default;
 
-		//MeshStuff
-		ScrapEngine::MeshComponent* createNewMeshComponent(const std::string& vertex_shader_path, const std::string& fragment_shader_path, const std::string& model_path, const std::string& texture_path);
-		void destroyMeshComponent(ScrapEngine::MeshComponent* componentToDestroy);
-	};
-
+			//MeshStuff
+			ScrapEngine::Core::MeshComponent* create_new_mesh_component(const std::string& vertex_shader_path,
+			                                                            const std::string& fragment_shader_path,
+			                                                            const std::string& model_path,
+			                                                            const std::string& texture_path);
+			void destroy_mesh_component(ScrapEngine::Core::MeshComponent* component_to_destroy);
+		};
+	}
 }
-

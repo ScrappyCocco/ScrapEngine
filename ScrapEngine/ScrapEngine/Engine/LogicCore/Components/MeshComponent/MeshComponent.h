@@ -3,21 +3,25 @@
 #include "../SComponent.h"
 #include "../../../Rendering/Model/VulkanMeshInstance.h"
 
-namespace ScrapEngine {
-	class MeshComponent : public SComponent
+namespace ScrapEngine
+{
+	namespace Core
 	{
-	private:
-		VulkanMeshInstance* VulkanMesh;
-	public:
-		MeshComponent(VulkanMeshInstance* input_VulkanMesh);
-		~MeshComponent() = default;
+		class MeshComponent : public Core::SComponent
+		{
+		private:
+			VulkanMeshInstance* vulkan_mesh_;
+		public:
+			explicit MeshComponent(VulkanMeshInstance* input_vulkan_mesh);
+			~MeshComponent() = default;
 
-		virtual void setComponentLocation(const glm::vec3& location) override;
-		virtual void setComponentRotation(const glm::vec3& rotation) override;
-		virtual void setComponentScale(const glm::vec3& scale) override;
+			virtual void set_component_location(const glm::vec3& location) override;
+			virtual void set_component_rotation(const glm::vec3& rotation) override;
+			virtual void set_component_scale(const glm::vec3& scale) override;
 
-		virtual glm::vec3 getComponentLocation() const override;
-		virtual glm::vec3 getComponentRotation() const override;
-		virtual glm::vec3 getComponentScale() const override;
-	};
+			virtual glm::vec3 get_component_location() const override;
+			virtual glm::vec3 get_component_rotation() const override;
+			virtual glm::vec3 get_component_scale() const override;
+		};
+	}
 }

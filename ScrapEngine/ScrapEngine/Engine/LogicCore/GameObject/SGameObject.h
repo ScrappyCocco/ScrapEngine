@@ -5,30 +5,36 @@
 #include "../Components/SComponent.h"
 #include <vector>
 
-namespace ScrapEngine {
-	class SGameObject : public SObject
+namespace ScrapEngine
+{
+	namespace Core
 	{
-	private:
-		ScrapEngine::Transform ObjectTransform;
-		bool isStatic = false;
+		class SGameObject : public Core::SObject
+		{
+		private:
+			ScrapEngine::Transform object_transform_;
+			bool is_static_ = false;
 
-		std::vector<ScrapEngine::SComponent*> ObjectComponents;
-	public:
-		SGameObject(const std::string& objectName, const ScrapEngine::Transform& input_ObjectTransform = ScrapEngine::Transform(), bool isStaticObject = false);
-		~SGameObject() = 0;
+			std::vector<ScrapEngine::Core::SComponent*> object_components_;
+		public:
+			explicit SGameObject(const std::string& object_name,
+			                     const ScrapEngine::Transform& input_object_transform = ScrapEngine::Transform(),
+			                     const bool is_static_object = false);
+			~SGameObject() = 0;
 
-		virtual void GameStart();
-		virtual void GameUpdate(float time);
+			virtual void game_start();
+			virtual void game_update(float time);
 
-		void setObjectLocation(const glm::vec3& location);
-		void setObjectRotation(const glm::vec3& rotation);
-		void setObjectScale(const glm::vec3& scale);
+			void set_object_location(const glm::vec3& location);
+			void set_object_rotation(const glm::vec3& rotation);
+			void set_object_scale(const glm::vec3& scale);
 
-		glm::vec3 getObjectLocation() const;
-		glm::vec3 getObjectRotation() const;
-		glm::vec3 getObjectScale() const;
+			glm::vec3 get_object_location() const;
+			glm::vec3 get_object_rotation() const;
+			glm::vec3 get_object_scale() const;
 
-		void AddComponent(SComponent* Component);
-		const std::vector<SComponent*>* GetComponents();
-	};
+			void add_component(SComponent* component);
+			const std::vector<SComponent*>* get_components() const;
+		};
+	}
 }

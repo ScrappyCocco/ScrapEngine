@@ -15,10 +15,10 @@ int main() {
 		ScrapEngine::Input::InputManager* inputmanager = gameWindowRef->createWindowInputManager();
 		inputmanager->set_cursor_input_mode(ScrapEngine::Input::cursor_mode::cursor_grabbed_mode);
 		//Get the component manager
-		ScrapEngine::ComponentsManager* ComponentManagerRef = ScrapEngineManager->LogicManagerView->getComponentsManager();
+		ScrapEngine::Core::ComponentsManager* ComponentManagerRef = ScrapEngineManager->LogicManagerView->getComponentsManager();
 		//Set the world skybox
-		ScrapEngine::SceneManager* SceneManagerRef = ScrapEngineManager->LogicManagerView->getSceneManager();
-		SceneManagerRef->setSkybox(
+		ScrapEngine::Core::SceneManager* SceneManagerRef = ScrapEngineManager->LogicManagerView->getSceneManager();
+		SceneManagerRef->set_skybox(
 			std::array<std::string, 6>{
 				"../assets/skybox/spires_ft.png", //FRONT TEXTURE
 				"../assets/skybox/spires_bk.png", //BACK TEXTURE
@@ -28,13 +28,13 @@ int main() {
 				"../assets/skybox/spires_lf.png", //LEFT TEXTURE
 			}
 		);
-		SceneManagerRef->setSkyboxSize(150);
+		SceneManagerRef->set_skybox_size(150);
 		//Create the first game object
 		TestGameObject* FirstGameObject = new TestGameObject(inputmanager, ComponentManagerRef);
-		ScrapEngineManager->LogicManagerView->RegisterGameObject(FirstGameObject);
+		ScrapEngineManager->LogicManagerView->register_game_object(FirstGameObject);
 		//Create the camera
 		GameCamera* GameCameraRef = new GameCamera(inputmanager, ScrapEngineManager->RenderManagerView->getDefaultRenderCamera(), FirstGameObject);
-		ScrapEngineManager->LogicManagerView->RegisterGameObject(GameCameraRef);
+		ScrapEngineManager->LogicManagerView->register_game_object(GameCameraRef);
 		//Begin gameplay
 		ScrapEngineManager->StartGameLoop();
 		//End gameplay

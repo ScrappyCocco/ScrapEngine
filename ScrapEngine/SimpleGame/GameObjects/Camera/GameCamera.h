@@ -7,7 +7,7 @@
 #include "Engine/Input/MouseButtons.h"
 #include "../TestGameObject.h"
 
-class GameCamera : public ScrapEngine::SGameObject
+class GameCamera : public ScrapEngine::Core::SGameObject
 {
 private:
 	ScrapEngine::Camera* GameCameraRef;
@@ -19,7 +19,7 @@ public:
 	GameCamera(ScrapEngine::Input::InputManager* CreatedInputManagerf, ScrapEngine::Camera* input_GameCameraRef, TestGameObject* input_GameObjectRef);
 	~GameCamera() = default;
 
-	virtual void GameStart() override;
-	virtual void GameUpdate(float time) override;
+	virtual void game_start() override;
+	virtual void game_update(float time) override;
 };
 

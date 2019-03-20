@@ -1,23 +1,31 @@
 #include "ComponentsManager.h"
 
-ScrapEngine::ComponentsManager::ComponentsManager(ScrapEngine::RenderManager* input_RenderManagerRef) : RenderManagerRef(input_RenderManagerRef)
+ScrapEngine::Core::ComponentsManager::
+ComponentsManager(ScrapEngine::RenderManager* input_render_manager_ref) : render_manager_ref_(input_render_manager_ref)
 {
-
 }
 
-ScrapEngine::MeshComponent* ScrapEngine::ComponentsManager::createNewMeshComponent(const std::string& vertex_shader_path, const std::string& fragment_shader_path, const std::string& model_path, const std::string& texture_path)
+ScrapEngine::Core::MeshComponent* ScrapEngine::Core::ComponentsManager::create_new_mesh_component(
+	const std::string& vertex_shader_path, const std::string& fragment_shader_path, const std::string& model_path,
+	const std::string& texture_path)
 {
-	VulkanMeshInstance* mesh = RenderManagerRef->loadMesh(vertex_shader_path, fragment_shader_path, model_path, texture_path);
-	ScrapEngine::MeshComponent* meshComponent = new MeshComponent(mesh);
-	loadedMeshes.insert(std::pair<ScrapEngine::MeshComponent*, ScrapEngine::VulkanMeshInstance*>(meshComponent, mesh));
-	return meshComponent;
+	VulkanMeshInstance* mesh = render_manager_ref_->loadMesh(vertex_shader_path, fragment_shader_path, model_path,
+	                                                         texture_path);
+	ScrapEngine::Core::MeshComponent* mesh_component = new MeshComponent(mesh);
+	loaded_meshes_.insert(
+		std::pair<ScrapEngine::Core::MeshComponent*, ScrapEngine::VulkanMeshInstance*>(mesh_component, mesh));
+	return mesh_component;
 }
 
-void ScrapEngine::ComponentsManager::destroyMeshComponent(ScrapEngine::MeshComponent* componentToDestroy)
+void ScrapEngine::Core::ComponentsManager::destroy_mesh_component(
+	ScrapEngine::Core::MeshComponent* component_to_destroy)
 {
-	std::map<ScrapEngine::MeshComponent*, ScrapEngine::VulkanMeshInstance*>::iterator position = loadedMeshes.find(componentToDestroy);
-	if (position != loadedMeshes.end()) {
-		RenderManagerRef->unloadMesh(position->second);
-		loadedMeshes.erase(position);
+	const std::map<ScrapEngine::Core::MeshComponent*, ScrapEngine::VulkanMeshInstance*>::iterator position =
+		loaded_meshes_.
+		find(component_to_destroy);
+	if (position != loaded_meshes_.end())
+	{
+		render_manager_ref_->unloadMesh(position->second);
+		loaded_meshes_.erase(position);
 	}
 }

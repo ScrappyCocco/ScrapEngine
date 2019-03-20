@@ -1,7 +1,6 @@
 #include "TestGameObject.h"
-#include "Engine/Debug/DebugLog.h"
 
-TestGameObject::TestGameObject(ScrapEngine::Input::InputManager* CreatedInputManager, ScrapEngine::ComponentsManager* input_ComponentManager)
+TestGameObject::TestGameObject(ScrapEngine::Input::InputManager* CreatedInputManager, ScrapEngine::Core::ComponentsManager* input_ComponentManager)
 	: SGameObject("Test game object"), InputManagerRef(CreatedInputManager), ComponentManagerRef(input_ComponentManager)
 {
 	//Add mesh to that GameObject
@@ -14,63 +13,52 @@ TestGameObject::TestGameObject(ScrapEngine::Input::InputManager* CreatedInputMan
 	setObjectLocation(glm::vec3(0, 0, -20.0f));
 	setObjectRotation(glm::vec3(0, 0, 0));
 	setObjectScale(glm::vec3(0.5f, 0.5f, 0.5f));*/
-	setObjectLocation(glm::vec3(0, 0, -40.0f));
-	setObjectRotation(glm::vec3(0, 0, 0));
-	setObjectScale(glm::vec3(0.1f, 0.1f, 0.1f));
+	set_object_location(glm::vec3(0, 0, -40.0f));
+	set_object_rotation(glm::vec3(0, 0, 0));
+	set_object_scale(glm::vec3(0.1f, 0.1f, 0.1f));
 
-	AddComponent(input_ComponentManager->createNewMeshComponent(
+	add_component(input_ComponentManager->create_new_mesh_component(
 		"../assets/shader/shader_base.vert.spv",
 		"../assets/shader/shader_base.frag.spv",
 		"../assets/models/Simple_Wood_Crate.fbx",
 		"../assets/textures/Simple_Wood_Crate_Color.png"
 	));
-	AddComponent(input_ComponentManager->createNewMeshComponent(
+	add_component(input_ComponentManager->create_new_mesh_component(
 		"../assets/shader/shader_base.vert.spv",
 		"../assets/shader/shader_base.frag.spv",
 		"../assets/models/Simple_Wood_Crate.fbx",
 		"../assets/textures/Simple_Wood_Crate_Color.png"
 	));
-	AddComponent(input_ComponentManager->createNewMeshComponent(
+	add_component(input_ComponentManager->create_new_mesh_component(
 		"../assets/shader/shader_base.vert.spv",
 		"../assets/shader/shader_base.frag.spv",
 		"../assets/models/Simple_Wood_Crate.fbx",
 		"../assets/textures/Simple_Wood_Crate_Color.png"
 	));
-	AddComponent(input_ComponentManager->createNewMeshComponent(
+	add_component(input_ComponentManager->create_new_mesh_component(
 		"../assets/shader/shader_base.vert.spv",
 		"../assets/shader/shader_base.frag.spv",
 		"../assets/models/Simple_Wood_Crate.fbx",
 		"../assets/textures/Simple_Wood_Crate_Color.png"
 	));
-	AddComponent(input_ComponentManager->createNewMeshComponent(
+	add_component(input_ComponentManager->create_new_mesh_component(
 		"../assets/shader/shader_base.vert.spv",
 		"../assets/shader/shader_base.frag.spv",
 		"../assets/models/Simple_Wood_Crate.fbx",
 		"../assets/textures/Simple_Wood_Crate_Color.png"
 	));
-	(*GetComponents())[0]->setComponentLocation(glm::vec3(0, 0, -45.0f));
-	(*GetComponents())[1]->setComponentLocation(glm::vec3(10, 5, -55.0f));
-	(*GetComponents())[2]->setComponentLocation(glm::vec3(20, -7, -70.0f));
-	(*GetComponents())[3]->setComponentLocation(glm::vec3(-10, 10, -10.0f));
-	(*GetComponents())[4]->setComponentLocation(glm::vec3(-20, -15, -20.0f));
+	(*get_components())[0]->set_component_location(glm::vec3(0, 0, -45.0f));
+	(*get_components())[1]->set_component_location(glm::vec3(10, 5, -55.0f));
+	(*get_components())[2]->set_component_location(glm::vec3(20, -7, -70.0f));
+	(*get_components())[3]->set_component_location(glm::vec3(-10, 10, -10.0f));
+	(*get_components())[4]->set_component_location(glm::vec3(-20, -15, -20.0f));
 }
 
-void TestGameObject::GameStart()
+void TestGameObject::game_start()
 {
 }
 
-void TestGameObject::GameUpdate(float time)
+void TestGameObject::game_update(float time)
 {
 	
-}
-
-void TestGameObject::SpawnCrateAtLocation(glm::vec3 pos)
-{
-	AddComponent(ComponentManagerRef->createNewMeshComponent(
-		"../assets/shader/shader_base.vert.spv",
-		"../assets/shader/shader_base.frag.spv",
-		"../assets/models/Simple_Wood_Crate.fbx",
-		"../assets/textures/Simple_Wood_Crate_Color.png"
-	));
-	(*GetComponents())[GetComponents()->size()-1]->setComponentLocation(pos);
 }

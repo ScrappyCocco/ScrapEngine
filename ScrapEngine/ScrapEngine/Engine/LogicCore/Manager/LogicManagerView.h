@@ -5,24 +5,26 @@
 #include "../Scene/SceneManager.h"
 #include "LogicManager.h"
 
-namespace ScrapEngine {
-
-	class LogicManagerView
+namespace ScrapEngine
+{
+	namespace Core
 	{
-	private:
-		ScrapEngine::RenderManager* RenderManagerRef;
-		ScrapEngine::LogicManager* LogicManagerRef;
-		ScrapEngine::ComponentsManager* ComponentManager;
-		ScrapEngine::SceneManager* SceneManager;
-	public:
-		LogicManagerView(ScrapEngine::RenderManager* input_RenderManagerRef, ScrapEngine::LogicManager* input_LogicManagerRef);
-		~LogicManagerView();
+		class LogicManagerView
+		{
+		private:
+			ScrapEngine::RenderManager* render_manager_ref_;
+			ScrapEngine::Core::LogicManager* logic_manager_ref_;
+			ScrapEngine::Core::ComponentsManager* component_manager_;
+			ScrapEngine::Core::SceneManager* scene_manager_;
+		public:
+			LogicManagerView(ScrapEngine::RenderManager* input_render_manager_ref,
+			                 ScrapEngine::Core::LogicManager* input_logic_manager_ref);
+			~LogicManagerView();
 
-		SGameObject* RegisterGameObject(SGameObject* input_GameObject);
-		void UnRegisterGameObject(SGameObject* input_GameObject);
-		ScrapEngine::ComponentsManager* getComponentsManager() const;
-		ScrapEngine::SceneManager* getSceneManager() const;
-	};
-
+			Core::SGameObject* register_game_object(Core::SGameObject* input_game_object) const;
+			void un_register_game_object(Core::SGameObject* input_game_object) const;
+			ScrapEngine::Core::ComponentsManager* getComponentsManager() const;
+			ScrapEngine::Core::SceneManager* getSceneManager() const;
+		};
+	}
 }
-

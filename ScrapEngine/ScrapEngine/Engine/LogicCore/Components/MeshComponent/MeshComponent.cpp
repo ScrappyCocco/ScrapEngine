@@ -1,36 +1,36 @@
 #include "MeshComponent.h"
 
-ScrapEngine::MeshComponent::MeshComponent(VulkanMeshInstance* input_VulkanMesh) : SComponent("MeshComponent"), VulkanMesh(input_VulkanMesh)
+ScrapEngine::Core::MeshComponent::MeshComponent(VulkanMeshInstance* input_vulkan_mesh) : SComponent("MeshComponent"),
+                                                                                         vulkan_mesh_(input_vulkan_mesh)
 {
-
 }
 
-void ScrapEngine::MeshComponent::setComponentLocation(const glm::vec3& location)
+void ScrapEngine::Core::MeshComponent::set_component_location(const glm::vec3& location)
 {
-	VulkanMesh->setMeshLocation(location);
+	vulkan_mesh_->setMeshLocation(location);
 }
 
-void ScrapEngine::MeshComponent::setComponentRotation(const glm::vec3& rotation)
+void ScrapEngine::Core::MeshComponent::set_component_rotation(const glm::vec3& rotation)
 {
-	VulkanMesh->setMeshRotation(rotation);
+	vulkan_mesh_->setMeshRotation(rotation);
 }
 
-void ScrapEngine::MeshComponent::setComponentScale(const glm::vec3& scale)
+void ScrapEngine::Core::MeshComponent::set_component_scale(const glm::vec3& scale)
 {
-	VulkanMesh->setMeshScale(scale);
+	vulkan_mesh_->setMeshScale(scale);
 }
 
-glm::vec3 ScrapEngine::MeshComponent::getComponentLocation() const
+glm::vec3 ScrapEngine::Core::MeshComponent::get_component_location() const
 {
-	return VulkanMesh->getMeshLocation();
+	return vulkan_mesh_->getMeshLocation();
 }
 
-glm::vec3 ScrapEngine::MeshComponent::getComponentRotation() const
+glm::vec3 ScrapEngine::Core::MeshComponent::get_component_rotation() const
 {
-	return VulkanMesh->getMeshRotation();
+	return vulkan_mesh_->getMeshRotation();
 }
 
-glm::vec3 ScrapEngine::MeshComponent::getComponentScale() const
+glm::vec3 ScrapEngine::Core::MeshComponent::get_component_scale() const
 {
-	return VulkanMesh->getMeshScale();
+	return vulkan_mesh_->getMeshScale();
 }

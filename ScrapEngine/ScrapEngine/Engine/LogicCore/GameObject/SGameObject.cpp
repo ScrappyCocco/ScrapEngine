@@ -1,79 +1,85 @@
 #include "SGameObject.h"
 
-ScrapEngine::SGameObject::SGameObject(const std::string& objectName, const ScrapEngine::Transform& input_ObjectTransform, bool isStaticObject) :
-	SObject(objectName), ObjectTransform(input_ObjectTransform), isStatic(isStaticObject)
+ScrapEngine::Core::SGameObject::SGameObject(const std::string& object_name,
+                                            const ScrapEngine::Transform& input_object_transform,
+                                            const bool is_static_object) :
+	SObject(object_name), object_transform_(input_object_transform), is_static_(is_static_object)
 {
 }
 
-ScrapEngine::SGameObject::~SGameObject()
+ScrapEngine::Core::SGameObject::~SGameObject()
 {
-	for (SComponent* component : ObjectComponents) {
+	for (SComponent* component : object_components_)
+	{
 		delete component;
 	}
 }
 
-void ScrapEngine::SGameObject::GameStart()
+void ScrapEngine::Core::SGameObject::game_start()
 {
 	//This will be defined by the user when is necessary, otherwise it will have no effect
 }
 
-void ScrapEngine::SGameObject::GameUpdate(float time)
+void ScrapEngine::Core::SGameObject::game_update(float time)
 {
 	//This will be defined by the user when is necessary, otherwise it will have no effect
 }
 
-void ScrapEngine::SGameObject::setObjectLocation(const glm::vec3& location)
+void ScrapEngine::Core::SGameObject::set_object_location(const glm::vec3& location)
 {
-	ObjectTransform.location = location;
+	object_transform_.location = location;
 	//Update the transform of every component
-	for (SComponent* component : ObjectComponents) {
-		component->setComponentLocation(location);
+	for (SComponent* component : object_components_)
+	{
+		component->set_component_location(location);
 	}
 }
 
-void ScrapEngine::SGameObject::setObjectRotation(const glm::vec3& rotation)
+void ScrapEngine::Core::SGameObject::set_object_rotation(const glm::vec3& rotation)
 {
-	ObjectTransform.rotation = rotation;
+	object_transform_.rotation = rotation;
 	//Update the transform of every component
-	for (SComponent* component : ObjectComponents) {
-		component->setComponentRotation(rotation);
+	for (SComponent* component : object_components_)
+	{
+		component->set_component_rotation(rotation);
 	}
 }
 
-void ScrapEngine::SGameObject::setObjectScale(const glm::vec3& scale)
+void ScrapEngine::Core::SGameObject::set_object_scale(const glm::vec3& scale)
 {
-	ObjectTransform.scale = scale;
+	object_transform_.scale = scale;
 	//Update the transform of every component
-	for (SComponent* component : ObjectComponents) {
-		component->setComponentScale(scale);
+	for (SComponent* component : object_components_)
+	{
+		component->set_component_scale(scale);
 	}
 }
 
-glm::vec3 ScrapEngine::SGameObject::getObjectLocation() const
+glm::vec3 ScrapEngine::Core::SGameObject::get_object_location() const
 {
-	return ObjectTransform.location;
+	return object_transform_.location;
 }
 
-glm::vec3 ScrapEngine::SGameObject::getObjectRotation() const
+glm::vec3 ScrapEngine::Core::SGameObject::get_object_rotation() const
 {
-	return ObjectTransform.rotation;
+	return object_transform_.rotation;
 }
 
-glm::vec3 ScrapEngine::SGameObject::getObjectScale() const
+glm::vec3 ScrapEngine::Core::SGameObject::get_object_scale() const
 {
-	return ObjectTransform.scale;
+	return object_transform_.scale;
 }
 
-void ScrapEngine::SGameObject::AddComponent(SComponent* Component)
+void ScrapEngine::Core::SGameObject::add_component(SComponent* component)
 {
-	ObjectComponents.push_back(Component);
+	object_components_.push_back(component);
 	//Set component default values same as object
-	Component->setComponentLocation(ObjectTransform.location);
-	Component->setComponentRotation(ObjectTransform.rotation);
-	Component->setComponentScale(ObjectTransform.scale);
+	component->set_component_location(object_transform_.location);
+	component->set_component_rotation(object_transform_.rotation);
+	component->set_component_scale(object_transform_.scale);
 }
 
-const std::vector<ScrapEngine::SComponent*>* ScrapEngine::SGameObject::GetComponents()
+const std::vector<ScrapEngine::Core::SComponent*>* ScrapEngine::Core::SGameObject::get_components() const
 {
-	return &ObjectComponents;
+	return &object_components_;
 }

@@ -3,18 +3,21 @@
 #include "../../Rendering/Manager/RenderManager.h"
 #include "../../Rendering/Model/VulkanSkyboxInstance.h"
 
-namespace ScrapEngine {
-	class SceneManager
+namespace ScrapEngine
+{
+	namespace Core
 	{
-	private:
-		ScrapEngine::RenderManager* RenderManagerRef;
-		ScrapEngine::VulkanSkyboxInstance* CurrentSkybox;
-	public:
-		SceneManager(ScrapEngine::RenderManager* input_RenderManagerRef);
-		~SceneManager();
+		class SceneManager
+		{
+		private:
+			ScrapEngine::RenderManager* render_manager_ref_;
+			ScrapEngine::VulkanSkyboxInstance* current_skybox_;
+		public:
+			explicit SceneManager(ScrapEngine::RenderManager* input_render_manager_ref);
+			~SceneManager() = default;
 
-		void setSkybox(const std::array<std::string, 6>& files_path);
-		void setSkyboxSize(unsigned int newSize);
-	};
+			void set_skybox(const std::array<std::string, 6>& files_path);
+			void set_skybox_size(unsigned int new_size) const;
+		};
+	}
 }
-
