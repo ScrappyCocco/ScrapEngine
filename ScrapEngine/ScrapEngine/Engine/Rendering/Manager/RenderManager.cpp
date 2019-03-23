@@ -159,7 +159,7 @@ ScrapEngine::VulkanMeshInstance* ScrapEngine::RenderManager::loadMesh(const std:
 
 ScrapEngine::VulkanMeshInstance* ScrapEngine::RenderManager::loadMesh(const std::string & model_path, const std::string & texture_path)
 {
-	return loadMesh("../assets/shader/vert.spv", "../assets/shader/frag.spv", model_path, texture_path);
+	return loadMesh("../assets/shader/compiled_shaders/shader_base.vert.spv", "../assets/shader/compiled_shaders/shader_base.frag.spv", model_path, texture_path);
 }
 
 void ScrapEngine::RenderManager::unloadMesh(ScrapEngine::VulkanMeshInstance* meshToUnload)
@@ -179,7 +179,7 @@ ScrapEngine::VulkanSkyboxInstance* ScrapEngine::RenderManager::loadSkybox(const 
 	if (Skybox) {
 		delete Skybox;
 	}
-	Skybox = new VulkanSkyboxInstance("../assets/shader/skybox.vert.spv", "../assets/shader/skybox.frag.spv", "../assets/models/cube.obj", files_path, VulkanRenderDevice, VulkanRenderSwapChain);
+	Skybox = new VulkanSkyboxInstance("../assets/shader/compiled_shaders/skybox.vert.spv", "../assets/shader/compiled_shaders/skybox.frag.spv", "../assets/models/cube.obj", files_path, VulkanRenderDevice, VulkanRenderSwapChain);
 	deleteCommandBuffers();
 	createCommandBuffers();
 	return Skybox;

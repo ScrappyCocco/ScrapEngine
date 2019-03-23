@@ -4,46 +4,37 @@ TestGameObject::TestGameObject(ScrapEngine::Input::InputManager* CreatedInputMan
 	: SGameObject("Test game object"), InputManagerRef(CreatedInputManager), ComponentManagerRef(input_ComponentManager)
 {
 	//Add mesh to that GameObject
-	/*AddComponent(input_ComponentManager->createNewMeshComponent(
-		"../assets/shader/vert.spv", 
-		"../assets/shader/frag.spv", 
-		"../assets/models/chess/ChessPieces/King.fbx", 
-		"../assets/textures/SimpleGreenTexture.png"
-	));
-	setObjectLocation(glm::vec3(0, 0, -20.0f));
-	setObjectRotation(glm::vec3(0, 0, 0));
-	setObjectScale(glm::vec3(0.5f, 0.5f, 0.5f));*/
 	set_object_location(glm::vec3(0, 0, -40.0f));
 	set_object_rotation(glm::vec3(0, 0, 0));
 	set_object_scale(glm::vec3(0.1f, 0.1f, 0.1f));
 
 	add_component(input_ComponentManager->create_new_mesh_component(
-		"../assets/shader/shader_base.vert.spv",
-		"../assets/shader/shader_base.frag.spv",
+		"../assets/shader/compiled_shaders/shader_base.vert.spv",
+		"../assets/shader/compiled_shaders/shader_base.frag.spv",
 		"../assets/models/Simple_Wood_Crate.fbx",
 		"../assets/textures/Simple_Wood_Crate_Color.png"
 	));
 	add_component(input_ComponentManager->create_new_mesh_component(
-		"../assets/shader/shader_base.vert.spv",
-		"../assets/shader/shader_base.frag.spv",
+		"../assets/shader/compiled_shaders/shader_base.vert.spv",
+		"../assets/shader/compiled_shaders/shader_base.frag.spv",
 		"../assets/models/Simple_Wood_Crate.fbx",
 		"../assets/textures/Simple_Wood_Crate_Color.png"
 	));
 	add_component(input_ComponentManager->create_new_mesh_component(
-		"../assets/shader/shader_base.vert.spv",
-		"../assets/shader/shader_base.frag.spv",
+		"../assets/shader/compiled_shaders/shader_base.vert.spv",
+		"../assets/shader/compiled_shaders/shader_base.frag.spv",
 		"../assets/models/Simple_Wood_Crate.fbx",
 		"../assets/textures/Simple_Wood_Crate_Color.png"
 	));
 	add_component(input_ComponentManager->create_new_mesh_component(
-		"../assets/shader/shader_base.vert.spv",
-		"../assets/shader/shader_base.frag.spv",
+		"../assets/shader/compiled_shaders/shader_base.vert.spv",
+		"../assets/shader/compiled_shaders/shader_base.frag.spv",
 		"../assets/models/Simple_Wood_Crate.fbx",
 		"../assets/textures/Simple_Wood_Crate_Color.png"
 	));
 	add_component(input_ComponentManager->create_new_mesh_component(
-		"../assets/shader/shader_base.vert.spv",
-		"../assets/shader/shader_base.frag.spv",
+		"../assets/shader/compiled_shaders/shader_base.vert.spv",
+		"../assets/shader/compiled_shaders/shader_base.frag.spv",
 		"../assets/models/Simple_Wood_Crate.fbx",
 		"../assets/textures/Simple_Wood_Crate_Color.png"
 	));
