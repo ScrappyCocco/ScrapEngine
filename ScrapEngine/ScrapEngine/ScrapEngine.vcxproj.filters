@@ -128,6 +128,18 @@
     <Filter Include="Engine\Rendering\Buffer\VertexBuffer">
       <UniqueIdentifier>{9aea26f4-8672-4846-b2af-d586e192b452}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\LogicCore\Math">
+      <UniqueIdentifier>{2a49310a-4443-4312-9738-651387ed1ee8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\LogicCore\Math\Transform">
+      <UniqueIdentifier>{c71f1553-21a8-4bec-9cb8-0f9dbd4bda38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\LogicCore\Math\Vector">
+      <UniqueIdentifier>{d94957ee-9ec9-4f78-9274-4689b4e0233c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\LogicCore\Math\Quaternion">
+      <UniqueIdentifier>{d1c36867-c55e-4582-b82b-9f474efef16e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Manager\EngineManager.cpp">
@@ -270,6 +282,15 @@
     </ClCompile>
     <ClCompile Include="Engine\Rendering\Buffer\StagingBuffer\StagingBuffer.cpp">
       <Filter>Engine\Rendering\Buffer\StagingBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\LogicCore\Math\Vector\SVector3.cpp">
+      <Filter>Engine\LogicCore\Math\Vector</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\LogicCore\Math\Transform\STransform.cpp">
+      <Filter>Engine\LogicCore\Math\Transform</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\LogicCore\Math\Quaternion\SQuaternion.cpp">
+      <Filter>Engine\LogicCore\Math\Quaternion</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -434,6 +455,15 @@
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Buffer\StagingBuffer\StagingBuffer.h">
       <Filter>Engine\Rendering\Buffer\StagingBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\LogicCore\Math\Vector\SVector3.h">
+      <Filter>Engine\LogicCore\Math\Vector</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\LogicCore\Math\Transform\STransform.h">
+      <Filter>Engine\LogicCore\Math\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\LogicCore\Math\Quaternion\SQuaternion.h">
+      <Filter>Engine\LogicCore\Math\Quaternion</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

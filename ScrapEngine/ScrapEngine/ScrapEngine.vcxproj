@@ -27,6 +27,9 @@
     <ClCompile Include="Engine\LogicCore\GameObject\SGameObject.cpp" />
     <ClCompile Include="Engine\LogicCore\Manager\LogicManager.cpp" />
     <ClCompile Include="Engine\LogicCore\Manager\LogicManagerView.cpp" />
+    <ClCompile Include="Engine\LogicCore\Math\Quaternion\SQuaternion.cpp" />
+    <ClCompile Include="Engine\LogicCore\Math\Transform\STransform.cpp" />
+    <ClCompile Include="Engine\LogicCore\Math\Vector\SVector3.cpp" />
     <ClCompile Include="Engine\LogicCore\Scene\SceneManager.cpp" />
     <ClCompile Include="Engine\LogicCore\SObject.cpp" />
     <ClCompile Include="Engine\Manager\EngineManager.cpp" />
@@ -79,6 +82,9 @@
     <ClInclude Include="Engine\LogicCore\GameObject\SGameObject.h" />
     <ClInclude Include="Engine\LogicCore\Manager\LogicManager.h" />
     <ClInclude Include="Engine\LogicCore\Manager\LogicManagerView.h" />
+    <ClInclude Include="Engine\LogicCore\Math\Quaternion\SQuaternion.h" />
+    <ClInclude Include="Engine\LogicCore\Math\Transform\STransform.h" />
+    <ClInclude Include="Engine\LogicCore\Math\Vector\SVector3.h" />
     <ClInclude Include="Engine\LogicCore\Scene\SceneManager.h" />
     <ClInclude Include="Engine\LogicCore\SObject.h" />
     <ClInclude Include="Engine\Manager\EngineManager.h" />
