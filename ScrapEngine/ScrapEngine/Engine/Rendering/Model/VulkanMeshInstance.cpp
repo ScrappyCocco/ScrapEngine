@@ -1,8 +1,8 @@
 #include "VulkanMeshInstance.h"
 #include "../../Debug/DebugLog.h"
 
-ScrapEngine::VulkanMeshInstance::VulkanMeshInstance(const std::string& vertex_shader_path, const std::string& fragment_shader_path, const std::string& model_path, const std::string& texture_path,
-	ScrapEngine::VulkanDevice* RenderDevice, ScrapEngine::VulkanSwapChain* SwapChain)
+ScrapEngine::Render::VulkanMeshInstance::VulkanMeshInstance(const std::string& vertex_shader_path, const std::string& fragment_shader_path, const std::string& model_path, const std::string& texture_path,
+	ScrapEngine::Render::VulkanDevice* RenderDevice, ScrapEngine::Render::VulkanSwapChain* SwapChain)
 {
 	VulkanRenderDescriptorSet = new VulkanDescriptorSet();
 	Debug::DebugLog::print_to_console_log("VulkanDescriptorSet created");
@@ -24,14 +24,14 @@ ScrapEngine::VulkanMeshInstance::VulkanMeshInstance(const std::string& vertex_sh
 	Debug::DebugLog::print_to_console_log("UniformBuffer created");
 	VulkanRenderDescriptorPool = new VulkanDescriptorPool(SwapChain->getSwapChainImagesVector());
 	Debug::DebugLog::print_to_console_log("VulkanDescriptorPool created");
-	VulkanRenderDescriptorSet->createDescriptorSets(VulkanRenderDescriptorPool->getDescriptorPool(), SwapChain->getSwapChainImagesVector(), VulkanRenderUniformBuffer->getUniformBuffers(),
+	VulkanRenderDescriptorSet->createDescriptorSets(VulkanRenderDescriptorPool->getDescriptorPool(), SwapChain->getSwapChainImagesVector(), VulkanRenderUniformBuffer->get_uniform_buffers(),
 		VulkanTextureImageView->getTextureImageView(), VulkanTextureSampler->getTextureSampler());
 	Debug::DebugLog::print_to_console_log("(DescriptorSets created)");
 	vertexbuffer = new simple_buffer<Vertex>(VulkanRenderVertexBuffer->getVertexBuffer(), VulkanRenderModel->getVertices());
 	indexbuffer = new simple_buffer<uint32_t>(VulkanRenderIndexBuffer->getIndexBuffer(), VulkanRenderModel->getIndices());
 }
 
-ScrapEngine::VulkanMeshInstance::~VulkanMeshInstance()
+ScrapEngine::Render::VulkanMeshInstance::~VulkanMeshInstance()
 {
 	delete vertexbuffer;
 	delete indexbuffer;
@@ -47,67 +47,67 @@ ScrapEngine::VulkanMeshInstance::~VulkanMeshInstance()
 	delete VulkanRenderModel;
 }
 
-void ScrapEngine::VulkanMeshInstance::setMeshLocation(const glm::vec3& location)
+void ScrapEngine::Render::VulkanMeshInstance::setMeshLocation(const glm::vec3& location)
 {
 	object_location.location = location;
 }
 
-void ScrapEngine::VulkanMeshInstance::setMeshRotation(const glm::vec3& rotation)
+void ScrapEngine::Render::VulkanMeshInstance::setMeshRotation(const glm::vec3& rotation)
 {
 	object_location.rotation = rotation;
 }
 
-void ScrapEngine::VulkanMeshInstance::setMeshScale(const glm::vec3& scale)
+void ScrapEngine::Render::VulkanMeshInstance::setMeshScale(const glm::vec3& scale)
 {
 	object_location.scale = scale;
 }
 
-glm::vec3 ScrapEngine::VulkanMeshInstance::getMeshLocation() const
+glm::vec3 ScrapEngine::Render::VulkanMeshInstance::getMeshLocation() const
 {
 	return object_location.location;
 }
 
-glm::vec3 ScrapEngine::VulkanMeshInstance::getMeshRotation() const
+glm::vec3 ScrapEngine::Render::VulkanMeshInstance::getMeshRotation() const
 {
 	return object_location.rotation;
 }
 
-glm::vec3 ScrapEngine::VulkanMeshInstance::getMeshScale() const
+glm::vec3 ScrapEngine::Render::VulkanMeshInstance::getMeshScale() const
 {
 	return object_location.scale;
 }
 
-void ScrapEngine::VulkanMeshInstance::updateUniformBuffer(const uint32_t& currentImage, ScrapEngine::Camera* RenderCamera)
+void ScrapEngine::Render::VulkanMeshInstance::updateUniformBuffer(const uint32_t& currentImage, ScrapEngine::Camera* RenderCamera)
 {
-	VulkanRenderUniformBuffer->updateUniformBuffer(currentImage, object_location, RenderCamera);
+	VulkanRenderUniformBuffer->update_uniform_buffer(currentImage, object_location, RenderCamera);
 }
 
-ScrapEngine::UniformBuffer* ScrapEngine::VulkanMeshInstance::getVulkanRenderUniformBuffer()
+ScrapEngine::Render::UniformBuffer* ScrapEngine::Render::VulkanMeshInstance::getVulkanRenderUniformBuffer()
 {
 	return VulkanRenderUniformBuffer;
 }
 
-ScrapEngine::VulkanGraphicsPipeline* ScrapEngine::VulkanMeshInstance::getVulkanRenderGraphicsPipeline()
+ScrapEngine::Render::VulkanGraphicsPipeline* ScrapEngine::Render::VulkanMeshInstance::getVulkanRenderGraphicsPipeline()
 {
 	return VulkanRenderGraphicsPipeline;
 }
 
-ScrapEngine::VulkanDescriptorSet* ScrapEngine::VulkanMeshInstance::getVulkanRenderDescriptorSet()
+ScrapEngine::Render::VulkanDescriptorSet* ScrapEngine::Render::VulkanMeshInstance::getVulkanRenderDescriptorSet()
 {
 	return VulkanRenderDescriptorSet;
 }
 
-ScrapEngine::simple_buffer<ScrapEngine::Vertex>* ScrapEngine::VulkanMeshInstance::getVertexbuffer()
+ScrapEngine::simple_buffer<ScrapEngine::Vertex>* ScrapEngine::Render::VulkanMeshInstance::getVertexbuffer()
 {
 	return vertexbuffer;
 }
 
-ScrapEngine::simple_buffer<uint32_t>* ScrapEngine::VulkanMeshInstance::getIndexbuffer()
+ScrapEngine::simple_buffer<uint32_t>* ScrapEngine::Render::VulkanMeshInstance::getIndexbuffer()
 {
 	return indexbuffer;
 }
 
-void ScrapEngine::VulkanMeshInstance::deleteGraphicsPipeline()
+void ScrapEngine::Render::VulkanMeshInstance::deleteGraphicsPipeline()
 {
 	delete VulkanRenderGraphicsPipeline;
 	VulkanRenderGraphicsPipeline = nullptr;

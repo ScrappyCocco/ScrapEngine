@@ -2,34 +2,34 @@
 #include "Engine/Debug/DebugLog.h"
 #include "Engine/Rendering/Base/StaticTypes.h"
 
-ScrapEngine::VulkanCommandBuffer::VulkanCommandBuffer(ScrapEngine::VulkanFrameBuffer* SwapChainFrameBuffer, vk::Extent2D* input_swapChainExtentRef, std::vector<ScrapEngine::VulkanGraphicsPipeline*> input_vulkanPipelineRef,
-	const std::vector<const std::vector<vk::DescriptorSet>*>& descriptorSets, std::vector<simple_buffer<Vertex>*> vertexBuffer, std::vector<simple_buffer<uint32_t>*> indexBuffer
-	, ScrapEngine::VulkanSkyboxInstance* SkyboxRef)
+ScrapEngine::Render::VulkanCommandBuffer::VulkanCommandBuffer(ScrapEngine::Render::VulkanFrameBuffer* swap_chain_frame_buffer, vk::Extent2D* input_swap_chain_extent_ref, std::vector<ScrapEngine::Render::VulkanGraphicsPipeline*> input_vulkan_pipeline_ref,
+	const std::vector<const std::vector<vk::DescriptorSet>*>& descriptor_sets, std::vector<simple_buffer<Vertex>*> vertex_buffer, std::vector<simple_buffer<uint32_t>*> index_buffer
+	, ScrapEngine::Render::VulkanSkyboxInstance* SkyboxRef)
 {
-	const std::vector<vk::Framebuffer>* swapChainFramebuffers = SwapChainFrameBuffer->getSwapChainFramebuffersVector();
-	commandBuffers.resize(swapChainFramebuffers->size());
+	const std::vector<vk::Framebuffer>* swap_chain_framebuffers = swap_chain_frame_buffer->get_swap_chain_framebuffers_vector();
+	command_buffers_.resize(swap_chain_framebuffers->size());
 
 	vk::CommandBufferAllocateInfo allocInfo(
 		*VulkanCommandPool::StaticCommandPoolRef, 
 		vk::CommandBufferLevel::ePrimary, 
-		(uint32_t)commandBuffers.size()
+		(uint32_t)command_buffers_.size()
 	);
 
-	if (VulkanDevice::StaticLogicDeviceRef->allocateCommandBuffers(&allocInfo, commandBuffers.data()) != vk::Result::eSuccess) {
+	if (VulkanDevice::StaticLogicDeviceRef->allocateCommandBuffers(&allocInfo, command_buffers_.data()) != vk::Result::eSuccess) {
 		throw std::runtime_error("VulkanCommandBuffer: Failed to allocate command buffers!");
 	}
 
-	for (size_t i = 0; i < commandBuffers.size(); i++) {
+	for (size_t i = 0; i < command_buffers_.size(); i++) {
 		vk::CommandBufferBeginInfo beginInfo(vk::CommandBufferUsageFlagBits::eSimultaneousUse);
 
-		if (commandBuffers[i].begin(&beginInfo) != vk::Result::eSuccess) {
+		if (command_buffers_[i].begin(&beginInfo) != vk::Result::eSuccess) {
 			throw std::runtime_error("VulkanCommandBuffer: Failed to begin recording command buffer!");
 		}
 
 		vk::RenderPassBeginInfo renderPassInfo(
 			*VulkanRenderPass::StaticRenderPassRef, 
-			(*swapChainFramebuffers)[i], 
-			vk::Rect2D(vk::Offset2D(), *input_swapChainExtentRef)
+			(*swap_chain_framebuffers)[i], 
+			vk::Rect2D(vk::Offset2D(), *input_swap_chain_extent_ref)
 		);
 
 		std::array<vk::ClearValue, 2> clearValues = {
@@ -39,52 +39,52 @@ ScrapEngine::VulkanCommandBuffer::VulkanCommandBuffer(ScrapEngine::VulkanFrameBu
 		renderPassInfo.clearValueCount = static_cast<uint32_t>(clearValues.size());
 		renderPassInfo.pClearValues = clearValues.data();
 
-		commandBuffers[i].beginRenderPass(&renderPassInfo, vk::SubpassContents::eInline);
+		command_buffers_[i].beginRenderPass(&renderPassInfo, vk::SubpassContents::eInline);
 
 		vk::DeviceSize offsets[] = { 0 };
 
 		//Skybox render, must be before the rest of the render
 		if (SkyboxRef) {
-			commandBuffers[i].bindPipeline(vk::PipelineBindPoint::eGraphics, *SkyboxRef->getVulkanRenderGraphicsPipeline()->getGraphicsPipeline());
+			command_buffers_[i].bindPipeline(vk::PipelineBindPoint::eGraphics, *SkyboxRef->getVulkanRenderGraphicsPipeline()->getGraphicsPipeline());
 			vk::Buffer buff[] = { *SkyboxRef->getVertexbuffer()->buffer };
-			commandBuffers[i].bindVertexBuffers(0, 1, buff, offsets);
-			commandBuffers[i].bindIndexBuffer(*SkyboxRef->getIndexbuffer()->buffer, 0, vk::IndexType::eUint32);
-			commandBuffers[i].bindDescriptorSets(vk::PipelineBindPoint::eGraphics, *SkyboxRef->getVulkanRenderGraphicsPipeline()->getPipelineLayout(), 0, 1, &(*SkyboxRef->getVulkanRenderDescriptorSet()->getDescriptorSets())[i], 0, nullptr);
-			commandBuffers[i].drawIndexed(static_cast<uint32_t>((*SkyboxRef->getIndexbuffer()).vectorData->size()), 1, 0, 0, 0);
+			command_buffers_[i].bindVertexBuffers(0, 1, buff, offsets);
+			command_buffers_[i].bindIndexBuffer(*SkyboxRef->getIndexbuffer()->buffer, 0, vk::IndexType::eUint32);
+			command_buffers_[i].bindDescriptorSets(vk::PipelineBindPoint::eGraphics, *SkyboxRef->getVulkanRenderGraphicsPipeline()->getPipelineLayout(), 0, 1, &(*SkyboxRef->getVulkanRenderDescriptorSet()->getDescriptorSets())[i], 0, nullptr);
+			command_buffers_[i].drawIndexed(static_cast<uint32_t>((*SkyboxRef->getIndexbuffer()).vectorData->size()), 1, 0, 0, 0);
 		}
 		//Scene render
-		for (int k = 0; k < vertexBuffer.size(); k++) {
-			commandBuffers[i].bindPipeline(vk::PipelineBindPoint::eGraphics, *input_vulkanPipelineRef[k]->getGraphicsPipeline());
+		for (int k = 0; k < vertex_buffer.size(); k++) {
+			command_buffers_[i].bindPipeline(vk::PipelineBindPoint::eGraphics, *input_vulkan_pipeline_ref[k]->getGraphicsPipeline());
 
-			vk::Buffer vertexBuffers[] = { *(*vertexBuffer[k]).buffer };
+			vk::Buffer vertex_buffers[] = { *(*vertex_buffer[k]).buffer };
 
-			commandBuffers[i].bindVertexBuffers(0, 1, vertexBuffers, offsets);
+			command_buffers_[i].bindVertexBuffers(0, 1, vertex_buffers, offsets);
 
-			commandBuffers[i].bindIndexBuffer(*(*indexBuffer[k]).buffer, 0, vk::IndexType::eUint32);
+			command_buffers_[i].bindIndexBuffer(*(*index_buffer[k]).buffer, 0, vk::IndexType::eUint32);
 
-			commandBuffers[i].bindDescriptorSets(vk::PipelineBindPoint::eGraphics, *input_vulkanPipelineRef[k]->getPipelineLayout(), 0, 1, &(*descriptorSets[k])[i], 0, nullptr);
+			command_buffers_[i].bindDescriptorSets(vk::PipelineBindPoint::eGraphics, *input_vulkan_pipeline_ref[k]->getPipelineLayout(), 0, 1, &(*descriptor_sets[k])[i], 0, nullptr);
 
-			commandBuffers[i].drawIndexed(static_cast<uint32_t>((*indexBuffer[k]).vectorData->size()), 1, 0, 0, 0);
+			command_buffers_[i].drawIndexed(static_cast<uint32_t>((*index_buffer[k]).vectorData->size()), 1, 0, 0, 0);
 		}
 
-		commandBuffers[i].endRenderPass();
+		command_buffers_[i].endRenderPass();
 
-		commandBuffers[i].end();
+		command_buffers_[i].end();
 	}
 }
 
-ScrapEngine::VulkanCommandBuffer::~VulkanCommandBuffer()
+ScrapEngine::Render::VulkanCommandBuffer::~VulkanCommandBuffer()
 {
-	freeCommandBuffers();
+	free_command_buffers();
 }
 
-void ScrapEngine::VulkanCommandBuffer::freeCommandBuffers()
+void ScrapEngine::Render::VulkanCommandBuffer::free_command_buffers()
 {
-	VulkanDevice::StaticLogicDeviceRef->freeCommandBuffers(*VulkanCommandPool::StaticCommandPoolRef, static_cast<uint32_t>(commandBuffers.size()), commandBuffers.data());
-	commandBuffers.clear();
+	VulkanDevice::StaticLogicDeviceRef->freeCommandBuffers(*VulkanCommandPool::StaticCommandPoolRef, static_cast<uint32_t>(command_buffers_.size()), command_buffers_.data());
+	command_buffers_.clear();
 }
 
-const std::vector<vk::CommandBuffer>* ScrapEngine::VulkanCommandBuffer::getCommandBuffersVector()
+const std::vector<vk::CommandBuffer>* ScrapEngine::Render::VulkanCommandBuffer::get_command_buffers_vector()
 {
-	return &commandBuffers;
+	return &command_buffers_;
 }

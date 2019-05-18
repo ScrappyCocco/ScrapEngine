@@ -2,22 +2,22 @@
 #include "../Base/StaticTypes.h"
 //Init Static Members
 
-const vk::SurfaceKHR* ScrapEngine::VulkanSurface::StaticSurfaceRef = nullptr;
+const vk::SurfaceKHR* ScrapEngine::Render::VulkanSurface::StaticSurfaceRef = nullptr;
 
 //Class
 
-ScrapEngine::VulkanSurface::VulkanSurface(ScrapEngine::GameWindow* windowRef) 
+ScrapEngine::Render::VulkanSurface::VulkanSurface(ScrapEngine::Render::GameWindow* windowRef)
 {
 	createSurface(windowRef);
 	StaticSurfaceRef = &surface;
 }
 
-ScrapEngine::VulkanSurface::~VulkanSurface()
+ScrapEngine::Render::VulkanSurface::~VulkanSurface()
 {
 	VukanInstance::StaticInstanceRef->destroySurfaceKHR(surface);
 }
 
-void ScrapEngine::VulkanSurface::createSurface(ScrapEngine::GameWindow* windowRef)
+void ScrapEngine::Render::VulkanSurface::createSurface(ScrapEngine::Render::GameWindow* windowRef)
 {
 	surface = vk::SurfaceKHR();
 	if (glfwCreateWindowSurface(*VukanInstance::StaticInstanceRef, windowRef->window, nullptr, reinterpret_cast<VkSurfaceKHR*>(&surface)) != VK_SUCCESS) {
@@ -25,7 +25,7 @@ void ScrapEngine::VulkanSurface::createSurface(ScrapEngine::GameWindow* windowRe
 	}
 }
 
-vk::SurfaceKHR* ScrapEngine::VulkanSurface::getSurface()
+vk::SurfaceKHR* ScrapEngine::Render::VulkanSurface::getSurface()
 {
 	return &surface;
 }

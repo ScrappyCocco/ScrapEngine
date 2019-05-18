@@ -3,7 +3,7 @@
 #include <algorithm>
 #include "../Base/StaticTypes.h"
 
-ScrapEngine::VulkanSwapChain::VulkanSwapChain(SwapChainSupportDetails swapChainSupport, GraphicsQueue::QueueFamilyIndices indices, vk::SurfaceKHR* input_surfaceRef, const uint32_t& WIDTH, const uint32_t& HEIGHT, bool vsync)
+ScrapEngine::Render::VulkanSwapChain::VulkanSwapChain(SwapChainSupportDetails swapChainSupport, GraphicsQueue::QueueFamilyIndices indices, vk::SurfaceKHR* input_surfaceRef, const uint32_t& WIDTH, const uint32_t& HEIGHT, bool vsync)
 	: surfaceRef(input_surfaceRef)
 {
 	vk::SurfaceFormatKHR surfaceFormat = chooseSwapSurfaceFormat(swapChainSupport.formats);
@@ -54,12 +54,12 @@ ScrapEngine::VulkanSwapChain::VulkanSwapChain(SwapChainSupportDetails swapChainS
 	swapChainExtent = extent;
 }
 
-ScrapEngine::VulkanSwapChain::~VulkanSwapChain()
+ScrapEngine::Render::VulkanSwapChain::~VulkanSwapChain()
 {
 	VulkanDevice::StaticLogicDeviceRef->destroySwapchainKHR(swapChain);
 }
 
-vk::SurfaceFormatKHR ScrapEngine::VulkanSwapChain::chooseSwapSurfaceFormat(const std::vector<vk::SurfaceFormatKHR>& availableFormats)
+vk::SurfaceFormatKHR ScrapEngine::Render::VulkanSwapChain::chooseSwapSurfaceFormat(const std::vector<vk::SurfaceFormatKHR>& availableFormats)
 {
 	if (availableFormats.size() == 1 && availableFormats[0].format == vk::Format::eUndefined) {
 		return { vk::Format::eB8G8R8A8Unorm , vk::ColorSpaceKHR::eSrgbNonlinear};
@@ -74,7 +74,7 @@ vk::SurfaceFormatKHR ScrapEngine::VulkanSwapChain::chooseSwapSurfaceFormat(const
 	return availableFormats[0];
 }
 
-vk::PresentModeKHR ScrapEngine::VulkanSwapChain::chooseSwapPresentMode(const std::vector<vk::PresentModeKHR>& availablePresentModes, bool vsync)
+vk::PresentModeKHR ScrapEngine::Render::VulkanSwapChain::chooseSwapPresentMode(const std::vector<vk::PresentModeKHR>& availablePresentModes, bool vsync)
 {
 	vk::PresentModeKHR bestMode = vk::PresentModeKHR::eFifo;
 
@@ -93,7 +93,7 @@ vk::PresentModeKHR ScrapEngine::VulkanSwapChain::chooseSwapPresentMode(const std
 	return bestMode;
 }
 
-vk::Extent2D ScrapEngine::VulkanSwapChain::chooseSwapExtent(const vk::SurfaceCapabilitiesKHR& capabilities, const uint32_t& WIDTH, const uint32_t& HEIGHT)
+vk::Extent2D ScrapEngine::Render::VulkanSwapChain::chooseSwapExtent(const vk::SurfaceCapabilitiesKHR& capabilities, const uint32_t& WIDTH, const uint32_t& HEIGHT)
 {
 	if (capabilities.currentExtent.width != std::numeric_limits<uint32_t>::max()) {
 		return capabilities.currentExtent;
@@ -108,22 +108,22 @@ vk::Extent2D ScrapEngine::VulkanSwapChain::chooseSwapExtent(const vk::SurfaceCap
 	}
 }
 
-vk::SwapchainKHR ScrapEngine::VulkanSwapChain::getSwapChain() const
+vk::SwapchainKHR ScrapEngine::Render::VulkanSwapChain::getSwapChain() const
 {
 	return swapChain;
 }
 
-const std::vector<vk::Image>* ScrapEngine::VulkanSwapChain::getSwapChainImagesVector()
+const std::vector<vk::Image>* ScrapEngine::Render::VulkanSwapChain::getSwapChainImagesVector()
 {
 	return &swapChainImages;
 }
 
-vk::Format ScrapEngine::VulkanSwapChain::getSwapChainImageFormat() const
+vk::Format ScrapEngine::Render::VulkanSwapChain::getSwapChainImageFormat() const
 {
 	return swapChainImageFormat;
 }
 
-vk::Extent2D ScrapEngine::VulkanSwapChain::getSwapChainExtent() const
+vk::Extent2D ScrapEngine::Render::VulkanSwapChain::getSwapChainExtent() const
 {
 	return swapChainExtent;
 }

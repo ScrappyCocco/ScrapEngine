@@ -1,7 +1,6 @@
 #include "SceneManager.h"
 
-ScrapEngine::Core::SceneManager::
-SceneManager(ScrapEngine::RenderManager* input_render_manager_ref) : render_manager_ref_(input_render_manager_ref),
+ScrapEngine::Core::SceneManager::SceneManager(ScrapEngine::Render::RenderManager* input_render_manager_ref) : render_manager_ref_(input_render_manager_ref),
                                                                      current_skybox_(nullptr)
 {
 }

@@ -3,7 +3,7 @@
 #include "../Texture/TextureImage.h"
 #include "../Texture/TextureImageView.h"
 
-ScrapEngine::VulkanDepthResources::VulkanDepthResources(const vk::Extent2D* swapChainExtent, vk::SampleCountFlagBits msaaSamples)
+ScrapEngine::Render::VulkanDepthResources::VulkanDepthResources(const vk::Extent2D* swapChainExtent, vk::SampleCountFlagBits msaaSamples)
 {
 	vk::Format depthFormat = findDepthFormat();
 
@@ -14,14 +14,14 @@ ScrapEngine::VulkanDepthResources::VulkanDepthResources(const vk::Extent2D* swap
 }
 
 
-ScrapEngine::VulkanDepthResources::~VulkanDepthResources()
+ScrapEngine::Render::VulkanDepthResources::~VulkanDepthResources()
 {
 	VulkanDevice::StaticLogicDeviceRef->destroyImageView(depthImageView);
 	VulkanDevice::StaticLogicDeviceRef->destroyImage(depthImage);
 	VulkanDevice::StaticLogicDeviceRef->freeMemory(depthImageMemory);
 }
 
-vk::Format ScrapEngine::VulkanDepthResources::findSupportedFormat(const std::vector<vk::Format>& candidates, vk::ImageTiling tiling, vk::FormatFeatureFlags features)
+vk::Format ScrapEngine::Render::VulkanDepthResources::findSupportedFormat(const std::vector<vk::Format>& candidates, vk::ImageTiling tiling, vk::FormatFeatureFlags features)
 {
 	for (vk::Format format : candidates) {
 		vk::FormatProperties props;
@@ -38,7 +38,7 @@ vk::Format ScrapEngine::VulkanDepthResources::findSupportedFormat(const std::vec
 	throw std::runtime_error("VulkanDepthResources: Failed to find supported format!");
 }
 
-vk::Format ScrapEngine::VulkanDepthResources::findDepthFormat()
+vk::Format ScrapEngine::Render::VulkanDepthResources::findDepthFormat()
 {
 	return findSupportedFormat(
 		{ 
@@ -49,22 +49,22 @@ vk::Format ScrapEngine::VulkanDepthResources::findDepthFormat()
 	);
 }
 
-bool ScrapEngine::VulkanDepthResources::hasStencilComponent(const vk::Format& format)
+bool ScrapEngine::Render::VulkanDepthResources::hasStencilComponent(const vk::Format& format)
 {
 	return format == vk::Format::eD32SfloatS8Uint || format == vk::Format::eD24UnormS8Uint;
 }
 
-vk::Image* ScrapEngine::VulkanDepthResources::getDepthImage()
+vk::Image* ScrapEngine::Render::VulkanDepthResources::getDepthImage()
 {
 	return &depthImage;
 }
 
-vk::DeviceMemory* ScrapEngine::VulkanDepthResources::getDepthImageMemory()
+vk::DeviceMemory* ScrapEngine::Render::VulkanDepthResources::getDepthImageMemory()
 {
 	return &depthImageMemory;
 }
 
-vk::ImageView* ScrapEngine::VulkanDepthResources::getDepthImageView()
+vk::ImageView* ScrapEngine::Render::VulkanDepthResources::getDepthImageView()
 {
 	return &depthImageView;
 }

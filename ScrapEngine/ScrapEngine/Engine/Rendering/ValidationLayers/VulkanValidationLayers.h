@@ -3,40 +3,41 @@
 #include <vulkan/vulkan.hpp>
 
 namespace ScrapEngine {
+	namespace Render {
+		class VulkanValidationLayers
+		{
+		public:
+			VulkanValidationLayers();
+			~VulkanValidationLayers();
 
-	class VulkanValidationLayers
-	{
-	public:
-		VulkanValidationLayers();
-		~VulkanValidationLayers();
+			void setupDebugCallback();
+			bool checkValidationLayerSupport();
+			static bool areValidationLayersEnabled();
+			std::vector<const char*> getValidationLayers();
 
-		void setupDebugCallback();
-		bool checkValidationLayerSupport();
-		static bool areValidationLayersEnabled();
-		std::vector<const char*> getValidationLayers();
+		private:
+			vk::DispatchLoaderDynamic dispatcher;
 
-	private:
-		vk::DispatchLoaderDynamic dispatcher;
+			//List of validationLayers to load and use
+			const std::vector<const char*> validationLayers = {
+				"VK_LAYER_LUNARG_standard_validation"
+			};
 
-		//List of validationLayers to load and use
-		const std::vector<const char*> validationLayers = {
-			"VK_LAYER_LUNARG_standard_validation"
-		};
+			vk::DebugUtilsMessengerEXT callback;
 
-		vk::DebugUtilsMessengerEXT callback;
-
-		//Callback function that display the messages
-		static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(
-			VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
-			VkDebugUtilsMessageTypeFlagsEXT messageType,
-			const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData,
-			void* pUserData);
+			//Callback function that display the messages
+			static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(
+				VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
+				VkDebugUtilsMessageTypeFlagsEXT messageType,
+				const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData,
+				void* pUserData);
 
 #ifdef NDEBUG
-		static const bool enableValidationLayers = false;
+			static const bool enableValidationLayers = false;
 #else
-		static const bool enableValidationLayers = true;
+			static const bool enableValidationLayers = true;
 #endif
-	};
+		};
+	}
 }
 

@@ -4,65 +4,73 @@
 #include "../Memory/MemoryManager.h"
 #include "../Base/StaticTypes.h"
 
-void ScrapEngine::BaseBuffer::createBuffer(const vk::DeviceSize& size, vk::BufferUsageFlags usage, vk::MemoryPropertyFlags properties, vk::Buffer& buffer, vk::DeviceMemory& bufferMemory)
+void ScrapEngine::Render::BaseBuffer::create_buffer(const vk::DeviceSize& size, vk::BufferUsageFlags usage,
+                                                    vk::MemoryPropertyFlags properties, vk::Buffer& buffer,
+                                                    vk::DeviceMemory& buffer_memory)
 {
-	vk::BufferCreateInfo bufferInfo(
-		vk::BufferCreateFlags(), 
-		size, 
-		usage, 
+	vk::BufferCreateInfo buffer_info(
+		vk::BufferCreateFlags(),
+		size,
+		usage,
 		vk::SharingMode::eExclusive
 	);
 
-	if (VulkanDevice::StaticLogicDeviceRef->createBuffer(&bufferInfo, nullptr, &buffer) != vk::Result::eSuccess) {
+	if (VulkanDevice::StaticLogicDeviceRef->createBuffer(&buffer_info, nullptr, &buffer) != vk::Result::eSuccess)
+	{
 		throw std::runtime_error("BaseBuffer: Failed to create buffer!");
 	}
 
-	vk::MemoryRequirements memRequirements;
-	VulkanDevice::StaticLogicDeviceRef->getBufferMemoryRequirements(buffer, &memRequirements);
+	vk::MemoryRequirements mem_requirements;
+	VulkanDevice::StaticLogicDeviceRef->getBufferMemoryRequirements(buffer, &mem_requirements);
 
-	vk::MemoryAllocateInfo allocInfo(memRequirements.size, findMemoryType(memRequirements.memoryTypeBits, properties));
+	vk::MemoryAllocateInfo alloc_info(mem_requirements.size,
+	                                  findMemoryType(mem_requirements.memoryTypeBits, properties));
 
-	if (VulkanDevice::StaticLogicDeviceRef->allocateMemory(&allocInfo, nullptr, &bufferMemory) != vk::Result::eSuccess) {
+	if (VulkanDevice::StaticLogicDeviceRef->allocateMemory(&alloc_info, nullptr, &buffer_memory) != vk::Result::eSuccess
+	)
+	{
 		throw std::runtime_error("BaseBuffer: Failed to allocate buffer memory!");
 	}
 
-	VulkanDevice::StaticLogicDeviceRef->bindBufferMemory(buffer, bufferMemory, 0);
+	VulkanDevice::StaticLogicDeviceRef->bindBufferMemory(buffer, buffer_memory, 0);
 }
 
-void ScrapEngine::BaseBuffer::copyBuffer(vk::Buffer* srcBuffer, vk::Buffer& dstBuffer, const vk::DeviceSize& size)
+void ScrapEngine::Render::BaseBuffer::copy_buffer(vk::Buffer* src_buffer, vk::Buffer& dst_buffer,
+                                                  const vk::DeviceSize& size)
 {
-	vk::CommandBuffer* commandBuffer = beginSingleTimeCommands();
+	vk::CommandBuffer* command_buffer = begin_single_time_commands();
 
-	vk::BufferCopy copyRegion(0, 0, size);
+	vk::BufferCopy copy_region(0, 0, size);
 
-	commandBuffer->copyBuffer(*srcBuffer, dstBuffer, 1, &copyRegion);
+	command_buffer->copyBuffer(*src_buffer, dst_buffer, 1, &copy_region);
 
-	endSingleTimeCommands(commandBuffer);
+	end_single_time_commands(command_buffer);
 }
 
-vk::CommandBuffer* ScrapEngine::BaseBuffer::beginSingleTimeCommands()
+vk::CommandBuffer* ScrapEngine::Render::BaseBuffer::begin_single_time_commands()
 {
-	vk::CommandBufferAllocateInfo allocInfo(*VulkanCommandPool::StaticCommandPoolRef, vk::CommandBufferLevel::ePrimary, 1);
+	vk::CommandBufferAllocateInfo alloc_info(*VulkanCommandPool::StaticCommandPoolRef, vk::CommandBufferLevel::ePrimary,
+	                                         1);
 
-	vk::CommandBuffer* commandBuffer = new vk::CommandBuffer();
-	VulkanDevice::StaticLogicDeviceRef->allocateCommandBuffers(&allocInfo, commandBuffer);
+	vk::CommandBuffer* command_buffer = new vk::CommandBuffer();
+	VulkanDevice::StaticLogicDeviceRef->allocateCommandBuffers(&alloc_info, command_buffer);
 
-	vk::CommandBufferBeginInfo beginInfo(vk::CommandBufferUsageFlagBits::eOneTimeSubmit);
+	const vk::CommandBufferBeginInfo begin_info(vk::CommandBufferUsageFlagBits::eOneTimeSubmit);
 
-	commandBuffer->begin(beginInfo);
+	command_buffer->begin(begin_info);
 
-	return commandBuffer;
+	return command_buffer;
 }
 
-void ScrapEngine::BaseBuffer::endSingleTimeCommands(vk::CommandBuffer* commandBuffer)
+void ScrapEngine::Render::BaseBuffer::end_single_time_commands(vk::CommandBuffer* command_buffer)
 {
-	commandBuffer->end();
+	command_buffer->end();
 
-	vk::SubmitInfo submitInfo(0, nullptr, nullptr, 1, commandBuffer);
-	GraphicsQueue::StaticGraphicsQueueRef->submit(1, &submitInfo, nullptr);
+	vk::SubmitInfo submit_info(0, nullptr, nullptr, 1, command_buffer);
+	GraphicsQueue::StaticGraphicsQueueRef->submit(1, &submit_info, nullptr);
 
 	GraphicsQueue::StaticGraphicsQueueRef->waitIdle();
 
-	VulkanDevice::StaticLogicDeviceRef->freeCommandBuffers(*VulkanCommandPool::StaticCommandPoolRef, 1, commandBuffer);
-	delete commandBuffer;
+	VulkanDevice::StaticLogicDeviceRef->freeCommandBuffers(*VulkanCommandPool::StaticCommandPoolRef, 1, command_buffer);
+	delete command_buffer;
 }

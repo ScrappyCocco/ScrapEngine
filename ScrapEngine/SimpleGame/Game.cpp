@@ -9,7 +9,7 @@ int main() {
 	try {
 		//init engine
 		ScrapEngineManager = new ScrapEngine::Manager::EngineManager("ScrapEngine Simple Chess Game", 0);
-		ScrapEngine::GameWindow* gameWindowRef = ScrapEngineManager->render_manager_view->getGameWindow();
+		ScrapEngine::Render::GameWindow* gameWindowRef = ScrapEngineManager->render_manager_view->getGameWindow();
 		gameWindowRef->setWindowIcon("../assets/game_icon/chess_game_icon_png.png");
 		//Create the input manager
 		ScrapEngine::Input::InputManager* inputmanager = gameWindowRef->createWindowInputManager();

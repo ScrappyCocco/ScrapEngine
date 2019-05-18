@@ -11,11 +11,11 @@ namespace ScrapEngine
 		class ComponentsManager
 		{
 		private:
-			ScrapEngine::RenderManager* render_manager_ref_;
+			ScrapEngine::Render::RenderManager* render_manager_ref_;
 
-			std::map<ScrapEngine::Core::MeshComponent*, ScrapEngine::VulkanMeshInstance*> loaded_meshes_;
+			std::map<ScrapEngine::Core::MeshComponent*, ScrapEngine::Render::VulkanMeshInstance*> loaded_meshes_;
 		public:
-			explicit ComponentsManager(ScrapEngine::RenderManager* input_render_manager_ref);
+			explicit ComponentsManager(ScrapEngine::Render::RenderManager* input_render_manager_ref);
 			~ComponentsManager() = default;
 
 			//MeshStuff

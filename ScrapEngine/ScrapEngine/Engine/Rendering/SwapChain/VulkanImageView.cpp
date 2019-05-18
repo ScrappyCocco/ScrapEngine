@@ -2,7 +2,7 @@
 #include "../Texture/TextureImageView.h"
 #include "../Base/StaticTypes.h"
 
-ScrapEngine::VulkanImageView::VulkanImageView(ScrapEngine::VulkanSwapChain* SwapChainRef)
+ScrapEngine::Render::VulkanImageView::VulkanImageView(ScrapEngine::Render::VulkanSwapChain* SwapChainRef)
 {
 	const std::vector<vk::Image>* swapChainImages = SwapChainRef->getSwapChainImagesVector();
 	swapChainImageViews.resize(swapChainImages->size());
@@ -12,14 +12,14 @@ ScrapEngine::VulkanImageView::VulkanImageView(ScrapEngine::VulkanSwapChain* Swap
 	}
 }
 
-ScrapEngine::VulkanImageView::~VulkanImageView()
+ScrapEngine::Render::VulkanImageView::~VulkanImageView()
 {
 	for (auto imageView : swapChainImageViews) {
 		VulkanDevice::StaticLogicDeviceRef->destroyImageView(imageView);
 	}
 }
 
-const std::vector<vk::ImageView>* ScrapEngine::VulkanImageView::getSwapChainImageViewsVector()
+const std::vector<vk::ImageView>* ScrapEngine::Render::VulkanImageView::getSwapChainImageViewsVector()
 {
 	return &swapChainImageViews;
 }

@@ -5,17 +5,17 @@
 #include <fstream>
 
 namespace ScrapEngine {
+	namespace Render {
+		class ShaderManager
+		{
+		public:
+			ShaderManager() = default;
+			~ShaderManager() = default;
 
-	class ShaderManager
-	{
-	public:
-		ShaderManager();
-		~ShaderManager();
+			vk::ShaderModule createShaderModule(const std::vector<char>& code);
 
-		vk::ShaderModule createShaderModule(const std::vector<char>& code);
-
-		static std::vector<char> readFile(const std::string& filename);
-	};
-
+			static std::vector<char> readFile(const std::string& filename);
+		};
+	}
 }
 

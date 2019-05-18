@@ -3,26 +3,26 @@
 #include "Engine/Rendering/Buffer/BaseBuffer.h"
 #include "Engine/Rendering/Buffer/StagingBuffer/StagingBuffer.h"
 
-ScrapEngine::IndexBuffer::IndexBuffer(const std::vector<uint32_t>* indices)
+ScrapEngine::Render::IndexBuffer::IndexBuffer(const std::vector<uint32_t>* indices)
 {
-	vk::DeviceSize bufferSize = sizeof((*indices)[0]) * indices->size();
+	const vk::DeviceSize buffer_size = sizeof((*indices)[0]) * indices->size();
 
-	StagingBuffer* Staging = new StagingBuffer(bufferSize, indices);
+	StagingBuffer* staging = new StagingBuffer(buffer_size, indices);
 	
-	BaseBuffer::createBuffer(bufferSize, vk::BufferUsageFlagBits::eTransferDst | vk::BufferUsageFlagBits::eIndexBuffer, vk::MemoryPropertyFlagBits::eDeviceLocal, indexBuffer, indexBufferMemory);
+	BaseBuffer::create_buffer(buffer_size, vk::BufferUsageFlagBits::eTransferDst | vk::BufferUsageFlagBits::eIndexBuffer, vk::MemoryPropertyFlagBits::eDeviceLocal, indexBuffer, indexBufferMemory);
 
-	BaseBuffer::copyBuffer(Staging->getStagingBuffer(), indexBuffer, bufferSize);
+	BaseBuffer::copy_buffer(staging->getStagingBuffer(), indexBuffer, buffer_size);
 
-	delete Staging;
+	delete staging;
 }
 
-ScrapEngine::IndexBuffer::~IndexBuffer()
+ScrapEngine::Render::IndexBuffer::~IndexBuffer()
 {
 	VulkanDevice::StaticLogicDeviceRef->destroyBuffer(indexBuffer);
 	VulkanDevice::StaticLogicDeviceRef->freeMemory(indexBufferMemory);
 }
 
-vk::Buffer* ScrapEngine::IndexBuffer::getIndexBuffer()
+vk::Buffer* ScrapEngine::Render::IndexBuffer::getIndexBuffer()
 {
 	return &indexBuffer;
 }

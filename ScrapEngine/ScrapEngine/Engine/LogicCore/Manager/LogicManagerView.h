@@ -12,12 +12,12 @@ namespace ScrapEngine
 		class LogicManagerView
 		{
 		private:
-			ScrapEngine::RenderManager* render_manager_ref_;
+			ScrapEngine::Render::RenderManager* render_manager_ref_;
 			ScrapEngine::Core::LogicManager* logic_manager_ref_;
 			ScrapEngine::Core::ComponentsManager* component_manager_;
 			ScrapEngine::Core::SceneManager* scene_manager_;
 		public:
-			LogicManagerView(ScrapEngine::RenderManager* input_render_manager_ref,
+			LogicManagerView(ScrapEngine::Render::RenderManager* input_render_manager_ref,
 			                 ScrapEngine::Core::LogicManager* input_logic_manager_ref);
 			~LogicManagerView();
 

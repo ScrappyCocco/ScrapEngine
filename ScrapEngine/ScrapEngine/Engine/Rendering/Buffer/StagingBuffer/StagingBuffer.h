@@ -5,36 +5,37 @@
 #include "Engine/Rendering/Buffer/CommandBuffer/VulkanCommandBuffer.h"
 
 namespace ScrapEngine {
+	namespace Render {
+		class StagingBuffer
+		{
+		private:
+			vk::Buffer staging_buffer_;
+			vk::DeviceMemory staging_buffer_memory_;
+		public:
+			StagingBuffer(const vk::DeviceSize& image_size, stbi_uc* pixels);
 
-	class StagingBuffer
-	{
-	private:
-		vk::Buffer stagingBuffer;
-		vk::DeviceMemory stagingBufferMemory;
-	public:
-		StagingBuffer(const vk::DeviceSize& imageSize, stbi_uc* pixels);
+			template <class T>
+			StagingBuffer(const vk::DeviceSize& buffer_size, const std::vector<T>* vector_data);
 
-		template <class T> 
-		StagingBuffer(const vk::DeviceSize& bufferSize, const std::vector<T>* vectorData);
+			~StagingBuffer();
 
-		~StagingBuffer();
-
-		static void copyBufferToImage(vk::Buffer* buffer, vk::Image* image, const uint32_t& width, const uint32_t& height);
-		static void copyBufferToImage(vk::Buffer* buffer, vk::Image* image, const uint32_t& width, const uint32_t& height, vk::BufferImageCopy* region, int regioncount = 1, vk::ImageLayout layout = vk::ImageLayout::eTransferDstOptimal);
+			static void copy_buffer_to_image(vk::Buffer* buffer, vk::Image* image, const uint32_t& width, const uint32_t& height);
+			static void copy_buffer_to_image(vk::Buffer* buffer, vk::Image* image, const uint32_t& width, const uint32_t& height, vk::BufferImageCopy* region, int regioncount = 1, vk::ImageLayout layout = vk::ImageLayout::eTransferDstOptimal);
 
 
-		vk::Buffer* getStagingBuffer();
-		vk::DeviceMemory* getStagingBufferMemory();
+			vk::Buffer* getStagingBuffer();
+			vk::DeviceMemory* getStagingBufferMemory();
 
-	};
-	template<class T>
-	inline StagingBuffer::StagingBuffer(const vk::DeviceSize& bufferSize, const std::vector<T>* vectorData)
-	{
-		BaseBuffer::createBuffer(bufferSize, vk::BufferUsageFlagBits::eTransferSrc, vk::MemoryPropertyFlagBits::eHostVisible | vk::MemoryPropertyFlagBits::eHostCoherent, stagingBuffer, stagingBufferMemory);
-		void* data;
-		VulkanDevice::StaticLogicDeviceRef->mapMemory(stagingBufferMemory, 0, bufferSize, vk::MemoryMapFlags(), &data);
-		memcpy(data, vectorData->data(), static_cast<size_t>(bufferSize));
-		VulkanDevice::StaticLogicDeviceRef->unmapMemory(stagingBufferMemory);
+		};
+		template<class T>
+		inline StagingBuffer::StagingBuffer(const vk::DeviceSize& buffer_size, const std::vector<T>* vector_data)
+		{
+			BaseBuffer::create_buffer(buffer_size, vk::BufferUsageFlagBits::eTransferSrc, vk::MemoryPropertyFlagBits::eHostVisible | vk::MemoryPropertyFlagBits::eHostCoherent, staging_buffer_, staging_buffer_memory_);
+			void* data;
+			VulkanDevice::StaticLogicDeviceRef->mapMemory(staging_buffer_memory_, 0, buffer_size, vk::MemoryMapFlags(), &data);
+			memcpy(data, vector_data->data(), static_cast<size_t>(buffer_size));
+			VulkanDevice::StaticLogicDeviceRef->unmapMemory(staging_buffer_memory_);
+		}
 	}
 }
 

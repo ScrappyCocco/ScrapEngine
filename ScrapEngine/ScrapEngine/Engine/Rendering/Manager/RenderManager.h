@@ -31,74 +31,76 @@
 #include "../Model/VulkanSkyboxInstance.h"
 
 namespace ScrapEngine {
-	class RenderManager
-	{
-	private:
-		ScrapEngine::GameWindow* GameWindow = nullptr;
-		ScrapEngine::VukanInstance* VulkanInstance = nullptr;
-		ScrapEngine::VulkanDevice* VulkanRenderDevice = nullptr;
-		ScrapEngine::VulkanSwapChain* VulkanRenderSwapChain = nullptr;
-		ScrapEngine::VulkanImageView* VulkanRenderImageView = nullptr;
-		ScrapEngine::VulkanRenderPass* VulkanRenderingPass = nullptr;
-		ScrapEngine::VulkanFrameBuffer* VulkanRenderFrameBuffer = nullptr;
-		ScrapEngine::VulkanCommandPool* VulkanRenderCommandPool = nullptr;
-		ScrapEngine::VulkanCommandBuffer* VulkanRenderCommandBuffer = nullptr;
-		ScrapEngine::GraphicsQueue* VulkanGraphicsQueue = nullptr;
-		ScrapEngine::PresentQueue* VulkanPresentationQueue = nullptr;
-		ScrapEngine::VulkanSemaphoresManager* VulkanRenderSemaphores = nullptr;
-		ScrapEngine::VulkanSurface* VulkanWindowSurface = nullptr;
-		ScrapEngine::VulkanDepthResources* VulkanRenderDepth = nullptr;
-		ScrapEngine::VulkanColorResources* VulkanRenderColor = nullptr;
+	namespace Render {
+		class RenderManager
+		{
+		private:
+			ScrapEngine::Render::GameWindow* GameWindow = nullptr;
+			ScrapEngine::Render::VukanInstance* VulkanInstance = nullptr;
+			ScrapEngine::Render::VulkanDevice* VulkanRenderDevice = nullptr;
+			ScrapEngine::Render::VulkanSwapChain* VulkanRenderSwapChain = nullptr;
+			ScrapEngine::Render::VulkanImageView* VulkanRenderImageView = nullptr;
+			ScrapEngine::Render::VulkanRenderPass* VulkanRenderingPass = nullptr;
+			ScrapEngine::Render::VulkanFrameBuffer* VulkanRenderFrameBuffer = nullptr;
+			ScrapEngine::Render::VulkanCommandPool* VulkanRenderCommandPool = nullptr;
+			ScrapEngine::Render::VulkanCommandBuffer* VulkanRenderCommandBuffer = nullptr;
+			ScrapEngine::Render::GraphicsQueue* VulkanGraphicsQueue = nullptr;
+			ScrapEngine::Render::PresentQueue* VulkanPresentationQueue = nullptr;
+			ScrapEngine::Render::VulkanSemaphoresManager* VulkanRenderSemaphores = nullptr;
+			ScrapEngine::Render::VulkanSurface* VulkanWindowSurface = nullptr;
+			ScrapEngine::Render::VulkanDepthResources* VulkanRenderDepth = nullptr;
+			ScrapEngine::Render::VulkanColorResources* VulkanRenderColor = nullptr;
 
-		ScrapEngine::Camera* RenderCamera = nullptr;
-		ScrapEngine::Camera* defaultCamera = nullptr;
+			ScrapEngine::Camera* RenderCamera = nullptr;
+			ScrapEngine::Camera* defaultCamera = nullptr;
 
-		ScrapEngine::VulkanSkyboxInstance* Skybox = nullptr;
+			ScrapEngine::Render::VulkanSkyboxInstance* Skybox = nullptr;
 
-		std::vector<ScrapEngine::VulkanMeshInstance*> LoadedModels;
+			std::vector<ScrapEngine::Render::VulkanMeshInstance*> LoadedModels;
 
-		size_t currentFrame = 0;
-		uint32_t imageIndex;
-		vk::Result result;
+			size_t currentFrame = 0;
+			uint32_t imageIndex;
+			vk::Result result;
 
-		unsigned short int MAX_FRAMES_IN_FLIGHT = 2;
-		bool framebufferResized = false;
-		const std::vector<vk::Semaphore>* imageAvailableSemaphoresRef;
-		const std::vector<vk::Semaphore>* renderFinishedSemaphoresRef;
-		const std::vector<vk::Fence>* inFlightFencesRef;
-	public:
-		RenderManager(const ScrapEngine::game_base_info* received_base_game_info);
-		~RenderManager();
-	private:
-		void initializeVulkan(const ScrapEngine::game_base_info* received_base_game_info);
+			unsigned short int MAX_FRAMES_IN_FLIGHT = 2;
+			bool framebufferResized = false;
+			const std::vector<vk::Semaphore>* imageAvailableSemaphoresRef;
+			const std::vector<vk::Semaphore>* renderFinishedSemaphoresRef;
+			const std::vector<vk::Fence>* inFlightFencesRef;
+		public:
+			RenderManager(const ScrapEngine::game_base_info* received_base_game_info);
+			~RenderManager();
+		private:
+			void initializeVulkan(const ScrapEngine::game_base_info* received_base_game_info);
 
-		void createQueues();
-		void deleteQueues();
+			void createQueues();
+			void deleteQueues();
 
-		void createCommandBuffers();
-		void deleteCommandBuffers();
+			void createCommandBuffers();
+			void deleteCommandBuffers();
 
-		void cleanupSwapChain();
-		void recreateSwapChain();
+			void cleanupSwapChain();
+			void recreateSwapChain();
 
-		void createCamera();
-	public:
-		void drawFrame();
-		void waitDeviceIdle();
+			void createCamera();
+		public:
+			void drawFrame();
+			void waitDeviceIdle();
 
-		//3D mesh and scene stuff
-		ScrapEngine::VulkanMeshInstance* loadMesh(const std::string& vertex_shader_path, const std::string& fragment_shader_path, const std::string& model_path, const std::string& texture_path);
-		ScrapEngine::VulkanMeshInstance* loadMesh(const std::string& model_path, const std::string& texture_path);
-		void unloadMesh(ScrapEngine::VulkanMeshInstance* meshToUnload);
-		ScrapEngine::VulkanSkyboxInstance* loadSkybox(const std::array<std::string, 6>& files_path);
+			//3D mesh and scene stuff
+			ScrapEngine::Render::VulkanMeshInstance* loadMesh(const std::string& vertex_shader_path, const std::string& fragment_shader_path, const std::string& model_path, const std::string& texture_path);
+			ScrapEngine::Render::VulkanMeshInstance* loadMesh(const std::string& model_path, const std::string& texture_path);
+			void unloadMesh(ScrapEngine::Render::VulkanMeshInstance* meshToUnload);
+			ScrapEngine::Render::VulkanSkyboxInstance* loadSkybox(const std::array<std::string, 6>& files_path);
 
-		//User-Window stuff
-		ScrapEngine::GameWindow* getGameWindow() const;
+			//User-Window stuff
+			ScrapEngine::Render::GameWindow* getGameWindow() const;
 
-		//View-Camera stuff
-		ScrapEngine::Camera* getRenderCamera() const;
-		ScrapEngine::Camera* getDefaultRenderCamera() const;
-		void setRenderCamera(ScrapEngine::Camera* newCamera);
-	};
+			//View-Camera stuff
+			ScrapEngine::Camera* getRenderCamera() const;
+			ScrapEngine::Camera* getDefaultRenderCamera() const;
+			void setRenderCamera(ScrapEngine::Camera* newCamera);
+		};
+	}
 }
 

@@ -2,30 +2,32 @@
 
 #include <vulkan/vulkan.hpp>
 #include <vector>
-#include "Engine/Rendering/Buffer/FrameBuffer/VulkanFrameBuffer.h"
 #include "Engine/Rendering/Base/Vertex.h"
+#include "Engine/Rendering/Buffer/FrameBuffer/VulkanFrameBuffer.h"
 #include "Engine/Rendering/Pipeline/VulkanGraphicsPipeline.h"
 #include "Engine/Rendering/Model/VulkanSkyboxInstance.h"
 
 namespace ScrapEngine {
-	class VulkanSkyboxInstance;
+	
+	namespace Render {
+		class VulkanSkyboxInstance;
 
-	class VulkanCommandBuffer
-	{
-	private:
-		std::vector<vk::CommandBuffer> commandBuffers;
-	public:
+		class VulkanCommandBuffer
+		{
+		private:
+			std::vector<vk::CommandBuffer> command_buffers_;
+		public:
 
-		VulkanCommandBuffer(ScrapEngine::VulkanFrameBuffer* SwapChainFrameBuffer, vk::Extent2D* input_swapChainExtentRef, std::vector<ScrapEngine::VulkanGraphicsPipeline*> input_vulkanPipelineRef,
-			const std::vector<const std::vector<vk::DescriptorSet>*>& descriptorSets, std::vector<simple_buffer<Vertex>*> vertexBuffer, std::vector<simple_buffer<uint32_t>*> indexBuffer
-		, ScrapEngine::VulkanSkyboxInstance* SkyboxRef = nullptr);
+			VulkanCommandBuffer(ScrapEngine::Render::VulkanFrameBuffer* swap_chain_frame_buffer, vk::Extent2D* input_swap_chain_extent_ref, std::vector<ScrapEngine::Render::VulkanGraphicsPipeline*> input_vulkan_pipeline_ref,
+				const std::vector<const std::vector<vk::DescriptorSet>*>& descriptor_sets, std::vector<simple_buffer<Vertex>*> vertex_buffer, std::vector<simple_buffer<uint32_t>*> index_buffer
+				, ScrapEngine::Render::VulkanSkyboxInstance* skybox_ref = nullptr);
 
-		~VulkanCommandBuffer();
+			~VulkanCommandBuffer();
 
-		void freeCommandBuffers();
+			void free_command_buffers();
 
-		const std::vector<vk::CommandBuffer>* getCommandBuffersVector();
-	};
-
+			const std::vector<vk::CommandBuffer>* get_command_buffers_vector();
+		};
+	}
 }
 

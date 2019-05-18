@@ -3,7 +3,7 @@
 #include <array>
 #include "../Base/StaticTypes.h"
 
-ScrapEngine::VulkanDescriptorSet::VulkanDescriptorSet()
+ScrapEngine::Render::VulkanDescriptorSet::VulkanDescriptorSet()
 {
 	vk::DescriptorSetLayoutBinding uboLayoutBinding(
 		0, 
@@ -34,12 +34,12 @@ ScrapEngine::VulkanDescriptorSet::VulkanDescriptorSet()
 	}
 }
 
-ScrapEngine::VulkanDescriptorSet::~VulkanDescriptorSet()
+ScrapEngine::Render::VulkanDescriptorSet::~VulkanDescriptorSet()
 {
 	VulkanDevice::StaticLogicDeviceRef->destroyDescriptorSetLayout(descriptorSetLayout);
 }
 
-void ScrapEngine::VulkanDescriptorSet::createDescriptorSets(vk::DescriptorPool* descriptorPool, const std::vector<vk::Image>* swapChainImages, const std::vector<vk::Buffer>* uniformBuffers, vk::ImageView* textureImageView, vk::Sampler* textureSampler, const vk::DeviceSize& BufferInfoSize)
+void ScrapEngine::Render::VulkanDescriptorSet::createDescriptorSets(vk::DescriptorPool* descriptorPool, const std::vector<vk::Image>* swapChainImages, const std::vector<vk::Buffer>* uniformBuffers, vk::ImageView* textureImageView, vk::Sampler* textureSampler, const vk::DeviceSize& BufferInfoSize)
 {
 	std::vector<vk::DescriptorSetLayout> layouts(swapChainImages->size(), descriptorSetLayout);
 
@@ -92,17 +92,17 @@ void ScrapEngine::VulkanDescriptorSet::createDescriptorSets(vk::DescriptorPool* 
 	}
 }
 
-vk::DescriptorSetLayout* ScrapEngine::VulkanDescriptorSet::getDescriptorSetLayout()
+vk::DescriptorSetLayout* ScrapEngine::Render::VulkanDescriptorSet::getDescriptorSetLayout()
 {
 	return &descriptorSetLayout;
 }
 
-vk::PipelineLayout* ScrapEngine::VulkanDescriptorSet::getPipelineLayout()
+vk::PipelineLayout* ScrapEngine::Render::VulkanDescriptorSet::getPipelineLayout()
 {
 	return &pipelineLayout;
 }
 
-const std::vector<vk::DescriptorSet>* ScrapEngine::VulkanDescriptorSet::getDescriptorSets()
+const std::vector<vk::DescriptorSet>* ScrapEngine::Render::VulkanDescriptorSet::getDescriptorSets()
 {
 	return &descriptorSets;
 }

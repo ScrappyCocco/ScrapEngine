@@ -4,21 +4,21 @@
 #include "../Shader/ShaderManager.h"
 
 namespace ScrapEngine {
+	namespace Render {
+		class VulkanGraphicsPipeline
+		{
+		private:
+			ShaderManager* ShaderManagerRef = nullptr;
+			vk::PipelineLayout pipelineLayout;
+			vk::Pipeline graphicsPipeline;
+		public:
+			VulkanGraphicsPipeline(const char* vertexShader, const char* fragmentShader, vk::Extent2D* swapChainExtent,
+				vk::DescriptorSetLayout* descriptorSetLayout, vk::SampleCountFlagBits msaaSamples, bool isSkybox = false);
+			~VulkanGraphicsPipeline();
 
-	class VulkanGraphicsPipeline
-	{
-	private:
-		ShaderManager* ShaderManagerRef = nullptr;
-		vk::PipelineLayout pipelineLayout;
-		vk::Pipeline graphicsPipeline;
-	public:
-		VulkanGraphicsPipeline(const char* vertexShader, const char* fragmentShader, vk::Extent2D* swapChainExtent,
-			vk::DescriptorSetLayout* descriptorSetLayout, vk::SampleCountFlagBits msaaSamples, bool isSkybox = false);
-		~VulkanGraphicsPipeline();
-
-		vk::Pipeline* getGraphicsPipeline();
-		vk::PipelineLayout* getPipelineLayout();
-	};
-
+			vk::Pipeline* getGraphicsPipeline();
+			vk::PipelineLayout* getPipelineLayout();
+		};
+	}
 }
 

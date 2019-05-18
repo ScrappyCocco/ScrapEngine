@@ -3,7 +3,7 @@
 #include <stdexcept>
 #include "../Base/StaticTypes.h"
 
-ScrapEngine::VulkanSemaphoresManager::VulkanSemaphoresManager(unsigned short int INPUT_MAX_FRAMES_IN_FLIGHT)
+ScrapEngine::Render::VulkanSemaphoresManager::VulkanSemaphoresManager(unsigned short int INPUT_MAX_FRAMES_IN_FLIGHT)
 	: MAX_FRAMES_IN_FLIGHT(INPUT_MAX_FRAMES_IN_FLIGHT)
 {
 	imageAvailableSemaphores.resize(MAX_FRAMES_IN_FLIGHT);
@@ -23,7 +23,7 @@ ScrapEngine::VulkanSemaphoresManager::VulkanSemaphoresManager(unsigned short int
 	}
 }
 
-ScrapEngine::VulkanSemaphoresManager::~VulkanSemaphoresManager()
+ScrapEngine::Render::VulkanSemaphoresManager::~VulkanSemaphoresManager()
 {
 	for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
 		VulkanDevice::StaticLogicDeviceRef->destroySemaphore(renderFinishedSemaphores[i]);
@@ -32,22 +32,22 @@ ScrapEngine::VulkanSemaphoresManager::~VulkanSemaphoresManager()
 	}
 }
 
-int ScrapEngine::VulkanSemaphoresManager::getMaxFramesInFlight() const
+int ScrapEngine::Render::VulkanSemaphoresManager::getMaxFramesInFlight() const
 {
 	return MAX_FRAMES_IN_FLIGHT;
 }
 
-const std::vector<vk::Semaphore>* ScrapEngine::VulkanSemaphoresManager::getImageAvailableSemaphoresVector()
+const std::vector<vk::Semaphore>* ScrapEngine::Render::VulkanSemaphoresManager::getImageAvailableSemaphoresVector()
 {
 	return &imageAvailableSemaphores;
 }
 
-const std::vector<vk::Semaphore>* ScrapEngine::VulkanSemaphoresManager::getRenderFinishedSemaphoresVector()
+const std::vector<vk::Semaphore>* ScrapEngine::Render::VulkanSemaphoresManager::getRenderFinishedSemaphoresVector()
 {
 	return &renderFinishedSemaphores;
 }
 
-const std::vector<vk::Fence>* ScrapEngine::VulkanSemaphoresManager::getInFlightFencesVector()
+const std::vector<vk::Fence>* ScrapEngine::Render::VulkanSemaphoresManager::getInFlightFencesVector()
 {
 	return &inFlightFences;
 }

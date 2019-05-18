@@ -1,6 +1,6 @@
 #include "LogicManagerView.h"
 
-ScrapEngine::Core::LogicManagerView::LogicManagerView(ScrapEngine::RenderManager* input_RenderManagerRef,
+ScrapEngine::Core::LogicManagerView::LogicManagerView(ScrapEngine::Render::RenderManager* input_RenderManagerRef,
                                                       ScrapEngine::Core::LogicManager* input_LogicManagerRef)
 	: render_manager_ref_(input_RenderManagerRef), logic_manager_ref_(input_LogicManagerRef)
 {

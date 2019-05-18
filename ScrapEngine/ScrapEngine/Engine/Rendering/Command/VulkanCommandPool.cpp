@@ -5,11 +5,11 @@
 
 //Init Static Members
 
-const vk::CommandPool* ScrapEngine::VulkanCommandPool::StaticCommandPoolRef = nullptr;
+const vk::CommandPool* ScrapEngine::Render::VulkanCommandPool::StaticCommandPoolRef = nullptr;
 
 //Class
 
-ScrapEngine::VulkanCommandPool::VulkanCommandPool(GraphicsQueue::QueueFamilyIndices queueFamilyIndices)
+ScrapEngine::Render::VulkanCommandPool::VulkanCommandPool(GraphicsQueue::QueueFamilyIndices queueFamilyIndices)
 {
 	vk::CommandPoolCreateInfo poolInfo(vk::CommandPoolCreateFlags(), queueFamilyIndices.graphicsFamily);
 
@@ -20,12 +20,12 @@ ScrapEngine::VulkanCommandPool::VulkanCommandPool(GraphicsQueue::QueueFamilyIndi
 	StaticCommandPoolRef = &commandPool;
 }
 
-ScrapEngine::VulkanCommandPool::~VulkanCommandPool()
+ScrapEngine::Render::VulkanCommandPool::~VulkanCommandPool()
 {
 	VulkanDevice::StaticLogicDeviceRef->destroyCommandPool(commandPool);
 }
 
-vk::CommandPool* ScrapEngine::VulkanCommandPool::getCommandPool()
+vk::CommandPool* ScrapEngine::Render::VulkanCommandPool::getCommandPool()
 {
 	return &commandPool;
 }

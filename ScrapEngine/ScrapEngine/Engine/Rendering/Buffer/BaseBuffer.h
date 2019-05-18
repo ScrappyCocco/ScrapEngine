@@ -1,21 +1,23 @@
 #pragma once
 
 #include <vulkan/vulkan.hpp>
-#include "Engine/Rendering/Buffer/CommandBuffer/VulkanCommandBuffer.h"
 
-namespace ScrapEngine {
-
-	class BaseBuffer
+namespace ScrapEngine
+{
+	namespace Render
 	{
-	public:
-		static void createBuffer(const vk::DeviceSize& size, vk::BufferUsageFlags usage, vk::MemoryPropertyFlags properties, vk::Buffer& buffer, vk::DeviceMemory& bufferMemory);
+		class BaseBuffer
+		{
+		public:
+			static void create_buffer(const vk::DeviceSize& size, vk::BufferUsageFlags usage,
+			                          vk::MemoryPropertyFlags properties, vk::Buffer& buffer,
+			                          vk::DeviceMemory& buffer_memory);
 
-		static void copyBuffer(vk::Buffer* srcBuffer, vk::Buffer& dstBuffer, const vk::DeviceSize& size);
+			static void copy_buffer(vk::Buffer* src_buffer, vk::Buffer& dst_buffer, const vk::DeviceSize& size);
 
-		static vk::CommandBuffer* beginSingleTimeCommands();
+			static vk::CommandBuffer* begin_single_time_commands();
 
-		static void endSingleTimeCommands(vk::CommandBuffer* commandBuffer);
-	};
-
+			static void end_single_time_commands(vk::CommandBuffer* command_buffer);
+		};
+	}
 }
-

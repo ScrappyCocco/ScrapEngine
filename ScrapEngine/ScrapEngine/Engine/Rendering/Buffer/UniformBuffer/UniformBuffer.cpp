@@ -2,36 +2,37 @@
 #include "../../../Debug/DebugLog.h"
 #include "../BaseBuffer.h"
 #include <glm/gtc/matrix_transform.hpp>
+#include "Engine/Rendering/Device/VulkanDevice.h"
 
-ScrapEngine::UniformBuffer::UniformBuffer(const std::vector<vk::Image>* swapChainImages, const vk::Extent2D& input_swapChainExtent)
-	: swapChainExtent(input_swapChainExtent)
+ScrapEngine::Render::UniformBuffer::UniformBuffer(const std::vector<vk::Image>* swap_chain_images, const vk::Extent2D& input_swap_chain_extent)
+	: swap_chain_extent_(input_swap_chain_extent)
 {
-	vk::DeviceSize bufferSize(sizeof(UniformBufferObject));
+	const vk::DeviceSize buffer_size(sizeof(UniformBufferObject));
 
-	swapChainImagesSize = swapChainImages->size();
-	uniformBuffers.resize(swapChainImagesSize);
-	uniformBuffersMemory.resize(swapChainImagesSize);
+	swap_chain_images_size_ = swap_chain_images->size();
+	uniform_buffers_.resize(swap_chain_images_size_);
+	uniform_buffers_memory_.resize(swap_chain_images_size_);
 
-	for (size_t i = 0; i < swapChainImagesSize; i++) {
-		BaseBuffer::createBuffer(bufferSize, vk::BufferUsageFlagBits::eUniformBuffer, vk::MemoryPropertyFlagBits::eHostVisible | vk::MemoryPropertyFlagBits::eHostCoherent, uniformBuffers[i], uniformBuffersMemory[i]);
+	for (size_t i = 0; i < swap_chain_images_size_; i++) {
+		BaseBuffer::create_buffer(buffer_size, vk::BufferUsageFlagBits::eUniformBuffer, vk::MemoryPropertyFlagBits::eHostVisible | vk::MemoryPropertyFlagBits::eHostCoherent, uniform_buffers_[i], uniform_buffers_memory_[i]);
 	}
 	//Map memory
-	mappedMemory.resize(swapChainImagesSize);
-	for (size_t i = 0; i < swapChainImagesSize; i++) {
-		VulkanDevice::StaticLogicDeviceRef->mapMemory(uniformBuffersMemory[i], 0, sizeof(UniformBufferObject), vk::MemoryMapFlags(), &mappedMemory[i]);
+	mapped_memory_.resize(swap_chain_images_size_);
+	for (size_t i = 0; i < swap_chain_images_size_; i++) {
+		VulkanDevice::StaticLogicDeviceRef->mapMemory(uniform_buffers_memory_[i], 0, sizeof(UniformBufferObject), vk::MemoryMapFlags(), &mapped_memory_[i]);
 	}
 }
 
-ScrapEngine::UniformBuffer::~UniformBuffer()
+ScrapEngine::Render::UniformBuffer::~UniformBuffer()
 {
-	for (size_t i = 0; i < swapChainImagesSize; i++) {
-		VulkanDevice::StaticLogicDeviceRef->destroyBuffer(uniformBuffers[i]);
-		VulkanDevice::StaticLogicDeviceRef->unmapMemory(uniformBuffersMemory[i]);
-		VulkanDevice::StaticLogicDeviceRef->freeMemory(uniformBuffersMemory[i]);
+	for (size_t i = 0; i < swap_chain_images_size_; i++) {
+		VulkanDevice::StaticLogicDeviceRef->destroyBuffer(uniform_buffers_[i]);
+		VulkanDevice::StaticLogicDeviceRef->unmapMemory(uniform_buffers_memory_[i]);
+		VulkanDevice::StaticLogicDeviceRef->freeMemory(uniform_buffers_memory_[i]);
 	}
 }
 
-void ScrapEngine::UniformBuffer::updateUniformBuffer(const uint32_t& currentImage, const ScrapEngine::Transform& object_transform, ScrapEngine::Camera* RenderCamera)
+void ScrapEngine::Render::UniformBuffer::update_uniform_buffer(const uint32_t& current_image, const ScrapEngine::Transform& object_transform, ScrapEngine::Camera* render_camera)
 {
 	UniformBufferObject ubo = {};
 
@@ -40,20 +41,20 @@ void ScrapEngine::UniformBuffer::updateUniformBuffer(const uint32_t& currentImag
 	if (object_transform.rotation.x != 0 || object_transform.rotation.y != 0 || object_transform.rotation.z != 0) {
 		ubo.model = glm::rotate(ubo.model, glm::radians(90.0f), object_transform.rotation);
 	}
-	ubo.proj = glm::perspective(glm::radians(45.0f), swapChainExtent.width / (float)swapChainExtent.height, RenderCamera->getCameraMinDrawDistance(), RenderCamera->getCameraMaxDrawDistance());
-	ubo.view = glm::lookAt(RenderCamera->getCameraLocation(), RenderCamera->getCameraLocation() + RenderCamera->getCameraFront(), RenderCamera->getCameraUp());
+	ubo.proj = glm::perspective(glm::radians(45.0f), swap_chain_extent_.width / (float)swap_chain_extent_.height, render_camera->getCameraMinDrawDistance(), render_camera->getCameraMaxDrawDistance());
+	ubo.view = glm::lookAt(render_camera->getCameraLocation(), render_camera->getCameraLocation() + render_camera->getCameraFront(), render_camera->getCameraUp());
 	ubo.proj[1][1] *= -1; //Invert image for openGL style
 	
-	memcpy(mappedMemory[currentImage], &ubo, sizeof(ubo));
+	memcpy(mapped_memory_[current_image], &ubo, sizeof(ubo));
 }
 
-const std::vector<vk::Buffer>* ScrapEngine::UniformBuffer::getUniformBuffers()
+const std::vector<vk::Buffer>* ScrapEngine::Render::UniformBuffer::get_uniform_buffers()
 {
-	return &uniformBuffers;
+	return &uniform_buffers_;
 }
 
-const std::vector<vk::DeviceMemory>* ScrapEngine::UniformBuffer::getUniformBuffersMemory()
+const std::vector<vk::DeviceMemory>* ScrapEngine::Render::UniformBuffer::get_uniform_buffers_memory()
 {
-	return &uniformBuffersMemory;
+	return &uniform_buffers_memory_;
 }
 

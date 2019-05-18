@@ -2,17 +2,17 @@
 #include <array>
 #include "Engine/Rendering/Base/StaticTypes.h"
 
-ScrapEngine::VulkanFrameBuffer::VulkanFrameBuffer(ScrapEngine::VulkanImageView* input_imageViewRef, const vk::Extent2D* input_swapChainExtent,
-	vk::ImageView* depthImageView, vk::ImageView* colorImageView)
+ScrapEngine::Render::VulkanFrameBuffer::VulkanFrameBuffer(ScrapEngine::Render::VulkanImageView* input_image_view_ref, const vk::Extent2D* input_swap_chain_extent,
+	vk::ImageView* depth_image_view, vk::ImageView* color_image_view)
 {
-	const std::vector<vk::ImageView>* swapChainImageViews = input_imageViewRef->getSwapChainImageViewsVector();
+	const std::vector<vk::ImageView>* swapChainImageViews = input_image_view_ref->getSwapChainImageViewsVector();
 
-	swapChainFramebuffers.resize(swapChainImageViews->size());
+	swap_chain_framebuffers_.resize(swapChainImageViews->size());
 
 	for (size_t i = 0; i < swapChainImageViews->size(); i++) {
 		std::array<vk::ImageView, 3> attachments = {
-			*colorImageView,
-			*depthImageView,
+			*color_image_view,
+			*depth_image_view,
 			(*swapChainImageViews)[i]
 		};
 
@@ -21,30 +21,30 @@ ScrapEngine::VulkanFrameBuffer::VulkanFrameBuffer(ScrapEngine::VulkanImageView* 
 			*VulkanRenderPass::StaticRenderPassRef, 
 			static_cast<uint32_t>(attachments.size()), 
 			attachments.data(), 
-			input_swapChainExtent->width, 
-			input_swapChainExtent->height, 
+			input_swap_chain_extent->width, 
+			input_swap_chain_extent->height, 
 			1
 		);
 		
-		if (VulkanDevice::StaticLogicDeviceRef->createFramebuffer(&framebufferInfo, nullptr, &swapChainFramebuffers[i]) != vk::Result::eSuccess) {
+		if (VulkanDevice::StaticLogicDeviceRef->createFramebuffer(&framebufferInfo, nullptr, &swap_chain_framebuffers_[i]) != vk::Result::eSuccess) {
 			throw std::runtime_error("VulkanFrameBuffer: Failed to create framebuffer!");
 		}
 	}
 }
 
-ScrapEngine::VulkanFrameBuffer::~VulkanFrameBuffer()
+ScrapEngine::Render::VulkanFrameBuffer::~VulkanFrameBuffer()
 {
-	for (auto framebuffer : swapChainFramebuffers) {
+	for (auto const framebuffer : swap_chain_framebuffers_) {
 		VulkanDevice::StaticLogicDeviceRef->destroyFramebuffer(framebuffer);
 	}
 }
 
-const std::vector<vk::Framebuffer>* ScrapEngine::VulkanFrameBuffer::getSwapChainFramebuffersVector()
+const std::vector<vk::Framebuffer>* ScrapEngine::Render::VulkanFrameBuffer::get_swap_chain_framebuffers_vector()
 {
-	return &swapChainFramebuffers;
+	return &swap_chain_framebuffers_;
 }
 
-size_t ScrapEngine::VulkanFrameBuffer::getSwapChainFramebuffersVectorSize() const
+size_t ScrapEngine::Render::VulkanFrameBuffer::get_swap_chain_framebuffers_vector_size() const
 {
-	return swapChainFramebuffers.size();
+	return swap_chain_framebuffers_.size();
 }

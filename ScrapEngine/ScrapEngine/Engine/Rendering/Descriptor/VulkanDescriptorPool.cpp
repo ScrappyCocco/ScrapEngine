@@ -2,7 +2,7 @@
 #include <array>
 #include "../Base/StaticTypes.h"
 
-ScrapEngine::VulkanDescriptorPool::VulkanDescriptorPool(const std::vector<vk::Image>* swapChainImages)
+ScrapEngine::Render::VulkanDescriptorPool::VulkanDescriptorPool(const std::vector<vk::Image>* swapChainImages)
 {
 	std::array<vk::DescriptorPoolSize, 2> poolSizes = {
 		vk::DescriptorPoolSize(vk::DescriptorType::eUniformBuffer, static_cast<uint32_t>(swapChainImages->size())),
@@ -20,12 +20,12 @@ ScrapEngine::VulkanDescriptorPool::VulkanDescriptorPool(const std::vector<vk::Im
 	}
 }
 
-ScrapEngine::VulkanDescriptorPool::~VulkanDescriptorPool()
+ScrapEngine::Render::VulkanDescriptorPool::~VulkanDescriptorPool()
 {
 	VulkanDevice::StaticLogicDeviceRef->destroyDescriptorPool(descriptorPool);
 }
 
-vk::DescriptorPool* ScrapEngine::VulkanDescriptorPool::getDescriptorPool()
+vk::DescriptorPool* ScrapEngine::Render::VulkanDescriptorPool::getDescriptorPool()
 {
 	return &descriptorPool;
 }

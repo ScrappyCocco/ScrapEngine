@@ -18,7 +18,7 @@ namespace ScrapEngine
 
 			ScrapEngine::game_base_info received_base_game_info_;
 
-			ScrapEngine::RenderManager* scrap_render_manager_ = nullptr;
+			ScrapEngine::Render::RenderManager* scrap_render_manager_ = nullptr;
 			ScrapEngine::Core::LogicManager* scrap_logic_manager_ = nullptr;
 		public:
 			EngineManager(std::string app_name = "ScrapEngine Game", int app_version = 1, uint32_t window_width = 800,
@@ -28,7 +28,7 @@ namespace ScrapEngine
 			void start_game_loop();
 
 			ScrapEngine::Core::LogicManagerView* logic_manager_view;
-			ScrapEngine::RenderManagerView* render_manager_view;
+			ScrapEngine::Render::RenderManagerView* render_manager_view;
 		private:
 			void initialize_engine();
 

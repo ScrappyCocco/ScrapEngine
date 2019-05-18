@@ -2,19 +2,19 @@
 #include "../../Debug/DebugLog.h"
 #include "../Base/StaticTypes.h"
 
-ScrapEngine::VulkanValidationLayers::VulkanValidationLayers()
+ScrapEngine::Render::VulkanValidationLayers::VulkanValidationLayers()
 {
 	if (enableValidationLayers && !checkValidationLayerSupport()) {
 		throw std::runtime_error("VulkanValidationLayers: validation layers requested, but not available!");
 	}
 }
 
-ScrapEngine::VulkanValidationLayers::~VulkanValidationLayers()
+ScrapEngine::Render::VulkanValidationLayers::~VulkanValidationLayers()
 {
 	VukanInstance::StaticInstanceRef->destroyDebugUtilsMessengerEXT(callback, nullptr, dispatcher);
 }
 
-void ScrapEngine::VulkanValidationLayers::setupDebugCallback()
+void ScrapEngine::Render::VulkanValidationLayers::setupDebugCallback()
 {
 	if (!enableValidationLayers) return;
 
@@ -32,7 +32,7 @@ void ScrapEngine::VulkanValidationLayers::setupDebugCallback()
 	Debug::DebugLog::print_to_console_log("VulkanValidationLayers: VulkanValidationLayers ENABLED!");
 }
 
-bool ScrapEngine::VulkanValidationLayers::checkValidationLayerSupport()
+bool ScrapEngine::Render::VulkanValidationLayers::checkValidationLayerSupport()
 {
 	uint32_t layerCount;
 	vk::enumerateInstanceLayerProperties(&layerCount, nullptr);
@@ -58,17 +58,17 @@ bool ScrapEngine::VulkanValidationLayers::checkValidationLayerSupport()
 	return true;
 }
 
-bool ScrapEngine::VulkanValidationLayers::areValidationLayersEnabled()
+bool ScrapEngine::Render::VulkanValidationLayers::areValidationLayersEnabled()
 {
 	return enableValidationLayers;
 }
 
-std::vector<const char*> ScrapEngine::VulkanValidationLayers::getValidationLayers()
+std::vector<const char*> ScrapEngine::Render::VulkanValidationLayers::getValidationLayers()
 {
 	return validationLayers;
 }
 
-VKAPI_ATTR VkBool32 VKAPI_CALL ScrapEngine::VulkanValidationLayers::debugCallback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageType, const VkDebugUtilsMessengerCallbackDataEXT * pCallbackData, void * pUserData)
+VKAPI_ATTR VkBool32 VKAPI_CALL ScrapEngine::Render::VulkanValidationLayers::debugCallback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageType, const VkDebugUtilsMessengerCallbackDataEXT * pCallbackData, void * pUserData)
 {
 	std::string messageSeverityString;
 	switch (messageSeverity) {

@@ -4,19 +4,19 @@
 #include "GraphicsQueue.h"
 
 namespace ScrapEngine {
+	namespace Render {
+		class PresentQueue
+		{
+		private:
+			vk::Queue presentationQueue;
+		public:
+			static const vk::Queue* StaticPresentationQueueRef;
 
-	class PresentQueue
-	{
-	private:
-		vk::Queue presentationQueue;
-	public:
-		static const vk::Queue* StaticPresentationQueueRef;
+			PresentQueue(GraphicsQueue::QueueFamilyIndices indices);
+			~PresentQueue();
 
-		PresentQueue(GraphicsQueue::QueueFamilyIndices indices);
-		~PresentQueue();
-
-		vk::Queue* getPresentQueue();
-	};
-
+			vk::Queue* getPresentQueue();
+		};
+	}
 }
 

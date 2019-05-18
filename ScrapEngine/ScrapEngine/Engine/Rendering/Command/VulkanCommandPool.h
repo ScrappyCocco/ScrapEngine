@@ -4,19 +4,19 @@
 #include "../Queue/GraphicsQueue.h"
 
 namespace ScrapEngine {
+	namespace Render {
+		class VulkanCommandPool
+		{
+		private:
+			vk::CommandPool commandPool;
+		public:
+			static const vk::CommandPool* StaticCommandPoolRef;
 
-	class VulkanCommandPool
-	{
-	private:
-		vk::CommandPool commandPool;
-	public:
-		static const vk::CommandPool* StaticCommandPoolRef;
+			VulkanCommandPool(GraphicsQueue::QueueFamilyIndices queueFamilyIndices);
+			~VulkanCommandPool();
 
-		VulkanCommandPool(GraphicsQueue::QueueFamilyIndices queueFamilyIndices);
-		~VulkanCommandPool();
-
-		vk::CommandPool* getCommandPool();
-	};
-
+			vk::CommandPool* getCommandPool();
+		};
+	}
 }
 

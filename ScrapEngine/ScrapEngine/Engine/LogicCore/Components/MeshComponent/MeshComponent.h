@@ -10,9 +10,9 @@ namespace ScrapEngine
 		class MeshComponent : public Core::SComponent
 		{
 		private:
-			VulkanMeshInstance* vulkan_mesh_;
+			Render::VulkanMeshInstance* vulkan_mesh_;
 		public:
-			explicit MeshComponent(VulkanMeshInstance* input_vulkan_mesh);
+			explicit MeshComponent(Render::VulkanMeshInstance* input_vulkan_mesh);
 			~MeshComponent() = default;
 
 			virtual void set_component_location(const glm::vec3& location) override;

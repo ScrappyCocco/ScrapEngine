@@ -7,27 +7,27 @@
 
 //Init Static Members
 
-const vk::Device* ScrapEngine::VulkanDevice::StaticLogicDeviceRef = nullptr;
-const vk::PhysicalDevice* ScrapEngine::VulkanDevice::StaticPhysicalDeviceRef = nullptr;
+const vk::Device* ScrapEngine::Render::VulkanDevice::StaticLogicDeviceRef = nullptr;
+const vk::PhysicalDevice* ScrapEngine::Render::VulkanDevice::StaticPhysicalDeviceRef = nullptr;
 
 //Class
 
-ScrapEngine::VulkanDevice::VulkanDevice(vk::Instance* VulkanInstanceInputRef, vk::SurfaceKHR* VulkanSurfaceInputRef)
+ScrapEngine::Render::VulkanDevice::VulkanDevice(vk::Instance* VulkanInstanceInputRef, vk::SurfaceKHR* VulkanSurfaceInputRef)
 	: instanceRef(VulkanInstanceInputRef), VulkanSurfaceRef(VulkanSurfaceInputRef)
 {
 	choosePhysicalDevice();
 	createLogicalDevice();
 
-	ScrapEngine::VulkanDevice::StaticLogicDeviceRef = &device;
-	ScrapEngine::VulkanDevice::StaticPhysicalDeviceRef = &physicalDevice;
+	ScrapEngine::Render::VulkanDevice::StaticLogicDeviceRef = &device;
+	ScrapEngine::Render::VulkanDevice::StaticPhysicalDeviceRef = &physicalDevice;
 }
 
-ScrapEngine::VulkanDevice::~VulkanDevice()
+ScrapEngine::Render::VulkanDevice::~VulkanDevice()
 {
 	device.destroy();
 }
 
-void ScrapEngine::VulkanDevice::choosePhysicalDevice()
+void ScrapEngine::Render::VulkanDevice::choosePhysicalDevice()
 {
 	uint32_t deviceCount = 0;
 	instanceRef->enumeratePhysicalDevices(&deviceCount, nullptr);
@@ -52,7 +52,7 @@ void ScrapEngine::VulkanDevice::choosePhysicalDevice()
 	}
 }
 
-void ScrapEngine::VulkanDevice::createLogicalDevice()
+void ScrapEngine::Render::VulkanDevice::createLogicalDevice()
 {
 	cached_indices = findQueueFamilies(&physicalDevice, VulkanSurfaceRef);
 
@@ -88,22 +88,22 @@ void ScrapEngine::VulkanDevice::createLogicalDevice()
 	}
 }
 
-vk::PhysicalDevice* ScrapEngine::VulkanDevice::getPhysicalDevice()
+vk::PhysicalDevice* ScrapEngine::Render::VulkanDevice::getPhysicalDevice()
 {
 	return &physicalDevice;
 }
 
-vk::Device* ScrapEngine::VulkanDevice::getLogicalDevice()
+vk::Device* ScrapEngine::Render::VulkanDevice::getLogicalDevice()
 {
 	return &device;
 }
 
-ScrapEngine::GraphicsQueue::QueueFamilyIndices ScrapEngine::VulkanDevice::getCachedQueueFamilyIndices() const
+ScrapEngine::Render::GraphicsQueue::QueueFamilyIndices ScrapEngine::Render::VulkanDevice::getCachedQueueFamilyIndices() const
 {
 	return cached_indices;
 }
 
-bool ScrapEngine::VulkanDevice::isDeviceSuitable(vk::PhysicalDevice* physical_device_input, vk::SurfaceKHR* surface) {
+bool ScrapEngine::Render::VulkanDevice::isDeviceSuitable(vk::PhysicalDevice* physical_device_input, vk::SurfaceKHR* surface) {
 	vk::PhysicalDeviceProperties deviceProperties = physical_device_input->getProperties();
 	vk::PhysicalDeviceFeatures deviceFeatures = physical_device_input->getFeatures();
 
@@ -118,7 +118,7 @@ bool ScrapEngine::VulkanDevice::isDeviceSuitable(vk::PhysicalDevice* physical_de
 
 	bool swapChainAdequate = false;
 	if (extensionsSupported) {
-		ScrapEngine::VulkanSwapChain::SwapChainSupportDetails swapChainSupport = querySwapChainSupport(physical_device_input);
+		ScrapEngine::Render::VulkanSwapChain::SwapChainSupportDetails swapChainSupport = querySwapChainSupport(physical_device_input);
 		swapChainAdequate = !swapChainSupport.formats.empty() && !swapChainSupport.presentModes.empty();
 	}
 
@@ -126,7 +126,7 @@ bool ScrapEngine::VulkanDevice::isDeviceSuitable(vk::PhysicalDevice* physical_de
 		&& cached_indices.isComplete() && extensionsSupported && swapChainAdequate && supportedFeatures.samplerAnisotropy;
 }
 
-bool ScrapEngine::VulkanDevice::checkDeviceExtensionSupport(vk::PhysicalDevice* device)
+bool ScrapEngine::Render::VulkanDevice::checkDeviceExtensionSupport(vk::PhysicalDevice* device)
 {
 	uint32_t extensionCount;
 	device->enumerateDeviceExtensionProperties(nullptr, &extensionCount, nullptr);
@@ -143,9 +143,9 @@ bool ScrapEngine::VulkanDevice::checkDeviceExtensionSupport(vk::PhysicalDevice* 
 	return requiredExtensions.empty();
 }
 
-ScrapEngine::VulkanSwapChain::SwapChainSupportDetails ScrapEngine::VulkanDevice::querySwapChainSupport(vk::PhysicalDevice* physical_device_input)
+ScrapEngine::Render::VulkanSwapChain::SwapChainSupportDetails ScrapEngine::Render::VulkanDevice::querySwapChainSupport(vk::PhysicalDevice* physical_device_input)
 {
-	ScrapEngine::VulkanSwapChain::SwapChainSupportDetails details;
+	ScrapEngine::Render::VulkanSwapChain::SwapChainSupportDetails details;
 
 	physical_device_input->getSurfaceCapabilitiesKHR(*VulkanSurfaceRef, &details.capabilities);
 
@@ -168,7 +168,7 @@ ScrapEngine::VulkanSwapChain::SwapChainSupportDetails ScrapEngine::VulkanDevice:
 	return details;
 }
 
-vk::SampleCountFlagBits ScrapEngine::VulkanDevice::getMaxUsableSampleCount()
+vk::SampleCountFlagBits ScrapEngine::Render::VulkanDevice::getMaxUsableSampleCount()
 {
 	vk::PhysicalDeviceProperties physicalDeviceProperties = physicalDevice.getProperties();
 
@@ -193,12 +193,12 @@ vk::SampleCountFlagBits ScrapEngine::VulkanDevice::getMaxUsableSampleCount()
 	return vk::SampleCountFlagBits::e1;
 }
 
-vk::SampleCountFlagBits ScrapEngine::VulkanDevice::getMsaaSamples() const
+vk::SampleCountFlagBits ScrapEngine::Render::VulkanDevice::getMsaaSamples() const
 {
 	return msaaSamples;
 }
 
-ScrapEngine::GraphicsQueue::QueueFamilyIndices ScrapEngine::VulkanDevice::findQueueFamilies(vk::PhysicalDevice* device, vk::SurfaceKHR* surface)
+ScrapEngine::Render::GraphicsQueue::QueueFamilyIndices ScrapEngine::Render::VulkanDevice::findQueueFamilies(vk::PhysicalDevice* device, vk::SurfaceKHR* surface)
 {
 	GraphicsQueue::QueueFamilyIndices indices;
 

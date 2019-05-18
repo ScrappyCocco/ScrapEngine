@@ -2,13 +2,13 @@
 #include <stdexcept>
 #include "../Base/StaticTypes.h"
 
-ScrapEngine::TextureSampler::TextureSampler(const uint32_t& mipLevels)
+ScrapEngine::Render::TextureSampler::TextureSampler(const uint32_t& mipLevels)
 	: TextureSampler(mipLevels, vk::Filter::eLinear, vk::Filter::eLinear,
 		vk::SamplerMipmapMode::eLinear, vk::SamplerAddressMode::eRepeat, vk::SamplerAddressMode::eRepeat, vk::SamplerAddressMode::eRepeat,
 		false, vk::CompareOp::eAlways, true, 16)
 { }
 
-ScrapEngine::TextureSampler::TextureSampler(const uint32_t& mipLevels, vk::Filter magFilter, vk::Filter minFilter, vk::SamplerMipmapMode minimapMode,
+ScrapEngine::Render::TextureSampler::TextureSampler(const uint32_t& mipLevels, vk::Filter magFilter, vk::Filter minFilter, vk::SamplerMipmapMode minimapMode,
 	vk::SamplerAddressMode addressModeU, vk::SamplerAddressMode addressModeV, vk::SamplerAddressMode addressModeW, bool compareEnabled, vk::CompareOp compareOp,
 	bool anisotropyEnable, uint16_t maxAnisotropy, vk::BorderColor borderColor)
 {
@@ -35,12 +35,12 @@ ScrapEngine::TextureSampler::TextureSampler(const uint32_t& mipLevels, vk::Filte
 	}
 }
 
-ScrapEngine::TextureSampler::~TextureSampler()
+ScrapEngine::Render::TextureSampler::~TextureSampler()
 {
-	VulkanDevice::StaticLogicDeviceRef->destroySampler(textureSampler);
+	ScrapEngine::Render::VulkanDevice::StaticLogicDeviceRef->destroySampler(textureSampler);
 }
 
-vk::Sampler* ScrapEngine::TextureSampler::getTextureSampler()
+vk::Sampler* ScrapEngine::Render::TextureSampler::getTextureSampler()
 {
 	return &textureSampler;
 }

@@ -1,14 +1,14 @@
 #include "RenderManager.h"
 
 
-ScrapEngine::RenderManager::RenderManager(const ScrapEngine::game_base_info* received_base_game_info)
+ScrapEngine::Render::RenderManager::RenderManager(const ScrapEngine::game_base_info* received_base_game_info)
 {
-	GameWindow = new ScrapEngine::GameWindow(received_base_game_info->window_width, received_base_game_info->window_height, received_base_game_info->app_name);
+	GameWindow = new ScrapEngine::Render::GameWindow(received_base_game_info->window_width, received_base_game_info->window_height, received_base_game_info->app_name);
 	Debug::DebugLog::print_to_console_log("GameWindow created");
 	initializeVulkan(received_base_game_info);
 }
 
-ScrapEngine::RenderManager::~RenderManager()
+ScrapEngine::Render::RenderManager::~RenderManager()
 {
 	Debug::DebugLog::print_to_console_log("Deleting ~RenderManager");
 	deleteQueues();
@@ -16,7 +16,7 @@ ScrapEngine::RenderManager::~RenderManager()
 	delete RenderCamera;
 
 	delete Skybox;
-	for (ScrapEngine::VulkanMeshInstance* current_model : LoadedModels) {
+	for (ScrapEngine::Render::VulkanMeshInstance* current_model : LoadedModels) {
 		delete current_model;
 	}
 	delete VulkanRenderSemaphores;
@@ -28,7 +28,7 @@ ScrapEngine::RenderManager::~RenderManager()
 	Debug::DebugLog::print_to_console_log("Deleting ~RenderManager completed");
 }
 
-void ScrapEngine::RenderManager::cleanupSwapChain()
+void ScrapEngine::Render::RenderManager::cleanupSwapChain()
 {
 	Debug::DebugLog::print_to_console_log("---cleanupSwapChain()---");
 	delete VulkanRenderColor;
@@ -44,39 +44,39 @@ void ScrapEngine::RenderManager::cleanupSwapChain()
 	Debug::DebugLog::print_to_console_log("---cleanupSwapChain() completed---");
 }
 
-void ScrapEngine::RenderManager::deleteQueues()
+void ScrapEngine::Render::RenderManager::deleteQueues()
 {
 	delete VulkanGraphicsQueue;
 	delete VulkanPresentationQueue;
 }
 
-void ScrapEngine::RenderManager::deleteCommandBuffers()
+void ScrapEngine::Render::RenderManager::deleteCommandBuffers()
 {
-	VulkanRenderCommandBuffer->freeCommandBuffers();
+	VulkanRenderCommandBuffer->free_command_buffers();
 	delete VulkanRenderCommandBuffer;
 }
 
-ScrapEngine::GameWindow* ScrapEngine::RenderManager::getGameWindow() const
+ScrapEngine::Render::GameWindow* ScrapEngine::Render::RenderManager::getGameWindow() const
 {
 	return GameWindow;
 }
 
-ScrapEngine::Camera* ScrapEngine::RenderManager::getRenderCamera() const
+ScrapEngine::Camera* ScrapEngine::Render::RenderManager::getRenderCamera() const
 {
 	return RenderCamera;
 }
 
-ScrapEngine::Camera* ScrapEngine::RenderManager::getDefaultRenderCamera() const
+ScrapEngine::Camera* ScrapEngine::Render::RenderManager::getDefaultRenderCamera() const
 {
 	return defaultCamera;
 }
 
-void ScrapEngine::RenderManager::setRenderCamera(ScrapEngine::Camera* newCamera)
+void ScrapEngine::Render::RenderManager::setRenderCamera(ScrapEngine::Camera* newCamera)
 {
 	RenderCamera = newCamera;
 }
 
-void ScrapEngine::RenderManager::initializeVulkan(const ScrapEngine::game_base_info* received_base_game_info)
+void ScrapEngine::Render::RenderManager::initializeVulkan(const ScrapEngine::game_base_info* received_base_game_info)
 {
 	Debug::DebugLog::print_to_console_log("---initializeVulkan()---");
 	VulkanInstance = new VukanInstance(received_base_game_info->app_name, received_base_game_info->app_version, "ScrapEngine");
@@ -115,7 +115,7 @@ void ScrapEngine::RenderManager::initializeVulkan(const ScrapEngine::game_base_i
 	Debug::DebugLog::print_to_console_log("---initializeVulkan() completed---");
 }
 
-void ScrapEngine::RenderManager::createQueues()
+void ScrapEngine::Render::RenderManager::createQueues()
 {
 	Debug::DebugLog::print_to_console_log("---Begin queues creation---");
 	VulkanGraphicsQueue = new GraphicsQueue(VulkanRenderDevice->getCachedQueueFamilyIndices());
@@ -123,13 +123,13 @@ void ScrapEngine::RenderManager::createQueues()
 	Debug::DebugLog::print_to_console_log("---Ended queues creation---");
 }
 
-void ScrapEngine::RenderManager::createCommandBuffers()
+void ScrapEngine::Render::RenderManager::createCommandBuffers()
 {
-	std::vector<ScrapEngine::VulkanGraphicsPipeline*> pipelines;
+	std::vector<ScrapEngine::Render::VulkanGraphicsPipeline*> pipelines;
 	std::vector<const std::vector<vk::DescriptorSet>*> descriptorSets;
 	std::vector<ScrapEngine::simple_buffer<Vertex>*> vertexbuffers;
 	std::vector<ScrapEngine::simple_buffer<uint32_t>*> indexbuffers;
-	for (ScrapEngine::VulkanMeshInstance* mesh : LoadedModels) {
+	for (ScrapEngine::Render::VulkanMeshInstance* mesh : LoadedModels) {
 		pipelines.push_back(mesh->getVulkanRenderGraphicsPipeline());
 		descriptorSets.push_back(mesh->getVulkanRenderDescriptorSet()->getDescriptorSets());
 		vertexbuffers.push_back(mesh->getVertexbuffer());
@@ -147,7 +147,7 @@ void ScrapEngine::RenderManager::createCommandBuffers()
 	Debug::DebugLog::print_to_console_log("VulkanRenderCommandBuffer created");
 }
 
-ScrapEngine::VulkanMeshInstance* ScrapEngine::RenderManager::loadMesh(const std::string & vertex_shader_path, const std::string & fragment_shader_path, const std::string & model_path, const std::string & texture_path)
+ScrapEngine::Render::VulkanMeshInstance* ScrapEngine::Render::RenderManager::loadMesh(const std::string & vertex_shader_path, const std::string & fragment_shader_path, const std::string & model_path, const std::string & texture_path)
 {
 	LoadedModels.push_back(
 		new VulkanMeshInstance(vertex_shader_path, fragment_shader_path, model_path, texture_path,VulkanRenderDevice, VulkanRenderSwapChain)
@@ -157,14 +157,14 @@ ScrapEngine::VulkanMeshInstance* ScrapEngine::RenderManager::loadMesh(const std:
 	return LoadedModels.back();
 }
 
-ScrapEngine::VulkanMeshInstance* ScrapEngine::RenderManager::loadMesh(const std::string & model_path, const std::string & texture_path)
+ScrapEngine::Render::VulkanMeshInstance* ScrapEngine::Render::RenderManager::loadMesh(const std::string & model_path, const std::string & texture_path)
 {
 	return loadMesh("../assets/shader/compiled_shaders/shader_base.vert.spv", "../assets/shader/compiled_shaders/shader_base.frag.spv", model_path, texture_path);
 }
 
-void ScrapEngine::RenderManager::unloadMesh(ScrapEngine::VulkanMeshInstance* meshToUnload)
+void ScrapEngine::Render::RenderManager::unloadMesh(ScrapEngine::Render::VulkanMeshInstance* meshToUnload)
 {
-	std::vector<ScrapEngine::VulkanMeshInstance*>::iterator element = find(LoadedModels.begin(), LoadedModels.end(), meshToUnload);
+	std::vector<ScrapEngine::Render::VulkanMeshInstance*>::iterator element = find(LoadedModels.begin(), LoadedModels.end(), meshToUnload);
 	if (element != LoadedModels.end())
 	{
 		delete *element;
@@ -174,7 +174,7 @@ void ScrapEngine::RenderManager::unloadMesh(ScrapEngine::VulkanMeshInstance* mes
 	}
 }
 
-ScrapEngine::VulkanSkyboxInstance* ScrapEngine::RenderManager::loadSkybox(const std::array<std::string, 6>& files_path)
+ScrapEngine::Render::VulkanSkyboxInstance* ScrapEngine::Render::RenderManager::loadSkybox(const std::array<std::string, 6>& files_path)
 {
 	if (Skybox) {
 		delete Skybox;
@@ -185,7 +185,7 @@ ScrapEngine::VulkanSkyboxInstance* ScrapEngine::RenderManager::loadSkybox(const 
 	return Skybox;
 }
 
-void ScrapEngine::RenderManager::drawFrame()
+void ScrapEngine::Render::RenderManager::drawFrame()
 {
 	VulkanDevice::StaticLogicDeviceRef->waitForFences(1, &(*inFlightFencesRef)[currentFrame], true, std::numeric_limits<uint64_t>::max());
 
@@ -218,7 +218,7 @@ void ScrapEngine::RenderManager::drawFrame()
 	submitInfo.setPWaitDstStageMask(waitStages);
 
 	submitInfo.setCommandBufferCount(1);
-	submitInfo.setPCommandBuffers(&(*VulkanRenderCommandBuffer->getCommandBuffersVector())[imageIndex]);
+	submitInfo.setPCommandBuffers(&(*VulkanRenderCommandBuffer->get_command_buffers_vector())[imageIndex]);
 
 	vk::Semaphore signalSemaphores[] = { (*renderFinishedSemaphoresRef)[currentFrame] };
 	submitInfo.setSignalSemaphoreCount(1);
@@ -257,18 +257,18 @@ void ScrapEngine::RenderManager::drawFrame()
 	currentFrame = (currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
 }
 
-void ScrapEngine::RenderManager::waitDeviceIdle()
+void ScrapEngine::Render::RenderManager::waitDeviceIdle()
 {
 	VulkanRenderDevice->getLogicalDevice()->waitIdle();
 }
 
-void ScrapEngine::RenderManager::recreateSwapChain()
+void ScrapEngine::Render::RenderManager::recreateSwapChain()
 {
 	VulkanDevice::StaticLogicDeviceRef->waitIdle();
 	//TODO https://vulkan-tutorial.com/Drawing_a_triangle/Swap_chain_recreation
 }
 
-void ScrapEngine::RenderManager::createCamera()
+void ScrapEngine::Render::RenderManager::createCamera()
 {
 	RenderCamera = new Camera();
 	defaultCamera = RenderCamera;

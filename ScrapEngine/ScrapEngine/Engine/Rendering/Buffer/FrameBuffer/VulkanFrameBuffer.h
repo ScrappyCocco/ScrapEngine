@@ -6,19 +6,19 @@
 
 
 namespace ScrapEngine {
+	namespace Render {
+		class VulkanFrameBuffer
+		{
+		private:
+			std::vector<vk::Framebuffer> swap_chain_framebuffers_;
+		public:
+			VulkanFrameBuffer(ScrapEngine::Render::VulkanImageView* input_image_view_ref, const vk::Extent2D* input_swap_chain_extent,
+				vk::ImageView* depth_image_view, vk::ImageView* color_image_view);
+			~VulkanFrameBuffer();
 
-	class VulkanFrameBuffer
-	{
-	private:
-		std::vector<vk::Framebuffer> swapChainFramebuffers;
-	public:
-		VulkanFrameBuffer(ScrapEngine::VulkanImageView* input_imageViewRef, const vk::Extent2D* input_swapChainExtent,
-			vk::ImageView* depthImageView, vk::ImageView* colorImageView);
-		~VulkanFrameBuffer();
-
-		const std::vector<vk::Framebuffer>* getSwapChainFramebuffersVector();
-		size_t getSwapChainFramebuffersVectorSize() const;
-	};
-
+			const std::vector<vk::Framebuffer>* get_swap_chain_framebuffers_vector();
+			size_t get_swap_chain_framebuffers_vector_size() const;
+		};
+	}
 }
 

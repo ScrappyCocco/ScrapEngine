@@ -1,16 +1,7 @@
 #include "ShaderManager.h"
 #include "../Base/StaticTypes.h"
 
-ScrapEngine::ShaderManager::ShaderManager()
-{
-
-}
-
-ScrapEngine::ShaderManager::~ShaderManager()
-{
-}
-
-vk::ShaderModule ScrapEngine::ShaderManager::createShaderModule(const std::vector<char>& code)
+vk::ShaderModule ScrapEngine::Render::ShaderManager::createShaderModule(const std::vector<char>& code)
 {
 	vk::ShaderModuleCreateInfo createInfo(
 		vk::ShaderModuleCreateFlags(), 
@@ -26,7 +17,7 @@ vk::ShaderModule ScrapEngine::ShaderManager::createShaderModule(const std::vecto
 	return shaderModule;
 }
 
-std::vector<char> ScrapEngine::ShaderManager::readFile(const std::string& filename) {
+std::vector<char> ScrapEngine::Render::ShaderManager::readFile(const std::string& filename) {
 	std::ifstream file(filename, std::ios::ate | std::ios::binary);
 
 	if (!file.is_open()) {

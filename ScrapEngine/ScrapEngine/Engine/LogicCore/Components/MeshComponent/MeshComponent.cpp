@@ -1,6 +1,6 @@
 #include "MeshComponent.h"
 
-ScrapEngine::Core::MeshComponent::MeshComponent(VulkanMeshInstance* input_vulkan_mesh) : SComponent("MeshComponent"),
+ScrapEngine::Core::MeshComponent::MeshComponent(Render::VulkanMeshInstance* input_vulkan_mesh) : SComponent("MeshComponent"),
                                                                                          vulkan_mesh_(input_vulkan_mesh)
 {
 }

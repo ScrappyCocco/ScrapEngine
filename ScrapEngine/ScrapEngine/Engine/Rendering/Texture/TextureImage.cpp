@@ -8,7 +8,7 @@
 #include "../SwapChain/VulkanSwapChain.h"
 #include "TextureImageView.h"
 
-ScrapEngine::TextureImage::TextureImage(const std::string& file_path, bool shouldCopyFromStaging)
+ScrapEngine::Render::TextureImage::TextureImage(const std::string& file_path, bool shouldCopyFromStaging)
 {
 	stbi_uc* pixels = stbi_load(file_path.c_str(), &texWidth, &texHeight, &texChannels, STBI_rgb_alpha);
 
@@ -28,7 +28,7 @@ ScrapEngine::TextureImage::TextureImage(const std::string& file_path, bool shoul
 	transitionImageLayout(&textureImage, vk::Format::eR8G8B8A8Unorm, vk::ImageLayout::eUndefined, vk::ImageLayout::eTransferDstOptimal);
 
 	if(shouldCopyFromStaging){
-		StagingBuffer::copyBufferToImage(StaginfBufferRef->getStagingBuffer(), &textureImage, static_cast<uint32_t>(texWidth), static_cast<uint32_t>(texHeight));
+		StagingBuffer::copy_buffer_to_image(StaginfBufferRef->getStagingBuffer(), &textureImage, static_cast<uint32_t>(texWidth), static_cast<uint32_t>(texHeight));
 
 		delete StaginfBufferRef;
 		StaginfBufferRef = nullptr;
@@ -37,7 +37,7 @@ ScrapEngine::TextureImage::TextureImage(const std::string& file_path, bool shoul
 	}
 }
 
-ScrapEngine::TextureImage::~TextureImage()
+ScrapEngine::Render::TextureImage::~TextureImage()
 {
 	if (StaginfBufferRef) {
 		delete StaginfBufferRef;
@@ -46,12 +46,12 @@ ScrapEngine::TextureImage::~TextureImage()
 	VulkanDevice::StaticLogicDeviceRef->freeMemory(textureImageMemory);
 }
 
-void ScrapEngine::TextureImage::createImage(const uint32_t& width, const uint32_t& height, const vk::Format& format, vk::ImageTiling tiling, vk::ImageUsageFlags usage, vk::MemoryPropertyFlags properties, vk::Image& image, vk::DeviceMemory& imageMemory)
+void ScrapEngine::Render::TextureImage::createImage(const uint32_t& width, const uint32_t& height, const vk::Format& format, vk::ImageTiling tiling, vk::ImageUsageFlags usage, vk::MemoryPropertyFlags properties, vk::Image& image, vk::DeviceMemory& imageMemory)
 {
 	createImage(width, height, format, tiling, usage, properties, image, imageMemory, mipLevels, vk::SampleCountFlagBits::e1);
 }
 
-void ScrapEngine::TextureImage::createImage(const uint32_t& width, const uint32_t& height, const vk::Format& format, vk::ImageTiling tiling, vk::ImageUsageFlags usage,
+void ScrapEngine::Render::TextureImage::createImage(const uint32_t& width, const uint32_t& height, const vk::Format& format, vk::ImageTiling tiling, vk::ImageUsageFlags usage,
 	vk::MemoryPropertyFlags properties, vk::Image& image, vk::DeviceMemory& imageMemory, uint32_t mipLevelsData, vk::SampleCountFlagBits numSamples)
 {
 	vk::ImageCreateInfo imageInfo(
@@ -86,14 +86,14 @@ void ScrapEngine::TextureImage::createImage(const uint32_t& width, const uint32_
 	VulkanDevice::StaticLogicDeviceRef->bindImageMemory(image, imageMemory, 0);
 }
 
-void ScrapEngine::TextureImage::transitionImageLayout(vk::Image* image, const vk::Format& format, const vk::ImageLayout& oldLayout, const vk::ImageLayout& newLayout)
+void ScrapEngine::Render::TextureImage::transitionImageLayout(vk::Image* image, const vk::Format& format, const vk::ImageLayout& oldLayout, const vk::ImageLayout& newLayout)
 {
 	transitionImageLayout(image, format, oldLayout, newLayout, mipLevels);
 }
 
-void ScrapEngine::TextureImage::transitionImageLayout(vk::Image* image, const vk::Format& format, const vk::ImageLayout& oldLayout, const vk::ImageLayout& newLayout, const uint32_t& mipLevelsData, int layercount)
+void ScrapEngine::Render::TextureImage::transitionImageLayout(vk::Image* image, const vk::Format& format, const vk::ImageLayout& oldLayout, const vk::ImageLayout& newLayout, const uint32_t& mipLevelsData, int layercount)
 {
-	vk::CommandBuffer* commandBuffer = BaseBuffer::beginSingleTimeCommands();
+	vk::CommandBuffer* commandBuffer = BaseBuffer::begin_single_time_commands();
 
 	vk::ImageMemoryBarrier barrier(vk::AccessFlags(), vk::AccessFlags(), oldLayout, newLayout, 0, 0, *image);
 
@@ -156,10 +156,10 @@ void ScrapEngine::TextureImage::transitionImageLayout(vk::Image* image, const vk
 		1, &barrier
 	);
 
-	BaseBuffer::endSingleTimeCommands(commandBuffer);
+	BaseBuffer::end_single_time_commands(commandBuffer);
 }
 
-void ScrapEngine::TextureImage::generateMipmaps(vk::Image* image, const vk::Format& imageFormat, const int32_t& texWidth, const int32_t& texHeight, const uint32_t& mipLevels)
+void ScrapEngine::Render::TextureImage::generateMipmaps(vk::Image* image, const vk::Format& imageFormat, const int32_t& texWidth, const int32_t& texHeight, const uint32_t& mipLevels)
 {
 	// Check if image format supports linear blitting
 	vk::FormatProperties formatProperties = VulkanDevice::StaticPhysicalDeviceRef->getFormatProperties(imageFormat);
@@ -168,7 +168,7 @@ void ScrapEngine::TextureImage::generateMipmaps(vk::Image* image, const vk::Form
 		throw std::runtime_error("TextureImage: Texture image format does not support linear blitting!");
 	}
 
-	vk::CommandBuffer* commandBuffer = BaseBuffer::beginSingleTimeCommands();
+	vk::CommandBuffer* commandBuffer = BaseBuffer::begin_single_time_commands();
 
 	vk::ImageMemoryBarrier barrier(
 		vk::AccessFlags(), 
@@ -240,40 +240,40 @@ void ScrapEngine::TextureImage::generateMipmaps(vk::Image* image, const vk::Form
 
 	commandBuffer->pipelineBarrier(vk::PipelineStageFlagBits::eTransfer, vk::PipelineStageFlagBits::eFragmentShader, vk::DependencyFlags(), 0, nullptr, 0, nullptr, 1, &barrier);
 
-	BaseBuffer::endSingleTimeCommands(commandBuffer);
+	BaseBuffer::end_single_time_commands(commandBuffer);
 }
 
-vk::Image* ScrapEngine::TextureImage::getTextureImage()
+vk::Image* ScrapEngine::Render::TextureImage::getTextureImage()
 {
 	return &textureImage;
 }
 
-ScrapEngine::StagingBuffer* ScrapEngine::TextureImage::getTextureStagingBuffer()
+ScrapEngine::Render::StagingBuffer* ScrapEngine::Render::TextureImage::getTextureStagingBuffer()
 {
 	return StaginfBufferRef;
 }
 
-vk::DeviceMemory* ScrapEngine::TextureImage::getTextureImageMemory()
+vk::DeviceMemory* ScrapEngine::Render::TextureImage::getTextureImageMemory()
 {
 	return &textureImageMemory;
 }
 
-uint32_t ScrapEngine::TextureImage::getMipLevels() const
+uint32_t ScrapEngine::Render::TextureImage::getMipLevels() const
 {
 	return mipLevels;
 }
 
-int ScrapEngine::TextureImage::getTextureWidth() const
+int ScrapEngine::Render::TextureImage::getTextureWidth() const
 {
 	return texWidth;
 }
 
-int ScrapEngine::TextureImage::getTextureHeight() const
+int ScrapEngine::Render::TextureImage::getTextureHeight() const
 {
 	return texHeight;
 }
 
-int ScrapEngine::TextureImage::getTextureChannels() const
+int ScrapEngine::Render::TextureImage::getTextureChannels() const
 {
 	return texChannels;
 }

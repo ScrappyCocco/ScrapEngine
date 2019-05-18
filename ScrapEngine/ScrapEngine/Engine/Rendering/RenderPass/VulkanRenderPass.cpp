@@ -7,11 +7,11 @@
 
 //Init Static Members
 
-const vk::RenderPass* ScrapEngine::VulkanRenderPass::StaticRenderPassRef = nullptr;
+const vk::RenderPass* ScrapEngine::Render::VulkanRenderPass::StaticRenderPassRef = nullptr;
 
 //Class
 
-ScrapEngine::VulkanRenderPass::VulkanRenderPass(const vk::Format& swapChainImageFormat, vk::SampleCountFlagBits msaaSamples)
+ScrapEngine::Render::VulkanRenderPass::VulkanRenderPass(const vk::Format& swapChainImageFormat, vk::SampleCountFlagBits msaaSamples)
 {
 	vk::AttachmentDescription colorAttachment(
 		vk::AttachmentDescriptionFlags(),
@@ -101,12 +101,12 @@ ScrapEngine::VulkanRenderPass::VulkanRenderPass(const vk::Format& swapChainImage
 	StaticRenderPassRef = &renderPass;
 }
 
-ScrapEngine::VulkanRenderPass::~VulkanRenderPass()
+ScrapEngine::Render::VulkanRenderPass::~VulkanRenderPass()
 {
 	VulkanDevice::StaticLogicDeviceRef->destroyRenderPass(renderPass);
 }
 
-vk::RenderPass* ScrapEngine::VulkanRenderPass::getRenderPass()
+vk::RenderPass* ScrapEngine::Render::VulkanRenderPass::getRenderPass()
 {
 	return &renderPass;
 }

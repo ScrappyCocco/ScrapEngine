@@ -3,7 +3,7 @@
 #include "../Base/Vertex.h"
 #include "../Base/StaticTypes.h"
 
-ScrapEngine::VulkanGraphicsPipeline::VulkanGraphicsPipeline(const char* vertexShader, const char* fragmentShader, vk::Extent2D* swapChainExtent,
+ScrapEngine::Render::VulkanGraphicsPipeline::VulkanGraphicsPipeline(const char* vertexShader, const char* fragmentShader, vk::Extent2D* swapChainExtent,
 	vk::DescriptorSetLayout* descriptorSetLayout, vk::SampleCountFlagBits msaaSamples, bool isSkybox)
 {
 	ShaderManagerRef = new ShaderManager();
@@ -145,18 +145,18 @@ ScrapEngine::VulkanGraphicsPipeline::VulkanGraphicsPipeline(const char* vertexSh
 }
 
 
-ScrapEngine::VulkanGraphicsPipeline::~VulkanGraphicsPipeline()
+ScrapEngine::Render::VulkanGraphicsPipeline::~VulkanGraphicsPipeline()
 {
 	VulkanDevice::StaticLogicDeviceRef->destroyPipeline(graphicsPipeline);
 	VulkanDevice::StaticLogicDeviceRef->destroyPipelineLayout(pipelineLayout);
 }
 
-vk::Pipeline* ScrapEngine::VulkanGraphicsPipeline::getGraphicsPipeline()
+vk::Pipeline* ScrapEngine::Render::VulkanGraphicsPipeline::getGraphicsPipeline()
 {
 	return &graphicsPipeline;
 }
 
-vk::PipelineLayout* ScrapEngine::VulkanGraphicsPipeline::getPipelineLayout()
+vk::PipelineLayout* ScrapEngine::Render::VulkanGraphicsPipeline::getPipelineLayout()
 {
 	return &pipelineLayout;
 }

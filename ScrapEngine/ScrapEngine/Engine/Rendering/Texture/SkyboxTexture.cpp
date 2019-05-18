@@ -1,15 +1,15 @@
 #include "SkyboxTexture.h"
 #include "../Memory/MemoryManager.h"
 
-ScrapEngine::SkyboxTexture::SkyboxTexture(const std::array<std::string, 6>& files_path)
+ScrapEngine::Render::SkyboxTexture::SkyboxTexture(const std::array<std::string, 6>& files_path)
 {
 	//-----------------------
 	// load images
 	//-----------------------
-	Debug::DebugLog::print_to_console_log("Start loading textures...");
+	ScrapEngine::Debug::DebugLog::print_to_console_log("Start loading textures...");
 
 	for (std::string file : files_path) {
-		Debug::DebugLog::print_to_console_log("Loading skybox texture:" + file);
+		ScrapEngine::Debug::DebugLog::print_to_console_log("Loading skybox texture:" + file);
 		images.push_back(new TextureImage(file, false));
 		Debug::DebugLog::print_to_console_log("A skybox texture has loaded (" + file + ")");
 	}
@@ -76,19 +76,19 @@ ScrapEngine::SkyboxTexture::SkyboxTexture(const std::array<std::string, 6>& file
 
 	}
 
-	ScrapEngine::TextureImage::transitionImageLayout(&cubemap, vk::Format::eR8G8B8A8Unorm, vk::ImageLayout::eUndefined, vk::ImageLayout::eTransferDstOptimal, mipLevels, 6);
+	ScrapEngine::Render::TextureImage::transitionImageLayout(&cubemap, vk::Format::eR8G8B8A8Unorm, vk::ImageLayout::eUndefined, vk::ImageLayout::eTransferDstOptimal, mipLevels, 6);
 
 	for (int i = 0; i < bufferCopyRegions.size(); i++) {
-		ScrapEngine::StagingBuffer::copyBufferToImage(images[i]->getTextureStagingBuffer()->getStagingBuffer(), &cubemap, images[i]->getTextureWidth(), images[i]->getTextureHeight(), &bufferCopyRegions[i], 1);
+		ScrapEngine::Render::StagingBuffer::copy_buffer_to_image(images[i]->getTextureStagingBuffer()->getStagingBuffer(), &cubemap, images[i]->getTextureWidth(), images[i]->getTextureHeight(), &bufferCopyRegions[i], 1);
 	}
 
-	ScrapEngine::TextureImage::transitionImageLayout(&cubemap, vk::Format::eR8G8B8A8Unorm, vk::ImageLayout::eTransferDstOptimal, vk::ImageLayout::eShaderReadOnlyOptimal, mipLevels, 6);
+	ScrapEngine::Render::TextureImage::transitionImageLayout(&cubemap, vk::Format::eR8G8B8A8Unorm, vk::ImageLayout::eTransferDstOptimal, vk::ImageLayout::eShaderReadOnlyOptimal, mipLevels, 6);
 	
 	//Delete all the images since they've been copied
 	deleteTemporaryImages();
 }
 
-ScrapEngine::SkyboxTexture::~SkyboxTexture()
+ScrapEngine::Render::SkyboxTexture::~SkyboxTexture()
 {
 	//Double-check that the images has been erased
 	deleteTemporaryImages();
@@ -96,20 +96,20 @@ ScrapEngine::SkyboxTexture::~SkyboxTexture()
 	VulkanDevice::StaticLogicDeviceRef->freeMemory(cubemapImageMemory);
 }
 
-void ScrapEngine::SkyboxTexture::deleteTemporaryImages()
+void ScrapEngine::Render::SkyboxTexture::deleteTemporaryImages()
 {
-	for (ScrapEngine::TextureImage* cubeSingleImage : images) {
+	for (ScrapEngine::Render::TextureImage* cubeSingleImage : images) {
 		delete cubeSingleImage;
 	}
 	images.clear();
 }
 
-vk::Image* ScrapEngine::SkyboxTexture::getTextureImage()
+vk::Image* ScrapEngine::Render::SkyboxTexture::getTextureImage()
 {
 	return &cubemap;
 }
 
-uint32_t ScrapEngine::SkyboxTexture::getMipLevels() const
+uint32_t ScrapEngine::Render::SkyboxTexture::getMipLevels() const
 {
 	return mipLevels;
 }

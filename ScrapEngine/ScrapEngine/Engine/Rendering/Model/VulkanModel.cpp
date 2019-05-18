@@ -6,7 +6,7 @@
 #include <unordered_map>
 #include <iostream>
 
-ScrapEngine::VulkanModel::VulkanModel(const std::string& input_MODEL_PATH)
+ScrapEngine::Render::VulkanModel::VulkanModel(const std::string& input_MODEL_PATH)
 {
 	Debug::DebugLog::print_to_console_log("Loading 3D model...");
 	Debug::DebugLog::print_to_console_log("Loading assimp...");
@@ -50,17 +50,17 @@ ScrapEngine::VulkanModel::VulkanModel(const std::string& input_MODEL_PATH)
 	Debug::DebugLog::print_to_console_log("Vertex and Index model info loaded");
 }
 
-ScrapEngine::VulkanModel::~VulkanModel()
+ScrapEngine::Render::VulkanModel::~VulkanModel()
 {
 
 }
 
-const std::vector<ScrapEngine::Vertex>* ScrapEngine::VulkanModel::getVertices()
+const std::vector<ScrapEngine::Vertex>* ScrapEngine::Render::VulkanModel::getVertices()
 {
 	return &vertices;
 }
 
-const std::vector<uint32_t>* ScrapEngine::VulkanModel::getIndices()
+const std::vector<uint32_t>* ScrapEngine::Render::VulkanModel::getIndices()
 {
 	return &indices;
 }
