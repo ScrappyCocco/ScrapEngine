@@ -27,8 +27,8 @@ ScrapEngine::Render::VulkanMeshInstance::VulkanMeshInstance(const std::string& v
 	VulkanRenderDescriptorSet->createDescriptorSets(VulkanRenderDescriptorPool->getDescriptorPool(), SwapChain->getSwapChainImagesVector(), VulkanRenderUniformBuffer->get_uniform_buffers(),
 		VulkanTextureImageView->getTextureImageView(), VulkanTextureSampler->getTextureSampler());
 	Debug::DebugLog::print_to_console_log("(DescriptorSets created)");
-	vertexbuffer = new simple_buffer<Vertex>(VulkanRenderVertexBuffer->getVertexBuffer(), VulkanRenderModel->getVertices());
-	indexbuffer = new simple_buffer<uint32_t>(VulkanRenderIndexBuffer->getIndexBuffer(), VulkanRenderModel->getIndices());
+	vertexbuffer = new simple_buffer<Vertex>(VulkanRenderVertexBuffer->get_vertex_buffer(), VulkanRenderModel->getVertices());
+	indexbuffer = new simple_buffer<uint32_t>(VulkanRenderIndexBuffer->get_index_buffer(), VulkanRenderModel->getIndices());
 }
 
 ScrapEngine::Render::VulkanMeshInstance::~VulkanMeshInstance()

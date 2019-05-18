@@ -28,7 +28,7 @@ ScrapEngine::Render::TextureImage::TextureImage(const std::string& file_path, bo
 	transitionImageLayout(&textureImage, vk::Format::eR8G8B8A8Unorm, vk::ImageLayout::eUndefined, vk::ImageLayout::eTransferDstOptimal);
 
 	if(shouldCopyFromStaging){
-		StagingBuffer::copy_buffer_to_image(StaginfBufferRef->getStagingBuffer(), &textureImage, static_cast<uint32_t>(texWidth), static_cast<uint32_t>(texHeight));
+		StagingBuffer::copy_buffer_to_image(StaginfBufferRef->get_staging_buffer(), &textureImage, static_cast<uint32_t>(texWidth), static_cast<uint32_t>(texHeight));
 
 		delete StaginfBufferRef;
 		StaginfBufferRef = nullptr;

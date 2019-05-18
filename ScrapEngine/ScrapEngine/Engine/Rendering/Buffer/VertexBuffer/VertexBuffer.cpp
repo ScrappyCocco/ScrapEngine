@@ -5,24 +5,26 @@
 
 ScrapEngine::Render::VertexBuffer::VertexBuffer(const std::vector<ScrapEngine::Vertex>* vertices)
 {
-	vk::DeviceSize bufferSize(sizeof((*vertices)[0]) * vertices->size());
+	const vk::DeviceSize buffer_size(sizeof((*vertices)[0]) * vertices->size());
 
-	ScrapEngine::Render::StagingBuffer* Staging = new StagingBuffer(bufferSize, vertices);
+	ScrapEngine::Render::StagingBuffer* staging = new StagingBuffer(buffer_size, vertices);
 
-	BaseBuffer::create_buffer(bufferSize, vk::BufferUsageFlagBits::eTransferDst | vk::BufferUsageFlagBits::eVertexBuffer, vk::MemoryPropertyFlagBits::eDeviceLocal, vertexBuffer, vertexBufferMemory);
+	BaseBuffer::create_buffer(buffer_size,
+	                          vk::BufferUsageFlagBits::eTransferDst | vk::BufferUsageFlagBits::eVertexBuffer,
+	                          vk::MemoryPropertyFlagBits::eDeviceLocal, vertex_buffer_, vertex_buffer_memory_);
 
-	BaseBuffer::copy_buffer(Staging->getStagingBuffer(), vertexBuffer, bufferSize);
+	BaseBuffer::copy_buffer(staging->get_staging_buffer(), vertex_buffer_, buffer_size);
 
-	delete Staging;
+	delete staging;
 }
 
 ScrapEngine::Render::VertexBuffer::~VertexBuffer()
 {
-	VulkanDevice::StaticLogicDeviceRef->destroyBuffer(vertexBuffer);
-	VulkanDevice::StaticLogicDeviceRef->freeMemory(vertexBufferMemory);
+	VulkanDevice::StaticLogicDeviceRef->destroyBuffer(vertex_buffer_);
+	VulkanDevice::StaticLogicDeviceRef->freeMemory(vertex_buffer_memory_);
 }
 
-vk::Buffer* ScrapEngine::Render::VertexBuffer::getVertexBuffer()
+vk::Buffer* ScrapEngine::Render::VertexBuffer::get_vertex_buffer()
 {
-	return &vertexBuffer;
+	return &vertex_buffer_;
 }

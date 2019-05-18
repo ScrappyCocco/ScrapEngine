@@ -79,7 +79,7 @@ ScrapEngine::Render::SkyboxTexture::SkyboxTexture(const std::array<std::string, 
 	ScrapEngine::Render::TextureImage::transitionImageLayout(&cubemap, vk::Format::eR8G8B8A8Unorm, vk::ImageLayout::eUndefined, vk::ImageLayout::eTransferDstOptimal, mipLevels, 6);
 
 	for (int i = 0; i < bufferCopyRegions.size(); i++) {
-		ScrapEngine::Render::StagingBuffer::copy_buffer_to_image(images[i]->getTextureStagingBuffer()->getStagingBuffer(), &cubemap, images[i]->getTextureWidth(), images[i]->getTextureHeight(), &bufferCopyRegions[i], 1);
+		ScrapEngine::Render::StagingBuffer::copy_buffer_to_image(images[i]->getTextureStagingBuffer()->get_staging_buffer(), &cubemap, images[i]->getTextureWidth(), images[i]->getTextureHeight(), &bufferCopyRegions[i], 1);
 	}
 
 	ScrapEngine::Render::TextureImage::transitionImageLayout(&cubemap, vk::Format::eR8G8B8A8Unorm, vk::ImageLayout::eTransferDstOptimal, vk::ImageLayout::eShaderReadOnlyOptimal, mipLevels, 6);

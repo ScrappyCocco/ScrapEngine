@@ -9,13 +9,13 @@ namespace ScrapEngine {
 		class VertexBuffer
 		{
 		private:
-			vk::Buffer vertexBuffer;
-			vk::DeviceMemory vertexBufferMemory;
+			vk::Buffer vertex_buffer_;
+			vk::DeviceMemory vertex_buffer_memory_;
 		public:
 			VertexBuffer(const std::vector<ScrapEngine::Vertex>* vertices);
 			~VertexBuffer();
 
-			vk::Buffer* getVertexBuffer();
+			vk::Buffer* get_vertex_buffer();
 		};
 	}
 }

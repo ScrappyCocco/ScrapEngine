@@ -48,12 +48,12 @@ void ScrapEngine::Render::UniformBuffer::update_uniform_buffer(const uint32_t& c
 	memcpy(mapped_memory_[current_image], &ubo, sizeof(ubo));
 }
 
-const std::vector<vk::Buffer>* ScrapEngine::Render::UniformBuffer::get_uniform_buffers()
+const std::vector<vk::Buffer>* ScrapEngine::Render::UniformBuffer::get_uniform_buffers() const
 {
 	return &uniform_buffers_;
 }
 
-const std::vector<vk::DeviceMemory>* ScrapEngine::Render::UniformBuffer::get_uniform_buffers_memory()
+const std::vector<vk::DeviceMemory>* ScrapEngine::Render::UniformBuffer::get_uniform_buffers_memory() const
 {
 	return &uniform_buffers_memory_;
 }
