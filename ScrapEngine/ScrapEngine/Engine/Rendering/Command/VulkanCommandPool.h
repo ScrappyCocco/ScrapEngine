@@ -3,20 +3,21 @@
 #include <vulkan/vulkan.hpp>
 #include "../Queue/GraphicsQueue.h"
 
-namespace ScrapEngine {
-	namespace Render {
+namespace ScrapEngine
+{
+	namespace Render
+	{
 		class VulkanCommandPool
 		{
 		private:
-			vk::CommandPool commandPool;
+			vk::CommandPool command_pool_;
 		public:
-			static const vk::CommandPool* StaticCommandPoolRef;
+			static const vk::CommandPool* static_command_pool_ref;
 
-			VulkanCommandPool(GraphicsQueue::QueueFamilyIndices queueFamilyIndices);
+			VulkanCommandPool(GraphicsQueue::QueueFamilyIndices queue_family_indices);
 			~VulkanCommandPool();
 
-			vk::CommandPool* getCommandPool();
+			vk::CommandPool* get_command_pool();
 		};
 	}
 }
-

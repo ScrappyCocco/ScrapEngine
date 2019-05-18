@@ -5,27 +5,29 @@
 
 //Init Static Members
 
-const vk::CommandPool* ScrapEngine::Render::VulkanCommandPool::StaticCommandPoolRef = nullptr;
+const vk::CommandPool* ScrapEngine::Render::VulkanCommandPool::static_command_pool_ref = nullptr;
 
 //Class
 
-ScrapEngine::Render::VulkanCommandPool::VulkanCommandPool(GraphicsQueue::QueueFamilyIndices queueFamilyIndices)
+ScrapEngine::Render::VulkanCommandPool::VulkanCommandPool(GraphicsQueue::QueueFamilyIndices queue_family_indices)
 {
-	vk::CommandPoolCreateInfo poolInfo(vk::CommandPoolCreateFlags(), queueFamilyIndices.graphicsFamily);
+	vk::CommandPoolCreateInfo pool_info(vk::CommandPoolCreateFlags(), queue_family_indices.graphicsFamily);
 
-	if (VulkanDevice::StaticLogicDeviceRef->createCommandPool(&poolInfo, nullptr, &commandPool) != vk::Result::eSuccess) {
+	if (VulkanDevice::StaticLogicDeviceRef->createCommandPool(&pool_info, nullptr, &command_pool_) != vk::Result::
+		eSuccess)
+	{
 		throw std::runtime_error("VulkanCommandPool: Failed to create command pool!");
 	}
 
-	StaticCommandPoolRef = &commandPool;
+	static_command_pool_ref = &command_pool_;
 }
 
 ScrapEngine::Render::VulkanCommandPool::~VulkanCommandPool()
 {
-	VulkanDevice::StaticLogicDeviceRef->destroyCommandPool(commandPool);
+	VulkanDevice::StaticLogicDeviceRef->destroyCommandPool(command_pool_);
 }
 
-vk::CommandPool* ScrapEngine::Render::VulkanCommandPool::getCommandPool()
+vk::CommandPool* ScrapEngine::Render::VulkanCommandPool::get_command_pool()
 {
-	return &commandPool;
+	return &command_pool_;
 }

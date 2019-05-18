@@ -1,99 +1,101 @@
 #include "Camera.h"
 
-ScrapEngine::Camera::Camera(glm::vec3 input_cameraLocation, float input_minDrawDistance, float input_maxDrawDistance) : cameraLocation(input_cameraLocation)
+ScrapEngine::Render::Camera::Camera(glm::vec3 input_camera_location, float input_min_draw_distance,
+                            float input_max_draw_distance) : camera_location_(input_camera_location)
 {
-	minDrawDistance = input_minDrawDistance;
-	maxDrawDistance = input_maxDrawDistance;
+	min_draw_distance_ = input_min_draw_distance;
+	max_draw_distance_ = input_max_draw_distance;
 
-	Yaw = -90.0f;
-	Pitch = 0.0f;
+	yaw_ = -90.0f;
+	pitch_ = 0.0f;
 }
 
-void ScrapEngine::Camera::setCameraLocation(const glm::vec3& newCameraLocation)
+void ScrapEngine::Render::Camera::set_camera_location(const glm::vec3& new_camera_location)
 {
-	cameraLocation = newCameraLocation;
+	camera_location_ = new_camera_location;
 }
 
-void ScrapEngine::Camera::ProcessMouseMovement(float xpos, float ypos, bool constrainPitch)
+void ScrapEngine::Render::Camera::process_mouse_movement(float xpos, float ypos, bool constrain_pitch)
 {
-	if (firstMouseRead) {
-		firstMouseRead = false;
-		lastX = xpos;
+	if (first_mouse_read_)
+	{
+		first_mouse_read_ = false;
+		last_x_ = xpos;
 		lastY = ypos;
 	}
-	float xoffset = xpos - lastX;
+	float xoffset = xpos - last_x_;
 	float yoffset = lastY - ypos; // reversed since y-coordinates range from bottom to top
-	lastX = xpos;
+	last_x_ = xpos;
 	lastY = ypos;
 
-	xoffset *= mouseSensivity;
-	yoffset *= mouseSensivity;
+	xoffset *= mouse_sensivity_;
+	yoffset *= mouse_sensivity_;
 
-	Yaw += xoffset;
-	Pitch += yoffset;
+	yaw_ += xoffset;
+	pitch_ += yoffset;
 
 	// Make sure that when pitch is out of bounds, screen doesn't get flipped
-	if (constrainPitch)
+	if (constrain_pitch)
 	{
-		if (Pitch > 89.0f)
-			Pitch = 89.0f;
-		if (Pitch < -89.0f)
-			Pitch = -89.0f;
+		if (pitch_ > 89.0f)
+			pitch_ = 89.0f;
+		if (pitch_ < -89.0f)
+			pitch_ = -89.0f;
 	}
 
-	updateCameraVectors();
+	update_camera_vectors();
 }
 
-void ScrapEngine::Camera::updateCameraVectors()
+void ScrapEngine::Render::Camera::update_camera_vectors()
 {
 	glm::vec3 front;
-	front.x = cos(glm::radians(Yaw)) * cos(glm::radians(Pitch));
-	front.y = sin(glm::radians(Pitch));
-	front.z = sin(glm::radians(Yaw)) * cos(glm::radians(-Pitch));
-	cameraFront = glm::normalize(front);
+	front.x = cos(glm::radians(yaw_)) * cos(glm::radians(pitch_));
+	front.y = sin(glm::radians(pitch_));
+	front.z = sin(glm::radians(yaw_)) * cos(glm::radians(-pitch_));
+	camera_front_ = glm::normalize(front);
 }
 
-void ScrapEngine::Camera::setMouseSensivity(float newSensivity)
+void ScrapEngine::Render::Camera::set_mouse_sensivity(float new_sensivity)
 {
-	mouseSensivity = newSensivity;
+	mouse_sensivity_ = new_sensivity;
 }
 
-void ScrapEngine::Camera::setMinRenderDistance(float newRenderDistance)
+void ScrapEngine::Render::Camera::set_min_render_distance(float new_render_distance)
 {
-	minDrawDistance = newRenderDistance;
+	min_draw_distance_ = new_render_distance;
 }
 
-void ScrapEngine::Camera::setMaxRenderDistance(float newRenderDistance)
+void ScrapEngine::Render::Camera::set_max_render_distance(float new_render_distance)
 {
-	maxDrawDistance = newRenderDistance;
+	max_draw_distance_ = new_render_distance;
 }
 
-float ScrapEngine::Camera::getMouseSensivity() const
+float ScrapEngine::Render::Camera::get_mouse_sensivity() const
 {
-	return mouseSensivity;
+	return mouse_sensivity_;
 }
 
-float ScrapEngine::Camera::getCameraMinDrawDistance() const
+float ScrapEngine::Render::Camera::get_camera_min_draw_distance() const
 {
-	return minDrawDistance;
+	return min_draw_distance_;
 }
 
-float ScrapEngine::Camera::getCameraMaxDrawDistance() const
+float ScrapEngine::Render::Camera::get_camera_max_draw_distance() const
 {
-	return maxDrawDistance;
+	return max_draw_distance_;
 }
 
-glm::vec3 ScrapEngine::Camera::getCameraFront() const
+glm::vec3 ScrapEngine::Render::Camera::get_camera_front() const
 {
-	return cameraFront;
+	return camera_front_;
 }
 
-glm::vec3 ScrapEngine::Camera::getCameraUp() const
+glm::vec3 ScrapEngine::Render::Camera::get_camera_up() const
 {
-	return cameraUp;
+	return camera_up_;
 }
 
-glm::vec3 ScrapEngine::Camera::getCameraLocation() const
+glm::vec3 ScrapEngine::Render::Camera::get_camera_location() const
 {
-	return cameraLocation;
+	return camera_location_;
 }

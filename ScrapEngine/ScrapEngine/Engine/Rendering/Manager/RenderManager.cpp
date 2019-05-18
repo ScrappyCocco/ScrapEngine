@@ -61,17 +61,17 @@ ScrapEngine::Render::GameWindow* ScrapEngine::Render::RenderManager::getGameWind
 	return GameWindow;
 }
 
-ScrapEngine::Camera* ScrapEngine::Render::RenderManager::getRenderCamera() const
+ScrapEngine::Render::Camera* ScrapEngine::Render::RenderManager::getRenderCamera() const
 {
 	return RenderCamera;
 }
 
-ScrapEngine::Camera* ScrapEngine::Render::RenderManager::getDefaultRenderCamera() const
+ScrapEngine::Render::Camera* ScrapEngine::Render::RenderManager::getDefaultRenderCamera() const
 {
 	return defaultCamera;
 }
 
-void ScrapEngine::Render::RenderManager::setRenderCamera(ScrapEngine::Camera* newCamera)
+void ScrapEngine::Render::RenderManager::setRenderCamera(ScrapEngine::Render::Camera* newCamera)
 {
 	RenderCamera = newCamera;
 }

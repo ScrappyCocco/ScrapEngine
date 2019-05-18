@@ -30,7 +30,7 @@ namespace ScrapEngine
 			~UniformBuffer();
 
 			void update_uniform_buffer(const uint32_t& current_image, const ScrapEngine::Transform& object_transform,
-			                           ScrapEngine::Camera* render_camera);
+			                           ScrapEngine::Render::Camera* render_camera);
 			const std::vector<vk::Buffer>* get_uniform_buffers() const;
 			const std::vector<vk::DeviceMemory>* get_uniform_buffers_memory() const;
 		};

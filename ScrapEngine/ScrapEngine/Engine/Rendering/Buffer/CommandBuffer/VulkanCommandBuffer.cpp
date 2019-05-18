@@ -13,7 +13,7 @@ ScrapEngine::Render::VulkanCommandBuffer::VulkanCommandBuffer(
 	command_buffers_.resize(swap_chain_framebuffers->size());
 
 	vk::CommandBufferAllocateInfo allocInfo(
-		*VulkanCommandPool::StaticCommandPoolRef,
+		*VulkanCommandPool::static_command_pool_ref,
 		vk::CommandBufferLevel::ePrimary,
 		static_cast<uint32_t>(command_buffers_.size())
 	);
@@ -98,7 +98,7 @@ ScrapEngine::Render::VulkanCommandBuffer::~VulkanCommandBuffer()
 
 void ScrapEngine::Render::VulkanCommandBuffer::free_command_buffers()
 {
-	VulkanDevice::StaticLogicDeviceRef->freeCommandBuffers(*VulkanCommandPool::StaticCommandPoolRef,
+	VulkanDevice::StaticLogicDeviceRef->freeCommandBuffers(*VulkanCommandPool::static_command_pool_ref,
 	                                                       static_cast<uint32_t>(command_buffers_.size()),
 	                                                       command_buffers_.data());
 	command_buffers_.clear();

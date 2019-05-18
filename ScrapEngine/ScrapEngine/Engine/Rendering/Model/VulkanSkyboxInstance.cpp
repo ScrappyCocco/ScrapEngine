@@ -49,7 +49,7 @@ ScrapEngine::Render::VulkanSkyboxInstance::~VulkanSkyboxInstance()
 	delete VulkanRenderModel;
 }
 
-void ScrapEngine::Render::VulkanSkyboxInstance::updateUniformBuffer(const uint32_t& currentImage, ScrapEngine::Camera* RenderCamera)
+void ScrapEngine::Render::VulkanSkyboxInstance::updateUniformBuffer(const uint32_t& currentImage, ScrapEngine::Render::Camera* RenderCamera)
 {
 	VulkanRenderUniformBuffer->update_uniform_buffer(currentImage, skyboxTransform, RenderCamera);
 }

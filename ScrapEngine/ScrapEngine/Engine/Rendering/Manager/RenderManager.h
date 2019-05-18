@@ -51,8 +51,8 @@ namespace ScrapEngine {
 			ScrapEngine::Render::VulkanDepthResources* VulkanRenderDepth = nullptr;
 			ScrapEngine::Render::VulkanColorResources* VulkanRenderColor = nullptr;
 
-			ScrapEngine::Camera* RenderCamera = nullptr;
-			ScrapEngine::Camera* defaultCamera = nullptr;
+			ScrapEngine::Render::Camera* RenderCamera = nullptr;
+			ScrapEngine::Render::Camera* defaultCamera = nullptr;
 
 			ScrapEngine::Render::VulkanSkyboxInstance* Skybox = nullptr;
 
@@ -97,9 +97,9 @@ namespace ScrapEngine {
 			ScrapEngine::Render::GameWindow* getGameWindow() const;
 
 			//View-Camera stuff
-			ScrapEngine::Camera* getRenderCamera() const;
-			ScrapEngine::Camera* getDefaultRenderCamera() const;
-			void setRenderCamera(ScrapEngine::Camera* newCamera);
+			ScrapEngine::Render::Camera* getRenderCamera() const;
+			ScrapEngine::Render::Camera* getDefaultRenderCamera() const;
+			void setRenderCamera(ScrapEngine::Render::Camera* newCamera);
 		};
 	}
 }

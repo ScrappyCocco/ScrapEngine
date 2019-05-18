@@ -77,7 +77,7 @@ glm::vec3 ScrapEngine::Render::VulkanMeshInstance::getMeshScale() const
 	return object_location.scale;
 }
 
-void ScrapEngine::Render::VulkanMeshInstance::updateUniformBuffer(const uint32_t& currentImage, ScrapEngine::Camera* RenderCamera)
+void ScrapEngine::Render::VulkanMeshInstance::updateUniformBuffer(const uint32_t& currentImage, ScrapEngine::Render::Camera* RenderCamera)
 {
 	VulkanRenderUniformBuffer->update_uniform_buffer(currentImage, object_location, RenderCamera);
 }

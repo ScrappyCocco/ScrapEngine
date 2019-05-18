@@ -38,7 +38,7 @@ namespace ScrapEngine {
 				ScrapEngine::Render::VulkanDevice* RenderDevice, ScrapEngine::Render::VulkanSwapChain* SwapChain);
 			~VulkanSkyboxInstance();
 
-			void updateUniformBuffer(const uint32_t& currentImage, ScrapEngine::Camera* RenderCamera);
+			void updateUniformBuffer(const uint32_t& currentImage, ScrapEngine::Render::Camera* RenderCamera);
 			void deleteGraphicsPipeline();
 
 			int getCubemapSize();

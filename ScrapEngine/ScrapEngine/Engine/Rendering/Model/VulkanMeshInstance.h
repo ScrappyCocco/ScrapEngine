@@ -48,7 +48,7 @@ namespace ScrapEngine {
 			glm::vec3 getMeshRotation() const;
 			glm::vec3 getMeshScale() const;
 
-			void updateUniformBuffer(const uint32_t& currentImage, ScrapEngine::Camera* RenderCamera);
+			void updateUniformBuffer(const uint32_t& currentImage, ScrapEngine::Render::Camera* RenderCamera);
 			void deleteGraphicsPipeline();
 
 			ScrapEngine::Render::UniformBuffer* getVulkanRenderUniformBuffer();

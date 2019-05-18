@@ -49,7 +49,7 @@ void ScrapEngine::Render::BaseBuffer::copy_buffer(vk::Buffer* src_buffer, vk::Bu
 
 vk::CommandBuffer* ScrapEngine::Render::BaseBuffer::begin_single_time_commands()
 {
-	vk::CommandBufferAllocateInfo alloc_info(*VulkanCommandPool::StaticCommandPoolRef, vk::CommandBufferLevel::ePrimary,
+	vk::CommandBufferAllocateInfo alloc_info(*VulkanCommandPool::static_command_pool_ref, vk::CommandBufferLevel::ePrimary,
 	                                         1);
 
 	vk::CommandBuffer* command_buffer = new vk::CommandBuffer();
@@ -71,6 +71,6 @@ void ScrapEngine::Render::BaseBuffer::end_single_time_commands(vk::CommandBuffer
 
 	GraphicsQueue::StaticGraphicsQueueRef->waitIdle();
 
-	VulkanDevice::StaticLogicDeviceRef->freeCommandBuffers(*VulkanCommandPool::StaticCommandPoolRef, 1, command_buffer);
+	VulkanDevice::StaticLogicDeviceRef->freeCommandBuffers(*VulkanCommandPool::static_command_pool_ref, 1, command_buffer);
 	delete command_buffer;
 }

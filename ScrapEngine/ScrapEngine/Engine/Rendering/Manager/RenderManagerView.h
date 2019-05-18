@@ -13,9 +13,9 @@ namespace ScrapEngine {
 
 			ScrapEngine::Render::GameWindow* getGameWindow() const;
 
-			ScrapEngine::Camera* getDefaultRenderCamera() const;
-			ScrapEngine::Camera* getCurrentRenderCamera() const;
-			void setRenderCamera(ScrapEngine::Camera*) const;
+			ScrapEngine::Render::Camera* getDefaultRenderCamera() const;
+			ScrapEngine::Render::Camera* getCurrentRenderCamera() const;
+			void setRenderCamera(ScrapEngine::Render::Camera*) const;
 		};
 	}
 }

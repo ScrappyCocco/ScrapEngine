@@ -10,13 +10,13 @@
 class GameCamera : public ScrapEngine::Core::SGameObject
 {
 private:
-	ScrapEngine::Camera* GameCameraRef;
+	ScrapEngine::Render::Camera* GameCameraRef;
 	ScrapEngine::Input::InputManager* InputManagerRef;
 	TestGameObject* GameObjectRef;
 
 	float cameraSpeed = 0.5f;
 public:
-	GameCamera(ScrapEngine::Input::InputManager* CreatedInputManagerf, ScrapEngine::Camera* input_GameCameraRef, TestGameObject* input_GameObjectRef);
+	GameCamera(ScrapEngine::Input::InputManager* CreatedInputManagerf, ScrapEngine::Render::Camera* input_GameCameraRef, TestGameObject* input_GameObjectRef);
 	~GameCamera() = default;
 
 	virtual void game_start() override;
