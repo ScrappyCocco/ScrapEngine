@@ -19,16 +19,16 @@ ScrapEngine::Render::UniformBuffer::UniformBuffer(const std::vector<vk::Image>* 
 	//Map memory
 	mapped_memory_.resize(swap_chain_images_size_);
 	for (size_t i = 0; i < swap_chain_images_size_; i++) {
-		VulkanDevice::StaticLogicDeviceRef->mapMemory(uniform_buffers_memory_[i], 0, sizeof(UniformBufferObject), vk::MemoryMapFlags(), &mapped_memory_[i]);
+		VulkanDevice::static_logic_device_ref->mapMemory(uniform_buffers_memory_[i], 0, sizeof(UniformBufferObject), vk::MemoryMapFlags(), &mapped_memory_[i]);
 	}
 }
 
 ScrapEngine::Render::UniformBuffer::~UniformBuffer()
 {
 	for (size_t i = 0; i < swap_chain_images_size_; i++) {
-		VulkanDevice::StaticLogicDeviceRef->destroyBuffer(uniform_buffers_[i]);
-		VulkanDevice::StaticLogicDeviceRef->unmapMemory(uniform_buffers_memory_[i]);
-		VulkanDevice::StaticLogicDeviceRef->freeMemory(uniform_buffers_memory_[i]);
+		VulkanDevice::static_logic_device_ref->destroyBuffer(uniform_buffers_[i]);
+		VulkanDevice::static_logic_device_ref->unmapMemory(uniform_buffers_memory_[i]);
+		VulkanDevice::static_logic_device_ref->freeMemory(uniform_buffers_memory_[i]);
 	}
 }
 

@@ -9,7 +9,7 @@ const vk::Queue* ScrapEngine::Render::PresentQueue::StaticPresentationQueueRef =
 
 ScrapEngine::Render::PresentQueue::PresentQueue(GraphicsQueue::QueueFamilyIndices indices)
 {
-	VulkanDevice::StaticLogicDeviceRef->getQueue(indices.presentFamily, 0, &presentationQueue);
+	VulkanDevice::static_logic_device_ref->getQueue(indices.presentFamily, 0, &presentationQueue);
 	StaticPresentationQueueRef = &presentationQueue;
 }
 

@@ -18,7 +18,7 @@ ScrapEngine::Render::VulkanCommandBuffer::VulkanCommandBuffer(
 		static_cast<uint32_t>(command_buffers_.size())
 	);
 
-	if (VulkanDevice::StaticLogicDeviceRef->allocateCommandBuffers(&allocInfo, command_buffers_.data()) != vk::Result::
+	if (VulkanDevice::static_logic_device_ref->allocateCommandBuffers(&allocInfo, command_buffers_.data()) != vk::Result::
 		eSuccess)
 	{
 		throw std::runtime_error("VulkanCommandBuffer: Failed to allocate command buffers!");
@@ -61,7 +61,7 @@ ScrapEngine::Render::VulkanCommandBuffer::VulkanCommandBuffer(
 			command_buffers_[i].bindDescriptorSets(vk::PipelineBindPoint::eGraphics,
 			                                       *SkyboxRef->getVulkanRenderGraphicsPipeline()->getPipelineLayout(),
 			                                       0, 1, &(*SkyboxRef
-			                                                ->getVulkanRenderDescriptorSet()->getDescriptorSets())[i],
+			                                                ->getVulkanRenderDescriptorSet()->get_descriptor_sets())[i],
 			                                       0, nullptr);
 			command_buffers_[i].drawIndexed(static_cast<uint32_t>((*SkyboxRef->getIndexbuffer()).vectorData->size()), 1,
 			                                0, 0, 0);
@@ -98,7 +98,7 @@ ScrapEngine::Render::VulkanCommandBuffer::~VulkanCommandBuffer()
 
 void ScrapEngine::Render::VulkanCommandBuffer::free_command_buffers()
 {
-	VulkanDevice::StaticLogicDeviceRef->freeCommandBuffers(*VulkanCommandPool::static_command_pool_ref,
+	VulkanDevice::static_logic_device_ref->freeCommandBuffers(*VulkanCommandPool::static_command_pool_ref,
 	                                                       static_cast<uint32_t>(command_buffers_.size()),
 	                                                       command_buffers_.data());
 	command_buffers_.clear();

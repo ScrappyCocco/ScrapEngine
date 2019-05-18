@@ -27,7 +27,7 @@ ScrapEngine::Render::VulkanRenderPass::VulkanRenderPass(const vk::Format& swapCh
 
 	vk::AttachmentDescription depthAttachment(
 		vk::AttachmentDescriptionFlags(),
-		VulkanDepthResources::findDepthFormat(),
+		VulkanDepthResources::find_depth_format(),
 		msaaSamples,
 		vk::AttachmentLoadOp::eClear,
 		vk::AttachmentStoreOp::eDontCare,
@@ -94,7 +94,7 @@ ScrapEngine::Render::VulkanRenderPass::VulkanRenderPass(const vk::Format& swapCh
 		&dependency
 	);
 
-	if (VulkanDevice::StaticLogicDeviceRef->createRenderPass(&renderPassInfo, nullptr, &renderPass) != vk::Result::eSuccess) {
+	if (VulkanDevice::static_logic_device_ref->createRenderPass(&renderPassInfo, nullptr, &renderPass) != vk::Result::eSuccess) {
 		throw std::runtime_error("VulkanRenderPass: Failed to create render pass!");
 	}
 
@@ -103,7 +103,7 @@ ScrapEngine::Render::VulkanRenderPass::VulkanRenderPass(const vk::Format& swapCh
 
 ScrapEngine::Render::VulkanRenderPass::~VulkanRenderPass()
 {
-	VulkanDevice::StaticLogicDeviceRef->destroyRenderPass(renderPass);
+	VulkanDevice::static_logic_device_ref->destroyRenderPass(renderPass);
 }
 
 vk::RenderPass* ScrapEngine::Render::VulkanRenderPass::getRenderPass()

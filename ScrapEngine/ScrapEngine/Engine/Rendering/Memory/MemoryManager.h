@@ -8,7 +8,7 @@ namespace ScrapEngine {
 	namespace Render {
 		static uint32_t findMemoryType(const uint32_t& typeFilter, vk::MemoryPropertyFlags properties) {
 			vk::PhysicalDeviceMemoryProperties memProperties;
-			VulkanDevice::StaticPhysicalDeviceRef->getMemoryProperties(&memProperties);
+			VulkanDevice::static_physical_device_ref->getMemoryProperties(&memProperties);
 
 			for (uint32_t i = 0; i < memProperties.memoryTypeCount; i++) {
 				if ((typeFilter & (1 << i)) && (memProperties.memoryTypes[i].propertyFlags & properties) == properties) {

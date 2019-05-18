@@ -15,9 +15,9 @@ ScrapEngine::Render::VulkanColorResources::VulkanColorResources(vk::SampleCountF
 
 ScrapEngine::Render::VulkanColorResources::~VulkanColorResources()
 {
-	VulkanDevice::StaticLogicDeviceRef->destroyImageView(colorImageView);
-	VulkanDevice::StaticLogicDeviceRef->destroyImage(colorImage);
-	VulkanDevice::StaticLogicDeviceRef->freeMemory(colorImageMemory);
+	VulkanDevice::static_logic_device_ref->destroyImageView(colorImageView);
+	VulkanDevice::static_logic_device_ref->destroyImage(colorImage);
+	VulkanDevice::static_logic_device_ref->freeMemory(colorImageMemory);
 }
 
 vk::Image* ScrapEngine::Render::VulkanColorResources::getColorImage()

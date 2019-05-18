@@ -1,11 +1,12 @@
 #include "VulkanSkyboxInstance.h"
+#include "Engine/Debug/DebugLog.h"
 
 ScrapEngine::Render::VulkanSkyboxInstance::VulkanSkyboxInstance(const std::string& vertex_shader_path, const std::string& fragment_shader_path, const std::string& model_path, const std::array<std::string, 6>& texture_path,
 	ScrapEngine::Render::VulkanDevice* RenderDevice, ScrapEngine::Render::VulkanSwapChain* SwapChain)
 {
 	VulkanRenderDescriptorSet = new VulkanDescriptorSet();
 	Debug::DebugLog::print_to_console_log("VulkanDescriptorSet created");
-	VulkanRenderGraphicsPipeline = new VulkanGraphicsPipeline(vertex_shader_path.c_str(), fragment_shader_path.c_str(), &SwapChain->getSwapChainExtent(), VulkanRenderDescriptorSet->getDescriptorSetLayout(), RenderDevice->getMsaaSamples(), true);
+	VulkanRenderGraphicsPipeline = new VulkanGraphicsPipeline(vertex_shader_path.c_str(), fragment_shader_path.c_str(), &SwapChain->getSwapChainExtent(), VulkanRenderDescriptorSet->get_descriptor_set_layout(), RenderDevice->get_msaa_samples(), true);
 	Debug::DebugLog::print_to_console_log("VulkanGraphicsPipeline created");
 	SkyboxTexture = new ScrapEngine::Render::SkyboxTexture(texture_path);
 	Debug::DebugLog::print_to_console_log("TextureImage created");
@@ -24,7 +25,7 @@ ScrapEngine::Render::VulkanSkyboxInstance::VulkanSkyboxInstance(const std::strin
 	Debug::DebugLog::print_to_console_log("UniformBuffer created");
 	VulkanRenderDescriptorPool = new VulkanDescriptorPool(SwapChain->getSwapChainImagesVector());
 	Debug::DebugLog::print_to_console_log("VulkanDescriptorPool created");
-	VulkanRenderDescriptorSet->createDescriptorSets(VulkanRenderDescriptorPool->getDescriptorPool(), SwapChain->getSwapChainImagesVector(), VulkanRenderUniformBuffer->get_uniform_buffers(),
+	VulkanRenderDescriptorSet->create_descriptor_sets(VulkanRenderDescriptorPool->get_descriptor_pool(), SwapChain->getSwapChainImagesVector(), VulkanRenderUniformBuffer->get_uniform_buffers(),
 		VulkanTextureImageView->getTextureImageView(), VulkanTextureSampler->getTextureSampler());
 	Debug::DebugLog::print_to_console_log("(DescriptorSets created)");
 	vertexbuffer = new simple_buffer<Vertex>(VulkanRenderVertexBuffer->get_vertex_buffer(), VulkanRenderModel->getVertices());

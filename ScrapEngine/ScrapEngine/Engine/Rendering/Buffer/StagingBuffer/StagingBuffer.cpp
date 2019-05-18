@@ -7,15 +7,15 @@ ScrapEngine::Render::StagingBuffer::StagingBuffer(const vk::DeviceSize& image_si
 	                          vk::MemoryPropertyFlagBits::eHostVisible | vk::MemoryPropertyFlagBits::eHostCoherent,
 	                          staging_buffer_, staging_buffer_memory_);
 	void* data;
-	VulkanDevice::StaticLogicDeviceRef->mapMemory(staging_buffer_memory_, 0, image_size, vk::MemoryMapFlags(), &data);
+	VulkanDevice::static_logic_device_ref->mapMemory(staging_buffer_memory_, 0, image_size, vk::MemoryMapFlags(), &data);
 	memcpy(data, pixels, static_cast<size_t>(image_size));
-	VulkanDevice::StaticLogicDeviceRef->unmapMemory(staging_buffer_memory_);
+	VulkanDevice::static_logic_device_ref->unmapMemory(staging_buffer_memory_);
 }
 
 ScrapEngine::Render::StagingBuffer::~StagingBuffer()
 {
-	VulkanDevice::StaticLogicDeviceRef->destroyBuffer(staging_buffer_);
-	VulkanDevice::StaticLogicDeviceRef->freeMemory(staging_buffer_memory_);
+	VulkanDevice::static_logic_device_ref->destroyBuffer(staging_buffer_);
+	VulkanDevice::static_logic_device_ref->freeMemory(staging_buffer_memory_);
 }
 
 void ScrapEngine::Render::StagingBuffer::copy_buffer_to_image(vk::Buffer* buffer, vk::Image* image,

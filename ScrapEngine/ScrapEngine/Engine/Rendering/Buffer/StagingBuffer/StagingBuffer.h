@@ -39,10 +39,10 @@ namespace ScrapEngine
 			                          vk::MemoryPropertyFlagBits::eHostVisible | vk::MemoryPropertyFlagBits::
 			                          eHostCoherent, staging_buffer_, staging_buffer_memory_);
 			void* data;
-			VulkanDevice::StaticLogicDeviceRef->mapMemory(staging_buffer_memory_, 0, buffer_size, vk::MemoryMapFlags(),
+			VulkanDevice::static_logic_device_ref->mapMemory(staging_buffer_memory_, 0, buffer_size, vk::MemoryMapFlags(),
 			                                              &data);
 			memcpy(data, vector_data->data(), static_cast<size_t>(buffer_size));
-			VulkanDevice::StaticLogicDeviceRef->unmapMemory(staging_buffer_memory_);
+			VulkanDevice::static_logic_device_ref->unmapMemory(staging_buffer_memory_);
 		}
 	}
 }

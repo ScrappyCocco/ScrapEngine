@@ -9,7 +9,7 @@ const vk::Queue* ScrapEngine::Render::GraphicsQueue::StaticGraphicsQueueRef = nu
 
 ScrapEngine::Render::GraphicsQueue::GraphicsQueue(QueueFamilyIndices indices)
 {
-	VulkanDevice::StaticLogicDeviceRef->getQueue(indices.graphicsFamily, 0, &graphicsQueue);
+	VulkanDevice::static_logic_device_ref->getQueue(indices.graphicsFamily, 0, &graphicsQueue);
 	StaticGraphicsQueueRef = &graphicsQueue;
 }
 

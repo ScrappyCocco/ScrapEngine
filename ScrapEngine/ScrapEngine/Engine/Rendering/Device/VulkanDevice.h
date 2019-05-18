@@ -2,66 +2,66 @@
 
 #include <vulkan/vulkan.hpp>
 #include "../Instance/VukanInstance.h"
-#include "../Window/VulkanSurface.h"
-#include "../../Debug/DebugLog.h"
 #include "../Queue/GraphicsQueue.h"
 #include "../SwapChain/VulkanSwapChain.h"
 
-namespace ScrapEngine {
-	namespace Render {
+namespace ScrapEngine
+{
+	namespace Render
+	{
 		class VulkanDevice
 		{
 		private:
-			vk::Instance* instanceRef;
-			vk::SurfaceKHR* VulkanSurfaceRef;
+			vk::Instance* instance_ref_;
+			vk::SurfaceKHR* vulkan_surface_ref_;
 
-			vk::SampleCountFlagBits msaaSamples = vk::SampleCountFlagBits::e1;
+			vk::SampleCountFlagBits msaa_samples_ = vk::SampleCountFlagBits::e1;
 
-			GraphicsQueue::QueueFamilyIndices cached_indices;
+			GraphicsQueue::QueueFamilyIndices cached_indices_;
 
-			vk::PhysicalDevice physicalDevice; //physical graphics card
-			vk::Device device; //logical connection to graphics card
+			vk::PhysicalDevice physical_device_; //physical graphics card
+			vk::Device device_; //logical connection to graphics card
 
 			//List of Extensions to check
-			const std::vector<const char*> deviceExtensions = {
+			const std::vector<const char*> device_extensions_ = {
 				VK_KHR_SWAPCHAIN_EXTENSION_NAME
 			};
 		public:
-			static const vk::Device* StaticLogicDeviceRef;
-			static const vk::PhysicalDevice* StaticPhysicalDeviceRef;
+			static const vk::Device* static_logic_device_ref;
+			static const vk::PhysicalDevice* static_physical_device_ref;
 
-			VulkanDevice(vk::Instance* VulkanInstanceInputRef, vk::SurfaceKHR* VulkanSurfaceInputRef);
+			VulkanDevice(vk::Instance* vulkan_instance_input_ref, vk::SurfaceKHR* vulkan_surface_input_ref);
 
 			//Turn off the logical device
 			~VulkanDevice();
 
 			//Choose and assign the best physicalDevice
-			void choosePhysicalDevice();
+			void choose_physical_device();
 
 			//Initialize the LogicalDevice
-			void createLogicalDevice();
+			void create_logical_device();
 
 			//Return a reference to physicalDevice
-			vk::PhysicalDevice* getPhysicalDevice();
+			vk::PhysicalDevice* get_physical_device();
 
 			//Return a reference to logical device
-			vk::Device* getLogicalDevice();
+			vk::Device* get_logical_device();
 
-			GraphicsQueue::QueueFamilyIndices getCachedQueueFamilyIndices() const;
+			GraphicsQueue::QueueFamilyIndices get_cached_queue_family_indices() const;
 
 			//Which queue families are supported by the device
-			ScrapEngine::Render::GraphicsQueue::QueueFamilyIndices findQueueFamilies(vk::PhysicalDevice* device, vk::SurfaceKHR* surface);
+			ScrapEngine::Render::GraphicsQueue::QueueFamilyIndices find_queue_families(
+				vk::PhysicalDevice* physical_device_input, vk::SurfaceKHR* surface);
 
-			VulkanSwapChain::SwapChainSupportDetails querySwapChainSupport(vk::PhysicalDevice* device);
+			VulkanSwapChain::SwapChainSupportDetails query_swap_chain_support(vk::PhysicalDevice* device) const;
 
-			vk::SampleCountFlagBits getMaxUsableSampleCount();
+			vk::SampleCountFlagBits get_max_usable_sample_count() const;
 
-			vk::SampleCountFlagBits getMsaaSamples() const;
+			vk::SampleCountFlagBits get_msaa_samples() const;
 		private:
-			bool isDeviceSuitable(vk::PhysicalDevice* device, vk::SurfaceKHR* surface);
+			bool is_device_suitable(vk::PhysicalDevice* device, vk::SurfaceKHR* surface);
 
-			bool checkDeviceExtensionSupport(vk::PhysicalDevice* device);
+			bool check_device_extension_support(vk::PhysicalDevice* device) const;
 		};
 	}
 }
-

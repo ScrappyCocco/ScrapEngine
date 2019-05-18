@@ -14,13 +14,13 @@ ScrapEngine::Render::VulkanSurface::VulkanSurface(ScrapEngine::Render::GameWindo
 
 ScrapEngine::Render::VulkanSurface::~VulkanSurface()
 {
-	VukanInstance::StaticInstanceRef->destroySurfaceKHR(surface);
+	VukanInstance::static_instance_ref->destroySurfaceKHR(surface);
 }
 
 void ScrapEngine::Render::VulkanSurface::createSurface(ScrapEngine::Render::GameWindow* windowRef)
 {
 	surface = vk::SurfaceKHR();
-	if (glfwCreateWindowSurface(*VukanInstance::StaticInstanceRef, windowRef->window, nullptr, reinterpret_cast<VkSurfaceKHR*>(&surface)) != VK_SUCCESS) {
+	if (glfwCreateWindowSurface(*VukanInstance::static_instance_ref, windowRef->window, nullptr, reinterpret_cast<VkSurfaceKHR*>(&surface)) != VK_SUCCESS) {
 		throw std::runtime_error("VulkanSurface: Failed to create window surface!");
 	}
 }

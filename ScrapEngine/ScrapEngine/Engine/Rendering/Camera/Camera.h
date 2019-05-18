@@ -1,11 +1,11 @@
 #pragma once
 
 #include <glm/glm.hpp>
-#include "../../Utility/UsefulTypes.h"
 
 namespace ScrapEngine
 {
-	namespace Render {
+	namespace Render
+	{
 		class Camera
 		{
 			glm::vec3 camera_location_;
@@ -26,7 +26,7 @@ namespace ScrapEngine
 			virtual void update_camera_vectors();
 		public:
 			Camera(glm::vec3 input_camera_location = glm::vec3(0.0f, 0.0f, 1.0f), float input_min_draw_distance = 0.1f,
-				float input_max_draw_distance = 100.f);
+			       float input_max_draw_distance = 100.f);
 			~Camera() = default;
 
 			virtual void process_mouse_movement(float xpos, float ypos, bool constrain_pitch = true);

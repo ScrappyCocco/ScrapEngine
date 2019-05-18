@@ -11,7 +11,7 @@ ScrapEngine::Render::VulkanValidationLayers::VulkanValidationLayers()
 
 ScrapEngine::Render::VulkanValidationLayers::~VulkanValidationLayers()
 {
-	VukanInstance::StaticInstanceRef->destroyDebugUtilsMessengerEXT(callback, nullptr, dispatcher);
+	VukanInstance::static_instance_ref->destroyDebugUtilsMessengerEXT(callback, nullptr, dispatcher);
 }
 
 void ScrapEngine::Render::VulkanValidationLayers::setupDebugCallback()
@@ -25,9 +25,9 @@ void ScrapEngine::Render::VulkanValidationLayers::setupDebugCallback()
 		debugCallback
 	);
 
-	dispatcher.init(*VukanInstance::StaticInstanceRef);
+	dispatcher.init(*VukanInstance::static_instance_ref);
 
-	callback = VukanInstance::StaticInstanceRef->createDebugUtilsMessengerEXT(createInfo, nullptr, dispatcher);
+	callback = VukanInstance::static_instance_ref->createDebugUtilsMessengerEXT(createInfo, nullptr, dispatcher);
 
 	Debug::DebugLog::print_to_console_log("VulkanValidationLayers: VulkanValidationLayers ENABLED!");
 }

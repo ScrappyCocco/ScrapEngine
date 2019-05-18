@@ -42,13 +42,13 @@ ScrapEngine::Render::VulkanSwapChain::VulkanSwapChain(SwapChainSupportDetails sw
 	createInfo.setPresentMode(presentMode);
 	createInfo.setClipped(true);
 
-	if (VulkanDevice::StaticLogicDeviceRef->createSwapchainKHR(&createInfo, nullptr, &swapChain) != vk::Result::eSuccess) {
+	if (VulkanDevice::static_logic_device_ref->createSwapchainKHR(&createInfo, nullptr, &swapChain) != vk::Result::eSuccess) {
 		throw std::runtime_error("VulkanSwapChain: Failed to create swap chain!");
 	}
 
-	VulkanDevice::StaticLogicDeviceRef->getSwapchainImagesKHR(swapChain, &imageCount, nullptr);
+	VulkanDevice::static_logic_device_ref->getSwapchainImagesKHR(swapChain, &imageCount, nullptr);
 	swapChainImages.resize(imageCount);
-	VulkanDevice::StaticLogicDeviceRef->getSwapchainImagesKHR(swapChain, &imageCount, swapChainImages.data());
+	VulkanDevice::static_logic_device_ref->getSwapchainImagesKHR(swapChain, &imageCount, swapChainImages.data());
 
 	swapChainImageFormat = surfaceFormat.format;
 	swapChainExtent = extent;
@@ -56,7 +56,7 @@ ScrapEngine::Render::VulkanSwapChain::VulkanSwapChain(SwapChainSupportDetails sw
 
 ScrapEngine::Render::VulkanSwapChain::~VulkanSwapChain()
 {
-	VulkanDevice::StaticLogicDeviceRef->destroySwapchainKHR(swapChain);
+	VulkanDevice::static_logic_device_ref->destroySwapchainKHR(swapChain);
 }
 
 vk::SurfaceFormatKHR ScrapEngine::Render::VulkanSwapChain::chooseSwapSurfaceFormat(const std::vector<vk::SurfaceFormatKHR>& availableFormats)

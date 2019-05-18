@@ -1,7 +1,7 @@
 #include "Camera.h"
 
 ScrapEngine::Render::Camera::Camera(glm::vec3 input_camera_location, float input_min_draw_distance,
-                            float input_max_draw_distance) : camera_location_(input_camera_location)
+                                    float input_max_draw_distance) : camera_location_(input_camera_location)
 {
 	min_draw_distance_ = input_min_draw_distance;
 	max_draw_distance_ = input_max_draw_distance;

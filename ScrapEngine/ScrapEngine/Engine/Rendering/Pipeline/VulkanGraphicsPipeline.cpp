@@ -113,7 +113,7 @@ ScrapEngine::Render::VulkanGraphicsPipeline::VulkanGraphicsPipeline(const char* 
 		depthStencil.setDepthTestEnable(false);
 	}
 	
-	if (VulkanDevice::StaticLogicDeviceRef->createPipelineLayout(&pipelineLayoutInfo, nullptr, &pipelineLayout) != vk::Result::eSuccess) {
+	if (VulkanDevice::static_logic_device_ref->createPipelineLayout(&pipelineLayoutInfo, nullptr, &pipelineLayout) != vk::Result::eSuccess) {
 		throw std::runtime_error("VulkanGraphicsPipeline: Failed to create pipeline layout!");
 	}
 
@@ -135,20 +135,20 @@ ScrapEngine::Render::VulkanGraphicsPipeline::VulkanGraphicsPipeline(const char* 
 		0
 	);
 
-	if (VulkanDevice::StaticLogicDeviceRef->createGraphicsPipelines(nullptr, 1, &pipelineInfo, nullptr, &graphicsPipeline) != vk::Result::eSuccess) {
+	if (VulkanDevice::static_logic_device_ref->createGraphicsPipelines(nullptr, 1, &pipelineInfo, nullptr, &graphicsPipeline) != vk::Result::eSuccess) {
 		throw std::runtime_error("VulkanGraphicsPipeline: Failed to create graphics pipeline!");
 	}
 
-	VulkanDevice::StaticLogicDeviceRef->destroyShaderModule(fragShaderModule);
-	VulkanDevice::StaticLogicDeviceRef->destroyShaderModule(vertShaderModule);
+	VulkanDevice::static_logic_device_ref->destroyShaderModule(fragShaderModule);
+	VulkanDevice::static_logic_device_ref->destroyShaderModule(vertShaderModule);
 	delete ShaderManagerRef;
 }
 
 
 ScrapEngine::Render::VulkanGraphicsPipeline::~VulkanGraphicsPipeline()
 {
-	VulkanDevice::StaticLogicDeviceRef->destroyPipeline(graphicsPipeline);
-	VulkanDevice::StaticLogicDeviceRef->destroyPipelineLayout(pipelineLayout);
+	VulkanDevice::static_logic_device_ref->destroyPipeline(graphicsPipeline);
+	VulkanDevice::static_logic_device_ref->destroyPipelineLayout(pipelineLayout);
 }
 
 vk::Pipeline* ScrapEngine::Render::VulkanGraphicsPipeline::getGraphicsPipeline()

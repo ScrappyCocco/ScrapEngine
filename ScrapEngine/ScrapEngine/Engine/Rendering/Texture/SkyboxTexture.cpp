@@ -1,5 +1,6 @@
 #include "SkyboxTexture.h"
 #include "../Memory/MemoryManager.h"
+#include "Engine/Debug/DebugLog.h"
 
 ScrapEngine::Render::SkyboxTexture::SkyboxTexture(const std::array<std::string, 6>& files_path)
 {
@@ -38,23 +39,23 @@ ScrapEngine::Render::SkyboxTexture::SkyboxTexture(const std::array<std::string, 
 	// allocate cubemap space memory
 	//-----------------------
 
-	if (VulkanDevice::StaticLogicDeviceRef->createImage(&imageCreateInfo, nullptr, &cubemap) != vk::Result::eSuccess) {
+	if (VulkanDevice::static_logic_device_ref->createImage(&imageCreateInfo, nullptr, &cubemap) != vk::Result::eSuccess) {
 		throw std::runtime_error("TextureImage: Failed to create image!");
 	}
 
 	vk::MemoryRequirements memRequirements;
-	VulkanDevice::StaticLogicDeviceRef->getImageMemoryRequirements(cubemap, &memRequirements);
+	VulkanDevice::static_logic_device_ref->getImageMemoryRequirements(cubemap, &memRequirements);
 
 	vk::MemoryAllocateInfo allocInfo(
 		memRequirements.size,
 		findMemoryType(memRequirements.memoryTypeBits, vk::MemoryPropertyFlagBits::eDeviceLocal)
 	);
 
-	if (VulkanDevice::StaticLogicDeviceRef->allocateMemory(&allocInfo, nullptr, &cubemapImageMemory) != vk::Result::eSuccess) {
+	if (VulkanDevice::static_logic_device_ref->allocateMemory(&allocInfo, nullptr, &cubemapImageMemory) != vk::Result::eSuccess) {
 		throw std::runtime_error("TextureImage: Failed to allocate image memory!");
 	}
 
-	VulkanDevice::StaticLogicDeviceRef->bindImageMemory(cubemap, cubemapImageMemory, 0);
+	VulkanDevice::static_logic_device_ref->bindImageMemory(cubemap, cubemapImageMemory, 0);
 
 	//-----------------------
 	// copy images
@@ -92,8 +93,8 @@ ScrapEngine::Render::SkyboxTexture::~SkyboxTexture()
 {
 	//Double-check that the images has been erased
 	deleteTemporaryImages();
-	VulkanDevice::StaticLogicDeviceRef->destroyImage(cubemap);
-	VulkanDevice::StaticLogicDeviceRef->freeMemory(cubemapImageMemory);
+	VulkanDevice::static_logic_device_ref->destroyImage(cubemap);
+	VulkanDevice::static_logic_device_ref->freeMemory(cubemapImageMemory);
 }
 
 void ScrapEngine::Render::SkyboxTexture::deleteTemporaryImages()

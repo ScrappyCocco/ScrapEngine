@@ -15,24 +15,24 @@ void ScrapEngine::Render::BaseBuffer::create_buffer(const vk::DeviceSize& size, 
 		vk::SharingMode::eExclusive
 	);
 
-	if (VulkanDevice::StaticLogicDeviceRef->createBuffer(&buffer_info, nullptr, &buffer) != vk::Result::eSuccess)
+	if (VulkanDevice::static_logic_device_ref->createBuffer(&buffer_info, nullptr, &buffer) != vk::Result::eSuccess)
 	{
 		throw std::runtime_error("BaseBuffer: Failed to create buffer!");
 	}
 
 	vk::MemoryRequirements mem_requirements;
-	VulkanDevice::StaticLogicDeviceRef->getBufferMemoryRequirements(buffer, &mem_requirements);
+	VulkanDevice::static_logic_device_ref->getBufferMemoryRequirements(buffer, &mem_requirements);
 
 	vk::MemoryAllocateInfo alloc_info(mem_requirements.size,
 	                                  findMemoryType(mem_requirements.memoryTypeBits, properties));
 
-	if (VulkanDevice::StaticLogicDeviceRef->allocateMemory(&alloc_info, nullptr, &buffer_memory) != vk::Result::eSuccess
+	if (VulkanDevice::static_logic_device_ref->allocateMemory(&alloc_info, nullptr, &buffer_memory) != vk::Result::eSuccess
 	)
 	{
 		throw std::runtime_error("BaseBuffer: Failed to allocate buffer memory!");
 	}
 
-	VulkanDevice::StaticLogicDeviceRef->bindBufferMemory(buffer, buffer_memory, 0);
+	VulkanDevice::static_logic_device_ref->bindBufferMemory(buffer, buffer_memory, 0);
 }
 
 void ScrapEngine::Render::BaseBuffer::copy_buffer(vk::Buffer* src_buffer, vk::Buffer& dst_buffer,
@@ -53,7 +53,7 @@ vk::CommandBuffer* ScrapEngine::Render::BaseBuffer::begin_single_time_commands()
 	                                         1);
 
 	vk::CommandBuffer* command_buffer = new vk::CommandBuffer();
-	VulkanDevice::StaticLogicDeviceRef->allocateCommandBuffers(&alloc_info, command_buffer);
+	VulkanDevice::static_logic_device_ref->allocateCommandBuffers(&alloc_info, command_buffer);
 
 	const vk::CommandBufferBeginInfo begin_info(vk::CommandBufferUsageFlagBits::eOneTimeSubmit);
 
@@ -71,6 +71,6 @@ void ScrapEngine::Render::BaseBuffer::end_single_time_commands(vk::CommandBuffer
 
 	GraphicsQueue::StaticGraphicsQueueRef->waitIdle();
 
-	VulkanDevice::StaticLogicDeviceRef->freeCommandBuffers(*VulkanCommandPool::static_command_pool_ref, 1, command_buffer);
+	VulkanDevice::static_logic_device_ref->freeCommandBuffers(*VulkanCommandPool::static_command_pool_ref, 1, command_buffer);
 	delete command_buffer;
 }

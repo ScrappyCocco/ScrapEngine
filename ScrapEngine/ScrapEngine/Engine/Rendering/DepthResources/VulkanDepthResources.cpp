@@ -3,34 +3,44 @@
 #include "../Texture/TextureImage.h"
 #include "../Texture/TextureImageView.h"
 
-ScrapEngine::Render::VulkanDepthResources::VulkanDepthResources(const vk::Extent2D* swapChainExtent, vk::SampleCountFlagBits msaaSamples)
+ScrapEngine::Render::VulkanDepthResources::VulkanDepthResources(const vk::Extent2D* swap_chain_extent,
+                                                                vk::SampleCountFlagBits msaa_samples)
 {
-	vk::Format depthFormat = findDepthFormat();
+	const vk::Format depth_format = find_depth_format();
 
-	TextureImage::createImage(swapChainExtent->width, swapChainExtent->height, depthFormat, vk::ImageTiling::eOptimal, vk::ImageUsageFlagBits::eDepthStencilAttachment, vk::MemoryPropertyFlagBits::eDeviceLocal, depthImage, depthImageMemory, 1, msaaSamples);
-	depthImageView = TextureImageView::createImageView(&depthImage, depthFormat, vk::ImageAspectFlagBits::eDepth, 1);
+	TextureImage::createImage(swap_chain_extent->width, swap_chain_extent->height, depth_format,
+	                          vk::ImageTiling::eOptimal, vk::ImageUsageFlagBits::eDepthStencilAttachment,
+	                          vk::MemoryPropertyFlagBits::eDeviceLocal, depth_image_, depth_image_memory_, 1,
+	                          msaa_samples);
+	depth_image_view_ = TextureImageView::createImageView(&depth_image_, depth_format, vk::ImageAspectFlagBits::eDepth,
+	                                                      1);
 
-	TextureImage::transitionImageLayout(&depthImage, depthFormat, vk::ImageLayout::eUndefined, vk::ImageLayout::eDepthStencilAttachmentOptimal, 1);
+	TextureImage::transitionImageLayout(&depth_image_, depth_format, vk::ImageLayout::eUndefined,
+	                                    vk::ImageLayout::eDepthStencilAttachmentOptimal, 1);
 }
 
 
 ScrapEngine::Render::VulkanDepthResources::~VulkanDepthResources()
 {
-	VulkanDevice::StaticLogicDeviceRef->destroyImageView(depthImageView);
-	VulkanDevice::StaticLogicDeviceRef->destroyImage(depthImage);
-	VulkanDevice::StaticLogicDeviceRef->freeMemory(depthImageMemory);
+	VulkanDevice::static_logic_device_ref->destroyImageView(depth_image_view_);
+	VulkanDevice::static_logic_device_ref->destroyImage(depth_image_);
+	VulkanDevice::static_logic_device_ref->freeMemory(depth_image_memory_);
 }
 
-vk::Format ScrapEngine::Render::VulkanDepthResources::findSupportedFormat(const std::vector<vk::Format>& candidates, vk::ImageTiling tiling, vk::FormatFeatureFlags features)
+vk::Format ScrapEngine::Render::VulkanDepthResources::find_supported_format(
+	const std::vector<vk::Format>& candidates, vk::ImageTiling tiling, vk::FormatFeatureFlags features)
 {
-	for (vk::Format format : candidates) {
+	for (vk::Format format : candidates)
+	{
 		vk::FormatProperties props;
-		VulkanDevice::StaticPhysicalDeviceRef->getFormatProperties(format, &props);
+		VulkanDevice::static_physical_device_ref->getFormatProperties(format, &props);
 
-		if (tiling == vk::ImageTiling::eLinear && (props.linearTilingFeatures & features) == features) {
+		if (tiling == vk::ImageTiling::eLinear && (props.linearTilingFeatures & features) == features)
+		{
 			return format;
 		}
-		else if (tiling == vk::ImageTiling::eOptimal && (props.optimalTilingFeatures & features) == features) {
+		else if (tiling == vk::ImageTiling::eOptimal && (props.optimalTilingFeatures & features) == features)
+		{
 			return format;
 		}
 	}
@@ -38,33 +48,33 @@ vk::Format ScrapEngine::Render::VulkanDepthResources::findSupportedFormat(const 
 	throw std::runtime_error("VulkanDepthResources: Failed to find supported format!");
 }
 
-vk::Format ScrapEngine::Render::VulkanDepthResources::findDepthFormat()
+vk::Format ScrapEngine::Render::VulkanDepthResources::find_depth_format()
 {
-	return findSupportedFormat(
-		{ 
-			vk::Format::eD32Sfloat , vk::Format::eD32SfloatS8Uint , vk::Format::eD24UnormS8Uint 
+	return find_supported_format(
+		{
+			vk::Format::eD32Sfloat, vk::Format::eD32SfloatS8Uint, vk::Format::eD24UnormS8Uint
 		},
 		vk::ImageTiling::eOptimal,
 		vk::FormatFeatureFlagBits::eDepthStencilAttachment
 	);
 }
 
-bool ScrapEngine::Render::VulkanDepthResources::hasStencilComponent(const vk::Format& format)
+bool ScrapEngine::Render::VulkanDepthResources::has_stencil_component(const vk::Format& format)
 {
 	return format == vk::Format::eD32SfloatS8Uint || format == vk::Format::eD24UnormS8Uint;
 }
 
-vk::Image* ScrapEngine::Render::VulkanDepthResources::getDepthImage()
+vk::Image* ScrapEngine::Render::VulkanDepthResources::get_depth_image()
 {
-	return &depthImage;
+	return &depth_image_;
 }
 
-vk::DeviceMemory* ScrapEngine::Render::VulkanDepthResources::getDepthImageMemory()
+vk::DeviceMemory* ScrapEngine::Render::VulkanDepthResources::get_depth_image_memory()
 {
-	return &depthImageMemory;
+	return &depth_image_memory_;
 }
 
-vk::ImageView* ScrapEngine::Render::VulkanDepthResources::getDepthImageView()
+vk::ImageView* ScrapEngine::Render::VulkanDepthResources::get_depth_image_view()
 {
-	return &depthImageView;
+	return &depth_image_view_;
 }

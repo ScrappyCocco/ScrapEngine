@@ -30,14 +30,14 @@ ScrapEngine::Render::TextureSampler::TextureSampler(const uint32_t& mipLevels, v
 		borderColor
 	);
 
-	if (VulkanDevice::StaticLogicDeviceRef->createSampler(&samplerInfo, nullptr, &textureSampler) != vk::Result::eSuccess) {
+	if (VulkanDevice::static_logic_device_ref->createSampler(&samplerInfo, nullptr, &textureSampler) != vk::Result::eSuccess) {
 		throw std::runtime_error("TextureSampler: Failed to create texture sampler!");
 	}
 }
 
 ScrapEngine::Render::TextureSampler::~TextureSampler()
 {
-	ScrapEngine::Render::VulkanDevice::StaticLogicDeviceRef->destroySampler(textureSampler);
+	ScrapEngine::Render::VulkanDevice::static_logic_device_ref->destroySampler(textureSampler);
 }
 
 vk::Sampler* ScrapEngine::Render::TextureSampler::getTextureSampler()

@@ -29,7 +29,7 @@ ScrapEngine::Render::VulkanFrameBuffer::VulkanFrameBuffer(ScrapEngine::Render::V
 			1
 		);
 
-		if (VulkanDevice::StaticLogicDeviceRef->createFramebuffer(&framebuffer_info, nullptr,
+		if (VulkanDevice::static_logic_device_ref->createFramebuffer(&framebuffer_info, nullptr,
 		                                                          &swap_chain_framebuffers_[i]) != vk::Result::eSuccess)
 		{
 			throw std::runtime_error("VulkanFrameBuffer: Failed to create framebuffer!");
@@ -41,7 +41,7 @@ ScrapEngine::Render::VulkanFrameBuffer::~VulkanFrameBuffer()
 {
 	for (auto const framebuffer : swap_chain_framebuffers_)
 	{
-		VulkanDevice::StaticLogicDeviceRef->destroyFramebuffer(framebuffer);
+		VulkanDevice::static_logic_device_ref->destroyFramebuffer(framebuffer);
 	}
 }
 

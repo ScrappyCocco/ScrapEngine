@@ -20,8 +20,8 @@ ScrapEngine::Render::VertexBuffer::VertexBuffer(const std::vector<ScrapEngine::V
 
 ScrapEngine::Render::VertexBuffer::~VertexBuffer()
 {
-	VulkanDevice::StaticLogicDeviceRef->destroyBuffer(vertex_buffer_);
-	VulkanDevice::StaticLogicDeviceRef->freeMemory(vertex_buffer_memory_);
+	VulkanDevice::static_logic_device_ref->destroyBuffer(vertex_buffer_);
+	VulkanDevice::static_logic_device_ref->freeMemory(vertex_buffer_memory_);
 }
 
 vk::Buffer* ScrapEngine::Render::VertexBuffer::get_vertex_buffer()

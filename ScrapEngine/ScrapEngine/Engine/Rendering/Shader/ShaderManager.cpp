@@ -10,7 +10,7 @@ vk::ShaderModule ScrapEngine::Render::ShaderManager::createShaderModule(const st
 	);
 
 	vk::ShaderModule shaderModule;
-	if (VulkanDevice::StaticLogicDeviceRef->createShaderModule(&createInfo, nullptr, &shaderModule) != vk::Result::eSuccess) {
+	if (VulkanDevice::static_logic_device_ref->createShaderModule(&createInfo, nullptr, &shaderModule) != vk::Result::eSuccess) {
 		throw std::runtime_error("ShaderManager: Failed to create shader module!");
 	}
 

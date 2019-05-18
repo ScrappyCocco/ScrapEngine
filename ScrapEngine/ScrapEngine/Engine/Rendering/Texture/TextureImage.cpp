@@ -42,8 +42,8 @@ ScrapEngine::Render::TextureImage::~TextureImage()
 	if (StaginfBufferRef) {
 		delete StaginfBufferRef;
 	}
-	VulkanDevice::StaticLogicDeviceRef->destroyImage(textureImage);
-	VulkanDevice::StaticLogicDeviceRef->freeMemory(textureImageMemory);
+	VulkanDevice::static_logic_device_ref->destroyImage(textureImage);
+	VulkanDevice::static_logic_device_ref->freeMemory(textureImageMemory);
 }
 
 void ScrapEngine::Render::TextureImage::createImage(const uint32_t& width, const uint32_t& height, const vk::Format& format, vk::ImageTiling tiling, vk::ImageUsageFlags usage, vk::MemoryPropertyFlags properties, vk::Image& image, vk::DeviceMemory& imageMemory)
@@ -67,23 +67,23 @@ void ScrapEngine::Render::TextureImage::createImage(const uint32_t& width, const
 		vk::SharingMode::eExclusive
 	);
 
-	if (VulkanDevice::StaticLogicDeviceRef->createImage(&imageInfo, nullptr, &image) != vk::Result::eSuccess) {
+	if (VulkanDevice::static_logic_device_ref->createImage(&imageInfo, nullptr, &image) != vk::Result::eSuccess) {
 		throw std::runtime_error("TextureImage: Failed to create image!");
 	}
 
 	vk::MemoryRequirements memRequirements;
-	VulkanDevice::StaticLogicDeviceRef->getImageMemoryRequirements(image, &memRequirements);
+	VulkanDevice::static_logic_device_ref->getImageMemoryRequirements(image, &memRequirements);
 
 	vk::MemoryAllocateInfo allocInfo(
 		memRequirements.size, 
 		findMemoryType(memRequirements.memoryTypeBits, properties)
 	);
 
-	if (VulkanDevice::StaticLogicDeviceRef->allocateMemory(&allocInfo, nullptr, &imageMemory) != vk::Result::eSuccess) {
+	if (VulkanDevice::static_logic_device_ref->allocateMemory(&allocInfo, nullptr, &imageMemory) != vk::Result::eSuccess) {
 		throw std::runtime_error("TextureImage: Failed to allocate image memory!");
 	}
 
-	VulkanDevice::StaticLogicDeviceRef->bindImageMemory(image, imageMemory, 0);
+	VulkanDevice::static_logic_device_ref->bindImageMemory(image, imageMemory, 0);
 }
 
 void ScrapEngine::Render::TextureImage::transitionImageLayout(vk::Image* image, const vk::Format& format, const vk::ImageLayout& oldLayout, const vk::ImageLayout& newLayout)
@@ -100,7 +100,7 @@ void ScrapEngine::Render::TextureImage::transitionImageLayout(vk::Image* image, 
 	if (newLayout == vk::ImageLayout::eDepthStencilAttachmentOptimal) {
 		barrier.subresourceRange.aspectMask = vk::ImageAspectFlagBits::eDepth;
 
-		if (VulkanDepthResources::hasStencilComponent(format)) {
+		if (VulkanDepthResources::has_stencil_component(format)) {
 			barrier.subresourceRange.aspectMask |= vk::ImageAspectFlagBits::eStencil;
 		}
 	}
@@ -162,7 +162,7 @@ void ScrapEngine::Render::TextureImage::transitionImageLayout(vk::Image* image, 
 void ScrapEngine::Render::TextureImage::generateMipmaps(vk::Image* image, const vk::Format& imageFormat, const int32_t& texWidth, const int32_t& texHeight, const uint32_t& mipLevels)
 {
 	// Check if image format supports linear blitting
-	vk::FormatProperties formatProperties = VulkanDevice::StaticPhysicalDeviceRef->getFormatProperties(imageFormat);
+	vk::FormatProperties formatProperties = VulkanDevice::static_physical_device_ref->getFormatProperties(imageFormat);
 
 	if (!(formatProperties.optimalTilingFeatures & vk::FormatFeatureFlagBits::eSampledImageFilterLinear)) {
 		throw std::runtime_error("TextureImage: Texture image format does not support linear blitting!");

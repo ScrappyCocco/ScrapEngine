@@ -15,7 +15,7 @@ ScrapEngine::Render::TextureImageView::TextureImageView(vk::Image* textureImage,
 
 ScrapEngine::Render::TextureImageView::~TextureImageView()
 {
-	VulkanDevice::StaticLogicDeviceRef->destroyImageView(textureImageView);
+	VulkanDevice::static_logic_device_ref->destroyImageView(textureImageView);
 }
 
 vk::ImageView ScrapEngine::Render::TextureImageView::createImageView(vk::Image* image, vk::Format format, vk::ImageAspectFlags aspectFlags, uint32_t mipLevelsData) {
@@ -29,7 +29,7 @@ vk::ImageView ScrapEngine::Render::TextureImageView::createImageView(vk::Image* 
 	);
 
 	vk::ImageView imageView;
-	if (ScrapEngine::Render::VulkanDevice::StaticLogicDeviceRef->createImageView(&viewInfo, nullptr, &imageView) != vk::Result::eSuccess) {
+	if (ScrapEngine::Render::VulkanDevice::static_logic_device_ref->createImageView(&viewInfo, nullptr, &imageView) != vk::Result::eSuccess) {
 		throw std::runtime_error("TextureImageView: Failed to create texture image view!");
 	}
 
@@ -48,7 +48,7 @@ vk::ImageView ScrapEngine::Render::TextureImageView::createCubeMapImageView(vk::
 	);
 
 	vk::ImageView imageView;
-	if (Render::VulkanDevice::StaticLogicDeviceRef->createImageView(&viewInfo, nullptr, &imageView) != vk::Result::eSuccess) {
+	if (Render::VulkanDevice::static_logic_device_ref->createImageView(&viewInfo, nullptr, &imageView) != vk::Result::eSuccess) {
 		throw std::runtime_error("TextureImageView: Failed to create texture image view!");
 	}
 

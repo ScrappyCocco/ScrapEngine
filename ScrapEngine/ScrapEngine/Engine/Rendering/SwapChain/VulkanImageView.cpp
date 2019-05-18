@@ -15,7 +15,7 @@ ScrapEngine::Render::VulkanImageView::VulkanImageView(ScrapEngine::Render::Vulka
 ScrapEngine::Render::VulkanImageView::~VulkanImageView()
 {
 	for (auto imageView : swapChainImageViews) {
-		VulkanDevice::StaticLogicDeviceRef->destroyImageView(imageView);
+		VulkanDevice::static_logic_device_ref->destroyImageView(imageView);
 	}
 }
 

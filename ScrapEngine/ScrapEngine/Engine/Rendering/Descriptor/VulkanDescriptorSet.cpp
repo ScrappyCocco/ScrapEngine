@@ -5,15 +5,15 @@
 
 ScrapEngine::Render::VulkanDescriptorSet::VulkanDescriptorSet()
 {
-	vk::DescriptorSetLayoutBinding uboLayoutBinding(
-		0, 
-		vk::DescriptorType::eUniformBuffer, 
+	const vk::DescriptorSetLayoutBinding ubo_layout_binding(
+		0,
+		vk::DescriptorType::eUniformBuffer,
 		1,
-		vk::ShaderStageFlagBits::eVertex, 
+		vk::ShaderStageFlagBits::eVertex,
 		nullptr
 	);
 
-	vk::DescriptorSetLayoutBinding samplerLayoutBinding(
+	const vk::DescriptorSetLayoutBinding sampler_layout_binding(
 		1,
 		vk::DescriptorType::eCombinedImageSampler,
 		1,
@@ -21,88 +21,99 @@ ScrapEngine::Render::VulkanDescriptorSet::VulkanDescriptorSet()
 		nullptr
 	);
 
-	std::array<vk::DescriptorSetLayoutBinding, 2> bindings = { uboLayoutBinding, samplerLayoutBinding };
+	std::array<vk::DescriptorSetLayoutBinding, 2> bindings = {ubo_layout_binding, sampler_layout_binding};
 
 	vk::DescriptorSetLayoutCreateInfo layoutInfo(
-		vk::DescriptorSetLayoutCreateFlags(), 
-		static_cast<uint32_t>(bindings.size()), 
+		vk::DescriptorSetLayoutCreateFlags(),
+		static_cast<uint32_t>(bindings.size()),
 		bindings.data()
 	);
 
-	if (VulkanDevice::StaticLogicDeviceRef->createDescriptorSetLayout(&layoutInfo, nullptr, &descriptorSetLayout) != vk::Result::eSuccess) {
+	if (VulkanDevice::static_logic_device_ref->createDescriptorSetLayout(&layoutInfo, nullptr, &descriptor_set_layout_) !=
+		vk::Result::eSuccess)
+	{
 		throw std::runtime_error("VulkanDescriptorSet: Failed to create descriptor set layout!");
 	}
 }
 
 ScrapEngine::Render::VulkanDescriptorSet::~VulkanDescriptorSet()
 {
-	VulkanDevice::StaticLogicDeviceRef->destroyDescriptorSetLayout(descriptorSetLayout);
+	VulkanDevice::static_logic_device_ref->destroyDescriptorSetLayout(descriptor_set_layout_);
 }
 
-void ScrapEngine::Render::VulkanDescriptorSet::createDescriptorSets(vk::DescriptorPool* descriptorPool, const std::vector<vk::Image>* swapChainImages, const std::vector<vk::Buffer>* uniformBuffers, vk::ImageView* textureImageView, vk::Sampler* textureSampler, const vk::DeviceSize& BufferInfoSize)
+void ScrapEngine::Render::VulkanDescriptorSet::create_descriptor_sets(vk::DescriptorPool* descriptor_pool,
+                                                                      const std::vector<vk::Image>* swap_chain_images,
+                                                                      const std::vector<vk::Buffer>* uniform_buffers,
+                                                                      vk::ImageView* texture_image_view,
+                                                                      vk::Sampler* texture_sampler,
+                                                                      const vk::DeviceSize& buffer_info_size)
 {
-	std::vector<vk::DescriptorSetLayout> layouts(swapChainImages->size(), descriptorSetLayout);
+	std::vector<vk::DescriptorSetLayout> layouts(swap_chain_images->size(), descriptor_set_layout_);
 
-	vk::DescriptorSetAllocateInfo allocInfo(
-		*descriptorPool, 
-		static_cast<uint32_t>(swapChainImages->size()), 
+	vk::DescriptorSetAllocateInfo alloc_info(
+		*descriptor_pool,
+		static_cast<uint32_t>(swap_chain_images->size()),
 		layouts.data()
 	);
 
-	descriptorSets.resize(swapChainImages->size());
-	
-	if (VulkanDevice::StaticLogicDeviceRef->allocateDescriptorSets(&allocInfo, &descriptorSets[0]) != vk::Result::eSuccess) {
+	descriptor_sets_.resize(swap_chain_images->size());
+
+	if (VulkanDevice::static_logic_device_ref->allocateDescriptorSets(&alloc_info, &descriptor_sets_[0]) != vk::Result::
+		eSuccess)
+	{
 		throw std::runtime_error("DescriptorSetLayout: Failed to allocate descriptor sets!");
 	}
 
-	for (size_t i = 0; i < swapChainImages->size(); i++) {
+	for (size_t i = 0; i < swap_chain_images->size(); i++)
+	{
 		vk::DescriptorBufferInfo bufferInfo(
-			(*uniformBuffers)[i], 
-			0, 
-			BufferInfoSize
+			(*uniform_buffers)[i],
+			0,
+			buffer_info_size
 		);
 
 		vk::DescriptorImageInfo imageInfo(
-			*textureSampler, 
-			*textureImageView, 
+			*texture_sampler,
+			*texture_image_view,
 			vk::ImageLayout::eShaderReadOnlyOptimal
 		);
 
-		std::array<vk::WriteDescriptorSet, 2> descriptorWrites = {
+		std::array<vk::WriteDescriptorSet, 2> descriptor_writes = {
 			vk::WriteDescriptorSet(
-				descriptorSets[i], 
+				descriptor_sets_[i],
 				0,
-				0, 
-				1, 
-				vk::DescriptorType::eUniformBuffer, 
-				nullptr, 
+				0,
+				1,
+				vk::DescriptorType::eUniformBuffer,
+				nullptr,
 				&bufferInfo
 			),
 			vk::WriteDescriptorSet(
-				descriptorSets[i], 
-				1, 
-				0, 
-				1, 
-				vk::DescriptorType::eCombinedImageSampler, 
+				descriptor_sets_[i],
+				1,
+				0,
+				1,
+				vk::DescriptorType::eCombinedImageSampler,
 				&imageInfo
 			)
 		};
 
-		VulkanDevice::StaticLogicDeviceRef->updateDescriptorSets(static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
+		VulkanDevice::static_logic_device_ref->updateDescriptorSets(static_cast<uint32_t>(descriptor_writes.size()),
+		                                                         descriptor_writes.data(), 0, nullptr);
 	}
 }
 
-vk::DescriptorSetLayout* ScrapEngine::Render::VulkanDescriptorSet::getDescriptorSetLayout()
+vk::DescriptorSetLayout* ScrapEngine::Render::VulkanDescriptorSet::get_descriptor_set_layout()
 {
-	return &descriptorSetLayout;
+	return &descriptor_set_layout_;
 }
 
-vk::PipelineLayout* ScrapEngine::Render::VulkanDescriptorSet::getPipelineLayout()
+vk::PipelineLayout* ScrapEngine::Render::VulkanDescriptorSet::get_pipeline_layout()
 {
-	return &pipelineLayout;
+	return &pipeline_layout_;
 }
 
-const std::vector<vk::DescriptorSet>* ScrapEngine::Render::VulkanDescriptorSet::getDescriptorSets()
+const std::vector<vk::DescriptorSet>* ScrapEngine::Render::VulkanDescriptorSet::get_descriptor_sets() const
 {
-	return &descriptorSets;
+	return &descriptor_sets_;
 }

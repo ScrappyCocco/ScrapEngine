@@ -3,27 +3,28 @@
 #include <vulkan/vulkan.hpp>
 #include <vector>
 
-namespace ScrapEngine {
-	namespace Render {
+namespace ScrapEngine
+{
+	namespace Render
+	{
 		class VulkanDepthResources
 		{
 		private:
-			vk::Image depthImage;
-			vk::DeviceMemory depthImageMemory;
-			vk::ImageView depthImageView;
+			vk::Image depth_image_;
+			vk::DeviceMemory depth_image_memory_;
+			vk::ImageView depth_image_view_;
 		public:
-			VulkanDepthResources(const vk::Extent2D* swapChainExtent, vk::SampleCountFlagBits msaaSamples);
+			VulkanDepthResources(const vk::Extent2D* swap_chain_extent, vk::SampleCountFlagBits msaa_samples);
 			~VulkanDepthResources();
 
-			static vk::Format findSupportedFormat(const std::vector<vk::Format>& candidates, vk::ImageTiling tiling, vk::FormatFeatureFlags features);
-			static vk::Format findDepthFormat();
-			static bool hasStencilComponent(const vk::Format& format);
+			static vk::Format find_supported_format(const std::vector<vk::Format>& candidates, vk::ImageTiling tiling,
+			                                        vk::FormatFeatureFlags features);
+			static vk::Format find_depth_format();
+			static bool has_stencil_component(const vk::Format& format);
 
-			vk::Image* getDepthImage();
-			vk::DeviceMemory* getDepthImageMemory();
-			vk::ImageView* getDepthImageView();
-
+			vk::Image* get_depth_image();
+			vk::DeviceMemory* get_depth_image_memory();
+			vk::ImageView* get_depth_image_view();
 		};
 	}
 }
-

@@ -15,9 +15,9 @@ ScrapEngine::Render::VulkanSemaphoresManager::VulkanSemaphoresManager(unsigned s
 	vk::FenceCreateInfo fenceInfo(vk::FenceCreateFlagBits::eSignaled);
 
 	for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
-		if (VulkanDevice::StaticLogicDeviceRef->createSemaphore(&semaphoreInfo, nullptr, &imageAvailableSemaphores[i]) != vk::Result::eSuccess ||
-			VulkanDevice::StaticLogicDeviceRef->createSemaphore(&semaphoreInfo, nullptr, &renderFinishedSemaphores[i]) != vk::Result::eSuccess ||
-			VulkanDevice::StaticLogicDeviceRef->createFence(&fenceInfo, nullptr, &inFlightFences[i]) != vk::Result::eSuccess) {
+		if (VulkanDevice::static_logic_device_ref->createSemaphore(&semaphoreInfo, nullptr, &imageAvailableSemaphores[i]) != vk::Result::eSuccess ||
+			VulkanDevice::static_logic_device_ref->createSemaphore(&semaphoreInfo, nullptr, &renderFinishedSemaphores[i]) != vk::Result::eSuccess ||
+			VulkanDevice::static_logic_device_ref->createFence(&fenceInfo, nullptr, &inFlightFences[i]) != vk::Result::eSuccess) {
 			throw std::runtime_error("Failed to create VulkanSemaphoresManager for a frame!");
 		}
 	}
@@ -26,9 +26,9 @@ ScrapEngine::Render::VulkanSemaphoresManager::VulkanSemaphoresManager(unsigned s
 ScrapEngine::Render::VulkanSemaphoresManager::~VulkanSemaphoresManager()
 {
 	for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
-		VulkanDevice::StaticLogicDeviceRef->destroySemaphore(renderFinishedSemaphores[i]);
-		VulkanDevice::StaticLogicDeviceRef->destroySemaphore(imageAvailableSemaphores[i]);
-		VulkanDevice::StaticLogicDeviceRef->destroyFence(inFlightFences[i]);
+		VulkanDevice::static_logic_device_ref->destroySemaphore(renderFinishedSemaphores[i]);
+		VulkanDevice::static_logic_device_ref->destroySemaphore(imageAvailableSemaphores[i]);
+		VulkanDevice::static_logic_device_ref->destroyFence(inFlightFences[i]);
 	}
 }
 

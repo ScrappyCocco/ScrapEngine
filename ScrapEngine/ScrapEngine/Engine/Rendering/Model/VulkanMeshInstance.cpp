@@ -6,7 +6,7 @@ ScrapEngine::Render::VulkanMeshInstance::VulkanMeshInstance(const std::string& v
 {
 	VulkanRenderDescriptorSet = new VulkanDescriptorSet();
 	Debug::DebugLog::print_to_console_log("VulkanDescriptorSet created");
-	VulkanRenderGraphicsPipeline = new VulkanGraphicsPipeline(vertex_shader_path.c_str(), fragment_shader_path.c_str(), &SwapChain->getSwapChainExtent(), VulkanRenderDescriptorSet->getDescriptorSetLayout(), RenderDevice->getMsaaSamples());
+	VulkanRenderGraphicsPipeline = new VulkanGraphicsPipeline(vertex_shader_path.c_str(), fragment_shader_path.c_str(), &SwapChain->getSwapChainExtent(), VulkanRenderDescriptorSet->get_descriptor_set_layout(), RenderDevice->get_msaa_samples());
 	Debug::DebugLog::print_to_console_log("VulkanGraphicsPipeline created");
 	VulkanTextureImage = new TextureImage(texture_path);
 	Debug::DebugLog::print_to_console_log("TextureImage created");
@@ -24,7 +24,7 @@ ScrapEngine::Render::VulkanMeshInstance::VulkanMeshInstance(const std::string& v
 	Debug::DebugLog::print_to_console_log("UniformBuffer created");
 	VulkanRenderDescriptorPool = new VulkanDescriptorPool(SwapChain->getSwapChainImagesVector());
 	Debug::DebugLog::print_to_console_log("VulkanDescriptorPool created");
-	VulkanRenderDescriptorSet->createDescriptorSets(VulkanRenderDescriptorPool->getDescriptorPool(), SwapChain->getSwapChainImagesVector(), VulkanRenderUniformBuffer->get_uniform_buffers(),
+	VulkanRenderDescriptorSet->create_descriptor_sets(VulkanRenderDescriptorPool->get_descriptor_pool(), SwapChain->getSwapChainImagesVector(), VulkanRenderUniformBuffer->get_uniform_buffers(),
 		VulkanTextureImageView->getTextureImageView(), VulkanTextureSampler->getTextureSampler());
 	Debug::DebugLog::print_to_console_log("(DescriptorSets created)");
 	vertexbuffer = new simple_buffer<Vertex>(VulkanRenderVertexBuffer->get_vertex_buffer(), VulkanRenderModel->getVertices());
