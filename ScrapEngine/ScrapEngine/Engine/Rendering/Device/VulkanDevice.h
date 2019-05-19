@@ -53,7 +53,7 @@ namespace ScrapEngine
 			ScrapEngine::Render::GraphicsQueue::QueueFamilyIndices find_queue_families(
 				vk::PhysicalDevice* physical_device_input, vk::SurfaceKHR* surface);
 
-			VulkanSwapChain::SwapChainSupportDetails query_swap_chain_support(vk::PhysicalDevice* device) const;
+			VulkanSwapChain::SwapChainSupportDetails query_swap_chain_support(vk::PhysicalDevice* physical_device_input) const;
 
 			vk::SampleCountFlagBits get_max_usable_sample_count() const;
 

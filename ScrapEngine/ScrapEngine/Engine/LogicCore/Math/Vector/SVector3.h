@@ -34,6 +34,7 @@ namespace ScrapEngine
 			void set_y(float y);
 			void set_z(float z);
 			SVector3 get_vector() const;
+			glm::vec3 get_wrapped_vector() const;
 			void set_vector(const SVector3& other);
 
 			SVector3 normalize() const;

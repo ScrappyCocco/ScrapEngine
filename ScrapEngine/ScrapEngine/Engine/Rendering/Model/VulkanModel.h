@@ -5,20 +5,21 @@
 #include <vector>
 #include "../Base/Vertex.h"
 
-namespace ScrapEngine {
-	namespace Render {
+namespace ScrapEngine
+{
+	namespace Render
+	{
 		class VulkanModel
 		{
 		private:
-			std::vector<ScrapEngine::Vertex> vertices;
-			std::vector<uint32_t> indices;
+			std::vector<ScrapEngine::Vertex> vertices_;
+			std::vector<uint32_t> indices_;
 		public:
-			VulkanModel(const std::string& input_MODEL_PATH);
+			VulkanModel(const std::string& input_model_path);
 			~VulkanModel();
 
-			const std::vector<ScrapEngine::Vertex>* getVertices();
-			const std::vector<uint32_t>* getIndices();
+			const std::vector<ScrapEngine::Vertex>* get_vertices() const;
+			const std::vector<uint32_t>* get_indices() const;
 		};
 	}
 }
-

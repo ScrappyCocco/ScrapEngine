@@ -23,13 +23,14 @@ ScrapEngine::Render::VulkanDescriptorSet::VulkanDescriptorSet()
 
 	std::array<vk::DescriptorSetLayoutBinding, 2> bindings = {ubo_layout_binding, sampler_layout_binding};
 
-	vk::DescriptorSetLayoutCreateInfo layoutInfo(
+	vk::DescriptorSetLayoutCreateInfo layout_info(
 		vk::DescriptorSetLayoutCreateFlags(),
 		static_cast<uint32_t>(bindings.size()),
 		bindings.data()
 	);
 
-	if (VulkanDevice::static_logic_device_ref->createDescriptorSetLayout(&layoutInfo, nullptr, &descriptor_set_layout_) !=
+	if (VulkanDevice::static_logic_device_ref->createDescriptorSetLayout(&layout_info, nullptr, &descriptor_set_layout_)
+		!=
 		vk::Result::eSuccess)
 	{
 		throw std::runtime_error("VulkanDescriptorSet: Failed to create descriptor set layout!");
@@ -66,13 +67,13 @@ void ScrapEngine::Render::VulkanDescriptorSet::create_descriptor_sets(vk::Descri
 
 	for (size_t i = 0; i < swap_chain_images->size(); i++)
 	{
-		vk::DescriptorBufferInfo bufferInfo(
+		vk::DescriptorBufferInfo buffer_info(
 			(*uniform_buffers)[i],
 			0,
 			buffer_info_size
 		);
 
-		vk::DescriptorImageInfo imageInfo(
+		vk::DescriptorImageInfo image_info(
 			*texture_sampler,
 			*texture_image_view,
 			vk::ImageLayout::eShaderReadOnlyOptimal
@@ -86,7 +87,7 @@ void ScrapEngine::Render::VulkanDescriptorSet::create_descriptor_sets(vk::Descri
 				1,
 				vk::DescriptorType::eUniformBuffer,
 				nullptr,
-				&bufferInfo
+				&buffer_info
 			),
 			vk::WriteDescriptorSet(
 				descriptor_sets_[i],
@@ -94,12 +95,12 @@ void ScrapEngine::Render::VulkanDescriptorSet::create_descriptor_sets(vk::Descri
 				0,
 				1,
 				vk::DescriptorType::eCombinedImageSampler,
-				&imageInfo
+				&image_info
 			)
 		};
 
 		VulkanDevice::static_logic_device_ref->updateDescriptorSets(static_cast<uint32_t>(descriptor_writes.size()),
-		                                                         descriptor_writes.data(), 0, nullptr);
+		                                                            descriptor_writes.data(), 0, nullptr);
 	}
 }
 

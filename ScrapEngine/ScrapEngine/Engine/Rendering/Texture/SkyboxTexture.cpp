@@ -9,9 +9,10 @@ ScrapEngine::Render::SkyboxTexture::SkyboxTexture(const std::array<std::string, 
 	//-----------------------
 	ScrapEngine::Debug::DebugLog::print_to_console_log("Start loading textures...");
 
-	for (std::string file : files_path) {
+	for (const std::string& file : files_path)
+	{
 		ScrapEngine::Debug::DebugLog::print_to_console_log("Loading skybox texture:" + file);
-		images.push_back(new TextureImage(file, false));
+		images_.push_back(new TextureImage(file, false));
 		Debug::DebugLog::print_to_console_log("A skybox texture has loaded (" + file + ")");
 	}
 	Debug::DebugLog::print_to_console_log("Textures loaded...");
@@ -19,15 +20,16 @@ ScrapEngine::Render::SkyboxTexture::SkyboxTexture(const std::array<std::string, 
 	// create cubemap base image
 	//-----------------------
 
-	mipLevels = static_cast<uint32_t>(std::floor(std::log2(std::max(images[0]->getTextureWidth(), images[0]->getTextureHeight())))) + 1;
-	mipLevels = 1; //Override for testing purpose...
+	mip_levels_ = static_cast<uint32_t>(std::floor(
+		std::log2(std::max(images_[0]->get_texture_width(), images_[0]->get_texture_height())))) + 1;
+	mip_levels_ = 1; //Override for testing purpose...
 
-	vk::ImageCreateInfo imageCreateInfo(
+	vk::ImageCreateInfo image_create_info(
 		vk::ImageCreateFlagBits::eCubeCompatible,
 		vk::ImageType::e2D,
 		vk::Format::eR8G8B8A8Unorm,
-		vk::Extent3D(images[0]->getTextureWidth(), images[0]->getTextureHeight(), 1),
-		mipLevels,
+		vk::Extent3D(images_[0]->get_texture_width(), images_[0]->get_texture_height(), 1),
+		mip_levels_,
 		6,
 		vk::SampleCountFlagBits::e1,
 		vk::ImageTiling::eOptimal,
@@ -39,23 +41,27 @@ ScrapEngine::Render::SkyboxTexture::SkyboxTexture(const std::array<std::string, 
 	// allocate cubemap space memory
 	//-----------------------
 
-	if (VulkanDevice::static_logic_device_ref->createImage(&imageCreateInfo, nullptr, &cubemap) != vk::Result::eSuccess) {
+	if (VulkanDevice::static_logic_device_ref->createImage(&image_create_info, nullptr, &cubemap_) != vk::Result::
+		eSuccess)
+	{
 		throw std::runtime_error("TextureImage: Failed to create image!");
 	}
 
-	vk::MemoryRequirements memRequirements;
-	VulkanDevice::static_logic_device_ref->getImageMemoryRequirements(cubemap, &memRequirements);
+	vk::MemoryRequirements mem_requirements;
+	VulkanDevice::static_logic_device_ref->getImageMemoryRequirements(cubemap_, &mem_requirements);
 
-	vk::MemoryAllocateInfo allocInfo(
-		memRequirements.size,
-		findMemoryType(memRequirements.memoryTypeBits, vk::MemoryPropertyFlagBits::eDeviceLocal)
+	vk::MemoryAllocateInfo alloc_info(
+		mem_requirements.size,
+		find_memory_type(mem_requirements.memoryTypeBits, vk::MemoryPropertyFlagBits::eDeviceLocal)
 	);
 
-	if (VulkanDevice::static_logic_device_ref->allocateMemory(&allocInfo, nullptr, &cubemapImageMemory) != vk::Result::eSuccess) {
+	if (VulkanDevice::static_logic_device_ref->allocateMemory(&alloc_info, nullptr, &cubemap_image_memory_) != vk::
+		Result::eSuccess)
+	{
 		throw std::runtime_error("TextureImage: Failed to allocate image memory!");
 	}
 
-	VulkanDevice::static_logic_device_ref->bindImageMemory(cubemap, cubemapImageMemory, 0);
+	VulkanDevice::static_logic_device_ref->bindImageMemory(cubemap_, cubemap_image_memory_, 0);
 
 	//-----------------------
 	// copy images
@@ -63,54 +69,62 @@ ScrapEngine::Render::SkyboxTexture::SkyboxTexture(const std::array<std::string, 
 
 	std::vector<vk::BufferImageCopy> bufferCopyRegions;
 
-	for (int i = 0; i < files_path.size(); ++i) {
+	for (int i = 0; i < files_path.size(); ++i)
+	{
 		vk::BufferImageCopy region(
 			0,
 			0,
 			0,
 			vk::ImageSubresourceLayers(vk::ImageAspectFlagBits::eColor, 0, i, 1),
 			vk::Offset3D(),
-			vk::Extent3D(images[0]->getTextureWidth(), images[0]->getTextureHeight(), 1)
+			vk::Extent3D(images_[0]->get_texture_width(), images_[0]->get_texture_height(), 1)
 		);
 
 		bufferCopyRegions.push_back(region);
-
 	}
 
-	ScrapEngine::Render::TextureImage::transitionImageLayout(&cubemap, vk::Format::eR8G8B8A8Unorm, vk::ImageLayout::eUndefined, vk::ImageLayout::eTransferDstOptimal, mipLevels, 6);
+	ScrapEngine::Render::TextureImage::transition_image_layout(&cubemap_, vk::Format::eR8G8B8A8Unorm,
+	                                                           vk::ImageLayout::eUndefined,
+	                                                           vk::ImageLayout::eTransferDstOptimal, mip_levels_, 6);
 
-	for (int i = 0; i < bufferCopyRegions.size(); i++) {
-		ScrapEngine::Render::StagingBuffer::copy_buffer_to_image(images[i]->getTextureStagingBuffer()->get_staging_buffer(), &cubemap, images[i]->getTextureWidth(), images[i]->getTextureHeight(), &bufferCopyRegions[i], 1);
+	for (int i = 0; i < bufferCopyRegions.size(); i++)
+	{
+		ScrapEngine::Render::StagingBuffer::copy_buffer_to_image(
+			images_[i]->get_texture_staging_buffer()->get_staging_buffer(), &cubemap_, images_[i]->get_texture_width(),
+			images_[i]->get_texture_height(), &bufferCopyRegions[i], 1);
 	}
 
-	ScrapEngine::Render::TextureImage::transitionImageLayout(&cubemap, vk::Format::eR8G8B8A8Unorm, vk::ImageLayout::eTransferDstOptimal, vk::ImageLayout::eShaderReadOnlyOptimal, mipLevels, 6);
-	
+	ScrapEngine::Render::TextureImage::transition_image_layout(&cubemap_, vk::Format::eR8G8B8A8Unorm,
+	                                                           vk::ImageLayout::eTransferDstOptimal,
+	                                                           vk::ImageLayout::eShaderReadOnlyOptimal, mip_levels_, 6);
+
 	//Delete all the images since they've been copied
-	deleteTemporaryImages();
+	delete_temporary_images();
 }
 
 ScrapEngine::Render::SkyboxTexture::~SkyboxTexture()
 {
 	//Double-check that the images has been erased
-	deleteTemporaryImages();
-	VulkanDevice::static_logic_device_ref->destroyImage(cubemap);
-	VulkanDevice::static_logic_device_ref->freeMemory(cubemapImageMemory);
+	delete_temporary_images();
+	VulkanDevice::static_logic_device_ref->destroyImage(cubemap_);
+	VulkanDevice::static_logic_device_ref->freeMemory(cubemap_image_memory_);
 }
 
-void ScrapEngine::Render::SkyboxTexture::deleteTemporaryImages()
+void ScrapEngine::Render::SkyboxTexture::delete_temporary_images()
 {
-	for (ScrapEngine::Render::TextureImage* cubeSingleImage : images) {
-		delete cubeSingleImage;
+	for (ScrapEngine::Render::TextureImage* cube_single_image : images_)
+	{
+		delete cube_single_image;
 	}
-	images.clear();
+	images_.clear();
 }
 
-vk::Image* ScrapEngine::Render::SkyboxTexture::getTextureImage()
+vk::Image* ScrapEngine::Render::SkyboxTexture::get_texture_image()
 {
-	return &cubemap;
+	return &cubemap_;
 }
 
-uint32_t ScrapEngine::Render::SkyboxTexture::getMipLevels() const
+uint32_t ScrapEngine::Render::SkyboxTexture::get_mip_levels() const
 {
-	return mipLevels;
+	return mip_levels_;
 }

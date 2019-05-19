@@ -58,16 +58,16 @@ void ScrapEngine::Manager::EngineManager::main_game_loop() const
 	Debug::DebugLog::print_to_console_log("---mainGameLoop() started---");
 	std::chrono::time_point<std::chrono::steady_clock> startTime, currentTime;
 	float time;
-	const ScrapEngine::Render::GameWindow* window_ref = scrap_render_manager_->getGameWindow();
-	while (!window_ref->checkWindowShouldClose())
+	const ScrapEngine::Render::GameWindow* window_ref = scrap_render_manager_->get_game_window();
+	while (!window_ref->check_window_should_close())
 	{
 		time = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - startTime).count();
 		scrap_logic_manager_->execute_game_objects_update_event(time);
 		startTime = std::chrono::high_resolution_clock::now();
-		scrap_render_manager_->drawFrame();
+		scrap_render_manager_->draw_frame();
 		currentTime = std::chrono::high_resolution_clock::now();
 	}
-	scrap_render_manager_->waitDeviceIdle();
+	scrap_render_manager_->wait_device_idle();
 	Debug::DebugLog::print_to_console_log("---mainGameLoop() ended---");
 }
 

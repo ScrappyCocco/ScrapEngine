@@ -2,56 +2,61 @@
 #include <stb_image.h>
 #include "../../Utility/UsefulMethods.h"
 
-ScrapEngine::Render::GameWindow::GameWindow(uint32_t input_WIDTH, uint32_t input_HEIGHT, std::string input_window_title) : WIDTH(input_WIDTH), HEIGHT(input_HEIGHT), window_title(input_window_title)
+ScrapEngine::Render::GameWindow::
+GameWindow(uint32_t input_width, uint32_t input_height, std::string input_window_title) : width_(input_width),
+                                                                                          height_(input_height),
+                                                                                          window_title_(
+	                                                                                          input_window_title)
 {
-	initializeWindow();
+	initialize_window();
 }
 
 ScrapEngine::Render::GameWindow::~GameWindow()
 {
-	glfwDestroyWindow(window);
+	glfwDestroyWindow(window_);
 
 	glfwTerminate();
 }
 
-void ScrapEngine::Render::GameWindow::initializeWindow()
+void ScrapEngine::Render::GameWindow::initialize_window()
 {
 	glfwInit();
 
 	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API); //initializes the GLFW library
 	glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 
-	window = glfwCreateWindow(WIDTH, HEIGHT, window_title.c_str(), nullptr, nullptr); //initialize the window
+	window_ = glfwCreateWindow(width_, height_, window_title_.c_str(), nullptr, nullptr); //initialize the window
 }
 
-void ScrapEngine::Render::GameWindow::setWindowSize(int input_WIDTH, int input_HEIGHT)
+void ScrapEngine::Render::GameWindow::set_window_size(int input_width, int input_height) const
 {
-	glfwSetWindowSize(window, input_WIDTH, input_HEIGHT);
+	glfwSetWindowSize(window_, input_width, input_height);
 }
 
-void ScrapEngine::Render::GameWindow::setWindowTitle(const std::string& title)
+void ScrapEngine::Render::GameWindow::set_window_title(const std::string& title) const
 {
-	glfwSetWindowTitle(window, title.c_str());
+	glfwSetWindowTitle(window_, title.c_str());
 }
 
-void ScrapEngine::Render::GameWindow::setWindowIcon(const std::string& path_to_file) const
+void ScrapEngine::Render::GameWindow::set_window_icon(const std::string& path_to_file) const
 {
-	glfwSetWindowIcon(window, 1, &Utility::UsefulMethods::load_icon(path_to_file));
+	glfwSetWindowIcon(window_, 1, &Utility::UsefulMethods::load_icon(path_to_file));
 }
 
-void ScrapEngine::Render::GameWindow::closeWindow()
+void ScrapEngine::Render::GameWindow::close_window() const
 {
-	glfwSetWindowShouldClose(window, GLFW_TRUE);
+	glfwSetWindowShouldClose(window_, GLFW_TRUE);
 }
 
-ScrapEngine::Input::InputManager* ScrapEngine::Render::GameWindow::createWindowInputManager() const
+ScrapEngine::Input::InputManager* ScrapEngine::Render::GameWindow::create_window_input_manager() const
 {
-	return new ScrapEngine::Input::InputManager(window);
+	return new ScrapEngine::Input::InputManager(window_);
 }
 
-bool ScrapEngine::Render::GameWindow::checkWindowShouldClose() const
+bool ScrapEngine::Render::GameWindow::check_window_should_close() const
 {
-	if (!glfwWindowShouldClose(window)) {
+	if (!glfwWindowShouldClose(window_))
+	{
 		glfwPollEvents();
 		return false;
 	}

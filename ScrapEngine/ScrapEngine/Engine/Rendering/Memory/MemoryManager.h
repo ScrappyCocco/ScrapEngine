@@ -4,20 +4,28 @@
 #include <stdexcept>
 #include "../Base/StaticTypes.h"
 
-namespace ScrapEngine {
-	namespace Render {
-		static uint32_t findMemoryType(const uint32_t& typeFilter, vk::MemoryPropertyFlags properties) {
-			vk::PhysicalDeviceMemoryProperties memProperties;
-			VulkanDevice::static_physical_device_ref->getMemoryProperties(&memProperties);
+namespace ScrapEngine
+{
+	namespace Render
+	{
+		static uint32_t find_memory_type(const uint32_t& type_filter, const vk::MemoryPropertyFlags properties)
+		{
+			vk::PhysicalDeviceMemoryProperties mem_properties;
+			VulkanDevice::static_physical_device_ref->getMemoryProperties(&mem_properties);
 
-			for (uint32_t i = 0; i < memProperties.memoryTypeCount; i++) {
-				if ((typeFilter & (1 << i)) && (memProperties.memoryTypes[i].propertyFlags & properties) == properties) {
+			for (uint32_t i = 0; i < mem_properties.memoryTypeCount; i++)
+			{
+				if ((type_filter & (1 << i)) && (mem_properties.memoryTypes[i].propertyFlags & properties) == properties
+				)
+				{
 					return i;
 				}
 			}
 			//Try a simpler way
-			for (uint32_t i = 0; i < memProperties.memoryTypeCount; i++) {
-				if (memProperties.memoryTypes[i].propertyFlags == properties) {
+			for (uint32_t i = 0; i < mem_properties.memoryTypeCount; i++)
+			{
+				if (mem_properties.memoryTypes[i].propertyFlags == properties)
+				{
 					return i;
 				}
 			}

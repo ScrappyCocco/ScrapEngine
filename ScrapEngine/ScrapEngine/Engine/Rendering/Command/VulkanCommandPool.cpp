@@ -11,7 +11,7 @@ const vk::CommandPool* ScrapEngine::Render::VulkanCommandPool::static_command_po
 
 ScrapEngine::Render::VulkanCommandPool::VulkanCommandPool(GraphicsQueue::QueueFamilyIndices queue_family_indices)
 {
-	vk::CommandPoolCreateInfo pool_info(vk::CommandPoolCreateFlags(), queue_family_indices.graphicsFamily);
+	vk::CommandPoolCreateInfo pool_info(vk::CommandPoolCreateFlags(), queue_family_indices.graphics_family);
 
 	if (VulkanDevice::static_logic_device_ref->createCommandPool(&pool_info, nullptr, &command_pool_) != vk::Result::
 		eSuccess)

@@ -1,27 +1,27 @@
 #include "RenderManagerView.h"
 
-ScrapEngine::Render::RenderManagerView::RenderManagerView(ScrapEngine::Render::RenderManager* input_RenderManagerRef) : RenderManagerRef(input_RenderManagerRef)
+ScrapEngine::Render::RenderManagerView::
+RenderManagerView(ScrapEngine::Render::RenderManager* input_render_manager_ref) : render_manager_ref_(
+	input_render_manager_ref)
 {
-
 }
 
-ScrapEngine::Render::GameWindow* ScrapEngine::Render::RenderManagerView::getGameWindow() const
+ScrapEngine::Render::GameWindow* ScrapEngine::Render::RenderManagerView::get_game_window() const
 {
-	return RenderManagerRef->getGameWindow();
+	return render_manager_ref_->get_game_window();
 }
 
-ScrapEngine::Render::Camera * ScrapEngine::Render::RenderManagerView::getDefaultRenderCamera() const
+ScrapEngine::Render::Camera* ScrapEngine::Render::RenderManagerView::get_default_render_camera() const
 {
-	return RenderManagerRef->getDefaultRenderCamera();
+	return render_manager_ref_->get_default_render_camera();
 }
 
-ScrapEngine::Render::Camera * ScrapEngine::Render::RenderManagerView::getCurrentRenderCamera() const
+ScrapEngine::Render::Camera* ScrapEngine::Render::RenderManagerView::get_current_render_camera() const
 {
-	return RenderManagerRef->getRenderCamera();
+	return render_manager_ref_->get_render_camera();
 }
 
-void ScrapEngine::Render::RenderManagerView::setRenderCamera(ScrapEngine::Render::Camera* newCamera) const
+void ScrapEngine::Render::RenderManagerView::set_render_camera(ScrapEngine::Render::Camera* newCamera) const
 {
-	RenderManagerRef->setRenderCamera(newCamera);
+	render_manager_ref_->set_render_camera(newCamera);
 }
-

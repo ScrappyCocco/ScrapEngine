@@ -6,22 +6,23 @@
 #include "GameWindow.h"
 #include "../Instance/VukanInstance.h"
 
-namespace ScrapEngine {
-	namespace Render {
+namespace ScrapEngine
+{
+	namespace Render
+	{
 		class VulkanSurface
 		{
 		private:
-			vk::SurfaceKHR surface; //represents an abstract type of surface to present rendered images to.
+			vk::SurfaceKHR surface_; //represents an abstract type of surface to present rendered images to.
 		public:
-			static const vk::SurfaceKHR* StaticSurfaceRef;
+			static const vk::SurfaceKHR* static_surface_ref;
 
-			VulkanSurface(ScrapEngine::Render::GameWindow* windowRef);
+			VulkanSurface(ScrapEngine::Render::GameWindow* window_ref);
 			~VulkanSurface();
 
-			void createSurface(ScrapEngine::Render::GameWindow* windowRef);
+			void create_surface(ScrapEngine::Render::GameWindow* window_ref);
 
-			vk::SurfaceKHR* getSurface();
+			vk::SurfaceKHR* get_surface();
 		};
 	}
 }
-

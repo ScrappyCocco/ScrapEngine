@@ -2,20 +2,25 @@
 
 #include <vulkan/vulkan.hpp>
 
-namespace ScrapEngine {
-	namespace Render {
+namespace ScrapEngine
+{
+	namespace Render
+	{
 		class TextureImageView
 		{
 		private:
-			vk::ImageView textureImageView;
+			vk::ImageView texture_image_view_;
 		public:
-			TextureImageView(vk::Image* textureImage, const uint32_t& mipLevelsData, bool iscubemap = false, int layerCount = 1);
+			TextureImageView(vk::Image* texture_image, const uint32_t& mip_levels_data, bool iscubemap = false,
+			                 int layer_count = 1);
 			~TextureImageView();
 
-			static vk::ImageView createImageView(vk::Image* image, vk::Format format, vk::ImageAspectFlags aspectFlags, uint32_t mipLevelsData);
-			static vk::ImageView createCubeMapImageView(vk::Image* image, vk::Format format, vk::ImageAspectFlags aspectFlags, uint32_t mipLevelsData, int layerCount);
-			vk::ImageView* getTextureImageView();
+			static vk::ImageView create_image_view(vk::Image* image, vk::Format format,
+			                                       vk::ImageAspectFlags aspect_flags, uint32_t mip_levels_data);
+			static vk::ImageView create_cube_map_image_view(vk::Image* image, vk::Format format,
+			                                                vk::ImageAspectFlags aspect_flags, uint32_t mip_levels_data,
+			                                                int layer_count);
+			vk::ImageView* get_texture_image_view();
 		};
 	}
 }
-

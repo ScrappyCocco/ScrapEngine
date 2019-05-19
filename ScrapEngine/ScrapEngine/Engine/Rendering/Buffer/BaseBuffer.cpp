@@ -24,7 +24,7 @@ void ScrapEngine::Render::BaseBuffer::create_buffer(const vk::DeviceSize& size, 
 	VulkanDevice::static_logic_device_ref->getBufferMemoryRequirements(buffer, &mem_requirements);
 
 	vk::MemoryAllocateInfo alloc_info(mem_requirements.size,
-	                                  findMemoryType(mem_requirements.memoryTypeBits, properties));
+	                                  find_memory_type(mem_requirements.memoryTypeBits, properties));
 
 	if (VulkanDevice::static_logic_device_ref->allocateMemory(&alloc_info, nullptr, &buffer_memory) != vk::Result::eSuccess
 	)
@@ -67,9 +67,9 @@ void ScrapEngine::Render::BaseBuffer::end_single_time_commands(vk::CommandBuffer
 	command_buffer->end();
 
 	vk::SubmitInfo submit_info(0, nullptr, nullptr, 1, command_buffer);
-	GraphicsQueue::StaticGraphicsQueueRef->submit(1, &submit_info, nullptr);
+	GraphicsQueue::static_graphics_queue_ref->submit(1, &submit_info, nullptr);
 
-	GraphicsQueue::StaticGraphicsQueueRef->waitIdle();
+	GraphicsQueue::static_graphics_queue_ref->waitIdle();
 
 	VulkanDevice::static_logic_device_ref->freeCommandBuffers(*VulkanCommandPool::static_command_pool_ref, 1, command_buffer);
 	delete command_buffer;

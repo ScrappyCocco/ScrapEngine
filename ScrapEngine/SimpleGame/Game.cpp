@@ -9,10 +9,10 @@ int main() {
 	try {
 		//init engine
 		ScrapEngineManager = new ScrapEngine::Manager::EngineManager("ScrapEngine Simple Chess Game", 0);
-		ScrapEngine::Render::GameWindow* gameWindowRef = ScrapEngineManager->render_manager_view->getGameWindow();
-		gameWindowRef->setWindowIcon("../assets/game_icon/chess_game_icon_png.png");
+		ScrapEngine::Render::GameWindow* gameWindowRef = ScrapEngineManager->render_manager_view->get_game_window();
+		gameWindowRef->set_window_icon("../assets/game_icon/chess_game_icon_png.png");
 		//Create the input manager
-		ScrapEngine::Input::InputManager* inputmanager = gameWindowRef->createWindowInputManager();
+		ScrapEngine::Input::InputManager* inputmanager = gameWindowRef->create_window_input_manager();
 		inputmanager->set_cursor_input_mode(ScrapEngine::Input::cursor_mode::cursor_grabbed_mode);
 		//Get the component manager
 		ScrapEngine::Core::ComponentsManager* ComponentManagerRef = ScrapEngineManager->logic_manager_view->getComponentsManager();
@@ -33,7 +33,7 @@ int main() {
 		TestGameObject* FirstGameObject = new TestGameObject(inputmanager, ComponentManagerRef);
 		ScrapEngineManager->logic_manager_view->register_game_object(FirstGameObject);
 		//Create the camera
-		GameCamera* GameCameraRef = new GameCamera(inputmanager, ScrapEngineManager->render_manager_view->getDefaultRenderCamera(), FirstGameObject);
+		GameCamera* GameCameraRef = new GameCamera(inputmanager, ScrapEngineManager->render_manager_view->get_default_render_camera(), FirstGameObject);
 		ScrapEngineManager->logic_manager_view->register_game_object(GameCameraRef);
 		//Begin gameplay
 		ScrapEngineManager->start_game_loop();

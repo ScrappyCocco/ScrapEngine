@@ -8,7 +8,7 @@ ScrapEngine::Core::MeshComponent* ScrapEngine::Core::ComponentsManager::create_n
 	const std::string& vertex_shader_path, const std::string& fragment_shader_path, const std::string& model_path,
 	const std::string& texture_path)
 {
-	Render::VulkanMeshInstance* mesh = render_manager_ref_->loadMesh(vertex_shader_path, fragment_shader_path, model_path,
+	Render::VulkanMeshInstance* mesh = render_manager_ref_->load_mesh(vertex_shader_path, fragment_shader_path, model_path,
 	                                                         texture_path);
 	ScrapEngine::Core::MeshComponent* mesh_component = new MeshComponent(mesh);
 	loaded_meshes_.insert(
@@ -24,7 +24,7 @@ void ScrapEngine::Core::ComponentsManager::destroy_mesh_component(
 		find(component_to_destroy);
 	if (position != loaded_meshes_.end())
 	{
-		render_manager_ref_->unloadMesh(position->second);
+		render_manager_ref_->unload_mesh(position->second);
 		loaded_meshes_.erase(position);
 	}
 }

@@ -7,23 +7,23 @@ namespace ScrapEngine {
 		class GraphicsQueue
 		{
 		private:
-			vk::Queue graphicsQueue;
+			vk::Queue graphics_queue_;
 		public:
 			struct QueueFamilyIndices {
-				int graphicsFamily = -1;
-				int presentFamily = -1;
+				int graphics_family = -1;
+				int present_family = -1;
 
-				bool isComplete() {
-					return graphicsFamily >= 0 && presentFamily >= 0;
+				bool is_complete() const {
+					return graphics_family >= 0 && present_family >= 0;
 				}
 			};
 
-			static const vk::Queue* StaticGraphicsQueueRef;
+			static const vk::Queue* static_graphics_queue_ref;
 
 			GraphicsQueue(QueueFamilyIndices indices);
 			~GraphicsQueue();
 
-			vk::Queue* getgraphicsQueue();
+			vk::Queue* get_graphics_queue();
 		};
 	}
 }

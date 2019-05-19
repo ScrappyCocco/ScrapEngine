@@ -61,16 +61,16 @@ void ScrapEngine::Render::VulkanDevice::create_logical_device()
 	cached_indices_ = find_queue_families(&physical_device_, vulkan_surface_ref_);
 
 	std::vector<vk::DeviceQueueCreateInfo> queueCreateInfos;
-	std::set<int> unique_queue_families = {cached_indices_.graphicsFamily, cached_indices_.presentFamily};
+	std::set<int> unique_queue_families = {cached_indices_.graphics_family, cached_indices_.present_family};
 
-	float queuePriority = 1.0f;
+	float queue_priority = 1.0f;
 	for (int queue_family : unique_queue_families)
 	{
 		vk::DeviceQueueCreateInfo queueCreateInfo(
 			vk::DeviceQueueCreateFlags(),
 			queue_family,
 			1,
-			&queuePriority
+			&queue_priority
 		);
 		queueCreateInfos.push_back(queueCreateInfo);
 	}
@@ -113,10 +113,10 @@ get_cached_queue_family_indices() const
 bool ScrapEngine::Render::VulkanDevice::is_device_suitable(vk::PhysicalDevice* physical_device_input,
                                                            vk::SurfaceKHR* surface)
 {
-	vk::PhysicalDeviceProperties deviceProperties = physical_device_input->getProperties();
-	vk::PhysicalDeviceFeatures deviceFeatures = physical_device_input->getFeatures();
+	vk::PhysicalDeviceProperties device_properties = physical_device_input->getProperties();
+	vk::PhysicalDeviceFeatures device_features = physical_device_input->getFeatures();
 
-	std::string gpu_name(deviceProperties.deviceName);
+	std::string gpu_name(device_properties.deviceName);
 	Debug::DebugLog::print_to_console_log("GPU Selected:" + gpu_name);
 
 	GraphicsQueue::QueueFamilyIndices cached_indices = find_queue_families(physical_device_input, surface);
@@ -130,11 +130,11 @@ bool ScrapEngine::Render::VulkanDevice::is_device_suitable(vk::PhysicalDevice* p
 	{
 		ScrapEngine::Render::VulkanSwapChain::SwapChainSupportDetails swap_chain_support = query_swap_chain_support(
 			physical_device_input);
-		swap_chain_adequate = !swap_chain_support.formats.empty() && !swap_chain_support.presentModes.empty();
+		swap_chain_adequate = !swap_chain_support.formats.empty() && !swap_chain_support.present_modes.empty();
 	}
 
-	return deviceProperties.deviceType == vk::PhysicalDeviceType::eDiscreteGpu && deviceFeatures.geometryShader
-		&& cached_indices.isComplete() && extensions_supported && swap_chain_adequate && supported_features.
+	return device_properties.deviceType == vk::PhysicalDeviceType::eDiscreteGpu && device_features.geometryShader
+		&& cached_indices.is_complete() && extensions_supported && swap_chain_adequate && supported_features.
 		samplerAnisotropy;
 }
 
@@ -146,14 +146,14 @@ bool ScrapEngine::Render::VulkanDevice::check_device_extension_support(vk::Physi
 	std::vector<vk::ExtensionProperties> availableExtensions(extension_count);
 	device->enumerateDeviceExtensionProperties(nullptr, &extension_count, availableExtensions.data());
 
-	std::set<std::string> requiredExtensions(device_extensions_.begin(), device_extensions_.end());
+	std::set<std::string> required_extensions(device_extensions_.begin(), device_extensions_.end());
 
 	for (const auto& extension : availableExtensions)
 	{
-		requiredExtensions.erase(extension.extensionName);
+		required_extensions.erase(extension.extensionName);
 	}
 
-	return requiredExtensions.empty();
+	return required_extensions.empty();
 }
 
 ScrapEngine::Render::VulkanSwapChain::SwapChainSupportDetails ScrapEngine::Render::VulkanDevice::
@@ -172,14 +172,14 @@ query_swap_chain_support(vk::PhysicalDevice* physical_device_input) const
 		physical_device_input->getSurfaceFormatsKHR(*vulkan_surface_ref_, &format_count, details.formats.data());
 	}
 
-	uint32_t presentModeCount;
-	physical_device_input->getSurfacePresentModesKHR(*vulkan_surface_ref_, &presentModeCount, nullptr);
+	uint32_t present_mode_count;
+	physical_device_input->getSurfacePresentModesKHR(*vulkan_surface_ref_, &present_mode_count, nullptr);
 
-	if (presentModeCount != 0)
+	if (present_mode_count != 0)
 	{
-		details.presentModes.resize(presentModeCount);
-		physical_device_input->getSurfacePresentModesKHR(*vulkan_surface_ref_, &presentModeCount,
-		                                                 details.presentModes.data());
+		details.present_modes.resize(present_mode_count);
+		physical_device_input->getSurfacePresentModesKHR(*vulkan_surface_ref_, &present_mode_count,
+		                                                 details.present_modes.data());
 	}
 
 	return details;
@@ -233,7 +233,7 @@ ScrapEngine::Render::GraphicsQueue::QueueFamilyIndices ScrapEngine::Render::Vulk
 	{
 		if (queue_family.queueCount > 0 && queue_family.queueFlags & vk::QueueFlagBits::eGraphics)
 		{
-			indices.graphicsFamily = i;
+			indices.graphics_family = i;
 		}
 
 		VkBool32 present_support = false;
@@ -241,10 +241,10 @@ ScrapEngine::Render::GraphicsQueue::QueueFamilyIndices ScrapEngine::Render::Vulk
 
 		if (queue_family.queueCount > 0 && present_support)
 		{
-			indices.presentFamily = i;
+			indices.present_family = i;
 		}
 
-		if (indices.isComplete())
+		if (indices.is_complete())
 		{
 			break;
 		}

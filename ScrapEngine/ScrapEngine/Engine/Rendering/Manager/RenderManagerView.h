@@ -1,22 +1,23 @@
 #pragma once
 #include "RenderManager.h"
 
-namespace ScrapEngine {
-	namespace Render {
+namespace ScrapEngine
+{
+	namespace Render
+	{
 		class RenderManagerView
 		{
 		private:
-			ScrapEngine::Render::RenderManager* RenderManagerRef;
+			ScrapEngine::Render::RenderManager* render_manager_ref_;
 		public:
-			RenderManagerView(ScrapEngine::Render::RenderManager* input_RenderManagerRef);
+			RenderManagerView(ScrapEngine::Render::RenderManager* input_render_manager_ref);
 			~RenderManagerView() = default;
 
-			ScrapEngine::Render::GameWindow* getGameWindow() const;
+			ScrapEngine::Render::GameWindow* get_game_window() const;
 
-			ScrapEngine::Render::Camera* getDefaultRenderCamera() const;
-			ScrapEngine::Render::Camera* getCurrentRenderCamera() const;
-			void setRenderCamera(ScrapEngine::Render::Camera*) const;
+			ScrapEngine::Render::Camera* get_default_render_camera() const;
+			ScrapEngine::Render::Camera* get_current_render_camera() const;
+			void set_render_camera(ScrapEngine::Render::Camera*) const;
 		};
 	}
 }
-

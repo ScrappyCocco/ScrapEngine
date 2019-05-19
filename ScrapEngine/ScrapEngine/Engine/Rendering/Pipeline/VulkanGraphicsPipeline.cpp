@@ -3,68 +3,72 @@
 #include "../Base/Vertex.h"
 #include "../Base/StaticTypes.h"
 
-ScrapEngine::Render::VulkanGraphicsPipeline::VulkanGraphicsPipeline(const char* vertexShader, const char* fragmentShader, vk::Extent2D* swapChainExtent,
-	vk::DescriptorSetLayout* descriptorSetLayout, vk::SampleCountFlagBits msaaSamples, bool isSkybox)
+ScrapEngine::Render::VulkanGraphicsPipeline::VulkanGraphicsPipeline(const char* vertex_shader,
+                                                                    const char* fragment_shader,
+                                                                    vk::Extent2D* swap_chain_extent,
+                                                                    vk::DescriptorSetLayout* descriptor_set_layout,
+                                                                    vk::SampleCountFlagBits msaa_samples,
+                                                                    bool is_skybox)
 {
-	ShaderManagerRef = new ShaderManager();
+	shader_manager_ref_ = new ShaderManager();
 
-	auto vertShaderCode = ShaderManager::readFile(vertexShader);
-	auto fragShaderCode = ShaderManager::readFile(fragmentShader);
+	auto vert_shader_code = ShaderManager::read_file(vertex_shader);
+	auto frag_shader_code = ShaderManager::read_file(fragment_shader);
 
-	vk::ShaderModule vertShaderModule = ShaderManagerRef->createShaderModule(vertShaderCode);
-	vk::ShaderModule fragShaderModule = ShaderManagerRef->createShaderModule(fragShaderCode);
+	vk::ShaderModule vert_shader_module = shader_manager_ref_->create_shader_module(vert_shader_code);
+	vk::ShaderModule frag_shader_module = shader_manager_ref_->create_shader_module(frag_shader_code);
 
-	vk::PipelineShaderStageCreateInfo vertShaderStageInfo(
-		vk::PipelineShaderStageCreateFlags(), 
-		vk::ShaderStageFlagBits::eVertex, 
-		vertShaderModule, 
+	vk::PipelineShaderStageCreateInfo vert_shader_stage_info(
+		vk::PipelineShaderStageCreateFlags(),
+		vk::ShaderStageFlagBits::eVertex,
+		vert_shader_module,
 		"main"
 	);
 
-	vk::PipelineShaderStageCreateInfo fragShaderStageInfo(
+	vk::PipelineShaderStageCreateInfo frag_shader_stage_info(
 		vk::PipelineShaderStageCreateFlags(),
 		vk::ShaderStageFlagBits::eFragment,
-		fragShaderModule,
+		frag_shader_module,
 		"main"
 	);
 
-	vk::PipelineShaderStageCreateInfo shaderStages[] = { vertShaderStageInfo, fragShaderStageInfo };
+	vk::PipelineShaderStageCreateInfo shader_stages[] = {vert_shader_stage_info, frag_shader_stage_info};
 
-	auto attributeDescriptions = Vertex::getAttributeDescriptions();
-	auto bindingDescription = Vertex::getBindingDescription();
+	auto attribute_descriptions = Vertex::getAttributeDescriptions();
+	auto binding_description = Vertex::getBindingDescription();
 
-	vk::PipelineVertexInputStateCreateInfo vertexInputInfo(
+	vk::PipelineVertexInputStateCreateInfo vertex_input_info(
 		vk::PipelineVertexInputStateCreateFlags(),
 		1,
-		&bindingDescription,
-		static_cast<uint32_t>(attributeDescriptions.size()),
-		attributeDescriptions.data()
+		&binding_description,
+		static_cast<uint32_t>(attribute_descriptions.size()),
+		attribute_descriptions.data()
 	);
 
-	vk::PipelineInputAssemblyStateCreateInfo inputAssembly(
-		vk::PipelineInputAssemblyStateCreateFlags(), 
+	vk::PipelineInputAssemblyStateCreateInfo input_assembly(
+		vk::PipelineInputAssemblyStateCreateFlags(),
 		vk::PrimitiveTopology::eTriangleList,
 		false
 	);
 
 	vk::Viewport viewport(
-		0, 
-		0, 
-		(float)swapChainExtent->width, 
-		(float)swapChainExtent->height, 
-		0.0f, 
+		0,
+		0,
+		static_cast<float>(swap_chain_extent->width),
+		static_cast<float>(swap_chain_extent->height),
+		0.0f,
 		1.0f);
 
 	vk::Rect2D scissor(
-		vk::Offset2D(), 
-		*swapChainExtent
+		vk::Offset2D(),
+		*swap_chain_extent
 	);
 
-	vk::PipelineViewportStateCreateInfo viewportState(
-		vk::PipelineViewportStateCreateFlags(), 
+	vk::PipelineViewportStateCreateInfo viewport_state(
+		vk::PipelineViewportStateCreateFlags(),
 		1,
-		&viewport, 
-		1, 
+		&viewport,
+		1,
 		&scissor
 	);
 
@@ -80,83 +84,90 @@ ScrapEngine::Render::VulkanGraphicsPipeline::VulkanGraphicsPipeline(const char* 
 
 	vk::PipelineMultisampleStateCreateInfo multisampling(
 		vk::PipelineMultisampleStateCreateFlags(),
-		msaaSamples
+		msaa_samples
 	);
 
-	vk::PipelineDepthStencilStateCreateInfo depthStencil(
+	vk::PipelineDepthStencilStateCreateInfo depth_stencil(
 		vk::PipelineDepthStencilStateCreateFlags(),
 		true,
 		true,
 		vk::CompareOp::eLessOrEqual
 	);
 
-	vk::PipelineColorBlendAttachmentState colorBlendAttachment;
-	colorBlendAttachment.setColorWriteMask(vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB | vk::ColorComponentFlagBits::eA);
+	vk::PipelineColorBlendAttachmentState color_blend_attachment;
+	color_blend_attachment.setColorWriteMask(
+		vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB | vk::
+		ColorComponentFlagBits::eA);
 
-	vk::PipelineColorBlendStateCreateInfo colorBlending(
+	vk::PipelineColorBlendStateCreateInfo color_blending(
 		vk::PipelineColorBlendStateCreateFlags(),
 		false,
 		vk::LogicOp::eCopy,
 		1,
-		&colorBlendAttachment
+		&color_blend_attachment
 	);
 
-	vk::PipelineLayoutCreateInfo pipelineLayoutInfo(
+	vk::PipelineLayoutCreateInfo pipeline_layout_info(
 		vk::PipelineLayoutCreateFlags(),
 		1,
-		&(*descriptorSetLayout)
+		&(*descriptor_set_layout)
 	);
 
-	if (isSkybox) {
+	if (is_skybox)
+	{
 		rasterizer.setCullMode(vk::CullModeFlagBits::eFront);
-		depthStencil.setDepthWriteEnable(false);
-		depthStencil.setDepthTestEnable(false);
+		depth_stencil.setDepthWriteEnable(false);
+		depth_stencil.setDepthTestEnable(false);
 	}
-	
-	if (VulkanDevice::static_logic_device_ref->createPipelineLayout(&pipelineLayoutInfo, nullptr, &pipelineLayout) != vk::Result::eSuccess) {
+
+	if (VulkanDevice::static_logic_device_ref->createPipelineLayout(&pipeline_layout_info, nullptr, &pipeline_layout_)
+		!= vk::Result::eSuccess)
+	{
 		throw std::runtime_error("VulkanGraphicsPipeline: Failed to create pipeline layout!");
 	}
 
-	vk::GraphicsPipelineCreateInfo pipelineInfo(
+	vk::GraphicsPipelineCreateInfo pipeline_info(
 		vk::PipelineCreateFlags(),
 		2,
-		shaderStages,
-		&vertexInputInfo,
-		&inputAssembly,
+		shader_stages,
+		&vertex_input_info,
+		&input_assembly,
 		nullptr,
-		&viewportState,
+		&viewport_state,
 		&rasterizer,
 		&multisampling,
-		&depthStencil,
-		&colorBlending,
+		&depth_stencil,
+		&color_blending,
 		nullptr,
-		pipelineLayout,
-		*VulkanRenderPass::StaticRenderPassRef,
+		pipeline_layout_,
+		*VulkanRenderPass::static_render_pass_ref,
 		0
 	);
 
-	if (VulkanDevice::static_logic_device_ref->createGraphicsPipelines(nullptr, 1, &pipelineInfo, nullptr, &graphicsPipeline) != vk::Result::eSuccess) {
+	if (VulkanDevice::static_logic_device_ref->createGraphicsPipelines(nullptr, 1, &pipeline_info, nullptr,
+	                                                                   &graphics_pipeline_) != vk::Result::eSuccess)
+	{
 		throw std::runtime_error("VulkanGraphicsPipeline: Failed to create graphics pipeline!");
 	}
 
-	VulkanDevice::static_logic_device_ref->destroyShaderModule(fragShaderModule);
-	VulkanDevice::static_logic_device_ref->destroyShaderModule(vertShaderModule);
-	delete ShaderManagerRef;
+	VulkanDevice::static_logic_device_ref->destroyShaderModule(frag_shader_module);
+	VulkanDevice::static_logic_device_ref->destroyShaderModule(vert_shader_module);
+	delete shader_manager_ref_;
 }
 
 
 ScrapEngine::Render::VulkanGraphicsPipeline::~VulkanGraphicsPipeline()
 {
-	VulkanDevice::static_logic_device_ref->destroyPipeline(graphicsPipeline);
-	VulkanDevice::static_logic_device_ref->destroyPipelineLayout(pipelineLayout);
+	VulkanDevice::static_logic_device_ref->destroyPipeline(graphics_pipeline_);
+	VulkanDevice::static_logic_device_ref->destroyPipelineLayout(pipeline_layout_);
 }
 
-vk::Pipeline* ScrapEngine::Render::VulkanGraphicsPipeline::getGraphicsPipeline()
+vk::Pipeline* ScrapEngine::Render::VulkanGraphicsPipeline::get_graphics_pipeline()
 {
-	return &graphicsPipeline;
+	return &graphics_pipeline_;
 }
 
-vk::PipelineLayout* ScrapEngine::Render::VulkanGraphicsPipeline::getPipelineLayout()
+vk::PipelineLayout* ScrapEngine::Render::VulkanGraphicsPipeline::get_pipeline_layout()
 {
-	return &pipelineLayout;
+	return &pipeline_layout_;
 }

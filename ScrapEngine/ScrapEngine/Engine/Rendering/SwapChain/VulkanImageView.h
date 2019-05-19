@@ -5,18 +5,19 @@
 
 #include "VulkanSwapChain.h"
 
-namespace ScrapEngine {
-	namespace Render {
+namespace ScrapEngine
+{
+	namespace Render
+	{
 		class VulkanImageView
 		{
 		private:
-			std::vector<vk::ImageView> swapChainImageViews;
+			std::vector<vk::ImageView> swap_chain_image_views_;
 		public:
-			VulkanImageView(ScrapEngine::Render::VulkanSwapChain* SwapChainRef);
+			VulkanImageView(ScrapEngine::Render::VulkanSwapChain* swap_chain_ref);
 			~VulkanImageView();
 
-			const std::vector<vk::ImageView>* getSwapChainImageViewsVector();
+			const std::vector<vk::ImageView>* get_swap_chain_image_views_vector() const;
 		};
 	}
 }
-

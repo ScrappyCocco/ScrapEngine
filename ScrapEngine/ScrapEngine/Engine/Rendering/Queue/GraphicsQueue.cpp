@@ -3,22 +3,21 @@
 
 //Init Static Members
 
-const vk::Queue* ScrapEngine::Render::GraphicsQueue::StaticGraphicsQueueRef = nullptr;
+const vk::Queue* ScrapEngine::Render::GraphicsQueue::static_graphics_queue_ref = nullptr;
 
 //Class
 
-ScrapEngine::Render::GraphicsQueue::GraphicsQueue(QueueFamilyIndices indices)
+ScrapEngine::Render::GraphicsQueue::GraphicsQueue(const QueueFamilyIndices indices)
 {
-	VulkanDevice::static_logic_device_ref->getQueue(indices.graphicsFamily, 0, &graphicsQueue);
-	StaticGraphicsQueueRef = &graphicsQueue;
+	VulkanDevice::static_logic_device_ref->getQueue(indices.graphics_family, 0, &graphics_queue_);
+	static_graphics_queue_ref = &graphics_queue_;
 }
 
 ScrapEngine::Render::GraphicsQueue::~GraphicsQueue()
 {
-
 }
 
-vk::Queue* ScrapEngine::Render::GraphicsQueue::getgraphicsQueue()
+vk::Queue* ScrapEngine::Render::GraphicsQueue::get_graphics_queue()
 {
-	return &graphicsQueue;
+	return &graphics_queue_;
 }

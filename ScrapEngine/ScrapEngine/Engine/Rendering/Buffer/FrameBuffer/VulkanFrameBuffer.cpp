@@ -7,7 +7,7 @@ ScrapEngine::Render::VulkanFrameBuffer::VulkanFrameBuffer(ScrapEngine::Render::V
                                                           vk::ImageView* depth_image_view,
                                                           vk::ImageView* color_image_view)
 {
-	const std::vector<vk::ImageView>* swap_chain_image_views = input_image_view_ref->getSwapChainImageViewsVector();
+	const std::vector<vk::ImageView>* swap_chain_image_views = input_image_view_ref->get_swap_chain_image_views_vector();
 
 	swap_chain_framebuffers_.resize(swap_chain_image_views->size());
 
@@ -21,7 +21,7 @@ ScrapEngine::Render::VulkanFrameBuffer::VulkanFrameBuffer(ScrapEngine::Render::V
 
 		vk::FramebufferCreateInfo framebuffer_info(
 			vk::FramebufferCreateFlags(),
-			*VulkanRenderPass::StaticRenderPassRef,
+			*VulkanRenderPass::static_render_pass_ref,
 			static_cast<uint32_t>(attachments.size()),
 			attachments.data(),
 			input_swap_chain_extent->width,

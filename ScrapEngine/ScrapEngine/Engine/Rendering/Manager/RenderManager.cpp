@@ -1,275 +1,275 @@
 #include "RenderManager.h"
+#include "Engine/Debug/DebugLog.h"
 
 
 ScrapEngine::Render::RenderManager::RenderManager(const ScrapEngine::game_base_info* received_base_game_info)
 {
-	GameWindow = new ScrapEngine::Render::GameWindow(received_base_game_info->window_width, received_base_game_info->window_height, received_base_game_info->app_name);
+	game_window_ = new ScrapEngine::Render::GameWindow(received_base_game_info->window_width, received_base_game_info->window_height, received_base_game_info->app_name);
 	Debug::DebugLog::print_to_console_log("GameWindow created");
-	initializeVulkan(received_base_game_info);
+	initialize_vulkan(received_base_game_info);
 }
 
 ScrapEngine::Render::RenderManager::~RenderManager()
 {
 	Debug::DebugLog::print_to_console_log("Deleting ~RenderManager");
-	deleteQueues();
-	cleanupSwapChain();
-	delete RenderCamera;
+	delete_queues();
+	cleanup_swap_chain();
+	delete render_camera_;
 
-	delete Skybox;
-	for (ScrapEngine::Render::VulkanMeshInstance* current_model : LoadedModels) {
+	delete skybox_;
+	for (ScrapEngine::Render::VulkanMeshInstance* current_model : loaded_models_) {
 		delete current_model;
 	}
-	delete VulkanRenderSemaphores;
-	delete VulkanRenderCommandPool;
-	delete VulkanRenderDevice;
-	delete VulkanWindowSurface;
-	delete VulkanInstance;
-	delete GameWindow;
+	delete vulkan_render_semaphores_;
+	delete vulkan_render_command_pool_;
+	delete vulkan_render_device_;
+	delete vulkan_window_surface_;
+	delete vulkan_instance_;
+	delete game_window_;
 	Debug::DebugLog::print_to_console_log("Deleting ~RenderManager completed");
 }
 
-void ScrapEngine::Render::RenderManager::cleanupSwapChain()
+void ScrapEngine::Render::RenderManager::cleanup_swap_chain()
 {
 	Debug::DebugLog::print_to_console_log("---cleanupSwapChain()---");
-	delete VulkanRenderColor;
-	delete VulkanRenderDepth;
-	delete VulkanRenderFrameBuffer;
-	deleteCommandBuffers();
-	for (int i = 0; i < LoadedModels.size(); i++) {
-		LoadedModels[i]->deleteGraphicsPipeline();
+	delete vulkan_render_color_;
+	delete vulkan_render_depth_;
+	delete vulkan_render_frame_buffer_;
+	delete_command_buffers();
+	for (int i = 0; i < loaded_models_.size(); i++) {
+		loaded_models_[i]->delete_graphics_pipeline();
 	}
-	delete VulkanRenderingPass;
-	delete VulkanRenderImageView;
-	delete VulkanRenderSwapChain;
+	delete vulkan_rendering_pass_;
+	delete vulkan_render_image_view_;
+	delete vulkan_render_swap_chain_;
 	Debug::DebugLog::print_to_console_log("---cleanupSwapChain() completed---");
 }
 
-void ScrapEngine::Render::RenderManager::deleteQueues()
+void ScrapEngine::Render::RenderManager::delete_queues() const
 {
-	delete VulkanGraphicsQueue;
-	delete VulkanPresentationQueue;
+	delete vulkan_graphics_queue_;
+	delete vulkan_presentation_queue_;
 }
 
-void ScrapEngine::Render::RenderManager::deleteCommandBuffers()
+void ScrapEngine::Render::RenderManager::delete_command_buffers() const
 {
-	VulkanRenderCommandBuffer->free_command_buffers();
-	delete VulkanRenderCommandBuffer;
+	vulkan_render_command_buffer_->free_command_buffers();
+	delete vulkan_render_command_buffer_;
 }
 
-ScrapEngine::Render::GameWindow* ScrapEngine::Render::RenderManager::getGameWindow() const
+ScrapEngine::Render::GameWindow* ScrapEngine::Render::RenderManager::get_game_window() const
 {
-	return GameWindow;
+	return game_window_;
 }
 
-ScrapEngine::Render::Camera* ScrapEngine::Render::RenderManager::getRenderCamera() const
+ScrapEngine::Render::Camera* ScrapEngine::Render::RenderManager::get_render_camera() const
 {
-	return RenderCamera;
+	return render_camera_;
 }
 
-ScrapEngine::Render::Camera* ScrapEngine::Render::RenderManager::getDefaultRenderCamera() const
+ScrapEngine::Render::Camera* ScrapEngine::Render::RenderManager::get_default_render_camera() const
 {
-	return defaultCamera;
+	return default_camera_;
 }
 
-void ScrapEngine::Render::RenderManager::setRenderCamera(ScrapEngine::Render::Camera* newCamera)
+void ScrapEngine::Render::RenderManager::set_render_camera(ScrapEngine::Render::Camera* new_camera)
 {
-	RenderCamera = newCamera;
+	render_camera_ = new_camera;
 }
 
-void ScrapEngine::Render::RenderManager::initializeVulkan(const ScrapEngine::game_base_info* received_base_game_info)
+void ScrapEngine::Render::RenderManager::initialize_vulkan(const ScrapEngine::game_base_info* received_base_game_info)
 {
 	Debug::DebugLog::print_to_console_log("---initializeVulkan()---");
-	VulkanInstance = new VukanInstance(received_base_game_info->app_name, received_base_game_info->app_version, "ScrapEngine");
+	vulkan_instance_ = new VukanInstance(received_base_game_info->app_name, received_base_game_info->app_version, "ScrapEngine");
 	Debug::DebugLog::print_to_console_log("VulkanInstance created");
-	VulkanWindowSurface = new VulkanSurface(GameWindow);
+	vulkan_window_surface_ = new VulkanSurface(game_window_);
 	Debug::DebugLog::print_to_console_log("VulkanWindowSurface created");
-	VulkanRenderDevice = new VulkanDevice(VulkanInstance->get_vulkan_instance(), VulkanWindowSurface->getSurface());
+	vulkan_render_device_ = new VulkanDevice(vulkan_instance_->get_vulkan_instance(), vulkan_window_surface_->get_surface());
 	Debug::DebugLog::print_to_console_log("VulkanRenderDevice created");
-	createQueues();
-	VulkanRenderSwapChain = new VulkanSwapChain(VulkanRenderDevice->query_swap_chain_support(VulkanRenderDevice->get_physical_device()),
-		VulkanRenderDevice->get_cached_queue_family_indices(),
-		VulkanWindowSurface->getSurface(), received_base_game_info->window_width, received_base_game_info->window_height, received_base_game_info->vsync);
+	create_queues();
+	vulkan_render_swap_chain_ = new VulkanSwapChain(vulkan_render_device_->query_swap_chain_support(vulkan_render_device_->get_physical_device()),
+		vulkan_render_device_->get_cached_queue_family_indices(),
+		vulkan_window_surface_->get_surface(), received_base_game_info->window_width, received_base_game_info->window_height, received_base_game_info->vsync);
 	Debug::DebugLog::print_to_console_log("VulkanSwapChain created");
-	VulkanRenderImageView = new VulkanImageView(VulkanRenderSwapChain);
+	vulkan_render_image_view_ = new VulkanImageView(vulkan_render_swap_chain_);
 	Debug::DebugLog::print_to_console_log("VulkanImageView created");
-	VulkanRenderingPass = new VulkanRenderPass(VulkanRenderSwapChain->getSwapChainImageFormat(), VulkanRenderDevice->get_msaa_samples());
+	vulkan_rendering_pass_ = new VulkanRenderPass(vulkan_render_swap_chain_->get_swap_chain_image_format(), vulkan_render_device_->get_msaa_samples());
 	Debug::DebugLog::print_to_console_log("VulkanRenderPass created");
-	VulkanRenderCommandPool = new VulkanCommandPool(VulkanRenderDevice->get_cached_queue_family_indices());
+	vulkan_render_command_pool_ = new VulkanCommandPool(vulkan_render_device_->get_cached_queue_family_indices());
 	Debug::DebugLog::print_to_console_log("VulkanCommandPool created");
-	VulkanRenderColor = new VulkanColorResources(VulkanRenderDevice->get_msaa_samples(), VulkanRenderSwapChain);
+	vulkan_render_color_ = new VulkanColorResources(vulkan_render_device_->get_msaa_samples(), vulkan_render_swap_chain_);
 	Debug::DebugLog::print_to_console_log("VulkanRenderColor created");
-	VulkanRenderDepth = new VulkanDepthResources(&VulkanRenderSwapChain->getSwapChainExtent(), VulkanRenderDevice->get_msaa_samples());
+	vulkan_render_depth_ = new VulkanDepthResources(&vulkan_render_swap_chain_->get_swap_chain_extent(), vulkan_render_device_->get_msaa_samples());
 	Debug::DebugLog::print_to_console_log("VulkanDepthResources created");
-	VulkanRenderFrameBuffer = new VulkanFrameBuffer(VulkanRenderImageView, &VulkanRenderSwapChain->getSwapChainExtent(), VulkanRenderDepth->get_depth_image_view(), VulkanRenderColor->getColorImageView());
+	vulkan_render_frame_buffer_ = new VulkanFrameBuffer(vulkan_render_image_view_, &vulkan_render_swap_chain_->get_swap_chain_extent(), vulkan_render_depth_->get_depth_image_view(), vulkan_render_color_->get_color_image_view());
 	Debug::DebugLog::print_to_console_log("VulkanFrameBuffer created");
 	//Create empty CommandBuffers
-	createCommandBuffers();
+	create_command_buffers();
 	//Vulkan Semaphores
-	VulkanRenderSemaphores = new VulkanSemaphoresManager();
-	imageAvailableSemaphoresRef = VulkanRenderSemaphores->getImageAvailableSemaphoresVector();
-	renderFinishedSemaphoresRef = VulkanRenderSemaphores->getRenderFinishedSemaphoresVector();
-	inFlightFencesRef = VulkanRenderSemaphores->getInFlightFencesVector();
+	vulkan_render_semaphores_ = new VulkanSemaphoresManager();
+	image_available_semaphores_ref_ = vulkan_render_semaphores_->get_image_available_semaphores_vector();
+	render_finished_semaphores_ref_ = vulkan_render_semaphores_->get_render_finished_semaphores_vector();
+	in_flight_fences_ref_ = vulkan_render_semaphores_->get_in_flight_fences_vector();
 	Debug::DebugLog::print_to_console_log("VulkanSemaphoresManager created");
-	createCamera();
+	create_camera();
 	Debug::DebugLog::print_to_console_log("User View Camera created");
 	Debug::DebugLog::print_to_console_log("---initializeVulkan() completed---");
 }
 
-void ScrapEngine::Render::RenderManager::createQueues()
+void ScrapEngine::Render::RenderManager::create_queues()
 {
 	Debug::DebugLog::print_to_console_log("---Begin queues creation---");
-	VulkanGraphicsQueue = new GraphicsQueue(VulkanRenderDevice->get_cached_queue_family_indices());
-	VulkanPresentationQueue = new PresentQueue(VulkanRenderDevice->get_cached_queue_family_indices());
+	vulkan_graphics_queue_ = new GraphicsQueue(vulkan_render_device_->get_cached_queue_family_indices());
+	vulkan_presentation_queue_ = new PresentQueue(vulkan_render_device_->get_cached_queue_family_indices());
 	Debug::DebugLog::print_to_console_log("---Ended queues creation---");
 }
 
-void ScrapEngine::Render::RenderManager::createCommandBuffers()
+void ScrapEngine::Render::RenderManager::create_command_buffers()
 {
 	std::vector<ScrapEngine::Render::VulkanGraphicsPipeline*> pipelines;
 	std::vector<const std::vector<vk::DescriptorSet>*> descriptorSets;
 	std::vector<ScrapEngine::simple_buffer<Vertex>*> vertexbuffers;
 	std::vector<ScrapEngine::simple_buffer<uint32_t>*> indexbuffers;
-	for (ScrapEngine::Render::VulkanMeshInstance* mesh : LoadedModels) {
-		pipelines.push_back(mesh->getVulkanRenderGraphicsPipeline());
-		descriptorSets.push_back(mesh->getVulkanRenderDescriptorSet()->get_descriptor_sets());
-		vertexbuffers.push_back(mesh->getVertexbuffer());
-		indexbuffers.push_back(mesh->getIndexbuffer());
+	for (ScrapEngine::Render::VulkanMeshInstance* mesh : loaded_models_) {
+		pipelines.push_back(mesh->get_vulkan_render_graphics_pipeline());
+		descriptorSets.push_back(mesh->get_vulkan_render_descriptor_set()->get_descriptor_sets());
+		vertexbuffers.push_back(mesh->get_vertex_buffer());
+		indexbuffers.push_back(mesh->get_index_buffer());
 	}
-	VulkanRenderCommandBuffer = new VulkanCommandBuffer(
-		VulkanRenderFrameBuffer,
-		&VulkanRenderSwapChain->getSwapChainExtent(),
+	vulkan_render_command_buffer_ = new VulkanCommandBuffer(
+		vulkan_render_frame_buffer_,
+		&vulkan_render_swap_chain_->get_swap_chain_extent(),
 		pipelines,
 		descriptorSets,
 		vertexbuffers,
 		indexbuffers,
-		Skybox
+		skybox_
 	);
 	Debug::DebugLog::print_to_console_log("VulkanRenderCommandBuffer created");
 }
 
-ScrapEngine::Render::VulkanMeshInstance* ScrapEngine::Render::RenderManager::loadMesh(const std::string & vertex_shader_path, const std::string & fragment_shader_path, const std::string & model_path, const std::string & texture_path)
+ScrapEngine::Render::VulkanMeshInstance* ScrapEngine::Render::RenderManager::load_mesh(const std::string & vertex_shader_path, const std::string & fragment_shader_path, const std::string & model_path, const std::string & texture_path)
 {
-	LoadedModels.push_back(
-		new VulkanMeshInstance(vertex_shader_path, fragment_shader_path, model_path, texture_path,VulkanRenderDevice, VulkanRenderSwapChain)
+	loaded_models_.push_back(
+		new VulkanMeshInstance(vertex_shader_path, fragment_shader_path, model_path, texture_path,vulkan_render_device_, vulkan_render_swap_chain_)
 	);
-	deleteCommandBuffers();
-	createCommandBuffers();
-	return LoadedModels.back();
+	delete_command_buffers();
+	create_command_buffers();
+	return loaded_models_.back();
 }
 
-ScrapEngine::Render::VulkanMeshInstance* ScrapEngine::Render::RenderManager::loadMesh(const std::string & model_path, const std::string & texture_path)
+ScrapEngine::Render::VulkanMeshInstance* ScrapEngine::Render::RenderManager::load_mesh(const std::string & model_path, const std::string & texture_path)
 {
-	return loadMesh("../assets/shader/compiled_shaders/shader_base.vert.spv", "../assets/shader/compiled_shaders/shader_base.frag.spv", model_path, texture_path);
+	return load_mesh("../assets/shader/compiled_shaders/shader_base.vert.spv", "../assets/shader/compiled_shaders/shader_base.frag.spv", model_path, texture_path);
 }
 
-void ScrapEngine::Render::RenderManager::unloadMesh(ScrapEngine::Render::VulkanMeshInstance* meshToUnload)
+void ScrapEngine::Render::RenderManager::unload_mesh(ScrapEngine::Render::VulkanMeshInstance* mesh_to_unload)
 {
-	std::vector<ScrapEngine::Render::VulkanMeshInstance*>::iterator element = find(LoadedModels.begin(), LoadedModels.end(), meshToUnload);
-	if (element != LoadedModels.end())
+	const std::vector<VulkanMeshInstance*>::iterator element = find(loaded_models_.begin(), loaded_models_.end(), mesh_to_unload);
+	if (element != loaded_models_.end())
 	{
 		delete *element;
-		LoadedModels.erase(element);
-		deleteCommandBuffers();
-		createCommandBuffers();
+		loaded_models_.erase(element);
+		delete_command_buffers();
+		create_command_buffers();
 	}
 }
 
-ScrapEngine::Render::VulkanSkyboxInstance* ScrapEngine::Render::RenderManager::loadSkybox(const std::array<std::string, 6>& files_path)
+ScrapEngine::Render::VulkanSkyboxInstance* ScrapEngine::Render::RenderManager::load_skybox(const std::array<std::string, 6>& files_path)
 {
-	if (Skybox) {
-		delete Skybox;
-	}
-	Skybox = new VulkanSkyboxInstance("../assets/shader/compiled_shaders/skybox.vert.spv", "../assets/shader/compiled_shaders/skybox.frag.spv", "../assets/models/cube.obj", files_path, VulkanRenderDevice, VulkanRenderSwapChain);
-	deleteCommandBuffers();
-	createCommandBuffers();
-	return Skybox;
+	delete skybox_;
+
+	skybox_ = new VulkanSkyboxInstance("../assets/shader/compiled_shaders/skybox.vert.spv", "../assets/shader/compiled_shaders/skybox.frag.spv", "../assets/models/cube.obj", files_path, vulkan_render_device_, vulkan_render_swap_chain_);
+	delete_command_buffers();
+	create_command_buffers();
+	return skybox_;
 }
 
-void ScrapEngine::Render::RenderManager::drawFrame()
+void ScrapEngine::Render::RenderManager::draw_frame()
 {
-	VulkanDevice::static_logic_device_ref->waitForFences(1, &(*inFlightFencesRef)[currentFrame], true, std::numeric_limits<uint64_t>::max());
+	VulkanDevice::static_logic_device_ref->waitForFences(1, &(*in_flight_fences_ref_)[current_frame_], true, std::numeric_limits<uint64_t>::max());
 
-	result = VulkanDevice::static_logic_device_ref->acquireNextImageKHR(VulkanRenderSwapChain->getSwapChain(), std::numeric_limits<uint64_t>::max(), (*imageAvailableSemaphoresRef)[currentFrame], vk::Fence(), &imageIndex);
+	result_ = VulkanDevice::static_logic_device_ref->acquireNextImageKHR(vulkan_render_swap_chain_->get_swap_chain(), std::numeric_limits<uint64_t>::max(), (*image_available_semaphores_ref_)[current_frame_], vk::Fence(), &image_index_);
 
-	if (result == vk::Result::eErrorOutOfDateKHR) {
+	if (result_ == vk::Result::eErrorOutOfDateKHR) {
 		//recreateSwapChain();
 		throw std::runtime_error("recreateSwapChain() not ready!");
 		return;
 	}
-	else if (result != vk::Result::eSuccess && result != vk::Result::eSuboptimalKHR) {
+	else if (result_ != vk::Result::eSuccess && result_ != vk::Result::eSuboptimalKHR) {
 		throw std::runtime_error("RenderManager: Failed to acquire swap chain image!");
 	}
 	//Update uniform buffer
-	for (int i = 0;i < LoadedModels.size(); i++) {
-		LoadedModels[i]->updateUniformBuffer(imageIndex, RenderCamera);
+	for (int i = 0;i < loaded_models_.size(); i++) {
+		loaded_models_[i]->update_uniform_buffer(image_index_, render_camera_);
 	}
-	if (Skybox) {
-		Skybox->updateUniformBuffer(imageIndex, RenderCamera);
+	if (skybox_) {
+		skybox_->update_uniform_buffer(image_index_, render_camera_);
 	}
 	//Submit the frame
-	vk::SubmitInfo submitInfo;
+	vk::SubmitInfo submit_info;
 
-	vk::Semaphore waitSemaphores[] = { (*imageAvailableSemaphoresRef)[currentFrame] };;
+	vk::Semaphore wait_semaphores[] = { (*image_available_semaphores_ref_)[current_frame_] };;
 
-	vk::PipelineStageFlags waitStages[] = { vk::PipelineStageFlagBits::eColorAttachmentOutput };
+	vk::PipelineStageFlags wait_stages[] = { vk::PipelineStageFlagBits::eColorAttachmentOutput };
 
-	submitInfo.setWaitSemaphoreCount(1);
-	submitInfo.setPWaitSemaphores(waitSemaphores);
-	submitInfo.setPWaitDstStageMask(waitStages);
+	submit_info.setWaitSemaphoreCount(1);
+	submit_info.setPWaitSemaphores(wait_semaphores);
+	submit_info.setPWaitDstStageMask(wait_stages);
 
-	submitInfo.setCommandBufferCount(1);
-	submitInfo.setPCommandBuffers(&(*VulkanRenderCommandBuffer->get_command_buffers_vector())[imageIndex]);
+	submit_info.setCommandBufferCount(1);
+	submit_info.setPCommandBuffers(&(*vulkan_render_command_buffer_->get_command_buffers_vector())[image_index_]);
 
-	vk::Semaphore signalSemaphores[] = { (*renderFinishedSemaphoresRef)[currentFrame] };
-	submitInfo.setSignalSemaphoreCount(1);
-	submitInfo.setPSignalSemaphores(signalSemaphores);
+	vk::Semaphore signal_semaphores[] = { (*render_finished_semaphores_ref_)[current_frame_] };
+	submit_info.setSignalSemaphoreCount(1);
+	submit_info.setPSignalSemaphores(signal_semaphores);
 	
-	VulkanDevice::static_logic_device_ref->resetFences(1, &(*inFlightFencesRef)[currentFrame]);
+	VulkanDevice::static_logic_device_ref->resetFences(1, &(*in_flight_fences_ref_)[current_frame_]);
 
-	result = VulkanGraphicsQueue->getgraphicsQueue()->submit(1, &submitInfo, (*inFlightFencesRef)[currentFrame]);
-	if (result != vk::Result::eSuccess) {
-		std::cout << "RESULT TYPE:" << result << std::endl;
+	result_ = vulkan_graphics_queue_->get_graphics_queue()->submit(1, &submit_info, (*in_flight_fences_ref_)[current_frame_]);
+	if (result_ != vk::Result::eSuccess) {
+		std::cout << "RESULT TYPE:" << result_ << std::endl;
 		throw std::runtime_error("RenderManager: Failed to submit draw command buffer!");
 	}
 
-	vk::PresentInfoKHR presentInfo;
+	vk::PresentInfoKHR present_info;
 
-	presentInfo.setWaitSemaphoreCount(1);
-	presentInfo.setPWaitSemaphores(signalSemaphores);
+	present_info.setWaitSemaphoreCount(1);
+	present_info.setPWaitSemaphores(signal_semaphores);
 	
-	vk::SwapchainKHR swapChains[] = { VulkanRenderSwapChain->getSwapChain() };
-	presentInfo.setSwapchainCount(1);
-	presentInfo.setPSwapchains(swapChains);
+	vk::SwapchainKHR swap_chains[] = { vulkan_render_swap_chain_->get_swap_chain() };
+	present_info.setSwapchainCount(1);
+	present_info.setPSwapchains(swap_chains);
 
-	presentInfo.setPImageIndices(&imageIndex);
+	present_info.setPImageIndices(&image_index_);
 
-	result = VulkanPresentationQueue->getPresentQueue()->presentKHR(&presentInfo);
+	result_ = vulkan_presentation_queue_->get_present_queue()->presentKHR(&present_info);
 
-	if (result == vk::Result::eErrorOutOfDateKHR || result == vk::Result::eSuboptimalKHR || framebufferResized) {
+	if (result_ == vk::Result::eErrorOutOfDateKHR || result_ == vk::Result::eSuboptimalKHR || framebuffer_resized_) {
 		//framebufferResized = false;
 		//recreateSwapChain();
 		throw std::runtime_error("recreateSwapChain() not ready!");
 	}
-	else if (result != vk::Result::eSuccess) {
+	else if (result_ != vk::Result::eSuccess) {
 		throw std::runtime_error("RenderManager: Failed to present swap chain image!");
 	}
 		
-	currentFrame = (currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
+	current_frame_ = (current_frame_ + 1) % max_frames_in_flight_;
 }
 
-void ScrapEngine::Render::RenderManager::waitDeviceIdle()
+void ScrapEngine::Render::RenderManager::wait_device_idle() const
 {
-	VulkanRenderDevice->get_logical_device()->waitIdle();
+	vulkan_render_device_->get_logical_device()->waitIdle();
 }
 
-void ScrapEngine::Render::RenderManager::recreateSwapChain()
+void ScrapEngine::Render::RenderManager::recreate_swap_chain()
 {
 	VulkanDevice::static_logic_device_ref->waitIdle();
 	//TODO https://vulkan-tutorial.com/Drawing_a_triangle/Swap_chain_recreation
 }
 
-void ScrapEngine::Render::RenderManager::createCamera()
+void ScrapEngine::Render::RenderManager::create_camera()
 {
-	RenderCamera = new Camera();
-	defaultCamera = RenderCamera;
+	render_camera_ = new Camera();
+	default_camera_ = render_camera_;
 }

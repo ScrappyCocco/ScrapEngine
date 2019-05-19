@@ -3,20 +3,21 @@
 #include <vulkan/vulkan.hpp>
 #include "GraphicsQueue.h"
 
-namespace ScrapEngine {
-	namespace Render {
+namespace ScrapEngine
+{
+	namespace Render
+	{
 		class PresentQueue
 		{
 		private:
-			vk::Queue presentationQueue;
+			vk::Queue presentation_queue_;
 		public:
-			static const vk::Queue* StaticPresentationQueueRef;
+			static const vk::Queue* static_presentation_queue_ref;
 
 			PresentQueue(GraphicsQueue::QueueFamilyIndices indices);
 			~PresentQueue();
 
-			vk::Queue* getPresentQueue();
+			vk::Queue* get_present_queue();
 		};
 	}
 }
-

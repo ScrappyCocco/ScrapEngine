@@ -3,59 +3,74 @@
 #include <stdexcept>
 #include "../Base/StaticTypes.h"
 
-ScrapEngine::Render::TextureImageView::TextureImageView(vk::Image* textureImage, const uint32_t& mipLevelsData, bool iscubemap, int layerCount)
+ScrapEngine::Render::TextureImageView::TextureImageView(vk::Image* texture_image, const uint32_t& mip_levels_data,
+                                                        bool iscubemap, int layer_count)
 {
-	if (iscubemap) {
-		textureImageView = createCubeMapImageView(textureImage, vk::Format::eR8G8B8A8Unorm, vk::ImageAspectFlagBits::eColor, mipLevelsData, layerCount);
+	if (iscubemap)
+	{
+		texture_image_view_ = create_cube_map_image_view(texture_image, vk::Format::eR8G8B8A8Unorm,
+		                                                 vk::ImageAspectFlagBits::eColor, mip_levels_data, layer_count);
 	}
-	else {
-		textureImageView = createImageView(textureImage, vk::Format::eR8G8B8A8Unorm, vk::ImageAspectFlagBits::eColor, mipLevelsData);
+	else
+	{
+		texture_image_view_ = create_image_view(texture_image, vk::Format::eR8G8B8A8Unorm,
+		                                        vk::ImageAspectFlagBits::eColor, mip_levels_data);
 	}
 }
 
 ScrapEngine::Render::TextureImageView::~TextureImageView()
 {
-	VulkanDevice::static_logic_device_ref->destroyImageView(textureImageView);
+	VulkanDevice::static_logic_device_ref->destroyImageView(texture_image_view_);
 }
 
-vk::ImageView ScrapEngine::Render::TextureImageView::createImageView(vk::Image* image, vk::Format format, vk::ImageAspectFlags aspectFlags, uint32_t mipLevelsData) {
-	vk::ImageViewCreateInfo viewInfo(
-		vk::ImageViewCreateFlags(), 
-		*image, 
-		vk::ImageViewType::e2D, 
-		format, 
+vk::ImageView ScrapEngine::Render::TextureImageView::create_image_view(vk::Image* image, const vk::Format format,
+                                                                       const vk::ImageAspectFlags aspect_flags,
+                                                                       uint32_t mip_levels_data)
+{
+	vk::ImageViewCreateInfo view_info(
+		vk::ImageViewCreateFlags(),
+		*image,
+		vk::ImageViewType::e2D,
+		format,
 		vk::ComponentMapping(),
-		vk::ImageSubresourceRange(aspectFlags, 0, mipLevelsData, 0, 1)
+		vk::ImageSubresourceRange(aspect_flags, 0, mip_levels_data, 0, 1)
 	);
 
-	vk::ImageView imageView;
-	if (ScrapEngine::Render::VulkanDevice::static_logic_device_ref->createImageView(&viewInfo, nullptr, &imageView) != vk::Result::eSuccess) {
+	vk::ImageView image_view;
+	if (ScrapEngine::Render::VulkanDevice::static_logic_device_ref->createImageView(&view_info, nullptr, &image_view) !=
+		vk::Result::eSuccess)
+	{
 		throw std::runtime_error("TextureImageView: Failed to create texture image view!");
 	}
 
-	return imageView;
+	return image_view;
 }
 
-vk::ImageView ScrapEngine::Render::TextureImageView::createCubeMapImageView(vk::Image* image, vk::Format format, vk::ImageAspectFlags aspectFlags, uint32_t mipLevelsData, int layerCount)
+vk::ImageView ScrapEngine::Render::TextureImageView::create_cube_map_image_view(
+	vk::Image* image, const vk::Format format, const vk::ImageAspectFlags aspectFlags, uint32_t mip_levels_data,
+	int layer_count)
 {
-	vk::ImageViewCreateInfo viewInfo(
+	vk::ImageViewCreateInfo view_info(
 		vk::ImageViewCreateFlags(),
 		*image,
 		vk::ImageViewType::eCube,
 		format,
-		vk::ComponentMapping(vk::ComponentSwizzle::eR, vk::ComponentSwizzle::eG, vk::ComponentSwizzle::eB, vk::ComponentSwizzle::eA),
-		vk::ImageSubresourceRange(aspectFlags, 0, mipLevelsData, 0, layerCount)
+		vk::ComponentMapping(vk::ComponentSwizzle::eR, vk::ComponentSwizzle::eG, vk::ComponentSwizzle::eB,
+		                     vk::ComponentSwizzle::eA),
+		vk::ImageSubresourceRange(aspectFlags, 0, mip_levels_data, 0, layer_count)
 	);
 
-	vk::ImageView imageView;
-	if (Render::VulkanDevice::static_logic_device_ref->createImageView(&viewInfo, nullptr, &imageView) != vk::Result::eSuccess) {
+	vk::ImageView image_view;
+	if (Render::VulkanDevice::static_logic_device_ref->createImageView(&view_info, nullptr, &image_view) != vk::Result::
+		eSuccess)
+	{
 		throw std::runtime_error("TextureImageView: Failed to create texture image view!");
 	}
 
-	return imageView;
+	return image_view;
 }
 
-vk::ImageView* ScrapEngine::Render::TextureImageView::getTextureImageView()
+vk::ImageView* ScrapEngine::Render::TextureImageView::get_texture_image_view()
 {
-	return &textureImageView;
+	return &texture_image_view_;
 }

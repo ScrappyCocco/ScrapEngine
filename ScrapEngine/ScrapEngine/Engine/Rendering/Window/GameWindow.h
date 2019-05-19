@@ -5,35 +5,37 @@
 #include "../../Input/Manager/InputManager.h"
 #include <string>
 
-namespace ScrapEngine {
-	namespace Render {
+namespace ScrapEngine
+{
+	namespace Render
+	{
 		class GameWindow
 		{
 			friend class VulkanSurface;
 
 		private:
-			const uint32_t WIDTH = 800;
-			const uint32_t HEIGHT = 600;
-			const std::string window_title = "ScrapEngine Game";
+			const uint32_t width_ = 800;
+			const uint32_t height_ = 600;
+			const std::string window_title_ = "ScrapEngine Game";
 
-			GLFWwindow* window; //actual window reference
+			GLFWwindow* window_; //actual window reference
 
 		public:
-			GameWindow(uint32_t input_WIDTH = 800, uint32_t input_HEIGHT = 600, std::string input_window_title = "ScrapEngine Game");
+			GameWindow(uint32_t input_width = 800, uint32_t input_height = 600,
+			           std::string input_window_title = "ScrapEngine Game");
 			~GameWindow();
 
-			void initializeWindow();
+			void initialize_window();
 
-			void setWindowSize(int input_WIDTH, int input_HEIGHT);
-			void setWindowTitle(const std::string& title);
-			void setWindowIcon(const std::string& path_to_file) const;
+			void set_window_size(int input_width, int input_height) const;
+			void set_window_title(const std::string& title) const;
+			void set_window_icon(const std::string& path_to_file) const;
 
-			void closeWindow();
+			void close_window() const;
 
-			ScrapEngine::Input::InputManager* createWindowInputManager() const;
+			ScrapEngine::Input::InputManager* create_window_input_manager() const;
 
-			bool checkWindowShouldClose() const;
+			bool check_window_should_close() const;
 		};
 	}
 }
-

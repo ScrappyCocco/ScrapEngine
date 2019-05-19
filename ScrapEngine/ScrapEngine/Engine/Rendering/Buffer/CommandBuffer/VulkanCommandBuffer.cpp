@@ -34,7 +34,7 @@ ScrapEngine::Render::VulkanCommandBuffer::VulkanCommandBuffer(
 		}
 
 		vk::RenderPassBeginInfo renderPassInfo(
-			*VulkanRenderPass::StaticRenderPassRef,
+			*VulkanRenderPass::static_render_pass_ref,
 			(*swap_chain_framebuffers)[i],
 			vk::Rect2D(vk::Offset2D(), *input_swap_chain_extent_ref)
 		);
@@ -54,23 +54,23 @@ ScrapEngine::Render::VulkanCommandBuffer::VulkanCommandBuffer(
 		if (SkyboxRef)
 		{
 			command_buffers_[i].bindPipeline(vk::PipelineBindPoint::eGraphics,
-			                                 *SkyboxRef->getVulkanRenderGraphicsPipeline()->getGraphicsPipeline());
-			vk::Buffer buff[] = {*SkyboxRef->getVertexbuffer()->buffer};
+			                                 *SkyboxRef->get_vulkan_render_graphics_pipeline()->get_graphics_pipeline());
+			vk::Buffer buff[] = {*SkyboxRef->get_vertex_buffer()->buffer};
 			command_buffers_[i].bindVertexBuffers(0, 1, buff, offsets);
-			command_buffers_[i].bindIndexBuffer(*SkyboxRef->getIndexbuffer()->buffer, 0, vk::IndexType::eUint32);
+			command_buffers_[i].bindIndexBuffer(*SkyboxRef->get_index_buffer()->buffer, 0, vk::IndexType::eUint32);
 			command_buffers_[i].bindDescriptorSets(vk::PipelineBindPoint::eGraphics,
-			                                       *SkyboxRef->getVulkanRenderGraphicsPipeline()->getPipelineLayout(),
+			                                       *SkyboxRef->get_vulkan_render_graphics_pipeline()->get_pipeline_layout(),
 			                                       0, 1, &(*SkyboxRef
-			                                                ->getVulkanRenderDescriptorSet()->get_descriptor_sets())[i],
+			                                                ->get_vulkan_render_descriptor_set()->get_descriptor_sets())[i],
 			                                       0, nullptr);
-			command_buffers_[i].drawIndexed(static_cast<uint32_t>((*SkyboxRef->getIndexbuffer()).vectorData->size()), 1,
+			command_buffers_[i].drawIndexed(static_cast<uint32_t>((*SkyboxRef->get_index_buffer()).vectorData->size()), 1,
 			                                0, 0, 0);
 		}
 		//Scene render
 		for (int k = 0; k < vertex_buffer.size(); k++)
 		{
 			command_buffers_[i].bindPipeline(vk::PipelineBindPoint::eGraphics,
-			                                 *input_vulkan_pipeline_ref[k]->getGraphicsPipeline());
+			                                 *input_vulkan_pipeline_ref[k]->get_graphics_pipeline());
 
 			vk::Buffer vertex_buffers[] = {*(*vertex_buffer[k]).buffer};
 
@@ -79,7 +79,7 @@ ScrapEngine::Render::VulkanCommandBuffer::VulkanCommandBuffer(
 			command_buffers_[i].bindIndexBuffer(*(*index_buffer[k]).buffer, 0, vk::IndexType::eUint32);
 
 			command_buffers_[i].bindDescriptorSets(vk::PipelineBindPoint::eGraphics,
-			                                       *input_vulkan_pipeline_ref[k]->getPipelineLayout(), 0, 1,
+			                                       *input_vulkan_pipeline_ref[k]->get_pipeline_layout(), 0, 1,
 			                                       &(*descriptor_sets[k])[i], 0, nullptr);
 
 			command_buffers_[i].drawIndexed(static_cast<uint32_t>((*index_buffer[k]).vectorData->size()), 1, 0, 0, 0);

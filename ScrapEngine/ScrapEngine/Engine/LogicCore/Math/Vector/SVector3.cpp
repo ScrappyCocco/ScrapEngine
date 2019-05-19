@@ -72,6 +72,11 @@ ScrapEngine::Core::SVector3 ScrapEngine::Core::SVector3::get_vector() const
 	return SVector3(*this);
 }
 
+glm::vec3 ScrapEngine::Core::SVector3::get_wrapped_vector() const
+{
+	return vec3_;
+}
+
 void ScrapEngine::Core::SVector3::set_vector(const SVector3& other)
 {
 	vec3_ = glm::vec3(other.vec3_.x, other.vec3_.y, other.vec3_.z);

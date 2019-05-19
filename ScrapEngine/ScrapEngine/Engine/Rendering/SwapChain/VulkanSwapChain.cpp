@@ -3,127 +3,127 @@
 #include <algorithm>
 #include "../Base/StaticTypes.h"
 
-ScrapEngine::Render::VulkanSwapChain::VulkanSwapChain(SwapChainSupportDetails swapChainSupport, GraphicsQueue::QueueFamilyIndices indices, vk::SurfaceKHR* input_surfaceRef, const uint32_t& WIDTH, const uint32_t& HEIGHT, bool vsync)
-	: surfaceRef(input_surfaceRef)
+ScrapEngine::Render::VulkanSwapChain::VulkanSwapChain(const SwapChainSupportDetails swap_chain_support, GraphicsQueue::QueueFamilyIndices indices, vk::SurfaceKHR* input_surface_ref, const uint32_t& width, const uint32_t& height, bool vsync)
+	: surface_ref_(input_surface_ref)
 {
-	vk::SurfaceFormatKHR surfaceFormat = chooseSwapSurfaceFormat(swapChainSupport.formats);
-	vk::PresentModeKHR presentMode = chooseSwapPresentMode(swapChainSupport.presentModes, vsync);
-	vk::Extent2D extent = chooseSwapExtent(swapChainSupport.capabilities, WIDTH, HEIGHT);
+	const vk::SurfaceFormatKHR surface_format = choose_swap_surface_format(swap_chain_support.formats);
+	const vk::PresentModeKHR present_mode = choose_swap_present_mode(swap_chain_support.present_modes, vsync);
+	const vk::Extent2D extent = choose_swap_extent(swap_chain_support.capabilities, width, height);
 
-	uint32_t imageCount = swapChainSupport.capabilities.minImageCount + 1;
-	if (swapChainSupport.capabilities.maxImageCount > 0 && imageCount > swapChainSupport.capabilities.maxImageCount) {
-		imageCount = swapChainSupport.capabilities.maxImageCount;
+	uint32_t image_count = swap_chain_support.capabilities.minImageCount + 1;
+	if (swap_chain_support.capabilities.maxImageCount > 0 && image_count > swap_chain_support.capabilities.maxImageCount) {
+		image_count = swap_chain_support.capabilities.maxImageCount;
 	}
 
-	vk::SwapchainCreateInfoKHR createInfo(
+	vk::SwapchainCreateInfoKHR create_info(
 		vk::SwapchainCreateFlagsKHR(),
-		*surfaceRef,
-		imageCount,
-		surfaceFormat.format,
-		surfaceFormat.colorSpace,
+		*surface_ref_,
+		image_count,
+		surface_format.format,
+		surface_format.colorSpace,
 		extent,
 		1,
 		vk::ImageUsageFlagBits::eColorAttachment
 	);
 
-	uint32_t queueFamilyIndices[] = { (uint32_t)indices.graphicsFamily, (uint32_t)indices.presentFamily };
+	uint32_t queue_family_indices[] = { static_cast<uint32_t>(indices.graphics_family), static_cast<uint32_t>(indices.present_family) };
 
-	if (indices.graphicsFamily != indices.presentFamily) {
-		createInfo.setImageSharingMode(vk::SharingMode::eConcurrent);
-		createInfo.setQueueFamilyIndexCount(2);
-		createInfo.setPQueueFamilyIndices(queueFamilyIndices);
+	if (indices.graphics_family != indices.present_family) {
+		create_info.setImageSharingMode(vk::SharingMode::eConcurrent);
+		create_info.setQueueFamilyIndexCount(2);
+		create_info.setPQueueFamilyIndices(queue_family_indices);
 	}
 	else {
-		createInfo.setImageSharingMode(vk::SharingMode::eExclusive);
+		create_info.setImageSharingMode(vk::SharingMode::eExclusive);
 	}
 
-	createInfo.setPreTransform(swapChainSupport.capabilities.currentTransform);
-	createInfo.setCompositeAlpha(vk::CompositeAlphaFlagBitsKHR::eOpaque);
-	createInfo.setPresentMode(presentMode);
-	createInfo.setClipped(true);
+	create_info.setPreTransform(swap_chain_support.capabilities.currentTransform);
+	create_info.setCompositeAlpha(vk::CompositeAlphaFlagBitsKHR::eOpaque);
+	create_info.setPresentMode(present_mode);
+	create_info.setClipped(true);
 
-	if (VulkanDevice::static_logic_device_ref->createSwapchainKHR(&createInfo, nullptr, &swapChain) != vk::Result::eSuccess) {
+	if (VulkanDevice::static_logic_device_ref->createSwapchainKHR(&create_info, nullptr, &swap_chain_) != vk::Result::eSuccess) {
 		throw std::runtime_error("VulkanSwapChain: Failed to create swap chain!");
 	}
 
-	VulkanDevice::static_logic_device_ref->getSwapchainImagesKHR(swapChain, &imageCount, nullptr);
-	swapChainImages.resize(imageCount);
-	VulkanDevice::static_logic_device_ref->getSwapchainImagesKHR(swapChain, &imageCount, swapChainImages.data());
+	VulkanDevice::static_logic_device_ref->getSwapchainImagesKHR(swap_chain_, &image_count, nullptr);
+	swap_chain_images_.resize(image_count);
+	VulkanDevice::static_logic_device_ref->getSwapchainImagesKHR(swap_chain_, &image_count, swap_chain_images_.data());
 
-	swapChainImageFormat = surfaceFormat.format;
-	swapChainExtent = extent;
+	swap_chain_image_format_ = surface_format.format;
+	swap_chain_extent_ = extent;
 }
 
 ScrapEngine::Render::VulkanSwapChain::~VulkanSwapChain()
 {
-	VulkanDevice::static_logic_device_ref->destroySwapchainKHR(swapChain);
+	VulkanDevice::static_logic_device_ref->destroySwapchainKHR(swap_chain_);
 }
 
-vk::SurfaceFormatKHR ScrapEngine::Render::VulkanSwapChain::chooseSwapSurfaceFormat(const std::vector<vk::SurfaceFormatKHR>& availableFormats)
+vk::SurfaceFormatKHR ScrapEngine::Render::VulkanSwapChain::choose_swap_surface_format(const std::vector<vk::SurfaceFormatKHR>& available_formats)
 {
-	if (availableFormats.size() == 1 && availableFormats[0].format == vk::Format::eUndefined) {
+	if (available_formats.size() == 1 && available_formats[0].format == vk::Format::eUndefined) {
 		return { vk::Format::eB8G8R8A8Unorm , vk::ColorSpaceKHR::eSrgbNonlinear};
 	}
 
-	for (const auto& availableFormat : availableFormats) {
-		if (availableFormat.format == vk::Format::eB8G8R8A8Unorm  && availableFormat.colorSpace == vk::ColorSpaceKHR::eSrgbNonlinear) {
-			return availableFormat;
+	for (const auto& available_format : available_formats) {
+		if (available_format.format == vk::Format::eB8G8R8A8Unorm  && available_format.colorSpace == vk::ColorSpaceKHR::eSrgbNonlinear) {
+			return available_format;
 		}
 	}
 
-	return availableFormats[0];
+	return available_formats[0];
 }
 
-vk::PresentModeKHR ScrapEngine::Render::VulkanSwapChain::chooseSwapPresentMode(const std::vector<vk::PresentModeKHR>& availablePresentModes, bool vsync)
+vk::PresentModeKHR ScrapEngine::Render::VulkanSwapChain::choose_swap_present_mode(const std::vector<vk::PresentModeKHR>& available_present_modes, bool vsync)
 {
-	vk::PresentModeKHR bestMode = vk::PresentModeKHR::eFifo;
+	vk::PresentModeKHR best_mode = vk::PresentModeKHR::eFifo;
 
-	for (const auto& availablePresentMode : availablePresentModes) {
-		if (vsync && (availablePresentMode == vk::PresentModeKHR::eFifoRelaxed || availablePresentMode == vk::PresentModeKHR::eFifo)) {
-			return availablePresentMode;
+	for (const auto& available_present_mode : available_present_modes) {
+		if (vsync && (available_present_mode == vk::PresentModeKHR::eFifoRelaxed || available_present_mode == vk::PresentModeKHR::eFifo)) {
+			return available_present_mode;
 		}
-		if (availablePresentMode == vk::PresentModeKHR::eMailbox) {
-			return availablePresentMode;
+		if (available_present_mode == vk::PresentModeKHR::eMailbox) {
+			return available_present_mode;
 		}
-		else if (availablePresentMode == vk::PresentModeKHR::eImmediate) {
-			bestMode = availablePresentMode;
+		else if (available_present_mode == vk::PresentModeKHR::eImmediate) {
+			best_mode = available_present_mode;
 		}
 	}
 
-	return bestMode;
+	return best_mode;
 }
 
-vk::Extent2D ScrapEngine::Render::VulkanSwapChain::chooseSwapExtent(const vk::SurfaceCapabilitiesKHR& capabilities, const uint32_t& WIDTH, const uint32_t& HEIGHT)
+vk::Extent2D ScrapEngine::Render::VulkanSwapChain::choose_swap_extent(const vk::SurfaceCapabilitiesKHR& capabilities, const uint32_t& width, const uint32_t& height) const
 {
 	if (capabilities.currentExtent.width != std::numeric_limits<uint32_t>::max()) {
 		return capabilities.currentExtent;
 	}
 	else {
-		VkExtent2D actualExtent = { WIDTH, HEIGHT };
+		VkExtent2D actual_extent = { width, height };
 
-		actualExtent.width = std::max(capabilities.minImageExtent.width, std::min(capabilities.maxImageExtent.width, actualExtent.width));
-		actualExtent.height = std::max(capabilities.minImageExtent.height, std::min(capabilities.maxImageExtent.height, actualExtent.height));
+		actual_extent.width = std::max(capabilities.minImageExtent.width, std::min(capabilities.maxImageExtent.width, actual_extent.width));
+		actual_extent.height = std::max(capabilities.minImageExtent.height, std::min(capabilities.maxImageExtent.height, actual_extent.height));
 
-		return actualExtent;
+		return actual_extent;
 	}
 }
 
-vk::SwapchainKHR ScrapEngine::Render::VulkanSwapChain::getSwapChain() const
+vk::SwapchainKHR ScrapEngine::Render::VulkanSwapChain::get_swap_chain() const
 {
-	return swapChain;
+	return swap_chain_;
 }
 
-const std::vector<vk::Image>* ScrapEngine::Render::VulkanSwapChain::getSwapChainImagesVector()
+const std::vector<vk::Image>* ScrapEngine::Render::VulkanSwapChain::get_swap_chain_images_vector() const
 {
-	return &swapChainImages;
+	return &swap_chain_images_;
 }
 
-vk::Format ScrapEngine::Render::VulkanSwapChain::getSwapChainImageFormat() const
+vk::Format ScrapEngine::Render::VulkanSwapChain::get_swap_chain_image_format() const
 {
-	return swapChainImageFormat;
+	return swap_chain_image_format_;
 }
 
-vk::Extent2D ScrapEngine::Render::VulkanSwapChain::getSwapChainExtent() const
+vk::Extent2D ScrapEngine::Render::VulkanSwapChain::get_swap_chain_extent() const
 {
-	return swapChainExtent;
+	return swap_chain_extent_;
 }
