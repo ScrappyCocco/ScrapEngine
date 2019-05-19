@@ -1,4 +1,4 @@
-#include "SQuaternion.h"
+#include <Engine/LogicCore/Math/Quaternion/SQuaternion.h>
 
 ScrapEngine::Core::SQuaternion::SQuaternion(const glm::quat input)
 {

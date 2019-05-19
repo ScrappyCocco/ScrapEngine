@@ -1,4 +1,4 @@
-#include "SObject.h"
+#include <Engine/LogicCore/SObject.h>
 
 ScrapEngine::Core::SObject::SObject(const std::string& input_object_name) : object_name_(input_object_name)
 {

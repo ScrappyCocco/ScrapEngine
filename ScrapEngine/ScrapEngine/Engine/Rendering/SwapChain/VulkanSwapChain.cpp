@@ -1,7 +1,7 @@
-#include "VulkanSwapChain.h"
+#include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
 
 #include <algorithm>
-#include "../Base/StaticTypes.h"
+#include <Engine/Rendering/Base/StaticTypes.h>
 
 ScrapEngine::Render::VulkanSwapChain::VulkanSwapChain(const SwapChainSupportDetails swap_chain_support, GraphicsQueue::QueueFamilyIndices indices, vk::SurfaceKHR* input_surface_ref, const uint32_t& width, const uint32_t& height, bool vsync)
 	: surface_ref_(input_surface_ref)

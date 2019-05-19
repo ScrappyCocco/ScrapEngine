@@ -1,7 +1,7 @@
-#include "VulkanDepthResources.h"
+#include <Engine/Rendering/DepthResources/VulkanDepthResources.h>
 
-#include "../Texture/TextureImage.h"
-#include "../Texture/TextureImageView.h"
+#include <Engine/Rendering/Texture/TextureImage.h>
+#include <Engine/Rendering/Texture/TextureImageView.h>
 
 ScrapEngine::Render::VulkanDepthResources::VulkanDepthResources(const vk::Extent2D* swap_chain_extent,
                                                                 vk::SampleCountFlagBits msaa_samples)

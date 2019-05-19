@@ -1,4 +1,4 @@
-#include "SGameObject.h"
+#include <Engine/LogicCore/GameObject/SGameObject.h>
 
 ScrapEngine::Core::SGameObject::SGameObject(const std::string& object_name,
                                             const ScrapEngine::Transform& input_object_transform,

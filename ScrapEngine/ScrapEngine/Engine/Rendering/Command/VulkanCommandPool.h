@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vulkan/vulkan.hpp>
-#include "../Queue/GraphicsQueue.h"
+#include <Engine/Rendering/Queue/GraphicsQueue.h>
 
 namespace ScrapEngine
 {

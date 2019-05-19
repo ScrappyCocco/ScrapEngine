@@ -1,15 +1,15 @@
 #pragma once
-#include "../Texture/SkyboxTexture.h"
-#include "../Texture/TextureImageView.h"
-#include "../Texture/TextureSampler.h"
-#include "Engine/Rendering/Buffer/VertexBuffer/VertexBuffer.h"
-#include "Engine/Rendering/Buffer/IndexBuffer/IndexBuffer.h"
-#include "../Model/VulkanModel.h"
-#include "../Descriptor/VulkanDescriptorPool.h"
-#include "../Descriptor/VulkanDescriptorSet.h"
-#include "../Device/VulkanDevice.h"
-#include "../SwapChain/VulkanSwapChain.h"
-#include "../../Utility/UsefulTypes.h"
+#include <Engine/Rendering/Texture/SkyboxTexture.h>
+#include <Engine/Rendering/Texture/TextureImageView.h>
+#include <Engine/Rendering/Texture/TextureSampler.h>
+#include <Engine/Rendering/Buffer/VertexBuffer/VertexBuffer.h>
+#include <Engine/Rendering/Buffer/IndexBuffer/IndexBuffer.h>
+#include <Engine/Rendering/Model/VulkanModel.h>
+#include <Engine/Rendering/Descriptor/VulkanDescriptorPool.h>
+#include <Engine/Rendering/Descriptor/VulkanDescriptorSet.h>
+#include <Engine/Rendering/Device/VulkanDevice.h>
+#include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
+#include <Engine/Utility/UsefulTypes.h>
 
 namespace ScrapEngine
 {

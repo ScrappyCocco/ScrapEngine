@@ -1,5 +1,5 @@
-#include "ShaderManager.h"
-#include "../Base/StaticTypes.h"
+#include <Engine/Rendering/Shader/ShaderManager.h>
+#include <Engine/Rendering/Base/StaticTypes.h>
 #include <fstream>
 
 vk::ShaderModule ScrapEngine::Render::ShaderManager::create_shader_module(const std::vector<char>& code)

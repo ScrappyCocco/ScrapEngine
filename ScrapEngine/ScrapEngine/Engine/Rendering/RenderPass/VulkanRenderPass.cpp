@@ -1,9 +1,9 @@
-#include "VulkanRenderPass.h"
+#include <Engine/Rendering/RenderPass/VulkanRenderPass.h>
 
 #include <stdexcept>
 #include <array>
-#include "../DepthResources/VulkanDepthResources.h"
-#include "../Base/StaticTypes.h"
+#include <Engine/Rendering/DepthResources/VulkanDepthResources.h>
+#include <Engine/Rendering/Base/StaticTypes.h>
 
 //Init Static Members
 

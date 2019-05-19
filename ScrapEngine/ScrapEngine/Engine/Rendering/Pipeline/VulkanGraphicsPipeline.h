@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vulkan/vulkan.hpp>
-#include "../Shader/ShaderManager.h"
+#include <Engine/Rendering/Shader/ShaderManager.h>
 
 namespace ScrapEngine
 {

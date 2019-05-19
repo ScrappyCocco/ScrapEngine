@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../../Rendering/Manager/RenderManager.h"
-#include "../../Rendering/Model/VulkanSkyboxInstance.h"
+#include <Engine/Rendering/Manager/RenderManager.h>
+#include <Engine/Rendering/Model/VulkanSkyboxInstance.h>
 
 namespace ScrapEngine
 {

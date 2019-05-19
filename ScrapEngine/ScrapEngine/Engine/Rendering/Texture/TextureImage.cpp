@@ -1,10 +1,10 @@
 #define STB_IMAGE_IMPLEMENTATION
-#include "TextureImage.h"
+#include <Engine/Rendering/Texture/TextureImage.h>
 
 #include <stdexcept>
-#include "../Memory/MemoryManager.h"
-#include "../Buffer/BaseBuffer.h"
-#include "../DepthResources/VulkanDepthResources.h"
+#include <Engine/Rendering/Memory/MemoryManager.h>
+#include <Engine/Rendering/Buffer/BaseBuffer.h>
+#include <Engine/Rendering/DepthResources/VulkanDepthResources.h>
 
 ScrapEngine::Render::TextureImage::TextureImage(const std::string& file_path, bool should_copy_from_staging)
 {

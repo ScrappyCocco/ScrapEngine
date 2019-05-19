@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../SObject.h"
+#include <Engine/LogicCore/SObject.h>
 #include <glm/glm.hpp>
 
 namespace ScrapEngine

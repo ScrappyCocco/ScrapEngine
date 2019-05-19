@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../../Utility/UsefulTypes.h"
-#include "../SObject.h"
-#include "../Components/SComponent.h"
+#include <Engine/Utility/UsefulTypes.h>
+#include <Engine/LogicCore/SObject.h>
+#include <Engine/LogicCore/Components/SComponent.h>
 #include <vector>
 
 namespace ScrapEngine

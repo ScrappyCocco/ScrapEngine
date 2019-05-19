@@ -1,6 +1,6 @@
-#include "TextureSampler.h"
+#include <Engine/Rendering/Texture/TextureSampler.h>
 #include <stdexcept>
-#include "../Base/StaticTypes.h"
+#include <Engine/Rendering/Base/StaticTypes.h>
 
 ScrapEngine::Render::TextureSampler::TextureSampler(const uint32_t& mip_levels)
 	: TextureSampler(mip_levels, vk::Filter::eLinear, vk::Filter::eLinear,

@@ -1,8 +1,8 @@
-#include "VulkanDevice.h"
+#include <Engine/Rendering/Device/VulkanDevice.h>
 
 #include <vector>
 #include <set>
-#include "../../Debug/DebugLog.h"
+#include <Engine/Debug/DebugLog.h>
 
 //Init Static Members
 

@@ -1,5 +1,5 @@
-#include "VulkanMeshInstance.h"
-#include "../../Debug/DebugLog.h"
+#include <Engine/Rendering/Model/VulkanMeshInstance.h>
+#include <Engine/Debug/DebugLog.h>
 
 ScrapEngine::Render::VulkanMeshInstance::VulkanMeshInstance(const std::string& vertex_shader_path,
                                                             const std::string& fragment_shader_path,

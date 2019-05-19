@@ -1,6 +1,6 @@
-#include "VulkanValidationLayers.h"
-#include "../../Debug/DebugLog.h"
-#include "../Base/StaticTypes.h"
+#include <Engine/Rendering/ValidationLayers/VulkanValidationLayers.h>
+#include <Engine/Debug/DebugLog.h>
+#include <Engine/Rendering/Base/StaticTypes.h>
 
 ScrapEngine::Render::VulkanValidationLayers::VulkanValidationLayers()
 {

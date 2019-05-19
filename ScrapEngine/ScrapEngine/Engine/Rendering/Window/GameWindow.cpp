@@ -1,12 +1,10 @@
-#include "GameWindow.h"
+#include <Engine/Rendering/Window/GameWindow.h>
 #include <stb_image.h>
-#include "../../Utility/UsefulMethods.h"
+#include <Engine/Utility/UsefulMethods.h>
 
-ScrapEngine::Render::GameWindow::
-GameWindow(uint32_t input_width, uint32_t input_height, std::string input_window_title) : width_(input_width),
-                                                                                          height_(input_height),
-                                                                                          window_title_(
-	                                                                                          input_window_title)
+ScrapEngine::Render::GameWindow::GameWindow(
+	uint32_t input_width, uint32_t input_height, std::string input_window_title)
+	: width_(input_width), height_(input_height), window_title_(input_window_title)
 {
 	initialize_window();
 }

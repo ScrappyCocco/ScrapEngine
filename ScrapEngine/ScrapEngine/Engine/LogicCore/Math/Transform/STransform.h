@@ -1,5 +1,5 @@
 #pragma once
-#include "Engine/LogicCore/Math/Quaternion/SQuaternion.h"
+#include <Engine/LogicCore/Math/Quaternion/SQuaternion.h>
 
 namespace ScrapEngine
 {

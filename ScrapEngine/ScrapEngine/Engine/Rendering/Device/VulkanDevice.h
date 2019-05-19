@@ -1,9 +1,9 @@
 #pragma once
 
 #include <vulkan/vulkan.hpp>
-#include "../Instance/VukanInstance.h"
-#include "../Queue/GraphicsQueue.h"
-#include "../SwapChain/VulkanSwapChain.h"
+#include <Engine/Rendering/Instance/VukanInstance.h>
+#include <Engine/Rendering/Queue/GraphicsQueue.h>
+#include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
 
 namespace ScrapEngine
 {

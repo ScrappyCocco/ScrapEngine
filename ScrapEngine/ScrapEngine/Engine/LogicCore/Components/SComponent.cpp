@@ -1,4 +1,4 @@
-#include "SComponent.h"
+#include <Engine/LogicCore/Components/SComponent.h>
 
 ScrapEngine::Core::SComponent::SComponent(const std::string& component_name) : SObject(component_name)
 {

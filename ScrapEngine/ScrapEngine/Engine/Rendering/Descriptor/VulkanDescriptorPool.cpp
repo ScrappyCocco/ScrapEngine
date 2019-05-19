@@ -1,6 +1,6 @@
-#include "VulkanDescriptorPool.h"
+#include <Engine/Rendering/Descriptor/VulkanDescriptorPool.h>
 #include <array>
-#include "../Base/StaticTypes.h"
+#include <Engine/Rendering/Base/StaticTypes.h>
 
 ScrapEngine::Render::VulkanDescriptorPool::VulkanDescriptorPool(const std::vector<vk::Image>* swap_chain_images)
 {

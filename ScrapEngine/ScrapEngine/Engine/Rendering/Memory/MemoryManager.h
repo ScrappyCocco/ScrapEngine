@@ -2,7 +2,7 @@
 
 #include <vulkan/vulkan.hpp>
 #include <stdexcept>
-#include "../Base/StaticTypes.h"
+#include <Engine/Rendering/Base/StaticTypes.h>
 
 namespace ScrapEngine
 {

@@ -1,7 +1,7 @@
-#include "VulkanGraphicsPipeline.h"
+#include <Engine/Rendering/Pipeline/VulkanGraphicsPipeline.h>
 
-#include "../Base/Vertex.h"
-#include "../Base/StaticTypes.h"
+#include <Engine/Rendering/Base/Vertex.h>
+#include <Engine/Rendering/Base/StaticTypes.h>
 
 ScrapEngine::Render::VulkanGraphicsPipeline::VulkanGraphicsPipeline(const char* vertex_shader,
                                                                     const char* fragment_shader,

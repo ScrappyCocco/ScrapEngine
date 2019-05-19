@@ -1,25 +1,25 @@
 #pragma once
 
-#include "../../Utility/UsefulTypes.h"
-#include "../Window/GameWindow.h"
-#include "../Window/VulkanSurface.h"
-#include "../Instance/VukanInstance.h"
-#include "../Device/VulkanDevice.h"
-#include "../SwapChain/VulkanSwapChain.h"
-#include "../SwapChain/VulkanImageView.h"
-#include "../RenderPass/VulkanRenderPass.h"
-#include "Engine/Rendering/Buffer/FrameBuffer/VulkanFrameBuffer.h"
-#include "../Command/VulkanCommandPool.h"
-#include "Engine/Rendering/Buffer/CommandBuffer/VulkanCommandBuffer.h"
-#include "../Semaphores/VulkanSemaphoresManager.h"
-#include "../Queue/GraphicsQueue.h"
-#include "../Queue/PresentQueue.h"
-#include "Engine/Rendering/Buffer/VertexBuffer/VertexBuffer.h"
-#include "Engine/Rendering/Buffer/UniformBuffer/UniformBuffer.h"
-#include "../DepthResources/VulkanDepthResources.h"
-#include "../Texture/VulkanColorResources.h"
-#include "../Model/VulkanMeshInstance.h"
-#include "../Model/VulkanSkyboxInstance.h"
+#include <Engine/Utility/UsefulTypes.h>
+#include <Engine/Rendering/Window/GameWindow.h>
+#include <Engine/Rendering/Window/VulkanSurface.h>
+#include <Engine/Rendering/Instance/VukanInstance.h>
+#include <Engine/Rendering/Device/VulkanDevice.h>
+#include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
+#include <Engine/Rendering/SwapChain/VulkanImageView.h>
+#include <Engine/Rendering/RenderPass/VulkanRenderPass.h>
+#include <Engine/Rendering/Buffer/FrameBuffer/VulkanFrameBuffer.h>
+#include <Engine/Rendering/Command/VulkanCommandPool.h>
+#include <Engine/Rendering/Buffer/CommandBuffer/VulkanCommandBuffer.h>
+#include <Engine/Rendering/Semaphores/VulkanSemaphoresManager.h>
+#include <Engine/Rendering/Queue/GraphicsQueue.h>
+#include <Engine/Rendering/Queue/PresentQueue.h>
+#include <Engine/Rendering/Buffer/VertexBuffer/VertexBuffer.h>
+#include <Engine/Rendering/Buffer/UniformBuffer/UniformBuffer.h>
+#include <Engine/Rendering/DepthResources/VulkanDepthResources.h>
+#include <Engine/Rendering/Texture/VulkanColorResources.h>
+#include <Engine/Rendering/Model/VulkanMeshInstance.h>
+#include <Engine/Rendering/Model/VulkanSkyboxInstance.h>
 
 namespace ScrapEngine
 {

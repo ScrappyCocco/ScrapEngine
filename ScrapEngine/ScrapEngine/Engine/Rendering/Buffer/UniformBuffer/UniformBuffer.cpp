@@ -1,8 +1,8 @@
-#include "UniformBuffer.h"
-#include "../../../Debug/DebugLog.h"
-#include "../BaseBuffer.h"
+#include <Engine/Rendering/Buffer/UniformBuffer/UniformBuffer.h>
+#include <Engine/Debug/DebugLog.h>
+#include <Engine/Rendering/Buffer/BaseBuffer.h>
 #include <glm/gtc/matrix_transform.hpp>
-#include "Engine/Rendering/Device/VulkanDevice.h"
+#include <Engine/Rendering/Device/VulkanDevice.h>
 
 ScrapEngine::Render::UniformBuffer::UniformBuffer(const std::vector<vk::Image>* swap_chain_images,
                                                   const vk::Extent2D& input_swap_chain_extent)

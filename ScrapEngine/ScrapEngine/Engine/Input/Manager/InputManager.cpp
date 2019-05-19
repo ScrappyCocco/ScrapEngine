@@ -1,6 +1,6 @@
-#include "InputManager.h"
-#include "../../Rendering/Window/GameWindow.h"
-#include "../../Utility/UsefulMethods.h"
+#include <Engine/Input/Manager/InputManager.h>
+#include <Engine/Rendering/Window/GameWindow.h>
+#include <Engine/Utility/UsefulMethods.h>
 
 ScrapEngine::Input::InputManager::InputManager(GLFWwindow* input_window_ref) : window_ref_(input_window_ref)
 {

@@ -1,5 +1,5 @@
-#include "VulkanSkyboxInstance.h"
-#include "Engine/Debug/DebugLog.h"
+#include <Engine/Rendering/Model/VulkanSkyboxInstance.h>
+#include <Engine/Debug/DebugLog.h>
 
 ScrapEngine::Render::VulkanSkyboxInstance::VulkanSkyboxInstance(const std::string& vertex_shader_path,
                                                                 const std::string& fragment_shader_path,

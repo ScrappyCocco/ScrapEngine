@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../../../Rendering/Manager/RenderManager.h"
-#include "../MeshComponent/MeshComponent.h"
+#include <Engine/Rendering/Manager/RenderManager.h>
+#include <Engine/LogicCore/Components/MeshComponent/MeshComponent.h>
 #include <map>
 
 namespace ScrapEngine

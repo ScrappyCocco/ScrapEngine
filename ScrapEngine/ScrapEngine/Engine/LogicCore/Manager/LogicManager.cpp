@@ -1,4 +1,4 @@
-#include "LogicManager.h"
+#include <Engine/LogicCore/Manager/LogicManager.h>
 
 ScrapEngine::Core::LogicManager::~LogicManager()
 {

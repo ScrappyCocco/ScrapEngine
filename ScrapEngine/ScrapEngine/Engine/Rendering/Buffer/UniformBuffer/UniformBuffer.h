@@ -2,8 +2,8 @@
 
 #include <vulkan/vulkan.hpp>
 #include <vector>
-#include "../../../Utility/UsefulTypes.h"
-#include "../../Camera/Camera.h"
+#include <Engine/Utility/UsefulTypes.h>
+#include <Engine/Rendering/Camera/Camera.h>
 
 namespace ScrapEngine
 {

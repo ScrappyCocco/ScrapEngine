@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../GameObject/SGameObject.h"
+#include <Engine/LogicCore/GameObject/SGameObject.h>
 
 namespace ScrapEngine
 {

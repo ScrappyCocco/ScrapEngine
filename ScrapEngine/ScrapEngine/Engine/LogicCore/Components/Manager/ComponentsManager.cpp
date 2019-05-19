@@ -1,4 +1,4 @@
-#include "ComponentsManager.h"
+#include <Engine/LogicCore/Components/Manager/ComponentsManager.h>
 
 ScrapEngine::Core::ComponentsManager::ComponentsManager(ScrapEngine::Render::RenderManager* input_render_manager_ref) : render_manager_ref_(input_render_manager_ref)
 {

@@ -2,7 +2,7 @@
 
 #include <vulkan/vulkan.hpp>
 #include <vector>
-#include "../Queue/GraphicsQueue.h"
+#include <Engine/Rendering/Queue/GraphicsQueue.h>
 
 namespace ScrapEngine
 {

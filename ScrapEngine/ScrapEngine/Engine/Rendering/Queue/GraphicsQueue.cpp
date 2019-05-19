@@ -1,5 +1,5 @@
-#include "GraphicsQueue.h"
-#include "../Base/StaticTypes.h"
+#include <Engine/Rendering/Queue/GraphicsQueue.h>
+#include <Engine/Rendering/Base/StaticTypes.h>
 
 //Init Static Members
 

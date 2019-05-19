@@ -3,7 +3,7 @@
 #include <vulkan/vulkan.hpp>
 #include <vector>
 
-#include "VulkanSwapChain.h"
+#include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
 
 namespace ScrapEngine
 {

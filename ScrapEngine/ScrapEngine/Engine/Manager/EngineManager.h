@@ -1,10 +1,10 @@
 #pragma once
 
-#include "../Utility/UsefulTypes.h"
-#include "../Rendering/Manager/RenderManager.h"
-#include "../Rendering/Manager/RenderManagerView.h"
-#include "../LogicCore/Manager/LogicManager.h"
-#include "../LogicCore/Manager/LogicManagerView.h"
+#include <Engine/Utility/UsefulTypes.h>
+#include <Engine/Rendering/Manager/RenderManager.h>
+#include <Engine/Rendering/Manager/RenderManagerView.h>
+#include <Engine/LogicCore/Manager/LogicManager.h>
+#include <Engine/LogicCore/Manager/LogicManagerView.h>
 
 namespace ScrapEngine
 {

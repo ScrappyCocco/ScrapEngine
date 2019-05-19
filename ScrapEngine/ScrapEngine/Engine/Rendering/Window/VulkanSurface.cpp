@@ -1,5 +1,5 @@
-#include "VulkanSurface.h"
-#include "../Base/StaticTypes.h"
+#include <Engine/Rendering/Window/VulkanSurface.h>
+#include <Engine/Rendering/Base/StaticTypes.h>
 //Init Static Members
 
 const vk::SurfaceKHR* ScrapEngine::Render::VulkanSurface::static_surface_ref = nullptr;

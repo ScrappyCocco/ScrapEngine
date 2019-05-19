@@ -1,8 +1,8 @@
-#include "BaseBuffer.h"
+#include <Engine/Rendering/Buffer/BaseBuffer.h>
 
 #include <stdexcept>
-#include "../Memory/MemoryManager.h"
-#include "../Base/StaticTypes.h"
+#include <Engine/Rendering/Memory/MemoryManager.h>
+#include <Engine/Rendering/Base/StaticTypes.h>
 
 void ScrapEngine::Render::BaseBuffer::create_buffer(const vk::DeviceSize& size, const vk::BufferUsageFlags& usage,
                                                     const vk::MemoryPropertyFlags& properties, vk::Buffer& buffer,

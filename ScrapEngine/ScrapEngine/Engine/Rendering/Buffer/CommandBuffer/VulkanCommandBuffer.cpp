@@ -1,5 +1,5 @@
-#include "VulkanCommandBuffer.h"
-#include "Engine/Rendering/Base/StaticTypes.h"
+#include <Engine/Rendering/Buffer/CommandBuffer/VulkanCommandBuffer.h>
+#include <Engine/Rendering/Base/StaticTypes.h>
 
 ScrapEngine::Render::VulkanCommandBuffer::VulkanCommandBuffer(
 	ScrapEngine::Render::VulkanFrameBuffer* swap_chain_frame_buffer, vk::Extent2D* input_swap_chain_extent_ref,

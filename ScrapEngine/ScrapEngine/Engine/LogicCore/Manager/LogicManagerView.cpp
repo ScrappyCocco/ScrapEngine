@@ -1,4 +1,4 @@
-#include "LogicManagerView.h"
+#include <Engine/LogicCore/Manager/LogicManagerView.h>
 
 ScrapEngine::Core::LogicManagerView::LogicManagerView(ScrapEngine::Render::RenderManager* input_render_manager_ref,
                                                       ScrapEngine::Core::LogicManager* input_logic_manager_ref)

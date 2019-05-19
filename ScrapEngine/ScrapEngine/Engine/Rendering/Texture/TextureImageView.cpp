@@ -1,7 +1,7 @@
-#include "TextureImageView.h"
+#include <Engine/Rendering/Texture/TextureImageView.h>
 
 #include <stdexcept>
-#include "../Base/StaticTypes.h"
+#include <Engine/Rendering/Base/StaticTypes.h>
 
 ScrapEngine::Render::TextureImageView::TextureImageView(vk::Image* texture_image, const uint32_t& mip_levels_data,
                                                         bool iscubemap, int layer_count)

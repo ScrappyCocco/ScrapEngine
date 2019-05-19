@@ -1,6 +1,6 @@
-#include "EngineManager.h"
+#include <Engine/Manager/EngineManager.h>
 #include <chrono>
-#include "Engine/Debug/DebugLog.h"
+#include <Engine/Debug/DebugLog.h>
 
 ScrapEngine::Manager::EngineManager::EngineManager(std::string app_name, int app_version, uint32_t window_width,
                                                    uint32_t window_height, bool fullscreen, bool vsync)

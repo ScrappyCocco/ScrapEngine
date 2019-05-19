@@ -1,6 +1,6 @@
-#include "SkyboxTexture.h"
-#include "../Memory/MemoryManager.h"
-#include "Engine/Debug/DebugLog.h"
+#include <Engine/Rendering/Texture/SkyboxTexture.h>
+#include <Engine/Rendering/Memory/MemoryManager.h>
+#include <Engine/Debug/DebugLog.h>
 
 ScrapEngine::Render::SkyboxTexture::SkyboxTexture(const std::array<std::string, 6>& files_path)
 {

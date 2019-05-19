@@ -1,4 +1,4 @@
-#include "SVector3.h"
+#include <Engine/LogicCore/Math/Vector/SVector3.h>
 #include <glm/ext/quaternion_geometric.inl>
 #include <glm/detail/func_geometric.inl>
 

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vulkan/vulkan.hpp>
-#include "../SwapChain/VulkanSwapChain.h"
+#include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
 
 namespace ScrapEngine
 {

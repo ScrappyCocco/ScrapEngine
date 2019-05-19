@@ -1,5 +1,5 @@
-#include "RenderManager.h"
-#include "Engine/Debug/DebugLog.h"
+#include <Engine/Rendering/Manager/RenderManager.h>
+#include <Engine/Debug/DebugLog.h>
 
 
 ScrapEngine::Render::RenderManager::RenderManager(const ScrapEngine::game_base_info* received_base_game_info)

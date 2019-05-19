@@ -1,7 +1,7 @@
-#include "IndexBuffer.h"
-#include "Engine/Rendering/Memory/MemoryManager.h"
-#include "Engine/Rendering/Buffer/BaseBuffer.h"
-#include "Engine/Rendering/Buffer/StagingBuffer/StagingBuffer.h"
+#include <Engine/Rendering/Buffer/IndexBuffer/IndexBuffer.h>
+#include <Engine/Rendering/Memory/MemoryManager.h>
+#include <Engine/Rendering/Buffer/BaseBuffer.h>
+#include <Engine/Rendering/Buffer/StagingBuffer/StagingBuffer.h>
 
 ScrapEngine::Render::IndexBuffer::IndexBuffer(const std::vector<uint32_t>* indices)
 {

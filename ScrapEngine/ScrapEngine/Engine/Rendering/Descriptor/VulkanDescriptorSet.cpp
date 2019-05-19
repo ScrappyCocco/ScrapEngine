@@ -1,7 +1,7 @@
-#include "VulkanDescriptorSet.h"
+#include <Engine/Rendering/Descriptor/VulkanDescriptorSet.h>
 #include <stdexcept>
 #include <array>
-#include "../Base/StaticTypes.h"
+#include <Engine/Rendering/Base/StaticTypes.h>
 
 ScrapEngine::Render::VulkanDescriptorSet::VulkanDescriptorSet()
 {

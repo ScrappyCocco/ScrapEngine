@@ -1,9 +1,9 @@
 #pragma once
 
-#include "../../Rendering/Manager/RenderManager.h"
-#include "../Components/Manager/ComponentsManager.h"
-#include "../Scene/SceneManager.h"
-#include "LogicManager.h"
+#include <Engine/Rendering/Manager/RenderManager.h>
+#include <Engine/LogicCore/Components/Manager/ComponentsManager.h>
+#include <Engine/LogicCore/Scene/SceneManager.h>
+#include <Engine/LogicCore/Manager/LogicManager.h>
 
 namespace ScrapEngine
 {

@@ -1,7 +1,7 @@
-#include "VulkanCommandPool.h"
+#include <Engine/Rendering/Command/VulkanCommandPool.h>
 
 #include <stdexcept>
-#include "../Base/StaticTypes.h"
+#include <Engine/Rendering/Base/StaticTypes.h>
 
 //Init Static Members
 

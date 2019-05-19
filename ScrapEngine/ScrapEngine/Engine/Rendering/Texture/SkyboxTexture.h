@@ -2,7 +2,7 @@
 
 #include <vulkan/vulkan.hpp>
 #include <string>
-#include "TextureImage.h"
+#include <Engine/Rendering/Texture/TextureImage.h>
 #include <vector>
 
 namespace ScrapEngine
