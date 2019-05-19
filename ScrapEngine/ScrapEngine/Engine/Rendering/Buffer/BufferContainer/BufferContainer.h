@@ -14,7 +14,7 @@ namespace ScrapEngine
 			BufferContainer(vk::Buffer* input_buffer);
 			virtual ~BufferContainer() = 0;
 
-			vk::Buffer* getbuffer() const;
+			vk::Buffer* get_buffer() const;
 		};
 	}
 }

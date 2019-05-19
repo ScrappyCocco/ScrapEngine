@@ -5,7 +5,12 @@ ScrapEngine::Render::BufferContainer::BufferContainer(vk::Buffer* input_buffer) 
 	
 }
 
-vk::Buffer* ScrapEngine::Render::BufferContainer::getbuffer() const
+ScrapEngine::Render::BufferContainer::~BufferContainer()
+{
+	//Empty here
+}
+
+vk::Buffer* ScrapEngine::Render::BufferContainer::get_buffer() const
 {
 	return buffer_;
 }

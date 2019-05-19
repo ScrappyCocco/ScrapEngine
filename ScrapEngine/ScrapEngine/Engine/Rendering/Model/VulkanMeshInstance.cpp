@@ -1,7 +1,5 @@
 #include <Engine/Rendering/Model/VulkanMeshInstance.h>
 #include <Engine/Debug/DebugLog.h>
-#include "Engine/Rendering/Buffer/BufferContainer/VertexBufferContainer/VertexBufferContainer.h"
-#include "Engine/Rendering/Buffer/BufferContainer/IndicesBufferContainer/IndicesBufferContainer.h"
 
 ScrapEngine::Render::VulkanMeshInstance::VulkanMeshInstance(const std::string& vertex_shader_path,
                                                             const std::string& fragment_shader_path,
@@ -41,15 +39,18 @@ ScrapEngine::Render::VulkanMeshInstance::VulkanMeshInstance(const std::string& v
 	Debug::DebugLog::print_to_console_log("(DescriptorSets created)");
 	for(auto mesh: (*vulkan_render_model_->get_meshes()))
 	{
+		std::pair<VertexBufferContainer*, IndicesBufferContainer*> buffer_pair;
 		VertexBuffer* vulkan_render_vertex_buffer = new VertexBuffer(mesh->get_vertices());
 		created_vertex_buffers_.push_back(vulkan_render_vertex_buffer);
-		vertexbuffers_.push_back(new VertexBufferContainer(vulkan_render_vertex_buffer->get_vertex_buffer(), mesh->get_vertices()));
+		buffer_pair.first = new VertexBufferContainer(vulkan_render_vertex_buffer->get_vertex_buffer(), mesh->get_vertices());
 		Debug::DebugLog::print_to_console_log("VertexBuffer created");
 
 		IndexBuffer* vulkan_render_index_buffer = new IndexBuffer(mesh->get_indices());
 		created_index_buffers_.push_back(vulkan_render_index_buffer);
-		indexbuffers_.push_back(new IndicesBufferContainer(vulkan_render_index_buffer->get_index_buffer(), mesh->get_indices()));
+		buffer_pair.second = new IndicesBufferContainer(vulkan_render_index_buffer->get_index_buffer(), mesh->get_indices());
 		Debug::DebugLog::print_to_console_log("IndexBuffer created");
+
+		mesh_buffers_.push_back(buffer_pair);
 	}
 }
 
@@ -70,13 +71,10 @@ ScrapEngine::Render::VulkanMeshInstance::~VulkanMeshInstance()
 	delete vulkan_render_descriptor_pool_;
 	delete vulkan_render_descriptor_set_;
 	delete vulkan_render_uniform_buffer_;
-	for (auto v_buffer_container : vertexbuffers_)
+	for (auto mesh_buffers : mesh_buffers_)
 	{
-		delete v_buffer_container;
-	}
-	for (auto i_buffer_container : indexbuffers_)
-	{
-		delete i_buffer_container;
+		delete mesh_buffers.first;
+		delete mesh_buffers.second;
 	}
 	delete vulkan_render_model_;
 }
@@ -134,14 +132,10 @@ get_vulkan_render_descriptor_set() const
 	return vulkan_render_descriptor_set_;
 }
 
-const std::vector<ScrapEngine::Render::BufferContainer*>* ScrapEngine::Render::VulkanMeshInstance::get_vertex_buffers() const
+const std::vector<std::pair<ScrapEngine::Render::VertexBufferContainer*, ScrapEngine::Render::IndicesBufferContainer*>>*
+ScrapEngine::Render::VulkanMeshInstance::get_mesh_buffers() const
 {
-	return &vertexbuffers_;
-}
-
-const std::vector<ScrapEngine::Render::BufferContainer*>* ScrapEngine::Render::VulkanMeshInstance::get_index_buffers() const
-{
-	return &indexbuffers_;
+	return &mesh_buffers_;
 }
 
 void ScrapEngine::Render::VulkanMeshInstance::delete_graphics_pipeline()

@@ -6,6 +6,8 @@
 #include <Engine/Rendering/Buffer/FrameBuffer/VulkanFrameBuffer.h>
 #include <Engine/Rendering/Pipeline/VulkanGraphicsPipeline.h>
 #include <Engine/Rendering/Model/VulkanSkyboxInstance.h>
+#include <Engine/Rendering/Buffer/BufferContainer/IndicesBufferContainer/IndicesBufferContainer.h>
+#include <Engine/Rendering/Buffer/BufferContainer/VertexBufferContainer/VertexBufferContainer.h>
 
 namespace ScrapEngine
 {
@@ -23,9 +25,9 @@ namespace ScrapEngine
 			                    vk::Extent2D* input_swap_chain_extent_ref,
 			                    std::vector<ScrapEngine::Render::VulkanGraphicsPipeline*> input_vulkan_pipeline_ref,
 			                    const std::vector<const std::vector<vk::DescriptorSet>*>& descriptor_sets,
-			                    std::vector<simple_buffer<Vertex>*> vertex_buffer,
-			                    std::vector<simple_buffer<uint32_t>*> index_buffer
-			                    , ScrapEngine::Render::VulkanSkyboxInstance* skybox_ref = nullptr);
+			                    const std::vector<std::pair<VertexBufferContainer*, IndicesBufferContainer*>>&
+			                    mesh_buffers,
+			                    ScrapEngine::Render::VulkanSkyboxInstance* skybox_ref = nullptr);
 
 			~VulkanCommandBuffer();
 

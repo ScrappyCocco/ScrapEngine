@@ -12,7 +12,8 @@
 #include <Engine/Rendering/Device/VulkanDevice.h>
 #include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
 #include <Engine/Utility/UsefulTypes.h>
-#include "Engine/Rendering/Buffer/BufferContainer/BufferContainer.h"
+#include <Engine/Rendering/Buffer/BufferContainer/VertexBufferContainer/VertexBufferContainer.h>
+#include <Engine/Rendering/Buffer/BufferContainer/IndicesBufferContainer/IndicesBufferContainer.h>
 
 namespace ScrapEngine
 {
@@ -32,8 +33,7 @@ namespace ScrapEngine
 			std::vector<VertexBuffer*> created_vertex_buffers_;
 			std::vector<IndexBuffer*> created_index_buffers_;
 
-			std::vector<BufferContainer*> vertexbuffers_;
-			std::vector<BufferContainer*> indexbuffers_;
+			std::vector<std::pair<VertexBufferContainer*, IndicesBufferContainer*>> mesh_buffers_;
 
 			ScrapEngine::Transform object_location_;
 		public:
@@ -57,8 +57,7 @@ namespace ScrapEngine
 			ScrapEngine::Render::UniformBuffer* get_vulkan_render_uniform_buffer() const;
 			ScrapEngine::Render::VulkanGraphicsPipeline* get_vulkan_render_graphics_pipeline() const;
 			ScrapEngine::Render::VulkanDescriptorSet* get_vulkan_render_descriptor_set() const;
-			const std::vector<BufferContainer*>* get_vertex_buffers() const;
-			const std::vector<BufferContainer*>* get_index_buffers() const;
+			const std::vector<std::pair<VertexBufferContainer*, IndicesBufferContainer*>>* get_mesh_buffers() const;
 		};
 	}
 }
