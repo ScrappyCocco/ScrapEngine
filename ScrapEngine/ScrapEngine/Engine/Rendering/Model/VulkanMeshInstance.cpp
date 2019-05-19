@@ -56,13 +56,10 @@ ScrapEngine::Render::VulkanMeshInstance::VulkanMeshInstance(const std::string& v
 
 ScrapEngine::Render::VulkanMeshInstance::~VulkanMeshInstance()
 {
-	for(auto v_buffer: created_vertex_buffers_)
+	for (auto mesh_buffers : mesh_buffers_)
 	{
-		delete v_buffer;
-	}
-	for (auto i_buffer : created_index_buffers_)
-	{
-		delete i_buffer;
+		delete mesh_buffers.first;
+		delete mesh_buffers.second;
 	}
 	delete_graphics_pipeline();
 	delete vulkan_texture_sampler_;
@@ -71,10 +68,13 @@ ScrapEngine::Render::VulkanMeshInstance::~VulkanMeshInstance()
 	delete vulkan_render_descriptor_pool_;
 	delete vulkan_render_descriptor_set_;
 	delete vulkan_render_uniform_buffer_;
-	for (auto mesh_buffers : mesh_buffers_)
+	for (auto v_buffer : created_vertex_buffers_)
 	{
-		delete mesh_buffers.first;
-		delete mesh_buffers.second;
+		delete v_buffer;
+	}
+	for (auto i_buffer : created_index_buffers_)
+	{
+		delete i_buffer;
 	}
 	delete vulkan_render_model_;
 }

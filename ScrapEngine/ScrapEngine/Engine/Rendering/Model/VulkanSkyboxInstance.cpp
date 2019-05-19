@@ -58,8 +58,8 @@ ScrapEngine::Render::VulkanSkyboxInstance::VulkanSkyboxInstance(const std::strin
 
 ScrapEngine::Render::VulkanSkyboxInstance::~VulkanSkyboxInstance()
 {
-	delete created_vertex_buffer_;
-	delete created_index_buffer_;
+	delete mesh_buffers_.first;
+	delete mesh_buffers_.second;
 	delete_graphics_pipeline();
 	delete vulkan_texture_sampler_;
 	delete vulkan_texture_image_view_;
@@ -67,8 +67,8 @@ ScrapEngine::Render::VulkanSkyboxInstance::~VulkanSkyboxInstance()
 	delete vulkan_render_descriptor_pool_;
 	delete vulkan_render_descriptor_set_;
 	delete vulkan_render_uniform_buffer_;
-	delete mesh_buffers_.first;
-	delete mesh_buffers_.second;
+	delete created_vertex_buffer_;
+	delete created_index_buffer_;
 	delete vulkan_render_model_;
 }
 

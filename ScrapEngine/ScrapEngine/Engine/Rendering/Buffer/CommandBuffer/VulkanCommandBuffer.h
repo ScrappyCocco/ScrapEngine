@@ -25,7 +25,10 @@ namespace ScrapEngine
 			                    vk::Extent2D* input_swap_chain_extent_ref,
 			                    std::vector<ScrapEngine::Render::VulkanGraphicsPipeline*> input_vulkan_pipeline_ref,
 			                    const std::vector<const std::vector<vk::DescriptorSet>*>& descriptor_sets,
-			                    const std::vector<std::pair<VertexBufferContainer*, IndicesBufferContainer*>>&
+								const std::vector<
+				const std::vector<
+				std::pair<ScrapEngine::Render::VertexBufferContainer*, ScrapEngine::Render::IndicesBufferContainer*>
+				>*>&
 			                    mesh_buffers,
 			                    ScrapEngine::Render::VulkanSkyboxInstance* skybox_ref = nullptr);
 

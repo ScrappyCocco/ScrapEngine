@@ -5,7 +5,7 @@ ScrapEngine::Render::VulkanCommandBuffer::VulkanCommandBuffer(
 	ScrapEngine::Render::VulkanFrameBuffer* swap_chain_frame_buffer, vk::Extent2D* input_swap_chain_extent_ref,
 	std::vector<ScrapEngine::Render::VulkanGraphicsPipeline*> input_vulkan_pipeline_ref,
 	const std::vector<const std::vector<vk::DescriptorSet>*>& descriptor_sets,
-	const std::vector<std::pair<VertexBufferContainer*, IndicesBufferContainer*>>& mesh_buffers,
+	const std::vector<const std::vector<std::pair<ScrapEngine::Render::VertexBufferContainer*, ScrapEngine::Render::IndicesBufferContainer*>>*>& mesh_buffers,
 	ScrapEngine::Render::VulkanSkyboxInstance* skybox_ref)
 {
 	const std::vector<vk::Framebuffer>* swap_chain_framebuffers = swap_chain_frame_buffer->
@@ -75,21 +75,23 @@ ScrapEngine::Render::VulkanCommandBuffer::VulkanCommandBuffer(
 		//Scene render
 		for (unsigned int k = 0; k < mesh_buffers.size(); k++)
 		{
-			command_buffers_[i].bindPipeline(vk::PipelineBindPoint::eGraphics,
-			                                 *input_vulkan_pipeline_ref[k]->get_graphics_pipeline());
+			for(const auto mesh_buffer : (*mesh_buffers[k]))
+			{
+				command_buffers_[i].bindPipeline(vk::PipelineBindPoint::eGraphics,
+				                                 *input_vulkan_pipeline_ref[k]->get_graphics_pipeline());
 
-			//vk::Buffer vertex_buffers[] = {*(*mesh_buffers[k]).first.};
-			vk::Buffer vertex_buffers[] = { *(mesh_buffers[k].first->get_buffer()) };
+				vk::Buffer vertex_buffers[] = { *(mesh_buffer.first->get_buffer()) };
 
-			command_buffers_[i].bindVertexBuffers(0, 1, vertex_buffers, offsets);
+				command_buffers_[i].bindVertexBuffers(0, 1, vertex_buffers, offsets);
 
-			command_buffers_[i].bindIndexBuffer(*(mesh_buffers[k].second->get_buffer()), 0, vk::IndexType::eUint32);
+				command_buffers_[i].bindIndexBuffer(*(mesh_buffer.second->get_buffer()), 0, vk::IndexType::eUint32);
 
-			command_buffers_[i].bindDescriptorSets(vk::PipelineBindPoint::eGraphics,
-			                                       *input_vulkan_pipeline_ref[k]->get_pipeline_layout(), 0, 1,
-			                                       &(*descriptor_sets[k])[i], 0, nullptr);
+				command_buffers_[i].bindDescriptorSets(vk::PipelineBindPoint::eGraphics,
+				                                       *input_vulkan_pipeline_ref[k]->get_pipeline_layout(), 0, 1,
+				                                       &(*descriptor_sets[k])[i], 0, nullptr);
 
-			command_buffers_[i].drawIndexed(static_cast<uint32_t>((mesh_buffers[k].second->get_vector()->size())), 1, 0, 0, 0);
+				command_buffers_[i].drawIndexed(static_cast<uint32_t>((mesh_buffer.second->get_vector()->size())), 1, 0, 0, 0);
+			}
 		}
 
 		command_buffers_[i].endRenderPass();

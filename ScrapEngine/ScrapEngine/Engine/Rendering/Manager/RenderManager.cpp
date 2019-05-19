@@ -143,16 +143,13 @@ void ScrapEngine::Render::RenderManager::create_command_buffers()
 	Debug::DebugLog::print_to_console_log("Rebuilding VulkanRenderCommandBuffer...");
 	std::vector<ScrapEngine::Render::VulkanGraphicsPipeline*> pipelines;
 	std::vector<const std::vector<vk::DescriptorSet>*> descriptor_sets;
-	std::vector<std::pair<VertexBufferContainer*, IndicesBufferContainer*>> mesh_buffers;
+	std::vector<const std::vector<std::pair<ScrapEngine::Render::VertexBufferContainer*, ScrapEngine::Render::IndicesBufferContainer*>>*> mesh_buffers;
 	for (ScrapEngine::Render::VulkanMeshInstance* mesh : loaded_models_)
 	{
 		pipelines.push_back(mesh->get_vulkan_render_graphics_pipeline());
 		descriptor_sets.push_back(mesh->get_vulkan_render_descriptor_set()->get_descriptor_sets());
 
-		for (auto m_buffer : (*mesh->get_mesh_buffers()))
-		{
-			mesh_buffers.push_back(m_buffer);
-		}
+		mesh_buffers.push_back((mesh->get_mesh_buffers()));
 	}
 	vulkan_render_command_buffer_ = new VulkanCommandBuffer(
 		vulkan_render_frame_buffer_,
