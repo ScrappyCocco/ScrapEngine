@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <Engine/Rendering/Base/Vertex.h>
+#include <Engine/Rendering/Model/Mesh/Mesh.h>
 
 namespace ScrapEngine
 {
@@ -12,14 +13,12 @@ namespace ScrapEngine
 		class VulkanModel
 		{
 		private:
-			std::vector<ScrapEngine::Vertex> vertices_;
-			std::vector<uint32_t> indices_;
+			std::vector<Mesh*> model_meshes_;
 		public:
 			VulkanModel(const std::string& input_model_path);
-			~VulkanModel() = default;
+			~VulkanModel();
 
-			const std::vector<ScrapEngine::Vertex>* get_vertices() const;
-			const std::vector<uint32_t>* get_indices() const;
+			const std::vector<Mesh*>* get_meshes() const;
 		};
 	}
 }

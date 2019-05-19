@@ -12,6 +12,7 @@
 #include <Engine/Rendering/Device/VulkanDevice.h>
 #include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
 #include <Engine/Utility/UsefulTypes.h>
+#include "Engine/Rendering/Buffer/BufferContainer/BufferContainer.h"
 
 namespace ScrapEngine
 {
@@ -25,14 +26,14 @@ namespace ScrapEngine
 			ScrapEngine::Render::TextureImageView* vulkan_texture_image_view_ = nullptr;
 			ScrapEngine::Render::TextureSampler* vulkan_texture_sampler_ = nullptr;
 			ScrapEngine::Render::VulkanModel* vulkan_render_model_ = nullptr;
-			ScrapEngine::Render::VertexBuffer* vulkan_render_vertex_buffer_ = nullptr;
-			ScrapEngine::Render::IndexBuffer* vulkan_render_index_buffer_ = nullptr;
 			ScrapEngine::Render::UniformBuffer* vulkan_render_uniform_buffer_ = nullptr;
 			ScrapEngine::Render::VulkanDescriptorPool* vulkan_render_descriptor_pool_ = nullptr;
 			ScrapEngine::Render::VulkanDescriptorSet* vulkan_render_descriptor_set_ = nullptr;
+			std::vector<VertexBuffer*> created_vertex_buffers_;
+			std::vector<IndexBuffer*> created_index_buffers_;
 
-			simple_buffer<Vertex>* vertexbuffer_ = nullptr;
-			simple_buffer<uint32_t>* indexbuffer_ = nullptr;
+			std::vector<BufferContainer*> vertexbuffers_;
+			std::vector<BufferContainer*> indexbuffers_;
 
 			ScrapEngine::Transform object_location_;
 		public:
@@ -56,8 +57,8 @@ namespace ScrapEngine
 			ScrapEngine::Render::UniformBuffer* get_vulkan_render_uniform_buffer() const;
 			ScrapEngine::Render::VulkanGraphicsPipeline* get_vulkan_render_graphics_pipeline() const;
 			ScrapEngine::Render::VulkanDescriptorSet* get_vulkan_render_descriptor_set() const;
-			ScrapEngine::simple_buffer<ScrapEngine::Vertex>* get_vertex_buffer() const;
-			ScrapEngine::simple_buffer<uint32_t>* get_index_buffer() const;
+			const std::vector<BufferContainer*>* get_vertex_buffers() const;
+			const std::vector<BufferContainer*>* get_index_buffers() const;
 		};
 	}
 }
