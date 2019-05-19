@@ -61,7 +61,7 @@ void ScrapEngine::Manager::EngineManager::main_game_loop() const
 	const ScrapEngine::Render::GameWindow* window_ref = scrap_render_manager_->get_game_window();
 	while (!window_ref->check_window_should_close())
 	{
-		float time = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - startTime).count();
+		const float time = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - startTime).count();
 		scrap_logic_manager_->execute_game_objects_update_event(time);
 		startTime = std::chrono::high_resolution_clock::now();
 		scrap_render_manager_->draw_frame();

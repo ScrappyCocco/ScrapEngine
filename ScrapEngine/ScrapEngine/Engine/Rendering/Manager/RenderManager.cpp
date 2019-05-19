@@ -195,7 +195,6 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 	if (result_ == vk::Result::eErrorOutOfDateKHR) {
 		//recreateSwapChain();
 		throw std::runtime_error("recreateSwapChain() not ready!");
-		return;
 	}
 	else if (result_ != vk::Result::eSuccess && result_ != vk::Result::eSuboptimalKHR) {
 		throw std::runtime_error("RenderManager: Failed to acquire swap chain image!");
