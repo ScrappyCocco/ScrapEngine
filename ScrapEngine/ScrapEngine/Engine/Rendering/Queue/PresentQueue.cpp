@@ -13,10 +13,6 @@ ScrapEngine::Render::PresentQueue::PresentQueue(GraphicsQueue::QueueFamilyIndice
 	static_presentation_queue_ref = &presentation_queue_;
 }
 
-ScrapEngine::Render::PresentQueue::~PresentQueue()
-{
-}
-
 vk::Queue* ScrapEngine::Render::PresentQueue::get_present_queue()
 {
 	return &presentation_queue_;

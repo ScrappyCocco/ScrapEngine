@@ -29,12 +29,11 @@ ScrapEngine::Core::SVector3 ScrapEngine::Core::SVector3::operator*(const float v
 
 ScrapEngine::Core::SVector3 ScrapEngine::Core::SVector3::operator^(const SVector3& other) const
 {
-	return SVector3
-	(
+	return {
 		vec3_.y * other.vec3_.z - vec3_.z * other.vec3_.y,
 		vec3_.z * other.vec3_.x - vec3_.x * other.vec3_.z,
 		vec3_.x * other.vec3_.y - vec3_.y * other.vec3_.x
-	);
+	};
 }
 
 float ScrapEngine::Core::SVector3::get_x() const
@@ -69,7 +68,7 @@ void ScrapEngine::Core::SVector3::set_z(const float z)
 
 ScrapEngine::Core::SVector3 ScrapEngine::Core::SVector3::get_vector() const
 {
-	return SVector3(*this);
+	return {*this};
 }
 
 glm::vec3 ScrapEngine::Core::SVector3::get_wrapped_vector() const

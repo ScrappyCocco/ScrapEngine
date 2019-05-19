@@ -4,8 +4,8 @@
 #include "../Memory/MemoryManager.h"
 #include "../Base/StaticTypes.h"
 
-void ScrapEngine::Render::BaseBuffer::create_buffer(const vk::DeviceSize& size, vk::BufferUsageFlags usage,
-                                                    vk::MemoryPropertyFlags properties, vk::Buffer& buffer,
+void ScrapEngine::Render::BaseBuffer::create_buffer(const vk::DeviceSize& size, const vk::BufferUsageFlags& usage,
+                                                    const vk::MemoryPropertyFlags& properties, vk::Buffer& buffer,
                                                     vk::DeviceMemory& buffer_memory)
 {
 	vk::BufferCreateInfo buffer_info(

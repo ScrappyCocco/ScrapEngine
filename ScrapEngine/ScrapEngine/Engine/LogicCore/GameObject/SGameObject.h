@@ -19,7 +19,7 @@ namespace ScrapEngine
 		public:
 			explicit SGameObject(const std::string& object_name,
 			                     const ScrapEngine::Transform& input_object_transform = ScrapEngine::Transform(),
-			                     const bool is_static_object = false);
+			                     bool is_static_object = false);
 			~SGameObject() = 0;
 
 			virtual void game_start();

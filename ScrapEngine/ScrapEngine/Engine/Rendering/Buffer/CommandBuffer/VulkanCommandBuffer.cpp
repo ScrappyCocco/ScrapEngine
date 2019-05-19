@@ -6,19 +6,20 @@ ScrapEngine::Render::VulkanCommandBuffer::VulkanCommandBuffer(
 	std::vector<ScrapEngine::Render::VulkanGraphicsPipeline*> input_vulkan_pipeline_ref,
 	const std::vector<const std::vector<vk::DescriptorSet>*>& descriptor_sets,
 	std::vector<simple_buffer<Vertex>*> vertex_buffer, std::vector<simple_buffer<uint32_t>*> index_buffer
-	, ScrapEngine::Render::VulkanSkyboxInstance* SkyboxRef)
+	, ScrapEngine::Render::VulkanSkyboxInstance* skybox_ref)
 {
 	const std::vector<vk::Framebuffer>* swap_chain_framebuffers = swap_chain_frame_buffer->
 		get_swap_chain_framebuffers_vector();
 	command_buffers_.resize(swap_chain_framebuffers->size());
 
-	vk::CommandBufferAllocateInfo allocInfo(
+	vk::CommandBufferAllocateInfo alloc_info(
 		*VulkanCommandPool::static_command_pool_ref,
 		vk::CommandBufferLevel::ePrimary,
 		static_cast<uint32_t>(command_buffers_.size())
 	);
 
-	if (VulkanDevice::static_logic_device_ref->allocateCommandBuffers(&allocInfo, command_buffers_.data()) != vk::Result::
+	if (VulkanDevice::static_logic_device_ref->allocateCommandBuffers(&alloc_info, command_buffers_.data()) != vk::
+		Result::
 		eSuccess)
 	{
 		throw std::runtime_error("VulkanCommandBuffer: Failed to allocate command buffers!");
@@ -51,23 +52,27 @@ ScrapEngine::Render::VulkanCommandBuffer::VulkanCommandBuffer(
 		vk::DeviceSize offsets[] = {0};
 
 		//Skybox render, must be before the rest of the render
-		if (SkyboxRef)
+		if (skybox_ref)
 		{
 			command_buffers_[i].bindPipeline(vk::PipelineBindPoint::eGraphics,
-			                                 *SkyboxRef->get_vulkan_render_graphics_pipeline()->get_graphics_pipeline());
-			vk::Buffer buff[] = {*SkyboxRef->get_vertex_buffer()->buffer};
+			                                 *skybox_ref->get_vulkan_render_graphics_pipeline()->
+			                                              get_graphics_pipeline());
+			vk::Buffer buff[] = {*skybox_ref->get_vertex_buffer()->buffer};
 			command_buffers_[i].bindVertexBuffers(0, 1, buff, offsets);
-			command_buffers_[i].bindIndexBuffer(*SkyboxRef->get_index_buffer()->buffer, 0, vk::IndexType::eUint32);
+			command_buffers_[i].bindIndexBuffer(*skybox_ref->get_index_buffer()->buffer, 0, vk::IndexType::eUint32);
 			command_buffers_[i].bindDescriptorSets(vk::PipelineBindPoint::eGraphics,
-			                                       *SkyboxRef->get_vulkan_render_graphics_pipeline()->get_pipeline_layout(),
-			                                       0, 1, &(*SkyboxRef
-			                                                ->get_vulkan_render_descriptor_set()->get_descriptor_sets())[i],
+			                                       *skybox_ref->get_vulkan_render_graphics_pipeline()->
+			                                                    get_pipeline_layout(),
+			                                       0, 1, &(*skybox_ref
+			                                                ->get_vulkan_render_descriptor_set()->get_descriptor_sets())
+			                                       [i],
 			                                       0, nullptr);
-			command_buffers_[i].drawIndexed(static_cast<uint32_t>((*SkyboxRef->get_index_buffer()).vectorData->size()), 1,
+			command_buffers_[i].drawIndexed(static_cast<uint32_t>((*skybox_ref->get_index_buffer()).vectorData->size()),
+			                                1,
 			                                0, 0, 0);
 		}
 		//Scene render
-		for (int k = 0; k < vertex_buffer.size(); k++)
+		for (unsigned int k = 0; k < vertex_buffer.size(); k++)
 		{
 			command_buffers_[i].bindPipeline(vk::PipelineBindPoint::eGraphics,
 			                                 *input_vulkan_pipeline_ref[k]->get_graphics_pipeline());
@@ -99,8 +104,8 @@ ScrapEngine::Render::VulkanCommandBuffer::~VulkanCommandBuffer()
 void ScrapEngine::Render::VulkanCommandBuffer::free_command_buffers()
 {
 	VulkanDevice::static_logic_device_ref->freeCommandBuffers(*VulkanCommandPool::static_command_pool_ref,
-	                                                       static_cast<uint32_t>(command_buffers_.size()),
-	                                                       command_buffers_.data());
+	                                                          static_cast<uint32_t>(command_buffers_.size()),
+	                                                          command_buffers_.data());
 	command_buffers_.clear();
 }
 

@@ -11,12 +11,12 @@ namespace ScrapEngine
 		private:
 			glm::quat quat_{};
 
-			explicit SQuaternion(const glm::quat input);
+			explicit SQuaternion(glm::quat input);
 			SVector3 rotate_vector(const SVector3& other) const;
 			SVector3 unrotate_vector(const SVector3& other) const;
 		public:
 			SQuaternion();
-			SQuaternion(const float x, const float y, const float z, const float w);
+			SQuaternion(float x, float y, float z, float w);
 			explicit SQuaternion(const SVector3& euler_angles);
 			SQuaternion(const SQuaternion& other) = default;
 			SQuaternion& operator=(const SQuaternion& other) = default;

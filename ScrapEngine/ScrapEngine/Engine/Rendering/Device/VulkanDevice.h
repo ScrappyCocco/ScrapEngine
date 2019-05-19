@@ -59,7 +59,7 @@ namespace ScrapEngine
 
 			vk::SampleCountFlagBits get_msaa_samples() const;
 		private:
-			bool is_device_suitable(vk::PhysicalDevice* device, vk::SurfaceKHR* surface);
+			bool is_device_suitable(vk::PhysicalDevice* physical_device_input, vk::SurfaceKHR* surface);
 
 			bool check_device_extension_support(vk::PhysicalDevice* device) const;
 		};

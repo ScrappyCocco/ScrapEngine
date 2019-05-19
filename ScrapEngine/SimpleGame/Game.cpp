@@ -2,6 +2,7 @@
 #include "Engine/Input/Manager/InputManager.h"
 #include "GameObjects/TestGameObject.h"
 #include "GameObjects/Camera/GameCamera.h"
+#include <iostream>
 
 int main() {
 	short exit_value = EXIT_SUCCESS;
@@ -15,9 +16,9 @@ int main() {
 		ScrapEngine::Input::InputManager* inputmanager = gameWindowRef->create_window_input_manager();
 		inputmanager->set_cursor_input_mode(ScrapEngine::Input::cursor_mode::cursor_grabbed_mode);
 		//Get the component manager
-		ScrapEngine::Core::ComponentsManager* ComponentManagerRef = ScrapEngineManager->logic_manager_view->getComponentsManager();
+		ScrapEngine::Core::ComponentsManager* ComponentManagerRef = ScrapEngineManager->logic_manager_view->get_components_manager();
 		//Set the world skybox
-		ScrapEngine::Core::SceneManager* SceneManagerRef = ScrapEngineManager->logic_manager_view->getSceneManager();
+		ScrapEngine::Core::SceneManager* SceneManagerRef = ScrapEngineManager->logic_manager_view->get_scene_manager();
 		SceneManagerRef->set_skybox(
 			std::array<std::string, 6>{
 				"../assets/skybox/spires_ft.png", //FRONT TEXTURE

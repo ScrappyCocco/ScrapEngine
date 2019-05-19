@@ -83,7 +83,7 @@ void ScrapEngine::Render::VulkanSkyboxInstance::delete_graphics_pipeline() const
 
 int ScrapEngine::Render::VulkanSkyboxInstance::get_cubemap_size() const
 {
-	return (int)skybox_transform_.scale.x;
+	return static_cast<int>(skybox_transform_.scale.x);
 }
 
 void ScrapEngine::Render::VulkanSkyboxInstance::set_cubemap_size(unsigned int new_size)

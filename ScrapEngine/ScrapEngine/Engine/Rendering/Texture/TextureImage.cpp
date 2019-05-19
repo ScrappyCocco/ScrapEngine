@@ -5,8 +5,6 @@
 #include "../Memory/MemoryManager.h"
 #include "../Buffer/BaseBuffer.h"
 #include "../DepthResources/VulkanDepthResources.h"
-#include "../SwapChain/VulkanSwapChain.h"
-#include "TextureImageView.h"
 
 ScrapEngine::Render::TextureImage::TextureImage(const std::string& file_path, bool should_copy_from_staging)
 {
@@ -53,7 +51,7 @@ ScrapEngine::Render::TextureImage::~TextureImage()
 
 void ScrapEngine::Render::TextureImage::create_image(const uint32_t& width, const uint32_t& height,
                                                      const vk::Format& format, vk::ImageTiling tiling,
-                                                     vk::ImageUsageFlags usage, vk::MemoryPropertyFlags properties,
+                                                     const vk::ImageUsageFlags& usage, const vk::MemoryPropertyFlags& properties,
                                                      vk::Image& image, vk::DeviceMemory& image_memory) const
 {
 	create_image(width, height, format, tiling, usage, properties, image, image_memory, mip_levels_,
@@ -62,8 +60,8 @@ void ScrapEngine::Render::TextureImage::create_image(const uint32_t& width, cons
 
 void ScrapEngine::Render::TextureImage::create_image(const uint32_t& width, const uint32_t& height,
                                                      const vk::Format& format, vk::ImageTiling tiling,
-                                                     vk::ImageUsageFlags usage,
-                                                     vk::MemoryPropertyFlags properties, vk::Image& image,
+                                                     const vk::ImageUsageFlags& usage,
+                                                     const vk::MemoryPropertyFlags& properties, vk::Image& image,
                                                      vk::DeviceMemory& image_memory, uint32_t mip_levels_data,
                                                      vk::SampleCountFlagBits num_samples)
 {

@@ -26,11 +26,11 @@ namespace ScrapEngine
 			~TextureImage();
 
 			void create_image(const uint32_t& width, const uint32_t& height, const vk::Format& format,
-			                  vk::ImageTiling tiling, vk::ImageUsageFlags usage, vk::MemoryPropertyFlags properties,
+			                  vk::ImageTiling tiling, const vk::ImageUsageFlags& usage, const vk::MemoryPropertyFlags& properties,
 			                  vk::Image& image, vk::DeviceMemory& image_memory) const;
 			static void create_image(const uint32_t& width, const uint32_t& height, const vk::Format& format,
-			                         vk::ImageTiling tiling, vk::ImageUsageFlags usage,
-			                         vk::MemoryPropertyFlags properties, vk::Image& image,
+			                         vk::ImageTiling tiling, const vk::ImageUsageFlags& usage,
+			                         const vk::MemoryPropertyFlags& properties, vk::Image& image,
 			                         vk::DeviceMemory& image_memory, uint32_t mip_levels_data,
 			                         vk::SampleCountFlagBits num_samples);
 

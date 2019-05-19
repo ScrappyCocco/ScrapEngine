@@ -22,7 +22,6 @@ ScrapEngine::Render::SkyboxTexture::SkyboxTexture(const std::array<std::string, 
 
 	mip_levels_ = static_cast<uint32_t>(std::floor(
 		std::log2(std::max(images_[0]->get_texture_width(), images_[0]->get_texture_height())))) + 1;
-	mip_levels_ = 1; //Override for testing purpose...
 
 	vk::ImageCreateInfo image_create_info(
 		vk::ImageCreateFlagBits::eCubeCompatible,
@@ -67,9 +66,9 @@ ScrapEngine::Render::SkyboxTexture::SkyboxTexture(const std::array<std::string, 
 	// copy images
 	//-----------------------
 
-	std::vector<vk::BufferImageCopy> bufferCopyRegions;
+	std::vector<vk::BufferImageCopy> buffer_copy_regions;
 
-	for (int i = 0; i < files_path.size(); ++i)
+	for (unsigned int i = 0; i < files_path.size(); ++i)
 	{
 		vk::BufferImageCopy region(
 			0,
@@ -80,18 +79,18 @@ ScrapEngine::Render::SkyboxTexture::SkyboxTexture(const std::array<std::string, 
 			vk::Extent3D(images_[0]->get_texture_width(), images_[0]->get_texture_height(), 1)
 		);
 
-		bufferCopyRegions.push_back(region);
+		buffer_copy_regions.push_back(region);
 	}
 
 	ScrapEngine::Render::TextureImage::transition_image_layout(&cubemap_, vk::Format::eR8G8B8A8Unorm,
 	                                                           vk::ImageLayout::eUndefined,
 	                                                           vk::ImageLayout::eTransferDstOptimal, mip_levels_, 6);
 
-	for (int i = 0; i < bufferCopyRegions.size(); i++)
+	for (unsigned int i = 0; i < buffer_copy_regions.size(); i++)
 	{
 		ScrapEngine::Render::StagingBuffer::copy_buffer_to_image(
 			images_[i]->get_texture_staging_buffer()->get_staging_buffer(), &cubemap_, images_[i]->get_texture_width(),
-			images_[i]->get_texture_height(), &bufferCopyRegions[i], 1);
+			images_[i]->get_texture_height(), &buffer_copy_regions[i], 1);
 	}
 
 	ScrapEngine::Render::TextureImage::transition_image_layout(&cubemap_, vk::Format::eR8G8B8A8Unorm,

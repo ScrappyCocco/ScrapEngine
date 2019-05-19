@@ -9,17 +9,17 @@ STransform(const SVector3& position, const SQuaternion& rotation, const SVector3
 
 ScrapEngine::Core::SVector3 ScrapEngine::Core::STransform::get_position() const
 {
-	return SVector3(position_);
+	return { position_ };
 }
 
 ScrapEngine::Core::SQuaternion ScrapEngine::Core::STransform::get_rotation() const
 {
-	return SQuaternion(rotation_);
+	return { rotation_ };
 }
 
 ScrapEngine::Core::SVector3 ScrapEngine::Core::STransform::get_scale() const
 {
-	return SVector3(scale_);
+	return { scale_ };
 }
 
 void ScrapEngine::Core::STransform::set_position(const SVector3& new_position)

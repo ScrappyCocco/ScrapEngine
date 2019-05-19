@@ -1,9 +1,5 @@
 #include "LogicManager.h"
 
-ScrapEngine::Core::LogicManager::LogicManager()
-{
-}
-
 ScrapEngine::Core::LogicManager::~LogicManager()
 {
 	for (SGameObject* game_object : registered_game_objects_)
@@ -21,7 +17,7 @@ ScrapEngine::Core::SGameObject* ScrapEngine::Core::LogicManager::register_game_o
 
 void ScrapEngine::Core::LogicManager::un_register_game_object(SGameObject* input_game_object)
 {
-	std::vector<SGameObject*>::iterator element = find(registered_game_objects_.begin(), registered_game_objects_.end(),
+	const std::vector<SGameObject*>::iterator element = find(registered_game_objects_.begin(), registered_game_objects_.end(),
 	                                                   input_game_object);
 	if (element != registered_game_objects_.end())
 	{

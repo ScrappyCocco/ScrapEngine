@@ -2,10 +2,11 @@
 
 #include <vulkan/vulkan.hpp>
 #include <vector>
-#include <fstream>
 
-namespace ScrapEngine {
-	namespace Render {
+namespace ScrapEngine
+{
+	namespace Render
+	{
 		class ShaderManager
 		{
 		public:
@@ -18,4 +19,3 @@ namespace ScrapEngine {
 		};
 	}
 }
-

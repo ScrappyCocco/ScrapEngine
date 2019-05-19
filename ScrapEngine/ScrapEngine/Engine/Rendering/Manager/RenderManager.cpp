@@ -17,7 +17,7 @@ ScrapEngine::Render::RenderManager::~RenderManager()
 	delete render_camera_;
 
 	delete skybox_;
-	for (ScrapEngine::Render::VulkanMeshInstance* current_model : loaded_models_) {
+	for (auto current_model : loaded_models_) {
 		delete current_model;
 	}
 	delete vulkan_render_semaphores_;
@@ -36,8 +36,9 @@ void ScrapEngine::Render::RenderManager::cleanup_swap_chain()
 	delete vulkan_render_depth_;
 	delete vulkan_render_frame_buffer_;
 	delete_command_buffers();
-	for (int i = 0; i < loaded_models_.size(); i++) {
-		loaded_models_[i]->delete_graphics_pipeline();
+	for (auto& loaded_model : loaded_models_)
+	{
+		loaded_model->delete_graphics_pipeline();
 	}
 	delete vulkan_rendering_pass_;
 	delete vulkan_render_image_view_;
@@ -200,8 +201,9 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 		throw std::runtime_error("RenderManager: Failed to acquire swap chain image!");
 	}
 	//Update uniform buffer
-	for (int i = 0;i < loaded_models_.size(); i++) {
-		loaded_models_[i]->update_uniform_buffer(image_index_, render_camera_);
+	for (auto& loaded_model : loaded_models_)
+	{
+		loaded_model->update_uniform_buffer(image_index_, render_camera_);
 	}
 	if (skybox_) {
 		skybox_->update_uniform_buffer(image_index_, render_camera_);

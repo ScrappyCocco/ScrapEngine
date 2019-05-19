@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../Debug/DebugLog.h"
 #include "../Utility/UsefulTypes.h"
 #include "../Rendering/Manager/RenderManager.h"
 #include "../Rendering/Manager/RenderManagerView.h"

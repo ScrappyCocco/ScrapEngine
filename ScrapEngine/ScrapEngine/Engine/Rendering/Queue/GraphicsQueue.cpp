@@ -13,10 +13,6 @@ ScrapEngine::Render::GraphicsQueue::GraphicsQueue(const QueueFamilyIndices indic
 	static_graphics_queue_ref = &graphics_queue_;
 }
 
-ScrapEngine::Render::GraphicsQueue::~GraphicsQueue()
-{
-}
-
 vk::Queue* ScrapEngine::Render::GraphicsQueue::get_graphics_queue()
 {
 	return &graphics_queue_;

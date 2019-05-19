@@ -34,8 +34,8 @@ ScrapEngine::Render::VulkanGraphicsPipeline::VulkanGraphicsPipeline(const char* 
 
 	vk::PipelineShaderStageCreateInfo shader_stages[] = {vert_shader_stage_info, frag_shader_stage_info};
 
-	auto attribute_descriptions = Vertex::getAttributeDescriptions();
-	auto binding_description = Vertex::getBindingDescription();
+	auto attribute_descriptions = Vertex::get_attribute_descriptions();
+	auto binding_description = Vertex::get_binding_description();
 
 	vk::PipelineVertexInputStateCreateInfo vertex_input_info(
 		vk::PipelineVertexInputStateCreateFlags(),

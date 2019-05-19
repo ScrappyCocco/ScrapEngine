@@ -21,7 +21,7 @@ namespace ScrapEngine {
 			static const vk::Queue* static_graphics_queue_ref;
 
 			GraphicsQueue(QueueFamilyIndices indices);
-			~GraphicsQueue();
+			~GraphicsQueue() = default;
 
 			vk::Queue* get_graphics_queue();
 		};

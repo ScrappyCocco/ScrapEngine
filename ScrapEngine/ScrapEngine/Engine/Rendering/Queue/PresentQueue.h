@@ -15,7 +15,7 @@ namespace ScrapEngine
 			static const vk::Queue* static_presentation_queue_ref;
 
 			PresentQueue(GraphicsQueue::QueueFamilyIndices indices);
-			~PresentQueue();
+			~PresentQueue() = default;
 
 			vk::Queue* get_present_queue();
 		};

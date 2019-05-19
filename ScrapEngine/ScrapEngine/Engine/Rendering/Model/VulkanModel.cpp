@@ -1,10 +1,8 @@
 #include "VulkanModel.h"
-#include "../../Debug/DebugLog.h"
+#include <Engine/Debug/DebugLog.h>
 #include <assimp/Importer.hpp> 
 #include <assimp/scene.h> 
-#include <assimp/postprocess.h>     // Post processing flags
-#include <unordered_map>
-#include <iostream>
+#include <assimp/postprocess.h> // Post processing flags
 
 ScrapEngine::Render::VulkanModel::VulkanModel(const std::string& input_model_path)
 {
@@ -34,7 +32,7 @@ ScrapEngine::Render::VulkanModel::VulkanModel(const std::string& input_model_pat
 			const aiVector3D* p_tex_coord = scene->mMeshes[k]->HasTextureCoords(0) ? &(scene->mMeshes[k]->mTextureCoords[0][i]) : &zero_3d;
 			Vertex vertex = {};
 			vertex.pos = { p_pos->x, p_pos->y, p_pos->z };
-			vertex.texCoord = { p_tex_coord->x, 1 - p_tex_coord->y };
+			vertex.tex_coord = { p_tex_coord->x, 1 - p_tex_coord->y };
 			vertex.color = { p_normal->x, p_normal->y, p_normal->z };
 			vertices_.push_back(vertex);
 		}
@@ -48,11 +46,6 @@ ScrapEngine::Render::VulkanModel::VulkanModel(const std::string& input_model_pat
 		}
 	}
 	Debug::DebugLog::print_to_console_log("Vertex and Index model info loaded");
-}
-
-ScrapEngine::Render::VulkanModel::~VulkanModel()
-{
-
 }
 
 const std::vector<ScrapEngine::Vertex>* ScrapEngine::Render::VulkanModel::get_vertices() const

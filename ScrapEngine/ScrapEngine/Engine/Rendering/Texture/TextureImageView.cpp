@@ -24,7 +24,7 @@ ScrapEngine::Render::TextureImageView::~TextureImageView()
 }
 
 vk::ImageView ScrapEngine::Render::TextureImageView::create_image_view(vk::Image* image, const vk::Format format,
-                                                                       const vk::ImageAspectFlags aspect_flags,
+                                                                       const vk::ImageAspectFlags& aspect_flags,
                                                                        uint32_t mip_levels_data)
 {
 	vk::ImageViewCreateInfo view_info(
@@ -47,7 +47,7 @@ vk::ImageView ScrapEngine::Render::TextureImageView::create_image_view(vk::Image
 }
 
 vk::ImageView ScrapEngine::Render::TextureImageView::create_cube_map_image_view(
-	vk::Image* image, const vk::Format format, const vk::ImageAspectFlags aspectFlags, uint32_t mip_levels_data,
+	vk::Image* image, const vk::Format format, const vk::ImageAspectFlags& aspect_flags, uint32_t mip_levels_data,
 	int layer_count)
 {
 	vk::ImageViewCreateInfo view_info(
@@ -57,7 +57,7 @@ vk::ImageView ScrapEngine::Render::TextureImageView::create_cube_map_image_view(
 		format,
 		vk::ComponentMapping(vk::ComponentSwizzle::eR, vk::ComponentSwizzle::eG, vk::ComponentSwizzle::eB,
 		                     vk::ComponentSwizzle::eA),
-		vk::ImageSubresourceRange(aspectFlags, 0, mip_levels_data, 0, layer_count)
+		vk::ImageSubresourceRange(aspect_flags, 0, mip_levels_data, 0, layer_count)
 	);
 
 	vk::ImageView image_view;

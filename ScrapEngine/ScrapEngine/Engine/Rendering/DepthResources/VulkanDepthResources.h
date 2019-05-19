@@ -18,7 +18,7 @@ namespace ScrapEngine
 			~VulkanDepthResources();
 
 			static vk::Format find_supported_format(const std::vector<vk::Format>& candidates, vk::ImageTiling tiling,
-			                                        vk::FormatFeatureFlags features);
+			                                        const vk::FormatFeatureFlags& features);
 			static vk::Format find_depth_format();
 			static bool has_stencil_component(const vk::Format& format);
 

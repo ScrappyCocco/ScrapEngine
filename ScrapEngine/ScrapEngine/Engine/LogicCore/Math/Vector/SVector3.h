@@ -10,10 +10,10 @@ namespace ScrapEngine
 		private:
 			glm::vec3 vec3_{};
 
-			explicit SVector3(const glm::vec3 input);
+			explicit SVector3(glm::vec3 input);
 		public:
 			SVector3();
-			SVector3(const float x, const float y, const float z);
+			SVector3(float x, float y, float z);
 			SVector3(const SVector3& other) = default;
 			SVector3& operator=(const SVector3& other) = default;
 			SVector3(SVector3&&) = default;
@@ -21,7 +21,7 @@ namespace ScrapEngine
 			~SVector3() = default;
 
 			SVector3 operator+(const SVector3& other) const;
-			SVector3 operator*(const float value) const;
+			SVector3 operator*(float value) const;
 			/**
 			 * Calculate cross product between this and another vector.
 			 */

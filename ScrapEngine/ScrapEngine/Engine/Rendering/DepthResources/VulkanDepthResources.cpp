@@ -28,7 +28,7 @@ ScrapEngine::Render::VulkanDepthResources::~VulkanDepthResources()
 }
 
 vk::Format ScrapEngine::Render::VulkanDepthResources::find_supported_format(
-	const std::vector<vk::Format>& candidates, vk::ImageTiling tiling, vk::FormatFeatureFlags features)
+	const std::vector<vk::Format>& candidates, const vk::ImageTiling tiling, const vk::FormatFeatureFlags& features)
 {
 	for (vk::Format format : candidates)
 	{

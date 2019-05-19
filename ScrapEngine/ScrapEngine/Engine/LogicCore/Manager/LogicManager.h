@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../Components/SComponent.h"
 #include "../GameObject/SGameObject.h"
 
 namespace ScrapEngine
@@ -12,7 +11,7 @@ namespace ScrapEngine
 		private:
 			std::vector<Core::SGameObject*> registered_game_objects_;
 		public:
-			LogicManager();
+			LogicManager() = default;
 			~LogicManager();
 
 			Core::SGameObject* register_game_object(Core::SGameObject* input_game_object);

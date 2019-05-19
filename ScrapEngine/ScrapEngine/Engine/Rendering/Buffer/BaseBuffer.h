@@ -9,8 +9,8 @@ namespace ScrapEngine
 		class BaseBuffer
 		{
 		public:
-			static void create_buffer(const vk::DeviceSize& size, vk::BufferUsageFlags usage,
-			                          vk::MemoryPropertyFlags properties, vk::Buffer& buffer,
+			static void create_buffer(const vk::DeviceSize& size, const vk::BufferUsageFlags& usage,
+			                          const vk::MemoryPropertyFlags& properties, vk::Buffer& buffer,
 			                          vk::DeviceMemory& buffer_memory);
 
 			static void copy_buffer(vk::Buffer* src_buffer, vk::Buffer& dst_buffer, const vk::DeviceSize& size);

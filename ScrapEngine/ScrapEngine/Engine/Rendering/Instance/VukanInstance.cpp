@@ -12,7 +12,7 @@ const vk::Instance* ScrapEngine::Render::VukanInstance::static_instance_ref = nu
 ScrapEngine::Render::VukanInstance::VukanInstance(const std::string& app_name, int app_version,
                                                   const std::string& engine_name, int engine_version)
 {
-	if (VulkanValidationLayers::areValidationLayersEnabled())
+	if (VulkanValidationLayers::are_validation_layers_enabled())
 	{
 		validation_layers_manager_ = new VulkanValidationLayers();
 	}
@@ -22,7 +22,7 @@ ScrapEngine::Render::VukanInstance::VukanInstance(const std::string& app_name, i
 
 	if (validation_layers_manager_)
 	{
-		validation_layers_manager_->setupDebugCallback();
+		validation_layers_manager_->setup_debug_callback();
 	}
 }
 
@@ -53,7 +53,7 @@ void ScrapEngine::Render::VukanInstance::create_vulkan_instance(std::string app_
 	std::vector<const char*> layers;
 	if (validation_layers_manager_)
 	{
-		layers = validation_layers_manager_->getValidationLayers();
+		layers = validation_layers_manager_->get_validation_layers();
 		create_info.setEnabledLayerCount(static_cast<uint32_t>(layers.size()));
 		create_info.setPpEnabledLayerNames(layers.data());
 	}

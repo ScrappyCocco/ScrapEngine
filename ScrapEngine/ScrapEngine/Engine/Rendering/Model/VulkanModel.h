@@ -16,7 +16,7 @@ namespace ScrapEngine
 			std::vector<uint32_t> indices_;
 		public:
 			VulkanModel(const std::string& input_model_path);
-			~VulkanModel();
+			~VulkanModel() = default;
 
 			const std::vector<ScrapEngine::Vertex>* get_vertices() const;
 			const std::vector<uint32_t>* get_indices() const;
