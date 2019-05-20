@@ -48,7 +48,7 @@ TestGameObject::TestGameObject(ScrapEngine::Input::InputManager* CreatedInputMan
 		"../assets/shader/compiled_shaders/shader_base.vert.spv",
 		"../assets/shader/compiled_shaders/shader_base.frag.spv",
 		"../assets/models/trees/Tree1.fbx",
-		{ "../assets/textures/SimpleGreenTexture.png", "../assets/textures/SimpleRedTexture.png" }
+		{ "../assets/textures/SimpleBrownTexture.png", "../assets/textures/SimpleGreenTexture.png"}
 	));
 	(*get_components())[5]->set_component_location(glm::vec3(0, 0, 0));
 	(*get_components())[5]->set_component_scale(glm::vec3(10, 10, 10));
