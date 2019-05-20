@@ -4,62 +4,71 @@
 ScrapEngine::Render::VulkanMeshInstance::VulkanMeshInstance(const std::string& vertex_shader_path,
                                                             const std::string& fragment_shader_path,
                                                             const std::string& model_path,
-                                                            const std::string& texture_path,
+                                                            const std::vector<std::string>& textures_path,
                                                             ScrapEngine::Render::VulkanDevice* render_device,
                                                             ScrapEngine::Render::VulkanSwapChain* swap_chain)
 {
-	vulkan_render_descriptor_set_ = new VulkanDescriptorSet();
-	Debug::DebugLog::print_to_console_log("VulkanDescriptorSet created");
-	vulkan_render_graphics_pipeline_ = new VulkanGraphicsPipeline(vertex_shader_path.c_str(),
-	                                                              fragment_shader_path.c_str(),
-	                                                              &swap_chain->get_swap_chain_extent(),
-	                                                              vulkan_render_descriptor_set_->
-	                                                              get_descriptor_set_layout(),
-	                                                              render_device->get_msaa_samples());
-	Debug::DebugLog::print_to_console_log("VulkanGraphicsPipeline created");
-	vulkan_texture_image_ = new TextureImage(texture_path);
-	Debug::DebugLog::print_to_console_log("TextureImage created");
-	vulkan_texture_image_view_ = new TextureImageView(vulkan_texture_image_->get_texture_image(),
-	                                                  vulkan_texture_image_->get_mip_levels());
-	Debug::DebugLog::print_to_console_log("TextureImageView created");
-	vulkan_texture_sampler_ = new TextureSampler(vulkan_texture_image_->get_mip_levels());
-	Debug::DebugLog::print_to_console_log("TextureSampler created");
+	vulkan_render_uniform_buffer_ = new UniformBuffer(swap_chain->get_swap_chain_images_vector(),
+		swap_chain->get_swap_chain_extent());
+	Debug::DebugLog::print_to_console_log("UniformBuffer created");
 	vulkan_render_model_ = new VulkanModel(model_path);
 	Debug::DebugLog::print_to_console_log("VulkanModel loaded");
-	vulkan_render_vertex_buffer_ = new VertexBuffer(vulkan_render_model_->get_vertices());
-	Debug::DebugLog::print_to_console_log("VertexBuffer created");
-	vulkan_render_index_buffer_ = new IndexBuffer(vulkan_render_model_->get_indices());
-	Debug::DebugLog::print_to_console_log("IndexBuffer created");
-	vulkan_render_uniform_buffer_ = new UniformBuffer(swap_chain->get_swap_chain_images_vector(),
-	                                                  swap_chain->get_swap_chain_extent());
-	Debug::DebugLog::print_to_console_log("UniformBuffer created");
-	vulkan_render_descriptor_pool_ = new VulkanDescriptorPool(swap_chain->get_swap_chain_images_vector());
-	Debug::DebugLog::print_to_console_log("VulkanDescriptorPool created");
-	vulkan_render_descriptor_set_->create_descriptor_sets(vulkan_render_descriptor_pool_->get_descriptor_pool(),
-	                                                      swap_chain->get_swap_chain_images_vector(),
-	                                                      vulkan_render_uniform_buffer_->get_uniform_buffers(),
-	                                                      vulkan_texture_image_view_->get_texture_image_view(),
-	                                                      vulkan_texture_sampler_->get_texture_sampler());
-	Debug::DebugLog::print_to_console_log("(DescriptorSets created)");
-	vertexbuffer_ = new simple_buffer<Vertex>(vulkan_render_vertex_buffer_->get_vertex_buffer(),
-	                                          vulkan_render_model_->get_vertices());
-	indexbuffer_ = new simple_buffer<uint32_t>(vulkan_render_index_buffer_->get_index_buffer(),
-	                                           vulkan_render_model_->get_indices());
+	if(vulkan_render_model_->get_meshes()->size() != textures_path.size() && textures_path.size() > 1)
+	{
+		throw "The texture array must have size 1 or equal number of meshes!";
+	}
+	for(auto texture_path: textures_path)
+	{
+		BasicMaterial* material = new BasicMaterial();
+		material->create_pipeline(vertex_shader_path, fragment_shader_path, swap_chain, render_device);
+		material->create_texture(texture_path);
+		material->create_descriptor_sets(swap_chain, vulkan_render_uniform_buffer_);
+		model_materials_.push_back(material);
+	}
+	for (auto mesh : (*vulkan_render_model_->get_meshes()))
+	{
+		std::pair<VertexBufferContainer*, IndicesBufferContainer*> buffer_pair;
+		VertexBuffer* vulkan_render_vertex_buffer = new VertexBuffer(mesh->get_vertices());
+		created_vertex_buffers_.push_back(vulkan_render_vertex_buffer);
+		buffer_pair.first = new VertexBufferContainer(vulkan_render_vertex_buffer->get_vertex_buffer(),
+		                                              mesh->get_vertices());
+		Debug::DebugLog::print_to_console_log("VertexBuffer created");
+
+		IndexBuffer* vulkan_render_index_buffer = new IndexBuffer(mesh->get_indices());
+		created_index_buffers_.push_back(vulkan_render_index_buffer);
+		buffer_pair.second = new IndicesBufferContainer(vulkan_render_index_buffer->get_index_buffer(),
+		                                                mesh->get_indices());
+		Debug::DebugLog::print_to_console_log("IndexBuffer created");
+
+		mesh_buffers_.push_back(buffer_pair);
+	}
 }
 
 ScrapEngine::Render::VulkanMeshInstance::~VulkanMeshInstance()
 {
-	delete vertexbuffer_;
-	delete indexbuffer_;
-	delete_graphics_pipeline();
-	delete vulkan_texture_sampler_;
-	delete vulkan_texture_image_view_;
-	delete vulkan_texture_image_;
-	delete vulkan_render_descriptor_pool_;
-	delete vulkan_render_descriptor_set_;
+	// Delete the buffers of every mesh
+	for (auto mesh_buffers : mesh_buffers_)
+	{
+		delete mesh_buffers.first;
+		delete mesh_buffers.second;
+	}
+	// Delete the textures
+	for(auto material : model_materials_)
+	{
+		delete material;
+	}
+	// Delete the uniform buffer
 	delete vulkan_render_uniform_buffer_;
-	delete vulkan_render_index_buffer_;
-	delete vulkan_render_vertex_buffer_;
+	// Delete the basic buffers
+	for (auto v_buffer : created_vertex_buffers_)
+	{
+		delete v_buffer;
+	}
+	for (auto i_buffer : created_index_buffers_)
+	{
+		delete i_buffer;
+	}
+	// Delete the 3d model
 	delete vulkan_render_model_;
 }
 
@@ -104,30 +113,14 @@ ScrapEngine::Render::UniformBuffer* ScrapEngine::Render::VulkanMeshInstance::get
 	return vulkan_render_uniform_buffer_;
 }
 
-ScrapEngine::Render::VulkanGraphicsPipeline* ScrapEngine::Render::VulkanMeshInstance::
-get_vulkan_render_graphics_pipeline() const
+const std::vector<ScrapEngine::Render::BasicMaterial*>* ScrapEngine::Render::VulkanMeshInstance::
+get_mesh_materials() const
 {
-	return vulkan_render_graphics_pipeline_;
+	return &model_materials_;
 }
 
-ScrapEngine::Render::VulkanDescriptorSet* ScrapEngine::Render::VulkanMeshInstance::
-get_vulkan_render_descriptor_set() const
+const std::vector<std::pair<ScrapEngine::Render::VertexBufferContainer*, ScrapEngine::Render::IndicesBufferContainer*>>*
+ScrapEngine::Render::VulkanMeshInstance::get_mesh_buffers() const
 {
-	return vulkan_render_descriptor_set_;
-}
-
-ScrapEngine::simple_buffer<ScrapEngine::Vertex>* ScrapEngine::Render::VulkanMeshInstance::get_vertex_buffer() const
-{
-	return vertexbuffer_;
-}
-
-ScrapEngine::simple_buffer<uint32_t>* ScrapEngine::Render::VulkanMeshInstance::get_index_buffer() const
-{
-	return indexbuffer_;
-}
-
-void ScrapEngine::Render::VulkanMeshInstance::delete_graphics_pipeline()
-{
-	delete vulkan_render_graphics_pipeline_;
-	vulkan_render_graphics_pipeline_ = nullptr;
+	return &mesh_buffers_;
 }

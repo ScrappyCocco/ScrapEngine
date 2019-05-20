@@ -4,8 +4,10 @@
 #include <vector>
 #include <Engine/Rendering/Base/Vertex.h>
 
-namespace ScrapEngine {
-	namespace Render {
+namespace ScrapEngine
+{
+	namespace Render
+	{
 		class VertexBuffer
 		{
 		private:
@@ -19,4 +21,3 @@ namespace ScrapEngine {
 		};
 	}
 }
-

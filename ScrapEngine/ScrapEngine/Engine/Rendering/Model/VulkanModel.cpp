@@ -25,35 +25,47 @@ ScrapEngine::Render::VulkanModel::VulkanModel(const std::string& input_model_pat
 	Debug::DebugLog::print_to_console_log("Begin model loading...");
 	Debug::DebugLog::print_to_console_log("Number of meshes to load:" + std::to_string(scene->mNumMeshes));
 	for (unsigned int k = 0; k < scene->mNumMeshes; k++) {
+		//MESH VECTORS
+		std::vector<ScrapEngine::Vertex> mesh_vertices;
+		std::vector<uint32_t> mesh_indices;
+		//LOADING VERTICES
 		Debug::DebugLog::print_to_console_log("Mesh " + std::to_string(k) + " - Loading vertices...");
 		for (unsigned int i = 0; i < scene->mMeshes[k]->mNumVertices; i++) {
 			const aiVector3D* p_pos = &(scene->mMeshes[k]->mVertices[i]);
 			const aiVector3D* p_normal = scene->mMeshes[k]->HasNormals() ? &(scene->mMeshes[k]->mNormals[i]) : &zero_3d;
 			const aiVector3D* p_tex_coord = scene->mMeshes[k]->HasTextureCoords(0) ? &(scene->mMeshes[k]->mTextureCoords[0][i]) : &zero_3d;
+
 			Vertex vertex = {};
 			vertex.pos = { p_pos->x, p_pos->y, p_pos->z };
 			vertex.tex_coord = { p_tex_coord->x, 1 - p_tex_coord->y };
 			vertex.color = { p_normal->x, p_normal->y, p_normal->z };
-			vertices_.push_back(vertex);
+			mesh_vertices.push_back(vertex);
 		}
+		//LOADING INDICES
 		Debug::DebugLog::print_to_console_log("Mesh " + std::to_string(k) + " - Loading indices...");
 		for (unsigned int i = 0; i < scene->mMeshes[k]->mNumFaces; i++) {
 			const aiFace& face = scene->mMeshes[k]->mFaces[i];
 			assert(face.mNumIndices == 3);
-			indices_.push_back(face.mIndices[0]);
-			indices_.push_back(face.mIndices[1]);
-			indices_.push_back(face.mIndices[2]);
+			mesh_indices.push_back(face.mIndices[0]);
+			mesh_indices.push_back(face.mIndices[1]);
+			mesh_indices.push_back(face.mIndices[2]);
 		}
+		//Save mesh informations
+		model_meshes_.push_back(new Mesh(mesh_vertices, mesh_indices));
 	}
 	Debug::DebugLog::print_to_console_log("Vertex and Index model info loaded");
 }
 
-const std::vector<ScrapEngine::Vertex>* ScrapEngine::Render::VulkanModel::get_vertices() const
+ScrapEngine::Render::VulkanModel::~VulkanModel()
 {
-	return &vertices_;
+	for(auto mesh : model_meshes_)
+	{
+		delete mesh;
+	}
+	model_meshes_.clear();
 }
 
-const std::vector<uint32_t>* ScrapEngine::Render::VulkanModel::get_indices() const
+const std::vector<ScrapEngine::Render::Mesh*>* ScrapEngine::Render::VulkanModel::get_meshes() const
 {
-	return &indices_;
+	return &model_meshes_;
 }

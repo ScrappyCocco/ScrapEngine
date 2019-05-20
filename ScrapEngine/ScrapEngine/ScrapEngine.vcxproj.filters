@@ -140,6 +140,21 @@
     <Filter Include="Engine\LogicCore\Math\Quaternion">
       <UniqueIdentifier>{d1c36867-c55e-4582-b82b-9f474efef16e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Rendering\Model\Mesh">
+      <UniqueIdentifier>{1681cb40-c5d2-49db-934b-deadf1543b0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Buffer\BufferContainer">
+      <UniqueIdentifier>{43a528ad-b221-4002-8928-d1c89d932fbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Buffer\BufferContainer\IndicesBufferContainer">
+      <UniqueIdentifier>{b6cd12ba-fa3e-4a5a-b3d9-9fd83579aaaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Buffer\BufferContainer\VertexBufferContainer">
+      <UniqueIdentifier>{d118180c-194f-4611-afb4-c1e299d63326}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Model\Material">
+      <UniqueIdentifier>{a52affdb-5fc6-4593-a48b-fa26be82d184}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Manager\EngineManager.cpp">
@@ -291,6 +306,21 @@
     </ClCompile>
     <ClCompile Include="Engine\LogicCore\Math\Quaternion\SQuaternion.cpp">
       <Filter>Engine\LogicCore\Math\Quaternion</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Model\Mesh\Mesh.cpp">
+      <Filter>Engine\Rendering\Model\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Buffer\BufferContainer\BufferContainer.cpp">
+      <Filter>Engine\Rendering\Buffer\BufferContainer</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Buffer\BufferContainer\IndicesBufferContainer\IndicesBufferContainer.cpp">
+      <Filter>Engine\Rendering\Buffer\BufferContainer\IndicesBufferContainer</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Buffer\BufferContainer\VertexBufferContainer\VertexBufferContainer.cpp">
+      <Filter>Engine\Rendering\Buffer\BufferContainer\VertexBufferContainer</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Model\Material\BasicMaterial.cpp">
+      <Filter>Engine\Rendering\Model\Material</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -464,6 +494,21 @@
     </ClInclude>
     <ClInclude Include="Engine\LogicCore\Math\Quaternion\SQuaternion.h">
       <Filter>Engine\LogicCore\Math\Quaternion</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Model\Mesh\Mesh.h">
+      <Filter>Engine\Rendering\Model\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Buffer\BufferContainer\BufferContainer.h">
+      <Filter>Engine\Rendering\Buffer\BufferContainer</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Buffer\BufferContainer\IndicesBufferContainer\IndicesBufferContainer.h">
+      <Filter>Engine\Rendering\Buffer\BufferContainer\IndicesBufferContainer</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Buffer\BufferContainer\VertexBufferContainer\VertexBufferContainer.h">
+      <Filter>Engine\Rendering\Buffer\BufferContainer\VertexBufferContainer</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Model\Material\BasicMaterial.h">
+      <Filter>Engine\Rendering\Model\Material</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
