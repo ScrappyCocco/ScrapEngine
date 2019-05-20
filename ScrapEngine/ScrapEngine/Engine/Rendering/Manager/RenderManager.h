@@ -84,9 +84,9 @@ namespace ScrapEngine
 			ScrapEngine::Render::VulkanMeshInstance* load_mesh(const std::string& vertex_shader_path,
 			                                                   const std::string& fragment_shader_path,
 			                                                   const std::string& model_path,
-			                                                   const std::string& texture_path);
+			                                                   const std::vector<std::string>& textures_path);
 			ScrapEngine::Render::VulkanMeshInstance* load_mesh(const std::string& model_path,
-			                                                   const std::string& texture_path);
+			                                                   const std::vector<std::string>& textures_pathh);
 			void unload_mesh(ScrapEngine::Render::VulkanMeshInstance* mesh_to_unload);
 			ScrapEngine::Render::VulkanSkyboxInstance* load_skybox(const std::array<std::string, 6>& files_path);
 

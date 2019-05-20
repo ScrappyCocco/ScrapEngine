@@ -41,7 +41,10 @@ void ScrapEngine::Render::RenderManager::cleanup_swap_chain()
 	delete_command_buffers();
 	for (auto& loaded_model : loaded_models_)
 	{
-		loaded_model->delete_graphics_pipeline();
+		for(auto model_material: (*loaded_model->get_mesh_materials()))
+		{
+			model_material->delete_graphics_pipeline();
+		}
 	}
 	delete vulkan_rendering_pass_;
 	delete vulkan_render_image_view_;
@@ -58,7 +61,6 @@ void ScrapEngine::Render::RenderManager::delete_queues() const
 void ScrapEngine::Render::RenderManager::delete_command_buffers() const
 {
 	vulkan_render_command_buffer_->free_command_buffers();
-	delete vulkan_render_command_buffer_;
 }
 
 ScrapEngine::Render::GameWindow* ScrapEngine::Render::RenderManager::get_game_window() const
@@ -141,33 +143,27 @@ void ScrapEngine::Render::RenderManager::create_queues()
 void ScrapEngine::Render::RenderManager::create_command_buffers()
 {
 	Debug::DebugLog::print_to_console_log("Rebuilding VulkanRenderCommandBuffer...");
-	std::vector<ScrapEngine::Render::VulkanGraphicsPipeline*> pipelines;
-	std::vector<const std::vector<vk::DescriptorSet>*> descriptor_sets;
-	std::vector<const std::vector<std::pair<ScrapEngine::Render::VertexBufferContainer*, ScrapEngine::Render::IndicesBufferContainer*>>*> mesh_buffers;
-	for (ScrapEngine::Render::VulkanMeshInstance* mesh : loaded_models_)
+	vulkan_render_command_buffer_ = new VulkanCommandBuffer();
+	vulkan_render_command_buffer_->init_command_buffer(vulkan_render_frame_buffer_,
+	                                                   &vulkan_render_swap_chain_->get_swap_chain_extent());
+	if (skybox_)
 	{
-		pipelines.push_back(mesh->get_vulkan_render_graphics_pipeline());
-		descriptor_sets.push_back(mesh->get_vulkan_render_descriptor_set()->get_descriptor_sets());
-
-		mesh_buffers.push_back((mesh->get_mesh_buffers()));
+		vulkan_render_command_buffer_->load_skybox(skybox_);
 	}
-	vulkan_render_command_buffer_ = new VulkanCommandBuffer(
-		vulkan_render_frame_buffer_,
-		&vulkan_render_swap_chain_->get_swap_chain_extent(),
-		pipelines,
-		descriptor_sets,
-		mesh_buffers,
-		skybox_
-	);
+	for (auto mesh : loaded_models_)
+	{
+		vulkan_render_command_buffer_->load_mesh(mesh);
+	}
+	vulkan_render_command_buffer_->close_command_buffer();
 	Debug::DebugLog::print_to_console_log("VulkanRenderCommandBuffer created");
 }
 
 ScrapEngine::Render::VulkanMeshInstance* ScrapEngine::Render::RenderManager::load_mesh(
 	const std::string& vertex_shader_path, const std::string& fragment_shader_path, const std::string& model_path,
-	const std::string& texture_path)
+	const std::vector<std::string>& textures_path)
 {
 	loaded_models_.push_back(
-		new VulkanMeshInstance(vertex_shader_path, fragment_shader_path, model_path, texture_path,
+		new VulkanMeshInstance(vertex_shader_path, fragment_shader_path, model_path, textures_path,
 		                       vulkan_render_device_, vulkan_render_swap_chain_)
 	);
 	delete_command_buffers();
@@ -176,10 +172,10 @@ ScrapEngine::Render::VulkanMeshInstance* ScrapEngine::Render::RenderManager::loa
 }
 
 ScrapEngine::Render::VulkanMeshInstance* ScrapEngine::Render::RenderManager::load_mesh(
-	const std::string& model_path, const std::string& texture_path)
+	const std::string& model_path, const std::vector<std::string>& textures_path)
 {
 	return load_mesh("../assets/shader/compiled_shaders/shader_base.vert.spv",
-	                 "../assets/shader/compiled_shaders/shader_base.frag.spv", model_path, texture_path);
+	                 "../assets/shader/compiled_shaders/shader_base.frag.spv", model_path, textures_path);
 }
 
 void ScrapEngine::Render::RenderManager::unload_mesh(ScrapEngine::Render::VulkanMeshInstance* mesh_to_unload)
