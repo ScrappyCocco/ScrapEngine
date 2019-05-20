@@ -50,6 +50,7 @@ ScrapEngine::Render::VulkanModel::VulkanModel(const std::string& input_model_pat
 			mesh_indices.push_back(face.mIndices[1]);
 			mesh_indices.push_back(face.mIndices[2]);
 		}
+		//Save mesh informations
 		model_meshes_.push_back(new Mesh(mesh_vertices, mesh_indices));
 	}
 	Debug::DebugLog::print_to_console_log("Vertex and Index model info loaded");
