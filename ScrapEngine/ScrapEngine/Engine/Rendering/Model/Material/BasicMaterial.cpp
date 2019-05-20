@@ -1,5 +1,5 @@
 #include <Engine/Rendering/Model/Material/BasicMaterial.h>
-#include "Engine/Debug/DebugLog.h"
+#include <Engine/Debug/DebugLog.h>
 
 ScrapEngine::Render::BasicMaterial::BasicMaterial()
 {

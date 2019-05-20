@@ -18,6 +18,7 @@ namespace ScrapEngine
 	namespace Render
 	{
 		class SkyboxTexture;
+		class VulkanGraphicsPipeline;
 
 		class VulkanSkyboxInstance
 		{

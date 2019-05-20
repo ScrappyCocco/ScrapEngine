@@ -1,13 +1,20 @@
 #pragma once
-#include <Engine/Rendering/Base/Vertex.h>
 #include <Engine/Rendering/Texture/TextureSampler.h>
 #include <Engine/Rendering/Texture/TextureImageView.h>
 #include <Engine/Rendering/Texture/TextureImage.h>
+#include <Engine/Rendering/Pipeline/VulkanGraphicsPipeline.h>
+#include <Engine/Rendering/Descriptor/VulkanDescriptorPool.h>
+#include <Engine/Rendering/Descriptor/VulkanDescriptorSet.h>
 
 namespace ScrapEngine
 {
 	namespace Render
 	{
+		class VulkanGraphicsPipeline;
+		class TextureImage;
+		class TextureImageView;
+		class TextureSampler;
+
 		class BasicMaterial
 		{
 		private:
