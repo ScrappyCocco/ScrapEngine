@@ -152,6 +152,9 @@
     <Filter Include="Engine\Rendering\Buffer\BufferContainer\VertexBufferContainer">
       <UniqueIdentifier>{d118180c-194f-4611-afb4-c1e299d63326}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Rendering\Model\Material">
+      <UniqueIdentifier>{a52affdb-5fc6-4593-a48b-fa26be82d184}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Manager\EngineManager.cpp">
@@ -315,6 +318,9 @@
     </ClCompile>
     <ClCompile Include="Engine\Rendering\Buffer\BufferContainer\VertexBufferContainer\VertexBufferContainer.cpp">
       <Filter>Engine\Rendering\Buffer\BufferContainer\VertexBufferContainer</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Model\Material\BasicMaterial.cpp">
+      <Filter>Engine\Rendering\Model\Material</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -500,6 +506,9 @@
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Buffer\BufferContainer\VertexBufferContainer\VertexBufferContainer.h">
       <Filter>Engine\Rendering\Buffer\BufferContainer\VertexBufferContainer</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Model\Material\BasicMaterial.h">
+      <Filter>Engine\Rendering\Model\Material</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

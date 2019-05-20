@@ -41,7 +41,7 @@ void ScrapEngine::Render::RenderManager::cleanup_swap_chain()
 	delete_command_buffers();
 	for (auto& loaded_model : loaded_models_)
 	{
-		loaded_model->delete_graphics_pipeline();
+		delete loaded_model;
 	}
 	delete vulkan_rendering_pass_;
 	delete vulkan_render_image_view_;

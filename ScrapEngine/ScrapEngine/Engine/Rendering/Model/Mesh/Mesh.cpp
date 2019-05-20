@@ -1,4 +1,4 @@
-#include "Mesh.h"
+#include <Engine/Rendering/Model/Mesh/Mesh.h>
 
 
 ScrapEngine::Render::Mesh::Mesh(const std::vector<ScrapEngine::Vertex>& input_mesh_vertices,

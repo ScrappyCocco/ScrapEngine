@@ -1,5 +1,5 @@
 #pragma once
-#include "Engine/Rendering/Base/Vertex.h"
+#include <Engine/Rendering/Base/Vertex.h>
 
 namespace ScrapEngine
 {
