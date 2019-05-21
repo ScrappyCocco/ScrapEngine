@@ -3,8 +3,8 @@
 #include <vulkan/vulkan.hpp>
 #include <vector>
 #include <Engine/Rendering/Buffer/FrameBuffer/VulkanFrameBuffer.h>
-#include <Engine/Rendering/Model/VulkanSkyboxInstance.h>
-#include <Engine/Rendering/Model/VulkanMeshInstance.h>
+#include <Engine/Rendering/Model/SkyboxInstance/VulkanSkyboxInstance.h>
+#include <Engine/Rendering/Model/MeshInstance/VulkanMeshInstance.h>
 
 namespace ScrapEngine
 {

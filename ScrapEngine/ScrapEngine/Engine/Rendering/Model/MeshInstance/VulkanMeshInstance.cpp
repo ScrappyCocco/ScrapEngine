@@ -1,4 +1,4 @@
-#include <Engine/Rendering/Model/VulkanMeshInstance.h>
+#include <Engine/Rendering/Model/MeshInstance/VulkanMeshInstance.h>
 #include <Engine/Debug/DebugLog.h>
 
 ScrapEngine::Render::VulkanMeshInstance::VulkanMeshInstance(const std::string& vertex_shader_path,
@@ -8,6 +8,7 @@ ScrapEngine::Render::VulkanMeshInstance::VulkanMeshInstance(const std::string& v
                                                             ScrapEngine::Render::VulkanDevice* render_device,
                                                             ScrapEngine::Render::VulkanSwapChain* swap_chain)
 {
+	//CREATE UNIFORM BUFFER
 	vulkan_render_uniform_buffer_ = new UniformBuffer(swap_chain->get_swap_chain_images_vector(),
 		swap_chain->get_swap_chain_extent());
 	Debug::DebugLog::print_to_console_log("UniformBuffer created");
@@ -19,7 +20,8 @@ ScrapEngine::Render::VulkanMeshInstance::VulkanMeshInstance(const std::string& v
 	}
 	for(const auto& texture_path: textures_path)
 	{
-		BasicMaterial* material = new BasicMaterial();
+		//CREATE MATERIAL(S)
+		SimpleMaterial* material = new SimpleMaterial();
 		material->create_pipeline(vertex_shader_path, fragment_shader_path, swap_chain, render_device);
 		material->create_texture(texture_path);
 		material->create_descriptor_sets(swap_chain, vulkan_render_uniform_buffer_);
@@ -27,6 +29,7 @@ ScrapEngine::Render::VulkanMeshInstance::VulkanMeshInstance(const std::string& v
 	}
 	for (auto mesh : (*vulkan_render_model_->get_meshes()))
 	{
+		//LOADING MODEL BUFFERS
 		std::pair<VertexBufferContainer*, IndicesBufferContainer*> buffer_pair;
 		VertexBuffer* vulkan_render_vertex_buffer = new VertexBuffer(mesh->get_vertices());
 		created_vertex_buffers_.push_back(vulkan_render_vertex_buffer);

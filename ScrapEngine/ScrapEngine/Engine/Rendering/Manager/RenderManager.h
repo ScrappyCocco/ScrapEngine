@@ -14,12 +14,11 @@
 #include <Engine/Rendering/Semaphores/VulkanSemaphoresManager.h>
 #include <Engine/Rendering/Queue/GraphicsQueue.h>
 #include <Engine/Rendering/Queue/PresentQueue.h>
-#include <Engine/Rendering/Buffer/VertexBuffer/VertexBuffer.h>
 #include <Engine/Rendering/Buffer/UniformBuffer/UniformBuffer.h>
 #include <Engine/Rendering/DepthResources/VulkanDepthResources.h>
 #include <Engine/Rendering/Texture/VulkanColorResources.h>
-#include <Engine/Rendering/Model/VulkanMeshInstance.h>
-#include <Engine/Rendering/Model/VulkanSkyboxInstance.h>
+#include <Engine/Rendering/Model/MeshInstance/VulkanMeshInstance.h>
+#include <Engine/Rendering/Model/SkyboxInstance/VulkanSkyboxInstance.h>
 
 namespace ScrapEngine
 {
@@ -86,7 +85,7 @@ namespace ScrapEngine
 			                                                   const std::string& model_path,
 			                                                   const std::vector<std::string>& textures_path);
 			ScrapEngine::Render::VulkanMeshInstance* load_mesh(const std::string& model_path,
-			                                                   const std::vector<std::string>& textures_pathh);
+			                                                   const std::vector<std::string>& textures_path);
 			void unload_mesh(ScrapEngine::Render::VulkanMeshInstance* mesh_to_unload);
 			ScrapEngine::Render::VulkanSkyboxInstance* load_skybox(const std::array<std::string, 6>& files_path);
 

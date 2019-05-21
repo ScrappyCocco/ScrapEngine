@@ -61,7 +61,8 @@ void ScrapEngine::Render::VulkanCommandBuffer::load_skybox(ScrapEngine::Render::
 	for (size_t i = 0; i < command_buffers_.size(); i++)
 	{
 		command_buffers_[i].bindPipeline(vk::PipelineBindPoint::eGraphics,
-		                                 *skybox_ref->get_vulkan_render_graphics_pipeline()->
+		                                 *skybox_ref->get_skybox_material()->
+		                                              get_vulkan_render_graphics_pipeline()->
 		                                              get_graphics_pipeline());
 		const std::pair<ScrapEngine::Render::VertexBufferContainer*, ScrapEngine::Render::IndicesBufferContainer*>*
 			skybox_pair = skybox_ref->get_mesh_buffers();
@@ -69,10 +70,12 @@ void ScrapEngine::Render::VulkanCommandBuffer::load_skybox(ScrapEngine::Render::
 		command_buffers_[i].bindVertexBuffers(0, 1, buff, offsets);
 		command_buffers_[i].bindIndexBuffer(*skybox_pair->second->get_buffer(), 0, vk::IndexType::eUint32);
 		command_buffers_[i].bindDescriptorSets(vk::PipelineBindPoint::eGraphics,
-		                                       *skybox_ref->get_vulkan_render_graphics_pipeline()->
+		                                       *skybox_ref->get_skybox_material()->
+		                                                    get_vulkan_render_graphics_pipeline()->
 		                                                    get_pipeline_layout(),
 		                                       0, 1, &(*skybox_ref
-		                                                ->get_vulkan_render_descriptor_set()->get_descriptor_sets())
+		                                                ->get_skybox_material()->
+		                                                get_vulkan_render_descriptor_set()->get_descriptor_sets())
 		                                       [i],
 		                                       0, nullptr);
 		command_buffers_[i].drawIndexed(static_cast<uint32_t>(skybox_pair->second->get_vector()->size()),

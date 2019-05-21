@@ -1,4 +1,4 @@
-#include <Engine/Rendering/Model/VulkanModel.h>
+#include <Engine/Rendering/Model/Model/VulkanModel.h>
 #include <Engine/Debug/DebugLog.h>
 #include <assimp/Importer.hpp> 
 #include <assimp/scene.h> 

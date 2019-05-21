@@ -13,8 +13,8 @@ ScrapEngine::Render::VulkanCommandPool::VulkanCommandPool(GraphicsQueue::QueueFa
 {
 	vk::CommandPoolCreateInfo pool_info(vk::CommandPoolCreateFlags(), queue_family_indices.graphics_family);
 
-	if (VulkanDevice::static_logic_device_ref->createCommandPool(&pool_info, nullptr, &command_pool_) != vk::Result::
-		eSuccess)
+	if (VulkanDevice::static_logic_device_ref->createCommandPool(&pool_info, nullptr, &command_pool_)
+		!= vk::Result::eSuccess)
 	{
 		throw std::runtime_error("VulkanCommandPool: Failed to create command pool!");
 	}

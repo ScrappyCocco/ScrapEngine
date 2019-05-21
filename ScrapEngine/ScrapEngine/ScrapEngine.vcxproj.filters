@@ -140,9 +140,6 @@
     <Filter Include="Engine\LogicCore\Math\Quaternion">
       <UniqueIdentifier>{d1c36867-c55e-4582-b82b-9f474efef16e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Rendering\Model\Mesh">
-      <UniqueIdentifier>{1681cb40-c5d2-49db-934b-deadf1543b0b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Rendering\Buffer\BufferContainer">
       <UniqueIdentifier>{43a528ad-b221-4002-8928-d1c89d932fbf}</UniqueIdentifier>
     </Filter>
@@ -163,6 +160,24 @@
     </Filter>
     <Filter Include="Engine\Rendering\Buffer\StagingBuffer\VertexStagingBuffer">
       <UniqueIdentifier>{e3d3a890-c4a3-4c7d-bd19-724c64622d4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Model\Material\SkyboxMaterial">
+      <UniqueIdentifier>{2687d768-3e60-4e69-94ae-ca326cb02243}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Model\Material\SimpleMaterial">
+      <UniqueIdentifier>{53653c80-2fd7-4de2-a706-2faa19018c06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Model\MeshInstance">
+      <UniqueIdentifier>{4458a7e6-f4e7-44c6-b560-972fb624298f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Model\Model">
+      <UniqueIdentifier>{084fb63f-fe22-42bd-aa76-ff39bc45bec0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Model\Model\Mesh">
+      <UniqueIdentifier>{59d08ce2-3524-499e-9e35-2fe8050ca74f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Model\SkyboxInstance">
+      <UniqueIdentifier>{d9671f82-4c7c-413c-bc5d-e0839c01edd8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -232,17 +247,11 @@
     <ClCompile Include="Engine\Rendering\DepthResources\VulkanDepthResources.cpp">
       <Filter>Engine\Rendering\DepthResources</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Rendering\Model\VulkanModel.cpp">
-      <Filter>Engine\Rendering\Model</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Rendering\Texture\VulkanColorResources.cpp">
       <Filter>Engine\Rendering\Texture</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Rendering\Manager\RenderManager.cpp">
       <Filter>Engine\Rendering\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Rendering\Model\VulkanMeshInstance.cpp">
-      <Filter>Engine\Rendering\Model</Filter>
     </ClCompile>
     <ClCompile Include="Engine\LogicCore\SObject.cpp">
       <Filter>Engine\LogicCore</Filter>
@@ -280,9 +289,6 @@
     <ClCompile Include="Engine\Rendering\Texture\SkyboxTexture.cpp">
       <Filter>Engine\Rendering\Texture</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Rendering\Model\VulkanSkyboxInstance.cpp">
-      <Filter>Engine\Rendering\Model</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Rendering\ValidationLayers\VulkanValidationLayers.cpp">
       <Filter>Engine\Rendering\ValidationLayers</Filter>
     </ClCompile>
@@ -313,9 +319,6 @@
     <ClCompile Include="Engine\LogicCore\Math\Quaternion\SQuaternion.cpp">
       <Filter>Engine\LogicCore\Math\Quaternion</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Rendering\Model\Mesh\Mesh.cpp">
-      <Filter>Engine\Rendering\Model\Mesh</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Rendering\Buffer\BufferContainer\BufferContainer.cpp">
       <Filter>Engine\Rendering\Buffer\BufferContainer</Filter>
     </ClCompile>
@@ -324,9 +327,6 @@
     </ClCompile>
     <ClCompile Include="Engine\Rendering\Buffer\BufferContainer\VertexBufferContainer\VertexBufferContainer.cpp">
       <Filter>Engine\Rendering\Buffer\BufferContainer\VertexBufferContainer</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Rendering\Model\Material\BasicMaterial.cpp">
-      <Filter>Engine\Rendering\Model\Material</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Rendering\Buffer\StagingBuffer\BaseStagingBuffer.cpp">
       <Filter>Engine\Rendering\Buffer\StagingBuffer</Filter>
@@ -339,6 +339,27 @@
     </ClCompile>
     <ClCompile Include="Engine\Rendering\Buffer\StagingBuffer\VertexStagingBuffer\VertexStagingBuffer.cpp">
       <Filter>Engine\Rendering\Buffer\StagingBuffer\VertexStagingBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Model\Material\SkyboxMaterial\SkyboxMaterial.cpp">
+      <Filter>Engine\Rendering\Model\Material\SkyboxMaterial</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Model\Material\SimpleMaterial\SimpleMaterial.cpp">
+      <Filter>Engine\Rendering\Model\Material\SimpleMaterial</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Model\Material\BasicMaterial.cpp">
+      <Filter>Engine\Rendering\Model\Material</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Model\MeshInstance\VulkanMeshInstance.cpp">
+      <Filter>Engine\Rendering\Model\MeshInstance</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Model\Model\Mesh\Mesh.cpp">
+      <Filter>Engine\Rendering\Model\Model\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Model\Model\VulkanModel.cpp">
+      <Filter>Engine\Rendering\Model\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Model\SkyboxInstance\VulkanSkyboxInstance.cpp">
+      <Filter>Engine\Rendering\Model\SkyboxInstance</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -411,9 +432,6 @@
     <ClInclude Include="Engine\Rendering\DepthResources\VulkanDepthResources.h">
       <Filter>Engine\Rendering\DepthResources</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Rendering\Model\VulkanModel.h">
-      <Filter>Engine\Rendering\Model</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Rendering\Texture\VulkanColorResources.h">
       <Filter>Engine\Rendering\Texture</Filter>
     </ClInclude>
@@ -422,9 +440,6 @@
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Manager\RenderManager.h">
       <Filter>Engine\Rendering\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Rendering\Model\VulkanMeshInstance.h">
-      <Filter>Engine\Rendering\Model</Filter>
     </ClInclude>
     <ClInclude Include="Engine\LogicCore\SObject.h">
       <Filter>Engine\LogicCore</Filter>
@@ -468,9 +483,6 @@
     <ClInclude Include="Engine\Rendering\Texture\SkyboxTexture.h">
       <Filter>Engine\Rendering\Texture</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Rendering\Model\VulkanSkyboxInstance.h">
-      <Filter>Engine\Rendering\Model</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Rendering\ValidationLayers\VulkanValidationLayers.h">
       <Filter>Engine\Rendering\ValidationLayers</Filter>
     </ClInclude>
@@ -510,9 +522,6 @@
     <ClInclude Include="Engine\LogicCore\Math\Quaternion\SQuaternion.h">
       <Filter>Engine\LogicCore\Math\Quaternion</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Rendering\Model\Mesh\Mesh.h">
-      <Filter>Engine\Rendering\Model\Mesh</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Rendering\Buffer\BufferContainer\BufferContainer.h">
       <Filter>Engine\Rendering\Buffer\BufferContainer</Filter>
     </ClInclude>
@@ -521,9 +530,6 @@
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Buffer\BufferContainer\VertexBufferContainer\VertexBufferContainer.h">
       <Filter>Engine\Rendering\Buffer\BufferContainer\VertexBufferContainer</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Rendering\Model\Material\BasicMaterial.h">
-      <Filter>Engine\Rendering\Model\Material</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Buffer\StagingBuffer\BaseStagingBuffer.h">
       <Filter>Engine\Rendering\Buffer\StagingBuffer</Filter>
@@ -536,6 +542,27 @@
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Buffer\StagingBuffer\VertexStagingBuffer\VertexStagingBuffer.h">
       <Filter>Engine\Rendering\Buffer\StagingBuffer\VertexStagingBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Model\Material\SkyboxMaterial\SkyboxMaterial.h">
+      <Filter>Engine\Rendering\Model\Material\SkyboxMaterial</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Model\Material\SimpleMaterial\SimpleMaterial.h">
+      <Filter>Engine\Rendering\Model\Material\SimpleMaterial</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Model\Material\BasicMaterial.h">
+      <Filter>Engine\Rendering\Model\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Model\MeshInstance\VulkanMeshInstance.h">
+      <Filter>Engine\Rendering\Model\MeshInstance</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Model\Model\Mesh\Mesh.h">
+      <Filter>Engine\Rendering\Model\Model\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Model\Model\VulkanModel.h">
+      <Filter>Engine\Rendering\Model\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Model\SkyboxInstance\VulkanSkyboxInstance.h">
+      <Filter>Engine\Rendering\Model\SkyboxInstance</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
