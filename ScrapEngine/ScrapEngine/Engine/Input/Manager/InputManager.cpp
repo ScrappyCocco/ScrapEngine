@@ -15,7 +15,7 @@ ScrapEngine::Input::mouse_location ScrapEngine::Input::InputManager::get_last_mo
 {
 	double x_position, y_position;
 	glfwGetCursorPos(window_ref_, &x_position, &y_position);
-	return { x_position, y_position };
+	return {x_position, y_position};
 }
 
 void ScrapEngine::Input::InputManager::set_cursor_input_mode(const ScrapEngine::Input::cursor_mode new_mode) const

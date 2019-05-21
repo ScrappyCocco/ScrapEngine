@@ -17,8 +17,9 @@ ScrapEngine::Core::SGameObject* ScrapEngine::Core::LogicManager::register_game_o
 
 void ScrapEngine::Core::LogicManager::un_register_game_object(SGameObject* input_game_object)
 {
-	const std::vector<SGameObject*>::iterator element = find(registered_game_objects_.begin(), registered_game_objects_.end(),
-	                                                   input_game_object);
+	const std::vector<SGameObject*>::iterator element = find(registered_game_objects_.begin(),
+	                                                         registered_game_objects_.end(),
+	                                                         input_game_object);
 	if (element != registered_game_objects_.end())
 	{
 		delete *element;

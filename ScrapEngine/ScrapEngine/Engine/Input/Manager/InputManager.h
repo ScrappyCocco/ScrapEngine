@@ -22,11 +22,18 @@ namespace ScrapEngine
 
 		enum cursor_mode
 		{
+			/**
+			 * \brief makes the cursor visible and behaving normally.
+			 */
 			cursor_normal_mode,
-			//makes the cursor visible and behaving normally.
+			/**
+			 * \brief makes the cursor invisible when it is over the client area of the window but does not restrict the cursor from leaving.
+			 */
 			cursor_hidden_mode,
-			//makes the cursor invisible when it is over the client area of the window but does not restrict the cursor from leaving.
-			cursor_grabbed_mode //hides and grabs the cursor, providing virtual and unlimited cursor movement.
+			/**
+			 * \brief hides and grabs the cursor, providing virtual and unlimited cursor movement.
+			 */
+			cursor_grabbed_mode
 		};
 
 		enum system_cursor_shapes

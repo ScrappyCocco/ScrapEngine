@@ -15,9 +15,9 @@ ScrapEngine::Render::VulkanMeshInstance::VulkanMeshInstance(const std::string& v
 	Debug::DebugLog::print_to_console_log("VulkanModel loaded");
 	if(vulkan_render_model_->get_meshes()->size() != textures_path.size() && textures_path.size() > 1)
 	{
-		throw "The texture array must have size 1 or equal number of meshes!";
+		throw std::runtime_error("The texture array must have size 1 or equal number of meshes!");
 	}
-	for(auto texture_path: textures_path)
+	for(const auto& texture_path: textures_path)
 	{
 		BasicMaterial* material = new BasicMaterial();
 		material->create_pipeline(vertex_shader_path, fragment_shader_path, swap_chain, render_device);

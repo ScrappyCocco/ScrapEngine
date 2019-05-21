@@ -6,8 +6,8 @@
 
 ScrapEngine::Render::VulkanModel::VulkanModel(const std::string& input_model_path)
 {
-	Debug::DebugLog::print_to_console_log("Loading 3D model...");
-	Debug::DebugLog::print_to_console_log("Loading assimp...");
+	Debug::DebugLog::print_to_console_log("[VulkanModel] Loading 3D model...");
+	Debug::DebugLog::print_to_console_log("[VulkanModel] Loading assimp...");
 	Assimp::Importer importer;
 	const aiScene* scene = importer.ReadFile(input_model_path,
 		aiProcess_CalcTangentSpace |
@@ -22,14 +22,14 @@ ScrapEngine::Render::VulkanModel::VulkanModel(const std::string& input_model_pat
 	}
 
 	const aiVector3D zero_3d(0.0f, 0.0f, 0.0f);
-	Debug::DebugLog::print_to_console_log("Begin model loading...");
-	Debug::DebugLog::print_to_console_log("Number of meshes to load:" + std::to_string(scene->mNumMeshes));
+	Debug::DebugLog::print_to_console_log("[VulkanModel] Begin model loading...");
+	Debug::DebugLog::print_to_console_log("[VulkanModel] Number of meshes to load:" + std::to_string(scene->mNumMeshes));
 	for (unsigned int k = 0; k < scene->mNumMeshes; k++) {
 		//MESH VECTORS
 		std::vector<ScrapEngine::Vertex> mesh_vertices;
 		std::vector<uint32_t> mesh_indices;
 		//LOADING VERTICES
-		Debug::DebugLog::print_to_console_log("Mesh " + std::to_string(k) + " - Loading vertices...");
+		Debug::DebugLog::print_to_console_log("[VulkanModel] Mesh " + std::to_string(k) + " - Loading vertices...");
 		for (unsigned int i = 0; i < scene->mMeshes[k]->mNumVertices; i++) {
 			const aiVector3D* p_pos = &(scene->mMeshes[k]->mVertices[i]);
 			const aiVector3D* p_normal = scene->mMeshes[k]->HasNormals() ? &(scene->mMeshes[k]->mNormals[i]) : &zero_3d;
@@ -42,7 +42,7 @@ ScrapEngine::Render::VulkanModel::VulkanModel(const std::string& input_model_pat
 			mesh_vertices.push_back(vertex);
 		}
 		//LOADING INDICES
-		Debug::DebugLog::print_to_console_log("Mesh " + std::to_string(k) + " - Loading indices...");
+		Debug::DebugLog::print_to_console_log("[VulkanModel] Mesh " + std::to_string(k) + " - Loading indices...");
 		for (unsigned int i = 0; i < scene->mMeshes[k]->mNumFaces; i++) {
 			const aiFace& face = scene->mMeshes[k]->mFaces[i];
 			assert(face.mNumIndices == 3);
@@ -53,7 +53,7 @@ ScrapEngine::Render::VulkanModel::VulkanModel(const std::string& input_model_pat
 		//Save mesh informations
 		model_meshes_.push_back(new Mesh(mesh_vertices, mesh_indices));
 	}
-	Debug::DebugLog::print_to_console_log("Vertex and Index model info loaded");
+	Debug::DebugLog::print_to_console_log("[VulkanModel] Vertex and Index model info loaded");
 }
 
 ScrapEngine::Render::VulkanModel::~VulkanModel()
