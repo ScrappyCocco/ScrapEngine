@@ -13,7 +13,7 @@ namespace ScrapEngine
 			ShaderManager() = default;
 			~ShaderManager() = default;
 
-			vk::ShaderModule create_shader_module(const std::vector<char>& code);
+			static vk::ShaderModule create_shader_module(const std::vector<char>& code);
 
 			static std::vector<char> read_file(const std::string& filename);
 		};

@@ -1,5 +1,5 @@
 #include <Engine/Rendering/Pipeline/StandardPipeline/StandardVulkanGraphicsPipeline.h>
-
+#include <Engine/Rendering/Shader/ShaderManager.h>
 #include <Engine/Rendering/Base/Vertex.h>
 #include <Engine/Rendering/Base/StaticTypes.h>
 
@@ -11,13 +11,12 @@ ScrapEngine::Render::StandardVulkanGraphicsPipeline::StandardVulkanGraphicsPipel
                                                                                     vk::SampleCountFlagBits
                                                                                     msaa_samples)
 {
-	shader_manager_ref_ = new ShaderManager();
-
-	auto vert_shader_code = ShaderManager::read_file(vertex_shader);
-	auto frag_shader_code = ShaderManager::read_file(fragment_shader);
-
-	vk::ShaderModule vert_shader_module = shader_manager_ref_->create_shader_module(vert_shader_code);
-	vk::ShaderModule frag_shader_module = shader_manager_ref_->create_shader_module(frag_shader_code);
+	vk::ShaderModule vert_shader_module = ShaderManager::create_shader_module(
+		ShaderManager::read_file(vertex_shader)
+	);
+	vk::ShaderModule frag_shader_module = ShaderManager::create_shader_module(
+		ShaderManager::read_file(fragment_shader)
+	);
 
 	vk::PipelineShaderStageCreateInfo vert_shader_stage_info(
 		vk::PipelineShaderStageCreateFlags(),
@@ -146,5 +145,4 @@ ScrapEngine::Render::StandardVulkanGraphicsPipeline::StandardVulkanGraphicsPipel
 
 	VulkanDevice::static_logic_device_ref->destroyShaderModule(frag_shader_module);
 	VulkanDevice::static_logic_device_ref->destroyShaderModule(vert_shader_module);
-	delete shader_manager_ref_;
 }

@@ -18,13 +18,13 @@ ScrapEngine::Render::VulkanSemaphoresManager::VulkanSemaphoresManager(
 	for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++)
 	{
 		if (VulkanDevice::static_logic_device_ref->createSemaphore(&semaphore_info, nullptr,
-		                                                           &image_available_semaphores_[i]) != vk::Result::
-			eSuccess ||
+		                                                           &image_available_semaphores_[i])
+			!= vk::Result::eSuccess ||
 			VulkanDevice::static_logic_device_ref->createSemaphore(&semaphore_info, nullptr,
-			                                                       &render_finished_semaphores_[i]) != vk::Result::
-			eSuccess ||
-			VulkanDevice::static_logic_device_ref->createFence(&fence_info, nullptr, &in_flight_fences_[i]) != vk::
-			Result::eSuccess)
+			                                                       &render_finished_semaphores_[i])
+			!= vk::Result::eSuccess ||
+			VulkanDevice::static_logic_device_ref->createFence(&fence_info, nullptr, &in_flight_fences_[i])
+			!= vk::Result::eSuccess)
 		{
 			throw std::runtime_error("Failed to create VulkanSemaphoresManager for a frame!");
 		}
