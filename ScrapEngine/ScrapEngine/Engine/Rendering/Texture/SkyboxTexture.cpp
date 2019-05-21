@@ -1,6 +1,7 @@
 #include <Engine/Rendering/Texture/SkyboxTexture.h>
 #include <Engine/Rendering/Memory/MemoryManager.h>
 #include <Engine/Debug/DebugLog.h>
+#include <Engine/Rendering/Buffer/StagingBuffer/ImageStagingBuffer/ImageStagingBuffer.h>
 
 ScrapEngine::Render::SkyboxTexture::SkyboxTexture(const std::array<std::string, 6>& files_path)
 {
@@ -88,7 +89,7 @@ ScrapEngine::Render::SkyboxTexture::SkyboxTexture(const std::array<std::string, 
 
 	for (unsigned int i = 0; i < buffer_copy_regions.size(); i++)
 	{
-		ScrapEngine::Render::StagingBuffer::copy_buffer_to_image(
+		ScrapEngine::Render::ImageStagingBuffer::copy_buffer_to_image(
 			images_[i]->get_texture_staging_buffer()->get_staging_buffer(), &cubemap_, images_[i]->get_texture_width(),
 			images_[i]->get_texture_height(), &buffer_copy_regions[i], 1);
 	}

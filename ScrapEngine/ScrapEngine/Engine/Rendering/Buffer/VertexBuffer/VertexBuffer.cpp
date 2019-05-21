@@ -1,14 +1,14 @@
 #include <Engine/Rendering/Buffer/VertexBuffer/VertexBuffer.h>
 
 #include <Engine/Rendering/Buffer/BaseBuffer.h>
-#include <Engine/Rendering/Buffer/StagingBuffer/StagingBuffer.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
+#include <Engine/Rendering/Buffer/StagingBuffer/VertexStagingBuffer/VertexStagingBuffer.h>
 
 ScrapEngine::Render::VertexBuffer::VertexBuffer(const std::vector<ScrapEngine::Vertex>* vertices)
 {
 	const vk::DeviceSize buffer_size(sizeof((*vertices)[0]) * vertices->size());
 
-	ScrapEngine::Render::StagingBuffer* staging = new StagingBuffer(buffer_size, vertices);
+	ScrapEngine::Render::BaseStagingBuffer* staging = new VertexStagingBuffer(buffer_size, vertices);
 
 	BaseBuffer::create_buffer(buffer_size,
 	                          vk::BufferUsageFlagBits::eTransferDst | vk::BufferUsageFlagBits::eVertexBuffer,

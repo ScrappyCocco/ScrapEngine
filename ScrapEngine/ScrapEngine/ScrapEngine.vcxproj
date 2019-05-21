@@ -40,7 +40,10 @@
     <ClCompile Include="Engine\Rendering\Buffer\CommandBuffer\VulkanCommandBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\FrameBuffer\VulkanFrameBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\IndexBuffer\IndexBuffer.cpp" />
-    <ClCompile Include="Engine\Rendering\Buffer\StagingBuffer\StagingBuffer.cpp" />
+    <ClCompile Include="Engine\Rendering\Buffer\StagingBuffer\BaseStagingBuffer.cpp" />
+    <ClCompile Include="Engine\Rendering\Buffer\StagingBuffer\ImageStagingBuffer\ImageStagingBuffer.cpp" />
+    <ClCompile Include="Engine\Rendering\Buffer\StagingBuffer\IndicesStagingBuffer\IndicesStagingBuffer.cpp" />
+    <ClCompile Include="Engine\Rendering\Buffer\StagingBuffer\VertexStagingBuffer\VertexStagingBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\UniformBuffer\UniformBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\VertexBuffer\VertexBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Camera\Camera.cpp" />
@@ -102,7 +105,10 @@
     <ClInclude Include="Engine\Rendering\Buffer\CommandBuffer\VulkanCommandBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\FrameBuffer\VulkanFrameBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\IndexBuffer\IndexBuffer.h" />
-    <ClInclude Include="Engine\Rendering\Buffer\StagingBuffer\StagingBuffer.h" />
+    <ClInclude Include="Engine\Rendering\Buffer\StagingBuffer\BaseStagingBuffer.h" />
+    <ClInclude Include="Engine\Rendering\Buffer\StagingBuffer\ImageStagingBuffer\ImageStagingBuffer.h" />
+    <ClInclude Include="Engine\Rendering\Buffer\StagingBuffer\IndicesStagingBuffer\IndicesStagingBuffer.h" />
+    <ClInclude Include="Engine\Rendering\Buffer\StagingBuffer\VertexStagingBuffer\VertexStagingBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\UniformBuffer\UniformBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\VertexBuffer\VertexBuffer.h" />
     <ClInclude Include="Engine\Rendering\Camera\Camera.h" />

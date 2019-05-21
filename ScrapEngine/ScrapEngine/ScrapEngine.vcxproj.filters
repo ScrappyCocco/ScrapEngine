@@ -155,6 +155,15 @@
     <Filter Include="Engine\Rendering\Model\Material">
       <UniqueIdentifier>{a52affdb-5fc6-4593-a48b-fa26be82d184}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Rendering\Buffer\StagingBuffer\ImageStagingBuffer">
+      <UniqueIdentifier>{87365126-4165-4462-9b89-aabd7f2a1871}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Buffer\StagingBuffer\IndicesStagingBuffer">
+      <UniqueIdentifier>{985b0e5b-dcc1-42e3-b548-f6ee5c0e4988}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Buffer\StagingBuffer\VertexStagingBuffer">
+      <UniqueIdentifier>{e3d3a890-c4a3-4c7d-bd19-724c64622d4a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Manager\EngineManager.cpp">
@@ -295,9 +304,6 @@
     <ClCompile Include="Engine\Rendering\Buffer\UniformBuffer\UniformBuffer.cpp">
       <Filter>Engine\Rendering\Buffer\UniformBuffer</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Rendering\Buffer\StagingBuffer\StagingBuffer.cpp">
-      <Filter>Engine\Rendering\Buffer\StagingBuffer</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\LogicCore\Math\Vector\SVector3.cpp">
       <Filter>Engine\LogicCore\Math\Vector</Filter>
     </ClCompile>
@@ -321,6 +327,18 @@
     </ClCompile>
     <ClCompile Include="Engine\Rendering\Model\Material\BasicMaterial.cpp">
       <Filter>Engine\Rendering\Model\Material</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Buffer\StagingBuffer\BaseStagingBuffer.cpp">
+      <Filter>Engine\Rendering\Buffer\StagingBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Buffer\StagingBuffer\ImageStagingBuffer\ImageStagingBuffer.cpp">
+      <Filter>Engine\Rendering\Buffer\StagingBuffer\ImageStagingBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Buffer\StagingBuffer\IndicesStagingBuffer\IndicesStagingBuffer.cpp">
+      <Filter>Engine\Rendering\Buffer\StagingBuffer\IndicesStagingBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Buffer\StagingBuffer\VertexStagingBuffer\VertexStagingBuffer.cpp">
+      <Filter>Engine\Rendering\Buffer\StagingBuffer\VertexStagingBuffer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -483,9 +501,6 @@
     <ClInclude Include="Engine\Rendering\Buffer\UniformBuffer\UniformBuffer.h">
       <Filter>Engine\Rendering\Buffer\UniformBuffer</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Rendering\Buffer\StagingBuffer\StagingBuffer.h">
-      <Filter>Engine\Rendering\Buffer\StagingBuffer</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\LogicCore\Math\Vector\SVector3.h">
       <Filter>Engine\LogicCore\Math\Vector</Filter>
     </ClInclude>
@@ -509,6 +524,18 @@
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Model\Material\BasicMaterial.h">
       <Filter>Engine\Rendering\Model\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Buffer\StagingBuffer\BaseStagingBuffer.h">
+      <Filter>Engine\Rendering\Buffer\StagingBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Buffer\StagingBuffer\ImageStagingBuffer\ImageStagingBuffer.h">
+      <Filter>Engine\Rendering\Buffer\StagingBuffer\ImageStagingBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Buffer\StagingBuffer\IndicesStagingBuffer\IndicesStagingBuffer.h">
+      <Filter>Engine\Rendering\Buffer\StagingBuffer\IndicesStagingBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Buffer\StagingBuffer\VertexStagingBuffer\VertexStagingBuffer.h">
+      <Filter>Engine\Rendering\Buffer\StagingBuffer\VertexStagingBuffer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

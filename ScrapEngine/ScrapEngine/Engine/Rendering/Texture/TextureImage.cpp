@@ -18,7 +18,7 @@ ScrapEngine::Render::TextureImage::TextureImage(const std::string& file_path, bo
 		throw std::runtime_error("TextureImage: Failed to load texture image! (pixels not valid) - " + file_path);
 	}
 
-	staginf_buffer_ref_ = new StagingBuffer(image_size, pixels);
+	staginf_buffer_ref_ = new ImageStagingBuffer(image_size, pixels);
 
 	stbi_image_free(pixels);
 
@@ -31,7 +31,7 @@ ScrapEngine::Render::TextureImage::TextureImage(const std::string& file_path, bo
 
 	if (should_copy_from_staging)
 	{
-		StagingBuffer::copy_buffer_to_image(staginf_buffer_ref_->get_staging_buffer(), &texture_image_,
+		ImageStagingBuffer::copy_buffer_to_image(staginf_buffer_ref_->get_staging_buffer(), &texture_image_,
 		                                    static_cast<uint32_t>(tex_width_), static_cast<uint32_t>(tex_height_));
 
 		delete staginf_buffer_ref_;
@@ -286,7 +286,7 @@ vk::Image* ScrapEngine::Render::TextureImage::get_texture_image()
 	return &texture_image_;
 }
 
-ScrapEngine::Render::StagingBuffer* ScrapEngine::Render::TextureImage::get_texture_staging_buffer() const
+ScrapEngine::Render::BaseStagingBuffer* ScrapEngine::Render::TextureImage::get_texture_staging_buffer() const
 {
 	return staginf_buffer_ref_;
 }

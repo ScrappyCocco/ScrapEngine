@@ -2,7 +2,7 @@
 
 #include <vulkan/vulkan.hpp>
 #include <string>
-#include <Engine/Rendering/Buffer/StagingBuffer/StagingBuffer.h>
+#include <Engine/Rendering/Buffer/StagingBuffer/ImageStagingBuffer/ImageStagingBuffer.h>
 
 
 namespace ScrapEngine
@@ -17,7 +17,7 @@ namespace ScrapEngine
 			uint32_t mip_levels_;
 			int tex_width_, tex_height_, tex_channels_;
 
-			ScrapEngine::Render::StagingBuffer* staginf_buffer_ref_ = nullptr;
+			ScrapEngine::Render::BaseStagingBuffer* staginf_buffer_ref_ = nullptr;
 
 		public:
 			TextureImage(const std::string& file_path, bool should_copy_from_staging = true);
@@ -43,7 +43,7 @@ namespace ScrapEngine
 			                      const int32_t& tex_height, const uint32_t& mip_levels);
 
 			vk::Image* get_texture_image();
-			ScrapEngine::Render::StagingBuffer* get_texture_staging_buffer() const;
+			ScrapEngine::Render::BaseStagingBuffer* get_texture_staging_buffer() const;
 			vk::DeviceMemory* get_texture_image_memory();
 			uint32_t get_mip_levels() const;
 			int get_texture_width() const;
