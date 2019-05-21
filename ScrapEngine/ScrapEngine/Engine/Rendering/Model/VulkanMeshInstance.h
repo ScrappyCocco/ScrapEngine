@@ -14,8 +14,6 @@ namespace ScrapEngine
 {
 	namespace Render
 	{
-		class BasicMaterial;
-
 		class VulkanMeshInstance
 		{
 		private:

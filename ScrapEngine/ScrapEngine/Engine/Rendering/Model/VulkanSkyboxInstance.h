@@ -12,14 +12,12 @@
 #include <Engine/Utility/UsefulTypes.h>
 #include <Engine/Rendering/Buffer/BufferContainer/VertexBufferContainer/VertexBufferContainer.h>
 #include <Engine/Rendering/Buffer/BufferContainer/IndicesBufferContainer/IndicesBufferContainer.h>
+#include <Engine/Rendering/Pipeline/VulkanGraphicsPipeline.h>
 
 namespace ScrapEngine
 {
 	namespace Render
 	{
-		class SkyboxTexture;
-		class VulkanGraphicsPipeline;
-
 		class VulkanSkyboxInstance
 		{
 		private:

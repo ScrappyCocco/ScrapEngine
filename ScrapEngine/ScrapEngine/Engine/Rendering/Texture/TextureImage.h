@@ -9,8 +9,6 @@ namespace ScrapEngine
 {
 	namespace Render
 	{
-		class StagingBuffer;
-
 		class TextureImage
 		{
 		private:
@@ -26,7 +24,8 @@ namespace ScrapEngine
 			~TextureImage();
 
 			void create_image(const uint32_t& width, const uint32_t& height, const vk::Format& format,
-			                  vk::ImageTiling tiling, const vk::ImageUsageFlags& usage, const vk::MemoryPropertyFlags& properties,
+			                  vk::ImageTiling tiling, const vk::ImageUsageFlags& usage,
+			                  const vk::MemoryPropertyFlags& properties,
 			                  vk::Image& image, vk::DeviceMemory& image_memory) const;
 			static void create_image(const uint32_t& width, const uint32_t& height, const vk::Format& format,
 			                         vk::ImageTiling tiling, const vk::ImageUsageFlags& usage,

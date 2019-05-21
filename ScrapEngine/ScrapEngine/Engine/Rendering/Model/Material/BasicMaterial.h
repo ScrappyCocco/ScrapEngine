@@ -5,16 +5,13 @@
 #include <Engine/Rendering/Pipeline/VulkanGraphicsPipeline.h>
 #include <Engine/Rendering/Descriptor/VulkanDescriptorPool.h>
 #include <Engine/Rendering/Descriptor/VulkanDescriptorSet.h>
+#include <Engine/Rendering/Device/VulkanDevice.h>
+#include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
 
 namespace ScrapEngine
 {
 	namespace Render
 	{
-		class VulkanGraphicsPipeline;
-		class TextureImage;
-		class TextureImageView;
-		class TextureSampler;
-
 		class BasicMaterial
 		{
 		private:

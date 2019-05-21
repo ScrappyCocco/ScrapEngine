@@ -2,6 +2,7 @@
 
 #include <Engine/Rendering/Buffer/BaseBuffer.h>
 #include <Engine/Rendering/Buffer/StagingBuffer/StagingBuffer.h>
+#include <Engine/Rendering/Device/VulkanDevice.h>
 
 ScrapEngine::Render::VertexBuffer::VertexBuffer(const std::vector<ScrapEngine::Vertex>* vertices)
 {

@@ -9,9 +9,6 @@ namespace ScrapEngine
 {
 	namespace Render
 	{
-		class TextureImage;
-		class StagingBuffer;
-
 		class SkyboxTexture
 		{
 		private:

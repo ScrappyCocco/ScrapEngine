@@ -1,6 +1,7 @@
 #include <Engine/Rendering/Texture/VulkanColorResources.h>
 #include <Engine/Rendering/Texture/TextureImage.h>
 #include <Engine/Rendering/Texture/TextureImageView.h>
+#include <Engine/Rendering/Device/VulkanDevice.h>
 
 ScrapEngine::Render::VulkanColorResources::VulkanColorResources(vk::SampleCountFlagBits msaa_samples,
                                                                 ScrapEngine::Render::VulkanSwapChain* swap_chain_ref)

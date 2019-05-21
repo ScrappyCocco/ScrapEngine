@@ -10,11 +10,6 @@ namespace ScrapEngine
 {
 	namespace Render
 	{
-
-		class VulkanSkyboxInstance;
-		class VulkanMeshInstance;
-		class VulkanGraphicsPipeline;
-
 		class VulkanCommandBuffer
 		{
 		private:
@@ -26,7 +21,8 @@ namespace ScrapEngine
 
 			~VulkanCommandBuffer();
 
-			void init_command_buffer(ScrapEngine::Render::VulkanFrameBuffer* swap_chain_frame_buffer, vk::Extent2D* input_swap_chain_extent_ref);
+			void init_command_buffer(ScrapEngine::Render::VulkanFrameBuffer* swap_chain_frame_buffer,
+			                         vk::Extent2D* input_swap_chain_extent_ref);
 			void load_skybox(ScrapEngine::Render::VulkanSkyboxInstance* skybox_ref);
 			void load_mesh(const ScrapEngine::Render::VulkanMeshInstance* mesh);
 			void close_command_buffer();
