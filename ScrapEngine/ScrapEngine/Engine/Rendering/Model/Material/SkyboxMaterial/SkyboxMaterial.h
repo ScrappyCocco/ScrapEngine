@@ -1,12 +1,12 @@
 #pragma once
 
 #include <Engine/Rendering/Model/Material/BasicMaterial.h>
-#include <Engine/Rendering/Texture/TextureSampler.h>
-#include <Engine/Rendering/Texture/TextureImageView.h>
+#include <Engine/Rendering/Texture/TextureSampler/TextureSampler.h>
+#include <Engine/Rendering/Texture/TextureImageView/TextureImageView.h>
 #include <Engine/Rendering/Descriptor/VulkanDescriptorPool.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
 #include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
-#include <Engine/Rendering/Texture/SkyboxTexture.h>
+#include <Engine/Rendering/Texture/Texture/BaseTexture.h>
 
 namespace ScrapEngine
 {
@@ -15,7 +15,7 @@ namespace ScrapEngine
 		class SkyboxMaterial : public BasicMaterial
 		{
 		private:
-			ScrapEngine::Render::SkyboxTexture* skybox_texture_ = nullptr;
+			ScrapEngine::Render::BaseTexture* skybox_texture_ = nullptr;
 			ScrapEngine::Render::TextureImageView* vulkan_texture_image_view_ = nullptr;
 			ScrapEngine::Render::TextureSampler* vulkan_texture_sampler_ = nullptr;
 			ScrapEngine::Render::VulkanDescriptorPool* vulkan_render_descriptor_pool_ = nullptr;

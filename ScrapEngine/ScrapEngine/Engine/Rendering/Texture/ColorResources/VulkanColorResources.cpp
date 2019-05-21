@@ -1,6 +1,6 @@
-#include <Engine/Rendering/Texture/VulkanColorResources.h>
-#include <Engine/Rendering/Texture/TextureImage.h>
-#include <Engine/Rendering/Texture/TextureImageView.h>
+#include <Engine/Rendering/Texture/ColorResources/VulkanColorResources.h>
+#include <Engine/Rendering/Texture/Texture/BaseTexture.h>
+#include <Engine/Rendering/Texture/TextureImageView/TextureImageView.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
 
 ScrapEngine::Render::VulkanColorResources::VulkanColorResources(vk::SampleCountFlagBits msaa_samples,
@@ -8,7 +8,7 @@ ScrapEngine::Render::VulkanColorResources::VulkanColorResources(vk::SampleCountF
 {
 	const vk::Format color_format = swap_chain_ref->get_swap_chain_image_format();
 
-	ScrapEngine::Render::TextureImage::create_image(swap_chain_ref->get_swap_chain_extent().width,
+	ScrapEngine::Render::BaseTexture::create_image(swap_chain_ref->get_swap_chain_extent().width,
 	                                               swap_chain_ref->get_swap_chain_extent().height, color_format,
 	                                               vk::ImageTiling::eOptimal,
 	                                               vk::ImageUsageFlagBits::eTransientAttachment | vk::ImageUsageFlagBits
@@ -17,7 +17,7 @@ ScrapEngine::Render::VulkanColorResources::VulkanColorResources(vk::SampleCountF
 	color_image_view_ = ScrapEngine::Render::TextureImageView::create_image_view(
 		&color_image_, color_format, vk::ImageAspectFlagBits::eColor, 1);
 
-	ScrapEngine::Render::TextureImage::transition_image_layout(&color_image_, color_format, vk::ImageLayout::eUndefined,
+	ScrapEngine::Render::BaseTexture::transition_image_layout(&color_image_, color_format, vk::ImageLayout::eUndefined,
 	                                                         vk::ImageLayout::eColorAttachmentOptimal, 1);
 }
 

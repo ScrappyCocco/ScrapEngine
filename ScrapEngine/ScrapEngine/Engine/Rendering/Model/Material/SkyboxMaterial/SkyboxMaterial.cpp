@@ -1,6 +1,7 @@
 #include <Engine/Rendering/Model/Material/SkyboxMaterial/SkyboxMaterial.h>
 #include <Engine/Debug/DebugLog.h>
 #include <Engine/Rendering/Pipeline/SkyboxPipeline/SkyboxVulkanGraphicsPipeline.h>
+#include <Engine/Rendering/Texture/Texture/SkyboxTexture/SkyboxTexture.h>
 
 ScrapEngine::Render::SkyboxMaterial::~SkyboxMaterial()
 {

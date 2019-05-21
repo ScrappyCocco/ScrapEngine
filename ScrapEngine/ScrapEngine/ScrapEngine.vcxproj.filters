@@ -191,6 +191,24 @@
     <Filter Include="Engine\Rendering\Queue\PresentationQueue">
       <UniqueIdentifier>{6f22bebe-4913-4568-af38-311d1b0ddf9a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Rendering\Texture\ColorResources">
+      <UniqueIdentifier>{6567112b-5a1d-4921-ad4c-b205d06e58ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Texture\Texture">
+      <UniqueIdentifier>{56051b60-8c76-43f4-a81f-8f52db3ca1ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Texture\TextureImageView">
+      <UniqueIdentifier>{24c016cf-b994-4009-8dd1-31b361917b15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Texture\TextureSampler">
+      <UniqueIdentifier>{997ae25b-0022-4508-9383-c063412c0ca8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Texture\Texture\SkyboxTexture">
+      <UniqueIdentifier>{d24e6ddf-dcd9-4e3e-b9cd-dab3450e0aa2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Texture\Texture\StandardTexture">
+      <UniqueIdentifier>{7a6f7939-800b-473d-84b2-47f521748348}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Manager\EngineManager.cpp">
@@ -238,20 +256,8 @@
     <ClCompile Include="Engine\Rendering\Descriptor\VulkanDescriptorPool.cpp">
       <Filter>Engine\Rendering\Descriptor</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Rendering\Texture\TextureImage.cpp">
-      <Filter>Engine\Rendering\Texture</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Rendering\Texture\TextureImageView.cpp">
-      <Filter>Engine\Rendering\Texture</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Rendering\Texture\TextureSampler.cpp">
-      <Filter>Engine\Rendering\Texture</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Rendering\DepthResources\VulkanDepthResources.cpp">
       <Filter>Engine\Rendering\DepthResources</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Rendering\Texture\VulkanColorResources.cpp">
-      <Filter>Engine\Rendering\Texture</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Rendering\Manager\RenderManager.cpp">
       <Filter>Engine\Rendering\Manager</Filter>
@@ -288,9 +294,6 @@
     </ClCompile>
     <ClCompile Include="Engine\Rendering\Camera\Camera.cpp">
       <Filter>Engine\Rendering\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Rendering\Texture\SkyboxTexture.cpp">
-      <Filter>Engine\Rendering\Texture</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Rendering\ValidationLayers\VulkanValidationLayers.cpp">
       <Filter>Engine\Rendering\ValidationLayers</Filter>
@@ -382,6 +385,24 @@
     <ClCompile Include="Engine\Rendering\Queue\BaseQueue.cpp">
       <Filter>Engine\Rendering\Queue</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Rendering\Texture\ColorResources\VulkanColorResources.cpp">
+      <Filter>Engine\Rendering\Texture\ColorResources</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Texture\TextureSampler\TextureSampler.cpp">
+      <Filter>Engine\Rendering\Texture\TextureSampler</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Texture\TextureImageView\TextureImageView.cpp">
+      <Filter>Engine\Rendering\Texture\TextureImageView</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Texture\Texture\BaseTexture.cpp">
+      <Filter>Engine\Rendering\Texture\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Texture\Texture\StandardTexture\StandardTexture.cpp">
+      <Filter>Engine\Rendering\Texture\Texture\StandardTexture</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Texture\Texture\SkyboxTexture\SkyboxTexture.cpp">
+      <Filter>Engine\Rendering\Texture\Texture\SkyboxTexture</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Manager\EngineManager.h">
@@ -432,20 +453,8 @@
     <ClInclude Include="Engine\Rendering\Descriptor\VulkanDescriptorPool.h">
       <Filter>Engine\Rendering\Descriptor</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Rendering\Texture\TextureImage.h">
-      <Filter>Engine\Rendering\Texture</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Rendering\Texture\TextureImageView.h">
-      <Filter>Engine\Rendering\Texture</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Rendering\Texture\TextureSampler.h">
-      <Filter>Engine\Rendering\Texture</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Rendering\DepthResources\VulkanDepthResources.h">
       <Filter>Engine\Rendering\DepthResources</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Rendering\Texture\VulkanColorResources.h">
-      <Filter>Engine\Rendering\Texture</Filter>
     </ClInclude>
     <ClInclude Include="..\..\external\stb\stb_image.h">
       <Filter>Engine\External</Filter>
@@ -491,9 +500,6 @@
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Camera\Camera.h">
       <Filter>Engine\Rendering\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Rendering\Texture\SkyboxTexture.h">
-      <Filter>Engine\Rendering\Texture</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Rendering\ValidationLayers\VulkanValidationLayers.h">
       <Filter>Engine\Rendering\ValidationLayers</Filter>
@@ -593,6 +599,24 @@
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Queue\BaseQueue.h">
       <Filter>Engine\Rendering\Queue</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Texture\ColorResources\VulkanColorResources.h">
+      <Filter>Engine\Rendering\Texture\ColorResources</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Texture\TextureSampler\TextureSampler.h">
+      <Filter>Engine\Rendering\Texture\TextureSampler</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Texture\TextureImageView\TextureImageView.h">
+      <Filter>Engine\Rendering\Texture\TextureImageView</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Texture\Texture\BaseTexture.h">
+      <Filter>Engine\Rendering\Texture\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Texture\Texture\StandardTexture\StandardTexture.h">
+      <Filter>Engine\Rendering\Texture\Texture\StandardTexture</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Texture\Texture\SkyboxTexture\SkyboxTexture.h">
+      <Filter>Engine\Rendering\Texture\Texture\SkyboxTexture</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

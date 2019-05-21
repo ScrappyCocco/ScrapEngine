@@ -14,7 +14,7 @@
 #include <Engine/Rendering/Semaphores/VulkanSemaphoresManager.h>
 #include <Engine/Rendering/Buffer/UniformBuffer/UniformBuffer.h>
 #include <Engine/Rendering/DepthResources/VulkanDepthResources.h>
-#include <Engine/Rendering/Texture/VulkanColorResources.h>
+#include <Engine/Rendering/Texture/ColorResources/VulkanColorResources.h>
 #include <Engine/Rendering/Model/MeshInstance/VulkanMeshInstance.h>
 #include <Engine/Rendering/Model/SkyboxInstance/VulkanSkyboxInstance.h>
 

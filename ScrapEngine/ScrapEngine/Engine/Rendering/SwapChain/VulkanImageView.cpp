@@ -1,5 +1,5 @@
 #include <Engine/Rendering/SwapChain/VulkanImageView.h>
-#include <Engine/Rendering/Texture/TextureImageView.h>
+#include <Engine/Rendering/Texture/TextureImageView/TextureImageView.h>
 #include <Engine/Rendering/Base/StaticTypes.h>
 
 ScrapEngine::Render::VulkanImageView::VulkanImageView(ScrapEngine::Render::VulkanSwapChain* swap_chain_ref)

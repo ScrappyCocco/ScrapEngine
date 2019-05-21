@@ -1,4 +1,4 @@
-#include <Engine/Rendering/Texture/TextureSampler.h>
+#include <Engine/Rendering/Texture/TextureSampler/TextureSampler.h>
 #include <stdexcept>
 #include <Engine/Rendering/Base/StaticTypes.h>
 

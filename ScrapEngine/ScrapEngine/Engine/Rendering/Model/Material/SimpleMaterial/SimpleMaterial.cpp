@@ -1,6 +1,7 @@
 #include <Engine/Rendering/Model/Material/SimpleMaterial/SimpleMaterial.h>
 #include <Engine/Debug/DebugLog.h>
 #include <Engine/Rendering/Pipeline/StandardPipeline/StandardVulkanGraphicsPipeline.h>
+#include <Engine/Rendering/Texture/Texture/StandardTexture/StandardTexture.h>
 
 ScrapEngine::Render::SimpleMaterial::~SimpleMaterial()
 {
@@ -28,7 +29,7 @@ void ScrapEngine::Render::SimpleMaterial::create_pipeline(const std::string& ver
 
 void ScrapEngine::Render::SimpleMaterial::create_texture(const std::string& texture_path)
 {
-	vulkan_texture_image_ = new TextureImage(texture_path);
+	vulkan_texture_image_ = new StandardTexture(texture_path);
 	Debug::DebugLog::print_to_console_log("TextureImage created");
 	vulkan_texture_image_view_ = new TextureImageView(vulkan_texture_image_->get_texture_image(),
 	                                                  vulkan_texture_image_->get_mip_levels());

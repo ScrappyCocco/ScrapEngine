@@ -1,69 +1,36 @@
 #define STB_IMAGE_IMPLEMENTATION
-#include <Engine/Rendering/Texture/TextureImage.h>
-
-#include <stdexcept>
+#include <Engine/Rendering/Texture/Texture/BaseTexture.h>
 #include <Engine/Rendering/Memory/MemoryManager.h>
 #include <Engine/Rendering/Buffer/BaseBuffer.h>
 #include <Engine/Rendering/DepthResources/VulkanDepthResources.h>
 
-ScrapEngine::Render::TextureImage::TextureImage(const std::string& file_path, bool should_copy_from_staging)
+ScrapEngine::Render::BaseTexture::~BaseTexture()
 {
-	stbi_uc* pixels = stbi_load(file_path.c_str(), &tex_width_, &tex_height_, &tex_channels_, STBI_rgb_alpha);
-
-	const vk::DeviceSize image_size = tex_width_ * tex_height_ * 4;
-	mip_levels_ = static_cast<uint32_t>(std::floor(std::log2(std::max(tex_width_, tex_height_)))) + 1;
-
-	if (!pixels)
-	{
-		throw std::runtime_error("TextureImage: Failed to load texture image! (pixels not valid) - " + file_path);
-	}
-
-	staginf_buffer_ref_ = new ImageStagingBuffer(image_size, pixels);
-
-	stbi_image_free(pixels);
-
-	create_image(tex_width_, tex_height_, vk::Format::eR8G8B8A8Unorm, vk::ImageTiling::eOptimal,
-	             vk::ImageUsageFlagBits::eTransferSrc | vk::ImageUsageFlagBits::eTransferDst | vk::ImageUsageFlagBits::
-	             eSampled, vk::MemoryPropertyFlagBits::eDeviceLocal, texture_image_, texture_image_memory_);
-
-	transition_image_layout(&texture_image_, vk::Format::eR8G8B8A8Unorm, vk::ImageLayout::eUndefined,
-	                        vk::ImageLayout::eTransferDstOptimal);
-
-	if (should_copy_from_staging)
-	{
-		ImageStagingBuffer::copy_buffer_to_image(staginf_buffer_ref_->get_staging_buffer(), &texture_image_,
-		                                    static_cast<uint32_t>(tex_width_), static_cast<uint32_t>(tex_height_));
-
-		delete staginf_buffer_ref_;
-		staginf_buffer_ref_ = nullptr;
-
-		generate_mipmaps(&texture_image_, vk::Format::eR8G8B8A8Unorm, tex_width_, tex_height_, mip_levels_);
-	}
-}
-
-ScrapEngine::Render::TextureImage::~TextureImage()
-{
-	delete staginf_buffer_ref_;
-
 	VulkanDevice::static_logic_device_ref->destroyImage(texture_image_);
 	VulkanDevice::static_logic_device_ref->freeMemory(texture_image_memory_);
 }
 
-void ScrapEngine::Render::TextureImage::create_image(const uint32_t& width, const uint32_t& height,
-                                                     const vk::Format& format, vk::ImageTiling tiling,
-                                                     const vk::ImageUsageFlags& usage, const vk::MemoryPropertyFlags& properties,
-                                                     vk::Image& image, vk::DeviceMemory& image_memory) const
+vk::Image* ScrapEngine::Render::BaseTexture::get_texture_image()
 {
-	create_image(width, height, format, tiling, usage, properties, image, image_memory, mip_levels_,
-	             vk::SampleCountFlagBits::e1);
+	return &texture_image_;
 }
 
-void ScrapEngine::Render::TextureImage::create_image(const uint32_t& width, const uint32_t& height,
-                                                     const vk::Format& format, vk::ImageTiling tiling,
-                                                     const vk::ImageUsageFlags& usage,
-                                                     const vk::MemoryPropertyFlags& properties, vk::Image& image,
-                                                     vk::DeviceMemory& image_memory, uint32_t mip_levels_data,
-                                                     vk::SampleCountFlagBits num_samples)
+vk::DeviceMemory* ScrapEngine::Render::BaseTexture::get_texture_image_memory()
+{
+	return &texture_image_memory_;
+}
+
+uint32_t ScrapEngine::Render::BaseTexture::get_mip_levels() const
+{
+	return mip_levels_;
+}
+
+void ScrapEngine::Render::BaseTexture::create_image(const uint32_t& width, const uint32_t& height,
+                                                    const vk::Format& format, vk::ImageTiling tiling,
+                                                    const vk::ImageUsageFlags& usage,
+                                                    const vk::MemoryPropertyFlags& properties, vk::Image& image,
+                                                    vk::DeviceMemory& image_memory, uint32_t mip_levels_data,
+                                                    vk::SampleCountFlagBits num_samples)
 {
 	vk::ImageCreateInfo image_info(
 		vk::ImageCreateFlags(),
@@ -100,17 +67,10 @@ void ScrapEngine::Render::TextureImage::create_image(const uint32_t& width, cons
 	VulkanDevice::static_logic_device_ref->bindImageMemory(image, image_memory, 0);
 }
 
-void ScrapEngine::Render::TextureImage::transition_image_layout(vk::Image* image, const vk::Format& format,
-                                                                const vk::ImageLayout& old_layout,
-                                                                const vk::ImageLayout& new_layout) const
-{
-	transition_image_layout(image, format, old_layout, new_layout, mip_levels_);
-}
-
-void ScrapEngine::Render::TextureImage::transition_image_layout(vk::Image* image, const vk::Format& format,
-                                                                const vk::ImageLayout& old_layout,
-                                                                const vk::ImageLayout& new_layout,
-                                                                const uint32_t& mip_levels_data, int layercount)
+void ScrapEngine::Render::BaseTexture::transition_image_layout(vk::Image* image, const vk::Format& format,
+                                                               const vk::ImageLayout& old_layout,
+                                                               const vk::ImageLayout& new_layout,
+                                                               const uint32_t& mip_levels_data, int layercount)
 {
 	vk::CommandBuffer* command_buffer = BaseBuffer::begin_single_time_commands();
 
@@ -188,9 +148,9 @@ void ScrapEngine::Render::TextureImage::transition_image_layout(vk::Image* image
 	BaseBuffer::end_single_time_commands(command_buffer);
 }
 
-void ScrapEngine::Render::TextureImage::generate_mipmaps(vk::Image* image, const vk::Format& image_format,
-                                                         const int32_t& tex_width, const int32_t& tex_height,
-                                                         const uint32_t& mip_levels)
+void ScrapEngine::Render::BaseTexture::generate_mipmaps(vk::Image* image, const vk::Format& image_format,
+                                                        const int32_t& tex_width, const int32_t& tex_height,
+                                                        const uint32_t& mip_levels)
 {
 	// Check if image format supports linear blitting
 	const vk::FormatProperties format_properties = VulkanDevice::static_physical_device_ref->
@@ -279,39 +239,4 @@ void ScrapEngine::Render::TextureImage::generate_mipmaps(vk::Image* image, const
 	                                vk::DependencyFlags(), 0, nullptr, 0, nullptr, 1, &barrier);
 
 	BaseBuffer::end_single_time_commands(command_buffer);
-}
-
-vk::Image* ScrapEngine::Render::TextureImage::get_texture_image()
-{
-	return &texture_image_;
-}
-
-ScrapEngine::Render::BaseStagingBuffer* ScrapEngine::Render::TextureImage::get_texture_staging_buffer() const
-{
-	return staginf_buffer_ref_;
-}
-
-vk::DeviceMemory* ScrapEngine::Render::TextureImage::get_texture_image_memory()
-{
-	return &texture_image_memory_;
-}
-
-uint32_t ScrapEngine::Render::TextureImage::get_mip_levels() const
-{
-	return mip_levels_;
-}
-
-int ScrapEngine::Render::TextureImage::get_texture_width() const
-{
-	return tex_width_;
-}
-
-int ScrapEngine::Render::TextureImage::get_texture_height() const
-{
-	return tex_height_;
-}
-
-int ScrapEngine::Render::TextureImage::get_texture_channels() const
-{
-	return tex_channels_;
 }

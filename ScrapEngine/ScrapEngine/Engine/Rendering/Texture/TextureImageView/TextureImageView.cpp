@@ -1,4 +1,4 @@
-#include <Engine/Rendering/Texture/TextureImageView.h>
+#include <Engine/Rendering/Texture/TextureImageView/TextureImageView.h>
 
 #include <stdexcept>
 #include <Engine/Rendering/Base/StaticTypes.h>

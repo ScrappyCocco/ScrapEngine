@@ -1,7 +1,7 @@
 #include <Engine/Rendering/DepthResources/VulkanDepthResources.h>
 
-#include <Engine/Rendering/Texture/TextureImage.h>
-#include <Engine/Rendering/Texture/TextureImageView.h>
+#include <Engine/Rendering/Texture/Texture/BaseTexture.h>
+#include <Engine/Rendering/Texture/TextureImageView/TextureImageView.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
 
 ScrapEngine::Render::VulkanDepthResources::VulkanDepthResources(const vk::Extent2D* swap_chain_extent,
@@ -9,14 +9,14 @@ ScrapEngine::Render::VulkanDepthResources::VulkanDepthResources(const vk::Extent
 {
 	const vk::Format depth_format = find_depth_format();
 
-	TextureImage::create_image(swap_chain_extent->width, swap_chain_extent->height, depth_format,
+	BaseTexture::create_image(swap_chain_extent->width, swap_chain_extent->height, depth_format,
 	                          vk::ImageTiling::eOptimal, vk::ImageUsageFlagBits::eDepthStencilAttachment,
 	                          vk::MemoryPropertyFlagBits::eDeviceLocal, depth_image_, depth_image_memory_, 1,
 	                          msaa_samples);
 	depth_image_view_ = TextureImageView::create_image_view(&depth_image_, depth_format, vk::ImageAspectFlagBits::eDepth,
 	                                                      1);
 
-	TextureImage::transition_image_layout(&depth_image_, depth_format, vk::ImageLayout::eUndefined,
+	BaseTexture::transition_image_layout(&depth_image_, depth_format, vk::ImageLayout::eUndefined,
 	                                    vk::ImageLayout::eDepthStencilAttachmentOptimal, 1);
 }
 

@@ -1,9 +1,9 @@
 #pragma once
 
 #include <Engine/Rendering/Model/Material/BasicMaterial.h>
-#include <Engine/Rendering/Texture/TextureSampler.h>
-#include <Engine/Rendering/Texture/TextureImageView.h>
-#include <Engine/Rendering/Texture/TextureImage.h>
+#include <Engine/Rendering/Texture/TextureSampler/TextureSampler.h>
+#include <Engine/Rendering/Texture/TextureImageView/TextureImageView.h>
+#include <Engine/Rendering/Texture/Texture/BaseTexture.h>
 #include <Engine/Rendering/Descriptor/VulkanDescriptorPool.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
 #include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
@@ -15,7 +15,7 @@ namespace ScrapEngine
 		class SimpleMaterial : public BasicMaterial
 		{
 		private:
-			ScrapEngine::Render::TextureImage* vulkan_texture_image_ = nullptr;
+			ScrapEngine::Render::BaseTexture* vulkan_texture_image_ = nullptr;
 			ScrapEngine::Render::TextureImageView* vulkan_texture_image_view_ = nullptr;
 			ScrapEngine::Render::TextureSampler* vulkan_texture_sampler_ = nullptr;
 			ScrapEngine::Render::VulkanDescriptorPool* vulkan_render_descriptor_pool_ = nullptr;

@@ -1,6 +1,5 @@
 #pragma once
 
-#include <Engine/Rendering/Texture/TextureImageView.h>
 #include <Engine/Rendering/Buffer/VertexBuffer/VertexBuffer.h>
 #include <Engine/Rendering/Buffer/IndexBuffer/IndexBuffer.h>
 #include <Engine/Rendering/Model/Model/VulkanModel.h>
