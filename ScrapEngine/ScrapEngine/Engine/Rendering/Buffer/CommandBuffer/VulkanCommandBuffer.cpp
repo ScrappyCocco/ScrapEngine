@@ -10,7 +10,7 @@ ScrapEngine::Render::VulkanCommandBuffer::~VulkanCommandBuffer()
 void ScrapEngine::Render::VulkanCommandBuffer::init_command_buffer(ScrapEngine::Render::VulkanFrameBuffer* swap_chain_frame_buffer,
 	vk::Extent2D* input_swap_chain_extent_ref)
 {
-	Debug::DebugLog::print_to_console_log("VulkanRenderCommandBuffer: Initializing...");
+	Debug::DebugLog::print_to_console_log("[VulkanCommandBuffer] Initializing...");
 	const std::vector<vk::Framebuffer>* swap_chain_framebuffers = swap_chain_frame_buffer->
 		get_swap_chain_framebuffers_vector();
 	command_buffers_.resize(swap_chain_framebuffers->size());
@@ -25,7 +25,7 @@ void ScrapEngine::Render::VulkanCommandBuffer::init_command_buffer(ScrapEngine::
 		Result::
 		eSuccess)
 	{
-		throw std::runtime_error("VulkanCommandBuffer: Failed to allocate command buffers!");
+		throw std::runtime_error("[VulkanCommandBuffer] Failed to allocate command buffers!");
 	}
 
 	for (size_t i = 0; i < command_buffers_.size(); i++)
@@ -34,7 +34,7 @@ void ScrapEngine::Render::VulkanCommandBuffer::init_command_buffer(ScrapEngine::
 
 		if (command_buffers_[i].begin(&begin_info) != vk::Result::eSuccess)
 		{
-			throw std::runtime_error("VulkanCommandBuffer: Failed to begin recording command buffer!");
+			throw std::runtime_error("[VulkanCommandBuffer] Failed to begin recording command buffer!");
 		}
 
 		render_pass_info_ = vk::RenderPassBeginInfo(
@@ -52,12 +52,11 @@ void ScrapEngine::Render::VulkanCommandBuffer::init_command_buffer(ScrapEngine::
 
 		command_buffers_[i].beginRenderPass(&render_pass_info_, vk::SubpassContents::eInline);
 	}
-	Debug::DebugLog::print_to_console_log("VulkanRenderCommandBuffer: Command Buffer successfully initialized");
+	Debug::DebugLog::print_to_console_log("[VulkanCommandBuffer] Command Buffer successfully initialized");
 }
 
 void ScrapEngine::Render::VulkanCommandBuffer::load_skybox(ScrapEngine::Render::VulkanSkyboxInstance* skybox_ref)
 {
-	Debug::DebugLog::print_to_console_log("VulkanRenderCommandBuffer: Loading Skybox");
 	vk::DeviceSize offsets[] = { 0 };
 	for (size_t i = 0; i < command_buffers_.size(); i++)
 	{
@@ -79,12 +78,10 @@ void ScrapEngine::Render::VulkanCommandBuffer::load_skybox(ScrapEngine::Render::
 			1,
 			0, 0, 0);
 	}
-	Debug::DebugLog::print_to_console_log("VulkanRenderCommandBuffer: Skybox loaded");
 }
 
 void ScrapEngine::Render::VulkanCommandBuffer::load_mesh(const ScrapEngine::Render::VulkanMeshInstance* mesh)
 {
-	Debug::DebugLog::print_to_console_log("VulkanRenderCommandBuffer: Loading Mesh");
 	vk::DeviceSize offsets[] = { 0 };
 	for (size_t i = 0; i < command_buffers_.size(); i++)
 	{
@@ -94,12 +91,9 @@ void ScrapEngine::Render::VulkanCommandBuffer::load_mesh(const ScrapEngine::Rend
 		auto materials_iterator = materials_vector.begin();
 		if(mesh->get_mesh_materials()->size()> 1)
 		{
-			Debug::DebugLog::print_to_console_log("VulkanRenderCommandBuffer: Mesh has more than 1 material...");
 			mesh_has_multi_material = true;
 		}
 		BasicMaterial* current_mat = *materials_iterator;
-		Debug::DebugLog::print_to_console_log(std::to_string(buffers_vector.size()));
-		Debug::DebugLog::print_to_console_log(std::to_string(materials_vector.size()));
 		for (const auto mesh_buffer : buffers_vector)
 		{
 			command_buffers_[i].bindPipeline(vk::PipelineBindPoint::eGraphics,
@@ -126,12 +120,11 @@ void ScrapEngine::Render::VulkanCommandBuffer::load_mesh(const ScrapEngine::Rend
 			}
 		}
 	}
-	Debug::DebugLog::print_to_console_log("VulkanRenderCommandBuffer: Mesh loaded");
 }
 
 void ScrapEngine::Render::VulkanCommandBuffer::close_command_buffer()
 {
-	Debug::DebugLog::print_to_console_log("VulkanRenderCommandBuffer: Closing Command Buffer");
+	Debug::DebugLog::print_to_console_log("[VulkanCommandBuffer] Closing Command Buffer");
 	for (auto& command_buffer : command_buffers_)
 	{
 		command_buffer.endRenderPass();
@@ -142,7 +135,7 @@ void ScrapEngine::Render::VulkanCommandBuffer::close_command_buffer()
 
 void ScrapEngine::Render::VulkanCommandBuffer::free_command_buffers()
 {
-	Debug::DebugLog::print_to_console_log("VulkanRenderCommandBuffer: Clearing Command Buffer");
+	Debug::DebugLog::print_to_console_log("[VulkanCommandBuffer] Clearing Command Buffer");
 	VulkanDevice::static_logic_device_ref->freeCommandBuffers(*VulkanCommandPool::static_command_pool_ref,
 	                                                          static_cast<uint32_t>(command_buffers_.size()),
 	                                                          command_buffers_.data());
