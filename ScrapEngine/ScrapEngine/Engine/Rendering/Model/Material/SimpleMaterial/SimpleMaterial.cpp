@@ -1,5 +1,6 @@
 #include <Engine/Rendering/Model/Material/SimpleMaterial/SimpleMaterial.h>
 #include <Engine/Debug/DebugLog.h>
+#include <Engine/Rendering/Pipeline/StandardPipeline/StandardVulkanGraphicsPipeline.h>
 
 ScrapEngine::Render::SimpleMaterial::~SimpleMaterial()
 {
@@ -12,16 +13,16 @@ ScrapEngine::Render::SimpleMaterial::~SimpleMaterial()
 }
 
 void ScrapEngine::Render::SimpleMaterial::create_pipeline(const std::string& vertex_shader_path,
-                                                         const std::string& fragment_shader_path,
-                                                         ScrapEngine::Render::VulkanSwapChain* swap_chain,
-                                                         ScrapEngine::Render::VulkanDevice* render_device)
+                                                          const std::string& fragment_shader_path,
+                                                          ScrapEngine::Render::VulkanSwapChain* swap_chain,
+                                                          ScrapEngine::Render::VulkanDevice* render_device)
 {
-	vulkan_render_graphics_pipeline_ = new VulkanGraphicsPipeline(vertex_shader_path.c_str(),
-	                                                              fragment_shader_path.c_str(),
-	                                                              &swap_chain->get_swap_chain_extent(),
-	                                                              vulkan_render_descriptor_set_->
-	                                                              get_descriptor_set_layout(),
-	                                                              render_device->get_msaa_samples());
+	vulkan_render_graphics_pipeline_ = new StandardVulkanGraphicsPipeline(vertex_shader_path.c_str(),
+	                                                                      fragment_shader_path.c_str(),
+	                                                                      &swap_chain->get_swap_chain_extent(),
+	                                                                      vulkan_render_descriptor_set_->
+	                                                                      get_descriptor_set_layout(),
+	                                                                      render_device->get_msaa_samples());
 	Debug::DebugLog::print_to_console_log("VulkanGraphicsPipeline created");
 }
 
@@ -37,7 +38,7 @@ void ScrapEngine::Render::SimpleMaterial::create_texture(const std::string& text
 }
 
 void ScrapEngine::Render::SimpleMaterial::create_descriptor_sets(ScrapEngine::Render::VulkanSwapChain* swap_chain,
-                                                                ScrapEngine::Render::UniformBuffer* uniform_buffer)
+                                                                 ScrapEngine::Render::UniformBuffer* uniform_buffer)
 {
 	vulkan_render_descriptor_pool_ = new VulkanDescriptorPool(swap_chain->get_swap_chain_images_vector());
 	Debug::DebugLog::print_to_console_log("VulkanDescriptorPool created");

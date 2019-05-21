@@ -1,5 +1,6 @@
 #include <Engine/Rendering/Model/Material/SkyboxMaterial/SkyboxMaterial.h>
 #include <Engine/Debug/DebugLog.h>
+#include <Engine/Rendering/Pipeline/SkyboxPipeline/SkyboxVulkanGraphicsPipeline.h>
 
 ScrapEngine::Render::SkyboxMaterial::~SkyboxMaterial()
 {
@@ -16,13 +17,12 @@ void ScrapEngine::Render::SkyboxMaterial::create_pipeline(const std::string& ver
                                                           ScrapEngine::Render::VulkanSwapChain* swap_chain,
                                                           ScrapEngine::Render::VulkanDevice* render_device)
 {
-	vulkan_render_graphics_pipeline_ = new VulkanGraphicsPipeline(vertex_shader_path.c_str(),
-	                                                              fragment_shader_path.c_str(),
-	                                                              &swap_chain->get_swap_chain_extent(),
-	                                                              vulkan_render_descriptor_set_->
-	                                                              get_descriptor_set_layout(),
-	                                                              render_device->get_msaa_samples(),
-	                                                              true);
+	vulkan_render_graphics_pipeline_ = new SkyboxVulkanGraphicsPipeline(vertex_shader_path.c_str(),
+	                                                                    fragment_shader_path.c_str(),
+	                                                                    &swap_chain->get_swap_chain_extent(),
+	                                                                    vulkan_render_descriptor_set_->
+	                                                                    get_descriptor_set_layout(),
+	                                                                    render_device->get_msaa_samples());
 	Debug::DebugLog::print_to_console_log("VulkanGraphicsPipeline created");
 }
 

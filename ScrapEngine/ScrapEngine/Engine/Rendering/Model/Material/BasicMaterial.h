@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Engine/Rendering/Pipeline/VulkanGraphicsPipeline.h>
+#include <Engine/Rendering/Pipeline/BaseVulkanGraphicsPipeline.h>
 #include <Engine/Rendering/Descriptor/VulkanDescriptorSet.h>
 
 namespace ScrapEngine
@@ -10,7 +10,7 @@ namespace ScrapEngine
 		class BasicMaterial
 		{
 		protected:
-			ScrapEngine::Render::VulkanGraphicsPipeline* vulkan_render_graphics_pipeline_ = nullptr;
+			ScrapEngine::Render::BaseVulkanGraphicsPipeline* vulkan_render_graphics_pipeline_ = nullptr;
 			ScrapEngine::Render::VulkanDescriptorSet* vulkan_render_descriptor_set_ = nullptr;
 		public:
 			BasicMaterial();
@@ -18,7 +18,7 @@ namespace ScrapEngine
 
 			void delete_graphics_pipeline();
 
-			ScrapEngine::Render::VulkanGraphicsPipeline* get_vulkan_render_graphics_pipeline() const;
+			ScrapEngine::Render::BaseVulkanGraphicsPipeline* get_vulkan_render_graphics_pipeline() const;
 			ScrapEngine::Render::VulkanDescriptorSet* get_vulkan_render_descriptor_set() const;
 		};
 	}

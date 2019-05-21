@@ -22,7 +22,7 @@ void ScrapEngine::Render::BasicMaterial::delete_graphics_pipeline()
 	vulkan_render_graphics_pipeline_ = nullptr;
 }
 
-ScrapEngine::Render::VulkanGraphicsPipeline* ScrapEngine::Render::BasicMaterial::
+ScrapEngine::Render::BaseVulkanGraphicsPipeline* ScrapEngine::Render::BasicMaterial::
 get_vulkan_render_graphics_pipeline() const
 {
 	return vulkan_render_graphics_pipeline_;

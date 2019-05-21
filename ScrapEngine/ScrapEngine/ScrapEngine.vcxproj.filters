@@ -179,6 +179,12 @@
     <Filter Include="Engine\Rendering\Model\SkyboxInstance">
       <UniqueIdentifier>{d9671f82-4c7c-413c-bc5d-e0839c01edd8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Rendering\Pipeline\SkyboxPipeline">
+      <UniqueIdentifier>{536fd79e-bc9c-462d-b9a2-666d2fbe9a43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Pipeline\StandardPipeline">
+      <UniqueIdentifier>{bd3a0dba-3b69-427d-8b6d-931515cbf8ee}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Manager\EngineManager.cpp">
@@ -210,9 +216,6 @@
     </ClCompile>
     <ClCompile Include="Engine\Rendering\SwapChain\VulkanImageView.cpp">
       <Filter>Engine\Rendering\SwapChain</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Rendering\Pipeline\VulkanGraphicsPipeline.cpp">
-      <Filter>Engine\Rendering\Pipeline</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Rendering\Shader\ShaderManager.cpp">
       <Filter>Engine\Rendering\Shader</Filter>
@@ -361,6 +364,15 @@
     <ClCompile Include="Engine\Rendering\Model\SkyboxInstance\VulkanSkyboxInstance.cpp">
       <Filter>Engine\Rendering\Model\SkyboxInstance</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Rendering\Pipeline\BaseVulkanGraphicsPipeline.cpp">
+      <Filter>Engine\Rendering\Pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Pipeline\StandardPipeline\StandardVulkanGraphicsPipeline.cpp">
+      <Filter>Engine\Rendering\Pipeline\StandardPipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Pipeline\SkyboxPipeline\SkyboxVulkanGraphicsPipeline.cpp">
+      <Filter>Engine\Rendering\Pipeline\SkyboxPipeline</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Manager\EngineManager.h">
@@ -392,9 +404,6 @@
     </ClInclude>
     <ClInclude Include="Engine\Rendering\SwapChain\VulkanImageView.h">
       <Filter>Engine\Rendering\SwapChain</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Rendering\Pipeline\VulkanGraphicsPipeline.h">
-      <Filter>Engine\Rendering\Pipeline</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Shader\ShaderManager.h">
       <Filter>Engine\Rendering\Shader</Filter>
@@ -563,6 +572,15 @@
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Model\SkyboxInstance\VulkanSkyboxInstance.h">
       <Filter>Engine\Rendering\Model\SkyboxInstance</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Pipeline\BaseVulkanGraphicsPipeline.h">
+      <Filter>Engine\Rendering\Pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Pipeline\StandardPipeline\StandardVulkanGraphicsPipeline.h">
+      <Filter>Engine\Rendering\Pipeline\StandardPipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Pipeline\SkyboxPipeline\SkyboxVulkanGraphicsPipeline.h">
+      <Filter>Engine\Rendering\Pipeline\SkyboxPipeline</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

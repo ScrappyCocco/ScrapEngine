@@ -1,14 +1,14 @@
-#include <Engine/Rendering/Pipeline/VulkanGraphicsPipeline.h>
+#include <Engine/Rendering/Pipeline/SkyboxPipeline/SkyboxVulkanGraphicsPipeline.h>
 
 #include <Engine/Rendering/Base/Vertex.h>
 #include <Engine/Rendering/Base/StaticTypes.h>
 
-ScrapEngine::Render::VulkanGraphicsPipeline::VulkanGraphicsPipeline(const char* vertex_shader,
-                                                                    const char* fragment_shader,
-                                                                    vk::Extent2D* swap_chain_extent,
-                                                                    vk::DescriptorSetLayout* descriptor_set_layout,
-                                                                    vk::SampleCountFlagBits msaa_samples,
-                                                                    bool is_skybox)
+ScrapEngine::Render::SkyboxVulkanGraphicsPipeline::SkyboxVulkanGraphicsPipeline(const char* vertex_shader,
+                                                                                const char* fragment_shader,
+                                                                                vk::Extent2D* swap_chain_extent,
+                                                                                vk::DescriptorSetLayout*
+                                                                                descriptor_set_layout,
+                                                                                vk::SampleCountFlagBits msaa_samples)
 {
 	shader_manager_ref_ = new ShaderManager();
 
@@ -77,7 +77,7 @@ ScrapEngine::Render::VulkanGraphicsPipeline::VulkanGraphicsPipeline(const char* 
 		false,
 		false,
 		vk::PolygonMode::eFill,
-		vk::CullModeFlagBits::eBack,
+		vk::CullModeFlagBits::eFront,
 		vk::FrontFace::eCounterClockwise
 	);
 	rasterizer.setLineWidth(1.0f);
@@ -89,8 +89,8 @@ ScrapEngine::Render::VulkanGraphicsPipeline::VulkanGraphicsPipeline(const char* 
 
 	vk::PipelineDepthStencilStateCreateInfo depth_stencil(
 		vk::PipelineDepthStencilStateCreateFlags(),
-		true,
-		true,
+		false,
+		false,
 		vk::CompareOp::eLessOrEqual
 	);
 
@@ -112,13 +112,6 @@ ScrapEngine::Render::VulkanGraphicsPipeline::VulkanGraphicsPipeline(const char* 
 		1,
 		&(*descriptor_set_layout)
 	);
-
-	if (is_skybox)
-	{
-		rasterizer.setCullMode(vk::CullModeFlagBits::eFront);
-		depth_stencil.setDepthWriteEnable(false);
-		depth_stencil.setDepthTestEnable(false);
-	}
 
 	if (VulkanDevice::static_logic_device_ref->createPipelineLayout(&pipeline_layout_info, nullptr, &pipeline_layout_)
 		!= vk::Result::eSuccess)
@@ -153,21 +146,4 @@ ScrapEngine::Render::VulkanGraphicsPipeline::VulkanGraphicsPipeline(const char* 
 	VulkanDevice::static_logic_device_ref->destroyShaderModule(frag_shader_module);
 	VulkanDevice::static_logic_device_ref->destroyShaderModule(vert_shader_module);
 	delete shader_manager_ref_;
-}
-
-
-ScrapEngine::Render::VulkanGraphicsPipeline::~VulkanGraphicsPipeline()
-{
-	VulkanDevice::static_logic_device_ref->destroyPipeline(graphics_pipeline_);
-	VulkanDevice::static_logic_device_ref->destroyPipelineLayout(pipeline_layout_);
-}
-
-vk::Pipeline* ScrapEngine::Render::VulkanGraphicsPipeline::get_graphics_pipeline()
-{
-	return &graphics_pipeline_;
-}
-
-vk::PipelineLayout* ScrapEngine::Render::VulkanGraphicsPipeline::get_pipeline_layout()
-{
-	return &pipeline_layout_;
 }

@@ -62,7 +62,9 @@
     <ClCompile Include="Engine\Rendering\Model\Model\Mesh\Mesh.cpp" />
     <ClCompile Include="Engine\Rendering\Model\Model\VulkanModel.cpp" />
     <ClCompile Include="Engine\Rendering\Model\SkyboxInstance\VulkanSkyboxInstance.cpp" />
-    <ClCompile Include="Engine\Rendering\Pipeline\VulkanGraphicsPipeline.cpp" />
+    <ClCompile Include="Engine\Rendering\Pipeline\BaseVulkanGraphicsPipeline.cpp" />
+    <ClCompile Include="Engine\Rendering\Pipeline\SkyboxPipeline\SkyboxVulkanGraphicsPipeline.cpp" />
+    <ClCompile Include="Engine\Rendering\Pipeline\StandardPipeline\StandardVulkanGraphicsPipeline.cpp" />
     <ClCompile Include="Engine\Rendering\Queue\GraphicsQueue.cpp" />
     <ClCompile Include="Engine\Rendering\Queue\PresentQueue.cpp" />
     <ClCompile Include="Engine\Rendering\RenderPass\VulkanRenderPass.cpp" />
@@ -130,7 +132,9 @@
     <ClInclude Include="Engine\Rendering\Model\Model\Mesh\Mesh.h" />
     <ClInclude Include="Engine\Rendering\Model\Model\VulkanModel.h" />
     <ClInclude Include="Engine\Rendering\Model\SkyboxInstance\VulkanSkyboxInstance.h" />
-    <ClInclude Include="Engine\Rendering\Pipeline\VulkanGraphicsPipeline.h" />
+    <ClInclude Include="Engine\Rendering\Pipeline\BaseVulkanGraphicsPipeline.h" />
+    <ClInclude Include="Engine\Rendering\Pipeline\SkyboxPipeline\SkyboxVulkanGraphicsPipeline.h" />
+    <ClInclude Include="Engine\Rendering\Pipeline\StandardPipeline\StandardVulkanGraphicsPipeline.h" />
     <ClInclude Include="Engine\Rendering\Queue\GraphicsQueue.h" />
     <ClInclude Include="Engine\Rendering\Queue\PresentQueue.h" />
     <ClInclude Include="Engine\Rendering\RenderPass\VulkanRenderPass.h" />
