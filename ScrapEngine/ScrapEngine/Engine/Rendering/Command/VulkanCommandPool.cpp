@@ -9,7 +9,7 @@ const vk::CommandPool* ScrapEngine::Render::VulkanCommandPool::static_command_po
 
 //Class
 
-ScrapEngine::Render::VulkanCommandPool::VulkanCommandPool(GraphicsQueue::QueueFamilyIndices queue_family_indices)
+ScrapEngine::Render::VulkanCommandPool::VulkanCommandPool(const BaseQueue::QueueFamilyIndices queue_family_indices)
 {
 	vk::CommandPoolCreateInfo pool_info(vk::CommandPoolCreateFlags(), queue_family_indices.graphics_family);
 

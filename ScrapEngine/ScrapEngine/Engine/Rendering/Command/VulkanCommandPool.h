@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vulkan/vulkan.hpp>
-#include <Engine/Rendering/Queue/GraphicsQueue.h>
+#include <Engine/Rendering/Queue/BaseQueue.h>
 
 namespace ScrapEngine
 {
@@ -14,7 +14,7 @@ namespace ScrapEngine
 		public:
 			static const vk::CommandPool* static_command_pool_ref;
 
-			VulkanCommandPool(GraphicsQueue::QueueFamilyIndices queue_family_indices);
+			VulkanCommandPool(BaseQueue::QueueFamilyIndices queue_family_indices);
 			~VulkanCommandPool();
 
 			vk::CommandPool* get_command_pool();

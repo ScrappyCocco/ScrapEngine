@@ -2,7 +2,7 @@
 
 #include <vulkan/vulkan.hpp>
 #include <Engine/Rendering/Instance/VukanInstance.h>
-#include <Engine/Rendering/Queue/GraphicsQueue.h>
+#include <Engine/Rendering/Queue/BaseQueue.h>
 #include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
 
 namespace ScrapEngine
@@ -17,7 +17,7 @@ namespace ScrapEngine
 
 			vk::SampleCountFlagBits msaa_samples_ = vk::SampleCountFlagBits::e1;
 
-			GraphicsQueue::QueueFamilyIndices cached_indices_;
+			BaseQueue::QueueFamilyIndices cached_indices_;
 
 			vk::PhysicalDevice physical_device_; //physical graphics card
 			vk::Device device_; //logical connection to graphics card
@@ -47,10 +47,10 @@ namespace ScrapEngine
 			//Return a reference to logical device
 			vk::Device* get_logical_device();
 
-			GraphicsQueue::QueueFamilyIndices get_cached_queue_family_indices() const;
+			BaseQueue::QueueFamilyIndices get_cached_queue_family_indices() const;
 
 			//Which queue families are supported by the device
-			ScrapEngine::Render::GraphicsQueue::QueueFamilyIndices find_queue_families(
+			BaseQueue::QueueFamilyIndices find_queue_families(
 				vk::PhysicalDevice* physical_device_input, vk::SurfaceKHR* surface);
 
 			VulkanSwapChain::SwapChainSupportDetails query_swap_chain_support(vk::PhysicalDevice* physical_device_input) const;

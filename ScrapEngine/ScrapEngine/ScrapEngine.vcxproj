@@ -65,8 +65,9 @@
     <ClCompile Include="Engine\Rendering\Pipeline\BaseVulkanGraphicsPipeline.cpp" />
     <ClCompile Include="Engine\Rendering\Pipeline\SkyboxPipeline\SkyboxVulkanGraphicsPipeline.cpp" />
     <ClCompile Include="Engine\Rendering\Pipeline\StandardPipeline\StandardVulkanGraphicsPipeline.cpp" />
-    <ClCompile Include="Engine\Rendering\Queue\GraphicsQueue.cpp" />
-    <ClCompile Include="Engine\Rendering\Queue\PresentQueue.cpp" />
+    <ClCompile Include="Engine\Rendering\Queue\BaseQueue.cpp" />
+    <ClCompile Include="Engine\Rendering\Queue\GraphicsQueue\GraphicsQueue.cpp" />
+    <ClCompile Include="Engine\Rendering\Queue\PresentationQueue\PresentQueue.cpp" />
     <ClCompile Include="Engine\Rendering\RenderPass\VulkanRenderPass.cpp" />
     <ClCompile Include="Engine\Rendering\Semaphores\VulkanSemaphoresManager.cpp" />
     <ClCompile Include="Engine\Rendering\Shader\ShaderManager.cpp" />
@@ -135,8 +136,9 @@
     <ClInclude Include="Engine\Rendering\Pipeline\BaseVulkanGraphicsPipeline.h" />
     <ClInclude Include="Engine\Rendering\Pipeline\SkyboxPipeline\SkyboxVulkanGraphicsPipeline.h" />
     <ClInclude Include="Engine\Rendering\Pipeline\StandardPipeline\StandardVulkanGraphicsPipeline.h" />
-    <ClInclude Include="Engine\Rendering\Queue\GraphicsQueue.h" />
-    <ClInclude Include="Engine\Rendering\Queue\PresentQueue.h" />
+    <ClInclude Include="Engine\Rendering\Queue\BaseQueue.h" />
+    <ClInclude Include="Engine\Rendering\Queue\GraphicsQueue\GraphicsQueue.h" />
+    <ClInclude Include="Engine\Rendering\Queue\PresentationQueue\PresentQueue.h" />
     <ClInclude Include="Engine\Rendering\RenderPass\VulkanRenderPass.h" />
     <ClInclude Include="Engine\Rendering\Semaphores\VulkanSemaphoresManager.h" />
     <ClInclude Include="Engine\Rendering\Shader\ShaderManager.h" />

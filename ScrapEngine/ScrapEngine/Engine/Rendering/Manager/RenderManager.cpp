@@ -1,5 +1,7 @@
 #include <Engine/Rendering/Manager/RenderManager.h>
 #include <Engine/Debug/DebugLog.h>
+#include <Engine/Rendering/Queue/GraphicsQueue/GraphicsQueue.h>
+#include <Engine/Rendering/Queue/PresentationQueue/PresentQueue.h>
 
 
 ScrapEngine::Render::RenderManager::RenderManager(const ScrapEngine::game_base_info* received_base_game_info)
@@ -251,7 +253,7 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 
 	VulkanDevice::static_logic_device_ref->resetFences(1, &(*in_flight_fences_ref_)[current_frame_]);
 
-	result_ = vulkan_graphics_queue_->get_graphics_queue()->submit(1, &submit_info,
+	result_ = vulkan_graphics_queue_->get_queue()->submit(1, &submit_info,
 	                                                               (*in_flight_fences_ref_)[current_frame_]);
 	if (result_ != vk::Result::eSuccess)
 	{
@@ -270,7 +272,7 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 
 	present_info.setPImageIndices(&image_index_);
 
-	result_ = vulkan_presentation_queue_->get_present_queue()->presentKHR(&present_info);
+	result_ = vulkan_presentation_queue_->get_queue()->presentKHR(&present_info);
 
 	if (result_ == vk::Result::eErrorOutOfDateKHR || result_ == vk::Result::eSuboptimalKHR || framebuffer_resized_)
 	{

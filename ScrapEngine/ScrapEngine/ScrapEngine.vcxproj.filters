@@ -185,6 +185,12 @@
     <Filter Include="Engine\Rendering\Pipeline\StandardPipeline">
       <UniqueIdentifier>{bd3a0dba-3b69-427d-8b6d-931515cbf8ee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Rendering\Queue\GraphicsQueue">
+      <UniqueIdentifier>{bfc1869e-9f09-4a58-86b3-92d09ad692f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Queue\PresentationQueue">
+      <UniqueIdentifier>{6f22bebe-4913-4568-af38-311d1b0ddf9a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Manager\EngineManager.cpp">
@@ -202,14 +208,8 @@
     <ClCompile Include="Engine\Rendering\Device\VulkanDevice.cpp">
       <Filter>Engine\Rendering\Device</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Rendering\Queue\GraphicsQueue.cpp">
-      <Filter>Engine\Rendering\Queue</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Rendering\Window\VulkanSurface.cpp">
       <Filter>Engine\Rendering\Window</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Rendering\Queue\PresentQueue.cpp">
-      <Filter>Engine\Rendering\Queue</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Rendering\SwapChain\VulkanSwapChain.cpp">
       <Filter>Engine\Rendering\SwapChain</Filter>
@@ -373,6 +373,15 @@
     <ClCompile Include="Engine\Rendering\Pipeline\SkyboxPipeline\SkyboxVulkanGraphicsPipeline.cpp">
       <Filter>Engine\Rendering\Pipeline\SkyboxPipeline</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Rendering\Queue\GraphicsQueue\GraphicsQueue.cpp">
+      <Filter>Engine\Rendering\Queue\GraphicsQueue</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Queue\PresentationQueue\PresentQueue.cpp">
+      <Filter>Engine\Rendering\Queue\PresentationQueue</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Queue\BaseQueue.cpp">
+      <Filter>Engine\Rendering\Queue</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Manager\EngineManager.h">
@@ -390,14 +399,8 @@
     <ClInclude Include="Engine\Rendering\Device\VulkanDevice.h">
       <Filter>Engine\Rendering\Device</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Rendering\Queue\GraphicsQueue.h">
-      <Filter>Engine\Rendering\Queue</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Rendering\Window\VulkanSurface.h">
       <Filter>Engine\Rendering\Window</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Rendering\Queue\PresentQueue.h">
-      <Filter>Engine\Rendering\Queue</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Rendering\SwapChain\VulkanSwapChain.h">
       <Filter>Engine\Rendering\SwapChain</Filter>
@@ -581,6 +584,15 @@
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Pipeline\SkyboxPipeline\SkyboxVulkanGraphicsPipeline.h">
       <Filter>Engine\Rendering\Pipeline\SkyboxPipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Queue\GraphicsQueue\GraphicsQueue.h">
+      <Filter>Engine\Rendering\Queue\GraphicsQueue</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Queue\PresentationQueue\PresentQueue.h">
+      <Filter>Engine\Rendering\Queue\PresentationQueue</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Queue\BaseQueue.h">
+      <Filter>Engine\Rendering\Queue</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

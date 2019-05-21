@@ -104,7 +104,7 @@ vk::Device* ScrapEngine::Render::VulkanDevice::get_logical_device()
 	return &device_;
 }
 
-ScrapEngine::Render::GraphicsQueue::QueueFamilyIndices ScrapEngine::Render::VulkanDevice::
+ScrapEngine::Render::BaseQueue::QueueFamilyIndices ScrapEngine::Render::VulkanDevice::
 get_cached_queue_family_indices() const
 {
 	return cached_indices_;
@@ -119,7 +119,7 @@ bool ScrapEngine::Render::VulkanDevice::is_device_suitable(vk::PhysicalDevice* p
 	std::string gpu_name(device_properties.deviceName);
 	Debug::DebugLog::print_to_console_log("GPU Selected:" + gpu_name);
 
-	GraphicsQueue::QueueFamilyIndices cached_indices = find_queue_families(physical_device_input, surface);
+	BaseQueue::QueueFamilyIndices cached_indices = find_queue_families(physical_device_input, surface);
 
 	vk::PhysicalDeviceFeatures supported_features = physical_device_input->getFeatures();
 
@@ -217,16 +217,16 @@ vk::SampleCountFlagBits ScrapEngine::Render::VulkanDevice::get_msaa_samples() co
 	return msaa_samples_;
 }
 
-ScrapEngine::Render::GraphicsQueue::QueueFamilyIndices ScrapEngine::Render::VulkanDevice::find_queue_families(
+ScrapEngine::Render::BaseQueue::QueueFamilyIndices ScrapEngine::Render::VulkanDevice::find_queue_families(
 	vk::PhysicalDevice* physical_device_input, vk::SurfaceKHR* surface)
 {
-	GraphicsQueue::QueueFamilyIndices indices;
+	BaseQueue::QueueFamilyIndices indices;
 
-	uint32_t queueFamilyCount = 0;
-	physical_device_input->getQueueFamilyProperties(&queueFamilyCount, nullptr);
+	uint32_t queue_family_count = 0;
+	physical_device_input->getQueueFamilyProperties(&queue_family_count, nullptr);
 
-	std::vector<vk::QueueFamilyProperties> queueFamilies(queueFamilyCount);
-	physical_device_input->getQueueFamilyProperties(&queueFamilyCount, queueFamilies.data());
+	std::vector<vk::QueueFamilyProperties> queueFamilies(queue_family_count);
+	physical_device_input->getQueueFamilyProperties(&queue_family_count, queueFamilies.data());
 
 	int i = 0;
 	for (const auto& queue_family : queueFamilies)

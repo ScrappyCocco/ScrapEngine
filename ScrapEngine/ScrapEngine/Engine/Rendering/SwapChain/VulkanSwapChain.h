@@ -2,7 +2,7 @@
 
 #include <vulkan/vulkan.hpp>
 #include <vector>
-#include <Engine/Rendering/Queue/GraphicsQueue.h>
+#include <Engine/Rendering/Queue/BaseQueue.h>
 
 namespace ScrapEngine
 {
@@ -25,7 +25,7 @@ namespace ScrapEngine
 				std::vector<vk::PresentModeKHR> present_modes;
 			};
 
-			VulkanSwapChain(SwapChainSupportDetails swap_chain_support, GraphicsQueue::QueueFamilyIndices indices,
+			VulkanSwapChain(SwapChainSupportDetails swap_chain_support, BaseQueue::QueueFamilyIndices indices,
 			                vk::SurfaceKHR* input_surface_ref, const uint32_t& width, const uint32_t& height,
 			                bool vsync);
 			~VulkanSwapChain();

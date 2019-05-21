@@ -12,8 +12,6 @@
 #include <Engine/Rendering/Command/VulkanCommandPool.h>
 #include <Engine/Rendering/Buffer/CommandBuffer/VulkanCommandBuffer.h>
 #include <Engine/Rendering/Semaphores/VulkanSemaphoresManager.h>
-#include <Engine/Rendering/Queue/GraphicsQueue.h>
-#include <Engine/Rendering/Queue/PresentQueue.h>
 #include <Engine/Rendering/Buffer/UniformBuffer/UniformBuffer.h>
 #include <Engine/Rendering/DepthResources/VulkanDepthResources.h>
 #include <Engine/Rendering/Texture/VulkanColorResources.h>
@@ -36,8 +34,8 @@ namespace ScrapEngine
 			ScrapEngine::Render::VulkanFrameBuffer* vulkan_render_frame_buffer_ = nullptr;
 			ScrapEngine::Render::VulkanCommandPool* vulkan_render_command_pool_ = nullptr;
 			ScrapEngine::Render::VulkanCommandBuffer* vulkan_render_command_buffer_ = nullptr;
-			ScrapEngine::Render::GraphicsQueue* vulkan_graphics_queue_ = nullptr;
-			ScrapEngine::Render::PresentQueue* vulkan_presentation_queue_ = nullptr;
+			ScrapEngine::Render::BaseQueue* vulkan_graphics_queue_ = nullptr;
+			ScrapEngine::Render::BaseQueue* vulkan_presentation_queue_ = nullptr;
 			ScrapEngine::Render::VulkanSemaphoresManager* vulkan_render_semaphores_ = nullptr;
 			ScrapEngine::Render::VulkanSurface* vulkan_window_surface_ = nullptr;
 			ScrapEngine::Render::VulkanDepthResources* vulkan_render_depth_ = nullptr;
