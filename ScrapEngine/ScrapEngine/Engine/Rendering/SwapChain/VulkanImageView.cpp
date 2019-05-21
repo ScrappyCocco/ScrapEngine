@@ -9,9 +9,10 @@ ScrapEngine::Render::VulkanImageView::VulkanImageView(ScrapEngine::Render::Vulka
 
 	for (uint32_t i = 0; i < swap_chain_images->size(); i++)
 	{
-		swap_chain_image_views_[i] = TextureImageView::create_image_view(const_cast<vk::Image*>(&(*swap_chain_images)[i]),
-		                                                               swap_chain_ref->get_swap_chain_image_format(),
-		                                                               vk::ImageAspectFlagBits::eColor, 1);
+		swap_chain_image_views_[i] = TextureImageView::create_image_view(
+			const_cast<vk::Image*>(&(*swap_chain_images)[i]),
+			swap_chain_ref->get_swap_chain_image_format(),
+			vk::ImageAspectFlagBits::eColor, 1);
 	}
 }
 

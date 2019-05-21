@@ -4,9 +4,9 @@
 #include <Engine/Rendering/Base/StaticTypes.h>
 
 ScrapEngine::Render::VulkanSwapChain::VulkanSwapChain(const SwapChainSupportDetails swap_chain_support,
-                                                      BaseQueue::QueueFamilyIndices indices,
+                                                      const BaseQueue::QueueFamilyIndices indices,
                                                       vk::SurfaceKHR* input_surface_ref, const uint32_t& width,
-                                                      const uint32_t& height, bool vsync)
+                                                      const uint32_t& height, const bool vsync)
 	: surface_ref_(input_surface_ref)
 {
 	const vk::SurfaceFormatKHR surface_format = choose_swap_surface_format(swap_chain_support.formats);
@@ -51,8 +51,8 @@ ScrapEngine::Render::VulkanSwapChain::VulkanSwapChain(const SwapChainSupportDeta
 	create_info.setPresentMode(present_mode);
 	create_info.setClipped(true);
 
-	if (VulkanDevice::static_logic_device_ref->createSwapchainKHR(&create_info, nullptr, &swap_chain_) != vk::Result::
-		eSuccess)
+	if (VulkanDevice::static_logic_device_ref->createSwapchainKHR(&create_info, nullptr, &swap_chain_)
+		!= vk::Result::eSuccess)
 	{
 		throw std::runtime_error("VulkanSwapChain: Failed to create swap chain!");
 	}
@@ -91,14 +91,14 @@ vk::SurfaceFormatKHR ScrapEngine::Render::VulkanSwapChain::choose_swap_surface_f
 }
 
 vk::PresentModeKHR ScrapEngine::Render::VulkanSwapChain::choose_swap_present_mode(
-	const std::vector<vk::PresentModeKHR>& available_present_modes, bool vsync)
+	const std::vector<vk::PresentModeKHR>& available_present_modes, const bool vsync)
 {
 	vk::PresentModeKHR best_mode = vk::PresentModeKHR::eFifo;
 
 	for (const auto& available_present_mode : available_present_modes)
 	{
-		if (vsync && (available_present_mode == vk::PresentModeKHR::eFifoRelaxed || available_present_mode == vk::
-			PresentModeKHR::eFifo))
+		if (vsync && (available_present_mode == vk::PresentModeKHR::eFifoRelaxed 
+			|| available_present_mode == vk::PresentModeKHR::eFifo))
 		{
 			return available_present_mode;
 		}
