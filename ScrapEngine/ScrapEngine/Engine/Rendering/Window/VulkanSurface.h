@@ -18,14 +18,18 @@ namespace ScrapEngine
 			 */
 			vk::SurfaceKHR surface_;
 
+			//Singleton static instance
 			static VulkanSurface* instance_;
 
+			//The constructor is private because this class is a Singleton
 			VulkanSurface() = default;
 		public:
+			//Method used to init the class with parameters because the constructor is private
 			void init(ScrapEngine::Render::GameWindow* window_ref);
 
 			~VulkanSurface();
 
+			//Singleton static function to get or create a class instance
 			static VulkanSurface* get_instance();
 
 			void create_surface(ScrapEngine::Render::GameWindow* window_ref);
