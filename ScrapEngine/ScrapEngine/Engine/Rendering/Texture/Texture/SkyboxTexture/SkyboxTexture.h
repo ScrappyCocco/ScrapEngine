@@ -21,7 +21,6 @@ namespace ScrapEngine
 
 			void delete_temporary_images();
 
-			ScrapEngine::Render::BaseStagingBuffer* get_texture_staging_buffer() const override;
 			int get_texture_width() const override;
 			int get_texture_height() const override;
 		};

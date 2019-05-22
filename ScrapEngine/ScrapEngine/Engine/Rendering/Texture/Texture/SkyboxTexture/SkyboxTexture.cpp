@@ -120,11 +120,6 @@ void ScrapEngine::Render::SkyboxTexture::delete_temporary_images()
 	images_.clear();
 }
 
-ScrapEngine::Render::BaseStagingBuffer* ScrapEngine::Render::SkyboxTexture::get_texture_staging_buffer() const
-{
-	return nullptr;
-}
-
 int ScrapEngine::Render::SkyboxTexture::get_texture_width() const
 {
 	return get_texture_height();

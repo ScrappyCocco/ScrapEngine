@@ -25,6 +25,11 @@ uint32_t ScrapEngine::Render::BaseTexture::get_mip_levels() const
 	return mip_levels_;
 }
 
+ScrapEngine::Render::BaseStagingBuffer* ScrapEngine::Render::BaseTexture::get_texture_staging_buffer() const
+{
+	return nullptr;
+}
+
 void ScrapEngine::Render::BaseTexture::create_image(const uint32_t& width, const uint32_t& height,
                                                     const vk::Format& format, vk::ImageTiling tiling,
                                                     const vk::ImageUsageFlags& usage,
