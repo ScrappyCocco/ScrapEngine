@@ -12,6 +12,8 @@ namespace ScrapEngine
 		class VulkanDevice
 		{
 		private:
+			static VulkanDevice* instance_;
+
 			vk::Instance* instance_ref_;
 			vk::SurfaceKHR* vulkan_surface_ref_;
 
@@ -26,14 +28,16 @@ namespace ScrapEngine
 			const std::vector<const char*> device_extensions_ = {
 				VK_KHR_SWAPCHAIN_EXTENSION_NAME
 			};
-		public:
-			static const vk::Device* static_logic_device_ref;
-			static const vk::PhysicalDevice* static_physical_device_ref;
 
-			VulkanDevice(vk::Instance* vulkan_instance_input_ref, vk::SurfaceKHR* vulkan_surface_input_ref);
+			VulkanDevice() = default;
+		public:
+
+			void init(vk::Instance* vulkan_instance_input_ref, vk::SurfaceKHR* vulkan_surface_input_ref);
 
 			//Turn off the logical device
 			~VulkanDevice();
+
+			static VulkanDevice* get_instance();
 
 			//Choose and assign the best physicalDevice
 			void choose_physical_device();

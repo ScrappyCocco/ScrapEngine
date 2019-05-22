@@ -1,7 +1,7 @@
 #include <Engine/Rendering/Semaphores/VulkanSemaphoresManager.h>
 
 #include <stdexcept>
-#include <Engine/Rendering/Base/StaticTypes.h>
+#include "Engine/Rendering/Device/VulkanDevice.h"
 
 ScrapEngine::Render::VulkanSemaphoresManager::VulkanSemaphoresManager(
 	const unsigned short int input_max_frames_in_flight)
@@ -17,13 +17,13 @@ ScrapEngine::Render::VulkanSemaphoresManager::VulkanSemaphoresManager(
 
 	for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++)
 	{
-		if (VulkanDevice::static_logic_device_ref->createSemaphore(&semaphore_info, nullptr,
-		                                                           &image_available_semaphores_[i])
+		if (VulkanDevice::get_instance()->get_logical_device()->createSemaphore(&semaphore_info, nullptr,
+		                                                                        &image_available_semaphores_[i])
 			!= vk::Result::eSuccess ||
-			VulkanDevice::static_logic_device_ref->createSemaphore(&semaphore_info, nullptr,
-			                                                       &render_finished_semaphores_[i])
+			VulkanDevice::get_instance()->get_logical_device()->createSemaphore(&semaphore_info, nullptr,
+			                                                                    &render_finished_semaphores_[i])
 			!= vk::Result::eSuccess ||
-			VulkanDevice::static_logic_device_ref->createFence(&fence_info, nullptr, &in_flight_fences_[i])
+			VulkanDevice::get_instance()->get_logical_device()->createFence(&fence_info, nullptr, &in_flight_fences_[i])
 			!= vk::Result::eSuccess)
 		{
 			throw std::runtime_error("Failed to create VulkanSemaphoresManager for a frame!");
@@ -35,9 +35,9 @@ ScrapEngine::Render::VulkanSemaphoresManager::~VulkanSemaphoresManager()
 {
 	for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++)
 	{
-		VulkanDevice::static_logic_device_ref->destroySemaphore(render_finished_semaphores_[i]);
-		VulkanDevice::static_logic_device_ref->destroySemaphore(image_available_semaphores_[i]);
-		VulkanDevice::static_logic_device_ref->destroyFence(in_flight_fences_[i]);
+		VulkanDevice::get_instance()->get_logical_device()->destroySemaphore(render_finished_semaphores_[i]);
+		VulkanDevice::get_instance()->get_logical_device()->destroySemaphore(image_available_semaphores_[i]);
+		VulkanDevice::get_instance()->get_logical_device()->destroyFence(in_flight_fences_[i]);
 	}
 }
 

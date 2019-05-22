@@ -24,9 +24,9 @@ ScrapEngine::Render::VulkanColorResources::VulkanColorResources(vk::SampleCountF
 
 ScrapEngine::Render::VulkanColorResources::~VulkanColorResources()
 {
-	VulkanDevice::static_logic_device_ref->destroyImageView(color_image_view_);
-	VulkanDevice::static_logic_device_ref->destroyImage(color_image_);
-	VulkanDevice::static_logic_device_ref->freeMemory(color_image_memory_);
+	VulkanDevice::get_instance()->get_logical_device()->destroyImageView(color_image_view_);
+	VulkanDevice::get_instance()->get_logical_device()->destroyImage(color_image_);
+	VulkanDevice::get_instance()->get_logical_device()->freeMemory(color_image_memory_);
 }
 
 vk::Image* ScrapEngine::Render::VulkanColorResources::get_color_image()

@@ -1,7 +1,6 @@
 #include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
-
 #include <algorithm>
-#include <Engine/Rendering/Base/StaticTypes.h>
+#include <Engine/Rendering/Device/VulkanDevice.h>
 
 ScrapEngine::Render::VulkanSwapChain::VulkanSwapChain(const SwapChainSupportDetails swap_chain_support,
                                                       const BaseQueue::QueueFamilyIndices indices,
@@ -51,15 +50,16 @@ ScrapEngine::Render::VulkanSwapChain::VulkanSwapChain(const SwapChainSupportDeta
 	create_info.setPresentMode(present_mode);
 	create_info.setClipped(true);
 
-	if (VulkanDevice::static_logic_device_ref->createSwapchainKHR(&create_info, nullptr, &swap_chain_)
+	if (VulkanDevice::get_instance()->get_logical_device()->createSwapchainKHR(&create_info, nullptr, &swap_chain_)
 		!= vk::Result::eSuccess)
 	{
 		throw std::runtime_error("VulkanSwapChain: Failed to create swap chain!");
 	}
 
-	VulkanDevice::static_logic_device_ref->getSwapchainImagesKHR(swap_chain_, &image_count, nullptr);
+	VulkanDevice::get_instance()->get_logical_device()->getSwapchainImagesKHR(swap_chain_, &image_count, nullptr);
 	swap_chain_images_.resize(image_count);
-	VulkanDevice::static_logic_device_ref->getSwapchainImagesKHR(swap_chain_, &image_count, swap_chain_images_.data());
+	VulkanDevice::get_instance()->get_logical_device()->getSwapchainImagesKHR(
+		swap_chain_, &image_count, swap_chain_images_.data());
 
 	swap_chain_image_format_ = surface_format.format;
 	swap_chain_extent_ = extent;
@@ -67,7 +67,7 @@ ScrapEngine::Render::VulkanSwapChain::VulkanSwapChain(const SwapChainSupportDeta
 
 ScrapEngine::Render::VulkanSwapChain::~VulkanSwapChain()
 {
-	VulkanDevice::static_logic_device_ref->destroySwapchainKHR(swap_chain_);
+	VulkanDevice::get_instance()->get_logical_device()->destroySwapchainKHR(swap_chain_);
 }
 
 vk::SurfaceFormatKHR ScrapEngine::Render::VulkanSwapChain::choose_swap_surface_format(
@@ -97,7 +97,7 @@ vk::PresentModeKHR ScrapEngine::Render::VulkanSwapChain::choose_swap_present_mod
 
 	for (const auto& available_present_mode : available_present_modes)
 	{
-		if (vsync && (available_present_mode == vk::PresentModeKHR::eFifoRelaxed 
+		if (vsync && (available_present_mode == vk::PresentModeKHR::eFifoRelaxed
 			|| available_present_mode == vk::PresentModeKHR::eFifo))
 		{
 			return available_present_mode;

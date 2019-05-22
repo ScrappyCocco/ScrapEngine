@@ -4,27 +4,32 @@
 #include <set>
 #include <Engine/Debug/DebugLog.h>
 
-//Init Static Members
+//Init static instance reference
 
-const vk::Device* ScrapEngine::Render::VulkanDevice::static_logic_device_ref = nullptr;
-const vk::PhysicalDevice* ScrapEngine::Render::VulkanDevice::static_physical_device_ref = nullptr;
+ScrapEngine::Render::VulkanDevice* ScrapEngine::Render::VulkanDevice::instance_ = nullptr;
 
-//Class
-
-ScrapEngine::Render::VulkanDevice::VulkanDevice(vk::Instance* vulkan_instance_input_ref,
-                                                vk::SurfaceKHR* vulkan_surface_input_ref)
-	: instance_ref_(vulkan_instance_input_ref), vulkan_surface_ref_(vulkan_surface_input_ref)
+void ScrapEngine::Render::VulkanDevice::init(vk::Instance* vulkan_instance_input_ref,
+	vk::SurfaceKHR* vulkan_surface_input_ref)
 {
+	instance_ref_ = vulkan_instance_input_ref;
+	vulkan_surface_ref_ = vulkan_surface_input_ref;
+
 	choose_physical_device();
 	create_logical_device();
-
-	static_logic_device_ref = &device_;
-	static_physical_device_ref = &physical_device_;
 }
 
 ScrapEngine::Render::VulkanDevice::~VulkanDevice()
 {
 	device_.destroy();
+}
+
+ScrapEngine::Render::VulkanDevice* ScrapEngine::Render::VulkanDevice::get_instance()
+{
+	if (instance_ == nullptr)
+	{
+		instance_ = new VulkanDevice();
+	}
+	return instance_;
 }
 
 void ScrapEngine::Render::VulkanDevice::choose_physical_device()

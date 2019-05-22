@@ -88,13 +88,15 @@ void ScrapEngine::Render::RenderManager::set_render_camera(ScrapEngine::Render::
 void ScrapEngine::Render::RenderManager::initialize_vulkan(const ScrapEngine::game_base_info* received_base_game_info)
 {
 	Debug::DebugLog::print_to_console_log("---initializeVulkan()---");
-	vulkan_instance_ = new VukanInstance(received_base_game_info->app_name, received_base_game_info->app_version,
-	                                     "ScrapEngine");
+	vulkan_instance_ = VukanInstance::get_instance();
+	vulkan_instance_->init(received_base_game_info->app_name, received_base_game_info->app_version,
+		"ScrapEngine");
 	Debug::DebugLog::print_to_console_log("VulkanInstance created");
-	vulkan_window_surface_ = new VulkanSurface(game_window_);
+	vulkan_window_surface_ = VulkanSurface::get_instance();
+	vulkan_window_surface_->init(game_window_);
 	Debug::DebugLog::print_to_console_log("VulkanWindowSurface created");
-	vulkan_render_device_ = new VulkanDevice(vulkan_instance_->get_vulkan_instance(),
-	                                         vulkan_window_surface_->get_surface());
+	vulkan_render_device_ = VulkanDevice::get_instance();
+	vulkan_render_device_->init(vulkan_instance_->get_vulkan_instance(), vulkan_window_surface_->get_surface());
 	Debug::DebugLog::print_to_console_log("VulkanRenderDevice created");
 	create_queues();
 	vulkan_render_swap_chain_ = new VulkanSwapChain(
@@ -105,10 +107,12 @@ void ScrapEngine::Render::RenderManager::initialize_vulkan(const ScrapEngine::ga
 	Debug::DebugLog::print_to_console_log("VulkanSwapChain created");
 	vulkan_render_image_view_ = new VulkanImageView(vulkan_render_swap_chain_);
 	Debug::DebugLog::print_to_console_log("VulkanImageView created");
-	vulkan_rendering_pass_ = new VulkanRenderPass(vulkan_render_swap_chain_->get_swap_chain_image_format(),
-	                                              vulkan_render_device_->get_msaa_samples());
+	vulkan_rendering_pass_ = VulkanRenderPass::get_instance();
+	vulkan_rendering_pass_->init(vulkan_render_swap_chain_->get_swap_chain_image_format(),
+		vulkan_render_device_->get_msaa_samples());
 	Debug::DebugLog::print_to_console_log("VulkanRenderPass created");
-	vulkan_render_command_pool_ = new VulkanCommandPool(vulkan_render_device_->get_cached_queue_family_indices());
+	vulkan_render_command_pool_ = VulkanCommandPool::get_instance();
+	vulkan_render_command_pool_->init(vulkan_render_device_->get_cached_queue_family_indices());
 	Debug::DebugLog::print_to_console_log("VulkanCommandPool created");
 	vulkan_render_color_ = new VulkanColorResources(vulkan_render_device_->get_msaa_samples(),
 	                                                vulkan_render_swap_chain_);
@@ -137,8 +141,14 @@ void ScrapEngine::Render::RenderManager::initialize_vulkan(const ScrapEngine::ga
 void ScrapEngine::Render::RenderManager::create_queues()
 {
 	Debug::DebugLog::print_to_console_log("---Begin queues creation---");
-	vulkan_graphics_queue_ = new GraphicsQueue(vulkan_render_device_->get_cached_queue_family_indices());
-	vulkan_presentation_queue_ = new PresentQueue(vulkan_render_device_->get_cached_queue_family_indices());
+	//_graphics_queue
+	GraphicsQueue* g_queue = GraphicsQueue::get_instance();
+	g_queue->init(vulkan_render_device_->get_cached_queue_family_indices());
+	vulkan_graphics_queue_ = g_queue;
+	//presentation_queue
+	PresentQueue* p_queue = PresentQueue::get_instance();
+	p_queue->init(vulkan_render_device_->get_cached_queue_family_indices());
+	vulkan_presentation_queue_ = p_queue;
 	Debug::DebugLog::print_to_console_log("---Ended queues creation---");
 }
 
@@ -208,10 +218,10 @@ ScrapEngine::Render::VulkanSkyboxInstance* ScrapEngine::Render::RenderManager::l
 
 void ScrapEngine::Render::RenderManager::draw_frame()
 {
-	VulkanDevice::static_logic_device_ref->waitForFences(1, &(*in_flight_fences_ref_)[current_frame_], true,
+	VulkanDevice::get_instance()->get_logical_device()->waitForFences(1, &(*in_flight_fences_ref_)[current_frame_], true,
 	                                                     std::numeric_limits<uint64_t>::max());
 
-	result_ = VulkanDevice::static_logic_device_ref->acquireNextImageKHR(
+	result_ = VulkanDevice::get_instance()->get_logical_device()->acquireNextImageKHR(
 		vulkan_render_swap_chain_->get_swap_chain(), std::numeric_limits<uint64_t>::max(),
 		(*image_available_semaphores_ref_)[current_frame_], vk::Fence(), &image_index_);
 
@@ -251,7 +261,7 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 	submit_info.setSignalSemaphoreCount(1);
 	submit_info.setPSignalSemaphores(signal_semaphores);
 
-	VulkanDevice::static_logic_device_ref->resetFences(1, &(*in_flight_fences_ref_)[current_frame_]);
+	VulkanDevice::get_instance()->get_logical_device()->resetFences(1, &(*in_flight_fences_ref_)[current_frame_]);
 
 	result_ = vulkan_graphics_queue_->get_queue()->submit(1, &submit_info,
 	                                                               (*in_flight_fences_ref_)[current_frame_]);
@@ -295,7 +305,7 @@ void ScrapEngine::Render::RenderManager::wait_device_idle() const
 
 void ScrapEngine::Render::RenderManager::recreate_swap_chain()
 {
-	VulkanDevice::static_logic_device_ref->waitIdle();
+	VulkanDevice::get_instance()->get_logical_device()->waitIdle();
 	//TODO https://vulkan-tutorial.com/Drawing_a_triangle/Swap_chain_recreation
 }
 

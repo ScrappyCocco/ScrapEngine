@@ -23,9 +23,9 @@ ScrapEngine::Render::VulkanDepthResources::VulkanDepthResources(const vk::Extent
 
 ScrapEngine::Render::VulkanDepthResources::~VulkanDepthResources()
 {
-	VulkanDevice::static_logic_device_ref->destroyImageView(depth_image_view_);
-	VulkanDevice::static_logic_device_ref->destroyImage(depth_image_);
-	VulkanDevice::static_logic_device_ref->freeMemory(depth_image_memory_);
+	VulkanDevice::get_instance()->get_logical_device()->destroyImageView(depth_image_view_);
+	VulkanDevice::get_instance()->get_logical_device()->destroyImage(depth_image_);
+	VulkanDevice::get_instance()->get_logical_device()->freeMemory(depth_image_memory_);
 }
 
 vk::Format ScrapEngine::Render::VulkanDepthResources::find_supported_format(
@@ -34,7 +34,7 @@ vk::Format ScrapEngine::Render::VulkanDepthResources::find_supported_format(
 	for (vk::Format format : candidates)
 	{
 		vk::FormatProperties props;
-		VulkanDevice::static_physical_device_ref->getFormatProperties(format, &props);
+		VulkanDevice::get_instance()->get_physical_device()->getFormatProperties(format, &props);
 
 		if (tiling == vk::ImageTiling::eLinear && (props.linearTilingFeatures & features) == features)
 		{

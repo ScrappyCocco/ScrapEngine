@@ -1,6 +1,5 @@
 #pragma once
 
-#include <vulkan/vulkan.hpp>
 #include <Engine/Rendering/Queue/BaseQueue.h>
 
 namespace ScrapEngine
@@ -9,11 +8,16 @@ namespace ScrapEngine
 	{
 		class PresentQueue : public BaseQueue
 		{
-		public:
-			static const vk::Queue* static_presentation_queue_ref;
+		private:
+			static PresentQueue* instance_;
 
-			PresentQueue(QueueFamilyIndices indices);
+			PresentQueue() = default;
+		public:
+			void init(QueueFamilyIndices indices);
+
 			~PresentQueue() = default;
+
+			static PresentQueue* get_instance();
 		};
 	}
 }

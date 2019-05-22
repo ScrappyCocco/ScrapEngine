@@ -11,11 +11,16 @@ namespace ScrapEngine
 		{
 		private:
 			vk::CommandPool command_pool_;
-		public:
-			static const vk::CommandPool* static_command_pool_ref;
 
-			VulkanCommandPool(BaseQueue::QueueFamilyIndices queue_family_indices);
+			static VulkanCommandPool* instance_;
+
+			VulkanCommandPool() = default;
+		public:
+			void init(BaseQueue::QueueFamilyIndices queue_family_indices);
+
 			~VulkanCommandPool();
+
+			static VulkanCommandPool* get_instance();
 
 			vk::CommandPool* get_command_pool();
 		};

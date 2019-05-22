@@ -1,6 +1,7 @@
 #include <Engine/Rendering/Buffer/CommandBuffer/VulkanCommandBuffer.h>
-#include <Engine/Rendering/Base/StaticTypes.h>
 #include <Engine/Debug/DebugLog.h>
+#include <Engine/Rendering/Command/VulkanCommandPool.h>
+#include <Engine/Rendering/RenderPass/VulkanRenderPass.h>
 
 ScrapEngine::Render::VulkanCommandBuffer::~VulkanCommandBuffer()
 {
@@ -17,12 +18,12 @@ void ScrapEngine::Render::VulkanCommandBuffer::init_command_buffer(
 	command_buffers_.resize(swap_chain_framebuffers->size());
 
 	vk::CommandBufferAllocateInfo alloc_info(
-		*VulkanCommandPool::static_command_pool_ref,
+		*VulkanCommandPool::get_instance()->get_command_pool(),
 		vk::CommandBufferLevel::ePrimary,
 		static_cast<uint32_t>(command_buffers_.size())
 	);
 
-	if (VulkanDevice::static_logic_device_ref->allocateCommandBuffers(&alloc_info, command_buffers_.data())
+	if (VulkanDevice::get_instance()->get_logical_device()->allocateCommandBuffers(&alloc_info, command_buffers_.data())
 		!= vk::Result::eSuccess)
 	{
 		throw std::runtime_error("[VulkanCommandBuffer] Failed to allocate command buffers!");
@@ -38,7 +39,7 @@ void ScrapEngine::Render::VulkanCommandBuffer::init_command_buffer(
 		}
 
 		render_pass_info_ = vk::RenderPassBeginInfo(
-			*VulkanRenderPass::static_render_pass_ref,
+			*VulkanRenderPass::get_instance()->get_render_pass(),
 			(*swap_chain_framebuffers)[i],
 			vk::Rect2D(vk::Offset2D(), *input_swap_chain_extent_ref)
 		);
@@ -147,9 +148,10 @@ void ScrapEngine::Render::VulkanCommandBuffer::close_command_buffer()
 void ScrapEngine::Render::VulkanCommandBuffer::free_command_buffers()
 {
 	Debug::DebugLog::print_to_console_log("[VulkanCommandBuffer] Clearing Command Buffer");
-	VulkanDevice::static_logic_device_ref->freeCommandBuffers(*VulkanCommandPool::static_command_pool_ref,
-	                                                          static_cast<uint32_t>(command_buffers_.size()),
-	                                                          command_buffers_.data());
+	VulkanDevice::get_instance()->get_logical_device()->freeCommandBuffers(
+		*VulkanCommandPool::get_instance()->get_command_pool(),
+		static_cast<uint32_t>(command_buffers_.size()),
+		command_buffers_.data());
 	command_buffers_.clear();
 }
 

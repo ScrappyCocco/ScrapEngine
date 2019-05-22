@@ -1,14 +1,22 @@
 #include <Engine/Rendering/Queue/PresentationQueue/PresentQueue.h>
-#include <Engine/Rendering/Base/StaticTypes.h>
+#include "Engine/Rendering/Device/VulkanDevice.h"
 
-//Init Static Members
+//Init static instance reference
 
-const vk::Queue* ScrapEngine::Render::PresentQueue::static_presentation_queue_ref = nullptr;
+ScrapEngine::Render::PresentQueue* ScrapEngine::Render::PresentQueue::instance_ = nullptr;
 
 //Class
 
-ScrapEngine::Render::PresentQueue::PresentQueue(const QueueFamilyIndices indices)
+void ScrapEngine::Render::PresentQueue::init(const QueueFamilyIndices indices)
 {
-	VulkanDevice::static_logic_device_ref->getQueue(indices.present_family, 0, &queue_);
-	static_presentation_queue_ref = &queue_;
+	VulkanDevice::get_instance()->get_logical_device()->getQueue(indices.present_family, 0, &queue_);
+}
+
+ScrapEngine::Render::PresentQueue* ScrapEngine::Render::PresentQueue::get_instance()
+{
+	if (instance_ == nullptr)
+	{
+		instance_ = new PresentQueue();
+	}
+	return instance_;
 }

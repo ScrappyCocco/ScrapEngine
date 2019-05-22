@@ -1,5 +1,4 @@
 #include <Engine/Rendering/Queue/BaseQueue.h>
-#include <Engine/Rendering/Base/StaticTypes.h>
 
 ScrapEngine::Render::BaseQueue::~BaseQueue()
 {

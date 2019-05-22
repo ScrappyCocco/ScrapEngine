@@ -102,7 +102,6 @@
     <ClInclude Include="Engine\LogicCore\Scene\SceneManager.h" />
     <ClInclude Include="Engine\LogicCore\SObject.h" />
     <ClInclude Include="Engine\Manager\EngineManager.h" />
-    <ClInclude Include="Engine\Rendering\Base\StaticTypes.h" />
     <ClInclude Include="Engine\Rendering\Base\Vertex.h" />
     <ClInclude Include="Engine\Rendering\Buffer\BaseBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\BufferContainer\BufferContainer.h" />

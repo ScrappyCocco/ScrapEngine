@@ -20,8 +20,8 @@ ScrapEngine::Render::IndexBuffer::IndexBuffer(const std::vector<uint32_t>* indic
 
 ScrapEngine::Render::IndexBuffer::~IndexBuffer()
 {
-	VulkanDevice::static_logic_device_ref->destroyBuffer(index_buffer_);
-	VulkanDevice::static_logic_device_ref->freeMemory(index_buffer_memory_);
+	VulkanDevice::get_instance()->get_logical_device()->destroyBuffer(index_buffer_);
+	VulkanDevice::get_instance()->get_logical_device()->freeMemory(index_buffer_memory_);
 }
 
 vk::Buffer* ScrapEngine::Render::IndexBuffer::get_index_buffer()
