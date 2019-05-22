@@ -1,6 +1,6 @@
 #include <Engine/Rendering/ValidationLayers/VulkanValidationLayers.h>
 #include <Engine/Debug/DebugLog.h>
-#include <Engine/Rendering/Base/StaticTypes.h>
+#include <Engine/Rendering/Instance/VukanInstance.h>
 
 ScrapEngine::Render::VulkanValidationLayers::VulkanValidationLayers()
 {
@@ -12,7 +12,8 @@ ScrapEngine::Render::VulkanValidationLayers::VulkanValidationLayers()
 
 ScrapEngine::Render::VulkanValidationLayers::~VulkanValidationLayers()
 {
-	VukanInstance::static_instance_ref->destroyDebugUtilsMessengerEXT(callback_, nullptr, dispatcher_);
+	VukanInstance::get_instance()->get_vulkan_instance()->
+	                               destroyDebugUtilsMessengerEXT(callback_, nullptr, dispatcher_);
 }
 
 void ScrapEngine::Render::VulkanValidationLayers::setup_debug_callback()
@@ -28,9 +29,10 @@ void ScrapEngine::Render::VulkanValidationLayers::setup_debug_callback()
 		debug_callback
 	);
 
-	dispatcher_.init(*VukanInstance::static_instance_ref);
+	dispatcher_.init(*VukanInstance::get_instance()->get_vulkan_instance());
 
-	callback_ = VukanInstance::static_instance_ref->createDebugUtilsMessengerEXT(create_info, nullptr, dispatcher_);
+	callback_ = VukanInstance::get_instance()->get_vulkan_instance()->createDebugUtilsMessengerEXT(
+		create_info, nullptr, dispatcher_);
 
 	Debug::DebugLog::print_to_console_log("VulkanValidationLayers: VulkanValidationLayers ENABLED!");
 }

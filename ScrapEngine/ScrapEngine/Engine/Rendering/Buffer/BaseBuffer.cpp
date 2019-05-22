@@ -2,7 +2,9 @@
 
 #include <stdexcept>
 #include <Engine/Rendering/Memory/MemoryManager.h>
-#include <Engine/Rendering/Base/StaticTypes.h>
+#include <Engine/Rendering/Device/VulkanDevice.h>
+#include <Engine/Rendering/Command/VulkanCommandPool.h>
+#include <Engine/Rendering/Queue/GraphicsQueue/GraphicsQueue.h>
 
 void ScrapEngine::Render::BaseBuffer::create_buffer(const vk::DeviceSize& size, const vk::BufferUsageFlags& usage,
                                                     const vk::MemoryPropertyFlags& properties, vk::Buffer& buffer,
@@ -15,24 +17,24 @@ void ScrapEngine::Render::BaseBuffer::create_buffer(const vk::DeviceSize& size, 
 		vk::SharingMode::eExclusive
 	);
 
-	if (VulkanDevice::static_logic_device_ref->createBuffer(&buffer_info, nullptr, &buffer) != vk::Result::eSuccess)
+	if (VulkanDevice::get_instance()->get_logical_device()->createBuffer(&buffer_info, nullptr, &buffer) != vk::Result::eSuccess)
 	{
 		throw std::runtime_error("BaseBuffer: Failed to create buffer!");
 	}
 
 	vk::MemoryRequirements mem_requirements;
-	VulkanDevice::static_logic_device_ref->getBufferMemoryRequirements(buffer, &mem_requirements);
+	VulkanDevice::get_instance()->get_logical_device()->getBufferMemoryRequirements(buffer, &mem_requirements);
 
 	vk::MemoryAllocateInfo alloc_info(mem_requirements.size,
 	                                  find_memory_type(mem_requirements.memoryTypeBits, properties));
 
-	if (VulkanDevice::static_logic_device_ref->allocateMemory(&alloc_info, nullptr, &buffer_memory) != vk::Result::eSuccess
+	if (VulkanDevice::get_instance()->get_logical_device()->allocateMemory(&alloc_info, nullptr, &buffer_memory) != vk::Result::eSuccess
 	)
 	{
 		throw std::runtime_error("BaseBuffer: Failed to allocate buffer memory!");
 	}
 
-	VulkanDevice::static_logic_device_ref->bindBufferMemory(buffer, buffer_memory, 0);
+	VulkanDevice::get_instance()->get_logical_device()->bindBufferMemory(buffer, buffer_memory, 0);
 }
 
 void ScrapEngine::Render::BaseBuffer::copy_buffer(vk::Buffer* src_buffer, vk::Buffer& dst_buffer,
@@ -49,11 +51,11 @@ void ScrapEngine::Render::BaseBuffer::copy_buffer(vk::Buffer* src_buffer, vk::Bu
 
 vk::CommandBuffer* ScrapEngine::Render::BaseBuffer::begin_single_time_commands()
 {
-	vk::CommandBufferAllocateInfo alloc_info(*VulkanCommandPool::static_command_pool_ref, vk::CommandBufferLevel::ePrimary,
+	vk::CommandBufferAllocateInfo alloc_info(*VulkanCommandPool::get_instance()->get_command_pool(), vk::CommandBufferLevel::ePrimary,
 	                                         1);
 
 	vk::CommandBuffer* command_buffer = new vk::CommandBuffer();
-	VulkanDevice::static_logic_device_ref->allocateCommandBuffers(&alloc_info, command_buffer);
+	VulkanDevice::get_instance()->get_logical_device()->allocateCommandBuffers(&alloc_info, command_buffer);
 
 	const vk::CommandBufferBeginInfo begin_info(vk::CommandBufferUsageFlagBits::eOneTimeSubmit);
 
@@ -67,10 +69,10 @@ void ScrapEngine::Render::BaseBuffer::end_single_time_commands(vk::CommandBuffer
 	command_buffer->end();
 
 	vk::SubmitInfo submit_info(0, nullptr, nullptr, 1, command_buffer);
-	GraphicsQueue::static_graphics_queue_ref->submit(1, &submit_info, nullptr);
+	GraphicsQueue::get_instance()->get_queue()->submit(1, &submit_info, nullptr);
 
-	GraphicsQueue::static_graphics_queue_ref->waitIdle();
+	GraphicsQueue::get_instance()->get_queue()->waitIdle();
 
-	VulkanDevice::static_logic_device_ref->freeCommandBuffers(*VulkanCommandPool::static_command_pool_ref, 1, command_buffer);
+	VulkanDevice::get_instance()->get_logical_device()->freeCommandBuffers(*VulkanCommandPool::get_instance()->get_command_pool(), 1, command_buffer);
 	delete command_buffer;
 }

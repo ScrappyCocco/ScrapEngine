@@ -1,7 +1,8 @@
 #include <Engine/Rendering/Pipeline/StandardPipeline/StandardVulkanGraphicsPipeline.h>
 #include <Engine/Rendering/Shader/ShaderManager.h>
 #include <Engine/Rendering/Base/Vertex.h>
-#include <Engine/Rendering/Base/StaticTypes.h>
+#include <Engine/Rendering/Device/VulkanDevice.h>
+#include <Engine/Rendering/RenderPass/VulkanRenderPass.h>
 
 ScrapEngine::Render::StandardVulkanGraphicsPipeline::StandardVulkanGraphicsPipeline(const char* vertex_shader,
                                                                                     const char* fragment_shader,
@@ -113,7 +114,7 @@ ScrapEngine::Render::StandardVulkanGraphicsPipeline::StandardVulkanGraphicsPipel
 		&(*descriptor_set_layout)
 	);
 
-	if (VulkanDevice::static_logic_device_ref->createPipelineLayout(&pipeline_layout_info, nullptr, &pipeline_layout_)
+	if (VulkanDevice::get_instance()->get_logical_device()->createPipelineLayout(&pipeline_layout_info, nullptr, &pipeline_layout_)
 		!= vk::Result::eSuccess)
 	{
 		throw std::runtime_error("VulkanGraphicsPipeline: Failed to create pipeline layout!");
@@ -133,16 +134,16 @@ ScrapEngine::Render::StandardVulkanGraphicsPipeline::StandardVulkanGraphicsPipel
 		&color_blending,
 		nullptr,
 		pipeline_layout_,
-		*VulkanRenderPass::static_render_pass_ref,
+		*VulkanRenderPass::get_instance()->get_render_pass(),
 		0
 	);
 
-	if (VulkanDevice::static_logic_device_ref->createGraphicsPipelines(nullptr, 1, &pipeline_info, nullptr,
+	if (VulkanDevice::get_instance()->get_logical_device()->createGraphicsPipelines(nullptr, 1, &pipeline_info, nullptr,
 	                                                                   &graphics_pipeline_) != vk::Result::eSuccess)
 	{
 		throw std::runtime_error("VulkanGraphicsPipeline: Failed to create graphics pipeline!");
 	}
 
-	VulkanDevice::static_logic_device_ref->destroyShaderModule(frag_shader_module);
-	VulkanDevice::static_logic_device_ref->destroyShaderModule(vert_shader_module);
+	VulkanDevice::get_instance()->get_logical_device()->destroyShaderModule(frag_shader_module);
+	VulkanDevice::get_instance()->get_logical_device()->destroyShaderModule(vert_shader_module);
 }

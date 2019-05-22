@@ -1,6 +1,6 @@
 #include <Engine/Rendering/Texture/TextureSampler/TextureSampler.h>
 #include <stdexcept>
-#include <Engine/Rendering/Base/StaticTypes.h>
+#include <Engine/Rendering/Device/VulkanDevice.h>
 
 ScrapEngine::Render::TextureSampler::TextureSampler(const uint32_t& mip_levels)
 	: TextureSampler(mip_levels, vk::Filter::eLinear, vk::Filter::eLinear,
@@ -37,8 +37,8 @@ ScrapEngine::Render::TextureSampler::TextureSampler(const uint32_t& mip_levels, 
 		border_color
 	);
 
-	if (VulkanDevice::static_logic_device_ref->createSampler(&samplerInfo, nullptr, &texture_sampler_) != vk::Result::
-		eSuccess)
+	if (VulkanDevice::get_instance()->get_logical_device()->createSampler(&samplerInfo, nullptr, &texture_sampler_) 
+		!= vk::Result::eSuccess)
 	{
 		throw std::runtime_error("TextureSampler: Failed to create texture sampler!");
 	}
@@ -46,7 +46,7 @@ ScrapEngine::Render::TextureSampler::TextureSampler(const uint32_t& mip_levels, 
 
 ScrapEngine::Render::TextureSampler::~TextureSampler()
 {
-	ScrapEngine::Render::VulkanDevice::static_logic_device_ref->destroySampler(texture_sampler_);
+	ScrapEngine::Render::VulkanDevice::get_instance()->get_logical_device()->destroySampler(texture_sampler_);
 }
 
 vk::Sampler* ScrapEngine::Render::TextureSampler::get_texture_sampler()

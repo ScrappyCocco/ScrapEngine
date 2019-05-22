@@ -6,8 +6,8 @@
 
 ScrapEngine::Render::BaseTexture::~BaseTexture()
 {
-	VulkanDevice::static_logic_device_ref->destroyImage(texture_image_);
-	VulkanDevice::static_logic_device_ref->freeMemory(texture_image_memory_);
+	VulkanDevice::get_instance()->get_logical_device()->destroyImage(texture_image_);
+	VulkanDevice::get_instance()->get_logical_device()->freeMemory(texture_image_memory_);
 }
 
 vk::Image* ScrapEngine::Render::BaseTexture::get_texture_image()
@@ -45,26 +45,27 @@ void ScrapEngine::Render::BaseTexture::create_image(const uint32_t& width, const
 		vk::SharingMode::eExclusive
 	);
 
-	if (VulkanDevice::static_logic_device_ref->createImage(&image_info, nullptr, &image) != vk::Result::eSuccess)
+	if (VulkanDevice::get_instance()->get_logical_device()->createImage(&image_info, nullptr, &image)
+		!= vk::Result::eSuccess)
 	{
 		throw std::runtime_error("TextureImage: Failed to create image!");
 	}
 
 	vk::MemoryRequirements mem_requirements;
-	VulkanDevice::static_logic_device_ref->getImageMemoryRequirements(image, &mem_requirements);
+	VulkanDevice::get_instance()->get_logical_device()->getImageMemoryRequirements(image, &mem_requirements);
 
 	vk::MemoryAllocateInfo alloc_info(
 		mem_requirements.size,
 		find_memory_type(mem_requirements.memoryTypeBits, properties)
 	);
 
-	if (VulkanDevice::static_logic_device_ref->allocateMemory(&alloc_info, nullptr, &image_memory) != vk::Result::
-		eSuccess)
+	if (VulkanDevice::get_instance()->get_logical_device()->allocateMemory(&alloc_info, nullptr, &image_memory)
+		!= vk::Result::eSuccess)
 	{
 		throw std::runtime_error("TextureImage: Failed to allocate image memory!");
 	}
 
-	VulkanDevice::static_logic_device_ref->bindImageMemory(image, image_memory, 0);
+	VulkanDevice::get_instance()->get_logical_device()->bindImageMemory(image, image_memory, 0);
 }
 
 void ScrapEngine::Render::BaseTexture::transition_image_layout(vk::Image* image, const vk::Format& format,
@@ -153,8 +154,8 @@ void ScrapEngine::Render::BaseTexture::generate_mipmaps(vk::Image* image, const 
                                                         const uint32_t& mip_levels)
 {
 	// Check if image format supports linear blitting
-	const vk::FormatProperties format_properties = VulkanDevice::static_physical_device_ref->
-		getFormatProperties(image_format);
+	const vk::FormatProperties format_properties = VulkanDevice::get_instance()->get_physical_device()->
+	                                                                             getFormatProperties(image_format);
 
 	if (!(format_properties.optimalTilingFeatures & vk::FormatFeatureFlagBits::eSampledImageFilterLinear))
 	{

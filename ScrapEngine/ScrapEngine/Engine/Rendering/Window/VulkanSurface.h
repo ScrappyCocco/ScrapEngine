@@ -13,12 +13,24 @@ namespace ScrapEngine
 		class VulkanSurface
 		{
 		private:
-			vk::SurfaceKHR surface_; //represents an abstract type of surface to present rendered images to.
-		public:
-			static const vk::SurfaceKHR* static_surface_ref;
+			/**
+			 * \brief represents an abstract type of surface to present rendered images to.
+			 */
+			vk::SurfaceKHR surface_;
 
-			VulkanSurface(ScrapEngine::Render::GameWindow* window_ref);
+			//Singleton static instance
+			static VulkanSurface* instance_;
+
+			//The constructor is private because this class is a Singleton
+			VulkanSurface() = default;
+		public:
+			//Method used to init the class with parameters because the constructor is private
+			void init(ScrapEngine::Render::GameWindow* window_ref);
+
 			~VulkanSurface();
+
+			//Singleton static function to get or create a class instance
+			static VulkanSurface* get_instance();
 
 			void create_surface(ScrapEngine::Render::GameWindow* window_ref);
 

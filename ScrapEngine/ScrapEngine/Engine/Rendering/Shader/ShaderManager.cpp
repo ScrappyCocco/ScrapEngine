@@ -1,6 +1,6 @@
 #include <Engine/Rendering/Shader/ShaderManager.h>
-#include <Engine/Rendering/Base/StaticTypes.h>
 #include <fstream>
+#include <Engine/Rendering/Device/VulkanDevice.h>
 
 vk::ShaderModule ScrapEngine::Render::ShaderManager::create_shader_module(const std::vector<char>& code)
 {
@@ -11,7 +11,7 @@ vk::ShaderModule ScrapEngine::Render::ShaderManager::create_shader_module(const 
 	);
 
 	vk::ShaderModule shader_module;
-	if (VulkanDevice::static_logic_device_ref->createShaderModule(&create_info, nullptr, &shader_module)
+	if (VulkanDevice::get_instance()->get_logical_device()->createShaderModule(&create_info, nullptr, &shader_module)
 		!= vk::Result::eSuccess)
 	{
 		throw std::runtime_error("ShaderManager: Failed to create shader module!");

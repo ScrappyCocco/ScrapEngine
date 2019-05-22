@@ -3,14 +3,14 @@
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
-//Init Static Members
+//Init static instance reference
 
-const vk::Instance* ScrapEngine::Render::VukanInstance::static_instance_ref = nullptr;
+ScrapEngine::Render::VukanInstance* ScrapEngine::Render::VukanInstance::instance_ = nullptr;
 
 //Class
 
-ScrapEngine::Render::VukanInstance::VukanInstance(const std::string& app_name, int app_version,
-                                                  const std::string& engine_name, int engine_version)
+void ScrapEngine::Render::VukanInstance::init(const std::string& app_name, int app_version,
+                                              const std::string& engine_name, int engine_version)
 {
 	if (VulkanValidationLayers::are_validation_layers_enabled())
 	{
@@ -18,7 +18,6 @@ ScrapEngine::Render::VukanInstance::VukanInstance(const std::string& app_name, i
 	}
 
 	create_vulkan_instance(app_name, app_version, engine_name, engine_version);
-	static_instance_ref = &instance_;
 
 	if (validation_layers_manager_)
 	{
@@ -30,7 +29,16 @@ ScrapEngine::Render::VukanInstance::~VukanInstance()
 {
 	delete validation_layers_manager_;
 
-	vkDestroyInstance(instance_, nullptr);
+	vkDestroyInstance(vulkan_instance_, nullptr);
+}
+
+ScrapEngine::Render::VukanInstance* ScrapEngine::Render::VukanInstance::get_instance()
+{
+	if (instance_ == nullptr)
+	{
+		instance_ = new VukanInstance();
+	}
+	return instance_;
 }
 
 void ScrapEngine::Render::VukanInstance::create_vulkan_instance(std::string app_name, int app_version,
@@ -58,7 +66,7 @@ void ScrapEngine::Render::VukanInstance::create_vulkan_instance(std::string app_
 		create_info.setPpEnabledLayerNames(layers.data());
 	}
 
-	if (vk::createInstance(&create_info, nullptr, &instance_) != vk::Result::eSuccess)
+	if (vk::createInstance(&create_info, nullptr, &vulkan_instance_) != vk::Result::eSuccess)
 	{
 		throw std::runtime_error("VukanInstance: Failed to create instance!");
 	}
@@ -66,7 +74,7 @@ void ScrapEngine::Render::VukanInstance::create_vulkan_instance(std::string app_
 
 vk::Instance* ScrapEngine::Render::VukanInstance::get_vulkan_instance()
 {
-	return &instance_;
+	return &vulkan_instance_;
 }
 
 std::vector<const char*> ScrapEngine::Render::VukanInstance::get_required_extensions() const

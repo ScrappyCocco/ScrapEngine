@@ -12,6 +12,9 @@ namespace ScrapEngine
 		class VulkanDevice
 		{
 		private:
+			//Singleton static instance
+			static VulkanDevice* instance_;
+
 			vk::Instance* instance_ref_;
 			vk::SurfaceKHR* vulkan_surface_ref_;
 
@@ -19,21 +22,31 @@ namespace ScrapEngine
 
 			BaseQueue::QueueFamilyIndices cached_indices_;
 
-			vk::PhysicalDevice physical_device_; //physical graphics card
-			vk::Device device_; //logical connection to graphics card
+			/**
+			 * \brief physical graphics card
+			 */
+			vk::PhysicalDevice physical_device_;
+			/**
+			 * \brief logical connection to graphics card
+			 */
+			vk::Device device_;
 
 			//List of Extensions to check
 			const std::vector<const char*> device_extensions_ = {
 				VK_KHR_SWAPCHAIN_EXTENSION_NAME
 			};
-		public:
-			static const vk::Device* static_logic_device_ref;
-			static const vk::PhysicalDevice* static_physical_device_ref;
 
-			VulkanDevice(vk::Instance* vulkan_instance_input_ref, vk::SurfaceKHR* vulkan_surface_input_ref);
+			//The constructor is private because this class is a Singleton
+			VulkanDevice() = default;
+		public:
+			//Method used to init the class with parameters because the constructor is private
+			void init(vk::Instance* vulkan_instance_input_ref, vk::SurfaceKHR* vulkan_surface_input_ref);
 
 			//Turn off the logical device
 			~VulkanDevice();
+
+			//Singleton static function to get or create a class instance
+			static VulkanDevice* get_instance();
 
 			//Choose and assign the best physicalDevice
 			void choose_physical_device();
@@ -53,7 +66,8 @@ namespace ScrapEngine
 			BaseQueue::QueueFamilyIndices find_queue_families(
 				vk::PhysicalDevice* physical_device_input, vk::SurfaceKHR* surface);
 
-			VulkanSwapChain::SwapChainSupportDetails query_swap_chain_support(vk::PhysicalDevice* physical_device_input) const;
+			VulkanSwapChain::SwapChainSupportDetails query_swap_chain_support(
+				vk::PhysicalDevice* physical_device_input) const;
 
 			vk::SampleCountFlagBits get_max_usable_sample_count() const;
 

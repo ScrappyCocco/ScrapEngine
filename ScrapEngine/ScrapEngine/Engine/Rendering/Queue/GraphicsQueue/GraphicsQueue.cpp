@@ -1,14 +1,21 @@
 #include <Engine/Rendering/Queue/GraphicsQueue/GraphicsQueue.h>
-#include <Engine/Rendering/Base/StaticTypes.h>
+#include <Engine/Rendering/Device/VulkanDevice.h>
 
-//Init Static Members
+//Init static instance reference
 
-const vk::Queue* ScrapEngine::Render::GraphicsQueue::static_graphics_queue_ref = nullptr;
+ScrapEngine::Render::GraphicsQueue* ScrapEngine::Render::GraphicsQueue::instance_ = nullptr;
 
 //Class
-
-ScrapEngine::Render::GraphicsQueue::GraphicsQueue(const QueueFamilyIndices indices)
+void ScrapEngine::Render::GraphicsQueue::init(const QueueFamilyIndices indices)
 {
-	VulkanDevice::static_logic_device_ref->getQueue(indices.graphics_family, 0, &queue_);
-	static_graphics_queue_ref = &queue_;
+	VulkanDevice::get_instance()->get_logical_device()->getQueue(indices.graphics_family, 0, &queue_);
+}
+
+ScrapEngine::Render::GraphicsQueue* ScrapEngine::Render::GraphicsQueue::get_instance()
+{
+	if (instance_ == nullptr)
+	{
+		instance_ = new GraphicsQueue();
+	}
+	return instance_;
 }

@@ -3,16 +3,16 @@
 #include <stdexcept>
 #include <array>
 #include <Engine/Rendering/DepthResources/VulkanDepthResources.h>
-#include <Engine/Rendering/Base/StaticTypes.h>
+#include <Engine/Rendering/Device/VulkanDevice.h>
 
-//Init Static Members
+//Init static instance reference
 
-const vk::RenderPass* ScrapEngine::Render::VulkanRenderPass::static_render_pass_ref = nullptr;
+ScrapEngine::Render::VulkanRenderPass* ScrapEngine::Render::VulkanRenderPass::instance_ = nullptr;
 
 //Class
 
-ScrapEngine::Render::VulkanRenderPass::VulkanRenderPass(const vk::Format& swap_chain_image_format,
-                                                        const vk::SampleCountFlagBits msaa_samples)
+void ScrapEngine::Render::VulkanRenderPass::init(const vk::Format& swap_chain_image_format,
+                                                 const vk::SampleCountFlagBits msaa_samples)
 {
 	const vk::AttachmentDescription color_attachment(
 		vk::AttachmentDescriptionFlags(),
@@ -97,18 +97,25 @@ ScrapEngine::Render::VulkanRenderPass::VulkanRenderPass(const vk::Format& swap_c
 		&dependency
 	);
 
-	if (VulkanDevice::static_logic_device_ref->createRenderPass(&render_pass_info, nullptr, &render_pass_) != vk::Result
-		::eSuccess)
+	if (VulkanDevice::get_instance()->get_logical_device()->createRenderPass(&render_pass_info, nullptr, &render_pass_)
+		!= vk::Result::eSuccess)
 	{
 		throw std::runtime_error("VulkanRenderPass: Failed to create render pass!");
 	}
-
-	static_render_pass_ref = &render_pass_;
 }
 
 ScrapEngine::Render::VulkanRenderPass::~VulkanRenderPass()
 {
-	VulkanDevice::static_logic_device_ref->destroyRenderPass(render_pass_);
+	VulkanDevice::get_instance()->get_logical_device()->destroyRenderPass(render_pass_);
+}
+
+ScrapEngine::Render::VulkanRenderPass* ScrapEngine::Render::VulkanRenderPass::get_instance()
+{
+	if (instance_ == nullptr)
+	{
+		instance_ = new VulkanRenderPass();
+	}
+	return instance_;
 }
 
 vk::RenderPass* ScrapEngine::Render::VulkanRenderPass::get_render_pass()

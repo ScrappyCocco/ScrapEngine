@@ -1,7 +1,7 @@
 #include <Engine/Rendering/Descriptor/VulkanDescriptorSet.h>
 #include <stdexcept>
 #include <array>
-#include <Engine/Rendering/Base/StaticTypes.h>
+#include <Engine/Rendering/Device/VulkanDevice.h>
 
 ScrapEngine::Render::VulkanDescriptorSet::VulkanDescriptorSet()
 {
@@ -29,9 +29,9 @@ ScrapEngine::Render::VulkanDescriptorSet::VulkanDescriptorSet()
 		bindings.data()
 	);
 
-	if (VulkanDevice::static_logic_device_ref->createDescriptorSetLayout(&layout_info, nullptr, &descriptor_set_layout_)
-		!=
-		vk::Result::eSuccess)
+	if (VulkanDevice::get_instance()->get_logical_device()->createDescriptorSetLayout(
+			&layout_info, nullptr, &descriptor_set_layout_)
+		!= vk::Result::eSuccess)
 	{
 		throw std::runtime_error("VulkanDescriptorSet: Failed to create descriptor set layout!");
 	}
@@ -39,7 +39,7 @@ ScrapEngine::Render::VulkanDescriptorSet::VulkanDescriptorSet()
 
 ScrapEngine::Render::VulkanDescriptorSet::~VulkanDescriptorSet()
 {
-	VulkanDevice::static_logic_device_ref->destroyDescriptorSetLayout(descriptor_set_layout_);
+	VulkanDevice::get_instance()->get_logical_device()->destroyDescriptorSetLayout(descriptor_set_layout_);
 }
 
 void ScrapEngine::Render::VulkanDescriptorSet::create_descriptor_sets(vk::DescriptorPool* descriptor_pool,
@@ -59,8 +59,8 @@ void ScrapEngine::Render::VulkanDescriptorSet::create_descriptor_sets(vk::Descri
 
 	descriptor_sets_.resize(swap_chain_images->size());
 
-	if (VulkanDevice::static_logic_device_ref->allocateDescriptorSets(&alloc_info, &descriptor_sets_[0]) != vk::Result::
-		eSuccess)
+	if (VulkanDevice::get_instance()->get_logical_device()->allocateDescriptorSets(&alloc_info, &descriptor_sets_[0])
+		!= vk::Result::eSuccess)
 	{
 		throw std::runtime_error("DescriptorSetLayout: Failed to allocate descriptor sets!");
 	}
@@ -99,8 +99,9 @@ void ScrapEngine::Render::VulkanDescriptorSet::create_descriptor_sets(vk::Descri
 			)
 		};
 
-		VulkanDevice::static_logic_device_ref->updateDescriptorSets(static_cast<uint32_t>(descriptor_writes.size()),
-		                                                            descriptor_writes.data(), 0, nullptr);
+		VulkanDevice::get_instance()->get_logical_device()->updateDescriptorSets(
+			static_cast<uint32_t>(descriptor_writes.size()),
+			descriptor_writes.data(), 0, nullptr);
 	}
 }
 

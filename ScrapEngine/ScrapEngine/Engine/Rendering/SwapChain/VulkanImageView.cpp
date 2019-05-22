@@ -1,6 +1,6 @@
 #include <Engine/Rendering/SwapChain/VulkanImageView.h>
 #include <Engine/Rendering/Texture/TextureImageView/TextureImageView.h>
-#include <Engine/Rendering/Base/StaticTypes.h>
+#include <Engine/Rendering/Device/VulkanDevice.h>
 
 ScrapEngine::Render::VulkanImageView::VulkanImageView(ScrapEngine::Render::VulkanSwapChain* swap_chain_ref)
 {
@@ -20,7 +20,7 @@ ScrapEngine::Render::VulkanImageView::~VulkanImageView()
 {
 	for (const auto image_view : swap_chain_image_views_)
 	{
-		VulkanDevice::static_logic_device_ref->destroyImageView(image_view);
+		VulkanDevice::get_instance()->get_logical_device()->destroyImageView(image_view);
 	}
 }
 

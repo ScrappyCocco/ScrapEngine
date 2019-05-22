@@ -12,19 +12,29 @@ namespace ScrapEngine
 		class VukanInstance
 		{
 		private:
-			vk::Instance instance_;
-			//Vulkan Instance of the engine - connection between the application and the Vulkan library
+			//Singleton static instance
+			static VukanInstance* instance_;
+
+			/**
+			 * \brief Vulkan Instance of the engine - connection between the application and the Vulkan library
+			 */
+			vk::Instance vulkan_instance_;
 
 			//Reference to ValidationLayersManager that display vulkan warning/errors
 			ScrapEngine::Render::VulkanValidationLayers* validation_layers_manager_ = nullptr;
-		public:
-			static const vk::Instance* static_instance_ref;
 
-			VukanInstance(const std::string& app_name, int app_version, const std::string& engine_name = "ScrapEngine",
-			              int engine_version = 1);
+			//The constructor is private because this class is a Singleton
+			VukanInstance() = default;
+		public:
+			//Method used to init the class with parameters because the constructor is private
+			void init(const std::string& app_name, int app_version, const std::string& engine_name = "ScrapEngine",
+			          int engine_version = 1);
 
 			//Destroy the Vulkan Instance
 			~VukanInstance();
+
+			//Singleton static function to get or create a class instance
+			static VukanInstance* get_instance();
 
 			//Create the Vulkan Instance with the given data
 			void create_vulkan_instance(std::string app_name, int app_version, std::string engine_name = "ScrapEngine",

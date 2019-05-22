@@ -43,27 +43,27 @@ ScrapEngine::Render::SkyboxTexture::SkyboxTexture(const std::array<std::string, 
 	// allocate cubemap space memory
 	//-----------------------
 
-	if (VulkanDevice::static_logic_device_ref->createImage(&image_create_info, nullptr, &texture_image_) != vk::Result::
-		eSuccess)
+	if (VulkanDevice::get_instance()->get_logical_device()->createImage(&image_create_info, nullptr, &texture_image_)
+		!= vk::Result::eSuccess)
 	{
 		throw std::runtime_error("TextureImage: Failed to create image!");
 	}
 
 	vk::MemoryRequirements mem_requirements;
-	VulkanDevice::static_logic_device_ref->getImageMemoryRequirements(texture_image_, &mem_requirements);
+	VulkanDevice::get_instance()->get_logical_device()->getImageMemoryRequirements(texture_image_, &mem_requirements);
 
 	vk::MemoryAllocateInfo alloc_info(
 		mem_requirements.size,
 		find_memory_type(mem_requirements.memoryTypeBits, vk::MemoryPropertyFlagBits::eDeviceLocal)
 	);
 
-	if (VulkanDevice::static_logic_device_ref->allocateMemory(&alloc_info, nullptr, &texture_image_memory_) != vk::
-		Result::eSuccess)
+	if (VulkanDevice::get_instance()->get_logical_device()->allocateMemory(&alloc_info, nullptr, &texture_image_memory_)
+		!= vk::Result::eSuccess)
 	{
 		throw std::runtime_error("TextureImage: Failed to allocate image memory!");
 	}
 
-	VulkanDevice::static_logic_device_ref->bindImageMemory(texture_image_, texture_image_memory_, 0);
+	VulkanDevice::get_instance()->get_logical_device()->bindImageMemory(texture_image_, texture_image_memory_, 0);
 
 	//-----------------------
 	// copy images
@@ -86,19 +86,20 @@ ScrapEngine::Render::SkyboxTexture::SkyboxTexture(const std::array<std::string, 
 	}
 
 	ScrapEngine::Render::BaseTexture::transition_image_layout(&texture_image_, vk::Format::eR8G8B8A8Unorm,
-	                                                           vk::ImageLayout::eUndefined,
-	                                                           vk::ImageLayout::eTransferDstOptimal, mip_levels_, 6);
+	                                                          vk::ImageLayout::eUndefined,
+	                                                          vk::ImageLayout::eTransferDstOptimal, mip_levels_, 6);
 
 	for (unsigned int i = 0; i < buffer_copy_regions.size(); i++)
 	{
 		ScrapEngine::Render::ImageStagingBuffer::copy_buffer_to_image(
-			images_[i]->get_texture_staging_buffer()->get_staging_buffer(), &texture_image_, images_[i]->get_texture_width(),
+			images_[i]->get_texture_staging_buffer()->get_staging_buffer(), &texture_image_,
+			images_[i]->get_texture_width(),
 			images_[i]->get_texture_height(), &buffer_copy_regions[i], 1);
 	}
 
 	ScrapEngine::Render::BaseTexture::transition_image_layout(&texture_image_, vk::Format::eR8G8B8A8Unorm,
-	                                                           vk::ImageLayout::eTransferDstOptimal,
-	                                                           vk::ImageLayout::eShaderReadOnlyOptimal, mip_levels_, 6);
+	                                                          vk::ImageLayout::eTransferDstOptimal,
+	                                                          vk::ImageLayout::eShaderReadOnlyOptimal, mip_levels_, 6);
 
 	//Delete all the images since they've been copied
 	delete_temporary_images();

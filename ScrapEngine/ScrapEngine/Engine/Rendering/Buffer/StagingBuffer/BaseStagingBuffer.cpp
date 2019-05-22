@@ -5,8 +5,8 @@
 
 ScrapEngine::Render::BaseStagingBuffer::~BaseStagingBuffer()
 {
-	VulkanDevice::static_logic_device_ref->destroyBuffer(staging_buffer_);
-	VulkanDevice::static_logic_device_ref->freeMemory(staging_buffer_memory_);
+	VulkanDevice::get_instance()->get_logical_device()->destroyBuffer(staging_buffer_);
+	VulkanDevice::get_instance()->get_logical_device()->freeMemory(staging_buffer_memory_);
 }
 
 vk::Buffer* ScrapEngine::Render::BaseStagingBuffer::get_staging_buffer()
