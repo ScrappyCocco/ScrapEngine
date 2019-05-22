@@ -1,7 +1,7 @@
 #include <Engine/Rendering/Semaphores/VulkanSemaphoresManager.h>
 
 #include <stdexcept>
-#include "Engine/Rendering/Device/VulkanDevice.h"
+#include <Engine/Rendering/Device/VulkanDevice.h>
 
 ScrapEngine::Render::VulkanSemaphoresManager::VulkanSemaphoresManager(
 	const unsigned short int input_max_frames_in_flight)
