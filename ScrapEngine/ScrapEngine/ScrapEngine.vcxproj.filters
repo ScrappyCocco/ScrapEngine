@@ -218,6 +218,9 @@
     <Filter Include="Engine\Rendering\Model\ObjectPool\VulkanModelBuffersPool">
       <UniqueIdentifier>{ec0e3d1d-5205-4368-9228-b45eb585b2d2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Rendering\Model\ObjectPool\VulkanSimpleMaterialPool">
+      <UniqueIdentifier>{c1a5df19-36e4-42d3-a33a-4cf38b44fc66}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Manager\EngineManager.cpp">
@@ -417,6 +420,9 @@
     </ClCompile>
     <ClCompile Include="Engine\Rendering\Model\ObjectPool\VulkanModelBuffersPool\VulkanModelBuffersPool.cpp">
       <Filter>Engine\Rendering\Model\ObjectPool\VulkanModelBuffersPool</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Model\ObjectPool\VulkanSimpleMaterialPool\VulkanSimpleMaterialPool.cpp">
+      <Filter>Engine\Rendering\Model\ObjectPool\VulkanSimpleMaterialPool</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -635,6 +641,9 @@
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Model\ObjectPool\VulkanModelBuffersPool\VulkanModelBuffersPool.h">
       <Filter>Engine\Rendering\Model\ObjectPool\VulkanModelBuffersPool</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Model\ObjectPool\VulkanSimpleMaterialPool\VulkanSimpleMaterialPool.h">
+      <Filter>Engine\Rendering\Model\ObjectPool\VulkanSimpleMaterialPool</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

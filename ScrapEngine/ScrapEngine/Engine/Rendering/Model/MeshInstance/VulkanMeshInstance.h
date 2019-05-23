@@ -4,7 +4,6 @@
 #include <Engine/Rendering/Buffer/IndexBuffer/IndexBuffer.h>
 #include <Engine/Rendering/Buffer/UniformBuffer/UniformBuffer.h>
 #include <Engine/Rendering/Model/Model/VulkanModel.h>
-#include <Engine/Rendering/Device/VulkanDevice.h>
 #include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
 #include <Engine/Utility/UsefulTypes.h>
 #include <Engine/Rendering/Buffer/BufferContainer/VertexBufferContainer/VertexBufferContainer.h>
@@ -32,7 +31,6 @@ namespace ScrapEngine
 		public:
 			VulkanMeshInstance(const std::string& vertex_shader_path, const std::string& fragment_shader_path,
 			                   const std::string& model_path, const std::vector<std::string>& textures_path,
-			                   ScrapEngine::Render::VulkanDevice* render_device,
 			                   ScrapEngine::Render::VulkanSwapChain* swap_chain);
 			~VulkanMeshInstance();
 

@@ -7,7 +7,6 @@ ScrapEngine::Render::VulkanSkyboxInstance::VulkanSkyboxInstance(const std::strin
                                                                 const std::string& fragment_shader_path,
                                                                 const std::string& model_path,
                                                                 const std::array<std::string, 6>& texture_path,
-                                                                ScrapEngine::Render::VulkanDevice* render_device,
                                                                 ScrapEngine::Render::VulkanSwapChain* swap_chain)
 {
 	//CREATE UNIFORM BUFFER
@@ -18,7 +17,7 @@ ScrapEngine::Render::VulkanSkyboxInstance::VulkanSkyboxInstance(const std::strin
 	skybox_material_ = new SkyboxMaterial();
 	Debug::DebugLog::print_to_console_log("VulkanDescriptorSet created");
 	skybox_material_->create_pipeline(vertex_shader_path,
-	                                  fragment_shader_path, swap_chain, render_device);
+	                                  fragment_shader_path, swap_chain);
 	skybox_material_->create_skybox_texture(texture_path);
 	skybox_material_->create_descriptor_sets(swap_chain, vulkan_render_uniform_buffer_);
 	//LOADING 3D MODEL AND BUFFERS

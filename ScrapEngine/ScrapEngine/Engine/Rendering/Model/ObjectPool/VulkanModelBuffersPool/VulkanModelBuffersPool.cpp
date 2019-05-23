@@ -86,8 +86,8 @@ void ScrapEngine::Render::VulkanModelBuffersPool::clear_memory()
 	}
 	for (const auto& model_key : model_to_erase)
 	{
-		Debug::DebugLog::print_to_console_log("[VulkanModelBuffersPool] Removing " 
-			+ model_key + " buffers from pool memory");
+		Debug::DebugLog::print_to_console_log("[VulkanModelBuffersPool] Removing '" 
+			+ model_key + "' buffers from pool memory");
 		for(const auto& model_pair : concrete_buffers_[model_key])
 		{
 			delete model_pair.first;

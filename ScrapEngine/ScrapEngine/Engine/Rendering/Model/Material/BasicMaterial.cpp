@@ -15,11 +15,10 @@ ScrapEngine::Render::BasicMaterial::~BasicMaterial()
 
 void ScrapEngine::Render::BasicMaterial::delete_graphics_pipeline()
 {
-	delete vulkan_render_graphics_pipeline_;
 	vulkan_render_graphics_pipeline_ = nullptr;
 }
 
-ScrapEngine::Render::BaseVulkanGraphicsPipeline* ScrapEngine::Render::BasicMaterial::
+std::shared_ptr<ScrapEngine::Render::BaseVulkanGraphicsPipeline> ScrapEngine::Render::BasicMaterial::
 get_vulkan_render_graphics_pipeline() const
 {
 	return vulkan_render_graphics_pipeline_;

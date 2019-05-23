@@ -44,7 +44,7 @@ void ScrapEngine::Render::VulkanModelPool::clear_memory()
 	}
 	for(const auto& model_key : model_to_erase)
 	{
-		Debug::DebugLog::print_to_console_log("[VulkanModelPool] Removing " + model_key + " from pool memory");
+		Debug::DebugLog::print_to_console_log("[VulkanModelPool] Removing 3D model '" + model_key + "' from pool memory");
 		model_pool_[model_key] = nullptr;
 		model_pool_.erase(model_key);
 	}

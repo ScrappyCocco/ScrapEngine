@@ -2,6 +2,7 @@
 #include <Engine/Debug/DebugLog.h>
 #include <Engine/Rendering/Pipeline/SkyboxPipeline/SkyboxVulkanGraphicsPipeline.h>
 #include <Engine/Rendering/Texture/Texture/SkyboxTexture/SkyboxTexture.h>
+#include <Engine/Rendering/Device/VulkanDevice.h>
 
 ScrapEngine::Render::SkyboxMaterial::~SkyboxMaterial()
 {
@@ -13,15 +14,16 @@ ScrapEngine::Render::SkyboxMaterial::~SkyboxMaterial()
 
 void ScrapEngine::Render::SkyboxMaterial::create_pipeline(const std::string& vertex_shader_path,
                                                           const std::string& fragment_shader_path,
-                                                          ScrapEngine::Render::VulkanSwapChain* swap_chain,
-                                                          ScrapEngine::Render::VulkanDevice* render_device)
+                                                          ScrapEngine::Render::VulkanSwapChain* swap_chain)
 {
-	vulkan_render_graphics_pipeline_ = new SkyboxVulkanGraphicsPipeline(vertex_shader_path.c_str(),
-	                                                                    fragment_shader_path.c_str(),
-	                                                                    &swap_chain->get_swap_chain_extent(),
-	                                                                    vulkan_render_descriptor_set_->
-	                                                                    get_descriptor_set_layout(),
-	                                                                    render_device->get_msaa_samples());
+	vulkan_render_graphics_pipeline_ = std::make_shared<SkyboxVulkanGraphicsPipeline>(vertex_shader_path.c_str(),
+	                                                                                  fragment_shader_path.c_str(),
+	                                                                                  &swap_chain->
+	                                                                                  get_swap_chain_extent(),
+	                                                                                  vulkan_render_descriptor_set_->
+	                                                                                  get_descriptor_set_layout(),
+	                                                                                  VulkanDevice::get_instance()->
+	                                                                                  get_msaa_samples());
 	Debug::DebugLog::print_to_console_log("VulkanGraphicsPipeline created");
 }
 

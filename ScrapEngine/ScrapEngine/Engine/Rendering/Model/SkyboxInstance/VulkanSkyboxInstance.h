@@ -31,7 +31,6 @@ namespace ScrapEngine
 		public:
 			VulkanSkyboxInstance(const std::string& vertex_shader_path, const std::string& fragment_shader_path,
 			                     const std::string& model_path, const std::array<std::string, 6>& texture_path,
-			                     ScrapEngine::Render::VulkanDevice* render_device,
 			                     ScrapEngine::Render::VulkanSwapChain* swap_chain);
 			~VulkanSkyboxInstance();
 

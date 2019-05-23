@@ -7,7 +7,6 @@ ScrapEngine::Render::VulkanMeshInstance::VulkanMeshInstance(const std::string& v
                                                             const std::string& fragment_shader_path,
                                                             const std::string& model_path,
                                                             const std::vector<std::string>& textures_path,
-                                                            ScrapEngine::Render::VulkanDevice* render_device,
                                                             ScrapEngine::Render::VulkanSwapChain* swap_chain)
 {
 	//CREATE UNIFORM BUFFER
@@ -24,7 +23,7 @@ ScrapEngine::Render::VulkanMeshInstance::VulkanMeshInstance(const std::string& v
 	{
 		//CREATE MATERIAL(S)
 		SimpleMaterial* material = new SimpleMaterial();
-		material->create_pipeline(vertex_shader_path, fragment_shader_path, swap_chain, render_device);
+		material->create_pipeline(vertex_shader_path, fragment_shader_path, swap_chain);
 		material->create_texture(texture_path);
 		material->create_descriptor_sets(swap_chain, vulkan_render_uniform_buffer_);
 		model_materials_.push_back(material);
@@ -34,9 +33,6 @@ ScrapEngine::Render::VulkanMeshInstance::VulkanMeshInstance(const std::string& v
 
 ScrapEngine::Render::VulkanMeshInstance::~VulkanMeshInstance()
 {
-	// Clear pointers
-	vulkan_render_model_ = nullptr;
-	mesh_buffers_ = nullptr;
 	// Delete the textures
 	for (auto material : model_materials_)
 	{
