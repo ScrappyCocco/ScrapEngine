@@ -1,5 +1,7 @@
 #include <Engine/Rendering/Model/SkyboxInstance/VulkanSkyboxInstance.h>
 #include <Engine/Debug/DebugLog.h>
+#include <Engine/Rendering/Model/ObjectPool/VulkanModelPool/VulkanModelPool.h>
+#include <Engine/Rendering/Model/ObjectPool/VulkanModelBuffersPool/VulkanModelBuffersPool.h>
 
 ScrapEngine::Render::VulkanSkyboxInstance::VulkanSkyboxInstance(const std::string& vertex_shader_path,
                                                                 const std::string& fragment_shader_path,
@@ -20,33 +22,21 @@ ScrapEngine::Render::VulkanSkyboxInstance::VulkanSkyboxInstance(const std::strin
 	skybox_material_->create_skybox_texture(texture_path);
 	skybox_material_->create_descriptor_sets(swap_chain, vulkan_render_uniform_buffer_);
 	//LOADING 3D MODEL AND BUFFERS
-	vulkan_render_model_ = new VulkanModel(model_path);
+	vulkan_render_model_ = VulkanModelPool::get_instance()->get_model(model_path);
 	Debug::DebugLog::print_to_console_log("VulkanModel loaded");
 	if (vulkan_render_model_->get_meshes()->size() > 1)
 	{
 		throw std::runtime_error("Cannot use a cubemap with a model containing more than one mesh!");
 	}
-	created_vertex_buffer_ = new VertexBuffer((*vulkan_render_model_->get_meshes())[0]->get_vertices());
-	Debug::DebugLog::print_to_console_log("VertexBuffer created");
-	created_index_buffer_ = new IndexBuffer((*vulkan_render_model_->get_meshes())[0]->get_indices());
-	Debug::DebugLog::print_to_console_log("IndexBuffer created");
-	mesh_buffers_.first = new VertexBufferContainer(created_vertex_buffer_->get_vertex_buffer(),
-	                                                (*vulkan_render_model_->get_meshes())[0]->get_vertices());
-	mesh_buffers_.second = new IndicesBufferContainer(created_index_buffer_->get_index_buffer(),
-	                                                  (*vulkan_render_model_->get_meshes())[0]->get_indices());
+	mesh_buffers_ = VulkanModelBuffersPool::get_instance()->get_model_buffers(model_path, vulkan_render_model_);
 	skybox_transform_.location = glm::vec3(0, 0, 0);
 	skybox_transform_.scale = glm::vec3(50, 50, 50);
 }
 
 ScrapEngine::Render::VulkanSkyboxInstance::~VulkanSkyboxInstance()
 {
-	delete mesh_buffers_.first;
-	delete mesh_buffers_.second;
 	delete skybox_material_;
 	delete vulkan_render_uniform_buffer_;
-	delete created_vertex_buffer_;
-	delete created_index_buffer_;
-	delete vulkan_render_model_;
 }
 
 void ScrapEngine::Render::VulkanSkyboxInstance::update_uniform_buffer(const uint32_t& current_image,
@@ -79,5 +69,5 @@ const std::pair<ScrapEngine::Render::VertexBufferContainer*, ScrapEngine::Render
 ::
 Render::VulkanSkyboxInstance::get_mesh_buffers() const
 {
-	return &mesh_buffers_;
+	return &mesh_buffers_->at(0);
 }

@@ -209,6 +209,15 @@
     <Filter Include="Engine\Rendering\Texture\Texture\StandardTexture">
       <UniqueIdentifier>{7a6f7939-800b-473d-84b2-47f521748348}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Rendering\Model\ObjectPool">
+      <UniqueIdentifier>{495eb222-dc12-4efd-8443-e5fd2f88c2d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Model\ObjectPool\VulkanModelPool">
+      <UniqueIdentifier>{22be1ba3-c07a-4bcf-b645-b6ec813ab584}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Model\ObjectPool\VulkanModelBuffersPool">
+      <UniqueIdentifier>{ec0e3d1d-5205-4368-9228-b45eb585b2d2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Manager\EngineManager.cpp">
@@ -402,6 +411,12 @@
     </ClCompile>
     <ClCompile Include="Engine\Rendering\Texture\Texture\SkyboxTexture\SkyboxTexture.cpp">
       <Filter>Engine\Rendering\Texture\Texture\SkyboxTexture</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Model\ObjectPool\VulkanModelPool\VulkanModelPool.cpp">
+      <Filter>Engine\Rendering\Model\ObjectPool\VulkanModelPool</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Model\ObjectPool\VulkanModelBuffersPool\VulkanModelBuffersPool.cpp">
+      <Filter>Engine\Rendering\Model\ObjectPool\VulkanModelBuffersPool</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -614,6 +629,12 @@
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Texture\Texture\SkyboxTexture\SkyboxTexture.h">
       <Filter>Engine\Rendering\Texture\Texture\SkyboxTexture</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Model\ObjectPool\VulkanModelPool\VulkanModelPool.h">
+      <Filter>Engine\Rendering\Model\ObjectPool\VulkanModelPool</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Model\ObjectPool\VulkanModelBuffersPool\VulkanModelBuffersPool.h">
+      <Filter>Engine\Rendering\Model\ObjectPool\VulkanModelBuffersPool</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

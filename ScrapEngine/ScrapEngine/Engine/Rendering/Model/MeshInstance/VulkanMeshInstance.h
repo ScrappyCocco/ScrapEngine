@@ -18,13 +18,15 @@ namespace ScrapEngine
 		class VulkanMeshInstance
 		{
 		private:
-			ScrapEngine::Render::VulkanModel* vulkan_render_model_ = nullptr;
+			std::shared_ptr<VulkanModel> vulkan_render_model_ = nullptr;
 			ScrapEngine::Render::UniformBuffer* vulkan_render_uniform_buffer_ = nullptr;
 			std::vector<ScrapEngine::Render::BasicMaterial*> model_materials_;
-			std::vector<VertexBuffer*> created_vertex_buffers_;
-			std::vector<IndexBuffer*> created_index_buffers_;
 
-			std::vector<std::pair<VertexBufferContainer*, IndicesBufferContainer*>> mesh_buffers_;
+			std::shared_ptr<std::vector<
+				std::pair<
+					VertexBufferContainer*,
+					IndicesBufferContainer*>
+			>> mesh_buffers_;
 
 			ScrapEngine::Transform object_location_;
 		public:
@@ -46,7 +48,12 @@ namespace ScrapEngine
 
 			ScrapEngine::Render::UniformBuffer* get_vulkan_render_uniform_buffer() const;
 			const std::vector<ScrapEngine::Render::BasicMaterial*>* get_mesh_materials() const;
-			const std::vector<std::pair<VertexBufferContainer*, IndicesBufferContainer*>>* get_mesh_buffers() const;
+
+			std::shared_ptr<std::vector<
+				std::pair<
+					VertexBufferContainer*,
+					IndicesBufferContainer*>
+			>> get_mesh_buffers() const;
 		};
 	}
 }

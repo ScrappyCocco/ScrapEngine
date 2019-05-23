@@ -2,6 +2,8 @@
 #include <Engine/Debug/DebugLog.h>
 #include <Engine/Rendering/Queue/GraphicsQueue/GraphicsQueue.h>
 #include <Engine/Rendering/Queue/PresentationQueue/PresentQueue.h>
+#include <Engine/Rendering/Model/ObjectPool/VulkanModelBuffersPool/VulkanModelBuffersPool.h>
+#include <Engine/Rendering/Model/ObjectPool/VulkanModelPool/VulkanModelPool.h>
 
 
 ScrapEngine::Render::RenderManager::RenderManager(const ScrapEngine::game_base_info* received_base_game_info)
@@ -25,6 +27,8 @@ ScrapEngine::Render::RenderManager::~RenderManager()
 	{
 		delete current_model;
 	}
+	VulkanModelBuffersPool::get_instance()->clear_memory();
+	VulkanModelPool::get_instance()->clear_memory();
 	delete vulkan_render_semaphores_;
 	delete vulkan_render_command_pool_;
 	delete vulkan_render_device_;

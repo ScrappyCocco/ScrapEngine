@@ -18,14 +18,15 @@ namespace ScrapEngine
 		class VulkanSkyboxInstance
 		{
 		private:
-			ScrapEngine::Render::VulkanModel* vulkan_render_model_ = nullptr;
+			std::shared_ptr<VulkanModel> vulkan_render_model_ = nullptr;
 			ScrapEngine::Render::UniformBuffer* vulkan_render_uniform_buffer_ = nullptr;
 			ScrapEngine::Render::SkyboxMaterial* skybox_material_ = nullptr;
 
-			VertexBuffer* created_vertex_buffer_;
-			IndexBuffer* created_index_buffer_;
-
-			std::pair<VertexBufferContainer*, IndicesBufferContainer*> mesh_buffers_;
+			std::shared_ptr<std::vector<
+				std::pair<
+					VertexBufferContainer*,
+					IndicesBufferContainer*>
+			>> mesh_buffers_;
 			ScrapEngine::Transform skybox_transform_;
 		public:
 			VulkanSkyboxInstance(const std::string& vertex_shader_path, const std::string& fragment_shader_path,
