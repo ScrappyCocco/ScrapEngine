@@ -9,15 +9,12 @@ ScrapEngine::Render::BasicMaterial::BasicMaterial()
 
 ScrapEngine::Render::BasicMaterial::~BasicMaterial()
 {
-	Debug::DebugLog::print_to_console_log("Delete BasicMaterial");
 	delete_graphics_pipeline();
 	delete vulkan_render_descriptor_set_;
-	Debug::DebugLog::print_to_console_log("Delete BasicMaterial done");
 }
 
 void ScrapEngine::Render::BasicMaterial::delete_graphics_pipeline()
 {
-	Debug::DebugLog::print_to_console_log("---Delete pipeline");
 	delete vulkan_render_graphics_pipeline_;
 	vulkan_render_graphics_pipeline_ = nullptr;
 }

@@ -1,6 +1,5 @@
 #pragma once
 
-#include <vulkan/vulkan.hpp>
 #include <string>
 #include <vector>
 #include <Engine/Rendering/Base/Vertex.h>

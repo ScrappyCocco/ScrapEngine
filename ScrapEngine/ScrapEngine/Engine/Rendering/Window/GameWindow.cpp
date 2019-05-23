@@ -7,6 +7,11 @@ ScrapEngine::Render::GameWindow::GameWindow(
 	: width_(input_width), height_(input_height), window_title_(input_window_title)
 {
 	initialize_window();
+
+	int monitor_count;
+	GLFWmonitor **monitors = glfwGetMonitors(&monitor_count);
+	GLFWmonitor *best_monitor = monitors[0];
+	center_window(best_monitor);
 }
 
 ScrapEngine::Render::GameWindow::~GameWindow()
@@ -24,6 +29,26 @@ void ScrapEngine::Render::GameWindow::initialize_window()
 	glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 
 	window_ = glfwCreateWindow(width_, height_, window_title_.c_str(), nullptr, nullptr); //initialize the window
+}
+
+void ScrapEngine::Render::GameWindow::center_window(GLFWmonitor* monitor) const
+{
+	if (!monitor)
+		return;
+
+	const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+	if (!mode)
+		return;
+
+	int monitor_x, monitor_y;
+	glfwGetMonitorPos(monitor, &monitor_x, &monitor_y);
+
+	int window_width, window_height;
+	glfwGetWindowSize(window_, &window_width, &window_height);
+
+	glfwSetWindowPos(window_,
+	                 monitor_x + (mode->width - window_width) / 2,
+	                 monitor_y + (mode->height - window_height) / 2);
 }
 
 void ScrapEngine::Render::GameWindow::set_window_size(int input_width, int input_height) const

@@ -5,12 +5,10 @@
 
 ScrapEngine::Render::SkyboxMaterial::~SkyboxMaterial()
 {
-	Debug::DebugLog::print_to_console_log("Delete SkyboxMaterial");
 	delete vulkan_texture_sampler_;
 	delete vulkan_texture_image_view_;
 	delete skybox_texture_;
 	delete vulkan_render_descriptor_pool_;
-	Debug::DebugLog::print_to_console_log("Delete SkyboxMaterial done");
 }
 
 void ScrapEngine::Render::SkyboxMaterial::create_pipeline(const std::string& vertex_shader_path,

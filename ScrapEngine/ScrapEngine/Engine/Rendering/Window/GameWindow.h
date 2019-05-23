@@ -26,6 +26,7 @@ namespace ScrapEngine
 			~GameWindow();
 
 			void initialize_window();
+			void center_window(GLFWmonitor *monitor) const;
 
 			void set_window_size(int input_width, int input_height) const;
 			void set_window_title(const std::string& title) const;

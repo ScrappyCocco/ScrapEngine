@@ -5,12 +5,10 @@
 
 ScrapEngine::Render::SimpleMaterial::~SimpleMaterial()
 {
-	Debug::DebugLog::print_to_console_log("Delete SimpleMaterial");
 	delete vulkan_texture_sampler_;
 	delete vulkan_texture_image_view_;
 	delete vulkan_texture_image_;
 	delete vulkan_render_descriptor_pool_;
-	Debug::DebugLog::print_to_console_log("Delete SimpleMaterial done");
 }
 
 void ScrapEngine::Render::SimpleMaterial::create_pipeline(const std::string& vertex_shader_path,
