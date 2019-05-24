@@ -1,10 +1,7 @@
 #pragma once
 
-#include <Engine/Rendering/Buffer/VertexBuffer/VertexBuffer.h>
-#include <Engine/Rendering/Buffer/IndexBuffer/IndexBuffer.h>
 #include <Engine/Rendering/Model/Model/VulkanModel.h>
 #include <Engine/Rendering/Descriptor/VulkanDescriptorSet.h>
-#include <Engine/Rendering/Device/VulkanDevice.h>
 #include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
 #include <Engine/Utility/UsefulTypes.h>
 #include <Engine/Rendering/Buffer/BufferContainer/VertexBufferContainer/VertexBufferContainer.h>

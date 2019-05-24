@@ -1,7 +1,5 @@
 #pragma once
 
-#include <Engine/Rendering/Buffer/VertexBuffer/VertexBuffer.h>
-#include <Engine/Rendering/Buffer/IndexBuffer/IndexBuffer.h>
 #include <Engine/Rendering/Buffer/UniformBuffer/UniformBuffer.h>
 #include <Engine/Rendering/Model/Model/VulkanModel.h>
 #include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
