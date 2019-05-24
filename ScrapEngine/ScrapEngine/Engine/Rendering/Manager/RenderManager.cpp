@@ -2,6 +2,9 @@
 #include <Engine/Debug/DebugLog.h>
 #include <Engine/Rendering/Queue/GraphicsQueue/GraphicsQueue.h>
 #include <Engine/Rendering/Queue/PresentationQueue/PresentQueue.h>
+#include <Engine/Rendering/Model/ObjectPool/VulkanModelBuffersPool/VulkanModelBuffersPool.h>
+#include <Engine/Rendering/Model/ObjectPool/VulkanModelPool/VulkanModelPool.h>
+#include <Engine/Rendering/Model/ObjectPool/VulkanSimpleMaterialPool/VulkanSimpleMaterialPool.h>
 
 
 ScrapEngine::Render::RenderManager::RenderManager(const ScrapEngine::game_base_info* received_base_game_info)
@@ -25,6 +28,9 @@ ScrapEngine::Render::RenderManager::~RenderManager()
 	{
 		delete current_model;
 	}
+	VulkanModelBuffersPool::get_instance()->clear_memory();
+	VulkanModelPool::get_instance()->clear_memory();
+	VulkanSimpleMaterialPool::get_instance()->clear_memory();
 	delete vulkan_render_semaphores_;
 	delete vulkan_render_command_pool_;
 	delete vulkan_render_device_;
@@ -175,8 +181,7 @@ ScrapEngine::Render::VulkanMeshInstance* ScrapEngine::Render::RenderManager::loa
 	const std::vector<std::string>& textures_path)
 {
 	loaded_models_.push_back(
-		new VulkanMeshInstance(vertex_shader_path, fragment_shader_path, model_path, textures_path,
-		                       vulkan_render_device_, vulkan_render_swap_chain_)
+		new VulkanMeshInstance(vertex_shader_path, fragment_shader_path, model_path, textures_path, vulkan_render_swap_chain_)
 	);
 	delete_command_buffers();
 	create_command_buffers();
@@ -210,7 +215,7 @@ ScrapEngine::Render::VulkanSkyboxInstance* ScrapEngine::Render::RenderManager::l
 
 	skybox_ = new VulkanSkyboxInstance("../assets/shader/compiled_shaders/skybox.vert.spv",
 	                                   "../assets/shader/compiled_shaders/skybox.frag.spv", "../assets/models/cube.obj",
-	                                   files_path, vulkan_render_device_, vulkan_render_swap_chain_);
+	                                   files_path, vulkan_render_swap_chain_);
 	delete_command_buffers();
 	create_command_buffers();
 	return skybox_;

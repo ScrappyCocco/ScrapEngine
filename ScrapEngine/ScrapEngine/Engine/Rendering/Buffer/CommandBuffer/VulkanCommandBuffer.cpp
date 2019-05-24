@@ -2,6 +2,7 @@
 #include <Engine/Debug/DebugLog.h>
 #include <Engine/Rendering/Command/VulkanCommandPool.h>
 #include <Engine/Rendering/RenderPass/VulkanRenderPass.h>
+#include <Engine/Rendering/Device/VulkanDevice.h>
 
 ScrapEngine::Render::VulkanCommandBuffer::~VulkanCommandBuffer()
 {

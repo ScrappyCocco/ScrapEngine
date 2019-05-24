@@ -1,10 +1,7 @@
 #pragma once
 
-#include <Engine/Rendering/Buffer/VertexBuffer/VertexBuffer.h>
-#include <Engine/Rendering/Buffer/IndexBuffer/IndexBuffer.h>
 #include <Engine/Rendering/Buffer/UniformBuffer/UniformBuffer.h>
 #include <Engine/Rendering/Model/Model/VulkanModel.h>
-#include <Engine/Rendering/Device/VulkanDevice.h>
 #include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
 #include <Engine/Utility/UsefulTypes.h>
 #include <Engine/Rendering/Buffer/BufferContainer/VertexBufferContainer/VertexBufferContainer.h>
@@ -18,19 +15,20 @@ namespace ScrapEngine
 		class VulkanMeshInstance
 		{
 		private:
-			ScrapEngine::Render::VulkanModel* vulkan_render_model_ = nullptr;
+			std::shared_ptr<VulkanModel> vulkan_render_model_ = nullptr;
 			ScrapEngine::Render::UniformBuffer* vulkan_render_uniform_buffer_ = nullptr;
 			std::vector<ScrapEngine::Render::BasicMaterial*> model_materials_;
-			std::vector<VertexBuffer*> created_vertex_buffers_;
-			std::vector<IndexBuffer*> created_index_buffers_;
 
-			std::vector<std::pair<VertexBufferContainer*, IndicesBufferContainer*>> mesh_buffers_;
+			std::shared_ptr<std::vector<
+				std::pair<
+					VertexBufferContainer*,
+					IndicesBufferContainer*>
+			>> mesh_buffers_;
 
 			ScrapEngine::Transform object_location_;
 		public:
 			VulkanMeshInstance(const std::string& vertex_shader_path, const std::string& fragment_shader_path,
 			                   const std::string& model_path, const std::vector<std::string>& textures_path,
-			                   ScrapEngine::Render::VulkanDevice* render_device,
 			                   ScrapEngine::Render::VulkanSwapChain* swap_chain);
 			~VulkanMeshInstance();
 
@@ -46,7 +44,12 @@ namespace ScrapEngine
 
 			ScrapEngine::Render::UniformBuffer* get_vulkan_render_uniform_buffer() const;
 			const std::vector<ScrapEngine::Render::BasicMaterial*>* get_mesh_materials() const;
-			const std::vector<std::pair<VertexBufferContainer*, IndicesBufferContainer*>>* get_mesh_buffers() const;
+
+			std::shared_ptr<std::vector<
+				std::pair<
+					VertexBufferContainer*,
+					IndicesBufferContainer*>
+			>> get_mesh_buffers() const;
 		};
 	}
 }

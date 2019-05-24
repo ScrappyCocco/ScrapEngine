@@ -4,7 +4,6 @@
 #include <Engine/Rendering/Texture/TextureSampler/TextureSampler.h>
 #include <Engine/Rendering/Texture/TextureImageView/TextureImageView.h>
 #include <Engine/Rendering/Descriptor/VulkanDescriptorPool.h>
-#include <Engine/Rendering/Device/VulkanDevice.h>
 #include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
 #include <Engine/Rendering/Texture/Texture/BaseTexture.h>
 
@@ -24,8 +23,7 @@ namespace ScrapEngine
 			~SkyboxMaterial();
 
 			void create_pipeline(const std::string& vertex_shader_path, const std::string& fragment_shader_path,
-			                     ScrapEngine::Render::VulkanSwapChain* swap_chain,
-			                     ScrapEngine::Render::VulkanDevice* render_device);
+			                     ScrapEngine::Render::VulkanSwapChain* swap_chain);
 
 			void create_skybox_texture(const std::array<std::string, 6>& textures_path);
 
