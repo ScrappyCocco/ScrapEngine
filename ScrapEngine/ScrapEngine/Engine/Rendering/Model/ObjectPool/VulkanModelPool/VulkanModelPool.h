@@ -15,6 +15,8 @@ namespace ScrapEngine
 			//The constructor is private because this class is a Singleton
 			VulkanModelPool() = default;
 
+			//I associate the model path with the with the corresponding VulkanModel
+			//So i create only one VulkanModel for every model loaded
 			std::unordered_map<std::string, std::shared_ptr<VulkanModel>> model_pool_;
 		public:
 			//Singleton static function to get or create a class instance

@@ -19,6 +19,8 @@ namespace ScrapEngine
 			//The constructor is private because this class is a Singleton
 			VulkanModelBuffersPool() = default;
 
+			//The pool associate the model path with a shared_ptr vector of VertexBufferContainer* & IndicesBufferContainer*
+			//This because for every model i can have N mesh, every mash has a VertexBufferContainer and a IndicesBufferContainer
 			std::unordered_map<std::string,
 			                   std::shared_ptr<std::vector<
 					                   std::pair<
@@ -28,6 +30,8 @@ namespace ScrapEngine
 			                   >
 			> model_buffers_pool_;
 
+			//It's necessary to keep also a vector of VertexBuffer* and IndexBuffer*
+			//This because these are the concrete buffers i must clean when possible
 			std::unordered_map<std::string, std::vector<std::pair<VertexBuffer*, IndexBuffer*>>> concrete_buffers_;
 		public:
 			//Singleton static function to get or create a class instance
