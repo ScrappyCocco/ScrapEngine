@@ -60,5 +60,9 @@ void TestGameObject::game_start()
 
 void TestGameObject::game_update(float time)
 {
-	
+	(*get_components())[0]->set_component_rotation((*get_components())[0]->get_component_rotation() + glm::vec3(1, 0, 0));
+
+	(*get_components())[1]->set_component_rotation((*get_components())[1]->get_component_rotation() + glm::vec3(0, 1, 0));
+
+	(*get_components())[2]->set_component_rotation((*get_components())[2]->get_component_rotation() + glm::vec3(0, 0, 1));
 }

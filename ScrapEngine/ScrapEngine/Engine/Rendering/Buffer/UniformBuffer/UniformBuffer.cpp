@@ -47,10 +47,11 @@ void ScrapEngine::Render::UniformBuffer::update_uniform_buffer(const uint32_t& c
 
 	ubo.model = glm::translate(glm::mat4(1.0f), object_transform.location);
 	ubo.model = glm::scale(ubo.model, object_transform.scale);
-	if (object_transform.rotation.x != 0 || object_transform.rotation.y != 0 || object_transform.rotation.z != 0)
-	{
-		ubo.model = glm::rotate(ubo.model, glm::radians(90.0f), object_transform.rotation);
-	}
+
+	ubo.model = glm::rotate(ubo.model, glm::radians(object_transform.rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
+	ubo.model = glm::rotate(ubo.model, glm::radians(object_transform.rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
+	ubo.model = glm::rotate(ubo.model, glm::radians(object_transform.rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
+
 	ubo.proj = glm::perspective(glm::radians(45.0f),
 	                            swap_chain_extent_.width / static_cast<float>(swap_chain_extent_.height),
 	                            render_camera->get_camera_min_draw_distance(),
