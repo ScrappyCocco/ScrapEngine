@@ -2,8 +2,11 @@
 #include <Engine/Rendering/Window/GameWindow.h>
 #include <Engine/Utility/UsefulMethods.h>
 
+ScrapEngine::Input::scroll_status ScrapEngine::Input::InputManager::scroll_status_ = scroll_status::scroll_still;
+
 ScrapEngine::Input::InputManager::InputManager(GLFWwindow* input_window_ref) : window_ref_(input_window_ref)
 {
+	glfwSetScrollCallback(window_ref_, scroll_callback);
 }
 
 ScrapEngine::Input::InputManager::~InputManager()
@@ -79,6 +82,20 @@ void ScrapEngine::Input::InputManager::reset_cursor_to_system_default()
 	load_system_cursor(ScrapEngine::Input::system_cursor_shapes::cursor_regular_arrow);
 }
 
+void ScrapEngine::Input::InputManager::scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+{
+	if(yoffset > 0)
+	{
+		scroll_status_ = scroll_up;
+	}else if(yoffset < 0)
+	{
+		scroll_status_ = scroll_down;
+	}else
+	{
+		scroll_status_ = scroll_still;
+	}
+}
+
 ScrapEngine::Input::button_state ScrapEngine::Input::InputManager::get_keyboard_key_status(const int key_to_check) const
 {
 	return static_cast<ScrapEngine::Input::button_state>(glfwGetKey(window_ref_, key_to_check));
@@ -108,4 +125,11 @@ bool ScrapEngine::Input::InputManager::get_mouse_button_pressed(const int button
 bool ScrapEngine::Input::InputManager::get_mouse_button_released(const int button_to_check) const
 {
 	return get_mouse_button_status(button_to_check) == ScrapEngine::Input::button_state::released;
+}
+
+ScrapEngine::Input::scroll_status ScrapEngine::Input::InputManager::get_mouse_scroll_status() const
+{
+	const scroll_status to_return = scroll_status_;
+	scroll_status_ = scroll_still;
+	return to_return;
 }

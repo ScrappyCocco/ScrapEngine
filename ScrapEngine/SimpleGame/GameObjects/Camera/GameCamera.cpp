@@ -16,10 +16,19 @@ void GameCamera::game_start()
 void GameCamera::game_update(float time)
 {
 	ScrapEngine::Input::mouse_location mouse = InputManagerRef->get_last_mouse_location();
+
+	const ScrapEngine::Input::scroll_status scroll = InputManagerRef->get_mouse_scroll_status();
+	if (scroll == ScrapEngine::Input::scroll_status::scroll_up)
+	{
+		camera_multiplier_++;
+	}else if (scroll == ScrapEngine::Input::scroll_status::scroll_down)
+	{
+		camera_multiplier_--;
+	}
 	
 	GameCameraRef->process_mouse_movement(static_cast<float>(mouse.xpos), static_cast<float>(mouse.ypos), true);
 
-	camera_speed_ = 10.f * time;
+	camera_speed_ = camera_multiplier_ * time;
 	if (InputManagerRef->get_keyboard_key_pressed(KEYBOARD_KEY_W)) {
 		GameCameraRef->set_camera_location(GameCameraRef->get_camera_location() + (camera_speed_ * GameCameraRef->get_camera_front()));
 	}

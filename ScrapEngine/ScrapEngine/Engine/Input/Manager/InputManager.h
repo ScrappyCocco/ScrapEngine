@@ -52,11 +52,21 @@ namespace ScrapEngine
 			pressed
 		};
 
+		enum scroll_status
+		{
+			scroll_up,
+			scroll_down,
+			scroll_still
+		};
+
 		class InputManager
 		{
 		private:
 			GLFWwindow* window_ref_;
 			GLFWcursor* cursor_ = nullptr;
+
+			static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+			static scroll_status scroll_status_;
 		public:
 			explicit InputManager(GLFWwindow* input_window_ref);
 			InputManager(const InputManager&) = delete;
@@ -79,6 +89,8 @@ namespace ScrapEngine
 			Input::button_state get_mouse_button_status(int button_to_check) const;
 			bool get_mouse_button_pressed(int button_to_check) const;
 			bool get_mouse_button_released(int button_to_check) const;
+
+			scroll_status get_mouse_scroll_status() const;
 		};
 	}
 }
