@@ -2,7 +2,6 @@
 
 #include <Engine/LogicCore/SObject.h>
 #include <glm/glm.hpp>
-#include <Engine/Utility/UsefulTypes.h>
 
 namespace ScrapEngine
 {
