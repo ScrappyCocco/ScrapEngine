@@ -7,30 +7,24 @@ ScrapEngine::Core::MeshComponent::MeshComponent(Render::VulkanMeshInstance* inpu
 
 void ScrapEngine::Core::MeshComponent::set_component_location(const glm::vec3& location)
 {
+	SComponent::set_component_location(location);
 	vulkan_mesh_->set_mesh_location(location);
 }
 
 void ScrapEngine::Core::MeshComponent::set_component_rotation(const glm::vec3& rotation)
 {
+	SComponent::set_component_rotation(rotation);
 	vulkan_mesh_->set_mesh_rotation(rotation);
 }
 
 void ScrapEngine::Core::MeshComponent::set_component_scale(const glm::vec3& scale)
 {
+	SComponent::set_component_scale(scale);
 	vulkan_mesh_->set_mesh_scale(scale);
 }
 
-glm::vec3 ScrapEngine::Core::MeshComponent::get_component_location() const
+void ScrapEngine::Core::MeshComponent::update_component_location()
 {
-	return vulkan_mesh_->get_mesh_location();
-}
-
-glm::vec3 ScrapEngine::Core::MeshComponent::get_component_rotation() const
-{
-	return vulkan_mesh_->get_mesh_rotation();
-}
-
-glm::vec3 ScrapEngine::Core::MeshComponent::get_component_scale() const
-{
-	return vulkan_mesh_->get_mesh_scale();
+	SComponent::update_component_location();
+	vulkan_mesh_->set_mesh_location(get_component_location());
 }

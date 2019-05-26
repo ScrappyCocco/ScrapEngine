@@ -11,33 +11,56 @@ ScrapEngine::Core::SComponent::~SComponent()
 
 void ScrapEngine::Core::SComponent::set_component_location(const glm::vec3& location)
 {
-	//This will be defined by the user when is necessary, otherwise it will have no effect
+	object_world_transform_.location = location;
+	object_relative_transform_.location = object_world_transform_.location - father_transform_.location;
 }
 
 void ScrapEngine::Core::SComponent::set_component_rotation(const glm::vec3& rotation)
 {
-	//This will be defined by the user when is necessary, otherwise it will have no effect
+	object_world_transform_.rotation = rotation;
 }
 
 void ScrapEngine::Core::SComponent::set_component_scale(const glm::vec3& scale)
 {
-	//This will be defined by the user when is necessary, otherwise it will have no effect
+	object_world_transform_.scale = scale;
+}
+
+void ScrapEngine::Core::SComponent::update_component_location()
+{
+	object_world_transform_.location = father_transform_.location + object_relative_transform_.location;
+}
+
+void ScrapEngine::Core::SComponent::set_father_transform(const Transform& input_father_transform)
+{
+	father_transform_ = input_father_transform;
 }
 
 glm::vec3 ScrapEngine::Core::SComponent::get_component_location() const
 {
-	//This will be defined by the user when is necessary, otherwise it will have no effect
-	return glm::vec3();
+	return object_world_transform_.location;
 }
 
 glm::vec3 ScrapEngine::Core::SComponent::get_component_rotation() const
 {
-	//This will be defined by the user when is necessary, otherwise it will have no effect
-	return glm::vec3();
+	return object_world_transform_.rotation;
 }
 
 glm::vec3 ScrapEngine::Core::SComponent::get_component_scale() const
 {
-	//This will be defined by the user when is necessary, otherwise it will have no effect
-	return glm::vec3();
+	return object_world_transform_.scale;
+}
+
+glm::vec3 ScrapEngine::Core::SComponent::get_component_relative_location() const
+{
+	return object_relative_transform_.location;
+}
+
+glm::vec3 ScrapEngine::Core::SComponent::get_component_relative_rotation() const
+{
+	return object_relative_transform_.rotation;
+}
+
+glm::vec3 ScrapEngine::Core::SComponent::get_component_relative_scale() const
+{
+	return object_relative_transform_.scale;
 }
