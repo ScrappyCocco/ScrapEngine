@@ -28,3 +28,16 @@ void ScrapEngine::Core::MeshComponent::update_component_location()
 	SComponent::update_component_location();
 	vulkan_mesh_->set_mesh_location(get_component_location());
 }
+
+void ScrapEngine::Core::MeshComponent::update_component_rotation()
+{
+	SComponent::update_component_rotation();
+	vulkan_mesh_->set_mesh_location(get_component_location());
+	vulkan_mesh_->set_mesh_rotation(get_component_rotation());
+}
+
+void ScrapEngine::Core::MeshComponent::update_component_scale()
+{
+	SComponent::update_component_scale();
+	vulkan_mesh_->set_mesh_scale(get_component_scale());
+}

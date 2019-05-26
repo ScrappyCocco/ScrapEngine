@@ -43,7 +43,7 @@ void ScrapEngine::Core::SGameObject::set_object_rotation(const glm::vec3& rotati
 	for (SComponent* component : object_components_)
 	{
 		component->set_father_transform(object_transform_);
-		component->set_component_rotation(rotation);
+		component->update_component_rotation();
 	}
 }
 
@@ -54,7 +54,7 @@ void ScrapEngine::Core::SGameObject::set_object_scale(const glm::vec3& scale)
 	for (SComponent* component : object_components_)
 	{
 		component->set_father_transform(object_transform_);
-		component->set_component_scale(scale);
+		component->update_component_scale();
 	}
 }
 

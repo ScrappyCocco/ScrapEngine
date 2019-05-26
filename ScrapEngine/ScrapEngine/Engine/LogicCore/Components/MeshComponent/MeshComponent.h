@@ -20,6 +20,8 @@ namespace ScrapEngine
 			void set_component_scale(const glm::vec3& scale) override;
 
 			void update_component_location() override;
+			void update_component_rotation() override;
+			void update_component_scale() override;
 		};
 	}
 }

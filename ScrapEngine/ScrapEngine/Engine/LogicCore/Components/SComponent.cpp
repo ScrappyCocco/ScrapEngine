@@ -17,17 +17,31 @@ void ScrapEngine::Core::SComponent::set_component_location(const glm::vec3& loca
 
 void ScrapEngine::Core::SComponent::set_component_rotation(const glm::vec3& rotation)
 {
+	//TODO
 	object_world_transform_.rotation = rotation;
 }
 
 void ScrapEngine::Core::SComponent::set_component_scale(const glm::vec3& scale)
 {
 	object_world_transform_.scale = scale;
+	object_relative_transform_.scale = object_world_transform_.scale - father_transform_.scale;
 }
 
 void ScrapEngine::Core::SComponent::update_component_location()
 {
 	object_world_transform_.location = father_transform_.location + object_relative_transform_.location;
+}
+
+void ScrapEngine::Core::SComponent::update_component_rotation()
+{
+	//TODO
+	//object_world_transform_.location = ?
+	object_world_transform_.rotation = father_transform_.rotation + object_relative_transform_.rotation;
+}
+
+void ScrapEngine::Core::SComponent::update_component_scale()
+{
+	object_world_transform_.scale = father_transform_.scale + object_relative_transform_.scale;
 }
 
 void ScrapEngine::Core::SComponent::set_father_transform(const Transform& input_father_transform)
