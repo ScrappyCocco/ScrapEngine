@@ -24,27 +24,15 @@ TestGameObject::TestGameObject(ScrapEngine::Input::InputManager* CreatedInputMan
 
 	(*get_components())[0]->set_component_location(glm::vec3(0, 0, -10));
 	(*get_components())[1]->set_component_location(glm::vec3(0, 0, 10));
-
-	ScrapEngine::Debug::DebugLog::print_to_console_log(get_object_location());
-	ScrapEngine::Debug::DebugLog::print_to_console_log((*get_components())[0]->get_component_relative_location());
-	ScrapEngine::Debug::DebugLog::print_to_console_log((*get_components())[1]->get_component_relative_location());
 }
 
 void TestGameObject::game_start()
 {
 	set_object_location(glm::vec3(0, 10, 0));
-	ScrapEngine::Debug::DebugLog::print_to_console_log("---");
-	ScrapEngine::Debug::DebugLog::print_to_console_log("Father location");
-	ScrapEngine::Debug::DebugLog::print_to_console_log(get_object_location());
-	ScrapEngine::Debug::DebugLog::print_to_console_log("Relative location");
-	ScrapEngine::Debug::DebugLog::print_to_console_log((*get_components())[0]->get_component_relative_location());
-	ScrapEngine::Debug::DebugLog::print_to_console_log((*get_components())[1]->get_component_relative_location());
-	ScrapEngine::Debug::DebugLog::print_to_console_log("World location");
-	ScrapEngine::Debug::DebugLog::print_to_console_log((*get_components())[0]->get_component_location());
-	ScrapEngine::Debug::DebugLog::print_to_console_log((*get_components())[1]->get_component_location());
 }
 
 void TestGameObject::game_update(float time)
 {
-
+	ScrapEngine::Debug::DebugLog::print_to_console_log((*get_components())[0]->get_component_location());
+	ScrapEngine::Debug::DebugLog::print_to_console_log((*get_components())[0]->get_component_rotation());
 }

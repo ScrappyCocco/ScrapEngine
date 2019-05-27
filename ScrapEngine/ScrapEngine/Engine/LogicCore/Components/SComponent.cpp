@@ -37,12 +37,14 @@ void ScrapEngine::Core::SComponent::update_component_rotation()
 	//TODO
 	object_world_transform_.rotation = father_transform_.rotation + object_relative_transform_.rotation;
 	//object_world_transform_.location = ?
-	glm::mat4 localM = generate_transform_matrix(object_world_transform_);
+	glm::mat4 localM = generate_transform_matrix(object_relative_transform_);
 	glm::mat4 fullM = generate_transform_matrix(father_transform_) * localM;
 
 	//transf = glm::translate(transf, object_world_transform_.location);
 
-	object_world_transform_.location = glm::vec3(fullM[0][3], fullM[1][3], fullM[2][3]);
+	glm::vec3 pos = glm::vec3(fullM[3][0], fullM[3][1], fullM[3][2]);
+
+	object_world_transform_.location = pos;
 }
 
 void ScrapEngine::Core::SComponent::update_component_scale()
