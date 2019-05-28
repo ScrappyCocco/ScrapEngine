@@ -11,7 +11,7 @@ namespace ScrapEngine
 	{
 		class SGameObject : public Core::SObject
 		{
-		protected:
+		private:
 			ScrapEngine::Transform object_transform_;
 			ScrapEngine::Transform object_relative_transform_;
 			bool is_static_ = false;
@@ -28,6 +28,7 @@ namespace ScrapEngine
 			virtual void game_start();
 			virtual void game_update(float time);
 
+			//The should_update_relative is false when the value is updated from an update() call
 			void set_object_location(const glm::vec3& location, bool should_update_relative = true);
 			void set_object_rotation(const glm::vec3& rotation, bool should_update_relative = true);
 			void set_object_scale(const glm::vec3& scale, bool should_update_relative = true);
@@ -36,6 +37,7 @@ namespace ScrapEngine
 			glm::vec3 get_object_rotation() const;
 			glm::vec3 get_object_scale() const;
 
+			//Update the relative values based on father_object_ transform
 			virtual void update_relative_transform();
 			virtual void update_object_location();
 			virtual void update_object_rotation();

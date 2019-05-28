@@ -19,6 +19,7 @@ namespace ScrapEngine
 			void set_component_rotation(const glm::vec3& rotation) override;
 			void set_component_scale(const glm::vec3& scale) override;
 
+			//Call the standard implementation, then update vulkan_mesh_ values
 			void update_component_location() override;
 			void update_component_rotation() override;
 			void update_component_scale() override;
