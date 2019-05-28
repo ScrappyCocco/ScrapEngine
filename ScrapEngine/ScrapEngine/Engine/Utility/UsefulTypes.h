@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include <glm/glm.hpp>
+#include <glm/vec3.hpp>
 
 namespace ScrapEngine
 {

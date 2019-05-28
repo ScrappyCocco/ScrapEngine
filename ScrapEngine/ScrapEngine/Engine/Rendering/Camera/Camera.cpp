@@ -1,4 +1,6 @@
 #include <Engine/Rendering/Camera/Camera.h>
+#include <glm/detail/func_trigonometric.inl>
+#include <glm/detail/func_geometric.inl>
 
 ScrapEngine::Render::Camera::Camera(glm::vec3 input_camera_location, float input_min_draw_distance,
                                     float input_max_draw_distance) : camera_location_(input_camera_location)

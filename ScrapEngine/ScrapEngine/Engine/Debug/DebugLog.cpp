@@ -14,6 +14,25 @@ void ScrapEngine::Debug::DebugLog::print_to_console_log(const glm::vec3& vector)
 		<< vector.y << ", " << vector.z << ")" << std::endl;
 }
 
+void ScrapEngine::Debug::DebugLog::print_to_console_log(const glm::mat4& matrix)
+{
+	std::cout << "[" << std::endl;
+	for (int i = 0; i < 4; i++)
+	{
+		std::cout << "    [ ";
+		for (int k = 0; k < 4; k++)
+		{
+			std::cout << matrix[i][k];
+			if (k + 1 < 4)
+			{
+				std::cout << " | ";
+			}
+		}
+		std::cout << " ]" << std::endl;
+	}
+	std::cout << "]" << std::endl;
+}
+
 void ScrapEngine::Debug::DebugLog::print_exception_to_console_log(const std::string& message_severity,
                                                                   const std::string& exception_string)
 {

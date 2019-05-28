@@ -15,7 +15,7 @@ void GameCamera::game_start()
 
 void GameCamera::game_update(float time)
 {
-	ScrapEngine::Input::mouse_location mouse = InputManagerRef->get_last_mouse_location();
+	const ScrapEngine::Input::mouse_location mouse = InputManagerRef->get_last_mouse_location();
 
 	const ScrapEngine::Input::scroll_status scroll = InputManagerRef->get_mouse_scroll_status();
 	if (scroll == ScrapEngine::Input::scroll_status::scroll_up)
@@ -40,6 +40,19 @@ void GameCamera::game_update(float time)
 	}
 	if (InputManagerRef->get_keyboard_key_pressed(KEYBOARD_KEY_A)) {
 		GameCameraRef->set_camera_location(GameCameraRef->get_camera_location() - (camera_speed_ * (glm::normalize(glm::cross(GameCameraRef->get_camera_front(), GameCameraRef->get_camera_up())))));
+	}
+
+	if (InputManagerRef->get_keyboard_key_pressed(KEYBOARD_KEY_ARROW_UP)) {
+		GameObjectRef->set_object_rotation(GameObjectRef->get_object_rotation() + glm::vec3(0, 0, 0.5f));
+	}
+	if (InputManagerRef->get_keyboard_key_pressed(KEYBOARD_KEY_ARROW_DOWN)) {
+		GameObjectRef->set_object_rotation(GameObjectRef->get_object_rotation() + glm::vec3(0, 0, -0.5f));
+	}
+	if (InputManagerRef->get_keyboard_key_pressed(KEYBOARD_KEY_ARROW_LEFT)) {
+		GameObjectRef->set_object_rotation(GameObjectRef->get_object_rotation() + glm::vec3(0, 0.5f, 0));
+	}
+	if (InputManagerRef->get_keyboard_key_pressed(KEYBOARD_KEY_ARROW_RIGHT)) {
+		GameObjectRef->set_object_rotation(GameObjectRef->get_object_rotation() + glm::vec3(0, -0.5f, 0));
 	}
 }
 

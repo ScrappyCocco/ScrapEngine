@@ -3,6 +3,7 @@
 #include "GameObjects/TestGameObject.h"
 #include "GameObjects/Camera/GameCamera.h"
 #include <iostream>
+#include "GameObjects/AnotherTestGameObject.h"
 
 int main() {
 	short exit_value = EXIT_SUCCESS;
@@ -31,8 +32,12 @@ int main() {
 		);
 		SceneManagerRef->set_skybox_size(150);
 		//Create the first game object
-		TestGameObject* FirstGameObject = new TestGameObject(inputmanager, ComponentManagerRef);
+		TestGameObject* FirstGameObject = new TestGameObject(ComponentManagerRef);
 		ScrapEngineManager->logic_manager_view->register_game_object(FirstGameObject);
+		FirstGameObject->set_object_location(glm::vec3(0, 10, 0));
+		AnotherTestGameObject* SecondGameObject = new AnotherTestGameObject(ComponentManagerRef);
+		ScrapEngineManager->logic_manager_view->register_game_object(SecondGameObject);
+		FirstGameObject->add_child(SecondGameObject);
 		//Create the camera
 		GameCamera* GameCameraRef = new GameCamera(inputmanager, ScrapEngineManager->render_manager_view->get_default_render_camera(), FirstGameObject);
 		ScrapEngineManager->logic_manager_view->register_game_object(GameCameraRef);
