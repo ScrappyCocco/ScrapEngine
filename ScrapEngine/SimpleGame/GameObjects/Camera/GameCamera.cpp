@@ -43,10 +43,10 @@ void GameCamera::game_update(float time)
 	}
 
 	if (InputManagerRef->get_keyboard_key_pressed(KEYBOARD_KEY_ARROW_UP)) {
-		GameObjectRef->set_object_location(GameObjectRef->get_object_location() + glm::vec3(0, 0, 0.5f));
+		GameObjectRef->set_object_rotation(GameObjectRef->get_object_rotation() + glm::vec3(0, 0, 0.5f));
 	}
 	if (InputManagerRef->get_keyboard_key_pressed(KEYBOARD_KEY_ARROW_DOWN)) {
-		GameObjectRef->set_object_location(GameObjectRef->get_object_location() + glm::vec3(0, 0, -0.5f));
+		GameObjectRef->set_object_rotation(GameObjectRef->get_object_rotation() + glm::vec3(0, 0, -0.5f));
 	}
 	if (InputManagerRef->get_keyboard_key_pressed(KEYBOARD_KEY_ARROW_LEFT)) {
 		GameObjectRef->set_object_rotation(GameObjectRef->get_object_rotation() + glm::vec3(0, 0.5f, 0));

@@ -22,6 +22,7 @@ namespace ScrapEngine
 			virtual void set_component_rotation(const glm::vec3& rotation);
 			virtual void set_component_scale(const glm::vec3& scale);
 
+			virtual void update_relative_transform();
 			virtual void update_component_location();
 			virtual void update_component_rotation();
 			virtual void update_component_scale();

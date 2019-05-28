@@ -1,7 +1,7 @@
-#include "TestGameObject.h"
+#include "AnotherTestGameObject.h"
 #include <Engine/Debug/DebugLog.h>
 
-TestGameObject::TestGameObject(ScrapEngine::Core::ComponentsManager* input_ComponentManager)
+AnotherTestGameObject::AnotherTestGameObject(ScrapEngine::Core::ComponentsManager* input_ComponentManager)
 	: SGameObject("Test game object"), ComponentManagerRef(input_ComponentManager)
 {
 	//Add mesh to that GameObject
@@ -13,25 +13,25 @@ TestGameObject::TestGameObject(ScrapEngine::Core::ComponentsManager* input_Compo
 		"../assets/shader/compiled_shaders/shader_base.vert.spv",
 		"../assets/shader/compiled_shaders/shader_base.frag.spv",
 		"../assets/models/cube.obj",
-		{ "../assets/textures/SimpleRedTexture.png" }
+		{ "../assets/textures/SimpleGreenTexture.png" }
 	));
 	add_component(input_ComponentManager->create_new_mesh_component(
 		"../assets/shader/compiled_shaders/shader_base.vert.spv",
 		"../assets/shader/compiled_shaders/shader_base.frag.spv",
 		"../assets/models/cube.obj",
-		{ "../assets/textures/SimpleRedTexture.png" }
+		{ "../assets/textures/SimpleGreenTexture.png" }
 	));
 
 	(*get_components())[0]->set_component_location(glm::vec3(0, 0, -10));
 	(*get_components())[1]->set_component_location(glm::vec3(0, 0, 10));
 }
 
-void TestGameObject::game_start()
+void AnotherTestGameObject::game_start()
 {
 }
 
-void TestGameObject::game_update(float time)
+void AnotherTestGameObject::game_update(float time)
 {
-	ScrapEngine::Debug::DebugLog::print_to_console_log("RedObj--");
+	ScrapEngine::Debug::DebugLog::print_to_console_log("GreenObj--");
 	ScrapEngine::Debug::DebugLog::print_to_console_log(object_transform_.location);
 }
