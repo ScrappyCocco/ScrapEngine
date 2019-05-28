@@ -4,6 +4,7 @@
 #include <vector>
 #include <Engine/Utility/UsefulTypes.h>
 #include <Engine/Rendering/Camera/Camera.h>
+#include <glm/mat4x4.hpp>
 
 namespace ScrapEngine
 {

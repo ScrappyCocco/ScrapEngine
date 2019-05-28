@@ -2,6 +2,7 @@
 
 #include <string>
 #include <Engine/Utility/UsefulTypes.h>
+#include <glm/mat4x4.hpp>
 
 namespace ScrapEngine
 {

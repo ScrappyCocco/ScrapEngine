@@ -1,7 +1,8 @@
 #pragma once
 
 #include <iostream>
-#include <glm/glm.hpp>
+#include <glm/vec3.hpp>
+#include <glm/mat4x4.hpp>
 
 namespace ScrapEngine
 {
@@ -15,6 +16,9 @@ namespace ScrapEngine
 
 			//Print the vector to console log with time
 			static void print_to_console_log(const glm::vec3&);
+
+			//Print the matrix to console log with time
+			static void print_to_console_log(const glm::mat4&);
 
 			//Print the error to console
 			static void print_exception_to_console_log(const std::string& message_severity,

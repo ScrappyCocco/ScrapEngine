@@ -1,4 +1,6 @@
 #include <Engine/LogicCore/Components/SComponent.h>
+#include <glm/mat4x4.hpp>
+#include <Engine/Debug/DebugLog.h>
 
 ScrapEngine::Core::SComponent::SComponent(const std::string& component_name) : SObject(component_name)
 {
@@ -36,13 +38,14 @@ void ScrapEngine::Core::SComponent::update_component_rotation()
 {
 	//TODO
 	object_world_transform_.rotation = father_transform_.rotation + object_relative_transform_.rotation;
-	//object_world_transform_.location = ?
-	glm::mat4 localM = generate_transform_matrix(object_relative_transform_);
-	glm::mat4 fullM = generate_transform_matrix(father_transform_) * localM;
 
-	//transf = glm::translate(transf, object_world_transform_.location);
+	const glm::mat4 localM = generate_transform_matrix(object_relative_transform_);
+	const glm::mat4 fatherM = generate_transform_matrix(father_transform_);
+	glm::mat4 fullM = fatherM * localM;
 
 	glm::vec3 pos = glm::vec3(fullM[3][0], fullM[3][1], fullM[3][2]);
+
+	ScrapEngine::Debug::DebugLog::print_to_console_log(pos);
 
 	object_world_transform_.location = pos;
 }

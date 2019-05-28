@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Engine/LogicCore/SObject.h>
-#include <glm/glm.hpp>
+#include <glm/vec3.hpp>
 
 namespace ScrapEngine
 {
