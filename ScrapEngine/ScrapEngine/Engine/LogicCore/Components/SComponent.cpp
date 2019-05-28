@@ -1,6 +1,5 @@
 #include <Engine/LogicCore/Components/SComponent.h>
 #include <glm/mat4x4.hpp>
-#include <Engine/Debug/DebugLog.h>
 
 ScrapEngine::Core::SComponent::SComponent(const std::string& component_name) : SObject(component_name)
 {
@@ -31,23 +30,20 @@ void ScrapEngine::Core::SComponent::set_component_scale(const glm::vec3& scale)
 
 void ScrapEngine::Core::SComponent::update_component_location()
 {
-	object_world_transform_.location = father_transform_.location + object_relative_transform_.location;
+	const glm::mat4 local_m = generate_unscaled_transform_matrix(object_relative_transform_);
+	const glm::mat4 father_m = generate_unscaled_transform_matrix(father_transform_);
+	glm::mat4 full_m = father_m * local_m;
+
+	glm::vec3 pos = glm::vec3(full_m[3][0], full_m[3][1], full_m[3][2]);
+
+	object_world_transform_.location = pos;
 }
 
 void ScrapEngine::Core::SComponent::update_component_rotation()
 {
-	//TODO
 	object_world_transform_.rotation = father_transform_.rotation + object_relative_transform_.rotation;
 
-	const glm::mat4 localM = generate_transform_matrix(object_relative_transform_);
-	const glm::mat4 fatherM = generate_transform_matrix(father_transform_);
-	glm::mat4 fullM = fatherM * localM;
-
-	glm::vec3 pos = glm::vec3(fullM[3][0], fullM[3][1], fullM[3][2]);
-
-	ScrapEngine::Debug::DebugLog::print_to_console_log(pos);
-
-	object_world_transform_.location = pos;
+	update_component_location();
 }
 
 void ScrapEngine::Core::SComponent::update_component_scale()
