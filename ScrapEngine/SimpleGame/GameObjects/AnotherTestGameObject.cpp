@@ -32,6 +32,4 @@ void AnotherTestGameObject::game_start()
 
 void AnotherTestGameObject::game_update(float time)
 {
-	ScrapEngine::Debug::DebugLog::print_to_console_log("GreenObj--");
-	ScrapEngine::Debug::DebugLog::print_to_console_log(object_transform_.location);
 }
