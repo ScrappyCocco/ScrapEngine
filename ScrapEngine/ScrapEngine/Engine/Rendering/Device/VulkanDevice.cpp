@@ -1,5 +1,4 @@
 #include <Engine/Rendering/Device/VulkanDevice.h>
-
 #include <vector>
 #include <set>
 #include <Engine/Debug/DebugLog.h>
@@ -9,7 +8,7 @@
 ScrapEngine::Render::VulkanDevice* ScrapEngine::Render::VulkanDevice::instance_ = nullptr;
 
 void ScrapEngine::Render::VulkanDevice::init(vk::Instance* vulkan_instance_input_ref,
-	vk::SurfaceKHR* vulkan_surface_input_ref)
+                                             vk::SurfaceKHR* vulkan_surface_input_ref)
 {
 	instance_ref_ = vulkan_instance_input_ref;
 	vulkan_surface_ref_ = vulkan_surface_input_ref;

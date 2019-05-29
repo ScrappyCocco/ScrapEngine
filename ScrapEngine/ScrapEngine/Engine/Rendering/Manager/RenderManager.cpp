@@ -10,8 +10,8 @@
 ScrapEngine::Render::RenderManager::RenderManager(const game_base_info* received_base_game_info)
 {
 	game_window_ = new GameWindow(received_base_game_info->window_width,
-	                                                   received_base_game_info->window_height,
-	                                                   received_base_game_info->app_name);
+	                              received_base_game_info->window_height,
+	                              received_base_game_info->app_name);
 	Debug::DebugLog::print_to_console_log("GameWindow created");
 	initialize_vulkan(received_base_game_info);
 }
@@ -49,7 +49,7 @@ void ScrapEngine::Render::RenderManager::cleanup_swap_chain()
 	delete_command_buffers();
 	for (auto& loaded_model : loaded_models_)
 	{
-		for(auto model_material: (*loaded_model->get_mesh_materials()))
+		for (auto model_material : (*loaded_model->get_mesh_materials()))
 		{
 			model_material->delete_graphics_pipeline();
 		}
@@ -96,7 +96,7 @@ void ScrapEngine::Render::RenderManager::initialize_vulkan(const game_base_info*
 	Debug::DebugLog::print_to_console_log("---initializeVulkan()---");
 	vulkan_instance_ = VukanInstance::get_instance();
 	vulkan_instance_->init(received_base_game_info->app_name, received_base_game_info->app_version,
-		"ScrapEngine");
+	                       "ScrapEngine");
 	Debug::DebugLog::print_to_console_log("VulkanInstance created");
 	vulkan_window_surface_ = VulkanSurface::get_instance();
 	vulkan_window_surface_->init(game_window_);
@@ -115,7 +115,7 @@ void ScrapEngine::Render::RenderManager::initialize_vulkan(const game_base_info*
 	Debug::DebugLog::print_to_console_log("VulkanImageView created");
 	vulkan_rendering_pass_ = VulkanRenderPass::get_instance();
 	vulkan_rendering_pass_->init(vulkan_render_swap_chain_->get_swap_chain_image_format(),
-		vulkan_render_device_->get_msaa_samples());
+	                             vulkan_render_device_->get_msaa_samples());
 	Debug::DebugLog::print_to_console_log("VulkanRenderPass created");
 	vulkan_render_command_pool_ = VulkanCommandPool::get_instance();
 	vulkan_render_command_pool_->init(vulkan_render_device_->get_cached_queue_family_indices());
@@ -181,7 +181,8 @@ ScrapEngine::Render::VulkanMeshInstance* ScrapEngine::Render::RenderManager::loa
 	const std::vector<std::string>& textures_path)
 {
 	loaded_models_.push_back(
-		new VulkanMeshInstance(vertex_shader_path, fragment_shader_path, model_path, textures_path, vulkan_render_swap_chain_)
+		new VulkanMeshInstance(vertex_shader_path, fragment_shader_path, model_path, textures_path,
+		                       vulkan_render_swap_chain_)
 	);
 	delete_command_buffers();
 	create_command_buffers();
@@ -223,12 +224,15 @@ ScrapEngine::Render::VulkanSkyboxInstance* ScrapEngine::Render::RenderManager::l
 
 void ScrapEngine::Render::RenderManager::draw_frame()
 {
-	VulkanDevice::get_instance()->get_logical_device()->waitForFences(1, &(*in_flight_fences_ref_)[current_frame_], true,
-	                                                     std::numeric_limits<uint64_t>::max());
+	VulkanDevice::get_instance()->get_logical_device()->waitForFences(1, &(*in_flight_fences_ref_)[current_frame_],
+	                                                                  true,
+	                                                                  std::numeric_limits<uint64_t>::max());
 
 	result_ = VulkanDevice::get_instance()->get_logical_device()->acquireNextImageKHR(
-		vulkan_render_swap_chain_->get_swap_chain(), std::numeric_limits<uint64_t>::max(),
-		(*image_available_semaphores_ref_)[current_frame_], vk::Fence(), &image_index_);
+		vulkan_render_swap_chain_->get_swap_chain(),
+		std::numeric_limits<uint64_t>::max(),
+		(*image_available_semaphores_ref_)[current_frame_], vk::Fence(),
+		&image_index_);
 
 	if (result_ == vk::Result::eErrorOutOfDateKHR)
 	{
@@ -269,7 +273,7 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 	VulkanDevice::get_instance()->get_logical_device()->resetFences(1, &(*in_flight_fences_ref_)[current_frame_]);
 
 	result_ = vulkan_graphics_queue_->get_queue()->submit(1, &submit_info,
-	                                                               (*in_flight_fences_ref_)[current_frame_]);
+	                                                      (*in_flight_fences_ref_)[current_frame_]);
 	if (result_ != vk::Result::eSuccess)
 	{
 		std::cout << "RESULT TYPE:" << result_ << std::endl;

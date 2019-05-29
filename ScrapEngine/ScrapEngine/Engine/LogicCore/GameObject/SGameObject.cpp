@@ -109,9 +109,12 @@ void ScrapEngine::Core::SGameObject::update_relative_transform()
 	//Check that the father_object_ exists
 	if (father_object_)
 	{
-		object_relative_transform_.set_position(object_transform_.get_position() - father_object_->object_transform_.get_position());
-		object_relative_transform_.set_rotation(object_transform_.get_rotation() - father_object_->object_transform_.get_rotation());
-		object_relative_transform_.set_scale(object_transform_.get_scale() - father_object_->object_transform_.get_scale());
+		object_relative_transform_.set_position(
+			object_transform_.get_position() - father_object_->object_transform_.get_position());
+		object_relative_transform_.set_rotation(
+			object_transform_.get_rotation() - father_object_->object_transform_.get_rotation());
+		object_relative_transform_.set_scale(
+			object_transform_.get_scale() - father_object_->object_transform_.get_scale());
 	}
 }
 
@@ -128,7 +131,8 @@ void ScrapEngine::Core::SGameObject::update_object_location()
 
 void ScrapEngine::Core::SGameObject::update_object_rotation()
 {
-	object_transform_.set_rotation(father_object_->object_transform_.get_rotation() + object_relative_transform_.get_rotation());
+	object_transform_.set_rotation(
+		father_object_->object_transform_.get_rotation() + object_relative_transform_.get_rotation());
 
 	//Update location and rotation
 	update_object_location();

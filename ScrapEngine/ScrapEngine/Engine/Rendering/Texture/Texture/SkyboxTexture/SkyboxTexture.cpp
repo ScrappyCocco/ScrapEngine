@@ -86,8 +86,8 @@ ScrapEngine::Render::SkyboxTexture::SkyboxTexture(const std::array<std::string, 
 	}
 
 	transition_image_layout(&texture_image_, vk::Format::eR8G8B8A8Unorm,
-	                                                          vk::ImageLayout::eUndefined,
-	                                                          vk::ImageLayout::eTransferDstOptimal, mip_levels_, 6);
+	                        vk::ImageLayout::eUndefined,
+	                        vk::ImageLayout::eTransferDstOptimal, mip_levels_, 6);
 
 	for (unsigned int i = 0; i < buffer_copy_regions.size(); i++)
 	{
@@ -98,8 +98,8 @@ ScrapEngine::Render::SkyboxTexture::SkyboxTexture(const std::array<std::string, 
 	}
 
 	transition_image_layout(&texture_image_, vk::Format::eR8G8B8A8Unorm,
-	                                                          vk::ImageLayout::eTransferDstOptimal,
-	                                                          vk::ImageLayout::eShaderReadOnlyOptimal, mip_levels_, 6);
+	                        vk::ImageLayout::eTransferDstOptimal,
+	                        vk::ImageLayout::eShaderReadOnlyOptimal, mip_levels_, 6);
 
 	//Delete all the images since they've been copied
 	delete_temporary_images();

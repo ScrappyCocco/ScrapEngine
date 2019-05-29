@@ -9,8 +9,8 @@ ScrapEngine::Render::GameWindow::GameWindow(
 	initialize_window();
 
 	int monitor_count;
-	GLFWmonitor **monitors = glfwGetMonitors(&monitor_count);
-	GLFWmonitor *best_monitor = monitors[0];
+	GLFWmonitor** monitors = glfwGetMonitors(&monitor_count);
+	GLFWmonitor* best_monitor = monitors[0];
 	center_window(best_monitor);
 }
 

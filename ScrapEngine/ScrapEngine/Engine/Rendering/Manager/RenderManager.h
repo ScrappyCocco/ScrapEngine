@@ -79,11 +79,11 @@ namespace ScrapEngine
 
 			//3D mesh and scene stuff
 			VulkanMeshInstance* load_mesh(const std::string& vertex_shader_path,
-			                                                   const std::string& fragment_shader_path,
-			                                                   const std::string& model_path,
-			                                                   const std::vector<std::string>& textures_path);
+			                              const std::string& fragment_shader_path,
+			                              const std::string& model_path,
+			                              const std::vector<std::string>& textures_path);
 			VulkanMeshInstance* load_mesh(const std::string& model_path,
-			                                                   const std::vector<std::string>& textures_path);
+			                              const std::vector<std::string>& textures_path);
 			void unload_mesh(VulkanMeshInstance* mesh_to_unload);
 			VulkanSkyboxInstance* load_skybox(const std::array<std::string, 6>& files_path);
 

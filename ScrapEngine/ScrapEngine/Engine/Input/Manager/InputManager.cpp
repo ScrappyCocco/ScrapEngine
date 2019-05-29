@@ -84,13 +84,15 @@ void ScrapEngine::Input::InputManager::reset_cursor_to_system_default()
 
 void ScrapEngine::Input::InputManager::scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
-	if(yoffset > 0)
+	if (yoffset > 0)
 	{
 		scroll_status_ = scroll_up;
-	}else if(yoffset < 0)
+	}
+	else if (yoffset < 0)
 	{
 		scroll_status_ = scroll_down;
-	}else
+	}
+	else
 	{
 		scroll_status_ = scroll_still;
 	}

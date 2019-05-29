@@ -22,7 +22,7 @@ ScrapEngine::Render::VulkanSimpleMaterialPool* ScrapEngine::Render::VulkanSimple
 
 std::shared_ptr<ScrapEngine::Render::BaseVulkanGraphicsPipeline> ScrapEngine::Render::VulkanSimpleMaterialPool::
 get_pipeline(const std::string& vertex_shader_path, const std::string& fragment_shader_path,
-            VulkanSwapChain* swap_chain,
+             VulkanSwapChain* swap_chain,
              vk::DescriptorSetLayout* descriptor_set_layout)
 {
 	const std::string key_string = vertex_shader_path + fragment_shader_path;
