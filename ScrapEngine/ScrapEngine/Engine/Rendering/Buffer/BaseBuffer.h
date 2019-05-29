@@ -1,21 +1,23 @@
 #pragma once
 
 #include <vulkan/vulkan.hpp>
-#include "VulkanCommandBuffer.h"
 
-namespace ScrapEngine {
-
-	class BaseBuffer
+namespace ScrapEngine
+{
+	namespace Render
 	{
-	public:
-		static void createBuffer(vk::Device* input_deviceRef, vk::PhysicalDevice* PhysicalDevice, vk::DeviceSize* size, vk::BufferUsageFlags usage, vk::MemoryPropertyFlags properties, vk::Buffer& buffer, vk::DeviceMemory& bufferMemory);
+		class BaseBuffer
+		{
+		public:
+			static void create_buffer(const vk::DeviceSize& size, const vk::BufferUsageFlags& usage,
+			                          const vk::MemoryPropertyFlags& properties, vk::Buffer& buffer,
+			                          vk::DeviceMemory& buffer_memory);
 
-		static void copyBuffer(vk::Device* input_deviceRef, vk::CommandPool* commandPool, vk::Queue* graphicsQueue, vk::Buffer* srcBuffer, vk::Buffer& dstBuffer, vk::DeviceSize* size);
+			static void copy_buffer(vk::Buffer* src_buffer, vk::Buffer& dst_buffer, const vk::DeviceSize& size);
 
-		static vk::CommandBuffer* beginSingleTimeCommands(vk::Device* deviceRef, vk::CommandPool* CommandPool);
+			static vk::CommandBuffer* begin_single_time_commands();
 
-		static void endSingleTimeCommands(vk::Device* deviceRef, vk::CommandBuffer* commandBuffer, vk::CommandPool* CommandPool, vk::Queue* graphicsQueue);
-	};
-
+			static void end_single_time_commands(vk::CommandBuffer* command_buffer);
+		};
+	}
 }
-

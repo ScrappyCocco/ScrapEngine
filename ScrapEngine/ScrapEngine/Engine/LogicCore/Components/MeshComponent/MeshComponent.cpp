@@ -1,36 +1,43 @@
-#include "MeshComponent.h"
+#include <Engine/LogicCore/Components/MeshComponent/MeshComponent.h>
 
-ScrapEngine::MeshComponent::MeshComponent(VulkanMeshInstance* input_VulkanMesh) : SComponent("MeshComponent"), VulkanMesh(input_VulkanMesh)
+ScrapEngine::Core::MeshComponent::MeshComponent(Render::VulkanMeshInstance* input_vulkan_mesh)
+	: SComponent("MeshComponent"), vulkan_mesh_(input_vulkan_mesh)
 {
-
 }
 
-void ScrapEngine::MeshComponent::setComponentLocation(glm::vec3 location)
+void ScrapEngine::Core::MeshComponent::set_component_location(const SVector3& location)
 {
-	VulkanMesh->setMeshLocation(location);
+	SComponent::set_component_location(location);
+	vulkan_mesh_->set_mesh_location(location);
 }
 
-void ScrapEngine::MeshComponent::setComponentRotation(glm::vec3 rotation)
+void ScrapEngine::Core::MeshComponent::set_component_rotation(const SVector3& rotation)
 {
-	VulkanMesh->setMeshRotation(rotation);
+	SComponent::set_component_rotation(rotation);
+	vulkan_mesh_->set_mesh_rotation(rotation);
 }
 
-void ScrapEngine::MeshComponent::setComponentScale(glm::vec3 scale)
+void ScrapEngine::Core::MeshComponent::set_component_scale(const SVector3& scale)
 {
-	VulkanMesh->setMeshScale(scale);
+	SComponent::set_component_scale(scale);
+	vulkan_mesh_->set_mesh_scale(scale);
 }
 
-glm::vec3 ScrapEngine::MeshComponent::getComponentLocation()
+void ScrapEngine::Core::MeshComponent::update_component_location()
 {
-	return VulkanMesh->getMeshLocation();
+	SComponent::update_component_location();
+	vulkan_mesh_->set_mesh_location(get_component_location());
 }
 
-glm::vec3 ScrapEngine::MeshComponent::getComponentRotation()
+void ScrapEngine::Core::MeshComponent::update_component_rotation()
 {
-	return VulkanMesh->getMeshRotation();
+	SComponent::update_component_rotation();
+	vulkan_mesh_->set_mesh_location(get_component_location());
+	vulkan_mesh_->set_mesh_rotation(get_component_rotation());
 }
 
-glm::vec3 ScrapEngine::MeshComponent::getComponentScale()
+void ScrapEngine::Core::MeshComponent::update_component_scale()
 {
-	return VulkanMesh->getMeshScale();
+	SComponent::update_component_scale();
+	vulkan_mesh_->set_mesh_scale(get_component_scale());
 }

@@ -3,20 +3,19 @@
 #include <vulkan/vulkan.hpp>
 #include <vector>
 
-namespace ScrapEngine {
-
-	class VulkanDescriptorPool
+namespace ScrapEngine
+{
+	namespace Render
 	{
-	private:
-		vk::DescriptorPool descriptorPool;
+		class VulkanDescriptorPool
+		{
+		private:
+			vk::DescriptorPool descriptor_pool_;
+		public:
+			VulkanDescriptorPool(const std::vector<vk::Image>* swap_chain_images);
+			~VulkanDescriptorPool();
 
-		vk::Device* deviceRef;
-	public:
-		VulkanDescriptorPool(vk::Device* input_deviceRef, const std::vector<vk::Image>* swapChainImages);
-		~VulkanDescriptorPool();
-
-		vk::DescriptorPool* getDescriptorPool();
-	};
-
+			vk::DescriptorPool* get_descriptor_pool();
+		};
+	}
 }
-

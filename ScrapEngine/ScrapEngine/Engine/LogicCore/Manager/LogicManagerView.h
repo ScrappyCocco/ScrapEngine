@@ -1,28 +1,29 @@
 #pragma once
 
-#include "../../Rendering/Manager/RenderManager.h"
-#include "../Components/Manager/ComponentsManager.h"
-#include "../Scene/SceneManager.h"
-#include "LogicManager.h"
+#include <Engine/Rendering/Manager/RenderManager.h>
+#include <Engine/LogicCore/Components/Manager/ComponentsManager.h>
+#include <Engine/LogicCore/Scene/SceneManager.h>
+#include <Engine/LogicCore/Manager/LogicManager.h>
 
-namespace ScrapEngine {
-
-	class LogicManagerView
+namespace ScrapEngine
+{
+	namespace Core
 	{
-	private:
-		ScrapEngine::RenderManager* RenderManagerRef;
-		ScrapEngine::LogicManager* LogicManagerRef;
-		ScrapEngine::ComponentsManager* ComponentManager;
-		ScrapEngine::SceneManager* SceneManager;
-	public:
-		LogicManagerView(ScrapEngine::RenderManager* input_RenderManagerRef, ScrapEngine::LogicManager* input_LogicManagerRef);
-		~LogicManagerView();
+		class LogicManagerView
+		{
+		private:
+			LogicManager* logic_manager_ref_;
+			ComponentsManager* component_manager_;
+			SceneManager* scene_manager_;
+		public:
+			LogicManagerView(Render::RenderManager* input_render_manager_ref,
+			                 LogicManager* input_logic_manager_ref);
+			~LogicManagerView();
 
-		SGameObject* RegisterGameObject(SGameObject* input_GameObject);
-		void UnRegisterGameObject(SGameObject* input_GameObject);
-		ScrapEngine::ComponentsManager* getComponentsManager() const;
-		ScrapEngine::SceneManager* getSceneManager() const;
-	};
-
+			SGameObject* register_game_object(SGameObject* input_game_object) const;
+			void un_register_game_object(SGameObject* input_game_object) const;
+			ComponentsManager* get_components_manager() const;
+			SceneManager* get_scene_manager() const;
+		};
+	}
 }
-

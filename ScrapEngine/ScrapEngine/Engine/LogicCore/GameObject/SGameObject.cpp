@@ -1,79 +1,190 @@
-#include "SGameObject.h"
+#include <Engine/LogicCore/GameObject/SGameObject.h>
+#include <algorithm>
 
-ScrapEngine::SGameObject::SGameObject(std::string objectName, ScrapEngine::Transform input_ObjectTransform, bool isStaticObject) : 
-	SObject(objectName), ObjectTransform(input_ObjectTransform), isStatic(isStaticObject)
+ScrapEngine::Core::SGameObject::SGameObject(const std::string& object_name,
+                                            const STransform& input_object_transform,
+                                            const bool is_static_object) :
+	SObject(object_name), object_transform_(input_object_transform), is_static_(is_static_object)
 {
 }
 
-ScrapEngine::SGameObject::~SGameObject()
+ScrapEngine::Core::SGameObject::~SGameObject()
 {
-	for (SComponent* component : ObjectComponents) {
+	for (SComponent* component : object_components_)
+	{
 		delete component;
 	}
 }
 
-void ScrapEngine::SGameObject::GameStart()
+void ScrapEngine::Core::SGameObject::game_start()
 {
 	//This will be defined by the user when is necessary, otherwise it will have no effect
 }
 
-void ScrapEngine::SGameObject::GameUpdate(float time)
+void ScrapEngine::Core::SGameObject::game_update(float time)
 {
 	//This will be defined by the user when is necessary, otherwise it will have no effect
 }
 
-void ScrapEngine::SGameObject::setObjectLocation(glm::vec3 location)
+void ScrapEngine::Core::SGameObject::set_object_location(const SVector3& location, const bool should_update_relative)
 {
-	ObjectTransform.location = location;
+	object_transform_.set_position(location);
+	//Check if i should update the relative values
+	if (should_update_relative)
+	{
+		update_relative_transform();
+	}
 	//Update the transform of every component
-	for (SComponent* component : ObjectComponents) {
-		component->setComponentLocation(location);
+	for (SComponent* component : object_components_)
+	{
+		component->set_father_transform(object_transform_);
+		component->update_component_location();
+	}
+	//Update the transform of every child
+	for (SGameObject* child_object : object_child_)
+	{
+		child_object->update_object_location();
 	}
 }
 
-void ScrapEngine::SGameObject::setObjectRotation(glm::vec3 rotation)
+void ScrapEngine::Core::SGameObject::set_object_rotation(const SVector3& rotation, const bool should_update_relative)
 {
-	ObjectTransform.rotation = rotation;
+	object_transform_.set_rotation(rotation);
+	//Check if i should update the relative values
+	if (should_update_relative)
+	{
+		update_relative_transform();
+	}
 	//Update the transform of every component
-	for (SComponent* component : ObjectComponents) {
-		component->setComponentRotation(rotation);
+	for (SComponent* component : object_components_)
+	{
+		component->set_father_transform(object_transform_);
+		component->update_component_rotation();
+	}
+	//Update the transform of every child
+	for (SGameObject* child_object : object_child_)
+	{
+		child_object->update_object_rotation();
 	}
 }
 
-void ScrapEngine::SGameObject::setObjectScale(glm::vec3 scale)
+void ScrapEngine::Core::SGameObject::set_object_scale(const SVector3& scale, const bool should_update_relative)
 {
-	ObjectTransform.scale = scale;
+	object_transform_.set_scale(scale);
+	//Check if i should update the relative values
+	if (should_update_relative)
+	{
+		update_relative_transform();
+	}
 	//Update the transform of every component
-	for (SComponent* component : ObjectComponents) {
-		component->setComponentScale(scale);
+	for (SComponent* component : object_components_)
+	{
+		component->set_father_transform(object_transform_);
+		component->update_component_scale();
+	}
+	//Update the transform of every child
+	for (SGameObject* child_object : object_child_)
+	{
+		child_object->update_object_scale();
 	}
 }
 
-glm::vec3 ScrapEngine::SGameObject::getObjectLocation()
+ScrapEngine::Core::SVector3 ScrapEngine::Core::SGameObject::get_object_location() const
 {
-	return ObjectTransform.location;
+	return object_transform_.get_position();
 }
 
-glm::vec3 ScrapEngine::SGameObject::getObjectRotation()
+ScrapEngine::Core::SVector3 ScrapEngine::Core::SGameObject::get_object_rotation() const
 {
-	return ObjectTransform.rotation;
+	return object_transform_.get_rotation();
 }
 
-glm::vec3 ScrapEngine::SGameObject::getObjectScale()
+ScrapEngine::Core::SVector3 ScrapEngine::Core::SGameObject::get_object_scale() const
 {
-	return ObjectTransform.scale;
+	return object_transform_.get_scale();
 }
 
-void ScrapEngine::SGameObject::AddComponent(SComponent* Component)
+void ScrapEngine::Core::SGameObject::update_relative_transform()
 {
-	ObjectComponents.push_back(Component);
+	//Check that the father_object_ exists
+	if (father_object_)
+	{
+		object_relative_transform_.set_position(
+			object_transform_.get_position() - father_object_->object_transform_.get_position());
+		object_relative_transform_.set_rotation(
+			object_transform_.get_rotation() - father_object_->object_transform_.get_rotation());
+		object_relative_transform_.set_scale(
+			object_transform_.get_scale() - father_object_->object_transform_.get_scale());
+	}
+}
+
+void ScrapEngine::Core::SGameObject::update_object_location()
+{
+	const glm::mat4 local_m = generate_unscaled_transform_matrix(object_relative_transform_);
+	const glm::mat4 father_m = generate_unscaled_transform_matrix(father_object_->object_transform_);
+	const glm::mat4 full_m = father_m * local_m;
+
+	const glm::vec3 pos = glm::vec3(full_m[3][0], full_m[3][1], full_m[3][2]);
+
+	set_object_location(SVector3(pos), false);
+}
+
+void ScrapEngine::Core::SGameObject::update_object_rotation()
+{
+	object_transform_.set_rotation(
+		father_object_->object_transform_.get_rotation() + object_relative_transform_.get_rotation());
+
+	//Update location and rotation
+	update_object_location();
+	set_object_rotation(object_transform_.get_rotation(), false);
+}
+
+void ScrapEngine::Core::SGameObject::update_object_scale()
+{
+	object_transform_.set_scale(father_object_->object_transform_.get_scale() + object_relative_transform_.get_scale());
+}
+
+void ScrapEngine::Core::SGameObject::add_component(SComponent* component)
+{
+	object_components_.push_back(component);
 	//Set component default values same as object
-	Component->setComponentLocation(ObjectTransform.location);
-	Component->setComponentRotation(ObjectTransform.rotation);
-	Component->setComponentScale(ObjectTransform.scale);
+	component->set_component_location(object_transform_.get_position());
+	component->set_component_rotation(object_transform_.get_rotation());
+	component->set_component_scale(object_transform_.get_scale());
 }
 
-const std::vector<ScrapEngine::SComponent*>* ScrapEngine::SGameObject::GetComponents()
+void ScrapEngine::Core::SGameObject::remove_component(SComponent* component)
 {
-	return &ObjectComponents;
+	object_components_.erase(std::remove(
+		                         object_components_.begin(),
+		                         object_components_.end(),
+		                         component),
+	                         object_components_.end());
+}
+
+const std::vector<ScrapEngine::Core::SComponent*>* ScrapEngine::Core::SGameObject::get_components() const
+{
+	return &object_components_;
+}
+
+void ScrapEngine::Core::SGameObject::add_child(SGameObject* game_object)
+{
+	object_child_.push_back(game_object);
+	game_object->father_object_ = this;
+	game_object->update_relative_transform();
+}
+
+void ScrapEngine::Core::SGameObject::remove_child(SGameObject* game_object)
+{
+	object_child_.erase(std::remove(
+		                    object_child_.begin(),
+		                    object_child_.end(),
+		                    game_object),
+	                    object_child_.end());
+	game_object->father_object_ = nullptr;
+}
+
+const std::vector<ScrapEngine::Core::SGameObject*>* ScrapEngine::Core::SGameObject::get_child() const
+{
+	return &object_child_;
 }

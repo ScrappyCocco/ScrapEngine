@@ -2,24 +2,35 @@
 
 #include <vulkan/vulkan.hpp>
 #include <stdexcept>
+#include <Engine/Rendering/Device/VulkanDevice.h>
 
-namespace ScrapEngine {
-	static uint32_t findMemoryType(uint32_t typeFilter, vk::MemoryPropertyFlags properties, vk::PhysicalDevice* physicalDevice) {
-		vk::PhysicalDeviceMemoryProperties memProperties;
-		physicalDevice->getMemoryProperties(&memProperties);
+namespace ScrapEngine
+{
+	namespace Render
+	{
+		static uint32_t find_memory_type(const uint32_t& type_filter, const vk::MemoryPropertyFlags& properties)
+		{
+			vk::PhysicalDeviceMemoryProperties mem_properties;
+			VulkanDevice::get_instance()->get_physical_device()->getMemoryProperties(&mem_properties);
 
-		for (uint32_t i = 0; i < memProperties.memoryTypeCount; i++) {
-			if ((typeFilter & (1 << i)) && (memProperties.memoryTypes[i].propertyFlags & properties) == properties) {
-				return i;
+			for (uint32_t i = 0; i < mem_properties.memoryTypeCount; i++)
+			{
+				if ((type_filter & (1 << i)) && (mem_properties.memoryTypes[i].propertyFlags & properties) == properties
+				)
+				{
+					return i;
+				}
 			}
-		}
-		//Try a simpler way
-		for (uint32_t i = 0; i < memProperties.memoryTypeCount; i++) {
-			if (memProperties.memoryTypes[i].propertyFlags == properties) {
-				return i;
+			//Try a simpler way
+			for (uint32_t i = 0; i < mem_properties.memoryTypeCount; i++)
+			{
+				if (mem_properties.memoryTypes[i].propertyFlags == properties)
+				{
+					return i;
+				}
 			}
-		}
 
-		throw std::runtime_error("Memory Manager: Failed to find suitable memory type!");
+			throw std::runtime_error("Memory Manager: Failed to find suitable memory type!");
+		}
 	}
 }

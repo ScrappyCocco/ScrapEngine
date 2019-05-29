@@ -1,39 +1,58 @@
 #include "GameCamera.h"
-#include "Engine/Debug/DebugLog.h"
-#include "../Camera/GameCamera.h"
+#include <Engine/Debug/DebugLog.h>
+#include <Engine/Input/KeyboardKeys.h>
 
-GameCamera::GameCamera(ScrapEngine::InputManager* CreatedInputManagerf, ScrapEngine::Camera* input_GameCameraRef, TestGameObject* input_GameObjectRef) :
-	GameCameraRef(input_GameCameraRef), SGameObject("Camera-Controller Object"), InputManagerRef(CreatedInputManagerf), GameObjectRef(input_GameObjectRef)
+GameCamera::GameCamera(ScrapEngine::Input::InputManager* CreatedInputManagerf, ScrapEngine::Render::Camera* input_GameCameraRef, TestGameObject* input_GameObjectRef) 
+:SGameObject("Camera-Controller Object"), GameCameraRef(input_GameCameraRef), InputManagerRef(CreatedInputManagerf), GameObjectRef(input_GameObjectRef)
 {
-	GameCameraRef->setMaxRenderDistance(10000);
+	GameCameraRef->set_max_render_distance(10000);
 }
 
-void GameCamera::GameStart()
+void GameCamera::game_start()
 {
 
 }
 
-void GameCamera::GameUpdate(float time)
+void GameCamera::game_update(float time)
 {
-	ScrapEngine::MouseLocation mouse = InputManagerRef->getLastMouseLocation();
+	const ScrapEngine::Input::mouse_location mouse = InputManagerRef->get_last_mouse_location();
+
+	const ScrapEngine::Input::scroll_status scroll = InputManagerRef->get_mouse_scroll_status();
+	if (scroll == ScrapEngine::Input::scroll_status::scroll_up)
+	{
+		camera_multiplier_++;
+	}else if (scroll == ScrapEngine::Input::scroll_status::scroll_down)
+	{
+		camera_multiplier_--;
+	}
 	
-	GameCameraRef->ProcessMouseMovement((float)mouse.xpos, (float)mouse.ypos, true);
+	GameCameraRef->process_mouse_movement(static_cast<float>(mouse.xpos), static_cast<float>(mouse.ypos), true);
 
-	cameraSpeed = 10.f * time;
-	if (InputManagerRef->getKeyboardKeyPressed(keyboard_key_W)) {
-		GameCameraRef->setCameraLocation(GameCameraRef->getCameraLocation() + (cameraSpeed * GameCameraRef->getCameraFront()));
+	camera_speed_ = camera_multiplier_ * time;
+	if (InputManagerRef->get_keyboard_key_pressed(KEYBOARD_KEY_W)) {
+		GameCameraRef->set_camera_location(GameCameraRef->get_camera_location() + (GameCameraRef->get_camera_front() * camera_speed_));
 	}
-	if (InputManagerRef->getKeyboardKeyPressed(keyboard_key_S)) {
-		GameCameraRef->setCameraLocation(GameCameraRef->getCameraLocation() - (cameraSpeed * GameCameraRef->getCameraFront()));
+	if (InputManagerRef->get_keyboard_key_pressed(KEYBOARD_KEY_S)) {
+		GameCameraRef->set_camera_location(GameCameraRef->get_camera_location() - (GameCameraRef->get_camera_front() * camera_speed_));
 	}
-	if (InputManagerRef->getKeyboardKeyPressed(keyboard_key_D)) {
-		GameCameraRef->setCameraLocation(GameCameraRef->getCameraLocation() + (cameraSpeed * (glm::normalize(glm::cross(GameCameraRef->getCameraFront(), GameCameraRef->getCameraUp())))));
+	if (InputManagerRef->get_keyboard_key_pressed(KEYBOARD_KEY_D)) {
+		GameCameraRef->set_camera_location(GameCameraRef->get_camera_location() + (((GameCameraRef->get_camera_front() ^ GameCameraRef->get_camera_up()).normalize()) * camera_speed_));
 	}
-	if (InputManagerRef->getKeyboardKeyPressed(keyboard_key_A)) {
-		GameCameraRef->setCameraLocation(GameCameraRef->getCameraLocation() - (cameraSpeed * (glm::normalize(glm::cross(GameCameraRef->getCameraFront(), GameCameraRef->getCameraUp())))));
+	if (InputManagerRef->get_keyboard_key_pressed(KEYBOARD_KEY_A)) {
+		GameCameraRef->set_camera_location(GameCameraRef->get_camera_location() - (((GameCameraRef->get_camera_front() ^ GameCameraRef->get_camera_up()).normalize()) * camera_speed_));
 	}
-	if (InputManagerRef->getMouseButtonPressed(mouse_button_left)) {
-		GameObjectRef->SpawnCrateAtLocation(GameCameraRef->getCameraLocation());
+
+	if (InputManagerRef->get_keyboard_key_pressed(KEYBOARD_KEY_ARROW_UP)) {
+		GameObjectRef->set_object_rotation(GameObjectRef->get_object_rotation() + ScrapEngine::Core::SVector3(0, 0, 0.5f));
+	}
+	if (InputManagerRef->get_keyboard_key_pressed(KEYBOARD_KEY_ARROW_DOWN)) {
+		GameObjectRef->set_object_rotation(GameObjectRef->get_object_rotation() + ScrapEngine::Core::SVector3(0, 0, -0.5f));
+	}
+	if (InputManagerRef->get_keyboard_key_pressed(KEYBOARD_KEY_ARROW_LEFT)) {
+		GameObjectRef->set_object_rotation(GameObjectRef->get_object_rotation() + ScrapEngine::Core::SVector3(0, 0.5f, 0));
+	}
+	if (InputManagerRef->get_keyboard_key_pressed(KEYBOARD_KEY_ARROW_RIGHT)) {
+		GameObjectRef->set_object_rotation(GameObjectRef->get_object_rotation() + ScrapEngine::Core::SVector3(0, -0.5f, 0));
 	}
 }
 

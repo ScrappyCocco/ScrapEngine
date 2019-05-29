@@ -1,25 +1,29 @@
 #pragma once
 
-#include "../../../Rendering/Manager/RenderManager.h"
-#include "../MeshComponent/MeshComponent.h"
+#include <Engine/Rendering/Manager/RenderManager.h>
+#include <Engine/LogicCore/Components/MeshComponent/MeshComponent.h>
 #include <map>
 
-namespace ScrapEngine {
-
-	class ComponentsManager
+namespace ScrapEngine
+{
+	namespace Core
 	{
-	private:
-		ScrapEngine::RenderManager* RenderManagerRef;
+		class ComponentsManager
+		{
+		private:
+			Render::RenderManager* render_manager_ref_;
 
-		std::map<ScrapEngine::MeshComponent*, ScrapEngine::VulkanMeshInstance*> loadedMeshes;
-	public:
-		ComponentsManager(ScrapEngine::RenderManager* input_RenderManagerRef);
-		~ComponentsManager() = default;
+			std::map<MeshComponent*, Render::VulkanMeshInstance*> loaded_meshes_;
+		public:
+			explicit ComponentsManager(Render::RenderManager* input_render_manager_ref);
+			~ComponentsManager() = default;
 
-		//MeshStuff
-		ScrapEngine::MeshComponent* createNewMeshComponent(const std::string& vertex_shader_path, const std::string& fragment_shader_path, const std::string& model_path, const std::string& texture_path);
-		void destroyMeshComponent(ScrapEngine::MeshComponent* componentToDestroy);
-	};
-
+			//MeshStuff
+			MeshComponent* create_new_mesh_component(const std::string& vertex_shader_path,
+			                                         const std::string& fragment_shader_path,
+			                                         const std::string& model_path,
+			                                         const std::vector<std::string>& textures_path);
+			void destroy_mesh_component(MeshComponent* component_to_destroy);
+		};
+	}
 }
-

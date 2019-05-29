@@ -1,57 +1,85 @@
-#include "GameWindow.h"
+#include <Engine/Rendering/Window/GameWindow.h>
 #include <stb_image.h>
-#include "../../Utility/UsefulMethods.h"
+#include <Engine/Utility/UsefulMethods.h>
 
-ScrapEngine::GameWindow::GameWindow(uint32_t input_WIDTH, uint32_t input_HEIGHT, std::string input_window_title) : WIDTH(input_WIDTH), HEIGHT(input_HEIGHT), window_title(input_window_title)
+ScrapEngine::Render::GameWindow::GameWindow(
+	uint32_t input_width, uint32_t input_height, std::string input_window_title)
+	: width_(input_width), height_(input_height), window_title_(input_window_title)
 {
-	initializeWindow();
+	initialize_window();
+
+	int monitor_count;
+	GLFWmonitor** monitors = glfwGetMonitors(&monitor_count);
+	GLFWmonitor* best_monitor = monitors[0];
+	center_window(best_monitor);
 }
 
-ScrapEngine::GameWindow::~GameWindow()
+ScrapEngine::Render::GameWindow::~GameWindow()
 {
-	glfwDestroyWindow(window);
+	glfwDestroyWindow(window_);
 
 	glfwTerminate();
 }
 
-void ScrapEngine::GameWindow::initializeWindow()
+void ScrapEngine::Render::GameWindow::initialize_window()
 {
 	glfwInit();
 
 	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API); //initializes the GLFW library
 	glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 
-	window = glfwCreateWindow(WIDTH, HEIGHT, window_title.c_str(), nullptr, nullptr); //initialize the window
+	window_ = glfwCreateWindow(width_, height_, window_title_.c_str(), nullptr, nullptr); //initialize the window
 }
 
-void ScrapEngine::GameWindow::setWindowSize(int input_WIDTH, int input_HEIGHT)
+void ScrapEngine::Render::GameWindow::center_window(GLFWmonitor* monitor) const
 {
-	glfwSetWindowSize(window, input_WIDTH, input_HEIGHT);
+	if (!monitor)
+		return;
+
+	const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+	if (!mode)
+		return;
+
+	int monitor_x, monitor_y;
+	glfwGetMonitorPos(monitor, &monitor_x, &monitor_y);
+
+	int window_width, window_height;
+	glfwGetWindowSize(window_, &window_width, &window_height);
+
+	glfwSetWindowPos(window_,
+	                 monitor_x + (mode->width - window_width) / 2,
+	                 monitor_y + (mode->height - window_height) / 2);
 }
 
-void ScrapEngine::GameWindow::setWindowTitle(const std::string& title)
+void ScrapEngine::Render::GameWindow::set_window_size(int input_width, int input_height) const
 {
-	glfwSetWindowTitle(window, title.c_str());
+	glfwSetWindowSize(window_, input_width, input_height);
 }
 
-void ScrapEngine::GameWindow::setWindowIcon(const std::string& path_to_file) const
+void ScrapEngine::Render::GameWindow::set_window_title(const std::string& title) const
 {
-	glfwSetWindowIcon(window, 1, &UsefulMethods::loadIcon(path_to_file));
+	glfwSetWindowTitle(window_, title.c_str());
 }
 
-void ScrapEngine::GameWindow::closeWindow()
+void ScrapEngine::Render::GameWindow::set_window_icon(const std::string& path_to_file) const
 {
-	glfwSetWindowShouldClose(window, GLFW_TRUE);
+	glfwSetWindowIcon(window_, 1, &Utility::UsefulMethods::load_icon(path_to_file));
 }
 
-ScrapEngine::InputManager* ScrapEngine::GameWindow::createWindowInputManager() const
+void ScrapEngine::Render::GameWindow::close_window() const
 {
-	return new ScrapEngine::InputManager(window);
+	glfwSetWindowShouldClose(window_, GLFW_TRUE);
 }
 
-bool ScrapEngine::GameWindow::checkWindowShouldClose() const
+ScrapEngine::Input::InputManager* ScrapEngine::Render::GameWindow::create_window_input_manager() const
 {
-	if (!glfwWindowShouldClose(window)) {
+	return new Input::InputManager(window_);
+}
+
+bool ScrapEngine::Render::GameWindow::check_window_should_close() const
+{
+	if (!glfwWindowShouldClose(window_))
+	{
 		glfwPollEvents();
 		return false;
 	}

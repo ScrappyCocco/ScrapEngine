@@ -1,105 +1,99 @@
 #pragma once
-#include "../../Debug/DebugLog.h"
 
-#include "../../Utility/UsefulTypes.h"
-#include "../Window/GameWindow.h"
-#include "../Window/VulkanSurface.h"
-#include "../Instance/VukanInstance.h"
-#include "../Device/VulkanDevice.h"
-#include "../SwapChain/VulkanSwapChain.h"
-#include "../SwapChain/VulkanImageView.h"
-#include "../Pipeline/VulkanGraphicsPipeline.h"
-#include "../RenderPass/VulkanRenderPass.h"
-#include "../Buffer/VulkanFrameBuffer.h"
-#include "../Command/VulkanCommandPool.h"
-#include "../Buffer/VulkanCommandBuffer.h"
-#include "../Semaphores/VulkanSemaphoresManager.h"
-#include "../Queue/GraphicsQueue.h"
-#include "../Queue/PresentQueue.h"
-#include "../Buffer/Vertex/VertexBuffer.h"
-#include "../Buffer/Index/IndexBuffer.h"
-#include "../Buffer/Uniform/UniformBuffer.h"
-#include "../Descriptor/VulkanDescriptorSet.h"
-#include "../Descriptor/VulkanDescriptorPool.h"
-#include "../Texture/TextureImage.h"
-#include "../Texture/TextureImageView.h"
-#include "../Texture/TextureSampler.h"
-#include "../DepthResources/VulkanDepthResources.h"
-#include "../Texture/VulkanColorResources.h"
-#include "../Model/VulkanModel.h"
-#include "../Model/VulkanMeshInstance.h"
-#include "../Model/VulkanSkyboxInstance.h"
+#include <Engine/Utility/UsefulTypes.h>
+#include <Engine/Rendering/Window/GameWindow.h>
+#include <Engine/Rendering/Window/VulkanSurface.h>
+#include <Engine/Rendering/Instance/VukanInstance.h>
+#include <Engine/Rendering/Device/VulkanDevice.h>
+#include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
+#include <Engine/Rendering/SwapChain/VulkanImageView.h>
+#include <Engine/Rendering/RenderPass/VulkanRenderPass.h>
+#include <Engine/Rendering/Buffer/FrameBuffer/VulkanFrameBuffer.h>
+#include <Engine/Rendering/Command/VulkanCommandPool.h>
+#include <Engine/Rendering/Buffer/CommandBuffer/VulkanCommandBuffer.h>
+#include <Engine/Rendering/Semaphores/VulkanSemaphoresManager.h>
+#include <Engine/Rendering/Buffer/UniformBuffer/UniformBuffer.h>
+#include <Engine/Rendering/DepthResources/VulkanDepthResources.h>
+#include <Engine/Rendering/Texture/ColorResources/VulkanColorResources.h>
+#include <Engine/Rendering/Model/MeshInstance/VulkanMeshInstance.h>
+#include <Engine/Rendering/Model/SkyboxInstance/VulkanSkyboxInstance.h>
 
-namespace ScrapEngine {
-	class RenderManager
+namespace ScrapEngine
+{
+	namespace Render
 	{
-	private:
-		ScrapEngine::GameWindow* GameWindow = nullptr;
-		ScrapEngine::VukanInstance* VulkanInstance = nullptr;
-		ScrapEngine::VulkanDevice* VulkanRenderDevice = nullptr;
-		ScrapEngine::VulkanSwapChain* VulkanRenderSwapChain = nullptr;
-		ScrapEngine::VulkanImageView* VulkanRenderImageView = nullptr;
-		ScrapEngine::VulkanRenderPass* VulkanRenderingPass = nullptr;
-		ScrapEngine::VulkanFrameBuffer* VulkanRenderFrameBuffer = nullptr;
-		ScrapEngine::VulkanCommandPool* VulkanRenderCommandPool = nullptr;
-		ScrapEngine::VulkanCommandBuffer* VulkanRenderCommandBuffer = nullptr;
-		ScrapEngine::GraphicsQueue* VulkanGraphicsQueue = nullptr;
-		ScrapEngine::PresentQueue* VulkanPresentationQueue = nullptr;
-		ScrapEngine::VulkanSemaphoresManager* VulkanRenderSemaphores = nullptr;
-		ScrapEngine::VulkanSurface* VulkanWindowSurface = nullptr;
-		ScrapEngine::VulkanDepthResources* VulkanRenderDepth = nullptr;
-		ScrapEngine::VulkanColorResources* VulkanRenderColor = nullptr;
+		class RenderManager
+		{
+		private:
+			GameWindow* game_window_ = nullptr;
+			VukanInstance* vulkan_instance_ = nullptr;
+			VulkanDevice* vulkan_render_device_ = nullptr;
+			VulkanSwapChain* vulkan_render_swap_chain_ = nullptr;
+			VulkanImageView* vulkan_render_image_view_ = nullptr;
+			VulkanRenderPass* vulkan_rendering_pass_ = nullptr;
+			VulkanFrameBuffer* vulkan_render_frame_buffer_ = nullptr;
+			VulkanCommandPool* vulkan_render_command_pool_ = nullptr;
+			VulkanCommandBuffer* vulkan_render_command_buffer_ = nullptr;
+			BaseQueue* vulkan_graphics_queue_ = nullptr;
+			BaseQueue* vulkan_presentation_queue_ = nullptr;
+			VulkanSemaphoresManager* vulkan_render_semaphores_ = nullptr;
+			VulkanSurface* vulkan_window_surface_ = nullptr;
+			VulkanDepthResources* vulkan_render_depth_ = nullptr;
+			VulkanColorResources* vulkan_render_color_ = nullptr;
 
-		ScrapEngine::Camera* RenderCamera = nullptr;
-		ScrapEngine::Camera* defaultCamera = nullptr;
+			Camera* render_camera_ = nullptr;
+			Camera* default_camera_ = nullptr;
 
-		ScrapEngine::VulkanSkyboxInstance* Skybox = nullptr;
+			VulkanSkyboxInstance* skybox_ = nullptr;
 
-		std::vector<ScrapEngine::VulkanMeshInstance*> LoadedModels;
+			std::vector<VulkanMeshInstance*> loaded_models_;
 
-		size_t currentFrame = 0;
-		uint32_t imageIndex;
-		vk::Result result;
+			size_t current_frame_ = 0;
+			uint32_t image_index_;
+			vk::Result result_;
 
-		vk::Device deviceRef;
-		unsigned short int MAX_FRAMES_IN_FLIGHT = 2;
-		bool framebufferResized = false;
-		const std::vector<vk::Semaphore>* imageAvailableSemaphoresRef;
-		const std::vector<vk::Semaphore>* renderFinishedSemaphoresRef;
-		const std::vector<vk::Fence>* inFlightFencesRef;
-	public:
-		RenderManager(const ScrapEngine::game_base_info* received_base_game_info);
-		~RenderManager();
-	private:
-		void initializeVulkan(const ScrapEngine::game_base_info* received_base_game_info);
+			unsigned short int max_frames_in_flight_ = 2;
+			bool framebuffer_resized_ = false;
+			const std::vector<vk::Semaphore>* image_available_semaphores_ref_;
+			const std::vector<vk::Semaphore>* render_finished_semaphores_ref_;
+			const std::vector<vk::Fence>* in_flight_fences_ref_;
+		public:
+			RenderManager(const game_base_info* received_base_game_info);
+			~RenderManager();
+		private:
+			auto initialize_vulkan(const game_base_info* received_base_game_info) -> void;
 
-		void createQueues();
-		void deleteQueues();
+			void create_queues();
+			void delete_queues() const;
 
-		void createCommandBuffers();
-		void deleteCommandBuffers();
+			void create_command_buffers();
+			void delete_command_buffers() const;
 
-		void cleanupSwapChain();
-		void recreateSwapChain();
+			void cleanup_swap_chain();
+			void recreate_swap_chain();
 
-		void createCamera();
-	public:
-		void drawFrame();
-		void waitDeviceIdle();
+			void create_camera();
+		public:
+			void draw_frame();
+			void wait_device_idle() const;
 
-		//3D mesh and scene stuff
-		ScrapEngine::VulkanMeshInstance* loadMesh(const std::string& vertex_shader_path, const std::string& fragment_shader_path, const std::string& model_path, const std::string& texture_path);
-		ScrapEngine::VulkanMeshInstance* loadMesh(const std::string& model_path, const std::string& texture_path);
-		void unloadMesh(ScrapEngine::VulkanMeshInstance* meshToUnload);
-		ScrapEngine::VulkanSkyboxInstance* loadSkybox(const std::array<std::string, 6>& files_path);
+			//3D mesh and scene stuff
+			VulkanMeshInstance* load_mesh(const std::string& vertex_shader_path,
+			                              const std::string& fragment_shader_path,
+			                              const std::string& model_path,
+			                              const std::vector<std::string>& textures_path);
+			VulkanMeshInstance* load_mesh(const std::string& model_path,
+			                              const std::vector<std::string>& textures_path);
+			void unload_mesh(VulkanMeshInstance* mesh_to_unload);
+			VulkanSkyboxInstance* load_skybox(const std::array<std::string, 6>& files_path);
 
-		//User-Window stuff
-		ScrapEngine::GameWindow* getGameWindow() const;
+			//User-Window stuff
+			GameWindow* get_game_window() const;
 
-		//View-Camera stuff
-		ScrapEngine::Camera* getRenderCamera() const;
-		ScrapEngine::Camera* getDefaultRenderCamera() const;
-		void setRenderCamera(ScrapEngine::Camera* newCamera);
-	};
+			//View-Camera stuff
+			Camera* get_render_camera() const;
+			Camera* get_default_render_camera() const;
+			void set_render_camera(Camera* new_camera);
+		};
+	}
 }
-

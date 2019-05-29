@@ -328,6 +328,24 @@ ASALocalRun/
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
 
-external/VulkanSDK/Include/
+external/VulkanSDK/Lib/shaderc_combined\.lib
 
-external/VulkanSDK/Lib/
+external/VulkanSDK/Lib/VkLayer_api_dump\.lib
+
+external/VulkanSDK/Lib/VkLayer_core_validation\.lib
+
+external/VulkanSDK/Lib/VkLayer_device_simulation\.lib
+
+external/VulkanSDK/Lib/VkLayer_monitor\.lib
+
+external/VulkanSDK/Lib/VkLayer_object_tracker\.lib
+
+external/VulkanSDK/Lib/VkLayer_parameter_validation\.lib
+
+external/VulkanSDK/Lib/VkLayer_screenshot\.lib
+
+external/VulkanSDK/Lib/VkLayer_threading\.lib
+
+external/VulkanSDK/Lib/VkLayer_unique_objects\.lib
+
+external/VulkanSDK/Lib/VkLayer_utils\.lib

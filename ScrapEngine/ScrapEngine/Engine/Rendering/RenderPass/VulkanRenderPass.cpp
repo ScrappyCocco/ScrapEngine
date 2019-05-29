@@ -1,16 +1,23 @@
-#include "VulkanRenderPass.h"
+#include <Engine/Rendering/RenderPass/VulkanRenderPass.h>
 
 #include <stdexcept>
 #include <array>
-#include "../DepthResources/VulkanDepthResources.h"
+#include <Engine/Rendering/DepthResources/VulkanDepthResources.h>
+#include <Engine/Rendering/Device/VulkanDevice.h>
 
-ScrapEngine::VulkanRenderPass::VulkanRenderPass(vk::Device* input_deviceRef, vk::Format swapChainImageFormat, vk::PhysicalDevice* PhysicalDeviceRef, vk::SampleCountFlagBits msaaSamples)
-	: deviceRef(input_deviceRef)
+//Init static instance reference
+
+ScrapEngine::Render::VulkanRenderPass* ScrapEngine::Render::VulkanRenderPass::instance_ = nullptr;
+
+//Class
+
+void ScrapEngine::Render::VulkanRenderPass::init(const vk::Format& swap_chain_image_format,
+                                                 const vk::SampleCountFlagBits msaa_samples)
 {
-	vk::AttachmentDescription colorAttachment(
+	const vk::AttachmentDescription color_attachment(
 		vk::AttachmentDescriptionFlags(),
-		swapChainImageFormat,
-		msaaSamples,
+		swap_chain_image_format,
+		msaa_samples,
 		vk::AttachmentLoadOp::eClear,
 		vk::AttachmentStoreOp::eStore,
 		vk::AttachmentLoadOp::eDontCare,
@@ -19,10 +26,10 @@ ScrapEngine::VulkanRenderPass::VulkanRenderPass(vk::Device* input_deviceRef, vk:
 		vk::ImageLayout::eColorAttachmentOptimal
 	);
 
-	vk::AttachmentDescription depthAttachment(
+	const vk::AttachmentDescription depth_attachment(
 		vk::AttachmentDescriptionFlags(),
-		VulkanDepthResources::findDepthFormat(PhysicalDeviceRef),
-		msaaSamples,
+		VulkanDepthResources::find_depth_format(),
+		msaa_samples,
 		vk::AttachmentLoadOp::eClear,
 		vk::AttachmentStoreOp::eDontCare,
 		vk::AttachmentLoadOp::eDontCare,
@@ -31,9 +38,9 @@ ScrapEngine::VulkanRenderPass::VulkanRenderPass(vk::Device* input_deviceRef, vk:
 		vk::ImageLayout::eDepthStencilAttachmentOptimal
 	);
 
-	vk::AttachmentDescription colorAttachmentResolve(
+	const vk::AttachmentDescription color_attachment_resolve(
 		vk::AttachmentDescriptionFlags(),
-		swapChainImageFormat,
+		swap_chain_image_format,
 		vk::SampleCountFlagBits::e1,
 		vk::AttachmentLoadOp::eDontCare,
 		vk::AttachmentStoreOp::eStore,
@@ -43,17 +50,17 @@ ScrapEngine::VulkanRenderPass::VulkanRenderPass(vk::Device* input_deviceRef, vk:
 		vk::ImageLayout::ePresentSrcKHR
 	);
 
-	vk::AttachmentReference colorAttachmentRef(
+	vk::AttachmentReference color_attachment_ref(
 		0,
 		vk::ImageLayout::eColorAttachmentOptimal
 	);
 
-	vk::AttachmentReference depthAttachmentRef(
+	vk::AttachmentReference depth_attachment_ref(
 		1,
 		vk::ImageLayout::eDepthStencilAttachmentOptimal
 	);
 
-	vk::AttachmentReference colorAttachmentResolveRef(
+	vk::AttachmentReference color_attachment_resolve_ref(
 		2,
 		vk::ImageLayout::eColorAttachmentOptimal
 	);
@@ -62,13 +69,13 @@ ScrapEngine::VulkanRenderPass::VulkanRenderPass(vk::Device* input_deviceRef, vk:
 		vk::SubpassDescriptionFlags(),
 		vk::PipelineBindPoint::eGraphics,
 		0, nullptr,
-		1, &colorAttachmentRef,
-		&colorAttachmentResolveRef, 
-		&depthAttachmentRef
+		1, &color_attachment_ref,
+		&color_attachment_resolve_ref,
+		&depth_attachment_ref
 	);
 
 	vk::SubpassDependency dependency(
-		VK_SUBPASS_EXTERNAL, 
+		VK_SUBPASS_EXTERNAL,
 		0,
 		vk::PipelineStageFlagBits::eColorAttachmentOutput,
 		vk::PipelineStageFlagBits::eColorAttachmentOutput,
@@ -76,9 +83,11 @@ ScrapEngine::VulkanRenderPass::VulkanRenderPass(vk::Device* input_deviceRef, vk:
 		vk::AccessFlagBits::eColorAttachmentRead | vk::AccessFlagBits::eColorAttachmentWrite
 	);
 
-	std::array<vk::AttachmentDescription, 3> attachments = { colorAttachment, depthAttachment, colorAttachmentResolve };
+	std::array<vk::AttachmentDescription, 3> attachments = {
+		color_attachment, depth_attachment, color_attachment_resolve
+	};
 
-	vk::RenderPassCreateInfo renderPassInfo(
+	vk::RenderPassCreateInfo render_pass_info(
 		vk::RenderPassCreateFlags(),
 		static_cast<uint32_t>(attachments.size()),
 		attachments.data(),
@@ -88,17 +97,28 @@ ScrapEngine::VulkanRenderPass::VulkanRenderPass(vk::Device* input_deviceRef, vk:
 		&dependency
 	);
 
-	if (deviceRef->createRenderPass(&renderPassInfo, nullptr, &renderPass) != vk::Result::eSuccess) {
+	if (VulkanDevice::get_instance()->get_logical_device()->createRenderPass(&render_pass_info, nullptr, &render_pass_)
+		!= vk::Result::eSuccess)
+	{
 		throw std::runtime_error("VulkanRenderPass: Failed to create render pass!");
 	}
 }
 
-ScrapEngine::VulkanRenderPass::~VulkanRenderPass()
+ScrapEngine::Render::VulkanRenderPass::~VulkanRenderPass()
 {
-	deviceRef->destroyRenderPass(renderPass);
+	VulkanDevice::get_instance()->get_logical_device()->destroyRenderPass(render_pass_);
 }
 
-vk::RenderPass* ScrapEngine::VulkanRenderPass::getRenderPass()
+ScrapEngine::Render::VulkanRenderPass* ScrapEngine::Render::VulkanRenderPass::get_instance()
 {
-	return &renderPass;
+	if (instance_ == nullptr)
+	{
+		instance_ = new VulkanRenderPass();
+	}
+	return instance_;
+}
+
+vk::RenderPass* ScrapEngine::Render::VulkanRenderPass::get_render_pass()
+{
+	return &render_pass_;
 }

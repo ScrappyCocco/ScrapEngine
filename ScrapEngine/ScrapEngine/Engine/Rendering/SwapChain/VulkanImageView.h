@@ -3,22 +3,21 @@
 #include <vulkan/vulkan.hpp>
 #include <vector>
 
-#include "VulkanSwapChain.h"
+#include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
 
-namespace ScrapEngine {
-
-	class VulkanImageView
+namespace ScrapEngine
+{
+	namespace Render
 	{
-	private:
-		std::vector<vk::ImageView> swapChainImageViews;
+		class VulkanImageView
+		{
+		private:
+			std::vector<vk::ImageView> swap_chain_image_views_;
+		public:
+			VulkanImageView(VulkanSwapChain* swap_chain_ref);
+			~VulkanImageView();
 
-		vk::Device* deviceRef;
-	public:
-		VulkanImageView(vk::Device* input_deviceRef, ScrapEngine::VulkanSwapChain* SwapChainRef);
-		~VulkanImageView();
-
-		const std::vector<vk::ImageView>* getSwapChainImageViewsVector();
-	};
-
+			const std::vector<vk::ImageView>* get_swap_chain_image_views_vector() const;
+		};
+	}
 }
-

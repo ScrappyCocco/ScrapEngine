@@ -1,22 +1,19 @@
-#include "SceneManager.h"
+#include <Engine/LogicCore/Scene/SceneManager.h>
 
-ScrapEngine::SceneManager::SceneManager(ScrapEngine::RenderManager* input_RenderManagerRef) : RenderManagerRef(input_RenderManagerRef)
-{
-
-}
-
-ScrapEngine::SceneManager::~SceneManager()
+ScrapEngine::Core::SceneManager::SceneManager(Render::RenderManager* input_render_manager_ref) :
+	render_manager_ref_(input_render_manager_ref), current_skybox_(nullptr)
 {
 }
 
-void ScrapEngine::SceneManager::setSkybox(const std::array<std::string, 6>& files_path)
+void ScrapEngine::Core::SceneManager::set_skybox(const std::array<std::string, 6>& files_path)
 {
-	CurrentSkybox = RenderManagerRef->loadSkybox(files_path);
+	current_skybox_ = render_manager_ref_->load_skybox(files_path);
 }
 
-void ScrapEngine::SceneManager::setSkyboxSize(unsigned int newSize)
+void ScrapEngine::Core::SceneManager::set_skybox_size(const unsigned int new_size) const
 {
-	if (CurrentSkybox) {
-		CurrentSkybox->setCubemapSize(newSize);
+	if (current_skybox_)
+	{
+		current_skybox_->set_cubemap_size(new_size);
 	}
 }

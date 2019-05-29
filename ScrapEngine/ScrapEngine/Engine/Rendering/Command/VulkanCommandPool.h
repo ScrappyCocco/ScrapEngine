@@ -1,22 +1,32 @@
 #pragma once
 
 #include <vulkan/vulkan.hpp>
-#include "../Queue/GraphicsQueue.h"
+#include <Engine/Rendering/Queue/BaseQueue.h>
 
-namespace ScrapEngine {
-
-	class VulkanCommandPool
+namespace ScrapEngine
+{
+	namespace Render
 	{
-	private:
-		vk::CommandPool commandPool;
+		class VulkanCommandPool
+		{
+		private:
+			vk::CommandPool command_pool_;
 
-		vk::Device* deviceRef;
-	public:
-		VulkanCommandPool(GraphicsQueue::QueueFamilyIndices queueFamilyIndices, vk::Device* input_deviceRef);
-		~VulkanCommandPool();
+			//Singleton static instance
+			static VulkanCommandPool* instance_;
 
-		vk::CommandPool* getCommandPool();
-	};
+			//The constructor is private because this class is a Singleton
+			VulkanCommandPool() = default;
+		public:
+			//Method used to init the class with parameters because the constructor is private
+			void init(BaseQueue::QueueFamilyIndices queue_family_indices);
 
+			~VulkanCommandPool();
+
+			//Singleton static function to get or create a class instance
+			static VulkanCommandPool* get_instance();
+
+			vk::CommandPool* get_command_pool();
+		};
+	}
 }
-

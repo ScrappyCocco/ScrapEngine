@@ -144,6 +144,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <BrowseInformation>true</BrowseInformation>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -153,13 +154,18 @@
       <AdditionalLibraryDirectories>$(SolutionDir)x64\Release;$(SolutionDir)..\external\glfw\build\src\Release;$(SolutionDir)..\external\assimp\build\code\Release;$(SolutionDir)..\external\VulkanSDK\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>vulkan-1.lib;assimp-vc140-mt.lib;glfw3.lib;ScrapEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameObjects\AnotherTestGameObject.cpp" />
     <ClCompile Include="GameObjects\Camera\GameCamera.cpp" />
     <ClCompile Include="GameObjects\TestGameObject.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameObjects\AnotherTestGameObject.h" />
     <ClInclude Include="GameObjects\Camera\GameCamera.h" />
     <ClInclude Include="GameObjects\TestGameObject.h" />
     <ClInclude Include="resource.h" />

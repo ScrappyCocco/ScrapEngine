@@ -3,24 +3,38 @@
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
-#include "GameWindow.h"
-#include "../Instance/VukanInstance.h"
+#include <Engine/Rendering/Window/GameWindow.h>
+#include <Engine/Rendering/Instance/VukanInstance.h>
 
-namespace ScrapEngine {
-
-	class VulkanSurface
+namespace ScrapEngine
+{
+	namespace Render
 	{
-	private:
-		vk::SurfaceKHR surface; //represents an abstract type of surface to present rendered images to.
-		vk::Instance* instanceRef; //Reference to vulkan instance
-	public:
-		VulkanSurface(ScrapEngine::VukanInstance* input_instanceRef, ScrapEngine::GameWindow* windowRef);
-		~VulkanSurface();
+		class VulkanSurface
+		{
+		private:
+			/**
+			 * \brief represents an abstract type of surface to present rendered images to.
+			 */
+			vk::SurfaceKHR surface_;
 
-		void createSurface(ScrapEngine::GameWindow* windowRef);
+			//Singleton static instance
+			static VulkanSurface* instance_;
 
-		vk::SurfaceKHR* getSurface();
-	};
+			//The constructor is private because this class is a Singleton
+			VulkanSurface() = default;
+		public:
+			//Method used to init the class with parameters because the constructor is private
+			void init(GameWindow* window_ref);
 
+			~VulkanSurface();
+
+			//Singleton static function to get or create a class instance
+			static VulkanSurface* get_instance();
+
+			void create_surface(GameWindow* window_ref);
+
+			vk::SurfaceKHR* get_surface();
+		};
+	}
 }
-

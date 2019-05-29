@@ -1,25 +1,30 @@
-#include "VulkanImageView.h"
-#include "../Texture/TextureImageView.h"
+#include <Engine/Rendering/SwapChain/VulkanImageView.h>
+#include <Engine/Rendering/Texture/TextureImageView/TextureImageView.h>
+#include <Engine/Rendering/Device/VulkanDevice.h>
 
-ScrapEngine::VulkanImageView::VulkanImageView(vk::Device* input_deviceRef, ScrapEngine::VulkanSwapChain* SwapChainRef)
-	: deviceRef(input_deviceRef)
+ScrapEngine::Render::VulkanImageView::VulkanImageView(VulkanSwapChain* swap_chain_ref)
 {
-	const std::vector<vk::Image>* swapChainImages = SwapChainRef->getSwapChainImagesVector();
-	swapChainImageViews.resize(swapChainImages->size());
+	const std::vector<vk::Image>* swap_chain_images = swap_chain_ref->get_swap_chain_images_vector();
+	swap_chain_image_views_.resize(swap_chain_images->size());
 
-	for (uint32_t i = 0; i < swapChainImages->size(); i++) {
-		swapChainImageViews[i] = TextureImageView::createImageView(input_deviceRef, const_cast<vk::Image*>(&(*swapChainImages)[i]), SwapChainRef->getSwapChainImageFormat(), vk::ImageAspectFlagBits::eColor, 1);
+	for (uint32_t i = 0; i < swap_chain_images->size(); i++)
+	{
+		swap_chain_image_views_[i] = TextureImageView::create_image_view(
+			const_cast<vk::Image*>(&(*swap_chain_images)[i]),
+			swap_chain_ref->get_swap_chain_image_format(),
+			vk::ImageAspectFlagBits::eColor, 1);
 	}
 }
 
-ScrapEngine::VulkanImageView::~VulkanImageView()
+ScrapEngine::Render::VulkanImageView::~VulkanImageView()
 {
-	for (auto imageView : swapChainImageViews) {
-		deviceRef->destroyImageView(imageView);
+	for (const auto image_view : swap_chain_image_views_)
+	{
+		VulkanDevice::get_instance()->get_logical_device()->destroyImageView(image_view);
 	}
 }
 
-const std::vector<vk::ImageView>* ScrapEngine::VulkanImageView::getSwapChainImageViewsVector()
+const std::vector<vk::ImageView>* ScrapEngine::Render::VulkanImageView::get_swap_chain_image_views_vector() const
 {
-	return &swapChainImageViews;
+	return &swap_chain_image_views_;
 }

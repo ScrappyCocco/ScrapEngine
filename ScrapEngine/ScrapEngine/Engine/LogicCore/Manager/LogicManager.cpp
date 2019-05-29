@@ -1,43 +1,44 @@
-#include "LogicManager.h"
+#include <Engine/LogicCore/Manager/LogicManager.h>
 
-ScrapEngine::LogicManager::LogicManager()
+ScrapEngine::Core::LogicManager::~LogicManager()
 {
-
-}
-
-ScrapEngine::LogicManager::~LogicManager()
-{
-	for (SGameObject* GameObject : RegisteredGameObjects) {
-		delete GameObject;
+	for (SGameObject* game_object : registered_game_objects_)
+	{
+		delete game_object;
 	}
 }
 
-ScrapEngine::SGameObject* ScrapEngine::LogicManager::RegisterGameObject(SGameObject* input_GameObject)
+ScrapEngine::Core::SGameObject* ScrapEngine::Core::LogicManager::register_game_object(
+	SGameObject* input_game_object)
 {
-	RegisteredGameObjects.push_back(input_GameObject);
-	return RegisteredGameObjects.back();
+	registered_game_objects_.push_back(input_game_object);
+	return registered_game_objects_.back();
 }
 
-void ScrapEngine::LogicManager::UnRegisterGameObject(SGameObject* input_GameObject)
+void ScrapEngine::Core::LogicManager::un_register_game_object(SGameObject* input_game_object)
 {
-	std::vector<SGameObject*>::iterator element = find(RegisteredGameObjects.begin(), RegisteredGameObjects.end(), input_GameObject);
-	if (element != RegisteredGameObjects.end())
+	const std::vector<SGameObject*>::iterator element = find(registered_game_objects_.begin(),
+	                                                         registered_game_objects_.end(),
+	                                                         input_game_object);
+	if (element != registered_game_objects_.end())
 	{
 		delete *element;
-		RegisteredGameObjects.erase(element);
+		registered_game_objects_.erase(element);
 	}
 }
 
-void ScrapEngine::LogicManager::ExecuteGameObjectsStartEvent()
+void ScrapEngine::Core::LogicManager::execute_game_objects_start_event()
 {
-	for (SGameObject* GameObject : RegisteredGameObjects) {
-		GameObject->GameStart();
+	for (SGameObject* game_object : registered_game_objects_)
+	{
+		game_object->game_start();
 	}
 }
 
-void ScrapEngine::LogicManager::ExecuteGameObjectsUpdateEvent(float time)
+void ScrapEngine::Core::LogicManager::execute_game_objects_update_event(const float time)
 {
-	for (SGameObject* GameObject : RegisteredGameObjects) {
-		GameObject->GameUpdate(time);
+	for (SGameObject* game_object : registered_game_objects_)
+	{
+		game_object->game_update(time);
 	}
 }

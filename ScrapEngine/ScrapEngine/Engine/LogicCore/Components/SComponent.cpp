@@ -1,44 +1,94 @@
-#include "SComponent.h"
+#include <Engine/LogicCore/Components/SComponent.h>
+#include <glm/mat4x4.hpp>
 
-ScrapEngine::SComponent::SComponent(std::string componentName) : SObject(componentName)
+ScrapEngine::Core::SComponent::SComponent(const std::string& component_name) : SObject(component_name)
 {
-
 }
 
-ScrapEngine::SComponent::~SComponent()
+ScrapEngine::Core::SComponent::~SComponent()
 {
 	//Empty here
 }
 
-void ScrapEngine::SComponent::setComponentLocation(glm::vec3 location)
+void ScrapEngine::Core::SComponent::set_component_location(const SVector3& location)
 {
-	//This will be defined by the user when is necessary, otherwise it will have no effect
+	object_world_transform_.set_position(location);
+	object_relative_transform_.set_position(object_world_transform_.get_position() - father_transform_.get_position());
 }
 
-void ScrapEngine::SComponent::setComponentRotation(glm::vec3 rotation)
+void ScrapEngine::Core::SComponent::set_component_rotation(const SVector3& rotation)
 {
-	//This will be defined by the user when is necessary, otherwise it will have no effect
+	object_world_transform_.set_rotation(rotation);
+	object_relative_transform_.set_rotation(object_world_transform_.get_rotation() - father_transform_.get_rotation());
 }
 
-void ScrapEngine::SComponent::setComponentScale(glm::vec3 scale)
+void ScrapEngine::Core::SComponent::set_component_scale(const SVector3& scale)
 {
-	//This will be defined by the user when is necessary, otherwise it will have no effect
+	object_world_transform_.set_scale(scale);
+	object_relative_transform_.set_scale(object_world_transform_.get_scale() - father_transform_.get_scale());
 }
 
-glm::vec3 ScrapEngine::SComponent::getComponentLocation()
+void ScrapEngine::Core::SComponent::update_relative_transform()
 {
-	//This will be defined by the user when is necessary, otherwise it will have no effect
-	return glm::vec3();
+	object_relative_transform_.set_position(object_world_transform_.get_position() - father_transform_.get_position());
+	object_relative_transform_.set_rotation(object_world_transform_.get_rotation() - father_transform_.get_rotation());
+	object_relative_transform_.set_scale(object_world_transform_.get_scale() - father_transform_.get_scale());
 }
 
-glm::vec3 ScrapEngine::SComponent::getComponentRotation()
+void ScrapEngine::Core::SComponent::update_component_location()
 {
-	//This will be defined by the user when is necessary, otherwise it will have no effect
-	return glm::vec3();
+	const glm::mat4 local_m = generate_unscaled_transform_matrix(object_relative_transform_);
+	const glm::mat4 father_m = generate_unscaled_transform_matrix(father_transform_);
+	glm::mat4 full_m = father_m * local_m;
+
+	const glm::vec3 pos = glm::vec3(full_m[3][0], full_m[3][1], full_m[3][2]);
+
+	object_world_transform_.set_position(SVector3(pos));
 }
 
-glm::vec3 ScrapEngine::SComponent::getComponentScale()
+void ScrapEngine::Core::SComponent::update_component_rotation()
 {
-	//This will be defined by the user when is necessary, otherwise it will have no effect
-	return glm::vec3();
+	object_world_transform_.set_rotation(father_transform_.get_rotation() + object_relative_transform_.get_rotation());
+
+	update_component_location();
+}
+
+void ScrapEngine::Core::SComponent::update_component_scale()
+{
+	object_world_transform_.set_scale(father_transform_.get_scale() + object_relative_transform_.get_scale());
+}
+
+void ScrapEngine::Core::SComponent::set_father_transform(const STransform& input_father_transform)
+{
+	father_transform_ = input_father_transform;
+}
+
+ScrapEngine::Core::SVector3 ScrapEngine::Core::SComponent::get_component_location() const
+{
+	return object_world_transform_.get_position();
+}
+
+ScrapEngine::Core::SVector3 ScrapEngine::Core::SComponent::get_component_rotation() const
+{
+	return object_world_transform_.get_rotation();
+}
+
+ScrapEngine::Core::SVector3 ScrapEngine::Core::SComponent::get_component_scale() const
+{
+	return object_world_transform_.get_scale();
+}
+
+ScrapEngine::Core::SVector3 ScrapEngine::Core::SComponent::get_component_relative_location() const
+{
+	return object_relative_transform_.get_position();
+}
+
+ScrapEngine::Core::SVector3 ScrapEngine::Core::SComponent::get_component_relative_rotation() const
+{
+	return object_relative_transform_.get_rotation();
+}
+
+ScrapEngine::Core::SVector3 ScrapEngine::Core::SComponent::get_component_relative_scale() const
+{
+	return object_relative_transform_.get_scale();
 }

@@ -29,6 +29,9 @@
     <ClCompile Include="GameObjects\Camera\GameCamera.cpp">
       <Filter>File di origine\GameObjects\Camera</Filter>
     </ClCompile>
+    <ClCompile Include="GameObjects\AnotherTestGameObject.cpp">
+      <Filter>File di origine\GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
@@ -37,6 +40,9 @@
     </ClInclude>
     <ClInclude Include="GameObjects\Camera\GameCamera.h">
       <Filter>File di origine\GameObjects\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\AnotherTestGameObject.h">
+      <Filter>File di origine\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

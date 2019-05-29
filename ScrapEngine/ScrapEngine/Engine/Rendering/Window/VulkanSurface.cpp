@@ -1,25 +1,41 @@
-#include "VulkanSurface.h"
+#include <Engine/Rendering/Window/VulkanSurface.h>
 
-ScrapEngine::VulkanSurface::VulkanSurface(ScrapEngine::VukanInstance* input_instanceRef, ScrapEngine::GameWindow* windowRef) 
-	: instanceRef(input_instanceRef->getVulkanInstance())
+//Init static instance reference
+
+ScrapEngine::Render::VulkanSurface* ScrapEngine::Render::VulkanSurface::instance_ = nullptr;
+
+//Class
+
+void ScrapEngine::Render::VulkanSurface::init(GameWindow* window_ref)
 {
-	createSurface(windowRef);
+	create_surface(window_ref);
 }
 
-ScrapEngine::VulkanSurface::~VulkanSurface()
+ScrapEngine::Render::VulkanSurface::~VulkanSurface()
 {
-	instanceRef->destroySurfaceKHR(surface);
+	VukanInstance::get_instance()->get_vulkan_instance()->destroySurfaceKHR(surface_);
 }
 
-void ScrapEngine::VulkanSurface::createSurface(ScrapEngine::GameWindow* windowRef)
+ScrapEngine::Render::VulkanSurface* ScrapEngine::Render::VulkanSurface::get_instance()
 {
-	surface = vk::SurfaceKHR();
-	if (glfwCreateWindowSurface(*instanceRef, windowRef->window, nullptr, reinterpret_cast<VkSurfaceKHR*>(&surface)) != VK_SUCCESS) {
+	if (instance_ == nullptr)
+	{
+		instance_ = new VulkanSurface();
+	}
+	return instance_;
+}
+
+void ScrapEngine::Render::VulkanSurface::create_surface(GameWindow* window_ref)
+{
+	surface_ = vk::SurfaceKHR();
+	if (glfwCreateWindowSurface(*VukanInstance::get_instance()->get_vulkan_instance(), window_ref->window_, nullptr,
+	                            reinterpret_cast<VkSurfaceKHR*>(&surface_)) != VK_SUCCESS)
+	{
 		throw std::runtime_error("VulkanSurface: Failed to create window surface!");
 	}
 }
 
-vk::SurfaceKHR* ScrapEngine::VulkanSurface::getSurface()
+vk::SurfaceKHR* ScrapEngine::Render::VulkanSurface::get_surface()
 {
-	return &surface;
+	return &surface_;
 }

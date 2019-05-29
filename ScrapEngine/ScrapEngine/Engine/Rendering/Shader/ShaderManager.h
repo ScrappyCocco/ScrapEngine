@@ -2,22 +2,20 @@
 
 #include <vulkan/vulkan.hpp>
 #include <vector>
-#include <fstream>
 
-namespace ScrapEngine {
-
-	class ShaderManager
+namespace ScrapEngine
+{
+	namespace Render
 	{
-	private:
-		vk::Device* deviceRef;
-	public:
-		ShaderManager(vk::Device* input_deviceRef);
-		~ShaderManager();
+		class ShaderManager
+		{
+		public:
+			ShaderManager() = default;
+			~ShaderManager() = default;
 
-		vk::ShaderModule createShaderModule(const std::vector<char>& code);
+			static vk::ShaderModule create_shader_module(const std::vector<char>& code);
 
-		static std::vector<char> readFile(const std::string& filename);
-	};
-
+			static std::vector<char> read_file(const std::string& filename);
+		};
+	}
 }
-

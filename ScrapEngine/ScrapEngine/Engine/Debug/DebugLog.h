@@ -1,22 +1,32 @@
 #pragma once
 
 #include <iostream>
-#include <glm/glm.hpp>
+#include <glm/vec3.hpp>
+#include <glm/mat4x4.hpp>
 
-namespace ScrapEngine {
-	class DebugLog
+namespace ScrapEngine
+{
+	namespace Debug
 	{
-	public:
-		//Print the message to console log with time
-		static void printToConsoleLog(std::string);
+		class DebugLog
+		{
+		public:
+			//Print the message to console log with time
+			static void print_to_console_log(const std::string&);
 
-		static void printToConsoleLog(glm::vec3);
+			//Print the vector to console log with time
+			static void print_to_console_log(const glm::vec3&);
 
-		static void printExceptionToConsoleLog(std::string messageSeverity, std::string exceptionString);
+			//Print the matrix to console log with time
+			static void print_to_console_log(const glm::mat4&);
 
-	private:
-		//Return a string with the current date and time
-		static std::string NowToString();
-	};
+			//Print the error to console
+			static void print_exception_to_console_log(const std::string& message_severity,
+			                                           const std::string& exception_string);
+
+		private:
+			//Return a string with the current date and time
+			static std::string now_to_string();
+		};
+	}
 }
-

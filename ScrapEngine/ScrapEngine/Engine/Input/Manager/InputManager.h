@@ -1,65 +1,96 @@
 #pragma once
+
 #include <GLFW/glfw3.h>
 #include <string>
 
-namespace ScrapEngine {
-
-	struct MouseLocation {
-		double xpos, ypos;
-
-		MouseLocation() {
-			xpos = 0;
-			ypos = 0;
-		}
-		MouseLocation(double x, double y) {
-			xpos = x;
-			ypos = y;
-		}
-	};
-
-	enum CursorMode {
-		cursor_normal_mode, //makes the cursor visible and behaving normally.
-		cursor_hidden_mode, //makes the cursor invisible when it is over the client area of the window but does not restrict the cursor from leaving.
-		cursor_grabbed_mode //hides and grabs the cursor, providing virtual and unlimited cursor movement.
-	};
-
-	enum SystemCursorShapes {
-		cursor_regular_arrow,
-		cursor_crosshair_shape,
-		cursor_hand_shape,
-		cursor_horizontal_resize_arrow_shape,
-		cursor_vertical_resize_arrow_shape,
-		cursor_input_beam_shape
-	};
-
-	enum ButtonState {
-		released, pressed
-	};
-
-	class InputManager
+namespace ScrapEngine
+{
+	namespace Input
 	{
-	private:
-		GLFWwindow* windowRef;
-		GLFWcursor* cursor = nullptr;
-	public:
-		InputManager(GLFWwindow* window);
-		~InputManager();
+		struct mouse_location
+		{
+			const double xpos, ypos;
 
-		MouseLocation getLastMouseLocation();
-		void SetCursorInputMode(ScrapEngine::CursorMode NewMode);
+			mouse_location() : xpos(0), ypos(0)
+			{
+			}
 
-		void LoadNewCursor(const std::string& path_to_file, int xhot = 0, int yhot = 0);
-		void LoadSystemCursor(ScrapEngine::SystemCursorShapes NewShape);
-		void ResetCursorToSystemDefault();
+			mouse_location(const double x, const double y) : xpos(x), ypos(y)
+			{
+			}
+		};
 
-		int getKeyboardKeyStatus(int key_to_check);
-		int getKeyboardKeyPressed(int key_to_check);
-		int getKeyboardKeyReleased(int key_to_check);
+		enum cursor_mode
+		{
+			/**
+			 * \brief makes the cursor visible and behaving normally.
+			 */
+			cursor_normal_mode,
+			/**
+			 * \brief makes the cursor invisible when it is over the client area of the window but does not restrict the cursor from leaving.
+			 */
+			cursor_hidden_mode,
+			/**
+			 * \brief hides and grabs the cursor, providing virtual and unlimited cursor movement.
+			 */
+			cursor_grabbed_mode
+		};
 
-		int getMouseButtonStatus(int button_to_check);
-		int getMouseButtonPressed(int button_to_check);
-		int getMouseButtonReleased(int button_to_check);
-	};
+		enum system_cursor_shapes
+		{
+			cursor_regular_arrow,
+			cursor_crosshair_shape,
+			cursor_hand_shape,
+			cursor_horizontal_resize_arrow_shape,
+			cursor_vertical_resize_arrow_shape,
+			cursor_input_beam_shape
+		};
 
+		enum button_state
+		{
+			released,
+			pressed
+		};
+
+		enum scroll_status
+		{
+			scroll_up,
+			scroll_down,
+			scroll_still
+		};
+
+		class InputManager
+		{
+		private:
+			GLFWwindow* window_ref_;
+			GLFWcursor* cursor_ = nullptr;
+
+			static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+			static scroll_status scroll_status_;
+		public:
+			explicit InputManager(GLFWwindow* input_window_ref);
+			InputManager(const InputManager&) = delete;
+			InputManager& operator =(const InputManager&) = delete;
+			InputManager(InputManager&&) = delete;
+			InputManager& operator=(InputManager&&) = delete;
+			~InputManager();
+
+			mouse_location get_last_mouse_location() const;
+			void set_cursor_input_mode(cursor_mode new_mode) const;
+
+			void load_new_cursor(const std::string& path_to_file, int xhot = 0, int yhot = 0);
+			void load_system_cursor(const system_cursor_shapes& new_shape);
+			void reset_cursor_to_system_default();
+
+			button_state get_keyboard_key_status(int key_to_check) const;
+			bool get_keyboard_key_pressed(int key_to_check) const;
+			bool get_keyboard_key_released(int key_to_check) const;
+
+			button_state get_mouse_button_status(int button_to_check) const;
+			bool get_mouse_button_pressed(int button_to_check) const;
+			bool get_mouse_button_released(int button_to_check) const;
+
+			scroll_status get_mouse_scroll_status() const;
+		};
+	}
 }
-

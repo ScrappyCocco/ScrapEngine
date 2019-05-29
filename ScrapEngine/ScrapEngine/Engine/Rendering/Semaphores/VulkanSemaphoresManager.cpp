@@ -1,52 +1,64 @@
-#include "VulkanSemaphoresManager.h"
+#include <Engine/Rendering/Semaphores/VulkanSemaphoresManager.h>
 
 #include <stdexcept>
+#include <Engine/Rendering/Device/VulkanDevice.h>
 
-ScrapEngine::VulkanSemaphoresManager::VulkanSemaphoresManager(vk::Device* input_deviceRef, unsigned short int INPUT_MAX_FRAMES_IN_FLIGHT)
-	: deviceRef(input_deviceRef), MAX_FRAMES_IN_FLIGHT(INPUT_MAX_FRAMES_IN_FLIGHT)
+ScrapEngine::Render::VulkanSemaphoresManager::VulkanSemaphoresManager(
+	const unsigned short int input_max_frames_in_flight)
+	: MAX_FRAMES_IN_FLIGHT(input_max_frames_in_flight)
 {
-	imageAvailableSemaphores.resize(MAX_FRAMES_IN_FLIGHT);
-	renderFinishedSemaphores.resize(MAX_FRAMES_IN_FLIGHT);
-	inFlightFences.resize(MAX_FRAMES_IN_FLIGHT);
+	image_available_semaphores_.resize(MAX_FRAMES_IN_FLIGHT);
+	render_finished_semaphores_.resize(MAX_FRAMES_IN_FLIGHT);
+	in_flight_fences_.resize(MAX_FRAMES_IN_FLIGHT);
 
-	vk::SemaphoreCreateInfo semaphoreInfo;
+	vk::SemaphoreCreateInfo semaphore_info;
 
-	vk::FenceCreateInfo fenceInfo(vk::FenceCreateFlagBits::eSignaled);
+	vk::FenceCreateInfo fence_info(vk::FenceCreateFlagBits::eSignaled);
 
-	for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
-		if (deviceRef->createSemaphore(&semaphoreInfo, nullptr, &imageAvailableSemaphores[i]) != vk::Result::eSuccess ||
-			deviceRef->createSemaphore(&semaphoreInfo, nullptr, &renderFinishedSemaphores[i]) != vk::Result::eSuccess ||
-			deviceRef->createFence(&fenceInfo, nullptr, &inFlightFences[i]) != vk::Result::eSuccess) {
+	for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++)
+	{
+		if (VulkanDevice::get_instance()->get_logical_device()->createSemaphore(&semaphore_info, nullptr,
+		                                                                        &image_available_semaphores_[i])
+			!= vk::Result::eSuccess ||
+			VulkanDevice::get_instance()->get_logical_device()->createSemaphore(&semaphore_info, nullptr,
+			                                                                    &render_finished_semaphores_[i])
+			!= vk::Result::eSuccess ||
+			VulkanDevice::get_instance()->get_logical_device()->createFence(&fence_info, nullptr, &in_flight_fences_[i])
+			!= vk::Result::eSuccess)
+		{
 			throw std::runtime_error("Failed to create VulkanSemaphoresManager for a frame!");
 		}
 	}
 }
 
-ScrapEngine::VulkanSemaphoresManager::~VulkanSemaphoresManager()
+ScrapEngine::Render::VulkanSemaphoresManager::~VulkanSemaphoresManager()
 {
-	for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
-		deviceRef->destroySemaphore(renderFinishedSemaphores[i]);
-		deviceRef->destroySemaphore(imageAvailableSemaphores[i]);
-		deviceRef->destroyFence(inFlightFences[i]);
+	for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++)
+	{
+		VulkanDevice::get_instance()->get_logical_device()->destroySemaphore(render_finished_semaphores_[i]);
+		VulkanDevice::get_instance()->get_logical_device()->destroySemaphore(image_available_semaphores_[i]);
+		VulkanDevice::get_instance()->get_logical_device()->destroyFence(in_flight_fences_[i]);
 	}
 }
 
-int ScrapEngine::VulkanSemaphoresManager::getMaxFramesInFlight() const
+int ScrapEngine::Render::VulkanSemaphoresManager::getMaxFramesInFlight() const
 {
 	return MAX_FRAMES_IN_FLIGHT;
 }
 
-const std::vector<vk::Semaphore>* ScrapEngine::VulkanSemaphoresManager::getImageAvailableSemaphoresVector()
+const std::vector<vk::Semaphore>* ScrapEngine::Render::VulkanSemaphoresManager::
+get_image_available_semaphores_vector() const
 {
-	return &imageAvailableSemaphores;
+	return &image_available_semaphores_;
 }
 
-const std::vector<vk::Semaphore>* ScrapEngine::VulkanSemaphoresManager::getRenderFinishedSemaphoresVector()
+const std::vector<vk::Semaphore>* ScrapEngine::Render::VulkanSemaphoresManager::
+get_render_finished_semaphores_vector() const
 {
-	return &renderFinishedSemaphores;
+	return &render_finished_semaphores_;
 }
 
-const std::vector<vk::Fence>* ScrapEngine::VulkanSemaphoresManager::getInFlightFencesVector()
+const std::vector<vk::Fence>* ScrapEngine::Render::VulkanSemaphoresManager::get_in_flight_fences_vector() const
 {
-	return &inFlightFences;
+	return &in_flight_fences_;
 }

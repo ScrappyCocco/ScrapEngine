@@ -1,23 +1,40 @@
-#include "VulkanCommandPool.h"
+#include <Engine/Rendering/Command/VulkanCommandPool.h>
 
 #include <stdexcept>
+#include <Engine/Rendering/Device/VulkanDevice.h>
 
-ScrapEngine::VulkanCommandPool::VulkanCommandPool(GraphicsQueue::QueueFamilyIndices queueFamilyIndices, vk::Device* input_deviceRef)
-	: deviceRef(input_deviceRef)
+//Init static instance reference
+
+ScrapEngine::Render::VulkanCommandPool* ScrapEngine::Render::VulkanCommandPool::instance_ = nullptr;
+
+//Class
+
+void ScrapEngine::Render::VulkanCommandPool::init(const BaseQueue::QueueFamilyIndices queue_family_indices)
 {
-	vk::CommandPoolCreateInfo poolInfo(vk::CommandPoolCreateFlags(), queueFamilyIndices.graphicsFamily);
+	vk::CommandPoolCreateInfo pool_info(vk::CommandPoolCreateFlags(), queue_family_indices.graphics_family);
 
-	if (deviceRef->createCommandPool(&poolInfo, nullptr, &commandPool) != vk::Result::eSuccess) {
+	if (VulkanDevice::get_instance()->get_logical_device()->createCommandPool(&pool_info, nullptr, &command_pool_)
+		!= vk::Result::eSuccess)
+	{
 		throw std::runtime_error("VulkanCommandPool: Failed to create command pool!");
 	}
 }
 
-ScrapEngine::VulkanCommandPool::~VulkanCommandPool()
+ScrapEngine::Render::VulkanCommandPool::~VulkanCommandPool()
 {
-	deviceRef->destroyCommandPool(commandPool);
+	VulkanDevice::get_instance()->get_logical_device()->destroyCommandPool(command_pool_);
 }
 
-vk::CommandPool* ScrapEngine::VulkanCommandPool::getCommandPool()
+ScrapEngine::Render::VulkanCommandPool* ScrapEngine::Render::VulkanCommandPool::get_instance()
 {
-	return &commandPool;
+	if (instance_ == nullptr)
+	{
+		instance_ = new VulkanCommandPool();
+	}
+	return instance_;
+}
+
+vk::CommandPool* ScrapEngine::Render::VulkanCommandPool::get_command_pool()
+{
+	return &command_pool_;
 }

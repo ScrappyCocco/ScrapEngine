@@ -1,33 +1,49 @@
 #pragma once
 
 #include <vulkan/vulkan.hpp>
-#include "../ValidationLayers/VulkanValidationLayers.h"
+#include <Engine/Rendering/ValidationLayers/VulkanValidationLayers.h>
 #include <string>
 #include <vector>
 
-namespace ScrapEngine {
-
-	class VukanInstance
+namespace ScrapEngine
+{
+	namespace Render
 	{
-	private:
-		vk::Instance instance; //Vulkan Instance of the engine - connection between the application and the Vulkan library
+		class VukanInstance
+		{
+		private:
+			//Singleton static instance
+			static VukanInstance* instance_;
 
-		//Reference to ValidationLayersManager that display vulkan warning/errors
-		ScrapEngine::VulkanValidationLayers* ValidationLayersManager = nullptr;
-	public:
-		VukanInstance(std::string app_name, int app_version, std::string engine_name = "No Engine", int engine_version = 1);
+			/**
+			 * \brief Vulkan Instance of the engine - connection between the application and the Vulkan library
+			 */
+			vk::Instance vulkan_instance_;
 
-		//Destroy the Vulkan Instance
-		~VukanInstance(); 
+			//Reference to ValidationLayersManager that display vulkan warning/errors
+			VulkanValidationLayers* validation_layers_manager_ = nullptr;
 
-		//Create the Vulkan Instance with the given data
-		void createVulkanInstance(std::string app_name, int app_version, std::string engine_name = "No Engine", int engine_version = 1);
+			//The constructor is private because this class is a Singleton
+			VukanInstance() = default;
+		public:
+			//Method used to init the class with parameters because the constructor is private
+			void init(const std::string& app_name, int app_version, const std::string& engine_name = "ScrapEngine",
+			          int engine_version = 1);
 
-		//Return the current Vulkan Instance (if created)
-		vk::Instance* getVulkanInstance();
-	private:
-		std::vector<const char*> getRequiredExtensions();
-	};
+			//Destroy the Vulkan Instance
+			~VukanInstance();
 
+			//Singleton static function to get or create a class instance
+			static VukanInstance* get_instance();
+
+			//Create the Vulkan Instance with the given data
+			void create_vulkan_instance(std::string app_name, int app_version, std::string engine_name = "ScrapEngine",
+			                            int engine_version = 1);
+
+			//Return the current Vulkan Instance (if created)
+			vk::Instance* get_vulkan_instance();
+		private:
+			std::vector<const char*> get_required_extensions() const;
+		};
+	}
 }
-
