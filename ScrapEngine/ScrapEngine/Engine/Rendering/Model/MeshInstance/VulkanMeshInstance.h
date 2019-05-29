@@ -6,7 +6,7 @@
 #include <Engine/Rendering/Buffer/BufferContainer/VertexBufferContainer/VertexBufferContainer.h>
 #include <Engine/Rendering/Buffer/BufferContainer/IndicesBufferContainer/IndicesBufferContainer.h>
 #include <Engine/Rendering/Model/Material/SimpleMaterial/SimpleMaterial.h>
-#include "Engine/LogicCore/Math/Transform/STransform.h"
+#include <Engine/LogicCore/Math/Transform/STransform.h>
 
 namespace ScrapEngine
 {
