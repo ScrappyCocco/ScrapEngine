@@ -19,6 +19,16 @@ ScrapEngine::Core::SVector3::SVector3(const float x, const float y, const float 
 
 ScrapEngine::Core::SVector3 ScrapEngine::Core::SVector3::operator+(const SVector3& other) const
 {
+	return SVector3(vec3_ + other.vec3_);
+}
+
+ScrapEngine::Core::SVector3 ScrapEngine::Core::SVector3::operator-(const SVector3& other) const
+{
+	return SVector3(vec3_ - other.vec3_);
+}
+
+ScrapEngine::Core::SVector3 ScrapEngine::Core::SVector3::operator*(const SVector3& other) const
+{
 	return SVector3(vec3_ * other.vec3_);
 }
 
@@ -27,13 +37,14 @@ ScrapEngine::Core::SVector3 ScrapEngine::Core::SVector3::operator*(const float v
 	return SVector3(vec3_ * value);
 }
 
+ScrapEngine::Core::SVector3::operator glm::vec3() const
+{
+	return vec3_;
+}
+
 ScrapEngine::Core::SVector3 ScrapEngine::Core::SVector3::operator^(const SVector3& other) const
 {
-	return {
-		vec3_.y * other.vec3_.z - vec3_.z * other.vec3_.y,
-		vec3_.z * other.vec3_.x - vec3_.x * other.vec3_.z,
-		vec3_.x * other.vec3_.y - vec3_.y * other.vec3_.x
-	};
+	return SVector3(cross(vec3_, other.vec3_));
 }
 
 float ScrapEngine::Core::SVector3::get_x() const
@@ -71,11 +82,6 @@ ScrapEngine::Core::SVector3 ScrapEngine::Core::SVector3::get_vector() const
 	return {*this};
 }
 
-glm::vec3 ScrapEngine::Core::SVector3::get_wrapped_vector() const
-{
-	return vec3_;
-}
-
 void ScrapEngine::Core::SVector3::set_vector(const SVector3& other)
 {
 	vec3_ = glm::vec3(other.vec3_.x, other.vec3_.y, other.vec3_.z);
@@ -99,4 +105,9 @@ float ScrapEngine::Core::SVector3::distance(const SVector3& other) const
 ScrapEngine::Core::SVector3 ScrapEngine::Core::SVector3::cross_product(const SVector3& a, const SVector3& b)
 {
 	return a ^ b;
+}
+
+glm::vec3 ScrapEngine::Core::SVector3::get_glm_vector() const
+{
+	return vec3_;
 }

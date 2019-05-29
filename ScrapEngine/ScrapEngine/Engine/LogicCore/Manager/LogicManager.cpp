@@ -9,7 +9,7 @@ ScrapEngine::Core::LogicManager::~LogicManager()
 }
 
 ScrapEngine::Core::SGameObject* ScrapEngine::Core::LogicManager::register_game_object(
-	Core::SGameObject* input_game_object)
+	SGameObject* input_game_object)
 {
 	registered_game_objects_.push_back(input_game_object);
 	return registered_game_objects_.back();
@@ -35,7 +35,7 @@ void ScrapEngine::Core::LogicManager::execute_game_objects_start_event()
 	}
 }
 
-void ScrapEngine::Core::LogicManager::execute_game_objects_update_event(float time)
+void ScrapEngine::Core::LogicManager::execute_game_objects_update_event(const float time)
 {
 	for (SGameObject* game_object : registered_game_objects_)
 	{

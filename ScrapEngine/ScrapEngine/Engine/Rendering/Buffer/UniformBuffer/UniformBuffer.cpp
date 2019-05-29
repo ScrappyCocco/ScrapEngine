@@ -40,25 +40,25 @@ ScrapEngine::Render::UniformBuffer::~UniformBuffer()
 }
 
 void ScrapEngine::Render::UniformBuffer::update_uniform_buffer(const uint32_t& current_image,
-                                                               const ScrapEngine::Transform& object_transform,
-                                                               ScrapEngine::Render::Camera* render_camera)
+                                                               const Core::STransform& object_transform,
+                                                               Camera* render_camera)
 {
 	UniformBufferObject ubo = {};
 
-	ubo.model = glm::translate(glm::mat4(1.0f), object_transform.location);
-	ubo.model = glm::scale(ubo.model, object_transform.scale);
+	ubo.model = translate(glm::mat4(1.0f), object_transform.get_position().get_glm_vector());
+	ubo.model = scale(ubo.model, object_transform.get_scale().get_glm_vector());
 
-	ubo.model = glm::rotate(ubo.model, glm::radians(object_transform.rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
-	ubo.model = glm::rotate(ubo.model, glm::radians(object_transform.rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
-	ubo.model = glm::rotate(ubo.model, glm::radians(object_transform.rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
+	ubo.model = rotate(ubo.model, glm::radians(object_transform.get_rotation().get_x()), glm::vec3(1.0f, 0.0f, 0.0f));
+	ubo.model = rotate(ubo.model, glm::radians(object_transform.get_rotation().get_y()), glm::vec3(0.0f, 1.0f, 0.0f));
+	ubo.model = rotate(ubo.model, glm::radians(object_transform.get_rotation().get_z()), glm::vec3(0.0f, 0.0f, 1.0f));
 
 	ubo.proj = glm::perspective(glm::radians(45.0f),
 	                            swap_chain_extent_.width / static_cast<float>(swap_chain_extent_.height),
 	                            render_camera->get_camera_min_draw_distance(),
 	                            render_camera->get_camera_max_draw_distance());
-	ubo.view = glm::lookAt(render_camera->get_camera_location(),
-	                       render_camera->get_camera_location() + render_camera->get_camera_front(),
-	                       render_camera->get_camera_up());
+	ubo.view = lookAt(render_camera->get_camera_location().get_glm_vector(),
+	                       (render_camera->get_camera_location() + render_camera->get_camera_front()).get_glm_vector(),
+	                       render_camera->get_camera_up().get_glm_vector());
 	ubo.proj[1][1] *= -1; //Invert image for openGL style
 
 	memcpy(mapped_memory_[current_image], &ubo, sizeof(ubo));

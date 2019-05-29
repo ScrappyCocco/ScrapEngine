@@ -2,7 +2,7 @@
 #include <algorithm>
 
 ScrapEngine::Core::SGameObject::SGameObject(const std::string& object_name,
-                                            const ScrapEngine::Transform& input_object_transform,
+                                            const STransform& input_object_transform,
                                             const bool is_static_object) :
 	SObject(object_name), object_transform_(input_object_transform), is_static_(is_static_object)
 {
@@ -26,9 +26,9 @@ void ScrapEngine::Core::SGameObject::game_update(float time)
 	//This will be defined by the user when is necessary, otherwise it will have no effect
 }
 
-void ScrapEngine::Core::SGameObject::set_object_location(const glm::vec3& location, const bool should_update_relative)
+void ScrapEngine::Core::SGameObject::set_object_location(const SVector3& location, const bool should_update_relative)
 {
-	object_transform_.location = location;
+	object_transform_.set_position(location);
 	//Check if i should update the relative values
 	if (should_update_relative)
 	{
@@ -47,9 +47,9 @@ void ScrapEngine::Core::SGameObject::set_object_location(const glm::vec3& locati
 	}
 }
 
-void ScrapEngine::Core::SGameObject::set_object_rotation(const glm::vec3& rotation, const bool should_update_relative)
+void ScrapEngine::Core::SGameObject::set_object_rotation(const SVector3& rotation, const bool should_update_relative)
 {
-	object_transform_.rotation = rotation;
+	object_transform_.set_rotation(rotation);
 	//Check if i should update the relative values
 	if (should_update_relative)
 	{
@@ -68,9 +68,9 @@ void ScrapEngine::Core::SGameObject::set_object_rotation(const glm::vec3& rotati
 	}
 }
 
-void ScrapEngine::Core::SGameObject::set_object_scale(const glm::vec3& scale, const bool should_update_relative)
+void ScrapEngine::Core::SGameObject::set_object_scale(const SVector3& scale, const bool should_update_relative)
 {
-	object_transform_.scale = scale;
+	object_transform_.set_scale(scale);
 	//Check if i should update the relative values
 	if (should_update_relative)
 	{
@@ -89,19 +89,19 @@ void ScrapEngine::Core::SGameObject::set_object_scale(const glm::vec3& scale, co
 	}
 }
 
-glm::vec3 ScrapEngine::Core::SGameObject::get_object_location() const
+ScrapEngine::Core::SVector3 ScrapEngine::Core::SGameObject::get_object_location() const
 {
-	return object_transform_.location;
+	return object_transform_.get_position();
 }
 
-glm::vec3 ScrapEngine::Core::SGameObject::get_object_rotation() const
+ScrapEngine::Core::SVector3 ScrapEngine::Core::SGameObject::get_object_rotation() const
 {
-	return object_transform_.rotation;
+	return object_transform_.get_rotation();
 }
 
-glm::vec3 ScrapEngine::Core::SGameObject::get_object_scale() const
+ScrapEngine::Core::SVector3 ScrapEngine::Core::SGameObject::get_object_scale() const
 {
-	return object_transform_.scale;
+	return object_transform_.get_scale();
 }
 
 void ScrapEngine::Core::SGameObject::update_relative_transform()
@@ -109,9 +109,9 @@ void ScrapEngine::Core::SGameObject::update_relative_transform()
 	//Check that the father_object_ exists
 	if (father_object_)
 	{
-		object_relative_transform_.location = object_transform_.location - father_object_->object_transform_.location;
-		object_relative_transform_.rotation = object_transform_.rotation - father_object_->object_transform_.rotation;
-		object_relative_transform_.scale = object_transform_.scale - father_object_->object_transform_.scale;
+		object_relative_transform_.set_position(object_transform_.get_position() - father_object_->object_transform_.get_position());
+		object_relative_transform_.set_rotation(object_transform_.get_rotation() - father_object_->object_transform_.get_rotation());
+		object_relative_transform_.set_scale(object_transform_.get_scale() - father_object_->object_transform_.get_scale());
 	}
 }
 
@@ -123,30 +123,30 @@ void ScrapEngine::Core::SGameObject::update_object_location()
 
 	const glm::vec3 pos = glm::vec3(full_m[3][0], full_m[3][1], full_m[3][2]);
 
-	set_object_location(pos, false);
+	set_object_location(SVector3(pos), false);
 }
 
 void ScrapEngine::Core::SGameObject::update_object_rotation()
 {
-	object_transform_.rotation = father_object_->object_transform_.rotation + object_relative_transform_.rotation;
+	object_transform_.set_rotation(father_object_->object_transform_.get_rotation() + object_relative_transform_.get_rotation());
 
 	//Update location and rotation
 	update_object_location();
-	set_object_rotation(object_transform_.rotation, false);
+	set_object_rotation(object_transform_.get_rotation(), false);
 }
 
 void ScrapEngine::Core::SGameObject::update_object_scale()
 {
-	object_transform_.scale = father_object_->object_transform_.scale + object_relative_transform_.scale;
+	object_transform_.set_scale(father_object_->object_transform_.get_scale() + object_relative_transform_.get_scale());
 }
 
 void ScrapEngine::Core::SGameObject::add_component(SComponent* component)
 {
 	object_components_.push_back(component);
 	//Set component default values same as object
-	component->set_component_location(object_transform_.location);
-	component->set_component_rotation(object_transform_.rotation);
-	component->set_component_scale(object_transform_.scale);
+	component->set_component_location(object_transform_.get_position());
+	component->set_component_rotation(object_transform_.get_rotation());
+	component->set_component_scale(object_transform_.get_scale());
 }
 
 void ScrapEngine::Core::SGameObject::remove_component(SComponent* component)

@@ -14,7 +14,7 @@ namespace ScrapEngine
 		private:
 			int tex_width_, tex_height_, tex_channels_;
 
-			ScrapEngine::Render::BaseStagingBuffer* staginf_buffer_ref_ = nullptr;
+			BaseStagingBuffer* staginf_buffer_ref_ = nullptr;
 
 		public:
 			StandardTexture(const std::string& file_path, bool should_copy_from_staging = true);
@@ -28,7 +28,7 @@ namespace ScrapEngine
 			void transition_image_layout(vk::Image* image, const vk::Format& format, const vk::ImageLayout& old_layout,
 			                             const vk::ImageLayout& new_layout) const;
 
-			ScrapEngine::Render::BaseStagingBuffer* get_texture_staging_buffer() const override;
+			BaseStagingBuffer* get_texture_staging_buffer() const override;
 			int get_texture_width() const override;
 			int get_texture_height() const override;
 			int get_texture_channels() const;

@@ -26,7 +26,7 @@ ScrapEngine::Render::VulkanModel::VulkanModel(const std::string& input_model_pat
 	Debug::DebugLog::print_to_console_log("[VulkanModel] Number of meshes to load:" + std::to_string(scene->mNumMeshes));
 	for (unsigned int k = 0; k < scene->mNumMeshes; k++) {
 		//MESH VECTORS
-		std::vector<ScrapEngine::Vertex> mesh_vertices;
+		std::vector<Vertex> mesh_vertices;
 		std::vector<uint32_t> mesh_indices;
 		//LOADING VERTICES
 		Debug::DebugLog::print_to_console_log("[VulkanModel] Mesh " + std::to_string(k) + " - Loading vertices...");

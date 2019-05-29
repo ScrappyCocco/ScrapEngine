@@ -11,7 +11,7 @@ ScrapEngine::Render::SimpleMaterial::~SimpleMaterial()
 
 void ScrapEngine::Render::SimpleMaterial::create_pipeline(const std::string& vertex_shader_path,
                                                           const std::string& fragment_shader_path,
-                                                          ScrapEngine::Render::VulkanSwapChain* swap_chain)
+                                                          VulkanSwapChain* swap_chain)
 {
 	vulkan_render_graphics_pipeline_ = VulkanSimpleMaterialPool::get_instance()->get_pipeline(
 		vertex_shader_path,
@@ -27,8 +27,8 @@ void ScrapEngine::Render::SimpleMaterial::create_texture(const std::string& text
 	vulkan_texture_sampler_ = VulkanSimpleMaterialPool::get_instance()->get_texture_sampler(texture_path);
 }
 
-void ScrapEngine::Render::SimpleMaterial::create_descriptor_sets(ScrapEngine::Render::VulkanSwapChain* swap_chain,
-                                                                 ScrapEngine::Render::UniformBuffer* uniform_buffer)
+void ScrapEngine::Render::SimpleMaterial::create_descriptor_sets(VulkanSwapChain* swap_chain,
+                                                                 UniformBuffer* uniform_buffer)
 {
 	vulkan_render_descriptor_pool_ = new VulkanDescriptorPool(swap_chain->get_swap_chain_images_vector());
 	Debug::DebugLog::print_to_console_log("VulkanDescriptorPool created");

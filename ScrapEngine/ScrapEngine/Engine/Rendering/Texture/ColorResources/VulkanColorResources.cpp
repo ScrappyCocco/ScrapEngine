@@ -4,21 +4,22 @@
 #include <Engine/Rendering/Device/VulkanDevice.h>
 
 ScrapEngine::Render::VulkanColorResources::VulkanColorResources(vk::SampleCountFlagBits msaa_samples,
-                                                                ScrapEngine::Render::VulkanSwapChain* swap_chain_ref)
+                                                                VulkanSwapChain* swap_chain_ref)
 {
 	const vk::Format color_format = swap_chain_ref->get_swap_chain_image_format();
 
-	ScrapEngine::Render::BaseTexture::create_image(swap_chain_ref->get_swap_chain_extent().width,
-	                                               swap_chain_ref->get_swap_chain_extent().height, color_format,
-	                                               vk::ImageTiling::eOptimal,
-	                                               vk::ImageUsageFlagBits::eTransientAttachment | vk::ImageUsageFlagBits
-	                                               ::eColorAttachment, vk::MemoryPropertyFlagBits::eDeviceLocal,
-	                                               color_image_, color_image_memory_, 1, msaa_samples);
-	color_image_view_ = ScrapEngine::Render::TextureImageView::create_image_view(
+	BaseTexture::create_image(swap_chain_ref->get_swap_chain_extent().width,
+	                          swap_chain_ref->get_swap_chain_extent().height, color_format,
+	                          vk::ImageTiling::eOptimal,
+	                          vk::ImageUsageFlagBits::eTransientAttachment |
+	                          vk::ImageUsageFlagBits::eColorAttachment,
+	                          vk::MemoryPropertyFlagBits::eDeviceLocal,
+	                          color_image_, color_image_memory_, 1, msaa_samples);
+	color_image_view_ = TextureImageView::create_image_view(
 		&color_image_, color_format, vk::ImageAspectFlagBits::eColor, 1);
 
-	ScrapEngine::Render::BaseTexture::transition_image_layout(&color_image_, color_format, vk::ImageLayout::eUndefined,
-	                                                         vk::ImageLayout::eColorAttachmentOptimal, 1);
+	BaseTexture::transition_image_layout(&color_image_, color_format, vk::ImageLayout::eUndefined,
+	                                     vk::ImageLayout::eColorAttachmentOptimal, 1);
 }
 
 

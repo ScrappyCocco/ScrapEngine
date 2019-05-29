@@ -12,7 +12,7 @@ namespace ScrapEngine
 		class SkyboxTexture : public BaseTexture
 		{
 		private:
-			std::vector<ScrapEngine::Render::BaseTexture*> images_;
+			std::vector<BaseTexture*> images_;
 
 			int cube_image_size;
 		public:

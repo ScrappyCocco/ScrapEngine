@@ -1,7 +1,7 @@
 #include <Engine/Rendering/Manager/RenderManagerView.h>
 
 ScrapEngine::Render::RenderManagerView::
-RenderManagerView(ScrapEngine::Render::RenderManager* input_render_manager_ref)
+RenderManagerView(RenderManager* input_render_manager_ref)
 	: render_manager_ref_(input_render_manager_ref)
 {
 }
@@ -21,7 +21,7 @@ ScrapEngine::Render::Camera* ScrapEngine::Render::RenderManagerView::get_current
 	return render_manager_ref_->get_render_camera();
 }
 
-void ScrapEngine::Render::RenderManagerView::set_render_camera(ScrapEngine::Render::Camera* newCamera) const
+void ScrapEngine::Render::RenderManagerView::set_render_camera(Camera* newCamera) const
 {
 	render_manager_ref_->set_render_camera(newCamera);
 }

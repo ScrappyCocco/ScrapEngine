@@ -6,7 +6,7 @@ ScrapEngine::Render::VulkanSurface* ScrapEngine::Render::VulkanSurface::instance
 
 //Class
 
-void ScrapEngine::Render::VulkanSurface::init(ScrapEngine::Render::GameWindow* window_ref)
+void ScrapEngine::Render::VulkanSurface::init(GameWindow* window_ref)
 {
 	create_surface(window_ref);
 }
@@ -25,7 +25,7 @@ ScrapEngine::Render::VulkanSurface* ScrapEngine::Render::VulkanSurface::get_inst
 	return instance_;
 }
 
-void ScrapEngine::Render::VulkanSurface::create_surface(ScrapEngine::Render::GameWindow* window_ref)
+void ScrapEngine::Render::VulkanSurface::create_surface(GameWindow* window_ref)
 {
 	surface_ = vk::SurfaceKHR();
 	if (glfwCreateWindowSurface(*VukanInstance::get_instance()->get_vulkan_instance(), window_ref->window_, nullptr,

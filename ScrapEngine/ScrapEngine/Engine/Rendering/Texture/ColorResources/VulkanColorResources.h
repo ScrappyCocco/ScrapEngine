@@ -15,7 +15,7 @@ namespace ScrapEngine
 			vk::ImageView color_image_view_;
 		public:
 			VulkanColorResources(vk::SampleCountFlagBits msaa_samples,
-			                     ScrapEngine::Render::VulkanSwapChain* swap_chain_ref);
+			                     VulkanSwapChain* swap_chain_ref);
 			~VulkanColorResources();
 
 			vk::Image* get_color_image();

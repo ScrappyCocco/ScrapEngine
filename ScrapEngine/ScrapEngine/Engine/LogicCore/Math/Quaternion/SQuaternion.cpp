@@ -65,3 +65,8 @@ ScrapEngine::Core::SVector3 ScrapEngine::Core::SQuaternion::get_up_vector() cons
 {
 	return get_axis_z();
 }
+
+glm::quat ScrapEngine::Core::SQuaternion::get_glm_quat() const
+{
+	return quat_;
+}

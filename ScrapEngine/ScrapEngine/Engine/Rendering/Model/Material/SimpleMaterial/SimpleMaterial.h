@@ -14,21 +14,21 @@ namespace ScrapEngine
 		class SimpleMaterial : public BasicMaterial
 		{
 		private:
-			std::shared_ptr<ScrapEngine::Render::BaseTexture> vulkan_texture_image_ = nullptr;
-			std::shared_ptr<ScrapEngine::Render::TextureImageView> vulkan_texture_image_view_ = nullptr;
-			std::shared_ptr<ScrapEngine::Render::TextureSampler> vulkan_texture_sampler_ = nullptr;
-			ScrapEngine::Render::VulkanDescriptorPool* vulkan_render_descriptor_pool_ = nullptr;
+			std::shared_ptr<BaseTexture> vulkan_texture_image_ = nullptr;
+			std::shared_ptr<TextureImageView> vulkan_texture_image_view_ = nullptr;
+			std::shared_ptr<TextureSampler> vulkan_texture_sampler_ = nullptr;
+			VulkanDescriptorPool* vulkan_render_descriptor_pool_ = nullptr;
 		public:
 			SimpleMaterial() = default;
 			~SimpleMaterial();
 
 			void create_pipeline(const std::string& vertex_shader_path, const std::string& fragment_shader_path,
-			                     ScrapEngine::Render::VulkanSwapChain* swap_chain);
+			                     VulkanSwapChain* swap_chain);
 
 			void create_texture(const std::string& texture_path);
 
-			void create_descriptor_sets(ScrapEngine::Render::VulkanSwapChain* swap_chain,
-			                            ScrapEngine::Render::UniformBuffer* uniform_buffer);
+			void create_descriptor_sets(VulkanSwapChain* swap_chain,
+			                            UniformBuffer* uniform_buffer);
 		};
 	}
 }

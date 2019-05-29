@@ -34,7 +34,7 @@ namespace ScrapEngine
 
 			void close_window() const;
 
-			ScrapEngine::Input::InputManager* create_window_input_manager() const;
+			Input::InputManager* create_window_input_manager() const;
 
 			bool check_window_should_close() const;
 		};

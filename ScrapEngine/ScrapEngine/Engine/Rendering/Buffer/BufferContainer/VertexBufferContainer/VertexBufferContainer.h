@@ -11,12 +11,12 @@ namespace ScrapEngine
 		class VertexBufferContainer : public BufferContainer
 		{
 		private:
-			const std::vector<ScrapEngine::Vertex>* vertices_;
+			const std::vector<Vertex>* vertices_;
 		public:
-			VertexBufferContainer(vk::Buffer* input_buffer, const std::vector<ScrapEngine::Vertex>* input_vertices);
+			VertexBufferContainer(vk::Buffer* input_buffer, const std::vector<Vertex>* input_vertices);
 			~VertexBufferContainer() = default;
 
-			const std::vector<ScrapEngine::Vertex>* get_vector() const;
+			const std::vector<Vertex>* get_vector() const;
 		};
 	}
 }

@@ -2,7 +2,7 @@
 #include <Engine/Rendering/Texture/TextureImageView/TextureImageView.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
 
-ScrapEngine::Render::VulkanImageView::VulkanImageView(ScrapEngine::Render::VulkanSwapChain* swap_chain_ref)
+ScrapEngine::Render::VulkanImageView::VulkanImageView(VulkanSwapChain* swap_chain_ref)
 {
 	const std::vector<vk::Image>* swap_chain_images = swap_chain_ref->get_swap_chain_images_vector();
 	swap_chain_image_views_.resize(swap_chain_images->size());

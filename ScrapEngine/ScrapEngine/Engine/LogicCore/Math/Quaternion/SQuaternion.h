@@ -31,6 +31,8 @@ namespace ScrapEngine
 			SVector3 get_forward_vector() const;
 			SVector3 get_right_vector() const;
 			SVector3 get_up_vector() const;
+
+			glm::quat get_glm_quat() const;
 		};
 	}
 }

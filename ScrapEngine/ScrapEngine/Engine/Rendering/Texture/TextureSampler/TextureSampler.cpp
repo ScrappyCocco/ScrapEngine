@@ -46,7 +46,7 @@ ScrapEngine::Render::TextureSampler::TextureSampler(const uint32_t& mip_levels, 
 
 ScrapEngine::Render::TextureSampler::~TextureSampler()
 {
-	ScrapEngine::Render::VulkanDevice::get_instance()->get_logical_device()->destroySampler(texture_sampler_);
+	VulkanDevice::get_instance()->get_logical_device()->destroySampler(texture_sampler_);
 }
 
 vk::Sampler* ScrapEngine::Render::TextureSampler::get_texture_sampler()

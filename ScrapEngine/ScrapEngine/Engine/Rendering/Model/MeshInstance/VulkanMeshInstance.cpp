@@ -7,7 +7,7 @@ ScrapEngine::Render::VulkanMeshInstance::VulkanMeshInstance(const std::string& v
                                                             const std::string& fragment_shader_path,
                                                             const std::string& model_path,
                                                             const std::vector<std::string>& textures_path,
-                                                            ScrapEngine::Render::VulkanSwapChain* swap_chain)
+                                                            VulkanSwapChain* swap_chain)
 {
 	//CREATE UNIFORM BUFFER
 	vulkan_render_uniform_buffer_ = new UniformBuffer(swap_chain->get_swap_chain_images_vector(),
@@ -42,38 +42,38 @@ ScrapEngine::Render::VulkanMeshInstance::~VulkanMeshInstance()
 	delete vulkan_render_uniform_buffer_;
 }
 
-void ScrapEngine::Render::VulkanMeshInstance::set_mesh_location(const glm::vec3& location)
+void ScrapEngine::Render::VulkanMeshInstance::set_mesh_location(const Core::SVector3& location)
 {
-	object_location_.location = location;
+	object_location_.set_position(location);
 }
 
-void ScrapEngine::Render::VulkanMeshInstance::set_mesh_rotation(const glm::vec3& rotation)
+void ScrapEngine::Render::VulkanMeshInstance::set_mesh_rotation(const Core::SVector3& rotation)
 {
-	object_location_.rotation = rotation;
+	object_location_.set_rotation(rotation);
 }
 
-void ScrapEngine::Render::VulkanMeshInstance::set_mesh_scale(const glm::vec3& scale)
+void ScrapEngine::Render::VulkanMeshInstance::set_mesh_scale(const Core::SVector3& scale)
 {
-	object_location_.scale = scale;
+	object_location_.set_scale(scale);
 }
 
-glm::vec3 ScrapEngine::Render::VulkanMeshInstance::get_mesh_location() const
+ScrapEngine::Core::SVector3 ScrapEngine::Render::VulkanMeshInstance::get_mesh_location() const
 {
-	return object_location_.location;
+	return object_location_.get_position();
 }
 
-glm::vec3 ScrapEngine::Render::VulkanMeshInstance::get_mesh_rotation() const
+ScrapEngine::Core::SVector3 ScrapEngine::Render::VulkanMeshInstance::get_mesh_rotation() const
 {
-	return object_location_.rotation;
+	return object_location_.get_rotation();
 }
 
-glm::vec3 ScrapEngine::Render::VulkanMeshInstance::get_mesh_scale() const
+ScrapEngine::Core::SVector3 ScrapEngine::Render::VulkanMeshInstance::get_mesh_scale() const
 {
-	return object_location_.scale;
+	return object_location_.get_scale();
 }
 
 void ScrapEngine::Render::VulkanMeshInstance::update_uniform_buffer(const uint32_t& current_image,
-                                                                    ScrapEngine::Render::Camera* render_camera) const
+                                                                    Camera* render_camera) const
 {
 	vulkan_render_uniform_buffer_->update_uniform_buffer(current_image, object_location_, render_camera);
 }

@@ -12,18 +12,18 @@ namespace ScrapEngine
 		class LogicManagerView
 		{
 		private:
-			ScrapEngine::Core::LogicManager* logic_manager_ref_;
-			ScrapEngine::Core::ComponentsManager* component_manager_;
-			ScrapEngine::Core::SceneManager* scene_manager_;
+			LogicManager* logic_manager_ref_;
+			ComponentsManager* component_manager_;
+			SceneManager* scene_manager_;
 		public:
-			LogicManagerView(ScrapEngine::Render::RenderManager* input_render_manager_ref,
-			                 ScrapEngine::Core::LogicManager* input_logic_manager_ref);
+			LogicManagerView(Render::RenderManager* input_render_manager_ref,
+			                 LogicManager* input_logic_manager_ref);
 			~LogicManagerView();
 
-			Core::SGameObject* register_game_object(Core::SGameObject* input_game_object) const;
-			void un_register_game_object(Core::SGameObject* input_game_object) const;
-			ScrapEngine::Core::ComponentsManager* get_components_manager() const;
-			ScrapEngine::Core::SceneManager* get_scene_manager() const;
+			SGameObject* register_game_object(SGameObject* input_game_object) const;
+			void un_register_game_object(SGameObject* input_game_object) const;
+			ComponentsManager* get_components_manager() const;
+			SceneManager* get_scene_manager() const;
 		};
 	}
 }

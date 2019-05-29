@@ -11,19 +11,19 @@ namespace ScrapEngine
 		class ComponentsManager
 		{
 		private:
-			ScrapEngine::Render::RenderManager* render_manager_ref_;
+			Render::RenderManager* render_manager_ref_;
 
-			std::map<ScrapEngine::Core::MeshComponent*, ScrapEngine::Render::VulkanMeshInstance*> loaded_meshes_;
+			std::map<MeshComponent*, Render::VulkanMeshInstance*> loaded_meshes_;
 		public:
-			explicit ComponentsManager(ScrapEngine::Render::RenderManager* input_render_manager_ref);
+			explicit ComponentsManager(Render::RenderManager* input_render_manager_ref);
 			~ComponentsManager() = default;
 
 			//MeshStuff
-			ScrapEngine::Core::MeshComponent* create_new_mesh_component(const std::string& vertex_shader_path,
-			                                                            const std::string& fragment_shader_path,
-			                                                            const std::string& model_path,
-			                                                            const std::vector<std::string>& textures_path);
-			void destroy_mesh_component(ScrapEngine::Core::MeshComponent* component_to_destroy);
+			MeshComponent* create_new_mesh_component(const std::string& vertex_shader_path,
+			                                         const std::string& fragment_shader_path,
+			                                         const std::string& model_path,
+			                                         const std::vector<std::string>& textures_path);
+			void destroy_mesh_component(MeshComponent* component_to_destroy);
 		};
 	}
 }

@@ -9,13 +9,13 @@ namespace ScrapEngine
 		class LogicManager
 		{
 		private:
-			std::vector<Core::SGameObject*> registered_game_objects_;
+			std::vector<SGameObject*> registered_game_objects_;
 		public:
 			LogicManager() = default;
 			~LogicManager();
 
-			Core::SGameObject* register_game_object(Core::SGameObject* input_game_object);
-			void un_register_game_object(Core::SGameObject* input_game_object);
+			SGameObject* register_game_object(SGameObject* input_game_object);
+			void un_register_game_object(SGameObject* input_game_object);
 			void execute_game_objects_start_event();
 			void execute_game_objects_update_event(float time);
 		};

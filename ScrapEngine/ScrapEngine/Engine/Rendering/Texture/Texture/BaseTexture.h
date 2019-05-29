@@ -35,7 +35,7 @@ namespace ScrapEngine
 			vk::DeviceMemory* get_texture_image_memory();
 			uint32_t get_mip_levels() const;
 
-			virtual ScrapEngine::Render::BaseStagingBuffer* get_texture_staging_buffer() const;
+			virtual BaseStagingBuffer* get_texture_staging_buffer() const;
 			virtual int get_texture_width() const = 0;
 			virtual int get_texture_height() const = 0;
 		};

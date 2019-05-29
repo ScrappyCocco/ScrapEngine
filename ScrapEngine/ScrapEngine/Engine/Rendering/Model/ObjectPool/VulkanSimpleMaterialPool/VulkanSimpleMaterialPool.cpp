@@ -22,7 +22,7 @@ ScrapEngine::Render::VulkanSimpleMaterialPool* ScrapEngine::Render::VulkanSimple
 
 std::shared_ptr<ScrapEngine::Render::BaseVulkanGraphicsPipeline> ScrapEngine::Render::VulkanSimpleMaterialPool::
 get_pipeline(const std::string& vertex_shader_path, const std::string& fragment_shader_path,
-             ScrapEngine::Render::VulkanSwapChain* swap_chain,
+            VulkanSwapChain* swap_chain,
              vk::DescriptorSetLayout* descriptor_set_layout)
 {
 	const std::string key_string = vertex_shader_path + fragment_shader_path;
@@ -59,7 +59,7 @@ std::shared_ptr<ScrapEngine::Render::TextureSampler> ScrapEngine::Render::Vulkan
 	if (texture_sampler_pool_.find(texture_path) == texture_sampler_pool_.end())
 	{
 		// Texture not found, create it
-		const std::shared_ptr<ScrapEngine::Render::BaseTexture> texture = get_standard_texture(texture_path);
+		const std::shared_ptr<BaseTexture> texture = get_standard_texture(texture_path);
 		texture_sampler_pool_[texture_path] = std::make_shared<TextureSampler>(texture->get_mip_levels());
 		Debug::DebugLog::print_to_console_log("[VulkanSimpleMaterialPool] Texture Sampler loaded and created");
 	}
@@ -72,7 +72,7 @@ get_texture_image_view(const std::string& texture_path)
 	if (texture_image_view_pool_.find(texture_path) == texture_image_view_pool_.end())
 	{
 		// Texture not found, create it
-		const std::shared_ptr<ScrapEngine::Render::BaseTexture> texture = get_standard_texture(texture_path);
+		const std::shared_ptr<BaseTexture> texture = get_standard_texture(texture_path);
 		texture_image_view_pool_[texture_path] = std::make_shared<TextureImageView>(
 			texture->get_texture_image(),
 			texture->get_mip_levels());
