@@ -58,10 +58,10 @@ namespace ScrapEngine
 			const std::vector<vk::Semaphore>* render_finished_semaphores_ref_;
 			const std::vector<vk::Fence>* in_flight_fences_ref_;
 		public:
-			RenderManager(const ScrapEngine::game_base_info* received_base_game_info);
+			RenderManager(const game_base_info* received_base_game_info);
 			~RenderManager();
 		private:
-			auto initialize_vulkan(const ScrapEngine::game_base_info* received_base_game_info) -> void;
+			auto initialize_vulkan(const game_base_info* received_base_game_info) -> void;
 
 			void create_queues();
 			void delete_queues() const;

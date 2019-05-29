@@ -41,7 +41,7 @@ void ScrapEngine::Core::SComponent::update_component_location()
 	const glm::mat4 father_m = generate_unscaled_transform_matrix(father_transform_);
 	glm::mat4 full_m = father_m * local_m;
 
-	glm::vec3 pos = glm::vec3(full_m[3][0], full_m[3][1], full_m[3][2]);
+	const glm::vec3 pos = glm::vec3(full_m[3][0], full_m[3][1], full_m[3][2]);
 
 	object_world_transform_.set_position(SVector3(pos));
 }

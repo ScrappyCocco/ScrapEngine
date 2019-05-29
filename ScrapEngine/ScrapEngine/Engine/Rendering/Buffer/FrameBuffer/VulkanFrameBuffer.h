@@ -14,7 +14,7 @@ namespace ScrapEngine
 		private:
 			std::vector<vk::Framebuffer> swap_chain_framebuffers_;
 		public:
-			VulkanFrameBuffer(ScrapEngine::Render::VulkanImageView* input_image_view_ref,
+			VulkanFrameBuffer(VulkanImageView* input_image_view_ref,
 			                  const vk::Extent2D* input_swap_chain_extent,
 			                  vk::ImageView* depth_image_view, vk::ImageView* color_image_view);
 			~VulkanFrameBuffer();

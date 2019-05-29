@@ -10,8 +10,8 @@ namespace ScrapEngine
 		class BasicMaterial
 		{
 		protected:
-			std::shared_ptr<ScrapEngine::Render::BaseVulkanGraphicsPipeline> vulkan_render_graphics_pipeline_ = nullptr;
-			ScrapEngine::Render::VulkanDescriptorSet* vulkan_render_descriptor_set_ = nullptr;
+			std::shared_ptr<BaseVulkanGraphicsPipeline> vulkan_render_graphics_pipeline_ = nullptr;
+			VulkanDescriptorSet* vulkan_render_descriptor_set_ = nullptr;
 		public:
 			BasicMaterial();
 			virtual ~BasicMaterial() = 0;
@@ -20,7 +20,7 @@ namespace ScrapEngine
 
 			std::shared_ptr<BaseVulkanGraphicsPipeline> get_vulkan_render_graphics_pipeline() const;
 
-			ScrapEngine::Render::VulkanDescriptorSet* get_vulkan_render_descriptor_set() const;
+			VulkanDescriptorSet* get_vulkan_render_descriptor_set() const;
 		};
 	}
 }

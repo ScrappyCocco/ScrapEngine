@@ -21,10 +21,10 @@ namespace ScrapEngine
 
 			~VulkanCommandBuffer();
 
-			void init_command_buffer(ScrapEngine::Render::VulkanFrameBuffer* swap_chain_frame_buffer,
+			void init_command_buffer(VulkanFrameBuffer* swap_chain_frame_buffer,
 			                         vk::Extent2D* input_swap_chain_extent_ref);
-			void load_skybox(ScrapEngine::Render::VulkanSkyboxInstance* skybox_ref);
-			void load_mesh(const ScrapEngine::Render::VulkanMeshInstance* mesh);
+			void load_skybox(VulkanSkyboxInstance* skybox_ref);
+			void load_mesh(const VulkanMeshInstance* mesh);
 			void close_command_buffer();
 
 			void free_command_buffers();

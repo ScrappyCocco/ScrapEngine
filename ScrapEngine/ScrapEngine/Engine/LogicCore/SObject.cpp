@@ -16,7 +16,7 @@ glm::mat4 ScrapEngine::Core::SObject::generate_transform_matrix(const STransform
 	return transf;
 }
 
-glm::mat4 ScrapEngine::Core::SObject::generate_unscaled_transform_matrix(const ScrapEngine::Core::STransform& transform) const
+glm::mat4 ScrapEngine::Core::SObject::generate_unscaled_transform_matrix(const STransform& transform) const
 {
 	glm::mat4 transf(1.0f);
 

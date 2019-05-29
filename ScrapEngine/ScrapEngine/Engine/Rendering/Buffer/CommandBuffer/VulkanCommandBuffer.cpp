@@ -10,7 +10,7 @@ ScrapEngine::Render::VulkanCommandBuffer::~VulkanCommandBuffer()
 }
 
 void ScrapEngine::Render::VulkanCommandBuffer::init_command_buffer(
-	ScrapEngine::Render::VulkanFrameBuffer* swap_chain_frame_buffer,
+	VulkanFrameBuffer* swap_chain_frame_buffer,
 	vk::Extent2D* input_swap_chain_extent_ref)
 {
 	Debug::DebugLog::print_to_console_log("[VulkanCommandBuffer] Initializing...");
@@ -57,7 +57,7 @@ void ScrapEngine::Render::VulkanCommandBuffer::init_command_buffer(
 	Debug::DebugLog::print_to_console_log("[VulkanCommandBuffer] Command Buffer successfully initialized");
 }
 
-void ScrapEngine::Render::VulkanCommandBuffer::load_skybox(ScrapEngine::Render::VulkanSkyboxInstance* skybox_ref)
+void ScrapEngine::Render::VulkanCommandBuffer::load_skybox(VulkanSkyboxInstance* skybox_ref)
 {
 	vk::DeviceSize offsets[] = {0};
 	for (size_t i = 0; i < command_buffers_.size(); i++)
@@ -66,7 +66,7 @@ void ScrapEngine::Render::VulkanCommandBuffer::load_skybox(ScrapEngine::Render::
 		                                 *skybox_ref->get_skybox_material()->
 		                                              get_vulkan_render_graphics_pipeline()->
 		                                              get_graphics_pipeline());
-		const std::pair<ScrapEngine::Render::VertexBufferContainer*, ScrapEngine::Render::IndicesBufferContainer*>*
+		const std::pair<VertexBufferContainer*, IndicesBufferContainer*>*
 			skybox_pair = skybox_ref->get_mesh_buffers();
 		vk::Buffer buff[] = {*skybox_pair->first->get_buffer()};
 		command_buffers_[i].bindVertexBuffers(0, 1, buff, offsets);
@@ -86,7 +86,7 @@ void ScrapEngine::Render::VulkanCommandBuffer::load_skybox(ScrapEngine::Render::
 	}
 }
 
-void ScrapEngine::Render::VulkanCommandBuffer::load_mesh(const ScrapEngine::Render::VulkanMeshInstance* mesh)
+void ScrapEngine::Render::VulkanCommandBuffer::load_mesh(const VulkanMeshInstance* mesh)
 {
 	vk::DeviceSize offsets[] = {0};
 	for (size_t i = 0; i < command_buffers_.size(); i++)

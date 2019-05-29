@@ -35,7 +35,7 @@ void ScrapEngine::Core::LogicManager::execute_game_objects_start_event()
 	}
 }
 
-void ScrapEngine::Core::LogicManager::execute_game_objects_update_event(float time)
+void ScrapEngine::Core::LogicManager::execute_game_objects_update_event(const float time)
 {
 	for (SGameObject* game_object : registered_game_objects_)
 	{

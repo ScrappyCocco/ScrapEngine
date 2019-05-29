@@ -36,7 +36,7 @@ vk::ImageView ScrapEngine::Render::TextureImageView::create_image_view(vk::Image
 	);
 
 	vk::ImageView image_view;
-	if (ScrapEngine::Render::VulkanDevice::get_instance()->get_logical_device()->createImageView(
+	if (VulkanDevice::get_instance()->get_logical_device()->createImageView(
 			&view_info, nullptr, &image_view) !=
 		vk::Result::eSuccess)
 	{
@@ -61,7 +61,7 @@ vk::ImageView ScrapEngine::Render::TextureImageView::create_cube_map_image_view(
 	);
 
 	vk::ImageView image_view;
-	if (Render::VulkanDevice::get_instance()->get_logical_device()->createImageView(&view_info, nullptr, &image_view)
+	if (VulkanDevice::get_instance()->get_logical_device()->createImageView(&view_info, nullptr, &image_view)
 		!= vk::Result::eSuccess)
 	{
 		throw std::runtime_error("TextureImageView: Failed to create texture image view!");
