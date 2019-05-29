@@ -15,9 +15,9 @@ namespace ScrapEngine
 			explicit MeshComponent(Render::VulkanMeshInstance* input_vulkan_mesh);
 			~MeshComponent() = default;
 
-			void set_component_location(const glm::vec3& location) override;
-			void set_component_rotation(const glm::vec3& rotation) override;
-			void set_component_scale(const glm::vec3& scale) override;
+			void set_component_location(const ScrapEngine::Core::SVector3& location) override;
+			void set_component_rotation(const ScrapEngine::Core::SVector3& rotation) override;
+			void set_component_scale(const ScrapEngine::Core::SVector3& scale) override;
 
 			//Call the standard implementation, then update vulkan_mesh_ values
 			void update_component_location() override;

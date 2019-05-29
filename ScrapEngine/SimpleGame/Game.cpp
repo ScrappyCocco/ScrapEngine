@@ -34,7 +34,7 @@ int main() {
 		//Create the first game object
 		TestGameObject* FirstGameObject = new TestGameObject(ComponentManagerRef);
 		ScrapEngineManager->logic_manager_view->register_game_object(FirstGameObject);
-		FirstGameObject->set_object_location(glm::vec3(0, 10, 0));
+		FirstGameObject->set_object_location(ScrapEngine::Core::SVector3(0, 10, 0));
 		AnotherTestGameObject* SecondGameObject = new AnotherTestGameObject(ComponentManagerRef);
 		ScrapEngineManager->logic_manager_view->register_game_object(SecondGameObject);
 		FirstGameObject->add_child(SecondGameObject);

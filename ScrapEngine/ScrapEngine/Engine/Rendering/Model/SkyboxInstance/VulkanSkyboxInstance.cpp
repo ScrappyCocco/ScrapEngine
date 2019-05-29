@@ -28,8 +28,8 @@ ScrapEngine::Render::VulkanSkyboxInstance::VulkanSkyboxInstance(const std::strin
 		throw std::runtime_error("Cannot use a cubemap with a model containing more than one mesh!");
 	}
 	mesh_buffers_ = VulkanModelBuffersPool::get_instance()->get_model_buffers(model_path, vulkan_render_model_);
-	skybox_transform_.location = glm::vec3(0, 0, 0);
-	skybox_transform_.scale = glm::vec3(50, 50, 50);
+	skybox_transform_.set_position(Core::SVector3());
+	skybox_transform_.set_scale(Core::SVector3(50, 50, 50));
 }
 
 ScrapEngine::Render::VulkanSkyboxInstance::~VulkanSkyboxInstance()
@@ -46,12 +46,12 @@ void ScrapEngine::Render::VulkanSkyboxInstance::update_uniform_buffer(const uint
 
 int ScrapEngine::Render::VulkanSkyboxInstance::get_cubemap_size() const
 {
-	return static_cast<int>(skybox_transform_.scale.x);
+	return static_cast<int>(skybox_transform_.get_scale().get_x());
 }
 
 void ScrapEngine::Render::VulkanSkyboxInstance::set_cubemap_size(unsigned int new_size)
 {
-	skybox_transform_.scale = glm::vec3(new_size, new_size, new_size);
+	skybox_transform_.set_scale(Core::SVector3(new_size, new_size, new_size));
 }
 
 ScrapEngine::Render::UniformBuffer* ScrapEngine::Render::VulkanSkyboxInstance::get_vulkan_render_uniform_buffer() const

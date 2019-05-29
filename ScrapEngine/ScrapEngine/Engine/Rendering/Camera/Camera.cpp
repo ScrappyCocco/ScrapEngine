@@ -2,8 +2,8 @@
 #include <glm/detail/func_trigonometric.inl>
 #include <glm/detail/func_geometric.inl>
 
-ScrapEngine::Render::Camera::Camera(glm::vec3 input_camera_location, float input_min_draw_distance,
-                                    float input_max_draw_distance) : camera_location_(input_camera_location)
+ScrapEngine::Render::Camera::Camera(float input_min_draw_distance, float input_max_draw_distance)
+	: camera_location_(Core::SVector3(0.f, 0.f, 1.f))
 {
 	min_draw_distance_ = input_min_draw_distance;
 	max_draw_distance_ = input_max_draw_distance;
@@ -12,7 +12,7 @@ ScrapEngine::Render::Camera::Camera(glm::vec3 input_camera_location, float input
 	pitch_ = 0.0f;
 }
 
-void ScrapEngine::Render::Camera::set_camera_location(const glm::vec3& new_camera_location)
+void ScrapEngine::Render::Camera::set_camera_location(const Core::SVector3& new_camera_location)
 {
 	camera_location_ = new_camera_location;
 }
@@ -87,17 +87,17 @@ float ScrapEngine::Render::Camera::get_camera_max_draw_distance() const
 	return max_draw_distance_;
 }
 
-glm::vec3 ScrapEngine::Render::Camera::get_camera_front() const
+ScrapEngine::Core::SVector3 ScrapEngine::Render::Camera::get_camera_front() const
 {
-	return camera_front_;
+	return Core::SVector3(camera_front_);
 }
 
-glm::vec3 ScrapEngine::Render::Camera::get_camera_up() const
+ScrapEngine::Core::SVector3 ScrapEngine::Render::Camera::get_camera_up() const
 {
-	return camera_up_;
+	return Core::SVector3(camera_up_);
 }
 
-glm::vec3 ScrapEngine::Render::Camera::get_camera_location() const
+ScrapEngine::Core::SVector3 ScrapEngine::Render::Camera::get_camera_location() const
 {
 	return camera_location_;
 }

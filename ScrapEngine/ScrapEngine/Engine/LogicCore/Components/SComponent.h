@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Engine/LogicCore/SObject.h>
-#include <glm/vec3.hpp>
+#include <Engine/LogicCore/Math/Transform/STransform.h>
 
 namespace ScrapEngine
 {
@@ -10,17 +10,17 @@ namespace ScrapEngine
 		class SComponent : public Core::SObject
 		{
 		private:
-			ScrapEngine::Transform father_transform_;
+			ScrapEngine::Core::STransform father_transform_;
 		protected:
-			ScrapEngine::Transform object_relative_transform_;
-			ScrapEngine::Transform object_world_transform_;
+			ScrapEngine::Core::STransform object_relative_transform_;
+			ScrapEngine::Core::STransform object_world_transform_;
 		public:
 			explicit SComponent(const std::string& component_name);
 			virtual ~SComponent() = 0;
 
-			virtual void set_component_location(const glm::vec3& location);
-			virtual void set_component_rotation(const glm::vec3& rotation);
-			virtual void set_component_scale(const glm::vec3& scale);
+			virtual void set_component_location(const ScrapEngine::Core::SVector3& location);
+			virtual void set_component_rotation(const ScrapEngine::Core::SVector3& rotation);
+			virtual void set_component_scale(const ScrapEngine::Core::SVector3& scale);
 
 			//Update the relative transform based on father_transform_
 			virtual void update_relative_transform();
@@ -29,15 +29,15 @@ namespace ScrapEngine
 			virtual void update_component_rotation();
 			virtual void update_component_scale();
 
-			void set_father_transform(const Transform& input_father_transform);
+			void set_father_transform(const STransform& input_father_transform);
 
-			virtual glm::vec3 get_component_location() const;
-			virtual glm::vec3 get_component_rotation() const;
-			virtual glm::vec3 get_component_scale() const;
+			virtual ScrapEngine::Core::SVector3 get_component_location() const;
+			virtual ScrapEngine::Core::SVector3 get_component_rotation() const;
+			virtual ScrapEngine::Core::SVector3 get_component_scale() const;
 
-			glm::vec3 get_component_relative_location() const;
-			glm::vec3 get_component_relative_rotation() const;
-			glm::vec3 get_component_relative_scale() const;
+			ScrapEngine::Core::SVector3 get_component_relative_location() const;
+			ScrapEngine::Core::SVector3 get_component_relative_rotation() const;
+			ScrapEngine::Core::SVector3 get_component_relative_scale() const;
 		};
 	}
 }

@@ -20,7 +20,11 @@ namespace ScrapEngine
 			~SVector3() = default;
 
 			SVector3 operator+(const SVector3& other) const;
+			SVector3 operator-(const SVector3& other) const;
+			SVector3 operator*(const SVector3& other) const;
 			SVector3 operator*(float value) const;
+			//explicit conversion operator to glm::vec3
+			explicit operator glm::vec3() const;
 			/**
 			 * Calculate cross product between this and another vector.
 			 */
@@ -33,7 +37,7 @@ namespace ScrapEngine
 			void set_y(float y);
 			void set_z(float z);
 			SVector3 get_vector() const;
-			glm::vec3 get_wrapped_vector() const;
+			glm::vec3 get_glm_vector() const;
 			void set_vector(const SVector3& other);
 
 			SVector3 normalize() const;
