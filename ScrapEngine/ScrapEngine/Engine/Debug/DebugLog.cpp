@@ -3,9 +3,9 @@
 #include <chrono>
 #include <string>
 
-void ScrapEngine::Debug::DebugLog::print_to_console_log(const std::string& logString)
+void ScrapEngine::Debug::DebugLog::print_to_console_log(const std::string& log_string)
 {
-	std::cout << now_to_string().c_str() << logString.c_str() << std::endl;
+	std::cout << now_to_string().c_str() << log_string.c_str() << std::endl;
 }
 
 void ScrapEngine::Debug::DebugLog::print_to_console_log(const glm::vec3& vector)

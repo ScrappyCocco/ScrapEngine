@@ -2,7 +2,7 @@
 #include <algorithm>
 #include <Engine/Rendering/Device/VulkanDevice.h>
 
-ScrapEngine::Render::VulkanSwapChain::VulkanSwapChain(const SwapChainSupportDetails swap_chain_support,
+ScrapEngine::Render::VulkanSwapChain::VulkanSwapChain(const SwapChainSupportDetails& swap_chain_support,
                                                       const BaseQueue::QueueFamilyIndices indices,
                                                       vk::SurfaceKHR* input_surface_ref, const uint32_t& width,
                                                       const uint32_t& height, const bool vsync)

@@ -9,10 +9,9 @@ namespace ScrapEngine
 		{
 		private:
 			glm::vec3 vec3_{};
-
-			explicit SVector3(glm::vec3 input);
 		public:
 			SVector3();
+			explicit SVector3(glm::vec3 input);
 			SVector3(float x, float y, float z);
 			SVector3(const SVector3& other) = default;
 			SVector3& operator=(const SVector3& other) = default;

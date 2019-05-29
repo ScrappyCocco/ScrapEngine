@@ -119,9 +119,9 @@ void ScrapEngine::Core::SGameObject::update_object_location()
 {
 	const glm::mat4 local_m = generate_unscaled_transform_matrix(object_relative_transform_);
 	const glm::mat4 father_m = generate_unscaled_transform_matrix(father_object_->object_transform_);
-	glm::mat4 full_m = father_m * local_m;
+	const glm::mat4 full_m = father_m * local_m;
 
-	glm::vec3 pos = glm::vec3(full_m[3][0], full_m[3][1], full_m[3][2]);
+	const glm::vec3 pos = glm::vec3(full_m[3][0], full_m[3][1], full_m[3][2]);
 
 	set_object_location(pos, false);
 }
