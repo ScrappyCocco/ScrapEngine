@@ -19,7 +19,7 @@ ScrapEngine::Core::SVector3::SVector3(const float x, const float y, const float 
 
 ScrapEngine::Core::SVector3 ScrapEngine::Core::SVector3::operator+(const SVector3& other) const
 {
-	return SVector3(vec3_ * other.vec3_);
+	return SVector3(vec3_ + other.vec3_);
 }
 
 ScrapEngine::Core::SVector3 ScrapEngine::Core::SVector3::operator-(const SVector3& other) const
