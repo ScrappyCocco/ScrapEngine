@@ -54,7 +54,7 @@ void ScrapEngine::Render::Camera::update_camera_vectors()
 	front.x = cos(glm::radians(yaw_)) * cos(glm::radians(pitch_));
 	front.y = sin(glm::radians(pitch_));
 	front.z = sin(glm::radians(yaw_)) * cos(glm::radians(-pitch_));
-	camera_front_ = glm::normalize(front);
+	camera_front_ = normalize(front);
 }
 
 void ScrapEngine::Render::Camera::set_mouse_sensivity(float new_sensivity)

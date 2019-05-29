@@ -73,7 +73,7 @@ void ScrapEngine::Render::GameWindow::close_window() const
 
 ScrapEngine::Input::InputManager* ScrapEngine::Render::GameWindow::create_window_input_manager() const
 {
-	return new ScrapEngine::Input::InputManager(window_);
+	return new Input::InputManager(window_);
 }
 
 bool ScrapEngine::Render::GameWindow::check_window_should_close() const

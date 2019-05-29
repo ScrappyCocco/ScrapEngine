@@ -8,19 +8,19 @@ namespace ScrapEngine
 {
 	namespace Core
 	{
-		class SGameObject : public Core::SObject
+		class SGameObject : public SObject
 		{
 		private:
-			ScrapEngine::Core::STransform object_transform_;
-			ScrapEngine::Core::STransform object_relative_transform_;
+			STransform object_transform_;
+			STransform object_relative_transform_;
 			bool is_static_ = false;
 
-			std::vector<ScrapEngine::Core::SComponent*> object_components_;
-			std::vector<ScrapEngine::Core::SGameObject*> object_child_;
-			ScrapEngine::Core::SGameObject* father_object_ = nullptr;
+			std::vector<SComponent*> object_components_;
+			std::vector<SGameObject*> object_child_;
+			SGameObject* father_object_ = nullptr;
 		public:
 			explicit SGameObject(const std::string& object_name,
-			                     const ScrapEngine::Core::STransform& input_object_transform = STransform(),
+			                     const STransform& input_object_transform = STransform(),
 			                     bool is_static_object = false);
 			~SGameObject() = 0;
 
@@ -48,7 +48,7 @@ namespace ScrapEngine
 
 			void add_child(SGameObject* game_object);
 			void remove_child(SGameObject* game_object);
-			const std::vector<ScrapEngine::Core::SGameObject*>* get_child() const;
+			const std::vector<SGameObject*>* get_child() const;
 		};
 	}
 }

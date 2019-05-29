@@ -133,7 +133,7 @@ bool ScrapEngine::Render::VulkanDevice::is_device_suitable(vk::PhysicalDevice* p
 	bool swap_chain_adequate = false;
 	if (extensions_supported)
 	{
-		ScrapEngine::Render::VulkanSwapChain::SwapChainSupportDetails swap_chain_support = query_swap_chain_support(
+		VulkanSwapChain::SwapChainSupportDetails swap_chain_support = query_swap_chain_support(
 			physical_device_input);
 		swap_chain_adequate = !swap_chain_support.formats.empty() && !swap_chain_support.present_modes.empty();
 	}
@@ -164,7 +164,7 @@ bool ScrapEngine::Render::VulkanDevice::check_device_extension_support(vk::Physi
 ScrapEngine::Render::VulkanSwapChain::SwapChainSupportDetails ScrapEngine::Render::VulkanDevice::
 query_swap_chain_support(vk::PhysicalDevice* physical_device_input) const
 {
-	ScrapEngine::Render::VulkanSwapChain::SwapChainSupportDetails details;
+	VulkanSwapChain::SwapChainSupportDetails details;
 
 	physical_device_input->getSurfaceCapabilitiesKHR(*vulkan_surface_ref_, &details.capabilities);
 

@@ -38,7 +38,7 @@ void ScrapEngine::Manager::EngineManager::initialize_engine()
 	Debug::DebugLog::print_to_console_log("---initializeEngine() completed---");
 }
 
-void ScrapEngine::Manager::EngineManager::initialize_render_manager(const ScrapEngine::game_base_info* game_info)
+void ScrapEngine::Manager::EngineManager::initialize_render_manager(const game_base_info* game_info)
 {
 	scrap_render_manager_ = new Render::RenderManager(game_info);
 }
@@ -50,15 +50,15 @@ void ScrapEngine::Manager::EngineManager::initialize_logic_manager()
 
 void ScrapEngine::Manager::EngineManager::initialize_views()
 {
-	render_manager_view = new ScrapEngine::Render::RenderManagerView(scrap_render_manager_);
-	logic_manager_view = new ScrapEngine::Core::LogicManagerView(scrap_render_manager_, scrap_logic_manager_);
+	render_manager_view = new Render::RenderManagerView(scrap_render_manager_);
+	logic_manager_view = new Core::LogicManagerView(scrap_render_manager_, scrap_logic_manager_);
 }
 
 void ScrapEngine::Manager::EngineManager::main_game_loop() const
 {
 	Debug::DebugLog::print_to_console_log("---mainGameLoop() started---");
 	std::chrono::time_point<std::chrono::steady_clock> startTime, currentTime;
-	const ScrapEngine::Render::GameWindow* window_ref = scrap_render_manager_->get_game_window();
+	const Render::GameWindow* window_ref = scrap_render_manager_->get_game_window();
 	while (!window_ref->check_window_should_close())
 	{
 		const float time = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - startTime).count();

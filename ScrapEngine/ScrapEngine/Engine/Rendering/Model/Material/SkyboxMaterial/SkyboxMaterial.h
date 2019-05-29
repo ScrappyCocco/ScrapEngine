@@ -14,21 +14,21 @@ namespace ScrapEngine
 		class SkyboxMaterial : public BasicMaterial
 		{
 		private:
-			ScrapEngine::Render::BaseTexture* skybox_texture_ = nullptr;
-			ScrapEngine::Render::TextureImageView* vulkan_texture_image_view_ = nullptr;
-			ScrapEngine::Render::TextureSampler* vulkan_texture_sampler_ = nullptr;
-			ScrapEngine::Render::VulkanDescriptorPool* vulkan_render_descriptor_pool_ = nullptr;
+			BaseTexture* skybox_texture_ = nullptr;
+			TextureImageView* vulkan_texture_image_view_ = nullptr;
+			TextureSampler* vulkan_texture_sampler_ = nullptr;
+			VulkanDescriptorPool* vulkan_render_descriptor_pool_ = nullptr;
 		public:
 			SkyboxMaterial() = default;
 			~SkyboxMaterial();
 
 			void create_pipeline(const std::string& vertex_shader_path, const std::string& fragment_shader_path,
-			                     ScrapEngine::Render::VulkanSwapChain* swap_chain);
+			                     VulkanSwapChain* swap_chain);
 
 			void create_skybox_texture(const std::array<std::string, 6>& textures_path);
 
-			void create_descriptor_sets(ScrapEngine::Render::VulkanSwapChain* swap_chain,
-			                            ScrapEngine::Render::UniformBuffer* uniform_buffer);
+			void create_descriptor_sets(VulkanSwapChain* swap_chain,
+			                            UniformBuffer* uniform_buffer);
 		};
 	}
 }

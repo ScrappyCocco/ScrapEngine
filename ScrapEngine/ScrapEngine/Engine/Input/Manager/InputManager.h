@@ -75,18 +75,18 @@ namespace ScrapEngine
 			InputManager& operator=(InputManager&&) = delete;
 			~InputManager();
 
-			Input::mouse_location get_last_mouse_location() const;
-			void set_cursor_input_mode(Input::cursor_mode new_mode) const;
+			mouse_location get_last_mouse_location() const;
+			void set_cursor_input_mode(cursor_mode new_mode) const;
 
 			void load_new_cursor(const std::string& path_to_file, int xhot = 0, int yhot = 0);
-			void load_system_cursor(const Input::system_cursor_shapes& new_shape);
+			void load_system_cursor(const system_cursor_shapes& new_shape);
 			void reset_cursor_to_system_default();
 
-			Input::button_state get_keyboard_key_status(int key_to_check) const;
+			button_state get_keyboard_key_status(int key_to_check) const;
 			bool get_keyboard_key_pressed(int key_to_check) const;
 			bool get_keyboard_key_released(int key_to_check) const;
 
-			Input::button_state get_mouse_button_status(int button_to_check) const;
+			button_state get_mouse_button_status(int button_to_check) const;
 			bool get_mouse_button_pressed(int button_to_check) const;
 			bool get_mouse_button_released(int button_to_check) const;
 

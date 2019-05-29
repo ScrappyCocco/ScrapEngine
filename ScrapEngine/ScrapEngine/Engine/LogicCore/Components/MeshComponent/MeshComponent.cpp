@@ -5,19 +5,19 @@ ScrapEngine::Core::MeshComponent::MeshComponent(Render::VulkanMeshInstance* inpu
 {
 }
 
-void ScrapEngine::Core::MeshComponent::set_component_location(const ScrapEngine::Core::SVector3& location)
+void ScrapEngine::Core::MeshComponent::set_component_location(const SVector3& location)
 {
 	SComponent::set_component_location(location);
 	vulkan_mesh_->set_mesh_location(location);
 }
 
-void ScrapEngine::Core::MeshComponent::set_component_rotation(const ScrapEngine::Core::SVector3& rotation)
+void ScrapEngine::Core::MeshComponent::set_component_rotation(const SVector3& rotation)
 {
 	SComponent::set_component_rotation(rotation);
 	vulkan_mesh_->set_mesh_rotation(rotation);
 }
 
-void ScrapEngine::Core::MeshComponent::set_component_scale(const ScrapEngine::Core::SVector3& scale)
+void ScrapEngine::Core::MeshComponent::set_component_scale(const SVector3& scale)
 {
 	SComponent::set_component_scale(scale);
 	vulkan_mesh_->set_mesh_scale(scale);

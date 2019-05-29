@@ -14,7 +14,7 @@ ScrapEngine::Render::SkyboxMaterial::~SkyboxMaterial()
 
 void ScrapEngine::Render::SkyboxMaterial::create_pipeline(const std::string& vertex_shader_path,
                                                           const std::string& fragment_shader_path,
-                                                          ScrapEngine::Render::VulkanSwapChain* swap_chain)
+                                                          VulkanSwapChain* swap_chain)
 {
 	vulkan_render_graphics_pipeline_ = std::make_shared<SkyboxVulkanGraphicsPipeline>(vertex_shader_path.c_str(),
 	                                                                                  fragment_shader_path.c_str(),
@@ -29,7 +29,7 @@ void ScrapEngine::Render::SkyboxMaterial::create_pipeline(const std::string& ver
 
 void ScrapEngine::Render::SkyboxMaterial::create_skybox_texture(const std::array<std::string, 6>& textures_path)
 {
-	skybox_texture_ = new ScrapEngine::Render::SkyboxTexture(textures_path);
+	skybox_texture_ = new SkyboxTexture(textures_path);
 	Debug::DebugLog::print_to_console_log("SkyboxTexture created");
 	vulkan_texture_image_view_ = new TextureImageView(skybox_texture_->get_texture_image(),
 	                                                  skybox_texture_->get_mip_levels(), true, 6);
@@ -43,8 +43,8 @@ void ScrapEngine::Render::SkyboxMaterial::create_skybox_texture(const std::array
 	                                             vk::BorderColor::eFloatOpaqueWhite);
 }
 
-void ScrapEngine::Render::SkyboxMaterial::create_descriptor_sets(ScrapEngine::Render::VulkanSwapChain* swap_chain,
-                                                                 ScrapEngine::Render::UniformBuffer* uniform_buffer)
+void ScrapEngine::Render::SkyboxMaterial::create_descriptor_sets(VulkanSwapChain* swap_chain,
+                                                                 UniformBuffer* uniform_buffer)
 {
 	vulkan_render_descriptor_pool_ = new VulkanDescriptorPool(swap_chain->get_swap_chain_images_vector());
 	Debug::DebugLog::print_to_console_log("VulkanDescriptorPool created");

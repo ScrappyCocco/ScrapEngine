@@ -10,19 +10,19 @@ ScrapEngine::Core::SComponent::~SComponent()
 	//Empty here
 }
 
-void ScrapEngine::Core::SComponent::set_component_location(const ScrapEngine::Core::SVector3& location)
+void ScrapEngine::Core::SComponent::set_component_location(const SVector3& location)
 {
 	object_world_transform_.set_position(location);
 	object_relative_transform_.set_position(object_world_transform_.get_position() - father_transform_.get_position());
 }
 
-void ScrapEngine::Core::SComponent::set_component_rotation(const ScrapEngine::Core::SVector3& rotation)
+void ScrapEngine::Core::SComponent::set_component_rotation(const SVector3& rotation)
 {
 	object_world_transform_.set_rotation(rotation);
 	object_relative_transform_.set_rotation(object_world_transform_.get_rotation() - father_transform_.get_rotation());
 }
 
-void ScrapEngine::Core::SComponent::set_component_scale(const ScrapEngine::Core::SVector3& scale)
+void ScrapEngine::Core::SComponent::set_component_scale(const SVector3& scale)
 {
 	object_world_transform_.set_scale(scale);
 	object_relative_transform_.set_scale(object_world_transform_.get_scale() - father_transform_.get_scale());

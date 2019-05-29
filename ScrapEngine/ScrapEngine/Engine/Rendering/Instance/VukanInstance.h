@@ -21,7 +21,7 @@ namespace ScrapEngine
 			vk::Instance vulkan_instance_;
 
 			//Reference to ValidationLayersManager that display vulkan warning/errors
-			ScrapEngine::Render::VulkanValidationLayers* validation_layers_manager_ = nullptr;
+			VulkanValidationLayers* validation_layers_manager_ = nullptr;
 
 			//The constructor is private because this class is a Singleton
 			VukanInstance() = default;

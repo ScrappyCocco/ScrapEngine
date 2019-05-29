@@ -9,11 +9,11 @@ ScrapEngine::Render::SkyboxTexture::SkyboxTexture(const std::array<std::string, 
 	//-----------------------
 	// load images
 	//-----------------------
-	ScrapEngine::Debug::DebugLog::print_to_console_log("Start loading textures...");
+	Debug::DebugLog::print_to_console_log("Start loading textures...");
 
 	for (const std::string& file : files_path)
 	{
-		ScrapEngine::Debug::DebugLog::print_to_console_log("Loading skybox texture:" + file);
+		Debug::DebugLog::print_to_console_log("Loading skybox texture:" + file);
 		images_.push_back(new StandardTexture(file, false));
 		Debug::DebugLog::print_to_console_log("A skybox texture has loaded (" + file + ")");
 	}
@@ -85,19 +85,19 @@ ScrapEngine::Render::SkyboxTexture::SkyboxTexture(const std::array<std::string, 
 		buffer_copy_regions.push_back(region);
 	}
 
-	ScrapEngine::Render::BaseTexture::transition_image_layout(&texture_image_, vk::Format::eR8G8B8A8Unorm,
+	transition_image_layout(&texture_image_, vk::Format::eR8G8B8A8Unorm,
 	                                                          vk::ImageLayout::eUndefined,
 	                                                          vk::ImageLayout::eTransferDstOptimal, mip_levels_, 6);
 
 	for (unsigned int i = 0; i < buffer_copy_regions.size(); i++)
 	{
-		ScrapEngine::Render::ImageStagingBuffer::copy_buffer_to_image(
+		ImageStagingBuffer::copy_buffer_to_image(
 			images_[i]->get_texture_staging_buffer()->get_staging_buffer(), &texture_image_,
 			images_[i]->get_texture_width(),
 			images_[i]->get_texture_height(), &buffer_copy_regions[i], 1);
 	}
 
-	ScrapEngine::Render::BaseTexture::transition_image_layout(&texture_image_, vk::Format::eR8G8B8A8Unorm,
+	transition_image_layout(&texture_image_, vk::Format::eR8G8B8A8Unorm,
 	                                                          vk::ImageLayout::eTransferDstOptimal,
 	                                                          vk::ImageLayout::eShaderReadOnlyOptimal, mip_levels_, 6);
 
@@ -113,7 +113,7 @@ ScrapEngine::Render::SkyboxTexture::~SkyboxTexture()
 
 void ScrapEngine::Render::SkyboxTexture::delete_temporary_images()
 {
-	for (ScrapEngine::Render::BaseTexture* cube_single_image : images_)
+	for (BaseTexture* cube_single_image : images_)
 	{
 		delete cube_single_image;
 	}

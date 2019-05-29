@@ -7,20 +7,20 @@ namespace ScrapEngine
 {
 	namespace Core
 	{
-		class SComponent : public Core::SObject
+		class SComponent : public SObject
 		{
 		private:
-			ScrapEngine::Core::STransform father_transform_;
+			STransform father_transform_;
 		protected:
-			ScrapEngine::Core::STransform object_relative_transform_;
-			ScrapEngine::Core::STransform object_world_transform_;
+			STransform object_relative_transform_;
+			STransform object_world_transform_;
 		public:
 			explicit SComponent(const std::string& component_name);
 			virtual ~SComponent() = 0;
 
-			virtual void set_component_location(const ScrapEngine::Core::SVector3& location);
-			virtual void set_component_rotation(const ScrapEngine::Core::SVector3& rotation);
-			virtual void set_component_scale(const ScrapEngine::Core::SVector3& scale);
+			virtual void set_component_location(const SVector3& location);
+			virtual void set_component_rotation(const SVector3& rotation);
+			virtual void set_component_scale(const SVector3& scale);
 
 			//Update the relative transform based on father_transform_
 			virtual void update_relative_transform();
@@ -31,13 +31,13 @@ namespace ScrapEngine
 
 			void set_father_transform(const STransform& input_father_transform);
 
-			virtual ScrapEngine::Core::SVector3 get_component_location() const;
-			virtual ScrapEngine::Core::SVector3 get_component_rotation() const;
-			virtual ScrapEngine::Core::SVector3 get_component_scale() const;
+			virtual SVector3 get_component_location() const;
+			virtual SVector3 get_component_rotation() const;
+			virtual SVector3 get_component_scale() const;
 
-			ScrapEngine::Core::SVector3 get_component_relative_location() const;
-			ScrapEngine::Core::SVector3 get_component_relative_rotation() const;
-			ScrapEngine::Core::SVector3 get_component_relative_scale() const;
+			SVector3 get_component_relative_location() const;
+			SVector3 get_component_relative_rotation() const;
+			SVector3 get_component_relative_scale() const;
 		};
 	}
 }

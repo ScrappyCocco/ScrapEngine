@@ -7,7 +7,7 @@ ScrapEngine::Render::VulkanMeshInstance::VulkanMeshInstance(const std::string& v
                                                             const std::string& fragment_shader_path,
                                                             const std::string& model_path,
                                                             const std::vector<std::string>& textures_path,
-                                                            ScrapEngine::Render::VulkanSwapChain* swap_chain)
+                                                            VulkanSwapChain* swap_chain)
 {
 	//CREATE UNIFORM BUFFER
 	vulkan_render_uniform_buffer_ = new UniformBuffer(swap_chain->get_swap_chain_images_vector(),
@@ -73,7 +73,7 @@ ScrapEngine::Core::SVector3 ScrapEngine::Render::VulkanMeshInstance::get_mesh_sc
 }
 
 void ScrapEngine::Render::VulkanMeshInstance::update_uniform_buffer(const uint32_t& current_image,
-                                                                    ScrapEngine::Render::Camera* render_camera) const
+                                                                    Camera* render_camera) const
 {
 	vulkan_render_uniform_buffer_->update_uniform_buffer(current_image, object_location_, render_camera);
 }

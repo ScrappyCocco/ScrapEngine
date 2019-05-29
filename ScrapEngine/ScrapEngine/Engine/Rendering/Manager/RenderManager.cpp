@@ -7,9 +7,9 @@
 #include <Engine/Rendering/Model/ObjectPool/VulkanSimpleMaterialPool/VulkanSimpleMaterialPool.h>
 
 
-ScrapEngine::Render::RenderManager::RenderManager(const ScrapEngine::game_base_info* received_base_game_info)
+ScrapEngine::Render::RenderManager::RenderManager(const game_base_info* received_base_game_info)
 {
-	game_window_ = new ScrapEngine::Render::GameWindow(received_base_game_info->window_width,
+	game_window_ = new GameWindow(received_base_game_info->window_width,
 	                                                   received_base_game_info->window_height,
 	                                                   received_base_game_info->app_name);
 	Debug::DebugLog::print_to_console_log("GameWindow created");
@@ -86,12 +86,12 @@ ScrapEngine::Render::Camera* ScrapEngine::Render::RenderManager::get_default_ren
 	return default_camera_;
 }
 
-void ScrapEngine::Render::RenderManager::set_render_camera(ScrapEngine::Render::Camera* new_camera)
+void ScrapEngine::Render::RenderManager::set_render_camera(Camera* new_camera)
 {
 	render_camera_ = new_camera;
 }
 
-void ScrapEngine::Render::RenderManager::initialize_vulkan(const ScrapEngine::game_base_info* received_base_game_info)
+void ScrapEngine::Render::RenderManager::initialize_vulkan(const game_base_info* received_base_game_info)
 {
 	Debug::DebugLog::print_to_console_log("---initializeVulkan()---");
 	vulkan_instance_ = VukanInstance::get_instance();
@@ -195,7 +195,7 @@ ScrapEngine::Render::VulkanMeshInstance* ScrapEngine::Render::RenderManager::loa
 	                 "../assets/shader/compiled_shaders/shader_base.frag.spv", model_path, textures_path);
 }
 
-void ScrapEngine::Render::RenderManager::unload_mesh(ScrapEngine::Render::VulkanMeshInstance* mesh_to_unload)
+void ScrapEngine::Render::RenderManager::unload_mesh(VulkanMeshInstance* mesh_to_unload)
 {
 	const std::vector<VulkanMeshInstance*>::iterator element = find(loaded_models_.begin(), loaded_models_.end(),
 	                                                                mesh_to_unload);

@@ -2,7 +2,7 @@
 #include <algorithm>
 
 ScrapEngine::Core::SGameObject::SGameObject(const std::string& object_name,
-                                            const ScrapEngine::Core::STransform& input_object_transform,
+                                            const STransform& input_object_transform,
                                             const bool is_static_object) :
 	SObject(object_name), object_transform_(input_object_transform), is_static_(is_static_object)
 {

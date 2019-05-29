@@ -10,10 +10,10 @@ namespace ScrapEngine
 		class SceneManager
 		{
 		private:
-			ScrapEngine::Render::RenderManager* render_manager_ref_;
-			ScrapEngine::Render::VulkanSkyboxInstance* current_skybox_;
+			Render::RenderManager* render_manager_ref_;
+			Render::VulkanSkyboxInstance* current_skybox_;
 		public:
-			explicit SceneManager(ScrapEngine::Render::RenderManager* input_render_manager_ref);
+			explicit SceneManager(Render::RenderManager* input_render_manager_ref);
 			~SceneManager() = default;
 
 			void set_skybox(const std::array<std::string, 6>& files_path);

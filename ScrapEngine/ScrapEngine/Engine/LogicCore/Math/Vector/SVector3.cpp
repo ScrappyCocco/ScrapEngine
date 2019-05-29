@@ -44,7 +44,7 @@ ScrapEngine::Core::SVector3::operator glm::vec3() const
 
 ScrapEngine::Core::SVector3 ScrapEngine::Core::SVector3::operator^(const SVector3& other) const
 {
-	return SVector3(glm::cross(vec3_, other.vec3_));
+	return SVector3(cross(vec3_, other.vec3_));
 }
 
 float ScrapEngine::Core::SVector3::get_x() const
