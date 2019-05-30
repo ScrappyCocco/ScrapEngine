@@ -16,3 +16,6 @@
 [submodule "external/VulkanSDK/Vulkan-Headers"]
 	path = external/VulkanSDK/Vulkan-Headers
 	url = https://github.com/KhronosGroup/Vulkan-Headers
+[submodule "external/reactphysics"]
+	path = external/reactphysics
+	url = https://github.com/DanielChappuis/reactphysics3d.git
