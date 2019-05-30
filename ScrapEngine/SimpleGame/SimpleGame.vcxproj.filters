@@ -9,9 +9,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="File di origine\External">
-      <UniqueIdentifier>{209cfcc1-6912-422e-8cd2-2d187570f067}</UniqueIdentifier>
-    </Filter>
     <Filter Include="File di origine\GameObjects">
       <UniqueIdentifier>{44a01f9c-dfaf-48a4-b6f2-490d8fc9033a}</UniqueIdentifier>
     </Filter>

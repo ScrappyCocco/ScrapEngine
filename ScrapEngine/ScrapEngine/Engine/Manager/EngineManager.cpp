@@ -85,6 +85,7 @@ void ScrapEngine::Manager::EngineManager::cleanup_engine()
 	delete scrap_render_manager_;
 	delete render_manager_view;
 	delete logic_manager_view;
+	delete physics_manager_;
 	delete scrap_logic_manager_;
 
 	cleanup_done_ = true;
