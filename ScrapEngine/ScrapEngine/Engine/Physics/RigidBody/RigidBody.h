@@ -1,7 +1,7 @@
 #pragma once
 
-#include <btBulletDynamicsCommon.h>
 #include <Engine/Physics/CollisionShape/CollisionShape.h>
+#include <Engine/LogicCore/Math/Transform/STransform.h>
 
 namespace ScrapEngine
 {
@@ -10,25 +10,30 @@ namespace ScrapEngine
 		class RigidBody
 		{
 		private:
-			btTransform start_transform_;
+			rp3d::Transform transform_;
+			rp3d::Transform prev_transform_;
 			CollisionShape* shape_ = nullptr;
-			float mass_ = 0.f;
-			btVector4 color_;
-			bool is_dynamic_ = false;
+			rp3d::ProxyShape* proxy_shape_ = nullptr;
 
-			btRigidBody* body_ = nullptr;
-			btDefaultMotionState* motion_state_ = nullptr;
+			rp3d::RigidBody* body_ = nullptr;
+
+			static Core::STransform convert_transform(const rp3d::Transform& other);
 		public:
 			RigidBody() = default;
 			~RigidBody();
 
-			void set_start_transform(const btTransform& start_transform);
+			void set_start_transform(const rp3d::Vector3& init_position = rp3d::Vector3(0.0, 3.0, 0.0),
+				const rp3d::Quaternion& init_orientation = rp3d::Quaternion::identity());
 			void set_collision_shape(CollisionShape* shape);
-			void set_mass(float mass);
-			void set_color(const btVector4& color);
-			void build_rigidbody(bool use_motionstate = true);
 
-			btRigidBody* get_rigidbody() const;
+			void set_mass(float mass) const;
+			float get_mass() const;
+
+			void build_rigidbody(rp3d::DynamicsWorld* dynamic_world);
+			void remove_from_world(rp3d::DynamicsWorld* dynamic_world) const;
+
+			rp3d::RigidBody* get_rigidbody() const;
+			Core::STransform get_updated_transform(float factor);
 		};
 	}
 }

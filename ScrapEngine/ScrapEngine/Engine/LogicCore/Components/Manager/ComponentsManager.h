@@ -34,6 +34,7 @@ namespace ScrapEngine
 			void destroy_mesh_component(MeshComponent* component_to_destroy);
 
 			//Physics stuff
+			void update_rigidbody_physics(float factor);
 			BoxColliderComponent* create_box_collider_component(const Core::SVector3& size,
 				const Core::SVector3& start_position,
 				float mass = 0.f);

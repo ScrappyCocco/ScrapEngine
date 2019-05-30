@@ -36,6 +36,14 @@ void ScrapEngine::Core::ComponentsManager::destroy_mesh_component(
 	}
 }
 
+void ScrapEngine::Core::ComponentsManager::update_rigidbody_physics(const float factor)
+{
+	for(auto const& element : loaded_collisions_)
+	{
+		element.first->update_transform(factor);
+	}
+}
+
 ScrapEngine::Core::BoxColliderComponent* ScrapEngine::Core::ComponentsManager::create_box_collider_component(
 	const Core::SVector3& size, const Core::SVector3& start_position, float mass)
 {

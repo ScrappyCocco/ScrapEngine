@@ -61,21 +61,38 @@ void ScrapEngine::Manager::EngineManager::initialize_views()
 	logic_manager_view->set_physics_manager(physics_manager_);
 }
 
-void ScrapEngine::Manager::EngineManager::main_game_loop() const
+void ScrapEngine::Manager::EngineManager::main_game_loop()
 {
 	Debug::DebugLog::print_to_console_log("---mainGameLoop() started---");
-	std::chrono::time_point<std::chrono::steady_clock> startTime, currentTime;
+	std::chrono::time_point<std::chrono::steady_clock> start_time, current_time;
 	const Render::GameWindow* window_ref = scrap_render_manager_->get_game_window();
 	while (!window_ref->check_window_should_close())
 	{
-		const float time = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - startTime).count();
+		//Compute frame delta time
+		const float time = std::chrono::duration<float, std::chrono::seconds::period>(current_time - start_time).count();
+		//Update physics
+		physics_update(time);
+		//Execute objects update()
 		scrap_logic_manager_->execute_game_objects_update_event(time);
-		startTime = std::chrono::high_resolution_clock::now();
+		//Draw frame and compute new times
+		start_time = std::chrono::high_resolution_clock::now();
 		scrap_render_manager_->draw_frame();
-		currentTime = std::chrono::high_resolution_clock::now();
+		current_time = std::chrono::high_resolution_clock::now();
 	}
 	scrap_render_manager_->wait_device_idle();
 	Debug::DebugLog::print_to_console_log("---mainGameLoop() ended---");
+}
+
+void ScrapEngine::Manager::EngineManager::physics_update(const float time_step)
+{
+	accumulator_ += time_step;
+	while (accumulator_ >= time_step_) {
+		physics_manager_->update_physics(time_step);
+
+		accumulator_ -= time_step_;
+	}
+	float factor = factor = accumulator_ / time_step_;
+	logic_manager_view->get_components_manager()->update_rigidbody_physics(factor);
 }
 
 void ScrapEngine::Manager::EngineManager::cleanup_engine()

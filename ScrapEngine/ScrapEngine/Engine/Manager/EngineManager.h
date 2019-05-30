@@ -37,7 +37,11 @@ namespace ScrapEngine
 			void initialize_physics_manager();
 			void initialize_views();
 
-			void main_game_loop() const;
+			void main_game_loop();
+
+			const float time_step_ = 1.0 / 60.0;
+			float accumulator_ = 0;
+			void physics_update(float time_step);
 
 			void cleanup_engine();
 		};

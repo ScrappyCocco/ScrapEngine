@@ -1,63 +1,76 @@
 #include <Engine/Physics/RigidBody/RigidBody.h>
 
+ScrapEngine::Core::STransform ScrapEngine::Physics::RigidBody::convert_transform(const rp3d::Transform& other)
+{
+	Core::STransform return_tras;
+
+	const rp3d::Vector3& other_pos = other.getPosition();
+	return_tras.set_position(Core::SVector3(other_pos.x, other_pos.y, other_pos.z));
+
+	const rp3d::Vector3& other_rot = other.getOrientation().getVectorV();
+	return_tras.set_rotation(Core::SVector3(other_rot.x, other_rot.y, other_rot.z));
+
+	return return_tras;
+}
+
 ScrapEngine::Physics::RigidBody::~RigidBody()
 {
 	delete shape_;
-	delete motion_state_;
-	delete body_;
 }
 
-void ScrapEngine::Physics::RigidBody::set_start_transform(const btTransform& start_transform)
+void ScrapEngine::Physics::RigidBody::set_start_transform(const rp3d::Vector3& init_position,
+                                                          const rp3d::Quaternion& init_orientation)
 {
-	start_transform_ = start_transform;
+	transform_ = rp3d::Transform(init_position, init_orientation);
 }
 
 void ScrapEngine::Physics::RigidBody::set_collision_shape(CollisionShape* shape)
 {
+	if (proxy_shape_)
+	{
+		body_->removeCollisionShape(proxy_shape_);
+	}
+	delete shape;
+
 	shape_ = shape;
+	proxy_shape_ = body_->addCollisionShape(shape_->get_collision_shape(),
+	                                        rp3d::Transform::identity(), body_->getMass());
 }
 
-void ScrapEngine::Physics::RigidBody::set_mass(const float mass)
+void ScrapEngine::Physics::RigidBody::set_mass(const float mass) const
 {
-	mass_ = mass;
-	is_dynamic_ = mass != 0.f;
+	body_->setMass(mass);
 }
 
-void ScrapEngine::Physics::RigidBody::set_color(const btVector4& color)
+float ScrapEngine::Physics::RigidBody::get_mass() const
 {
-	color_ = color;
+	return body_->getMass();
 }
 
-void ScrapEngine::Physics::RigidBody::build_rigidbody(const bool use_motionstate)
+void ScrapEngine::Physics::RigidBody::build_rigidbody(rp3d::DynamicsWorld* dynamic_world)
 {
-	if(!shape_)
-	{
-		return;
-	}
-	//Calculate local_inertia
-	btVector3 local_inertia(0, 0, 0);
-	if (is_dynamic_ && shape_)
-	{
-		shape_->get_collision_shape()->calculateLocalInertia(mass_, local_inertia);
-	}
-	//Create motion_state_ is necessary
-	motion_state_ = nullptr;
-	if (use_motionstate)
-	{
-		motion_state_ = new btDefaultMotionState(start_transform_);
-	}
-	//Build the btRigidBody
-	const btRigidBody::btRigidBodyConstructionInfo c_info(mass_, motion_state_, shape_->get_collision_shape(), local_inertia);
-	body_ = new btRigidBody(c_info);
-	body_->setUserIndex(-1);
-	//Set the transform
-	if (!use_motionstate)
-	{
-		body_->setWorldTransform(start_transform_);
-	}
+	body_ = dynamic_world->createRigidBody(transform_);
 }
 
-btRigidBody* ScrapEngine::Physics::RigidBody::get_rigidbody() const
+void ScrapEngine::Physics::RigidBody::remove_from_world(rp3d::DynamicsWorld* dynamic_world) const
+{
+	dynamic_world->destroyRigidBody(body_);
+}
+
+rp3d::RigidBody* ScrapEngine::Physics::RigidBody::get_rigidbody() const
 {
 	return body_;
+}
+
+ScrapEngine::Core::STransform ScrapEngine::Physics::RigidBody::get_updated_transform(const float factor)
+{
+	const rp3d::Transform curr_transform = body_->getTransform();
+	const rp3d::Transform interpolated_transform = rp3d::Transform::interpolateTransforms(
+		prev_transform_,
+		curr_transform,
+		factor);
+	Core::STransform return_tras = convert_transform(interpolated_transform);
+
+	prev_transform_ = curr_transform;
+	return return_tras;
 }
