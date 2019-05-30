@@ -118,6 +118,7 @@
     <ClInclude Include="Engine\Physics\CollisionShape\CollisionShape.h" />
     <ClInclude Include="Engine\Physics\DiscreteDynamicsWorld\DiscreteDynamicsWorld.h" />
     <ClInclude Include="Engine\Physics\Manager\PhysicsManager.h" />
+    <ClInclude Include="Engine\Physics\PhysicsInclude.h" />
     <ClInclude Include="Engine\Physics\RigidBody\RigidBody.h" />
     <ClInclude Include="Engine\Rendering\Base\Vertex.h" />
     <ClInclude Include="Engine\Rendering\Buffer\BaseBuffer.h" />

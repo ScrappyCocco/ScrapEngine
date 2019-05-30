@@ -711,5 +711,8 @@
     <ClInclude Include="Engine\LogicCore\Components\ColliderComponent\ColliderComponent.h">
       <Filter>Engine\LogicCore\Components\ColliderComponent</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Physics\PhysicsInclude.h">
+      <Filter>Engine\Physics</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
