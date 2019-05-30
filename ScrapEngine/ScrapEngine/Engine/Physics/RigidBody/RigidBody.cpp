@@ -30,11 +30,11 @@ void ScrapEngine::Physics::RigidBody::set_collision_shape(CollisionShape* shape)
 	{
 		body_->removeCollisionShape(proxy_shape_);
 	}
-	delete shape;
+	delete shape_;
 
 	shape_ = shape;
 	proxy_shape_ = body_->addCollisionShape(shape_->get_collision_shape(),
-	                                        rp3d::Transform::identity(), body_->getMass());
+	                                        rp3d::Transform::identity(), get_mass());
 }
 
 void ScrapEngine::Physics::RigidBody::set_mass(const float mass) const
@@ -44,12 +44,16 @@ void ScrapEngine::Physics::RigidBody::set_mass(const float mass) const
 
 float ScrapEngine::Physics::RigidBody::get_mass() const
 {
-	return body_->getMass();
+	if (body_) {
+		return body_->getMass();
+	}
+	return 0;
 }
 
 void ScrapEngine::Physics::RigidBody::build_rigidbody(rp3d::DynamicsWorld* dynamic_world)
 {
 	body_ = dynamic_world->createRigidBody(transform_);
+	body_->setMass(1.f);
 }
 
 void ScrapEngine::Physics::RigidBody::remove_from_world(rp3d::DynamicsWorld* dynamic_world) const

@@ -35,9 +35,9 @@ int main() {
 		TestGameObject* FirstGameObject = new TestGameObject(ComponentManagerRef);
 		ScrapEngineManager->logic_manager_view->register_game_object(FirstGameObject);
 		FirstGameObject->set_object_location(ScrapEngine::Core::SVector3(0, 10, 0));
-		AnotherTestGameObject* SecondGameObject = new AnotherTestGameObject(ComponentManagerRef);
+		/*AnotherTestGameObject* SecondGameObject = new AnotherTestGameObject(ComponentManagerRef);
 		ScrapEngineManager->logic_manager_view->register_game_object(SecondGameObject);
-		FirstGameObject->add_child(SecondGameObject);
+		FirstGameObject->add_child(SecondGameObject);*/
 		//Create the camera
 		GameCamera* GameCameraRef = new GameCamera(inputmanager, ScrapEngineManager->render_manager_view->get_default_render_camera(), FirstGameObject);
 		ScrapEngineManager->logic_manager_view->register_game_object(GameCameraRef);

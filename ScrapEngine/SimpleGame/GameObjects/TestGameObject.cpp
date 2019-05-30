@@ -15,15 +15,10 @@ TestGameObject::TestGameObject(ScrapEngine::Core::ComponentsManager* input_Compo
 		"../assets/models/cube.obj",
 		{ "../assets/textures/SimpleRedTexture.png" }
 	));
-	add_component(input_ComponentManager->create_new_mesh_component(
-		"../assets/shader/compiled_shaders/shader_base.vert.spv",
-		"../assets/shader/compiled_shaders/shader_base.frag.spv",
-		"../assets/models/cube.obj",
-		{ "../assets/textures/SimpleRedTexture.png" }
-	));
 
-	(*get_components())[0]->set_component_location(ScrapEngine::Core::SVector3(0, 0, -10));
-	(*get_components())[1]->set_component_location(ScrapEngine::Core::SVector3(0, 0, 10));
+	add_component(input_ComponentManager->create_box_collider_component(
+		ScrapEngine::Core::SVector3(.5f, 5.f, 5.f),
+		ScrapEngine::Core::SVector3(0, 0, 0), 1.f));
 }
 
 void TestGameObject::game_start()

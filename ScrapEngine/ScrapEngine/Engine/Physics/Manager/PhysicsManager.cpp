@@ -9,10 +9,8 @@ ScrapEngine::Physics::PhysicsManager::PhysicsManager()
 
 ScrapEngine::Physics::PhysicsManager::~PhysicsManager()
 {
-	for (RigidBody* body : created_rigid_bodies_)
-	{
-		delete body;
-	}
+	//The responsibility to clear the RigidBody* is of the logic manager that create them
+	created_rigid_bodies_.clear();
 	delete p_world_;
 }
 
@@ -40,12 +38,12 @@ ScrapEngine::Physics::RigidBody* ScrapEngine::Physics::PhysicsManager::create_bo
 {
 	BoxShape* box_shape = new BoxShape(size);
 	RigidBody* body = new RigidBody();
-	body->set_collision_shape(box_shape);
 
 	const rp3d::Vector3 start_position_v(start_position.get_x(), start_position.get_y(), start_position.get_z());
 	body->set_start_transform(start_position_v);
-	body->set_mass(mass);
 	body->build_rigidbody(p_world_->get_dynamic_world());
+	body->set_mass(mass);
+	body->set_collision_shape(box_shape);
 
 	created_rigid_bodies_.push_back(body);
 
