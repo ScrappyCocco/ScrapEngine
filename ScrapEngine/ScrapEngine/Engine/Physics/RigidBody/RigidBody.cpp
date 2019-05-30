@@ -50,6 +50,23 @@ float ScrapEngine::Physics::RigidBody::get_mass() const
 	return 0;
 }
 
+void ScrapEngine::Physics::RigidBody::set_type(RigidBody_Types type) const
+{
+	switch(type)
+	{
+	case static_rigidbody:
+		body_->setType(rp3d::BodyType::STATIC);
+		break;
+	case kinematic_rigidbody:
+		body_->setType(rp3d::BodyType::KINEMATIC);
+		break;
+	default:
+	case dynamic_rigidbody:
+		body_->setType(rp3d::BodyType::DYNAMIC);
+		break;
+	}
+}
+
 void ScrapEngine::Physics::RigidBody::build_rigidbody(rp3d::DynamicsWorld* dynamic_world)
 {
 	body_ = dynamic_world->createRigidBody(transform_);

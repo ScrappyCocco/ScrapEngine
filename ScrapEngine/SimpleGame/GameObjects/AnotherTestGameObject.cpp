@@ -5,25 +5,25 @@ AnotherTestGameObject::AnotherTestGameObject(ScrapEngine::Core::ComponentsManage
 	: SGameObject("Test game object"), ComponentManagerRef(input_ComponentManager)
 {
 	//Add mesh to that GameObject
-	set_object_location(ScrapEngine::Core::SVector3(0, 0, 0));
+	set_object_location(ScrapEngine::Core::SVector3(0, -20, 0));
 	set_object_rotation(ScrapEngine::Core::SVector3(0, 0, 0));
-	set_object_scale(ScrapEngine::Core::SVector3(0.5f, 0.5f, 0.5f));
+	set_object_scale(ScrapEngine::Core::SVector3(10.f, 0.5f, 10.f));
 
-	add_component(input_ComponentManager->create_new_mesh_component(
+	ScrapEngine::Core::MeshComponent* mesh = input_ComponentManager->create_new_mesh_component(
 		"../assets/shader/compiled_shaders/shader_base.vert.spv",
 		"../assets/shader/compiled_shaders/shader_base.frag.spv",
 		"../assets/models/cube.obj",
-		{ "../assets/textures/SimpleGreenTexture.png" }
-	));
-	add_component(input_ComponentManager->create_new_mesh_component(
-		"../assets/shader/compiled_shaders/shader_base.vert.spv",
-		"../assets/shader/compiled_shaders/shader_base.frag.spv",
-		"../assets/models/cube.obj",
-		{ "../assets/textures/SimpleGreenTexture.png" }
-	));
+		{ "../assets/textures/SimpleWhiteTexture.png" }
+	);
+	add_component(mesh);
 
-	(*get_components())[0]->set_component_location(ScrapEngine::Core::SVector3(0, 0, -10));
-	(*get_components())[1]->set_component_location(ScrapEngine::Core::SVector3(0, 0, 10));
+	ScrapEngine::Core::ColliderComponent* collider = input_ComponentManager->create_box_collider_component(
+		ScrapEngine::Core::SVector3(25.f, 0.5f, 25.f),
+		ScrapEngine::Core::SVector3(0, -20, 0), 0.f);
+	add_component(collider);
+
+	collider->set_rigidbody_type(ScrapEngine::Physics::RigidBody_Types::static_rigidbody);
+	collider->attach_to_mesh(mesh);
 }
 
 void AnotherTestGameObject::game_start()

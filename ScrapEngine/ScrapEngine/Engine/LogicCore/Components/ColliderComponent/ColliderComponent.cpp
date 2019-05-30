@@ -24,3 +24,8 @@ void ScrapEngine::Core::ColliderComponent::update_transform(const float factor) 
 		attached_mesh_->set_component_rotation(new_transform.get_rotation());
 	}
 }
+
+void ScrapEngine::Core::ColliderComponent::set_rigidbody_type(Physics::RigidBody_Types type) const
+{
+	rigidbody_->set_type(type);
+}

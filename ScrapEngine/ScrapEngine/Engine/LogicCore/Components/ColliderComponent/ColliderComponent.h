@@ -20,6 +20,7 @@ namespace ScrapEngine
 
 			void attach_to_mesh(MeshComponent* mesh);
 			void update_transform(float factor) const;
+			void set_rigidbody_type(Physics::RigidBody_Types type) const;
 		};
 	}
 }

@@ -7,6 +7,13 @@ namespace ScrapEngine
 {
 	namespace Physics
 	{
+		enum RigidBody_Types
+		{
+			static_rigidbody = rp3d::BodyType::STATIC,
+			kinematic_rigidbody = rp3d::BodyType::KINEMATIC,
+			dynamic_rigidbody = rp3d::BodyType::DYNAMIC
+		};
+
 		class RigidBody
 		{
 		private:
@@ -28,6 +35,8 @@ namespace ScrapEngine
 
 			void set_mass(float mass) const;
 			float get_mass() const;
+
+			void set_type(RigidBody_Types type) const;
 
 			void build_rigidbody(rp3d::DynamicsWorld* dynamic_world);
 			void remove_from_world(rp3d::DynamicsWorld* dynamic_world) const;
