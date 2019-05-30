@@ -20,6 +20,8 @@ namespace ScrapEngine
 			                 LogicManager* input_logic_manager_ref);
 			~LogicManagerView();
 
+			void set_physics_manager(Physics::PhysicsManager* physics_manager) const;
+
 			SGameObject* register_game_object(SGameObject* input_game_object) const;
 			void un_register_game_object(SGameObject* input_game_object) const;
 			ComponentsManager* get_components_manager() const;

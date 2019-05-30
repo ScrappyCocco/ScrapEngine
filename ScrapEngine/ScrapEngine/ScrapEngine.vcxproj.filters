@@ -221,6 +221,42 @@
     <Filter Include="Engine\Rendering\Model\ObjectPool\VulkanSimpleMaterialPool">
       <UniqueIdentifier>{c1a5df19-36e4-42d3-a33a-4cf38b44fc66}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Physics">
+      <UniqueIdentifier>{4702e2e4-2871-4a2f-865a-f253fa69ceb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Physics\BroadphaseInterface">
+      <UniqueIdentifier>{ab0d08f7-bb38-428c-b945-aedd85cc4bbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Physics\CollisionConfiguration">
+      <UniqueIdentifier>{4cc2cdf9-7255-4aff-b47c-2353a4c6a088}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Physics\CollisionDispatcher">
+      <UniqueIdentifier>{ed22015c-a1f1-49b3-8ad1-c49f4d379915}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Physics\DiscreteDynamicsWorld">
+      <UniqueIdentifier>{e5480635-1dca-4bbb-829a-d80884874cc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Physics\SequentialImpulseConstraintSolver">
+      <UniqueIdentifier>{beaa4c09-b802-41a2-9f4f-859a613319fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Physics\CollisionShape">
+      <UniqueIdentifier>{24cebe07-58c3-425b-aaeb-7ac96eaf8c1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Physics\CollisionShape\BoxShape">
+      <UniqueIdentifier>{721701d8-1203-40b4-b62d-42533ca953ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Physics\RigidBody">
+      <UniqueIdentifier>{bd96407b-84f6-414d-a7bc-4c17e3b8a83f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Physics\Manager">
+      <UniqueIdentifier>{874324aa-f50f-44c6-89a0-81ac96e60c5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\LogicCore\Components\ColliderComponent">
+      <UniqueIdentifier>{46cb3d16-cc5a-4310-b40b-b5eec9a2d8cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\LogicCore\Components\ColliderComponent\BoxColliderComponent">
+      <UniqueIdentifier>{43c14a51-b62d-409a-a89d-d20ed22b9137}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Manager\EngineManager.cpp">
@@ -423,6 +459,39 @@
     </ClCompile>
     <ClCompile Include="Engine\Rendering\Model\ObjectPool\VulkanSimpleMaterialPool\VulkanSimpleMaterialPool.cpp">
       <Filter>Engine\Rendering\Model\ObjectPool\VulkanSimpleMaterialPool</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Physics\CollisionConfiguration\DefaultCollisionConfiguration.cpp">
+      <Filter>Engine\Physics\CollisionConfiguration</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Physics\BroadphaseInterface\BroadphaseInterface.cpp">
+      <Filter>Engine\Physics\BroadphaseInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Physics\CollisionDispatcher\CollisionDispatcher.cpp">
+      <Filter>Engine\Physics\CollisionDispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Physics\SequentialImpulseConstraintSolver\SequentialImpulseConstraintSolver.cpp">
+      <Filter>Engine\Physics\SequentialImpulseConstraintSolver</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Physics\DiscreteDynamicsWorld\DiscreteDynamicsWorld.cpp">
+      <Filter>Engine\Physics\DiscreteDynamicsWorld</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Physics\CollisionShape\BoxShape\BoxShape.cpp">
+      <Filter>Engine\Physics\CollisionShape\BoxShape</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Physics\RigidBody\RigidBody.cpp">
+      <Filter>Engine\Physics\RigidBody</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Physics\Manager\PhysicsManager.cpp">
+      <Filter>Engine\Physics\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Physics\CollisionShape\CollisionShape.cpp">
+      <Filter>Engine\Physics\CollisionShape</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\LogicCore\Components\ColliderComponent\BoxColliderComponent\BoxColliderComponent.cpp">
+      <Filter>Engine\LogicCore\Components\ColliderComponent\BoxColliderComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\LogicCore\Components\ColliderComponent\ColliderComponent.cpp">
+      <Filter>Engine\LogicCore\Components\ColliderComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -644,6 +713,39 @@
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Model\ObjectPool\VulkanSimpleMaterialPool\VulkanSimpleMaterialPool.h">
       <Filter>Engine\Rendering\Model\ObjectPool\VulkanSimpleMaterialPool</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Physics\CollisionConfiguration\DefaultCollisionConfiguration.h">
+      <Filter>Engine\Physics\CollisionConfiguration</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Physics\BroadphaseInterface\BroadphaseInterface.h">
+      <Filter>Engine\Physics\BroadphaseInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Physics\CollisionDispatcher\CollisionDispatcher.h">
+      <Filter>Engine\Physics\CollisionDispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Physics\SequentialImpulseConstraintSolver\SequentialImpulseConstraintSolver.h">
+      <Filter>Engine\Physics\SequentialImpulseConstraintSolver</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Physics\DiscreteDynamicsWorld\DiscreteDynamicsWorld.h">
+      <Filter>Engine\Physics\DiscreteDynamicsWorld</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Physics\CollisionShape\BoxShape\BoxShape.h">
+      <Filter>Engine\Physics\CollisionShape\BoxShape</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Physics\RigidBody\RigidBody.h">
+      <Filter>Engine\Physics\RigidBody</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Physics\Manager\PhysicsManager.h">
+      <Filter>Engine\Physics\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Physics\CollisionShape\CollisionShape.h">
+      <Filter>Engine\Physics\CollisionShape</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\LogicCore\Components\ColliderComponent\BoxColliderComponent\BoxColliderComponent.h">
+      <Filter>Engine\LogicCore\Components\ColliderComponent\BoxColliderComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\LogicCore\Components\ColliderComponent\ColliderComponent.h">
+      <Filter>Engine\LogicCore\Components\ColliderComponent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

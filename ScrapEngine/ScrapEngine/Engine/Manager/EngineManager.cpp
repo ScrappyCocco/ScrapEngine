@@ -34,6 +34,7 @@ void ScrapEngine::Manager::EngineManager::initialize_engine()
 	Debug::DebugLog::print_to_console_log("---initializeEngine()---");
 	initialize_render_manager(&received_base_game_info_); //Create the base rendering module
 	initialize_logic_manager(); //Create the base logic manager
+	initialize_physics_manager(); // Create the physics manager
 	initialize_views(); //Create the views for the user
 	Debug::DebugLog::print_to_console_log("---initializeEngine() completed---");
 }
@@ -48,10 +49,16 @@ void ScrapEngine::Manager::EngineManager::initialize_logic_manager()
 	scrap_logic_manager_ = new Core::LogicManager();
 }
 
+void ScrapEngine::Manager::EngineManager::initialize_physics_manager()
+{
+	physics_manager_ = new Physics::PhysicsManager();
+}
+
 void ScrapEngine::Manager::EngineManager::initialize_views()
 {
 	render_manager_view = new Render::RenderManagerView(scrap_render_manager_);
 	logic_manager_view = new Core::LogicManagerView(scrap_render_manager_, scrap_logic_manager_);
+	logic_manager_view->set_physics_manager(physics_manager_);
 }
 
 void ScrapEngine::Manager::EngineManager::main_game_loop() const

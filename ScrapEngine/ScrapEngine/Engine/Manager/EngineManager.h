@@ -19,6 +19,7 @@ namespace ScrapEngine
 
 			Render::RenderManager* scrap_render_manager_ = nullptr;
 			Core::LogicManager* scrap_logic_manager_ = nullptr;
+			Physics::PhysicsManager* physics_manager_ = nullptr;
 		public:
 			EngineManager(std::string app_name = "ScrapEngine Game", int app_version = 1, uint32_t window_width = 800,
 			              uint32_t window_height = 600, bool fullscreen = false, bool vsync = true);
@@ -33,6 +34,7 @@ namespace ScrapEngine
 
 			void initialize_render_manager(const game_base_info* game_info);
 			void initialize_logic_manager();
+			void initialize_physics_manager();
 			void initialize_views();
 
 			void main_game_loop() const;
