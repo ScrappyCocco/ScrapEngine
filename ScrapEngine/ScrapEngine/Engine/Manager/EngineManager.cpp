@@ -83,15 +83,14 @@ void ScrapEngine::Manager::EngineManager::main_game_loop()
 	Debug::DebugLog::print_to_console_log("---mainGameLoop() ended---");
 }
 
-void ScrapEngine::Manager::EngineManager::physics_update(const float time_step)
+void ScrapEngine::Manager::EngineManager::physics_update(const float delta_time)
 {
-	accumulator_ += time_step;
+	accumulator_ += delta_time;
 	while (accumulator_ >= time_step_) {
-		physics_manager_->update_physics(time_step);
-
+		physics_manager_->update_physics(time_step_);
 		accumulator_ -= time_step_;
 	}
-	float factor = factor = accumulator_ / time_step_;
+	const float factor = accumulator_ / time_step_;
 	logic_manager_view->get_components_manager()->update_rigidbody_physics(factor);
 }
 

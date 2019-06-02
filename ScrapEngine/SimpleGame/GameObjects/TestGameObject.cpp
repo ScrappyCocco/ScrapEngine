@@ -5,7 +5,7 @@ TestGameObject::TestGameObject(ScrapEngine::Core::ComponentsManager* input_Compo
 	: SGameObject("Test game object"), ComponentManagerRef(input_ComponentManager)
 {
 	//Add mesh to that GameObject
-	set_object_location(ScrapEngine::Core::SVector3(0, 50, 0));
+	set_object_location(ScrapEngine::Core::SVector3(0, 100, 0));
 	set_object_rotation(ScrapEngine::Core::SVector3(0, 0, 0));
 	set_object_scale(ScrapEngine::Core::SVector3(0.5f, 0.5f, 0.5f));
 
@@ -19,7 +19,7 @@ TestGameObject::TestGameObject(ScrapEngine::Core::ComponentsManager* input_Compo
 
 	ScrapEngine::Core::ColliderComponent* collider = input_ComponentManager->create_box_collider_component(
 		ScrapEngine::Core::SVector3(5.f, 5.f, 5.f),
-		ScrapEngine::Core::SVector3(0, 50, 0), 10.f);
+		ScrapEngine::Core::SVector3(0, 100, 0), 10.f);
 	add_component(collider);
 
 	collider->attach_to_mesh(mesh);

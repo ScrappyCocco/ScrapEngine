@@ -3,7 +3,7 @@
 
 ScrapEngine::Physics::DiscreteDynamicsWorld::DiscreteDynamicsWorld()
 {
-	world_ = new rp3d::DynamicsWorld(rp3d::Vector3(0.0, -10, 0.0));
+	world_ = new rp3d::DynamicsWorld(rp3d::Vector3(0.0, -50, 0.0));
 }
 
 ScrapEngine::Physics::DiscreteDynamicsWorld::~DiscreteDynamicsWorld()

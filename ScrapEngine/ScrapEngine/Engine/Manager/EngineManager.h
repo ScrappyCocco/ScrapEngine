@@ -39,9 +39,10 @@ namespace ScrapEngine
 
 			void main_game_loop();
 
-			const float time_step_ = 1.0f / 60.0f;
+			//physics update frequency
+			const float time_step_ = 1.0f / 240.0f;
 			float accumulator_ = 0;
-			void physics_update(float time_step);
+			void physics_update(float delta_time);
 
 			void cleanup_engine();
 		};
