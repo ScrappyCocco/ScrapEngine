@@ -38,14 +38,14 @@ void ScrapEngine::Core::ComponentsManager::destroy_mesh_component(
 
 void ScrapEngine::Core::ComponentsManager::update_rigidbody_physics(const float factor)
 {
-	for(auto const& element : loaded_collisions_)
+	for (auto const& element : loaded_collisions_)
 	{
 		element.first->update_transform(factor);
 	}
 }
 
 ScrapEngine::Core::BoxColliderComponent* ScrapEngine::Core::ComponentsManager::create_box_collider_component(
-	const Core::SVector3& size, const Core::SVector3& start_position, float mass)
+	const Core::SVector3& size, const Core::SVector3& start_position, const float mass)
 {
 	Physics::RigidBody* body = physics_manager_ref_->create_box_collider(size, start_position, mass);
 	BoxColliderComponent* component = new BoxColliderComponent(body);
@@ -56,7 +56,31 @@ ScrapEngine::Core::BoxColliderComponent* ScrapEngine::Core::ComponentsManager::c
 	return component;
 }
 
-void ScrapEngine::Core::ComponentsManager::destroy_box_collider_component(BoxColliderComponent* component_to_destroy)
+ScrapEngine::Core::CapsuleColliderComponent* ScrapEngine::Core::ComponentsManager::create_capsule_collider_component(
+	const float radius, const float height, const Core::SVector3& start_position, const float mass)
+{
+	Physics::RigidBody* body = physics_manager_ref_->create_capsule_collider(radius, height, start_position, mass);
+	CapsuleColliderComponent* component = new CapsuleColliderComponent(body);
+
+	std::pair<ColliderComponent*, Physics::RigidBody*> pair_to_insert(component, body);
+	loaded_collisions_.insert(pair_to_insert);
+
+	return component;
+}
+
+ScrapEngine::Core::SphereColliderComponent* ScrapEngine::Core::ComponentsManager::create_sphere_collider_component(
+	const float radius, const Core::SVector3& start_position, const float mass)
+{
+	Physics::RigidBody* body = physics_manager_ref_->create_sphere_collider(radius, start_position, mass);
+	SphereColliderComponent* component = new SphereColliderComponent(body);
+
+	std::pair<ColliderComponent*, Physics::RigidBody*> pair_to_insert(component, body);
+	loaded_collisions_.insert(pair_to_insert);
+
+	return component;
+}
+
+void ScrapEngine::Core::ComponentsManager::destroy_collider_component(ColliderComponent* component_to_destroy)
 {
 	const std::map<ColliderComponent*, Physics::RigidBody*>::iterator position =
 		loaded_collisions_.find(component_to_destroy);

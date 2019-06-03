@@ -14,6 +14,11 @@ void ScrapEngine::Debug::DebugLog::print_to_console_log(const glm::vec3& vector)
 		<< vector.y << ", " << vector.z << ")" << std::endl;
 }
 
+void ScrapEngine::Debug::DebugLog::print_to_console_log(const Core::SVector3& vector)
+{
+	print_to_console_log(vector.get_glm_vector());
+}
+
 void ScrapEngine::Debug::DebugLog::print_to_console_log(const glm::mat4& matrix)
 {
 	std::cout << "[" << std::endl;

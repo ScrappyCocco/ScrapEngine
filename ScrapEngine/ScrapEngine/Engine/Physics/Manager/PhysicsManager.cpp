@@ -1,6 +1,8 @@
 #include <Engine/Physics/Manager/PhysicsManager.h>
 #include <Engine/Physics/CollisionShape/BoxShape/BoxShape.h>
 #include <algorithm>
+#include <Engine/Physics/CollisionShape/SphereShape/SphereShape.h>
+#include <Engine/Physics/CollisionShape/CapsuleShape/CapsuleShape.h>
 
 ScrapEngine::Physics::PhysicsManager::PhysicsManager()
 {
@@ -44,6 +46,45 @@ ScrapEngine::Physics::RigidBody* ScrapEngine::Physics::PhysicsManager::create_bo
 	body->build_rigidbody(p_world_->get_dynamic_world());
 	body->set_mass(mass);
 	body->set_collision_shape(box_shape);
+
+	created_rigid_bodies_.push_back(body);
+
+	return body;
+}
+
+ScrapEngine::Physics::RigidBody* ScrapEngine::Physics::PhysicsManager::create_sphere_collider(
+	const float radius,
+	const Core::SVector3& start_position,
+	const float mass)
+{
+	SphereShape* sphere_shape = new SphereShape(radius);
+	RigidBody* body = new RigidBody();
+
+	const rp3d::Vector3 start_position_v(start_position.get_x(), start_position.get_y(), start_position.get_z());
+	body->set_start_transform(start_position_v);
+	body->build_rigidbody(p_world_->get_dynamic_world());
+	body->set_mass(mass);
+	body->set_collision_shape(sphere_shape);
+
+	created_rigid_bodies_.push_back(body);
+
+	return body;
+}
+
+ScrapEngine::Physics::RigidBody* ScrapEngine::Physics::PhysicsManager::create_capsule_collider(
+	const float radius,
+	const float height,
+	const Core::SVector3& start_position,
+	const float mass)
+{
+	CapsuleShape* capsule_shape = new CapsuleShape(radius, height);
+	RigidBody* body = new RigidBody();
+
+	const rp3d::Vector3 start_position_v(start_position.get_x(), start_position.get_y(), start_position.get_z());
+	body->set_start_transform(start_position_v);
+	body->build_rigidbody(p_world_->get_dynamic_world());
+	body->set_mass(mass);
+	body->set_collision_shape(capsule_shape);
 
 	created_rigid_bodies_.push_back(body);
 

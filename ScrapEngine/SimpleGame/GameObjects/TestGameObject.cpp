@@ -12,13 +12,13 @@ TestGameObject::TestGameObject(ScrapEngine::Core::ComponentsManager* input_Compo
 	ScrapEngine::Core::MeshComponent* mesh = input_ComponentManager->create_new_mesh_component(
 		"../assets/shader/compiled_shaders/shader_base.vert.spv",
 		"../assets/shader/compiled_shaders/shader_base.frag.spv",
-		"../assets/models/cube.obj",
+		"../assets/models/sphere.obj",
 		{ "../assets/textures/SimpleRedTexture.png" }
 	);
 	add_component(mesh);
 
-	ScrapEngine::Core::ColliderComponent* collider = input_ComponentManager->create_box_collider_component(
-		ScrapEngine::Core::SVector3(5.f, 5.f, 5.f),
+	ScrapEngine::Core::ColliderComponent* collider = input_ComponentManager->create_sphere_collider_component(
+		10.f,
 		ScrapEngine::Core::SVector3(0, 100, 0), 10.f);
 	add_component(collider);
 
@@ -31,4 +31,5 @@ void TestGameObject::game_start()
 
 void TestGameObject::game_update(float time)
 {
+	
 }

@@ -245,6 +245,18 @@
     <Filter Include="Engine\LogicCore\Components\ColliderComponent\BoxColliderComponent">
       <UniqueIdentifier>{43c14a51-b62d-409a-a89d-d20ed22b9137}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Physics\CollisionShape\SphereShape">
+      <UniqueIdentifier>{7a478368-f725-4c87-863e-a9dd19052ecf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Physics\CollisionShape\CapsuleShape">
+      <UniqueIdentifier>{7d4d00dd-966c-41b2-8892-c2020990c433}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\LogicCore\Components\ColliderComponent\CapsuleColliderComponent">
+      <UniqueIdentifier>{c29a05e7-c72b-4920-bff0-a1d6aac65cd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\LogicCore\Components\ColliderComponent\SphereColliderComponent">
+      <UniqueIdentifier>{f4c39d33-3aab-4384-9463-22c2c3bd83e7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Manager\EngineManager.cpp">
@@ -468,6 +480,18 @@
     </ClCompile>
     <ClCompile Include="Engine\LogicCore\Components\ColliderComponent\ColliderComponent.cpp">
       <Filter>Engine\LogicCore\Components\ColliderComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Physics\CollisionShape\SphereShape\SphereShape.cpp">
+      <Filter>Engine\Physics\CollisionShape\SphereShape</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Physics\CollisionShape\CapsuleShape\CapsuleShape.cpp">
+      <Filter>Engine\Physics\CollisionShape\CapsuleShape</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\LogicCore\Components\ColliderComponent\CapsuleColliderComponent\CapsuleColliderComponent.cpp">
+      <Filter>Engine\LogicCore\Components\ColliderComponent\CapsuleColliderComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\LogicCore\Components\ColliderComponent\SphereColliderComponent\SphereColliderComponent.cpp">
+      <Filter>Engine\LogicCore\Components\ColliderComponent\SphereColliderComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -713,6 +737,18 @@
     </ClInclude>
     <ClInclude Include="Engine\Physics\PhysicsInclude.h">
       <Filter>Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Physics\CollisionShape\SphereShape\SphereShape.h">
+      <Filter>Engine\Physics\CollisionShape\SphereShape</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Physics\CollisionShape\CapsuleShape\CapsuleShape.h">
+      <Filter>Engine\Physics\CollisionShape\CapsuleShape</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\LogicCore\Components\ColliderComponent\CapsuleColliderComponent\CapsuleColliderComponent.h">
+      <Filter>Engine\LogicCore\Components\ColliderComponent\CapsuleColliderComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\LogicCore\Components\ColliderComponent\SphereColliderComponent\SphereColliderComponent.h">
+      <Filter>Engine\LogicCore\Components\ColliderComponent\SphereColliderComponent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

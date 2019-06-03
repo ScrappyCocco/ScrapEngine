@@ -24,6 +24,15 @@ namespace ScrapEngine
 			RigidBody* create_box_collider(const Core::SVector3& size,
 			                               const Core::SVector3& start_position,
 			                               float mass = 0.f);
+
+			RigidBody* create_sphere_collider(float radius,
+			                                  const Core::SVector3& start_position,
+			                                  float mass = 0.f);
+
+			RigidBody* create_capsule_collider(float radius,
+			                                   float height,
+			                                   const Core::SVector3& start_position,
+			                                   float mass = 0.f);
 		};
 	}
 }

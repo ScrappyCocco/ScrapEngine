@@ -1,8 +1,14 @@
 #pragma once
 
 #include <iostream>
-#include <glm/vec3.hpp>
 #include <glm/mat4x4.hpp>
+#include <Engine/LogicCore/Math/Vector/SVector3.h>
+
+namespace ScrapEngine {
+	namespace Core {
+		class SVector3;
+	}
+}
 
 namespace ScrapEngine
 {
@@ -16,6 +22,9 @@ namespace ScrapEngine
 
 			//Print the vector to console log with time
 			static void print_to_console_log(const glm::vec3&);
+
+			//Print the engine vector to console log with time
+			static void print_to_console_log(const Core::SVector3&);
 
 			//Print the matrix to console log with time
 			static void print_to_console_log(const glm::mat4&);
