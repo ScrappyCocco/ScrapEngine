@@ -1,4 +1,4 @@
-#include <Engine/Physics/DiscreteDynamicsWorld/DiscreteDynamicsWorld.h>
+#include <Engine/Physics/CollisionWorld/DynamicsWorld/DiscreteDynamicsWorld.h>
 
 
 ScrapEngine::Physics::DiscreteDynamicsWorld::DiscreteDynamicsWorld()

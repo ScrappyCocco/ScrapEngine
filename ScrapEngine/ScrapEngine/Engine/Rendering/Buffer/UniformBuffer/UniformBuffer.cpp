@@ -47,11 +47,12 @@ void ScrapEngine::Render::UniformBuffer::update_uniform_buffer(const uint32_t& c
 	UniformBufferObject ubo = {};
 
 	ubo.model = translate(glm::mat4(1.0f), object_transform.get_position().get_glm_vector());
-	ubo.model = scale(ubo.model, object_transform.get_scale().get_glm_vector());
 
 	ubo.model = rotate(ubo.model, glm::radians(object_transform.get_rotation().get_x()), glm::vec3(1.0f, 0.0f, 0.0f));
 	ubo.model = rotate(ubo.model, glm::radians(object_transform.get_rotation().get_y()), glm::vec3(0.0f, 1.0f, 0.0f));
 	ubo.model = rotate(ubo.model, glm::radians(object_transform.get_rotation().get_z()), glm::vec3(0.0f, 0.0f, 1.0f));
+
+	ubo.model = scale(ubo.model, object_transform.get_scale().get_glm_vector());
 
 	ubo.proj = glm::perspective(glm::radians(45.0f),
 	                            swap_chain_extent_.width / static_cast<float>(swap_chain_extent_.height),

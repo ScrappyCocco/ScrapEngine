@@ -224,9 +224,6 @@
     <Filter Include="Engine\Physics">
       <UniqueIdentifier>{4702e2e4-2871-4a2f-865a-f253fa69ceb0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Physics\DiscreteDynamicsWorld">
-      <UniqueIdentifier>{e5480635-1dca-4bbb-829a-d80884874cc9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Physics\CollisionShape">
       <UniqueIdentifier>{24cebe07-58c3-425b-aaeb-7ac96eaf8c1c}</UniqueIdentifier>
     </Filter>
@@ -256,6 +253,12 @@
     </Filter>
     <Filter Include="Engine\LogicCore\Components\ColliderComponent\SphereColliderComponent">
       <UniqueIdentifier>{f4c39d33-3aab-4384-9463-22c2c3bd83e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Physics\CollisionWorld">
+      <UniqueIdentifier>{3269aaff-f592-4e17-bc24-92f9924a4e7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Physics\CollisionWorld\DynamicsWorld">
+      <UniqueIdentifier>{09c7f0b9-7648-4bde-bd60-bef61f6ad38e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -460,9 +463,6 @@
     <ClCompile Include="Engine\Rendering\Model\ObjectPool\VulkanSimpleMaterialPool\VulkanSimpleMaterialPool.cpp">
       <Filter>Engine\Rendering\Model\ObjectPool\VulkanSimpleMaterialPool</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Physics\DiscreteDynamicsWorld\DiscreteDynamicsWorld.cpp">
-      <Filter>Engine\Physics\DiscreteDynamicsWorld</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Physics\CollisionShape\BoxShape\BoxShape.cpp">
       <Filter>Engine\Physics\CollisionShape\BoxShape</Filter>
     </ClCompile>
@@ -492,6 +492,9 @@
     </ClCompile>
     <ClCompile Include="Engine\LogicCore\Components\ColliderComponent\SphereColliderComponent\SphereColliderComponent.cpp">
       <Filter>Engine\LogicCore\Components\ColliderComponent\SphereColliderComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Physics\CollisionWorld\DynamicsWorld\DiscreteDynamicsWorld.cpp">
+      <Filter>Engine\Physics\CollisionWorld\DynamicsWorld</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -714,9 +717,6 @@
     <ClInclude Include="Engine\Rendering\Model\ObjectPool\VulkanSimpleMaterialPool\VulkanSimpleMaterialPool.h">
       <Filter>Engine\Rendering\Model\ObjectPool\VulkanSimpleMaterialPool</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Physics\DiscreteDynamicsWorld\DiscreteDynamicsWorld.h">
-      <Filter>Engine\Physics\DiscreteDynamicsWorld</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Physics\CollisionShape\BoxShape\BoxShape.h">
       <Filter>Engine\Physics\CollisionShape\BoxShape</Filter>
     </ClInclude>
@@ -749,6 +749,9 @@
     </ClInclude>
     <ClInclude Include="Engine\LogicCore\Components\ColliderComponent\SphereColliderComponent\SphereColliderComponent.h">
       <Filter>Engine\LogicCore\Components\ColliderComponent\SphereColliderComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Physics\CollisionWorld\DynamicsWorld\DiscreteDynamicsWorld.h">
+      <Filter>Engine\Physics\CollisionWorld\DynamicsWorld</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

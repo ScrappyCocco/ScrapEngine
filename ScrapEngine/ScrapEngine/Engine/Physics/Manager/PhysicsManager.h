@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Engine/Physics/DiscreteDynamicsWorld/DiscreteDynamicsWorld.h>
+#include <Engine/Physics/CollisionWorld/DynamicsWorld/DiscreteDynamicsWorld.h>
 #include <Engine/Physics/RigidBody/RigidBody.h>
 #include <vector>
 

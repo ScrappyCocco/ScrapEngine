@@ -41,7 +41,7 @@
     <ClCompile Include="Engine\Physics\CollisionShape\CapsuleShape\CapsuleShape.cpp" />
     <ClCompile Include="Engine\Physics\CollisionShape\CollisionShape.cpp" />
     <ClCompile Include="Engine\Physics\CollisionShape\SphereShape\SphereShape.cpp" />
-    <ClCompile Include="Engine\Physics\DiscreteDynamicsWorld\DiscreteDynamicsWorld.cpp" />
+    <ClCompile Include="Engine\Physics\CollisionWorld\DynamicsWorld\DiscreteDynamicsWorld.cpp" />
     <ClCompile Include="Engine\Physics\Manager\PhysicsManager.cpp" />
     <ClCompile Include="Engine\Physics\RigidBody\RigidBody.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\BaseBuffer.cpp" />
@@ -124,7 +124,7 @@
     <ClInclude Include="Engine\Physics\CollisionShape\CapsuleShape\CapsuleShape.h" />
     <ClInclude Include="Engine\Physics\CollisionShape\CollisionShape.h" />
     <ClInclude Include="Engine\Physics\CollisionShape\SphereShape\SphereShape.h" />
-    <ClInclude Include="Engine\Physics\DiscreteDynamicsWorld\DiscreteDynamicsWorld.h" />
+    <ClInclude Include="Engine\Physics\CollisionWorld\DynamicsWorld\DiscreteDynamicsWorld.h" />
     <ClInclude Include="Engine\Physics\Manager\PhysicsManager.h" />
     <ClInclude Include="Engine\Physics\PhysicsInclude.h" />
     <ClInclude Include="Engine\Physics\RigidBody\RigidBody.h" />
