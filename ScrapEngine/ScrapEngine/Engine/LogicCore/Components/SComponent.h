@@ -31,6 +31,7 @@ namespace ScrapEngine
 
 			void set_father_transform(const STransform& input_father_transform);
 
+			virtual STransform get_component_transform() const;
 			virtual SVector3 get_component_location() const;
 			virtual SVector3 get_component_rotation() const;
 			virtual SVector3 get_component_scale() const;

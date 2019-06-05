@@ -230,9 +230,6 @@
     <Filter Include="Engine\Physics\CollisionShape\BoxShape">
       <UniqueIdentifier>{721701d8-1203-40b4-b62d-42533ca953ed}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Physics\RigidBody">
-      <UniqueIdentifier>{bd96407b-84f6-414d-a7bc-4c17e3b8a83f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Physics\Manager">
       <UniqueIdentifier>{874324aa-f50f-44c6-89a0-81ac96e60c5c}</UniqueIdentifier>
     </Filter>
@@ -259,6 +256,24 @@
     </Filter>
     <Filter Include="Engine\Physics\CollisionWorld\DynamicsWorld">
       <UniqueIdentifier>{09c7f0b9-7648-4bde-bd60-bef61f6ad38e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Physics\CollisionBody">
+      <UniqueIdentifier>{11de413a-c8c0-4929-b3a7-4f71a3e35aa6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Physics\RigidBody">
+      <UniqueIdentifier>{59388314-eade-4e34-b773-6906cc951e23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\LogicCore\Components\RigidBodyComponent">
+      <UniqueIdentifier>{f92ac433-ccbb-4013-9548-b1ff97104bd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\LogicCore\Components\RigidBodyComponent\BoxRigidBodyComponent">
+      <UniqueIdentifier>{2a467c2d-5f71-4a7f-981d-31669bebc114}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\LogicCore\Components\RigidBodyComponent\CapsuleRigidBodyComponent">
+      <UniqueIdentifier>{0a4c4a4d-4444-4516-8f16-b8893edab49e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\LogicCore\Components\RigidBodyComponent\SphereRigidBodyComponent">
+      <UniqueIdentifier>{2dfcddef-16c1-4315-a4f4-fba4e657e13c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -466,9 +481,6 @@
     <ClCompile Include="Engine\Physics\CollisionShape\BoxShape\BoxShape.cpp">
       <Filter>Engine\Physics\CollisionShape\BoxShape</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Physics\RigidBody\RigidBody.cpp">
-      <Filter>Engine\Physics\RigidBody</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Physics\Manager\PhysicsManager.cpp">
       <Filter>Engine\Physics\Manager</Filter>
     </ClCompile>
@@ -495,6 +507,24 @@
     </ClCompile>
     <ClCompile Include="Engine\Physics\CollisionWorld\DynamicsWorld\DiscreteDynamicsWorld.cpp">
       <Filter>Engine\Physics\CollisionWorld\DynamicsWorld</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Physics\CollisionBody\CollisionBody.cpp">
+      <Filter>Engine\Physics\CollisionBody</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Physics\RigidBody\RigidBody.cpp">
+      <Filter>Engine\Physics\RigidBody</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\LogicCore\Components\RigidBodyComponent\RigidBodyComponent.cpp">
+      <Filter>Engine\LogicCore\Components\RigidBodyComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\LogicCore\Components\RigidBodyComponent\BoxRigidBodyComponent\BoxRigidBodyComponent.cpp">
+      <Filter>Engine\LogicCore\Components\RigidBodyComponent\BoxRigidBodyComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\LogicCore\Components\RigidBodyComponent\CapsuleRigidBodyComponent\CapsuleRigidBodyComponent.cpp">
+      <Filter>Engine\LogicCore\Components\RigidBodyComponent\CapsuleRigidBodyComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\LogicCore\Components\RigidBodyComponent\SphereRigidBodyComponent\SphereRigidBodyComponent.cpp">
+      <Filter>Engine\LogicCore\Components\RigidBodyComponent\SphereRigidBodyComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -720,9 +750,6 @@
     <ClInclude Include="Engine\Physics\CollisionShape\BoxShape\BoxShape.h">
       <Filter>Engine\Physics\CollisionShape\BoxShape</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Physics\RigidBody\RigidBody.h">
-      <Filter>Engine\Physics\RigidBody</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Physics\Manager\PhysicsManager.h">
       <Filter>Engine\Physics\Manager</Filter>
     </ClInclude>
@@ -752,6 +779,24 @@
     </ClInclude>
     <ClInclude Include="Engine\Physics\CollisionWorld\DynamicsWorld\DiscreteDynamicsWorld.h">
       <Filter>Engine\Physics\CollisionWorld\DynamicsWorld</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Physics\CollisionBody\CollisionBody.h">
+      <Filter>Engine\Physics\CollisionBody</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Physics\RigidBody\RigidBody.h">
+      <Filter>Engine\Physics\RigidBody</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\LogicCore\Components\RigidBodyComponent\RigidBodyComponent.h">
+      <Filter>Engine\LogicCore\Components\RigidBodyComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\LogicCore\Components\RigidBodyComponent\BoxRigidBodyComponent\BoxRigidBodyComponent.h">
+      <Filter>Engine\LogicCore\Components\RigidBodyComponent\BoxRigidBodyComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\LogicCore\Components\RigidBodyComponent\CapsuleRigidBodyComponent\CapsuleRigidBodyComponent.h">
+      <Filter>Engine\LogicCore\Components\RigidBodyComponent\CapsuleRigidBodyComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\LogicCore\Components\RigidBodyComponent\SphereRigidBodyComponent\SphereRigidBodyComponent.h">
+      <Filter>Engine\LogicCore\Components\RigidBodyComponent\SphereRigidBodyComponent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -2,7 +2,7 @@
 
 #include <Engine/LogicCore/Components/SComponent.h>
 #include <Engine/LogicCore/Components/MeshComponent/MeshComponent.h>
-#include <Engine/Physics/RigidBody/RigidBody.h>
+#include <Engine/Physics/CollisionBody/CollisionBody.h>
 
 namespace ScrapEngine
 {
@@ -11,16 +11,15 @@ namespace ScrapEngine
 		class ColliderComponent : public SComponent
 		{
 		private:
-			Physics::RigidBody* rigidbody_ = nullptr;
+			Physics::CollisionBody* collisionbody_ = nullptr;
 
 			MeshComponent* attached_mesh_ = nullptr;
 		public:
-			ColliderComponent(Physics::RigidBody* rigidbody);
+			ColliderComponent(Physics::CollisionBody* collisionbody);
 			virtual ~ColliderComponent();
 
-			void attach_to_mesh(MeshComponent* mesh);
-			void update_transform(float factor) const;
-			void set_rigidbody_type(Physics::RigidBody_Types type) const;
+			void set_component_location(const SVector3& location) override;
+			void set_component_rotation(const SVector3& rotation) override;
 		};
 	}
 }

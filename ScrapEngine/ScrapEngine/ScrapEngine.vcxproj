@@ -27,6 +27,10 @@
     <ClCompile Include="Engine\LogicCore\Components\ColliderComponent\SphereColliderComponent\SphereColliderComponent.cpp" />
     <ClCompile Include="Engine\LogicCore\Components\Manager\ComponentsManager.cpp" />
     <ClCompile Include="Engine\LogicCore\Components\MeshComponent\MeshComponent.cpp" />
+    <ClCompile Include="Engine\LogicCore\Components\RigidBodyComponent\BoxRigidBodyComponent\BoxRigidBodyComponent.cpp" />
+    <ClCompile Include="Engine\LogicCore\Components\RigidBodyComponent\CapsuleRigidBodyComponent\CapsuleRigidBodyComponent.cpp" />
+    <ClCompile Include="Engine\LogicCore\Components\RigidBodyComponent\RigidBodyComponent.cpp" />
+    <ClCompile Include="Engine\LogicCore\Components\RigidBodyComponent\SphereRigidBodyComponent\SphereRigidBodyComponent.cpp" />
     <ClCompile Include="Engine\LogicCore\Components\SComponent.cpp" />
     <ClCompile Include="Engine\LogicCore\GameObject\SGameObject.cpp" />
     <ClCompile Include="Engine\LogicCore\Manager\LogicManager.cpp" />
@@ -37,6 +41,7 @@
     <ClCompile Include="Engine\LogicCore\Scene\SceneManager.cpp" />
     <ClCompile Include="Engine\LogicCore\SObject.cpp" />
     <ClCompile Include="Engine\Manager\EngineManager.cpp" />
+    <ClCompile Include="Engine\Physics\CollisionBody\CollisionBody.cpp" />
     <ClCompile Include="Engine\Physics\CollisionShape\BoxShape\BoxShape.cpp" />
     <ClCompile Include="Engine\Physics\CollisionShape\CapsuleShape\CapsuleShape.cpp" />
     <ClCompile Include="Engine\Physics\CollisionShape\CollisionShape.cpp" />
@@ -110,6 +115,10 @@
     <ClInclude Include="Engine\LogicCore\Components\ColliderComponent\SphereColliderComponent\SphereColliderComponent.h" />
     <ClInclude Include="Engine\LogicCore\Components\Manager\ComponentsManager.h" />
     <ClInclude Include="Engine\LogicCore\Components\MeshComponent\MeshComponent.h" />
+    <ClInclude Include="Engine\LogicCore\Components\RigidBodyComponent\BoxRigidBodyComponent\BoxRigidBodyComponent.h" />
+    <ClInclude Include="Engine\LogicCore\Components\RigidBodyComponent\CapsuleRigidBodyComponent\CapsuleRigidBodyComponent.h" />
+    <ClInclude Include="Engine\LogicCore\Components\RigidBodyComponent\RigidBodyComponent.h" />
+    <ClInclude Include="Engine\LogicCore\Components\RigidBodyComponent\SphereRigidBodyComponent\SphereRigidBodyComponent.h" />
     <ClInclude Include="Engine\LogicCore\Components\SComponent.h" />
     <ClInclude Include="Engine\LogicCore\GameObject\SGameObject.h" />
     <ClInclude Include="Engine\LogicCore\Manager\LogicManager.h" />
@@ -120,6 +129,7 @@
     <ClInclude Include="Engine\LogicCore\Scene\SceneManager.h" />
     <ClInclude Include="Engine\LogicCore\SObject.h" />
     <ClInclude Include="Engine\Manager\EngineManager.h" />
+    <ClInclude Include="Engine\Physics\CollisionBody\CollisionBody.h" />
     <ClInclude Include="Engine\Physics\CollisionShape\BoxShape\BoxShape.h" />
     <ClInclude Include="Engine\Physics\CollisionShape\CapsuleShape\CapsuleShape.h" />
     <ClInclude Include="Engine\Physics\CollisionShape\CollisionShape.h" />

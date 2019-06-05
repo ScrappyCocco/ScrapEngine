@@ -4,6 +4,33 @@
 #include <Engine/Physics/CollisionShape/SphereShape/SphereShape.h>
 #include <Engine/Physics/CollisionShape/CapsuleShape/CapsuleShape.h>
 
+ScrapEngine::Physics::RigidBody* ScrapEngine::Physics::PhysicsManager::create_rigidbody(
+	const Core::SVector3& start_position, float mass, CollisionShape* c_shape) const
+{
+	RigidBody* body = new RigidBody();
+
+	const rp3d::Vector3 start_position_v(start_position.get_x(), start_position.get_y(), start_position.get_z());
+	body->set_start_transform(start_position_v);
+	body->build_rigidbody(p_world_->get_dynamic_world());
+	body->set_mass(mass);
+	body->set_collision_shape(c_shape);
+
+	return body;
+}
+
+ScrapEngine::Physics::CollisionBody* ScrapEngine::Physics::PhysicsManager::create_collision_body(
+	const Core::SVector3& start_position, CollisionShape* c_shape) const
+{
+	CollisionBody* body = new CollisionBody();
+
+	const rp3d::Vector3 start_position_v(start_position.get_x(), start_position.get_y(), start_position.get_z());
+	body->set_start_transform(start_position_v);
+	body->build_collision_body(p_world_->get_dynamic_world());
+	body->set_collision_shape(c_shape);
+
+	return body;
+}
+
 ScrapEngine::Physics::PhysicsManager::PhysicsManager()
 {
 	p_world_ = new DiscreteDynamicsWorld();
@@ -12,7 +39,7 @@ ScrapEngine::Physics::PhysicsManager::PhysicsManager()
 ScrapEngine::Physics::PhysicsManager::~PhysicsManager()
 {
 	//The responsibility to clear the RigidBody* is of the logic manager that create them
-	created_rigid_bodies_.clear();
+	created_rigidbodies_.clear();
 	delete p_world_;
 }
 
@@ -24,69 +51,88 @@ void ScrapEngine::Physics::PhysicsManager::update_physics(const float delta_time
 void ScrapEngine::Physics::PhysicsManager::remove_rigidbody(RigidBody* rigidbody)
 {
 	//Remove the rigidbody from the vector
-	created_rigid_bodies_.erase(std::remove(
-		                            created_rigid_bodies_.begin(),
-		                            created_rigid_bodies_.end(),
-		                            rigidbody),
-	                            created_rigid_bodies_.end());
+	created_rigidbodies_.erase(std::remove(
+		                           created_rigidbodies_.begin(),
+		                           created_rigidbodies_.end(),
+		                           rigidbody),
+	                           created_rigidbodies_.end());
 	//Unregister the element
 	rigidbody->remove_from_world(p_world_->get_dynamic_world());
 }
 
-ScrapEngine::Physics::RigidBody* ScrapEngine::Physics::PhysicsManager::create_box_collider(
+ScrapEngine::Physics::CollisionBody* ScrapEngine::Physics::PhysicsManager::create_box_collider(const Core::SVector3& size,
+                                                                                           const Core::SVector3&
+                                                                                           start_position)
+{
+	BoxShape* box_shape = new BoxShape(size);
+	CollisionBody* body = create_collision_body(start_position, box_shape);
+
+	created_collisionbodies_.push_back(body);
+
+	return body;
+}
+
+ScrapEngine::Physics::CollisionBody* ScrapEngine::Physics::PhysicsManager::create_sphere_collider(const float radius,
+                                                                                              const Core::SVector3&
+                                                                                              start_position)
+{
+	SphereShape* sphere_shape = new SphereShape(radius);
+	CollisionBody* body = create_collision_body(start_position, sphere_shape);
+
+	created_collisionbodies_.push_back(body);
+
+	return body;
+}
+
+ScrapEngine::Physics::CollisionBody* ScrapEngine::Physics::PhysicsManager::create_capsule_collider(const float radius,
+                                                                                               const float height,
+                                                                                               const Core::SVector3&
+                                                                                               start_position)
+{
+	CapsuleShape* capsule_shape = new CapsuleShape(radius, height);
+	CollisionBody* body = create_collision_body(start_position, capsule_shape);
+
+	created_collisionbodies_.push_back(body);
+
+	return body;
+}
+
+ScrapEngine::Physics::RigidBody* ScrapEngine::Physics::PhysicsManager::create_box_rigidbody(
 	const Core::SVector3& size,
 	const Core::SVector3& start_position,
 	const float mass)
 {
 	BoxShape* box_shape = new BoxShape(size);
-	RigidBody* body = new RigidBody();
+	RigidBody* body = create_rigidbody(start_position, mass, box_shape);
 
-	const rp3d::Vector3 start_position_v(start_position.get_x(), start_position.get_y(), start_position.get_z());
-	body->set_start_transform(start_position_v);
-	body->build_rigidbody(p_world_->get_dynamic_world());
-	body->set_mass(mass);
-	body->set_collision_shape(box_shape);
-
-	created_rigid_bodies_.push_back(body);
+	created_rigidbodies_.push_back(body);
 
 	return body;
 }
 
-ScrapEngine::Physics::RigidBody* ScrapEngine::Physics::PhysicsManager::create_sphere_collider(
+ScrapEngine::Physics::RigidBody* ScrapEngine::Physics::PhysicsManager::create_sphere_rigidbody(
 	const float radius,
 	const Core::SVector3& start_position,
 	const float mass)
 {
 	SphereShape* sphere_shape = new SphereShape(radius);
-	RigidBody* body = new RigidBody();
+	RigidBody* body = create_rigidbody(start_position, mass, sphere_shape);
 
-	const rp3d::Vector3 start_position_v(start_position.get_x(), start_position.get_y(), start_position.get_z());
-	body->set_start_transform(start_position_v);
-	body->build_rigidbody(p_world_->get_dynamic_world());
-	body->set_mass(mass);
-	body->set_collision_shape(sphere_shape);
-
-	created_rigid_bodies_.push_back(body);
+	created_rigidbodies_.push_back(body);
 
 	return body;
 }
 
-ScrapEngine::Physics::RigidBody* ScrapEngine::Physics::PhysicsManager::create_capsule_collider(
+ScrapEngine::Physics::RigidBody* ScrapEngine::Physics::PhysicsManager::create_capsule_rigidbody(
 	const float radius,
 	const float height,
 	const Core::SVector3& start_position,
 	const float mass)
 {
 	CapsuleShape* capsule_shape = new CapsuleShape(radius, height);
-	RigidBody* body = new RigidBody();
+	RigidBody* body = create_rigidbody(start_position, mass, capsule_shape);
 
-	const rp3d::Vector3 start_position_v(start_position.get_x(), start_position.get_y(), start_position.get_z());
-	body->set_start_transform(start_position_v);
-	body->build_rigidbody(p_world_->get_dynamic_world());
-	body->set_mass(mass);
-	body->set_collision_shape(capsule_shape);
-
-	created_rigid_bodies_.push_back(body);
+	created_rigidbodies_.push_back(body);
 
 	return body;
 }

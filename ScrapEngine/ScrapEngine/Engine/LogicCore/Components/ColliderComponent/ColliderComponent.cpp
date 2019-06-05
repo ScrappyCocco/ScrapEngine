@@ -1,31 +1,25 @@
 #include <Engine/LogicCore/Components/ColliderComponent/ColliderComponent.h>
 
-ScrapEngine::Core::ColliderComponent::ColliderComponent(Physics::RigidBody* rigidbody)
-	:SComponent("ColliderComponent"), rigidbody_(rigidbody)
+ScrapEngine::Core::ColliderComponent::ColliderComponent(Physics::CollisionBody* collisionbody)
+	:SComponent("ColliderComponent"), collisionbody_(collisionbody)
 {
 }
 
 ScrapEngine::Core::ColliderComponent::~ColliderComponent()
 {
-	delete rigidbody_;
+	delete collisionbody_;
 }
 
-void ScrapEngine::Core::ColliderComponent::attach_to_mesh(MeshComponent* mesh)
+void ScrapEngine::Core::ColliderComponent::set_component_location(const SVector3& location)
 {
-	attached_mesh_ = mesh;
+	SComponent::set_component_location(location);
+	collisionbody_->update_trasform(get_component_transform());
 }
 
-void ScrapEngine::Core::ColliderComponent::update_transform(const float factor) const
+void ScrapEngine::Core::ColliderComponent::set_component_rotation(const SVector3& rotation)
 {
-	if (attached_mesh_) {
-		const STransform new_transform = rigidbody_->get_updated_transform(factor);
-
-		attached_mesh_->set_component_location(new_transform.get_position());
-		attached_mesh_->set_component_rotation(new_transform.get_rotation());
-	}
+	SComponent::set_component_rotation(rotation);
+	collisionbody_->update_trasform(get_component_transform());
 }
 
-void ScrapEngine::Core::ColliderComponent::set_rigidbody_type(Physics::RigidBody_Types type) const
-{
-	rigidbody_->set_type(type);
-}
+

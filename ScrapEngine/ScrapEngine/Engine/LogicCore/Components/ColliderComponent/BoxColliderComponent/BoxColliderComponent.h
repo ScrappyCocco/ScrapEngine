@@ -1,6 +1,5 @@
 #pragma once
 
-#include <Engine/Physics/RigidBody/RigidBody.h>
 #include <Engine/LogicCore/Components/ColliderComponent/ColliderComponent.h>
 
 namespace ScrapEngine
@@ -10,7 +9,7 @@ namespace ScrapEngine
 		class BoxColliderComponent : public ColliderComponent
 		{
 		public:
-			BoxColliderComponent(Physics::RigidBody* rigidbody);
+			BoxColliderComponent(Physics::CollisionBody* collisionbody);
 			~BoxColliderComponent() = default;
 		};
 	}

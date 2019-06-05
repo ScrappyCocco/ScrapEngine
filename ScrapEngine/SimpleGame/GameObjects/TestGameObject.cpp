@@ -17,7 +17,7 @@ TestGameObject::TestGameObject(ScrapEngine::Core::ComponentsManager* input_Compo
 	);
 	add_component(mesh);
 
-	ScrapEngine::Core::ColliderComponent* collider = input_ComponentManager->create_sphere_collider_component(
+	ScrapEngine::Core::RigidBodyComponent* collider = input_ComponentManager->create_sphere_rigidbody_component(
 		10.f,
 		ScrapEngine::Core::SVector3(0, 100, 0), 10.f);
 	add_component(collider);

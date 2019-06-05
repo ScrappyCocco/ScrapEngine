@@ -63,6 +63,11 @@ void ScrapEngine::Core::SComponent::set_father_transform(const STransform& input
 	father_transform_ = input_father_transform;
 }
 
+ScrapEngine::Core::STransform ScrapEngine::Core::SComponent::get_component_transform() const
+{
+	return object_world_transform_;
+}
+
 ScrapEngine::Core::SVector3 ScrapEngine::Core::SComponent::get_component_location() const
 {
 	return object_world_transform_.get_position();

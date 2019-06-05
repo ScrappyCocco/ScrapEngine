@@ -8,6 +8,10 @@
 #include <Engine/LogicCore/Components/ColliderComponent/BoxColliderComponent/BoxColliderComponent.h>
 #include <Engine/LogicCore/Components/ColliderComponent/CapsuleColliderComponent/CapsuleColliderComponent.h>
 #include <Engine/LogicCore/Components/ColliderComponent/SphereColliderComponent/SphereColliderComponent.h>
+#include <Engine/LogicCore/Components/RigidBodyComponent/RigidBodyComponent.h>
+#include <Engine/LogicCore/Components/RigidBodyComponent/BoxRigidBodyComponent/BoxRigidBodyComponent.h>
+#include <Engine/LogicCore/Components/RigidBodyComponent/CapsuleRigidBodyComponent/CapsuleRigidBodyComponent.h>
+#include <Engine/LogicCore/Components/RigidBodyComponent/SphereRigidBodyComponent/SphereRigidBodyComponent.h>
 
 namespace ScrapEngine
 {
@@ -20,7 +24,7 @@ namespace ScrapEngine
 			Physics::PhysicsManager* physics_manager_ref_ = nullptr;
 
 			std::map<MeshComponent*, Render::VulkanMeshInstance*> loaded_meshes_;
-			std::map<ColliderComponent*, Physics::RigidBody*> loaded_collisions_;
+			std::map<RigidBodyComponent*, Physics::RigidBody*> loaded_rigidbody_collisions_;
 		public:
 			explicit ComponentsManager() = default;
 			~ComponentsManager() = default;
@@ -37,20 +41,21 @@ namespace ScrapEngine
 
 			//Physics stuff
 			void update_rigidbody_physics(float factor);
-			void destroy_collider_component(ColliderComponent* component_to_destroy);
+			void destroy_rigidbody_component(RigidBodyComponent* component_to_destroy);
 
+			//--->Rigidbodies
 			//BoxColliderComponent
-			BoxColliderComponent* create_box_collider_component(const Core::SVector3& size,
+			BoxRigidBodyComponent* create_box_rigidbody_component(const Core::SVector3& size,
 			                                                    const Core::SVector3& start_position,
 			                                                    float mass = 0.f);
 
 			//CapsuleColliderComponent
-			CapsuleColliderComponent* create_capsule_collider_component(float radius,
+			CapsuleRigidBodyComponent* create_capsule_rigidbody_component(float radius,
 			                                                            float height,
 			                                                            const Core::SVector3& start_position,
 			                                                            float mass = 0.f);
-
-			SphereColliderComponent* create_sphere_collider_component(float radius,
+			//SphereColliderComponent
+			SphereRigidBodyComponent* create_sphere_rigidbody_component(float radius,
 			                                                          const Core::SVector3& start_position,
 			                                                          float mass = 0.f);
 		};
