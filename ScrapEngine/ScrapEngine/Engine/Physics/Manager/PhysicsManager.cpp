@@ -48,6 +48,18 @@ void ScrapEngine::Physics::PhysicsManager::update_physics(const float delta_time
 	p_world_->step_simulation(delta_time);
 }
 
+void ScrapEngine::Physics::PhysicsManager::remove_collider(CollisionBody* collider)
+{
+	//Remove the collider from the vector
+	created_collisionbodies_.erase(std::remove(
+		created_collisionbodies_.begin(),
+		created_collisionbodies_.end(),
+		collider),
+		created_collisionbodies_.end());
+	//Unregister the element
+	collider->remove_from_world(p_world_->get_dynamic_world());
+}
+
 void ScrapEngine::Physics::PhysicsManager::remove_rigidbody(RigidBody* rigidbody)
 {
 	//Remove the rigidbody from the vector

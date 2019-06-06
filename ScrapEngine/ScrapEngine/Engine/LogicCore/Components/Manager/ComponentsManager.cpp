@@ -90,3 +90,50 @@ void ScrapEngine::Core::ComponentsManager::destroy_rigidbody_component(RigidBody
 		loaded_rigidbody_collisions_.erase(position);
 	}
 }
+
+ScrapEngine::Core::BoxColliderComponent* ScrapEngine::Core::ComponentsManager::create_box_collider_component(
+	const Core::SVector3& size, const Core::SVector3& start_position)
+{
+	Physics::CollisionBody* body = physics_manager_ref_->create_box_collider(size, start_position);
+	BoxColliderComponent* component = new BoxColliderComponent(body);
+
+	std::pair<ColliderComponent*, Physics::CollisionBody*> pair_to_insert(component, body);
+	loaded_collider_collisions_.insert(pair_to_insert);
+
+	return component;
+}
+
+ScrapEngine::Core::CapsuleColliderComponent* ScrapEngine::Core::ComponentsManager::create_capsule_collider_component(
+	const float radius, const float height, const Core::SVector3& start_position)
+{
+	Physics::CollisionBody* body = physics_manager_ref_->create_capsule_collider(radius, height, start_position);
+	CapsuleColliderComponent* component = new CapsuleColliderComponent(body);
+
+	std::pair<ColliderComponent*, Physics::CollisionBody*> pair_to_insert(component, body);
+	loaded_collider_collisions_.insert(pair_to_insert);
+
+	return component;
+}
+
+ScrapEngine::Core::SphereColliderComponent* ScrapEngine::Core::ComponentsManager::create_sphere_collider_component(
+	const float radius, const Core::SVector3& start_position)
+{
+	Physics::CollisionBody* body = physics_manager_ref_->create_sphere_collider(radius, start_position);
+	SphereColliderComponent* component = new SphereColliderComponent(body);
+
+	std::pair<ColliderComponent*, Physics::CollisionBody*> pair_to_insert(component, body);
+	loaded_collider_collisions_.insert(pair_to_insert);
+
+	return component;
+}
+
+void ScrapEngine::Core::ComponentsManager::destroy_collider_component(ColliderComponent* component_to_destroy)
+{
+	const std::map<ColliderComponent*, Physics::CollisionBody*>::iterator position =
+		loaded_collider_collisions_.find(component_to_destroy);
+	if (position != loaded_collider_collisions_.end())
+	{
+		physics_manager_ref_->remove_collider(position->second);
+		loaded_collider_collisions_.erase(position);
+	}
+}

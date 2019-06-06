@@ -25,6 +25,7 @@ namespace ScrapEngine
 
 			std::map<MeshComponent*, Render::VulkanMeshInstance*> loaded_meshes_;
 			std::map<RigidBodyComponent*, Physics::RigidBody*> loaded_rigidbody_collisions_;
+			std::map<ColliderComponent*, Physics::CollisionBody*> loaded_collider_collisions_;
 		public:
 			explicit ComponentsManager() = default;
 			~ComponentsManager() = default;
@@ -32,6 +33,7 @@ namespace ScrapEngine
 			void set_render_manager(Render::RenderManager* input_render_manager_ref);
 			void set_physics_manager(Physics::PhysicsManager* input_physics_manager);
 
+			//----------------------------------------
 			//MeshStuff
 			MeshComponent* create_new_mesh_component(const std::string& vertex_shader_path,
 			                                         const std::string& fragment_shader_path,
@@ -39,25 +41,41 @@ namespace ScrapEngine
 			                                         const std::vector<std::string>& textures_path);
 			void destroy_mesh_component(MeshComponent* component_to_destroy);
 
+			//----------------------------------------
 			//Physics stuff
 			void update_rigidbody_physics(float factor);
+			void destroy_collider_component(ColliderComponent* component_to_destroy);
 			void destroy_rigidbody_component(RigidBodyComponent* component_to_destroy);
+
+			//--->Standard collisions
+			//BoxColliderComponent
+			BoxColliderComponent* create_box_collider_component(const Core::SVector3& size,
+			                                                    const Core::SVector3& start_position);
+
+			//CapsuleColliderComponent
+			CapsuleColliderComponent* create_capsule_collider_component(float radius,
+			                                                            float height,
+			                                                            const Core::SVector3& start_position);
+
+			//SphereColliderComponent
+			SphereColliderComponent* create_sphere_collider_component(float radius,
+			                                                          const Core::SVector3& start_position);
 
 			//--->Rigidbodies
 			//BoxColliderComponent
 			BoxRigidBodyComponent* create_box_rigidbody_component(const Core::SVector3& size,
-			                                                    const Core::SVector3& start_position,
-			                                                    float mass = 0.f);
+			                                                      const Core::SVector3& start_position,
+			                                                      float mass = 0.f);
 
 			//CapsuleColliderComponent
 			CapsuleRigidBodyComponent* create_capsule_rigidbody_component(float radius,
-			                                                            float height,
-			                                                            const Core::SVector3& start_position,
-			                                                            float mass = 0.f);
+			                                                              float height,
+			                                                              const Core::SVector3& start_position,
+			                                                              float mass = 0.f);
 			//SphereColliderComponent
 			SphereRigidBodyComponent* create_sphere_rigidbody_component(float radius,
-			                                                          const Core::SVector3& start_position,
-			                                                          float mass = 0.f);
+			                                                            const Core::SVector3& start_position,
+			                                                            float mass = 0.f);
 		};
 	}
 }

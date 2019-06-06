@@ -28,6 +28,7 @@ namespace ScrapEngine
 
 			//Class stuff
 			void update_physics(float delta_time) const;
+			void remove_collider(CollisionBody* collider);
 			void remove_rigidbody(RigidBody* rigidbody);
 
 			//Standard collider (is not moved from the engine)
