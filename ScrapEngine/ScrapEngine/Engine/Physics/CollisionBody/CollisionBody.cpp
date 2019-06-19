@@ -28,6 +28,7 @@ void ScrapEngine::Physics::CollisionBody::set_collision_shape(CollisionShape* sh
 void ScrapEngine::Physics::CollisionBody::build_collision_body(rp3d::DynamicsWorld* dynamic_world)
 {
 	body_ = dynamic_world->createCollisionBody(transform_);
+	world_ref_ = dynamic_world;
 }
 
 void ScrapEngine::Physics::CollisionBody::remove_from_world(rp3d::DynamicsWorld* dynamic_world) const
@@ -50,4 +51,14 @@ void ScrapEngine::Physics::CollisionBody::update_trasform(const Core::STransform
 
 	const rp3d::Transform new_transform(position, rotation);
 	body_->setTransform(new_transform);
+}
+
+bool ScrapEngine::Physics::CollisionBody::test_collision(rp3d::CollisionBody* other_body) const
+{
+	return world_ref_->testOverlap(body_, other_body);
+}
+
+bool ScrapEngine::Physics::CollisionBody::test_collision(CollisionBody* other_body) const
+{
+	return test_collision(other_body->body_);
 }

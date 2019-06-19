@@ -233,23 +233,11 @@
     <Filter Include="Engine\Physics\Manager">
       <UniqueIdentifier>{874324aa-f50f-44c6-89a0-81ac96e60c5c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\LogicCore\Components\ColliderComponent">
-      <UniqueIdentifier>{46cb3d16-cc5a-4310-b40b-b5eec9a2d8cb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\LogicCore\Components\ColliderComponent\BoxColliderComponent">
-      <UniqueIdentifier>{43c14a51-b62d-409a-a89d-d20ed22b9137}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Physics\CollisionShape\SphereShape">
       <UniqueIdentifier>{7a478368-f725-4c87-863e-a9dd19052ecf}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\Physics\CollisionShape\CapsuleShape">
       <UniqueIdentifier>{7d4d00dd-966c-41b2-8892-c2020990c433}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\LogicCore\Components\ColliderComponent\CapsuleColliderComponent">
-      <UniqueIdentifier>{c29a05e7-c72b-4920-bff0-a1d6aac65cd0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\LogicCore\Components\ColliderComponent\SphereColliderComponent">
-      <UniqueIdentifier>{f4c39d33-3aab-4384-9463-22c2c3bd83e7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\Physics\CollisionWorld">
       <UniqueIdentifier>{3269aaff-f592-4e17-bc24-92f9924a4e7e}</UniqueIdentifier>
@@ -274,6 +262,12 @@
     </Filter>
     <Filter Include="Engine\LogicCore\Components\RigidBodyComponent\SphereRigidBodyComponent">
       <UniqueIdentifier>{2dfcddef-16c1-4315-a4f4-fba4e657e13c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\LogicCore\Components\TriggerComponent">
+      <UniqueIdentifier>{ce5ca7a6-e7fc-4820-a9d7-d4bd194c94d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\LogicCore\Components\TriggerComponent\BoxTriggerComponent">
+      <UniqueIdentifier>{06f0350a-5851-4310-ae28-a56fa8ecc6dd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -487,23 +481,11 @@
     <ClCompile Include="Engine\Physics\CollisionShape\CollisionShape.cpp">
       <Filter>Engine\Physics\CollisionShape</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\LogicCore\Components\ColliderComponent\BoxColliderComponent\BoxColliderComponent.cpp">
-      <Filter>Engine\LogicCore\Components\ColliderComponent\BoxColliderComponent</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\LogicCore\Components\ColliderComponent\ColliderComponent.cpp">
-      <Filter>Engine\LogicCore\Components\ColliderComponent</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Physics\CollisionShape\SphereShape\SphereShape.cpp">
       <Filter>Engine\Physics\CollisionShape\SphereShape</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Physics\CollisionShape\CapsuleShape\CapsuleShape.cpp">
       <Filter>Engine\Physics\CollisionShape\CapsuleShape</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\LogicCore\Components\ColliderComponent\CapsuleColliderComponent\CapsuleColliderComponent.cpp">
-      <Filter>Engine\LogicCore\Components\ColliderComponent\CapsuleColliderComponent</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\LogicCore\Components\ColliderComponent\SphereColliderComponent\SphereColliderComponent.cpp">
-      <Filter>Engine\LogicCore\Components\ColliderComponent\SphereColliderComponent</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Physics\CollisionWorld\DynamicsWorld\DiscreteDynamicsWorld.cpp">
       <Filter>Engine\Physics\CollisionWorld\DynamicsWorld</Filter>
@@ -525,6 +507,12 @@
     </ClCompile>
     <ClCompile Include="Engine\LogicCore\Components\RigidBodyComponent\SphereRigidBodyComponent\SphereRigidBodyComponent.cpp">
       <Filter>Engine\LogicCore\Components\RigidBodyComponent\SphereRigidBodyComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\LogicCore\Components\TriggerComponent\BoxTriggerComponent\BoxTriggerComponent.cpp">
+      <Filter>Engine\LogicCore\Components\TriggerComponent\BoxTriggerComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\LogicCore\Components\TriggerComponent\TriggerComponent.cpp">
+      <Filter>Engine\LogicCore\Components\TriggerComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -756,12 +744,6 @@
     <ClInclude Include="Engine\Physics\CollisionShape\CollisionShape.h">
       <Filter>Engine\Physics\CollisionShape</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\LogicCore\Components\ColliderComponent\BoxColliderComponent\BoxColliderComponent.h">
-      <Filter>Engine\LogicCore\Components\ColliderComponent\BoxColliderComponent</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\LogicCore\Components\ColliderComponent\ColliderComponent.h">
-      <Filter>Engine\LogicCore\Components\ColliderComponent</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Physics\PhysicsInclude.h">
       <Filter>Engine\Physics</Filter>
     </ClInclude>
@@ -770,12 +752,6 @@
     </ClInclude>
     <ClInclude Include="Engine\Physics\CollisionShape\CapsuleShape\CapsuleShape.h">
       <Filter>Engine\Physics\CollisionShape\CapsuleShape</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\LogicCore\Components\ColliderComponent\CapsuleColliderComponent\CapsuleColliderComponent.h">
-      <Filter>Engine\LogicCore\Components\ColliderComponent\CapsuleColliderComponent</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\LogicCore\Components\ColliderComponent\SphereColliderComponent\SphereColliderComponent.h">
-      <Filter>Engine\LogicCore\Components\ColliderComponent\SphereColliderComponent</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Physics\CollisionWorld\DynamicsWorld\DiscreteDynamicsWorld.h">
       <Filter>Engine\Physics\CollisionWorld\DynamicsWorld</Filter>
@@ -797,6 +773,12 @@
     </ClInclude>
     <ClInclude Include="Engine\LogicCore\Components\RigidBodyComponent\SphereRigidBodyComponent\SphereRigidBodyComponent.h">
       <Filter>Engine\LogicCore\Components\RigidBodyComponent\SphereRigidBodyComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\LogicCore\Components\TriggerComponent\BoxTriggerComponent\BoxTriggerComponent.h">
+      <Filter>Engine\LogicCore\Components\TriggerComponent\BoxTriggerComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\LogicCore\Components\TriggerComponent\TriggerComponent.h">
+      <Filter>Engine\LogicCore\Components\TriggerComponent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

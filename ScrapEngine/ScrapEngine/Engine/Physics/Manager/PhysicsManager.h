@@ -31,16 +31,9 @@ namespace ScrapEngine
 			void remove_collider(CollisionBody* collider);
 			void remove_rigidbody(RigidBody* rigidbody);
 
-			//Standard collider (is not moved from the engine)
-			CollisionBody* create_box_collider(const Core::SVector3& size,
+			//Standard collider (is not moved from the engine, basically a trigger)
+			CollisionBody* create_box_trigger(const Core::SVector3& size,
 			                               const Core::SVector3& start_position);
-
-			CollisionBody* create_sphere_collider(float radius,
-			                                  const Core::SVector3& start_position);
-
-			CollisionBody* create_capsule_collider(float radius,
-			                                   float height,
-			                                   const Core::SVector3& start_position);
 
 			//RigidBody
 			RigidBody* create_box_rigidbody(const Core::SVector3& size,

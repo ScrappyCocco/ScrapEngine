@@ -14,6 +14,8 @@ namespace ScrapEngine
 			Physics::RigidBody* rigidbody_ = nullptr;
 
 			MeshComponent* attached_mesh_ = nullptr;
+
+			friend class TriggerComponent;
 		public:
 			RigidBodyComponent(Physics::RigidBody* rigidbody);
 			virtual ~RigidBodyComponent();

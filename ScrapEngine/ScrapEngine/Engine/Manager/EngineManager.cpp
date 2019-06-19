@@ -70,10 +70,10 @@ void ScrapEngine::Manager::EngineManager::main_game_loop()
 	{
 		//Compute frame delta time
 		const float time = std::chrono::duration<float, std::chrono::seconds::period>(current_time - start_time).count();
-		//Update physics
-		physics_update(time);
 		//Execute objects update()
 		scrap_logic_manager_->execute_game_objects_update_event(time);
+		//Update physics
+		physics_update(time);
 		//Draw frame and compute new times
 		start_time = std::chrono::high_resolution_clock::now();
 		scrap_render_manager_->draw_frame();

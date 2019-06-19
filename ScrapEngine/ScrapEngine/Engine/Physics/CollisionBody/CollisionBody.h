@@ -13,6 +13,7 @@ namespace ScrapEngine
 			rp3d::Transform transform_;
 			CollisionShape* shape_ = nullptr;
 			rp3d::ProxyShape* proxy_shape_ = nullptr;
+			rp3d::DynamicsWorld* world_ref_ = nullptr;
 
 			rp3d::CollisionBody* body_ = nullptr;
 		public:
@@ -28,6 +29,9 @@ namespace ScrapEngine
 
 			rp3d::CollisionBody* get_collision_body() const;
 			void update_trasform(const Core::STransform& trasform) const;
+
+			bool test_collision(rp3d::CollisionBody* other_body) const;
+			bool test_collision(CollisionBody* other_body) const;
 		};
 	}
 }

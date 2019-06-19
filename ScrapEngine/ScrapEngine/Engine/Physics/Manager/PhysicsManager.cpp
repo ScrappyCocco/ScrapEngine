@@ -72,37 +72,12 @@ void ScrapEngine::Physics::PhysicsManager::remove_rigidbody(RigidBody* rigidbody
 	rigidbody->remove_from_world(p_world_->get_dynamic_world());
 }
 
-ScrapEngine::Physics::CollisionBody* ScrapEngine::Physics::PhysicsManager::create_box_collider(const Core::SVector3& size,
+ScrapEngine::Physics::CollisionBody* ScrapEngine::Physics::PhysicsManager::create_box_trigger(const Core::SVector3& size,
                                                                                            const Core::SVector3&
                                                                                            start_position)
 {
 	BoxShape* box_shape = new BoxShape(size);
 	CollisionBody* body = create_collision_body(start_position, box_shape);
-
-	created_collisionbodies_.push_back(body);
-
-	return body;
-}
-
-ScrapEngine::Physics::CollisionBody* ScrapEngine::Physics::PhysicsManager::create_sphere_collider(const float radius,
-                                                                                              const Core::SVector3&
-                                                                                              start_position)
-{
-	SphereShape* sphere_shape = new SphereShape(radius);
-	CollisionBody* body = create_collision_body(start_position, sphere_shape);
-
-	created_collisionbodies_.push_back(body);
-
-	return body;
-}
-
-ScrapEngine::Physics::CollisionBody* ScrapEngine::Physics::PhysicsManager::create_capsule_collider(const float radius,
-                                                                                               const float height,
-                                                                                               const Core::SVector3&
-                                                                                               start_position)
-{
-	CapsuleShape* capsule_shape = new CapsuleShape(radius, height);
-	CollisionBody* body = create_collision_body(start_position, capsule_shape);
 
 	created_collisionbodies_.push_back(body);
 
