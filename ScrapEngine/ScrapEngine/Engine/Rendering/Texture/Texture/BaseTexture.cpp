@@ -31,11 +31,11 @@ ScrapEngine::Render::BaseStagingBuffer* ScrapEngine::Render::BaseTexture::get_te
 }
 
 void ScrapEngine::Render::BaseTexture::create_image(const uint32_t& width, const uint32_t& height,
-                                                    const vk::Format& format, vk::ImageTiling tiling,
+                                                    const vk::Format& format, const vk::ImageTiling tiling,
                                                     const vk::ImageUsageFlags& usage,
                                                     const vk::MemoryPropertyFlags& properties, vk::Image& image,
-                                                    vk::DeviceMemory& image_memory, uint32_t mip_levels_data,
-                                                    vk::SampleCountFlagBits num_samples)
+                                                    vk::DeviceMemory& image_memory, const uint32_t mip_levels_data,
+                                                    const vk::SampleCountFlagBits num_samples)
 {
 	vk::ImageCreateInfo image_info(
 		vk::ImageCreateFlags(),
@@ -76,7 +76,7 @@ void ScrapEngine::Render::BaseTexture::create_image(const uint32_t& width, const
 void ScrapEngine::Render::BaseTexture::transition_image_layout(vk::Image* image, const vk::Format& format,
                                                                const vk::ImageLayout& old_layout,
                                                                const vk::ImageLayout& new_layout,
-                                                               const uint32_t& mip_levels_data, int layercount)
+                                                               const uint32_t& mip_levels_data, const int layercount)
 {
 	vk::CommandBuffer* command_buffer = BaseBuffer::begin_single_time_commands();
 

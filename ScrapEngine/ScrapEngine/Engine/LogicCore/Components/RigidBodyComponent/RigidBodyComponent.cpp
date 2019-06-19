@@ -46,7 +46,7 @@ void ScrapEngine::Core::RigidBodyComponent::update_transform(const float factor)
 	}
 }
 
-void ScrapEngine::Core::RigidBodyComponent::set_rigidbody_type(Physics::RigidBody_Types type) const
+void ScrapEngine::Core::RigidBodyComponent::set_rigidbody_type(const Physics::RigidBody_Types type) const
 {
 	rigidbody_->set_type(type);
 }

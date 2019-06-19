@@ -5,7 +5,7 @@
 #include <Engine/Physics/CollisionShape/CapsuleShape/CapsuleShape.h>
 
 ScrapEngine::Physics::RigidBody* ScrapEngine::Physics::PhysicsManager::create_rigidbody(
-	const Core::SVector3& start_position, float mass, CollisionShape* c_shape) const
+	const Core::SVector3& start_position, const float mass, CollisionShape* c_shape) const
 {
 	RigidBody* body = new RigidBody();
 

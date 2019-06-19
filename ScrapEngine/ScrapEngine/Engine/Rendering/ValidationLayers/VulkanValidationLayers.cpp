@@ -78,7 +78,7 @@ std::vector<const char*> ScrapEngine::Render::VulkanValidationLayers::get_valida
 }
 
 VKAPI_ATTR VkBool32 VKAPI_CALL ScrapEngine::Render::VulkanValidationLayers::debug_callback(
-	VkDebugUtilsMessageSeverityFlagBitsEXT message_severity, VkDebugUtilsMessageTypeFlagsEXT message_type,
+	const VkDebugUtilsMessageSeverityFlagBitsEXT message_severity, VkDebugUtilsMessageTypeFlagsEXT message_type,
 	const VkDebugUtilsMessengerCallbackDataEXT* p_callback_data, void* p_user_data)
 {
 	std::string message_severity_string;

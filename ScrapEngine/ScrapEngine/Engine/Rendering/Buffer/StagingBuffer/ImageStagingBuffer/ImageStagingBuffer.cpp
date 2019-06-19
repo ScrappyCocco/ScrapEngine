@@ -29,8 +29,8 @@ void ScrapEngine::Render::ImageStagingBuffer::copy_buffer_to_image(vk::Buffer* b
 
 void ScrapEngine::Render::ImageStagingBuffer::copy_buffer_to_image(vk::Buffer* buffer, vk::Image* image,
                                                                    const uint32_t& width, const uint32_t& height,
-                                                                   vk::BufferImageCopy* region, int regioncount,
-                                                                   vk::ImageLayout layout)
+                                                                   vk::BufferImageCopy* region, const int regioncount,
+                                                                   const vk::ImageLayout layout)
 {
 	vk::CommandBuffer* command_buffer = BaseBuffer::begin_single_time_commands();
 

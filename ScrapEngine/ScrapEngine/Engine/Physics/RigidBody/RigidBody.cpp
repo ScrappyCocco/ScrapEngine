@@ -64,7 +64,7 @@ float ScrapEngine::Physics::RigidBody::get_mass() const
 	return 0;
 }
 
-void ScrapEngine::Physics::RigidBody::set_type(RigidBody_Types type) const
+void ScrapEngine::Physics::RigidBody::set_type(const RigidBody_Types type) const
 {
 	switch (type)
 	{
