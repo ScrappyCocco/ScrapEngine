@@ -52,10 +52,10 @@ void ScrapEngine::Physics::PhysicsManager::remove_collider(CollisionBody* collid
 {
 	//Remove the collider from the vector
 	created_collisionbodies_.erase(std::remove(
-		created_collisionbodies_.begin(),
-		created_collisionbodies_.end(),
-		collider),
-		created_collisionbodies_.end());
+		                               created_collisionbodies_.begin(),
+		                               created_collisionbodies_.end(),
+		                               collider),
+	                               created_collisionbodies_.end());
 	//Unregister the element
 	collider->remove_from_world(p_world_->get_dynamic_world());
 }
@@ -72,9 +72,10 @@ void ScrapEngine::Physics::PhysicsManager::remove_rigidbody(RigidBody* rigidbody
 	rigidbody->remove_from_world(p_world_->get_dynamic_world());
 }
 
-ScrapEngine::Physics::CollisionBody* ScrapEngine::Physics::PhysicsManager::create_box_trigger(const Core::SVector3& size,
-                                                                                           const Core::SVector3&
-                                                                                           start_position)
+ScrapEngine::Physics::CollisionBody* ScrapEngine::Physics::PhysicsManager::create_box_trigger(
+	const Core::SVector3& size,
+	const Core::SVector3&
+	start_position)
 {
 	BoxShape* box_shape = new BoxShape(size);
 	CollisionBody* body = create_collision_body(start_position, box_shape);

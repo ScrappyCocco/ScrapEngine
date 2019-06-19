@@ -57,7 +57,8 @@ void ScrapEngine::Physics::RigidBody::set_mass(const float mass) const
 
 float ScrapEngine::Physics::RigidBody::get_mass() const
 {
-	if (body_) {
+	if (body_)
+	{
 		return body_->getMass();
 	}
 	return 0;
@@ -65,7 +66,7 @@ float ScrapEngine::Physics::RigidBody::get_mass() const
 
 void ScrapEngine::Physics::RigidBody::set_type(RigidBody_Types type) const
 {
-	switch(type)
+	switch (type)
 	{
 	case static_rigidbody:
 		body_->setType(rp3d::BodyType::STATIC);

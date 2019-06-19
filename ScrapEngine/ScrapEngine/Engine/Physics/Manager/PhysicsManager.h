@@ -33,7 +33,7 @@ namespace ScrapEngine
 
 			//Standard collider (is not moved from the engine, basically a trigger)
 			CollisionBody* create_box_trigger(const Core::SVector3& size,
-			                               const Core::SVector3& start_position);
+			                                  const Core::SVector3& start_position);
 
 			//RigidBody
 			RigidBody* create_box_rigidbody(const Core::SVector3& size,

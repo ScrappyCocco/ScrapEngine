@@ -31,7 +31,7 @@ namespace ScrapEngine
 			~RigidBody();
 
 			void set_start_transform(const rp3d::Vector3& init_position = rp3d::Vector3(0.0, 3.0, 0.0),
-				const rp3d::Quaternion& init_orientation = rp3d::Quaternion::identity());
+			                         const rp3d::Quaternion& init_orientation = rp3d::Quaternion::identity());
 			void set_collision_shape(CollisionShape* shape);
 
 			void set_mass(float mass) const;

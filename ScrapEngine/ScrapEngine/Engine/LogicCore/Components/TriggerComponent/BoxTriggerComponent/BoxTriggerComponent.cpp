@@ -4,4 +4,3 @@ ScrapEngine::Core::BoxTriggerComponent::BoxTriggerComponent(Physics::CollisionBo
 	: TriggerComponent(collisionbody)
 {
 }
-

@@ -1,7 +1,7 @@
 #include <Engine/LogicCore/Components/TriggerComponent/TriggerComponent.h>
 
 ScrapEngine::Core::TriggerComponent::TriggerComponent(Physics::CollisionBody* collisionbody)
-	:SComponent("ColliderComponent"), collisionbody_(collisionbody)
+	: SComponent("ColliderComponent"), collisionbody_(collisionbody)
 {
 }
 
@@ -31,5 +31,3 @@ bool ScrapEngine::Core::TriggerComponent::test_collision(RigidBodyComponent* oth
 {
 	return collisionbody_->test_collision(other->rigidbody_->get_rigidbody());
 }
-
-
