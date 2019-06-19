@@ -1,8 +1,8 @@
 #include "TestGameObject.h"
 #include <Engine/Debug/DebugLog.h>
 
-TestGameObject::TestGameObject(ScrapEngine::Core::ComponentsManager* input_ComponentManager)
-	: SGameObject("Test game object"), ComponentManagerRef(input_ComponentManager)
+TestGameObject::TestGameObject(ScrapEngine::Core::ComponentsManager* input_ComponentManager, ScrapEngine::Input::InputManager* CreatedInputManagerf)
+	: SGameObject("Test game object"), ComponentManagerRef(input_ComponentManager), InputManagerRef(CreatedInputManagerf)
 {
 	//Add mesh to that GameObject
 	set_object_location(ScrapEngine::Core::SVector3(0, 100, 0));

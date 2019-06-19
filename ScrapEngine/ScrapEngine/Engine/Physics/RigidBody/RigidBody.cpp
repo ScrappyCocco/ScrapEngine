@@ -15,13 +15,14 @@ ScrapEngine::Core::STransform ScrapEngine::Physics::RigidBody::convert_transform
 
 rp3d::Transform ScrapEngine::Physics::RigidBody::convert_transform(const Core::STransform& other)
 {
-	rp3d::Transform return_tras;
-
 	const Core::SVector3& other_pos = other.get_position();
 	const rp3d::Vector3 pos(other_pos.get_x(), other_pos.get_y(), other_pos.get_z());
 
 	const Core::SVector3& other_rot = other.get_rotation();
-	const rp3d::Quaternion rotation(other_rot.get_x(), other_rot.get_y(), other_rot.get_z(), 0);
+	rp3d::Quaternion rotation = rp3d::Quaternion::identity();
+	if (other_rot.get_x() != 0 || other_rot.get_y() != 0 || other_rot.get_z() != 0) {
+		rotation = rp3d::Quaternion(other_rot.get_x(), other_rot.get_y(), other_rot.get_z(), 0);
+	}
 
 	return rp3d::Transform(pos, rotation);
 }
@@ -124,7 +125,7 @@ ScrapEngine::Core::STransform ScrapEngine::Physics::RigidBody::get_updated_trans
 	return return_tras;
 }
 
-void ScrapEngine::Physics::RigidBody::set_new_transform(const Core::STransform& tramsform) const
+void ScrapEngine::Physics::RigidBody::set_new_transform(const Core::STransform& transform) const
 {
-	body_->setTransform(convert_transform(tramsform));
+	body_->setTransform(convert_transform(transform));
 }

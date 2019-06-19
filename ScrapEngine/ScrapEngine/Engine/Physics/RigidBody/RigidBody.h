@@ -45,7 +45,7 @@ namespace ScrapEngine
 
 			rp3d::RigidBody* get_rigidbody() const;
 			Core::STransform get_updated_transform(float factor);
-			void set_new_transform(const Core::STransform& tramsform) const;
+			void set_new_transform(const Core::STransform& transform) const;
 		};
 	}
 }

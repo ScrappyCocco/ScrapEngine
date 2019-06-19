@@ -10,7 +10,6 @@ class GameCamera : public ScrapEngine::Core::SGameObject
 private:
 	ScrapEngine::Render::Camera* GameCameraRef;
 	ScrapEngine::Input::InputManager* InputManagerRef;
-	TestGameObject* GameObjectRef;
 
 	float camera_speed_ = 0.5f;
 	float camera_multiplier_ = 10.f;

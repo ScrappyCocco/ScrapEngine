@@ -22,17 +22,17 @@ int main() {
 		ScrapEngine::Core::SceneManager* SceneManagerRef = ScrapEngineManager->logic_manager_view->get_scene_manager();
 		SceneManagerRef->set_skybox(
 			std::array<std::string, 6>{
-				"../assets/skybox/spires_ft.png", //FRONT TEXTURE
-				"../assets/skybox/spires_bk.png", //BACK TEXTURE
-				"../assets/skybox/spires_up.png", //UP TEXTURE
-				"../assets/skybox/spires_dn.png", //DOWN TEXTURE
-				"../assets/skybox/spires_rt.png", //RIGHT TEXTURE
-				"../assets/skybox/spires_lf.png", //LEFT TEXTURE
+				"../assets/skybox/stormydays_ft.png", //FRONT TEXTURE
+				"../assets/skybox/stormydays_bk.png", //BACK TEXTURE
+				"../assets/skybox/stormydays_up.png", //UP TEXTURE
+				"../assets/skybox/stormydays_dn.png", //DOWN TEXTURE
+				"../assets/skybox/stormydays_rt.png", //RIGHT TEXTURE
+				"../assets/skybox/stormydays_lf.png", //LEFT TEXTURE
 			}
 		);
 		SceneManagerRef->set_skybox_size(150);
 		//Create the first game object
-		TestGameObject* FirstGameObject = new TestGameObject(ComponentManagerRef);
+		TestGameObject* FirstGameObject = new TestGameObject(ComponentManagerRef, inputmanager);
 		ScrapEngineManager->logic_manager_view->register_game_object(FirstGameObject);
 		FirstGameObject->set_object_location(ScrapEngine::Core::SVector3(0, 10, 0));
 		AnotherTestGameObject* SecondGameObject = new AnotherTestGameObject(ComponentManagerRef);
