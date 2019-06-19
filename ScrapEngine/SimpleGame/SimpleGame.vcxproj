@@ -160,14 +160,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GameObjects\AnotherTestGameObject.cpp" />
+    <ClCompile Include="GameObjects\Ball.cpp" />
     <ClCompile Include="GameObjects\Camera\GameCamera.cpp" />
-    <ClCompile Include="GameObjects\TestGameObject.cpp" />
+    <ClCompile Include="GameObjects\Crate.cpp" />
+    <ClCompile Include="GameObjects\Terrain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameObjects\AnotherTestGameObject.h" />
+    <ClInclude Include="GameObjects\Ball.h" />
     <ClInclude Include="GameObjects\Camera\GameCamera.h" />
-    <ClInclude Include="GameObjects\TestGameObject.h" />
+    <ClInclude Include="GameObjects\Crate.h" />
+    <ClInclude Include="GameObjects\Terrain.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>

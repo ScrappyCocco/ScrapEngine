@@ -26,6 +26,16 @@ void ScrapEngine::Core::SGameObject::game_update(float time)
 	//This will be defined by the user when is necessary, otherwise it will have no effect
 }
 
+void ScrapEngine::Core::SGameObject::set_should_update(bool should_update)
+{
+	this->should_update = should_update;
+}
+
+bool ScrapEngine::Core::SGameObject::get_should_update() const
+{
+	return should_update;
+}
+
 void ScrapEngine::Core::SGameObject::set_object_location(const SVector3& location, const bool should_update_relative)
 {
 	object_transform_.set_position(location);

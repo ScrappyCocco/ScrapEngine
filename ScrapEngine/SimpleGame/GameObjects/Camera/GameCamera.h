@@ -3,7 +3,6 @@
 #include <Engine/LogicCore/GameObject/SGameObject.h>
 #include <Engine/Rendering/Manager/RenderManager.h>
 #include <Engine/Input/Manager/InputManager.h>
-#include "../TestGameObject.h"
 
 class GameCamera : public ScrapEngine::Core::SGameObject
 {
@@ -14,7 +13,7 @@ private:
 	float camera_speed_ = 0.5f;
 	float camera_multiplier_ = 10.f;
 public:
-	GameCamera(ScrapEngine::Input::InputManager* CreatedInputManagerf, ScrapEngine::Render::Camera* input_GameCameraRef, TestGameObject* input_GameObjectRef);
+	GameCamera(ScrapEngine::Input::InputManager* CreatedInputManagerf, ScrapEngine::Render::Camera* input_GameCameraRef);
 	~GameCamera() = default;
 
 	virtual void game_start() override;

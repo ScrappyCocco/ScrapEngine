@@ -39,6 +39,8 @@ void ScrapEngine::Core::LogicManager::execute_game_objects_update_event(const fl
 {
 	for (SGameObject* game_object : registered_game_objects_)
 	{
-		game_object->game_update(time);
+		if (game_object->get_should_update()) {
+			game_object->game_update(time);
+		}
 	}
 }

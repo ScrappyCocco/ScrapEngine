@@ -1,7 +1,7 @@
-#include "AnotherTestGameObject.h"
+#include "Terrain.h"
 #include <Engine/Debug/DebugLog.h>
 
-AnotherTestGameObject::AnotherTestGameObject(ScrapEngine::Core::ComponentsManager* input_ComponentManager)
+Terrain::Terrain(ScrapEngine::Core::ComponentsManager* input_ComponentManager)
 	: SGameObject("Test game object"), ComponentManagerRef(input_ComponentManager)
 {
 	//Add mesh to that GameObject
@@ -17,17 +17,13 @@ AnotherTestGameObject::AnotherTestGameObject(ScrapEngine::Core::ComponentsManage
 	add_component(mesh);
 
 	ScrapEngine::Core::RigidBodyComponent* box_collider = input_ComponentManager->create_box_rigidbody_component(
-		ScrapEngine::Core::SVector3(25.f, 0.5f, 25.f),
+		ScrapEngine::Core::SVector3(2500.f, 0.5f, 2500.f),
 		ScrapEngine::Core::SVector3(0, -20, 0), 0.f);
 	
 	box_collider->set_rigidbody_type(ScrapEngine::Physics::RigidBody_Types::static_rigidbody);
 	add_component(box_collider);
-}
+	box_collider->set_friction_coefficient(1.f);
 
-void AnotherTestGameObject::game_start()
-{
-}
-
-void AnotherTestGameObject::game_update(float time)
-{
+	//Disable update()
+	set_should_update(false);
 }
