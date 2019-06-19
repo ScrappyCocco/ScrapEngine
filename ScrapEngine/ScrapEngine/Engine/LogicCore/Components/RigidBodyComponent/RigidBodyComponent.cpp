@@ -10,6 +10,24 @@ ScrapEngine::Core::RigidBodyComponent::~RigidBodyComponent()
 	delete rigidbody_;
 }
 
+void ScrapEngine::Core::RigidBodyComponent::set_component_location(const SVector3& location)
+{
+	const Physics::RigidBody_Types type = rigidbody_->get_type();
+	if (type == Physics::RigidBody_Types::static_rigidbody || type == Physics::RigidBody_Types::kinematic_rigidbody) {
+		SComponent::set_component_location(location);
+		rigidbody_->set_new_transform(get_component_transform());
+	}
+}
+
+void ScrapEngine::Core::RigidBodyComponent::set_component_rotation(const SVector3& rotation)
+{
+	const Physics::RigidBody_Types type = rigidbody_->get_type();
+	if (type == Physics::RigidBody_Types::static_rigidbody || type == Physics::RigidBody_Types::kinematic_rigidbody) {
+		SComponent::set_component_rotation(rotation);
+		rigidbody_->set_new_transform(get_component_transform());
+	}
+}
+
 void ScrapEngine::Core::RigidBodyComponent::attach_to_mesh(MeshComponent* mesh)
 {
 	attached_mesh_ = mesh;

@@ -25,6 +25,7 @@ namespace ScrapEngine
 			rp3d::RigidBody* body_ = nullptr;
 
 			static Core::STransform convert_transform(const rp3d::Transform& other);
+			static rp3d::Transform convert_transform(const Core::STransform& other);
 		public:
 			RigidBody() = default;
 			~RigidBody();
@@ -37,12 +38,14 @@ namespace ScrapEngine
 			float get_mass() const;
 
 			void set_type(RigidBody_Types type) const;
+			RigidBody_Types get_type() const;
 
 			void build_rigidbody(rp3d::DynamicsWorld* dynamic_world);
 			void remove_from_world(rp3d::DynamicsWorld* dynamic_world) const;
 
 			rp3d::RigidBody* get_rigidbody() const;
 			Core::STransform get_updated_transform(float factor);
+			void set_new_transform(const Core::STransform& tramsform) const;
 		};
 	}
 }

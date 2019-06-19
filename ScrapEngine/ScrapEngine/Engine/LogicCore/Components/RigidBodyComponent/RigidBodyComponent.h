@@ -20,6 +20,10 @@ namespace ScrapEngine
 			RigidBodyComponent(Physics::RigidBody* rigidbody);
 			virtual ~RigidBodyComponent();
 
+			//This methods will be used when the rigidbody is static and the user move the object with it
+			void set_component_location(const SVector3& location) override;
+			void set_component_rotation(const SVector3& rotation) override;
+
 			void attach_to_mesh(MeshComponent* mesh);
 			void update_transform(float factor) const;
 			void set_rigidbody_type(Physics::RigidBody_Types type) const;

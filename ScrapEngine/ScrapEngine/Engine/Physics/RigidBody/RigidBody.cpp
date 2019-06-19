@@ -13,6 +13,19 @@ ScrapEngine::Core::STransform ScrapEngine::Physics::RigidBody::convert_transform
 	return return_tras;
 }
 
+rp3d::Transform ScrapEngine::Physics::RigidBody::convert_transform(const Core::STransform& other)
+{
+	rp3d::Transform return_tras;
+
+	const Core::SVector3& other_pos = other.get_position();
+	const rp3d::Vector3 pos(other_pos.get_x(), other_pos.get_y(), other_pos.get_z());
+
+	const Core::SVector3& other_rot = other.get_rotation();
+	const rp3d::Quaternion rotation(other_rot.get_x(), other_rot.get_y(), other_rot.get_z(), 0);
+
+	return rp3d::Transform(pos, rotation);
+}
+
 ScrapEngine::Physics::RigidBody::~RigidBody()
 {
 	delete shape_;
@@ -67,6 +80,20 @@ void ScrapEngine::Physics::RigidBody::set_type(RigidBody_Types type) const
 	}
 }
 
+ScrapEngine::Physics::RigidBody_Types ScrapEngine::Physics::RigidBody::get_type() const
+{
+	switch (body_->getType())
+	{
+	case rp3d::BodyType::STATIC:
+		return static_rigidbody;
+	case rp3d::BodyType::KINEMATIC:
+		return kinematic_rigidbody;
+	default:
+	case rp3d::BodyType::DYNAMIC:
+		return dynamic_rigidbody;
+	}
+}
+
 void ScrapEngine::Physics::RigidBody::build_rigidbody(rp3d::DynamicsWorld* dynamic_world)
 {
 	body_ = dynamic_world->createRigidBody(transform_);
@@ -94,4 +121,9 @@ ScrapEngine::Core::STransform ScrapEngine::Physics::RigidBody::get_updated_trans
 
 	prev_transform_ = curr_transform;
 	return return_tras;
+}
+
+void ScrapEngine::Physics::RigidBody::set_new_transform(const Core::STransform& tramsform) const
+{
+	body_->setTransform(convert_transform(tramsform));
 }
