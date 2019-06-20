@@ -75,3 +75,8 @@ void ScrapEngine::Core::RigidBodyComponent::apply_force_to_center(const SVector3
 {
 	rigidbody_->apply_force_to_center(force);
 }
+
+void ScrapEngine::Core::RigidBodyComponent::apply_torqe(const SVector3& force) const
+{
+	rigidbody_->apply_torque(force);
+}

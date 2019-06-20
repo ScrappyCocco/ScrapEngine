@@ -55,6 +55,7 @@ namespace ScrapEngine
 			void set_friction_coefficient(float coefficient) const;
 
 			void apply_force_to_center(const Core::SVector3& force) const;
+			void apply_torque(const Core::SVector3& force) const;
 		};
 	}
 }

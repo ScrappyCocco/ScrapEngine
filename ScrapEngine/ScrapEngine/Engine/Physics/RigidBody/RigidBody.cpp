@@ -10,13 +10,13 @@ ScrapEngine::Core::STransform ScrapEngine::Physics::RigidBody::convert_transform
 
 	const rp3d::Vector3 rot = other.getOrientation().getVectorV();
 
-	const float x = rot.x;
-	const float y = rot.y;
-	const float z = rot.z;
+	const float x = rot.x * 10;
+	const float y = rot.y * 10;
+	const float z = rot.z * 10;
 
 	//TODO FIX
 	return_tras.set_rotation(Core::SVector3(x,y,z));
-	Debug::DebugLog::print_to_console_log(return_tras.get_rotation());
+	//Debug::DebugLog::print_to_console_log(return_tras.get_rotation());
 
 	return return_tras;
 }
@@ -177,4 +177,9 @@ void ScrapEngine::Physics::RigidBody::set_friction_coefficient(const float coeff
 void ScrapEngine::Physics::RigidBody::apply_force_to_center(const Core::SVector3& force) const
 {
 	body_->applyForceToCenterOfMass(convert_vector(force));
+}
+
+void ScrapEngine::Physics::RigidBody::apply_torque(const Core::SVector3& force) const
+{
+	body_->applyTorque(convert_vector(force));
 }

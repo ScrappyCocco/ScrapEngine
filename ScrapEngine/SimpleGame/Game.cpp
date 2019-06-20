@@ -48,6 +48,7 @@ int main() {
 		new Crate(ComponentManagerRef, ScrapEngine::Core::SVector3(0, 20, -50));*/
 		//Create the camera
 		GameCamera* GameCameraRef = new GameCamera(inputmanager, ScrapEngineManager->render_manager_view->get_default_render_camera());
+		GameCameraRef->set_game_window_ref(gameWindowRef);
 		ScrapEngineManager->logic_manager_view->register_game_object(GameCameraRef);
 		//Begin gameplay
 		ScrapEngineManager->start_game_loop();

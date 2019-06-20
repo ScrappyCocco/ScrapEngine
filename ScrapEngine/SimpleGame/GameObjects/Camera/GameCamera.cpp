@@ -8,6 +8,11 @@ GameCamera::GameCamera(ScrapEngine::Input::InputManager* CreatedInputManagerf, S
 	GameCameraRef->set_max_render_distance(100000);
 }
 
+void GameCamera::set_game_window_ref(ScrapEngine::Render::GameWindow* window_ref)
+{
+	GameWindowRef = window_ref;
+}
+
 void GameCamera::game_start()
 {
 	GameCameraRef->set_camera_location(ScrapEngine::Core::SVector3(0.20f, 150.f, 234.f));
@@ -43,6 +48,12 @@ void GameCamera::game_update(const float time)
 	}
 	if (InputManagerRef->get_keyboard_key_pressed(KEYBOARD_KEY_A)) {
 		GameCameraRef->set_camera_location(GameCameraRef->get_camera_location() - (((GameCameraRef->get_camera_front() ^ GameCameraRef->get_camera_up()).normalize()) * camera_speed_));
+	}
+
+	//Close game
+	if (InputManagerRef->get_keyboard_key_pressed(KEYBOARD_KEY_ESCAPE)) {
+		ScrapEngine::Debug::DebugLog::print_to_console_log("ESC pressed - leaving game");
+		GameWindowRef->close_window();
 	}
 }
 
