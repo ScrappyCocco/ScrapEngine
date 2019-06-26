@@ -21,7 +21,7 @@ Crate::Crate(ScrapEngine::Core::ComponentsManager* input_ComponentManager, const
 
 	box_collider->attach_to_mesh(mesh);
 	box_collider->set_bounciness(0.f);
-	box_collider->set_friction_coefficient(0.2f);
+	box_collider->set_friction_coefficient(1);
 
 	//Disable update()
 	set_should_update(false);

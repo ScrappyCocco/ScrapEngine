@@ -22,6 +22,8 @@ Ball::Ball(ScrapEngine::Core::ComponentsManager* input_ComponentManager, ScrapEn
 	add_component(collider);
 
 	collider->attach_to_mesh(mesh);
+
+	collider->set_friction_coefficient(1);
 }
 
 void Ball::game_start()

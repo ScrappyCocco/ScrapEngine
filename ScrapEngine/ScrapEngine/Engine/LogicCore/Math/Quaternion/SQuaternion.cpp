@@ -1,4 +1,5 @@
 #include <Engine/LogicCore/Math/Quaternion/SQuaternion.h>
+#include <glm/gtc/quaternion.inl>
 
 ScrapEngine::Core::SQuaternion::SQuaternion(const glm::quat input)
 {
@@ -64,6 +65,13 @@ ScrapEngine::Core::SVector3 ScrapEngine::Core::SQuaternion::get_right_vector() c
 ScrapEngine::Core::SVector3 ScrapEngine::Core::SQuaternion::get_up_vector() const
 {
 	return get_axis_z();
+}
+
+ScrapEngine::Core::SVector3 ScrapEngine::Core::SQuaternion::to_euler_angles() const
+{
+	const glm::vec3 euler = glm::eulerAngles(quat_);
+
+	return SVector3(euler.x, euler.y, euler.z);
 }
 
 glm::quat ScrapEngine::Core::SQuaternion::get_glm_quat() const
