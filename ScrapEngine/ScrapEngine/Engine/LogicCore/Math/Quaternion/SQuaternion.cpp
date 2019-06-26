@@ -34,7 +34,7 @@ ScrapEngine::Core::SQuaternion::SQuaternion(const float x, const float y, const 
 
 ScrapEngine::Core::SQuaternion::SQuaternion(const SVector3& euler_angles)
 {
-	quat_ = glm::quat(glm::vec3(euler_angles.get_x(), euler_angles.get_y(), euler_angles.get_z()));
+	quat_ = glm::quat(euler_angles.get_glm_vector());
 }
 
 ScrapEngine::Core::SVector3 ScrapEngine::Core::SQuaternion::get_axis_x() const

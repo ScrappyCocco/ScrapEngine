@@ -40,7 +40,7 @@ int main() {
 		//Terrain
 		Terrain* TerrainGameObject = new Terrain(ComponentManagerRef);
 		ScrapEngineManager->logic_manager_view->register_game_object(TerrainGameObject);
-		//Crate
+		//Crates
 		new Crate(ComponentManagerRef, ScrapEngine::Core::SVector3(0, 0, -50));
 		new Crate(ComponentManagerRef, ScrapEngine::Core::SVector3(10, 0, -50));
 		new Crate(ComponentManagerRef, ScrapEngine::Core::SVector3(-10, 0, -50));

@@ -13,7 +13,6 @@ ScrapEngine::Core::STransform ScrapEngine::Physics::RigidBody::convert_transform
 	//Convert rotation
 	const rp3d::Quaternion& rot = other.getOrientation();
 	const glm::quat glm_quat(rot.w, rot.x, rot.y, rot.z);
-
 	return_tras.set_rotation(Core::SQuaternion(glm_quat));
 
 	return return_tras;
@@ -25,7 +24,8 @@ rp3d::Transform ScrapEngine::Physics::RigidBody::convert_transform(const Core::S
 
 	const Core::SVector3& other_rot = other.get_rotation();
 	rp3d::Quaternion rotation = rp3d::Quaternion::identity();
-	if (other_rot.get_x() != 0 || other_rot.get_y() != 0 || other_rot.get_z() != 0) {
+	if (other_rot.get_x() != 0 || other_rot.get_y() != 0 || other_rot.get_z() != 0)
+	{
 		rotation = rp3d::Quaternion(other_rot.get_x(), other_rot.get_y(), other_rot.get_z(), 0);
 	}
 
