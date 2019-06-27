@@ -16,6 +16,7 @@ namespace ScrapEngine
 		public:
 			SQuaternion();
 			SQuaternion(float x, float y, float z, float w);
+			static SQuaternion identity();
 			explicit SQuaternion(glm::quat input);
 			explicit SQuaternion(const SVector3& euler_angles);
 			SQuaternion(const SQuaternion& other) = default;
