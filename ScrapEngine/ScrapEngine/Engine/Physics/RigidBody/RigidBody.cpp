@@ -172,6 +172,16 @@ void ScrapEngine::Physics::RigidBody::set_friction_coefficient(const float coeff
 	material.setFrictionCoefficient(rp3d::decimal(coefficient));
 }
 
+bool ScrapEngine::Physics::RigidBody::get_allowed_to_sleep() const
+{
+	return body_->isAllowedToSleep();
+}
+
+void ScrapEngine::Physics::RigidBody::set_allowed_to_sleep(const bool allowed) const
+{
+	body_->setIsAllowedToSleep(allowed);
+}
+
 void ScrapEngine::Physics::RigidBody::apply_force_to_center(const Core::SVector3& force) const
 {
 	body_->applyForceToCenterOfMass(convert_vector(force));

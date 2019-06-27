@@ -71,6 +71,16 @@ void ScrapEngine::Core::RigidBodyComponent::set_friction_coefficient(const float
 	rigidbody_->set_friction_coefficient(coefficient);
 }
 
+bool ScrapEngine::Core::RigidBodyComponent::get_allowed_to_sleep() const
+{
+	return rigidbody_->get_allowed_to_sleep();
+}
+
+void ScrapEngine::Core::RigidBodyComponent::set_allowed_to_sleep(const bool allowed) const
+{
+	rigidbody_->set_allowed_to_sleep(allowed);
+}
+
 void ScrapEngine::Core::RigidBodyComponent::apply_force_to_center(const SVector3& force) const
 {
 	rigidbody_->apply_force_to_center(force);
