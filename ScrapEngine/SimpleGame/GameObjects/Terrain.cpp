@@ -22,7 +22,7 @@ Terrain::Terrain(ScrapEngine::Core::ComponentsManager* input_ComponentManager)
 	
 	box_collider->set_rigidbody_type(ScrapEngine::Physics::RigidBody_Types::static_rigidbody);
 	add_component(box_collider);
-	box_collider->set_friction_coefficient(1.f);
+	box_collider->set_friction_coefficient(1);
 
 	//Disable update()
 	set_should_update(false);

@@ -1,7 +1,7 @@
 #include <Engine/LogicCore/Math/Transform/STransform.h>
 
 ScrapEngine::Core::STransform::STransform(const SVector3& position, const SVector3& rotation, const SVector3& scale)
-	: position_(position), rotation_(rotation), scale_(scale)
+	: position_(position), rotation_(rotation), quaternion_rotation_(rotation), scale_(scale)
 {
 }
 
@@ -32,7 +32,14 @@ void ScrapEngine::Core::STransform::set_position(const SVector3& new_position)
 
 void ScrapEngine::Core::STransform::set_rotation(const SVector3& new_rotation)
 {
-	rotation_ = new_rotation;
+	quaternion_rotation_ = Core::SQuaternion(new_rotation);
+	rotation_ = quaternion_rotation_.to_euler_angles();
+}
+
+void ScrapEngine::Core::STransform::set_rotation(const SQuaternion& new_rotation)
+{
+	quaternion_rotation_ = new_rotation;
+	rotation_ = quaternion_rotation_.to_euler_angles();
 }
 
 void ScrapEngine::Core::STransform::set_quat_rotation(const SQuaternion& new_rotation)

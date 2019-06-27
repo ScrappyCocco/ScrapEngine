@@ -8,7 +8,7 @@ Crate::Crate(ScrapEngine::Core::ComponentsManager* input_ComponentManager, const
 	ScrapEngine::Core::MeshComponent* mesh = input_ComponentManager->create_new_mesh_component(
 		"../assets/shader/compiled_shaders/shader_base.vert.spv",
 		"../assets/shader/compiled_shaders/shader_base.frag.spv",
-		"../assets/models/Simple_Wood_Crate.fbx",
+		"../assets/models/cube.obj",
 		{ "../assets/textures/Simple_Wood_Crate_Color.png" }
 	);
 	add_component(mesh);
@@ -21,11 +21,11 @@ Crate::Crate(ScrapEngine::Core::ComponentsManager* input_ComponentManager, const
 
 	box_collider->attach_to_mesh(mesh);
 	box_collider->set_bounciness(0.f);
-	box_collider->set_friction_coefficient(0.2f);
+	box_collider->set_friction_coefficient(1);
 
 	//Disable update()
 	set_should_update(false);
 
 	//Set mesh scale
-	mesh->set_component_scale(ScrapEngine::Core::SVector3(0.15f, 0.15f, 0.15f));
+	mesh->set_component_scale(ScrapEngine::Core::SVector3(1.5f, 1.5f, 1.5f));
 }

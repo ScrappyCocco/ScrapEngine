@@ -1,22 +1,19 @@
 #include <Engine/Physics/RigidBody/RigidBody.h>
 #include <Engine/Debug/DebugLog.h>
+#include <glm/gtc/quaternion.inl>
 
 ScrapEngine::Core::STransform ScrapEngine::Physics::RigidBody::convert_transform(const rp3d::Transform& other)
 {
 	Core::STransform return_tras;
 
+	//Convert position
 	const rp3d::Vector3& other_pos = other.getPosition();
 	return_tras.set_position(Core::SVector3(other_pos.x, other_pos.y, other_pos.z));
 
-	const rp3d::Vector3 rot = other.getOrientation().getVectorV();
-
-	const float x = rot.x * 10;
-	const float y = rot.y * 10;
-	const float z = rot.z * 10;
-
-	//TODO FIX
-	return_tras.set_rotation(Core::SVector3(x,y,z));
-	//Debug::DebugLog::print_to_console_log(return_tras.get_rotation());
+	//Convert rotation
+	const rp3d::Quaternion& rot = other.getOrientation();
+	const glm::quat glm_quat(rot.w, rot.x, rot.y, rot.z);
+	return_tras.set_rotation(Core::SQuaternion(glm_quat));
 
 	return return_tras;
 }
@@ -27,7 +24,8 @@ rp3d::Transform ScrapEngine::Physics::RigidBody::convert_transform(const Core::S
 
 	const Core::SVector3& other_rot = other.get_rotation();
 	rp3d::Quaternion rotation = rp3d::Quaternion::identity();
-	if (other_rot.get_x() != 0 || other_rot.get_y() != 0 || other_rot.get_z() != 0) {
+	if (other_rot.get_x() != 0 || other_rot.get_y() != 0 || other_rot.get_z() != 0)
+	{
 		rotation = rp3d::Quaternion(other_rot.get_x(), other_rot.get_y(), other_rot.get_z(), 0);
 	}
 

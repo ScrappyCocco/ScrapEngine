@@ -91,6 +91,7 @@ void ScrapEngine::Manager::EngineManager::physics_update(const float delta_time)
 		accumulator_ -= time_step_;
 	}
 	const float factor = accumulator_ / time_step_;
+	//Once physics ended updating, update the rigidbody component position
 	logic_manager_view->get_components_manager()->update_rigidbody_physics(factor);
 }
 
