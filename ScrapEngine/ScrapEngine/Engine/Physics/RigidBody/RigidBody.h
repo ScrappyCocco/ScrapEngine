@@ -47,6 +47,7 @@ namespace ScrapEngine
 			rp3d::RigidBody* get_rigidbody() const;
 			Core::STransform get_updated_transform(float factor);
 			void set_new_transform(const Core::STransform& transform) const;
+			void set_new_location(const Core::SVector3& location) const;
 
 			float get_bounciness() const;
 			void set_bounciness(float bounce_factor) const;
@@ -59,6 +60,8 @@ namespace ScrapEngine
 
 			void apply_force_to_center(const Core::SVector3& force) const;
 			void apply_torque(const Core::SVector3& force) const;
+
+			void cancel_rigidbody_forces() const;
 		};
 	}
 }

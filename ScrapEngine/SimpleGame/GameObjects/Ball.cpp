@@ -34,18 +34,18 @@ void Ball::game_update(float time)
 {
 	if(InputManagerRef->get_keyboard_key_pressed(KEYBOARD_KEY_ARROW_UP))
 	{
-		collider->apply_force_to_center(ScrapEngine::Core::SVector3(0, 0, -500));
+		collider->apply_force_to_center(ScrapEngine::Core::SVector3(0, 0, -700));
 	}
 	if (InputManagerRef->get_keyboard_key_pressed(KEYBOARD_KEY_ARROW_DOWN))
 	{
-		collider->apply_force_to_center(ScrapEngine::Core::SVector3(0, 0, 500));
+		collider->apply_force_to_center(ScrapEngine::Core::SVector3(0, 0, 700));
 	}
 	if (InputManagerRef->get_keyboard_key_pressed(KEYBOARD_KEY_ARROW_LEFT))
 	{
-		collider->apply_force_to_center(ScrapEngine::Core::SVector3(-500, 0, 0));
+		collider->apply_force_to_center(ScrapEngine::Core::SVector3(-700, 0, 0));
 	}
 	if (InputManagerRef->get_keyboard_key_pressed(KEYBOARD_KEY_ARROW_RIGHT))
 	{
-		collider->apply_force_to_center(ScrapEngine::Core::SVector3(500, 0, 0));
+		collider->apply_force_to_center(ScrapEngine::Core::SVector3(700, 0, 0));
 	}
 }

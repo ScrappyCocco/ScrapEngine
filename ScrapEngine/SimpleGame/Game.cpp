@@ -5,6 +5,7 @@
 #include "GameObjects/Terrain.h"
 #include "GameObjects/Ball.h"
 #include "GameObjects/Crate.h"
+#include "GameObjects/Trigger.h"
 
 int main() {
 	short exit_value = EXIT_SUCCESS;
@@ -41,12 +42,29 @@ int main() {
 		Terrain* TerrainGameObject = new Terrain(ComponentManagerRef);
 		ScrapEngineManager->logic_manager_view->register_game_object(TerrainGameObject);
 		//Crates
-		new Crate(ComponentManagerRef, ScrapEngine::Core::SVector3(0, 0, -50));
-		new Crate(ComponentManagerRef, ScrapEngine::Core::SVector3(10, 0, -50));
-		new Crate(ComponentManagerRef, ScrapEngine::Core::SVector3(-10, 0, -50));
-		new Crate(ComponentManagerRef, ScrapEngine::Core::SVector3(5, 10, -50));
-		new Crate(ComponentManagerRef, ScrapEngine::Core::SVector3(-5, 10, -50));
-		new Crate(ComponentManagerRef, ScrapEngine::Core::SVector3(0, 20, -50));
+		std::vector<ScrapEngine::Core::SGameObject*> crates;
+		// First group
+		crates.push_back(new Crate(ComponentManagerRef, ScrapEngine::Core::SVector3(70, 0, -50)));
+		crates.push_back(new Crate(ComponentManagerRef, ScrapEngine::Core::SVector3(80, 0, -50)));
+		crates.push_back(new Crate(ComponentManagerRef, ScrapEngine::Core::SVector3(60, 0, -50)));
+		crates.push_back(new Crate(ComponentManagerRef, ScrapEngine::Core::SVector3(75, 10, -50)));
+		crates.push_back(new Crate(ComponentManagerRef, ScrapEngine::Core::SVector3(65, 10, -50)));
+		crates.push_back(new Crate(ComponentManagerRef, ScrapEngine::Core::SVector3(70, 20, -50)));
+		// Second group
+		crates.push_back(new Crate(ComponentManagerRef, ScrapEngine::Core::SVector3(-70, 0, -50)));
+		crates.push_back(new Crate(ComponentManagerRef, ScrapEngine::Core::SVector3(-80, 0, -50)));
+		crates.push_back(new Crate(ComponentManagerRef, ScrapEngine::Core::SVector3(-60, 0, -50)));
+		crates.push_back(new Crate(ComponentManagerRef, ScrapEngine::Core::SVector3(-75, 10, -50)));
+		crates.push_back(new Crate(ComponentManagerRef, ScrapEngine::Core::SVector3(-65, 10, -50)));
+		crates.push_back(new Crate(ComponentManagerRef, ScrapEngine::Core::SVector3(-70, 20, -50)));
+		//Simple box trigger
+		Trigger* box_trigger = new Trigger(ComponentManagerRef);
+		box_trigger->add_collision_test(BallGameObject);
+		for(auto crate : crates)
+		{
+			box_trigger->add_collision_test(crate);
+		}
+		ScrapEngineManager->logic_manager_view->register_game_object(box_trigger);
 		//Create the camera
 		GameCamera* GameCameraRef = new GameCamera(inputmanager, ScrapEngineManager->render_manager_view->get_default_render_camera());
 		GameCameraRef->set_game_window_ref(gameWindowRef);

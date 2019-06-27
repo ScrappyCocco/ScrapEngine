@@ -140,6 +140,13 @@ void ScrapEngine::Physics::RigidBody::set_new_transform(const Core::STransform& 
 	body_->setTransform(convert_transform(transform));
 }
 
+void ScrapEngine::Physics::RigidBody::set_new_location(const Core::SVector3& location) const
+{
+	rp3d::Transform current_transform = body_->getTransform();
+	current_transform.setPosition(convert_vector(location));
+	body_->setTransform(current_transform);
+}
+
 float ScrapEngine::Physics::RigidBody::get_bounciness() const
 {
 	// Get the current material of the body
@@ -190,4 +197,10 @@ void ScrapEngine::Physics::RigidBody::apply_force_to_center(const Core::SVector3
 void ScrapEngine::Physics::RigidBody::apply_torque(const Core::SVector3& force) const
 {
 	body_->applyTorque(convert_vector(force));
+}
+
+void ScrapEngine::Physics::RigidBody::cancel_rigidbody_forces() const
+{
+	body_->setAngularVelocity(rp3d::Vector3(0, 0, 0));
+	body_->setLinearVelocity(rp3d::Vector3(0, 0, 0));
 }

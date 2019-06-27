@@ -21,8 +21,11 @@ namespace ScrapEngine
 			virtual ~RigidBodyComponent();
 
 			//This methods will be used when the rigidbody is static and the user move the object with it
+			//They will have no effect with a Rigidbody
 			void set_component_location(const SVector3& location) override;
 			void set_component_rotation(const SVector3& rotation) override;
+			//If the user is really sure to change the position, will use this method
+			void modify_rigidbody_location(const SVector3& location) const;
 
 			void attach_to_mesh(MeshComponent* mesh);
 			void update_transform(float factor) const;
@@ -39,6 +42,8 @@ namespace ScrapEngine
 
 			void apply_force_to_center(const SVector3& force) const;
 			void apply_torqe(const SVector3& force) const;
+
+			void cancel_rigidbody_forces() const;
 		};
 	}
 }

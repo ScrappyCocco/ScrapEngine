@@ -30,6 +30,11 @@ void ScrapEngine::Core::RigidBodyComponent::set_component_rotation(const SVector
 	}
 }
 
+void ScrapEngine::Core::RigidBodyComponent::modify_rigidbody_location(const SVector3& location) const
+{
+	rigidbody_->set_new_location(location);
+}
+
 void ScrapEngine::Core::RigidBodyComponent::attach_to_mesh(MeshComponent* mesh)
 {
 	attached_mesh_ = mesh;
@@ -89,4 +94,9 @@ void ScrapEngine::Core::RigidBodyComponent::apply_force_to_center(const SVector3
 void ScrapEngine::Core::RigidBodyComponent::apply_torqe(const SVector3& force) const
 {
 	rigidbody_->apply_torque(force);
+}
+
+void ScrapEngine::Core::RigidBodyComponent::cancel_rigidbody_forces() const
+{
+	rigidbody_->cancel_rigidbody_forces();
 }
