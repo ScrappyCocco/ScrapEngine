@@ -14,6 +14,7 @@ namespace ScrapEngine
 			STransform object_transform_;
 			STransform object_relative_transform_;
 			bool is_static_ = false;
+			bool should_update = true;
 
 			std::vector<SComponent*> object_components_;
 			std::vector<SGameObject*> object_child_;
@@ -26,6 +27,9 @@ namespace ScrapEngine
 
 			virtual void game_start();
 			virtual void game_update(float time);
+
+			void set_should_update(bool should_update);
+			bool get_should_update() const;
 
 			//The should_update_relative is false when the value is updated from an update() call
 			void set_object_location(const SVector3& location, bool should_update_relative = true);

@@ -27,6 +27,15 @@ namespace ScrapEngine
 			void attach_to_mesh(MeshComponent* mesh);
 			void update_transform(float factor) const;
 			void set_rigidbody_type(Physics::RigidBody_Types type) const;
+
+			float get_bounciness() const;
+			void set_bounciness(float bounce_factor) const;
+
+			float get_friction_coefficient() const;
+			void set_friction_coefficient(float coefficient) const;
+
+			void apply_force_to_center(const SVector3& force) const;
+			void apply_torqe(const SVector3& force) const;
 		};
 	}
 }

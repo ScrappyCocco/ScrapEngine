@@ -1,29 +1,40 @@
 #include <Engine/Physics/RigidBody/RigidBody.h>
+#include <Engine/Debug/DebugLog.h>
+#include <glm/gtc/quaternion.inl>
 
 ScrapEngine::Core::STransform ScrapEngine::Physics::RigidBody::convert_transform(const rp3d::Transform& other)
 {
 	Core::STransform return_tras;
 
+	//Convert position
 	const rp3d::Vector3& other_pos = other.getPosition();
 	return_tras.set_position(Core::SVector3(other_pos.x, other_pos.y, other_pos.z));
 
-	const rp3d::Vector3& other_rot = other.getOrientation().getVectorV();
-	return_tras.set_rotation(Core::SVector3(other_rot.x, other_rot.y, other_rot.z));
+	//Convert rotation
+	const rp3d::Quaternion& rot = other.getOrientation();
+	const glm::quat glm_quat(rot.w, rot.x, rot.y, rot.z);
+	return_tras.set_rotation(Core::SQuaternion(glm_quat));
 
 	return return_tras;
 }
 
 rp3d::Transform ScrapEngine::Physics::RigidBody::convert_transform(const Core::STransform& other)
 {
-	rp3d::Transform return_tras;
-
-	const Core::SVector3& other_pos = other.get_position();
-	const rp3d::Vector3 pos(other_pos.get_x(), other_pos.get_y(), other_pos.get_z());
+	const rp3d::Vector3 pos = convert_vector(other.get_position());
 
 	const Core::SVector3& other_rot = other.get_rotation();
-	const rp3d::Quaternion rotation(other_rot.get_x(), other_rot.get_y(), other_rot.get_z(), 0);
+	rp3d::Quaternion rotation = rp3d::Quaternion::identity();
+	if (other_rot.get_x() != 0 || other_rot.get_y() != 0 || other_rot.get_z() != 0)
+	{
+		rotation = rp3d::Quaternion(other_rot.get_x(), other_rot.get_y(), other_rot.get_z(), 0);
+	}
 
 	return rp3d::Transform(pos, rotation);
+}
+
+rp3d::Vector3 ScrapEngine::Physics::RigidBody::convert_vector(const Core::SVector3& vector)
+{
+	return rp3d::Vector3(vector.get_x(), vector.get_y(), vector.get_z());
 }
 
 ScrapEngine::Physics::RigidBody::~RigidBody()
@@ -124,7 +135,49 @@ ScrapEngine::Core::STransform ScrapEngine::Physics::RigidBody::get_updated_trans
 	return return_tras;
 }
 
-void ScrapEngine::Physics::RigidBody::set_new_transform(const Core::STransform& tramsform) const
+void ScrapEngine::Physics::RigidBody::set_new_transform(const Core::STransform& transform) const
 {
-	body_->setTransform(convert_transform(tramsform));
+	body_->setTransform(convert_transform(transform));
+}
+
+float ScrapEngine::Physics::RigidBody::get_bounciness() const
+{
+	// Get the current material of the body
+	rp3d::Material& material = body_->getMaterial();
+
+	return material.getBounciness();
+}
+
+void ScrapEngine::Physics::RigidBody::set_bounciness(const float bounce_factor) const
+{
+	// Get the current material of the body
+	rp3d::Material& material = body_->getMaterial();
+
+	material.setBounciness(rp3d::decimal(bounce_factor));
+}
+
+float ScrapEngine::Physics::RigidBody::get_friction_coefficient() const
+{
+	// Get the current material of the body
+	rp3d::Material& material = body_->getMaterial();
+
+	return material.getFrictionCoefficient();
+}
+
+void ScrapEngine::Physics::RigidBody::set_friction_coefficient(const float coefficient) const
+{
+	// Get the current material of the body
+	rp3d::Material& material = body_->getMaterial();
+
+	material.setFrictionCoefficient(rp3d::decimal(coefficient));
+}
+
+void ScrapEngine::Physics::RigidBody::apply_force_to_center(const Core::SVector3& force) const
+{
+	body_->applyForceToCenterOfMass(convert_vector(force));
+}
+
+void ScrapEngine::Physics::RigidBody::apply_torque(const Core::SVector3& force) const
+{
+	body_->applyTorque(convert_vector(force));
 }

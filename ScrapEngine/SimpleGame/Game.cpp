@@ -1,16 +1,18 @@
 #include "Engine/Manager/EngineManager.h"
 #include "Engine/Input/Manager/InputManager.h"
-#include "GameObjects/TestGameObject.h"
 #include "GameObjects/Camera/GameCamera.h"
 #include <iostream>
-#include "GameObjects/AnotherTestGameObject.h"
+#include "GameObjects/Terrain.h"
+#include "GameObjects/Ball.h"
+#include "GameObjects/Crate.h"
 
 int main() {
 	short exit_value = EXIT_SUCCESS;
 	ScrapEngine::Manager::EngineManager* ScrapEngineManager = nullptr;
 	try {
 		//init engine
-		ScrapEngineManager = new ScrapEngine::Manager::EngineManager("ScrapEngine Simple Chess Game", 0, 1280, 720);
+		//ScrapEngineManager = new ScrapEngine::Manager::EngineManager("ScrapEngine Simple Chess Game", 0, 1280, 720);
+		ScrapEngineManager = new ScrapEngine::Manager::EngineManager("Example Game", 0, 1280, 720);
 		ScrapEngine::Render::GameWindow* gameWindowRef = ScrapEngineManager->render_manager_view->get_game_window();
 		gameWindowRef->set_window_icon("../assets/game_icon/chess_game_icon_png.png");
 		//Create the input manager
@@ -22,23 +24,32 @@ int main() {
 		ScrapEngine::Core::SceneManager* SceneManagerRef = ScrapEngineManager->logic_manager_view->get_scene_manager();
 		SceneManagerRef->set_skybox(
 			std::array<std::string, 6>{
-				"../assets/skybox/spires_ft.png", //FRONT TEXTURE
-				"../assets/skybox/spires_bk.png", //BACK TEXTURE
-				"../assets/skybox/spires_up.png", //UP TEXTURE
-				"../assets/skybox/spires_dn.png", //DOWN TEXTURE
-				"../assets/skybox/spires_rt.png", //RIGHT TEXTURE
-				"../assets/skybox/spires_lf.png", //LEFT TEXTURE
+				"../assets/skybox/stormydays_ft.png", //FRONT TEXTURE
+				"../assets/skybox/stormydays_bk.png", //BACK TEXTURE
+				"../assets/skybox/stormydays_up.png", //UP TEXTURE
+				"../assets/skybox/stormydays_dn.png", //DOWN TEXTURE
+				"../assets/skybox/stormydays_rt.png", //RIGHT TEXTURE
+				"../assets/skybox/stormydays_lf.png", //LEFT TEXTURE
 			}
 		);
 		SceneManagerRef->set_skybox_size(150);
 		//Create the first game object
-		TestGameObject* FirstGameObject = new TestGameObject(ComponentManagerRef);
-		ScrapEngineManager->logic_manager_view->register_game_object(FirstGameObject);
-		FirstGameObject->set_object_location(ScrapEngine::Core::SVector3(0, 10, 0));
-		AnotherTestGameObject* SecondGameObject = new AnotherTestGameObject(ComponentManagerRef);
-		ScrapEngineManager->logic_manager_view->register_game_object(SecondGameObject);
+		//Ball
+		Ball* BallGameObject = new Ball(ComponentManagerRef, inputmanager);
+		ScrapEngineManager->logic_manager_view->register_game_object(BallGameObject);
+		//Terrain
+		Terrain* TerrainGameObject = new Terrain(ComponentManagerRef);
+		ScrapEngineManager->logic_manager_view->register_game_object(TerrainGameObject);
+		//Crates
+		new Crate(ComponentManagerRef, ScrapEngine::Core::SVector3(0, 0, -50));
+		new Crate(ComponentManagerRef, ScrapEngine::Core::SVector3(10, 0, -50));
+		new Crate(ComponentManagerRef, ScrapEngine::Core::SVector3(-10, 0, -50));
+		new Crate(ComponentManagerRef, ScrapEngine::Core::SVector3(5, 10, -50));
+		new Crate(ComponentManagerRef, ScrapEngine::Core::SVector3(-5, 10, -50));
+		new Crate(ComponentManagerRef, ScrapEngine::Core::SVector3(0, 20, -50));
 		//Create the camera
-		GameCamera* GameCameraRef = new GameCamera(inputmanager, ScrapEngineManager->render_manager_view->get_default_render_camera(), FirstGameObject);
+		GameCamera* GameCameraRef = new GameCamera(inputmanager, ScrapEngineManager->render_manager_view->get_default_render_camera());
+		GameCameraRef->set_game_window_ref(gameWindowRef);
 		ScrapEngineManager->logic_manager_view->register_game_object(GameCameraRef);
 		//Begin gameplay
 		ScrapEngineManager->start_game_loop();

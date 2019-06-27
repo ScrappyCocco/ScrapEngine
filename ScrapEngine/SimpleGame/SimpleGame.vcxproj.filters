@@ -20,25 +20,31 @@
     <ClCompile Include="Game.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
-    <ClCompile Include="GameObjects\TestGameObject.cpp">
-      <Filter>File di origine\GameObjects</Filter>
-    </ClCompile>
     <ClCompile Include="GameObjects\Camera\GameCamera.cpp">
       <Filter>File di origine\GameObjects\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="GameObjects\AnotherTestGameObject.cpp">
+    <ClCompile Include="GameObjects\Ball.cpp">
+      <Filter>File di origine\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\Crate.cpp">
+      <Filter>File di origine\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\Terrain.cpp">
       <Filter>File di origine\GameObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
-    <ClInclude Include="GameObjects\TestGameObject.h">
-      <Filter>File di origine\GameObjects</Filter>
-    </ClInclude>
     <ClInclude Include="GameObjects\Camera\GameCamera.h">
       <Filter>File di origine\GameObjects\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="GameObjects\AnotherTestGameObject.h">
+    <ClInclude Include="GameObjects\Ball.h">
+      <Filter>File di origine\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\Crate.h">
+      <Filter>File di origine\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\Terrain.h">
       <Filter>File di origine\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>

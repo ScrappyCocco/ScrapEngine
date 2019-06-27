@@ -72,6 +72,26 @@ void ScrapEngine::Render::Camera::set_max_render_distance(float new_render_dista
 	max_draw_distance_ = new_render_distance;
 }
 
+float ScrapEngine::Render::Camera::get_camera_yaw() const
+{
+	return yaw_;
+}
+
+float ScrapEngine::Render::Camera::get_camera_pitch() const
+{
+	return pitch_;
+}
+
+void ScrapEngine::Render::Camera::set_camera_yaw(float yaw)
+{
+	yaw_ = yaw;
+}
+
+void ScrapEngine::Render::Camera::set_camera_pitch(float pitch)
+{
+	pitch_ = pitch;
+}
+
 float ScrapEngine::Render::Camera::get_mouse_sensivity() const
 {
 	return mouse_sensivity_;

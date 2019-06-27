@@ -50,3 +50,33 @@ void ScrapEngine::Core::RigidBodyComponent::set_rigidbody_type(const Physics::Ri
 {
 	rigidbody_->set_type(type);
 }
+
+float ScrapEngine::Core::RigidBodyComponent::get_bounciness() const
+{
+	return rigidbody_->get_bounciness();
+}
+
+void ScrapEngine::Core::RigidBodyComponent::set_bounciness(const float bounce_factor) const
+{
+	rigidbody_->set_bounciness(bounce_factor);
+}
+
+float ScrapEngine::Core::RigidBodyComponent::get_friction_coefficient() const
+{
+	return rigidbody_->get_friction_coefficient();
+}
+
+void ScrapEngine::Core::RigidBodyComponent::set_friction_coefficient(const float coefficient) const
+{
+	rigidbody_->set_friction_coefficient(coefficient);
+}
+
+void ScrapEngine::Core::RigidBodyComponent::apply_force_to_center(const SVector3& force) const
+{
+	rigidbody_->apply_force_to_center(force);
+}
+
+void ScrapEngine::Core::RigidBodyComponent::apply_torqe(const SVector3& force) const
+{
+	rigidbody_->apply_torque(force);
+}
