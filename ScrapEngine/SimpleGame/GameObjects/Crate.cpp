@@ -14,7 +14,7 @@ Crate::Crate(ScrapEngine::Core::ComponentsManager* input_ComponentManager, const
 	add_component(mesh);
 
 	ScrapEngine::Core::RigidBodyComponent* box_collider = input_ComponentManager->create_box_rigidbody_component(
-		ScrapEngine::Core::SVector3(8.5f, 8.5f, 8.5f),
+		ScrapEngine::Core::SVector3(8.f, 8.f, 8.f),
 		start_pos, 1.f);
 	
 	add_component(box_collider);
