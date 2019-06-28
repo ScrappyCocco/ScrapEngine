@@ -1,9 +1,11 @@
 [submodule "external/assimp"]
 	path = external/assimp
 	url = https://github.com/assimp/assimp
+	ignore = dirty
 [submodule "external/glfw"]
 	path = external/glfw
 	url = https://github.com/glfw/glfw.git
+	ignore = dirty
 [submodule "external/glm"]
 	path = external/glm
 	url = https://github.com/g-truc/glm.git
@@ -13,6 +15,12 @@
 [submodule "external/openal-soft"]
 	path = external/openal-soft
 	url = https://github.com/kcat/openal-soft
+	ignore = dirty
 [submodule "external/VulkanSDK/Vulkan-Headers"]
 	path = external/VulkanSDK/Vulkan-Headers
 	url = https://github.com/KhronosGroup/Vulkan-Headers
+	ignore = dirty
+[submodule "external/reactphysics"]
+	path = external/reactphysics
+	url = https://github.com/DanielChappuis/reactphysics3d.git
+	ignore = dirty

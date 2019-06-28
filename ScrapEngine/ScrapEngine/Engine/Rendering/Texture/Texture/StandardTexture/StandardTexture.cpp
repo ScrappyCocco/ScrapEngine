@@ -5,7 +5,7 @@
 #include <Engine/Rendering/DepthResources/VulkanDepthResources.h>
 #include <Engine/Rendering/Buffer/StagingBuffer/ImageStagingBuffer/ImageStagingBuffer.h>
 
-ScrapEngine::Render::StandardTexture::StandardTexture(const std::string& file_path, bool should_copy_from_staging)
+ScrapEngine::Render::StandardTexture::StandardTexture(const std::string& file_path, const bool should_copy_from_staging)
 {
 	stbi_uc* pixels = stbi_load(file_path.c_str(), &tex_width_, &tex_height_, &tex_channels_, STBI_rgb_alpha);
 
@@ -46,7 +46,7 @@ ScrapEngine::Render::StandardTexture::~StandardTexture()
 }
 
 void ScrapEngine::Render::StandardTexture::create_image(const uint32_t& width, const uint32_t& height,
-                                                        const vk::Format& format, vk::ImageTiling tiling,
+                                                        const vk::Format& format, const vk::ImageTiling tiling,
                                                         const vk::ImageUsageFlags& usage,
                                                         const vk::MemoryPropertyFlags& properties,
                                                         vk::Image& image, vk::DeviceMemory& image_memory) const

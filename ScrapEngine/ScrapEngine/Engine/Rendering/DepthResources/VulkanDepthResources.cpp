@@ -5,7 +5,7 @@
 #include <Engine/Rendering/Device/VulkanDevice.h>
 
 ScrapEngine::Render::VulkanDepthResources::VulkanDepthResources(const vk::Extent2D* swap_chain_extent,
-                                                                vk::SampleCountFlagBits msaa_samples)
+                                                                const vk::SampleCountFlagBits msaa_samples)
 {
 	const vk::Format depth_format = find_depth_format();
 

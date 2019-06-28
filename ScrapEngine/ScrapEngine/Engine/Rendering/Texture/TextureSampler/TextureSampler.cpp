@@ -10,14 +10,14 @@ ScrapEngine::Render::TextureSampler::TextureSampler(const uint32_t& mip_levels)
 {
 }
 
-ScrapEngine::Render::TextureSampler::TextureSampler(const uint32_t& mip_levels, vk::Filter mag_filter,
-                                                    vk::Filter min_filter, vk::SamplerMipmapMode minimap_mode,
-                                                    vk::SamplerAddressMode address_mode_u,
-                                                    vk::SamplerAddressMode address_mode_v,
-                                                    vk::SamplerAddressMode address_mode_w, bool compare_enabled,
-                                                    vk::CompareOp compare_op,
-                                                    bool anisotropy_enable, uint16_t max_anisotropy,
-                                                    vk::BorderColor border_color)
+ScrapEngine::Render::TextureSampler::TextureSampler(const uint32_t& mip_levels, const vk::Filter mag_filter,
+                                                    const vk::Filter min_filter, const vk::SamplerMipmapMode minimap_mode,
+                                                    const vk::SamplerAddressMode address_mode_u,
+                                                    const vk::SamplerAddressMode address_mode_v,
+                                                    const vk::SamplerAddressMode address_mode_w, const bool compare_enabled,
+                                                    const vk::CompareOp compare_op,
+                                                    const bool anisotropy_enable, const uint16_t max_anisotropy,
+                                                    const vk::BorderColor border_color)
 {
 	vk::SamplerCreateInfo samplerInfo(
 		vk::SamplerCreateFlags(),

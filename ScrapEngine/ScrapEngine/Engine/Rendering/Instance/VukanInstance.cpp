@@ -47,7 +47,7 @@ void ScrapEngine::Render::VukanInstance::create_vulkan_instance(std::string app_
 	vk::ApplicationInfo app_info(app_name.c_str(), app_version, engine_name.c_str(), engine_version,
 	                             VK_API_VERSION_1_0);
 
-	auto extensions = get_required_extensions();
+	std::vector<const char*> extensions = get_required_extensions();
 
 	vk::InstanceCreateInfo create_info(
 		vk::InstanceCreateFlags(),

@@ -61,7 +61,7 @@ namespace ScrapEngine
 			RenderManager(const game_base_info* received_base_game_info);
 			~RenderManager();
 		private:
-			auto initialize_vulkan(const game_base_info* received_base_game_info) -> void;
+			void initialize_vulkan(const game_base_info* received_base_game_info);
 
 			void create_queues();
 			void delete_queues() const;

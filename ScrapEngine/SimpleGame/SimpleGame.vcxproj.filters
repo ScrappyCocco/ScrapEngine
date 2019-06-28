@@ -9,9 +9,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="File di origine\External">
-      <UniqueIdentifier>{209cfcc1-6912-422e-8cd2-2d187570f067}</UniqueIdentifier>
-    </Filter>
     <Filter Include="File di origine\GameObjects">
       <UniqueIdentifier>{44a01f9c-dfaf-48a4-b6f2-490d8fc9033a}</UniqueIdentifier>
     </Filter>
@@ -23,25 +20,37 @@
     <ClCompile Include="Game.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
-    <ClCompile Include="GameObjects\TestGameObject.cpp">
-      <Filter>File di origine\GameObjects</Filter>
-    </ClCompile>
     <ClCompile Include="GameObjects\Camera\GameCamera.cpp">
       <Filter>File di origine\GameObjects\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="GameObjects\AnotherTestGameObject.cpp">
+    <ClCompile Include="GameObjects\Ball.cpp">
+      <Filter>File di origine\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\Crate.cpp">
+      <Filter>File di origine\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\Terrain.cpp">
+      <Filter>File di origine\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\Trigger.cpp">
       <Filter>File di origine\GameObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
-    <ClInclude Include="GameObjects\TestGameObject.h">
-      <Filter>File di origine\GameObjects</Filter>
-    </ClInclude>
     <ClInclude Include="GameObjects\Camera\GameCamera.h">
       <Filter>File di origine\GameObjects\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="GameObjects\AnotherTestGameObject.h">
+    <ClInclude Include="GameObjects\Ball.h">
+      <Filter>File di origine\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\Crate.h">
+      <Filter>File di origine\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\Terrain.h">
+      <Filter>File di origine\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\Trigger.h">
       <Filter>File di origine\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>

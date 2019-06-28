@@ -3,6 +3,7 @@
 #include <Engine/Rendering/Buffer/BaseBuffer.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include <Engine/Rendering/Device/VulkanDevice.h>
+#include <glm/gtx/quaternion.hpp>
 
 ScrapEngine::Render::UniformBuffer::UniformBuffer(const std::vector<vk::Image>* swap_chain_images,
                                                   const vk::Extent2D& input_swap_chain_extent)
@@ -46,13 +47,17 @@ void ScrapEngine::Render::UniformBuffer::update_uniform_buffer(const uint32_t& c
 {
 	UniformBufferObject ubo = {};
 
+	//Traslate
 	ubo.model = translate(glm::mat4(1.0f), object_transform.get_position().get_glm_vector());
+
+	//Rotate
+	const glm::mat4 rotation_matrix = glm::toMat4(object_transform.get_quat_rotation().get_glm_quat());
+	ubo.model = ubo.model * rotation_matrix;
+
+	//Scale
 	ubo.model = scale(ubo.model, object_transform.get_scale().get_glm_vector());
 
-	ubo.model = rotate(ubo.model, glm::radians(object_transform.get_rotation().get_x()), glm::vec3(1.0f, 0.0f, 0.0f));
-	ubo.model = rotate(ubo.model, glm::radians(object_transform.get_rotation().get_y()), glm::vec3(0.0f, 1.0f, 0.0f));
-	ubo.model = rotate(ubo.model, glm::radians(object_transform.get_rotation().get_z()), glm::vec3(0.0f, 0.0f, 1.0f));
-
+	//Perspective stuff
 	ubo.proj = glm::perspective(glm::radians(45.0f),
 	                            swap_chain_extent_.width / static_cast<float>(swap_chain_extent_.height),
 	                            render_camera->get_camera_min_draw_distance(),

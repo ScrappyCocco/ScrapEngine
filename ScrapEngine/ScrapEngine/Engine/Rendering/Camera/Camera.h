@@ -36,6 +36,11 @@ namespace ScrapEngine
 			void set_min_render_distance(float new_render_distance);
 			void set_max_render_distance(float new_render_distance);
 
+			float get_camera_yaw() const;
+			float get_camera_pitch() const;
+			void set_camera_yaw(float yaw);
+			void set_camera_pitch(float pitch);
+
 			float get_mouse_sensivity() const;
 			float get_camera_min_draw_distance() const;
 			float get_camera_max_draw_distance() const;

@@ -3,7 +3,7 @@
 #include <Engine/Rendering/Texture/TextureImageView/TextureImageView.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
 
-ScrapEngine::Render::VulkanColorResources::VulkanColorResources(vk::SampleCountFlagBits msaa_samples,
+ScrapEngine::Render::VulkanColorResources::VulkanColorResources(const vk::SampleCountFlagBits msaa_samples,
                                                                 VulkanSwapChain* swap_chain_ref)
 {
 	const vk::Format color_format = swap_chain_ref->get_swap_chain_image_format();

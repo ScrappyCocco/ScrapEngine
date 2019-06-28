@@ -23,7 +23,13 @@
     <ClCompile Include="Engine\Input\Manager\InputManager.cpp" />
     <ClCompile Include="Engine\LogicCore\Components\Manager\ComponentsManager.cpp" />
     <ClCompile Include="Engine\LogicCore\Components\MeshComponent\MeshComponent.cpp" />
+    <ClCompile Include="Engine\LogicCore\Components\RigidBodyComponent\BoxRigidBodyComponent\BoxRigidBodyComponent.cpp" />
+    <ClCompile Include="Engine\LogicCore\Components\RigidBodyComponent\CapsuleRigidBodyComponent\CapsuleRigidBodyComponent.cpp" />
+    <ClCompile Include="Engine\LogicCore\Components\RigidBodyComponent\RigidBodyComponent.cpp" />
+    <ClCompile Include="Engine\LogicCore\Components\RigidBodyComponent\SphereRigidBodyComponent\SphereRigidBodyComponent.cpp" />
     <ClCompile Include="Engine\LogicCore\Components\SComponent.cpp" />
+    <ClCompile Include="Engine\LogicCore\Components\TriggerComponent\BoxTriggerComponent\BoxTriggerComponent.cpp" />
+    <ClCompile Include="Engine\LogicCore\Components\TriggerComponent\TriggerComponent.cpp" />
     <ClCompile Include="Engine\LogicCore\GameObject\SGameObject.cpp" />
     <ClCompile Include="Engine\LogicCore\Manager\LogicManager.cpp" />
     <ClCompile Include="Engine\LogicCore\Manager\LogicManagerView.cpp" />
@@ -33,6 +39,14 @@
     <ClCompile Include="Engine\LogicCore\Scene\SceneManager.cpp" />
     <ClCompile Include="Engine\LogicCore\SObject.cpp" />
     <ClCompile Include="Engine\Manager\EngineManager.cpp" />
+    <ClCompile Include="Engine\Physics\CollisionBody\CollisionBody.cpp" />
+    <ClCompile Include="Engine\Physics\CollisionShape\BoxShape\BoxShape.cpp" />
+    <ClCompile Include="Engine\Physics\CollisionShape\CapsuleShape\CapsuleShape.cpp" />
+    <ClCompile Include="Engine\Physics\CollisionShape\CollisionShape.cpp" />
+    <ClCompile Include="Engine\Physics\CollisionShape\SphereShape\SphereShape.cpp" />
+    <ClCompile Include="Engine\Physics\CollisionWorld\DynamicsWorld\DiscreteDynamicsWorld.cpp" />
+    <ClCompile Include="Engine\Physics\Manager\PhysicsManager.cpp" />
+    <ClCompile Include="Engine\Physics\RigidBody\RigidBody.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\BaseBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\BufferContainer\BufferContainer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\BufferContainer\IndicesBufferContainer\IndicesBufferContainer.cpp" />
@@ -95,7 +109,13 @@
     <ClInclude Include="Engine\Input\MouseButtons.h" />
     <ClInclude Include="Engine\LogicCore\Components\Manager\ComponentsManager.h" />
     <ClInclude Include="Engine\LogicCore\Components\MeshComponent\MeshComponent.h" />
+    <ClInclude Include="Engine\LogicCore\Components\RigidBodyComponent\BoxRigidBodyComponent\BoxRigidBodyComponent.h" />
+    <ClInclude Include="Engine\LogicCore\Components\RigidBodyComponent\CapsuleRigidBodyComponent\CapsuleRigidBodyComponent.h" />
+    <ClInclude Include="Engine\LogicCore\Components\RigidBodyComponent\RigidBodyComponent.h" />
+    <ClInclude Include="Engine\LogicCore\Components\RigidBodyComponent\SphereRigidBodyComponent\SphereRigidBodyComponent.h" />
     <ClInclude Include="Engine\LogicCore\Components\SComponent.h" />
+    <ClInclude Include="Engine\LogicCore\Components\TriggerComponent\BoxTriggerComponent\BoxTriggerComponent.h" />
+    <ClInclude Include="Engine\LogicCore\Components\TriggerComponent\TriggerComponent.h" />
     <ClInclude Include="Engine\LogicCore\GameObject\SGameObject.h" />
     <ClInclude Include="Engine\LogicCore\Manager\LogicManager.h" />
     <ClInclude Include="Engine\LogicCore\Manager\LogicManagerView.h" />
@@ -105,6 +125,15 @@
     <ClInclude Include="Engine\LogicCore\Scene\SceneManager.h" />
     <ClInclude Include="Engine\LogicCore\SObject.h" />
     <ClInclude Include="Engine\Manager\EngineManager.h" />
+    <ClInclude Include="Engine\Physics\CollisionBody\CollisionBody.h" />
+    <ClInclude Include="Engine\Physics\CollisionShape\BoxShape\BoxShape.h" />
+    <ClInclude Include="Engine\Physics\CollisionShape\CapsuleShape\CapsuleShape.h" />
+    <ClInclude Include="Engine\Physics\CollisionShape\CollisionShape.h" />
+    <ClInclude Include="Engine\Physics\CollisionShape\SphereShape\SphereShape.h" />
+    <ClInclude Include="Engine\Physics\CollisionWorld\DynamicsWorld\DiscreteDynamicsWorld.h" />
+    <ClInclude Include="Engine\Physics\Manager\PhysicsManager.h" />
+    <ClInclude Include="Engine\Physics\PhysicsInclude.h" />
+    <ClInclude Include="Engine\Physics\RigidBody\RigidBody.h" />
     <ClInclude Include="Engine\Rendering\Base\Vertex.h" />
     <ClInclude Include="Engine\Rendering\Buffer\BaseBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\BufferContainer\BufferContainer.h" />
@@ -220,7 +249,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)ScrapEngine;$(SolutionDir)..\external\VulkanSDK\Vulkan-Headers\include;$(SolutionDir)..\external\glm;$(SolutionDir)..\external\stb;$(SolutionDir)..\external\gli;$(SolutionDir)..\external\glfw\include;$(SolutionDir)..\external\assimp\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)ScrapEngine;$(SolutionDir)..\external\VulkanSDK\Vulkan-Headers\include;$(SolutionDir)..\external\glm;$(SolutionDir)..\external\stb;$(SolutionDir)..\external\gli;$(SolutionDir)..\external\glfw\include;$(SolutionDir)..\external\reactphysics\src;$(SolutionDir)..\external\assimp\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -228,7 +257,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)ScrapEngine;$(SolutionDir)..\external\VulkanSDK\Vulkan-Headers\include;$(SolutionDir)..\external\glm;$(SolutionDir)..\external\stb;$(SolutionDir)..\external\gli;$(SolutionDir)..\external\glfw\include;$(SolutionDir)..\external\assimp\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)ScrapEngine;$(SolutionDir)..\external\VulkanSDK\Vulkan-Headers\include;$(SolutionDir)..\external\glm;$(SolutionDir)..\external\stb;$(SolutionDir)..\external\gli;$(SolutionDir)..\external\glfw\include;$(SolutionDir)..\external\reactphysics\src;$(SolutionDir)..\external\assimp\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

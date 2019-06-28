@@ -4,13 +4,19 @@ ScrapEngine::Core::LogicManagerView::LogicManagerView(Render::RenderManager* inp
                                                       LogicManager* input_logic_manager_ref)
 	: logic_manager_ref_(input_logic_manager_ref)
 {
-	component_manager_ = new ComponentsManager(input_render_manager_ref);
+	component_manager_ = new ComponentsManager();
+	component_manager_->set_render_manager(input_render_manager_ref);
 	scene_manager_ = new SceneManager(input_render_manager_ref);
 }
 
 ScrapEngine::Core::LogicManagerView::~LogicManagerView()
 {
 	delete component_manager_;
+}
+
+void ScrapEngine::Core::LogicManagerView::set_physics_manager(Physics::PhysicsManager* physics_manager) const
+{
+	component_manager_->set_physics_manager(physics_manager);
 }
 
 ScrapEngine::Core::SGameObject* ScrapEngine::Core::LogicManagerView::register_game_object(

@@ -82,7 +82,7 @@ void ScrapEngine::Input::InputManager::reset_cursor_to_system_default()
 	load_system_cursor(cursor_regular_arrow);
 }
 
-void ScrapEngine::Input::InputManager::scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+void ScrapEngine::Input::InputManager::scroll_callback(GLFWwindow* window, double xoffset, const double yoffset)
 {
 	if (yoffset > 0)
 	{

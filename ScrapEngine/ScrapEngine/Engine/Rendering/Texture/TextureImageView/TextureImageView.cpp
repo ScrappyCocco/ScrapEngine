@@ -3,7 +3,7 @@
 #include <Engine/Rendering/Device/VulkanDevice.h>
 
 ScrapEngine::Render::TextureImageView::TextureImageView(vk::Image* texture_image, const uint32_t& mip_levels_data,
-                                                        bool iscubemap, int layer_count)
+                                                        const bool iscubemap, const int layer_count)
 {
 	if (iscubemap)
 	{
@@ -24,7 +24,7 @@ ScrapEngine::Render::TextureImageView::~TextureImageView()
 
 vk::ImageView ScrapEngine::Render::TextureImageView::create_image_view(vk::Image* image, const vk::Format format,
                                                                        const vk::ImageAspectFlags& aspect_flags,
-                                                                       uint32_t mip_levels_data)
+                                                                       const uint32_t mip_levels_data)
 {
 	vk::ImageViewCreateInfo view_info(
 		vk::ImageViewCreateFlags(),
@@ -47,8 +47,8 @@ vk::ImageView ScrapEngine::Render::TextureImageView::create_image_view(vk::Image
 }
 
 vk::ImageView ScrapEngine::Render::TextureImageView::create_cube_map_image_view(
-	vk::Image* image, const vk::Format format, const vk::ImageAspectFlags& aspect_flags, uint32_t mip_levels_data,
-	int layer_count)
+	vk::Image* image, const vk::Format format, const vk::ImageAspectFlags& aspect_flags, const uint32_t mip_levels_data,
+	const int layer_count)
 {
 	vk::ImageViewCreateInfo view_info(
 		vk::ImageViewCreateFlags(),
