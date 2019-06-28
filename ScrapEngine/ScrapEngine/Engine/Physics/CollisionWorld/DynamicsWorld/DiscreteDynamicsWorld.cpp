@@ -26,4 +26,3 @@ rp3d::DynamicsWorld* ScrapEngine::Physics::DiscreteDynamicsWorld::get_dynamic_wo
 {
 	return world_;
 }
-

@@ -1,6 +1,5 @@
 #pragma once
 
-#include <vulkan/vulkan.hpp>
 #include <Engine/Rendering/Instance/VukanInstance.h>
 #include <Engine/Rendering/Queue/BaseQueue.h>
 #include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
