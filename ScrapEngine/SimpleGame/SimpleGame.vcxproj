@@ -178,7 +178,7 @@
     <ResourceCompile Include="SimpleGame.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\assets\game_icon\chess_game_icon.ico" />
+    <Image Include="..\assets\game_icon\crate_icon.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -60,7 +60,7 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\assets\game_icon\chess_game_icon.ico">
+    <Image Include="..\assets\game_icon\crate_icon.ico">
       <Filter>File di risorse</Filter>
     </Image>
   </ItemGroup>
