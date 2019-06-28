@@ -4,12 +4,6 @@
 #include <glm/mat4x4.hpp>
 #include <Engine/LogicCore/Math/Vector/SVector3.h>
 
-namespace ScrapEngine {
-	namespace Core {
-		class SVector3;
-	}
-}
-
 namespace ScrapEngine
 {
 	namespace Debug

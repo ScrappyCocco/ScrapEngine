@@ -17,7 +17,7 @@ Terrain::Terrain(ScrapEngine::Core::ComponentsManager* input_ComponentManager)
 	add_component(mesh);
 
 	ScrapEngine::Core::RigidBodyComponent* box_collider = input_ComponentManager->create_box_rigidbody_component(
-		ScrapEngine::Core::SVector3(125.f, 0.5f, 125.f),
+		ScrapEngine::Core::SVector3(125.f, 2.f, 125.f),
 		ScrapEngine::Core::SVector3(0, -20, 0), 0.f);
 	
 	box_collider->set_rigidbody_type(ScrapEngine::Physics::RigidBody_Types::static_rigidbody);
