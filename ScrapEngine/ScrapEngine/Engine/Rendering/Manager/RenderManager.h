@@ -17,6 +17,7 @@
 #include <Engine/Rendering/Texture/ColorResources/VulkanColorResources.h>
 #include <Engine/Rendering/Model/MeshInstance/VulkanMeshInstance.h>
 #include <Engine/Rendering/Model/SkyboxInstance/VulkanSkyboxInstance.h>
+#include <TaskScheduler.h>
 
 namespace ScrapEngine
 {
@@ -57,6 +58,9 @@ namespace ScrapEngine
 			const std::vector<vk::Semaphore>* image_available_semaphores_ref_;
 			const std::vector<vk::Semaphore>* render_finished_semaphores_ref_;
 			const std::vector<vk::Fence>* in_flight_fences_ref_;
+
+			//Scheduler tasks
+			enki::TaskScheduler g_TS;
 		public:
 			RenderManager(const game_base_info* received_base_game_info);
 			~RenderManager();
