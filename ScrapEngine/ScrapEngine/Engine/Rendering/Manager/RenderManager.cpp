@@ -37,6 +37,8 @@ ScrapEngine::Render::RenderManager::~RenderManager()
 	delete vulkan_window_surface_;
 	delete vulkan_instance_;
 	delete game_window_;
+	Debug::DebugLog::print_to_console_log("Shutting down scheduler...");
+	g_TS.WaitforAllAndShutdown();
 	Debug::DebugLog::print_to_console_log("Deleting ~RenderManager completed");
 }
 
@@ -142,6 +144,12 @@ void ScrapEngine::Render::RenderManager::initialize_vulkan(const game_base_info*
 	create_camera();
 	Debug::DebugLog::print_to_console_log("User View Camera created");
 	Debug::DebugLog::print_to_console_log("---initializeVulkan() completed---");
+}
+
+void ScrapEngine::Render::RenderManager::initialize_scheduler()
+{
+	//Initialize enkiTS scheduler
+	g_TS.Initialize();
 }
 
 void ScrapEngine::Render::RenderManager::create_queues()
