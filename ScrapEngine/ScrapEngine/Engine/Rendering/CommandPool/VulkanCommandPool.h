@@ -9,11 +9,8 @@ namespace ScrapEngine
 	{
 		class VulkanCommandPool
 		{
-		private:
+		protected:
 			vk::CommandPool command_pool_;
-
-			//Singleton static instance
-			static VulkanCommandPool* instance_;
 
 			//The constructor is private because this class is a Singleton
 			VulkanCommandPool() = default;
@@ -21,10 +18,7 @@ namespace ScrapEngine
 			//Method used to init the class with parameters because the constructor is private
 			void init(BaseQueue::QueueFamilyIndices queue_family_indices);
 
-			~VulkanCommandPool();
-
-			//Singleton static function to get or create a class instance
-			static VulkanCommandPool* get_instance();
+			virtual ~VulkanCommandPool() = 0;
 
 			vk::CommandPool* get_command_pool();
 		};

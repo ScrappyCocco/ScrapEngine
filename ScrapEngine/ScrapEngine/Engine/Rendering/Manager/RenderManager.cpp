@@ -5,6 +5,7 @@
 #include <Engine/Rendering/Model/ObjectPool/VulkanModelBuffersPool/VulkanModelBuffersPool.h>
 #include <Engine/Rendering/Model/ObjectPool/VulkanModelPool/VulkanModelPool.h>
 #include <Engine/Rendering/Model/ObjectPool/VulkanSimpleMaterialPool/VulkanSimpleMaterialPool.h>
+#include <Engine/Rendering/CommandPool/Singleton/SingletonCommandPool.h>
 
 
 ScrapEngine::Render::RenderManager::RenderManager(const game_base_info* received_base_game_info)
@@ -37,8 +38,11 @@ ScrapEngine::Render::RenderManager::~RenderManager()
 	delete vulkan_window_surface_;
 	delete vulkan_instance_;
 	delete game_window_;
-	Debug::DebugLog::print_to_console_log("Shutting down scheduler...");
-	g_TS.WaitforAllAndShutdown();
+	if (g_TS.GetNumTaskThreads() != 0 || g_TS.GetThreadNum() != 0)
+	{
+		Debug::DebugLog::print_to_console_log("Threads > 0, shutting down scheduler...");
+		g_TS.WaitforAllAndShutdown();
+	}
 	Debug::DebugLog::print_to_console_log("Deleting ~RenderManager completed");
 }
 
@@ -119,7 +123,7 @@ void ScrapEngine::Render::RenderManager::initialize_vulkan(const game_base_info*
 	vulkan_rendering_pass_->init(vulkan_render_swap_chain_->get_swap_chain_image_format(),
 	                             vulkan_render_device_->get_msaa_samples());
 	Debug::DebugLog::print_to_console_log("VulkanRenderPass created");
-	vulkan_render_command_pool_ = VulkanCommandPool::get_instance();
+	vulkan_render_command_pool_ = SingletonCommandPool::get_instance();
 	vulkan_render_command_pool_->init(vulkan_render_device_->get_cached_queue_family_indices());
 	Debug::DebugLog::print_to_console_log("VulkanCommandPool created");
 	vulkan_render_color_ = new VulkanColorResources(vulkan_render_device_->get_msaa_samples(),
@@ -171,7 +175,8 @@ void ScrapEngine::Render::RenderManager::create_command_buffers()
 	Debug::DebugLog::print_to_console_log("Rebuilding VulkanRenderCommandBuffer...");
 	vulkan_render_command_buffer_ = new VulkanCommandBuffer();
 	vulkan_render_command_buffer_->init_command_buffer(vulkan_render_frame_buffer_,
-	                                                   &vulkan_render_swap_chain_->get_swap_chain_extent());
+	                                                   &vulkan_render_swap_chain_->get_swap_chain_extent(),
+	                                                   vulkan_render_command_pool_);
 	if (skybox_)
 	{
 		vulkan_render_command_buffer_->load_skybox(skybox_);

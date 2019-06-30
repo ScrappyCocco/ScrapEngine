@@ -1,6 +1,5 @@
 #include <Engine/Rendering/Buffer/CommandBuffer/VulkanCommandBuffer.h>
 #include <Engine/Debug/DebugLog.h>
-#include <Engine/Rendering/Command/VulkanCommandPool.h>
 #include <Engine/Rendering/RenderPass/VulkanRenderPass.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
 
@@ -11,15 +10,18 @@ ScrapEngine::Render::VulkanCommandBuffer::~VulkanCommandBuffer()
 
 void ScrapEngine::Render::VulkanCommandBuffer::init_command_buffer(
 	VulkanFrameBuffer* swap_chain_frame_buffer,
-	vk::Extent2D* input_swap_chain_extent_ref)
+	vk::Extent2D* input_swap_chain_extent_ref,
+	VulkanCommandPool* command_pool)
 {
 	Debug::DebugLog::print_to_console_log("[VulkanCommandBuffer] Initializing...");
+	command_pool_ref_ = command_pool;
+
 	const std::vector<vk::Framebuffer>* swap_chain_framebuffers = swap_chain_frame_buffer->
 		get_swap_chain_framebuffers_vector();
 	command_buffers_.resize(swap_chain_framebuffers->size());
 
 	vk::CommandBufferAllocateInfo alloc_info(
-		*VulkanCommandPool::get_instance()->get_command_pool(),
+		*command_pool_ref_->get_command_pool(),
 		vk::CommandBufferLevel::ePrimary,
 		static_cast<uint32_t>(command_buffers_.size())
 	);
@@ -150,7 +152,7 @@ void ScrapEngine::Render::VulkanCommandBuffer::free_command_buffers()
 {
 	Debug::DebugLog::print_to_console_log("[VulkanCommandBuffer] Clearing Command Buffer");
 	VulkanDevice::get_instance()->get_logical_device()->freeCommandBuffers(
-		*VulkanCommandPool::get_instance()->get_command_pool(),
+		*command_pool_ref_->get_command_pool(),
 		static_cast<uint32_t>(command_buffers_.size()),
 		command_buffers_.data());
 	command_buffers_.clear();

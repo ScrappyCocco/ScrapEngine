@@ -61,7 +61,9 @@
     <ClCompile Include="Engine\Rendering\Buffer\UniformBuffer\UniformBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\VertexBuffer\VertexBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Camera\Camera.cpp" />
-    <ClCompile Include="Engine\Rendering\Command\VulkanCommandPool.cpp" />
+    <ClCompile Include="Engine\Rendering\CommandPool\Singleton\SingletonCommandPool.cpp" />
+    <ClCompile Include="Engine\Rendering\CommandPool\Standard\StandardCommandPool.cpp" />
+    <ClCompile Include="Engine\Rendering\CommandPool\VulkanCommandPool.cpp" />
     <ClCompile Include="Engine\Rendering\DepthResources\VulkanDepthResources.cpp" />
     <ClCompile Include="Engine\Rendering\Descriptor\VulkanDescriptorPool.cpp" />
     <ClCompile Include="Engine\Rendering\Descriptor\VulkanDescriptorSet.cpp" />
@@ -149,7 +151,9 @@
     <ClInclude Include="Engine\Rendering\Buffer\UniformBuffer\UniformBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\VertexBuffer\VertexBuffer.h" />
     <ClInclude Include="Engine\Rendering\Camera\Camera.h" />
-    <ClInclude Include="Engine\Rendering\Command\VulkanCommandPool.h" />
+    <ClInclude Include="Engine\Rendering\CommandPool\Singleton\SingletonCommandPool.h" />
+    <ClInclude Include="Engine\Rendering\CommandPool\Standard\StandardCommandPool.h" />
+    <ClInclude Include="Engine\Rendering\CommandPool\VulkanCommandPool.h" />
     <ClInclude Include="Engine\Rendering\DepthResources\VulkanDepthResources.h" />
     <ClInclude Include="Engine\Rendering\Descriptor\VulkanDescriptorPool.h" />
     <ClInclude Include="Engine\Rendering\Descriptor\VulkanDescriptorSet.h" />
