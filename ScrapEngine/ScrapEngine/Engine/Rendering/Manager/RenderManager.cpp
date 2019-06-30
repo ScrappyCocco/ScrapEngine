@@ -42,10 +42,11 @@ ScrapEngine::Render::RenderManager::RenderManager(const game_base_info* received
 ScrapEngine::Render::RenderManager::~RenderManager()
 {
 	Debug::DebugLog::print_to_console_log("Deleting ~RenderManager");
+	//Delete queues
 	delete_queues();
+	//Delete swap chain
 	cleanup_swap_chain();
 	delete render_camera_;
-
 	delete skybox_;
 	for (auto current_model : loaded_models_)
 	{
@@ -60,17 +61,19 @@ ScrapEngine::Render::RenderManager::~RenderManager()
 	delete vulkan_window_surface_;
 	delete vulkan_instance_;
 	delete game_window_;
-	if (g_TS.GetNumTaskThreads() != 0 || g_TS.GetThreadNum() != 0)
-	{
-		Debug::DebugLog::print_to_console_log("Threads > 0, shutting down scheduler...");
-		g_TS.WaitforAllAndShutdown();
-	}
 	Debug::DebugLog::print_to_console_log("Deleting ~RenderManager completed");
 }
 
 void ScrapEngine::Render::RenderManager::cleanup_swap_chain()
 {
 	Debug::DebugLog::print_to_console_log("---cleanupSwapChain()---");
+	//First stop the scheduler
+	if (g_TS.GetNumTaskThreads() != 0 || g_TS.GetThreadNum() != 0)
+	{
+		Debug::DebugLog::print_to_console_log("Threads > 0, shutting down scheduler...");
+		g_TS.WaitforAllAndShutdown();
+	}
+	//Delete all the other stuff
 	delete vulkan_render_color_;
 	delete vulkan_render_depth_;
 	delete vulkan_render_frame_buffer_;
@@ -189,7 +192,7 @@ void ScrapEngine::Render::RenderManager::initialize_command_buffers()
 {
 	for (int i = 0; i < 2; i++)
 	{
-		command_buffers_.push_back(threaded_command_buffer());
+		command_buffers_.emplace_back();
 		command_buffers_[i].command_pool = new StandardCommandPool();
 		command_buffers_[i].command_pool->init(vulkan_render_device_->get_cached_queue_family_indices());
 		command_buffers_[i].command_buffer = new VulkanCommandBuffer();
@@ -306,6 +309,7 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 {
 	//Check if i can build another command buffer in background
 	check_start_new_thread();
+	//Prepare draw frame
 	VulkanDevice::get_instance()->get_logical_device()->waitForFences(1, &(*in_flight_fences_ref_)[current_frame_],
 	                                                                  true,
 	                                                                  std::numeric_limits<uint64_t>::max());
