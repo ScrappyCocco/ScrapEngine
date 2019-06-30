@@ -83,6 +83,8 @@ namespace ScrapEngine
 			//I need to have a reference to know if is running or is done
 			//I need to use a pointer because a ITaskSet cannot be copied
 			std::vector<ParallelCommandBufferCreation*> command_buffers_tasks_;
+			//This is the fence used to wait that the previous command buffer has finished and can be deleted
+			const vk::Fence* waiting_fence_ = nullptr;
 		public:
 			RenderManager(const game_base_info* received_base_game_info);
 			~RenderManager();

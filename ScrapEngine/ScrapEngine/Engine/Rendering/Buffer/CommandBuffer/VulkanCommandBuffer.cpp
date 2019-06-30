@@ -1,5 +1,4 @@
 #include <Engine/Rendering/Buffer/CommandBuffer/VulkanCommandBuffer.h>
-#include <Engine/Debug/DebugLog.h>
 #include <Engine/Rendering/RenderPass/VulkanRenderPass.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
 

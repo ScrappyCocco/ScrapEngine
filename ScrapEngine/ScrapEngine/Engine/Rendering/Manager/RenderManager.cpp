@@ -9,8 +9,22 @@
 #include <Engine/Rendering/CommandPool/Standard/StandardCommandPool.h>
 
 void ScrapEngine::Render::RenderManager::ParallelCommandBufferCreation::ExecuteRange(enki::TaskSetPartition range,
-	uint32_t threadnum)
+                                                                                     uint32_t threadnum)
 {
+	if (owner->waiting_fence_)
+	{
+		const vk::Result result = VulkanDevice::get_instance()->get_logical_device()
+		                                                ->waitForFences(1, owner->waiting_fence_, true, 10000);
+		if (result == vk::Result::eSuccess) {
+			owner->waiting_fence_ = nullptr;
+		}else if(result == vk::Result::eTimeout)
+		{
+			throw std::runtime_error("Fence timeout");
+		}else
+		{
+			throw std::runtime_error("An error occurred while waiting a fence...");
+		}
+	}
 	owner->create_command_buffer(flip_flop);
 }
 
@@ -207,7 +221,6 @@ void ScrapEngine::Render::RenderManager::create_queues()
 
 void ScrapEngine::Render::RenderManager::create_command_buffer(const bool flip_flop)
 {
-	Debug::DebugLog::print_to_console_log("Rebuilding VulkanRenderCommandBuffer...");
 	const short int index = flip_flop ? 1 : 0;
 	command_buffers_[index].command_buffer->free_command_buffers();
 	command_buffers_[index].command_buffer->init_command_buffer(vulkan_render_frame_buffer_,
@@ -222,13 +235,12 @@ void ScrapEngine::Render::RenderManager::create_command_buffer(const bool flip_f
 		command_buffers_[index].command_buffer->load_mesh(mesh);
 	}
 	command_buffers_[index].command_buffer->close_command_buffer();
-	Debug::DebugLog::print_to_console_log("VulkanRenderCommandBuffer created");
 }
 
 void ScrapEngine::Render::RenderManager::check_start_new_thread()
 {
 	const short int index = command_buffer_flip_flop_ ? 0 : 1;
-	if(!command_buffers_[index].is_running)
+	if (!command_buffers_[index].is_running)
 	{
 		command_buffers_[index].is_running = true;
 		g_TS.AddTaskSetToPipe(command_buffers_tasks_[index]);
@@ -237,11 +249,12 @@ void ScrapEngine::Render::RenderManager::check_start_new_thread()
 
 void ScrapEngine::Render::RenderManager::swap_command_buffers()
 {
-	if(current_frame_ >= 1)
+	if (current_frame_ >= 1)
 	{
 		const short int index = command_buffer_flip_flop_ ? 0 : 1;
-		if(command_buffers_[index].is_running && command_buffers_tasks_[index]->GetIsComplete())
+		if (command_buffers_[index].is_running && command_buffers_tasks_[index]->GetIsComplete())
 		{
+			waiting_fence_ = &(*in_flight_fences_ref_)[current_frame_];
 			command_buffers_[index].is_running = false;
 			command_buffer_flip_flop_ = !command_buffer_flip_flop_;
 		}
@@ -283,7 +296,8 @@ ScrapEngine::Render::VulkanSkyboxInstance* ScrapEngine::Render::RenderManager::l
 	delete skybox_;
 
 	skybox_ = new VulkanSkyboxInstance("../assets/shader/compiled_shaders/skybox.vert.spv",
-	                                   "../assets/shader/compiled_shaders/skybox.frag.spv", "../assets/models/cube.obj",
+	                                   "../assets/shader/compiled_shaders/skybox.frag.spv",
+	                                   "../assets/models/cube.obj",
 	                                   files_path, vulkan_render_swap_chain_);
 	return skybox_;
 }
