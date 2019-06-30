@@ -24,3 +24,7 @@
 	path = external/reactphysics
 	url = https://github.com/DanielChappuis/reactphysics3d.git
 	ignore = dirty
+[submodule "external/enkits"]
+	path = external/enkits
+	url = https://github.com/dougbinks/enkiTS.git
+	ignore = dirty
