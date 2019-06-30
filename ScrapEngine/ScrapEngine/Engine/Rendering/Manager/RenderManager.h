@@ -34,7 +34,6 @@ namespace ScrapEngine
 			VulkanRenderPass* vulkan_rendering_pass_ = nullptr;
 			VulkanFrameBuffer* vulkan_render_frame_buffer_ = nullptr;
 			VulkanCommandPool* vulkan_render_command_pool_ = nullptr;
-			VulkanCommandBuffer* vulkan_render_command_buffer_ = nullptr;
 			BaseQueue* vulkan_graphics_queue_ = nullptr;
 			BaseQueue* vulkan_presentation_queue_ = nullptr;
 			VulkanSemaphoresManager* vulkan_render_semaphores_ = nullptr;
@@ -61,17 +60,44 @@ namespace ScrapEngine
 
 			//Scheduler tasks
 			enki::TaskScheduler g_TS;
+
+			//Multi threaded command buffers
+			struct threaded_command_buffer
+			{
+				bool is_running = false;
+				VulkanCommandPool* command_pool = nullptr;
+				VulkanCommandBuffer* command_buffer = nullptr;
+			};
+			//Flag to know if i'm using the first or the second command buffer
+			bool command_buffer_flip_flop_ = false;
+			std::vector<threaded_command_buffer> command_buffers_;
+
+			//Parallel task used to create command buffer in background
+			struct ParallelCommandBufferCreation : enki::ITaskSet
+			{
+				bool flip_flop = false;
+				RenderManager* owner;
+				void ExecuteRange(enki::TaskSetPartition range, uint32_t threadnum) override;
+			};
+
+			//I need to have a reference to know if is running or is done
+			//I need to use a pointer because a ITaskSet cannot be copied
+			std::vector<ParallelCommandBufferCreation*> command_buffers_tasks_;
 		public:
 			RenderManager(const game_base_info* received_base_game_info);
 			~RenderManager();
+			void prepare_to_draw_frame();
 		private:
 			void initialize_vulkan(const game_base_info* received_base_game_info);
 			void initialize_scheduler();
+			void initialize_command_buffers();
 
 			void create_queues();
 			void delete_queues() const;
 
-			void create_command_buffers();
+			void create_command_buffer(bool flip_flop);
+			void check_start_new_thread();
+			void swap_command_buffers();
 			void delete_command_buffers() const;
 
 			void cleanup_swap_chain();

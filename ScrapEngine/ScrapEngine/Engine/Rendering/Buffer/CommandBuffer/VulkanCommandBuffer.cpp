@@ -13,7 +13,6 @@ void ScrapEngine::Render::VulkanCommandBuffer::init_command_buffer(
 	vk::Extent2D* input_swap_chain_extent_ref,
 	VulkanCommandPool* command_pool)
 {
-	Debug::DebugLog::print_to_console_log("[VulkanCommandBuffer] Initializing...");
 	command_pool_ref_ = command_pool;
 
 	const std::vector<vk::Framebuffer>* swap_chain_framebuffers = swap_chain_frame_buffer->
@@ -56,7 +55,6 @@ void ScrapEngine::Render::VulkanCommandBuffer::init_command_buffer(
 
 		command_buffers_[i].beginRenderPass(&render_pass_info_, vk::SubpassContents::eInline);
 	}
-	Debug::DebugLog::print_to_console_log("[VulkanCommandBuffer] Command Buffer successfully initialized");
 }
 
 void ScrapEngine::Render::VulkanCommandBuffer::load_skybox(VulkanSkyboxInstance* skybox_ref)
@@ -139,7 +137,6 @@ void ScrapEngine::Render::VulkanCommandBuffer::load_mesh(const VulkanMeshInstanc
 
 void ScrapEngine::Render::VulkanCommandBuffer::close_command_buffer()
 {
-	Debug::DebugLog::print_to_console_log("[VulkanCommandBuffer] Closing Command Buffer");
 	for (auto& command_buffer : command_buffers_)
 	{
 		command_buffer.endRenderPass();
@@ -150,12 +147,13 @@ void ScrapEngine::Render::VulkanCommandBuffer::close_command_buffer()
 
 void ScrapEngine::Render::VulkanCommandBuffer::free_command_buffers()
 {
-	Debug::DebugLog::print_to_console_log("[VulkanCommandBuffer] Clearing Command Buffer");
-	VulkanDevice::get_instance()->get_logical_device()->freeCommandBuffers(
-		*command_pool_ref_->get_command_pool(),
-		static_cast<uint32_t>(command_buffers_.size()),
-		command_buffers_.data());
-	command_buffers_.clear();
+	if (command_buffers_.size() > 0) {
+		VulkanDevice::get_instance()->get_logical_device()->freeCommandBuffers(
+			*command_pool_ref_->get_command_pool(),
+			static_cast<uint32_t>(command_buffers_.size()),
+			command_buffers_.data());
+		command_buffers_.clear();
+	}
 }
 
 const std::vector<vk::CommandBuffer>* ScrapEngine::Render::VulkanCommandBuffer::get_command_buffers_vector() const
