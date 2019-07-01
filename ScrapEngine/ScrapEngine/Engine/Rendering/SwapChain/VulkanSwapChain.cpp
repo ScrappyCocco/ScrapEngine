@@ -12,6 +12,8 @@ ScrapEngine::Render::VulkanSwapChain::VulkanSwapChain(const SwapChainSupportDeta
 	const vk::PresentModeKHR present_mode = choose_swap_present_mode(swap_chain_support.present_modes, vsync);
 	const vk::Extent2D extent = choose_swap_extent(swap_chain_support.capabilities, width, height);
 
+	//That +1 is necessary
+	//See https://github.com/KhronosGroup/Vulkan-Docs/issues/909
 	uint32_t image_count = swap_chain_support.capabilities.minImageCount + 1;
 	if (swap_chain_support.capabilities.maxImageCount > 0 && image_count > swap_chain_support.capabilities.maxImageCount
 	)

@@ -192,6 +192,7 @@ void ScrapEngine::Render::RenderManager::initialize_command_buffers()
 {
 	for (int i = 0; i < 2; i++)
 	{
+		//Create a new struct and create objects in it
 		command_buffers_.emplace_back();
 		command_buffers_[i].command_pool = new StandardCommandPool();
 		command_buffers_[i].command_pool->init(vulkan_render_device_->get_cached_queue_family_indices());
@@ -200,6 +201,7 @@ void ScrapEngine::Render::RenderManager::initialize_command_buffers()
 		command_buffers_tasks_.push_back(new ParallelCommandBufferCreation());
 		command_buffers_tasks_[i]->owner = this;
 	}
+	//Update flip flop for the second command buffer
 	command_buffers_tasks_[1]->flip_flop = true;
 }
 
@@ -243,6 +245,7 @@ void ScrapEngine::Render::RenderManager::create_command_buffer(const bool flip_f
 void ScrapEngine::Render::RenderManager::check_start_new_thread()
 {
 	const short int index = command_buffer_flip_flop_ ? 0 : 1;
+	//If the thread is not already running, this function start it
 	if (!command_buffers_[index].is_running)
 	{
 		command_buffers_[index].is_running = true;
@@ -255,9 +258,12 @@ void ScrapEngine::Render::RenderManager::swap_command_buffers()
 	if (current_frame_ >= 1)
 	{
 		const short int index = command_buffer_flip_flop_ ? 0 : 1;
+		//If the thread is done, swap the command buffers
 		if (command_buffers_[index].is_running && command_buffers_tasks_[index]->GetIsComplete())
 		{
+			//Take a reference to the fence we must wait before deleting the current command buffer
 			waiting_fence_ = &(*in_flight_fences_ref_)[current_frame_];
+			//And swap them
 			command_buffers_[index].is_running = false;
 			command_buffer_flip_flop_ = !command_buffer_flip_flop_;
 		}
@@ -406,6 +412,7 @@ void ScrapEngine::Render::RenderManager::recreate_swap_chain()
 {
 	VulkanDevice::get_instance()->get_logical_device()->waitIdle();
 	//TODO https://vulkan-tutorial.com/Drawing_a_triangle/Swap_chain_recreation
+	//This will probably be done in the future
 }
 
 void ScrapEngine::Render::RenderManager::create_camera()
