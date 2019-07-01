@@ -19,6 +19,9 @@ namespace ScrapEngine
 			void set_component_rotation(const SVector3& rotation) override;
 			void set_component_scale(const SVector3& scale) override;
 
+			bool get_is_visible() const;
+			void set_is_visible(bool visible) const;
+
 			//Call the standard implementation, then update vulkan_mesh_ values
 			void update_component_location() override;
 			void update_component_rotation() override;

@@ -87,6 +87,11 @@ void ScrapEngine::Render::VulkanCommandBuffer::load_skybox(VulkanSkyboxInstance*
 
 void ScrapEngine::Render::VulkanCommandBuffer::load_mesh(const VulkanMeshInstance* mesh)
 {
+	//Check if the mesh is visible
+	if(!mesh->get_is_visible())
+	{
+		return;
+	}
 	vk::DeviceSize offsets[] = {0};
 	for (size_t i = 0; i < command_buffers_.size(); i++)
 	{

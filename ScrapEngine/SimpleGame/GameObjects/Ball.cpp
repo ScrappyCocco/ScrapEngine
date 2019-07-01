@@ -8,7 +8,7 @@ Ball::Ball(ScrapEngine::Core::ComponentsManager* input_ComponentManager, ScrapEn
 	//Add mesh to that GameObject
 	set_object_scale(ScrapEngine::Core::SVector3(0.5f, 0.5f, 0.5f));
 
-	ScrapEngine::Core::MeshComponent* mesh = input_ComponentManager->create_new_mesh_component(
+	mesh = input_ComponentManager->create_new_mesh_component(
 		"../assets/shader/compiled_shaders/shader_base.vert.spv",
 		"../assets/shader/compiled_shaders/shader_base.frag.spv",
 		"../assets/models/sphere.obj",
