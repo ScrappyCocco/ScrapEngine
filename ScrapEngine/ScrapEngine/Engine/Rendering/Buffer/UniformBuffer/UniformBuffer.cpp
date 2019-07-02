@@ -62,10 +62,11 @@ void ScrapEngine::Render::UniformBuffer::update_uniform_buffer(const uint32_t& c
 	                            swap_chain_extent_.width / static_cast<float>(swap_chain_extent_.height),
 	                            render_camera->get_camera_min_draw_distance(),
 	                            render_camera->get_camera_max_draw_distance());
+	//Invert image for openGL style
+	ubo.proj[1][1] *= -1;
 	ubo.view = lookAt(render_camera->get_camera_location().get_glm_vector(),
 	                  (render_camera->get_camera_location() + render_camera->get_camera_front()).get_glm_vector(),
 	                  render_camera->get_camera_up().get_glm_vector());
-	ubo.proj[1][1] *= -1; //Invert image for openGL style
 
 	memcpy(mapped_memory_[current_image], &ubo, sizeof(ubo));
 }

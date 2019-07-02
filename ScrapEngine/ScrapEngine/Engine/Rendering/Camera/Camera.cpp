@@ -1,6 +1,5 @@
 #include <Engine/Rendering/Camera/Camera.h>
-#include <glm/detail/func_trigonometric.inl>
-#include <glm/detail/func_geometric.inl>
+#include <glm/gtx/quaternion.hpp>
 
 ScrapEngine::Render::Camera::Camera(float input_min_draw_distance, float input_max_draw_distance)
 	: camera_location_(Core::SVector3(0.f, 0.f, 1.f))
@@ -23,12 +22,12 @@ void ScrapEngine::Render::Camera::process_mouse_movement(float xpos, float ypos,
 	{
 		first_mouse_read_ = false;
 		last_x_ = xpos;
-		lastY = ypos;
+		last_y_ = ypos;
 	}
 	float xoffset = xpos - last_x_;
-	float yoffset = lastY - ypos; // reversed since y-coordinates range from bottom to top
+	float yoffset = last_y_ - ypos; // reversed since y-coordinates range from bottom to top
 	last_x_ = xpos;
-	lastY = ypos;
+	last_y_ = ypos;
 
 	xoffset *= mouse_sensivity_;
 	yoffset *= mouse_sensivity_;
@@ -120,4 +119,34 @@ ScrapEngine::Core::SVector3 ScrapEngine::Render::Camera::get_camera_up() const
 ScrapEngine::Core::SVector3 ScrapEngine::Render::Camera::get_camera_location() const
 {
 	return camera_location_;
+}
+
+void ScrapEngine::Render::Camera::set_swap_chain_extent(const vk::Extent2D& swap_chain_extent)
+{
+	swap_chain_extent_ = swap_chain_extent;
+}
+
+void ScrapEngine::Render::Camera::update_frustum()
+{
+	//Traslate
+	glm::mat4 model = translate(glm::mat4(1.0f), camera_location_.get_glm_vector());
+
+	//Rotate
+	model = glm::rotate(model, glm::radians(yaw_), glm::vec3(1.0f, 0.0f, 0.0f));
+	model = glm::rotate(model, glm::radians(yaw_), glm::vec3(0.0f, 1.0f, 0.0f));
+	model = glm::rotate(model, glm::radians(pitch_), glm::vec3(0.0f, 0.0f, 1.0f));
+
+	//Perspective stuff
+	glm::mat4 proj = glm::perspective(glm::radians(45.0f),
+		swap_chain_extent_.width / static_cast<float>(swap_chain_extent_.height),
+		min_draw_distance_,
+		max_draw_distance_);
+	//proj[1][1] *= -1;
+
+	frustum_.update(proj * model);
+}
+
+bool ScrapEngine::Render::Camera::frustum_check_sphere(const glm::vec3& pos, const float radius)
+{
+	return frustum_.check_sphere(pos, radius);
 }

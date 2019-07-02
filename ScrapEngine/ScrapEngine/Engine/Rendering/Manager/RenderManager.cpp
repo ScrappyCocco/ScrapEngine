@@ -14,7 +14,7 @@ void ScrapEngine::Render::RenderManager::ParallelCommandBufferCreation::ExecuteR
 	if (owner->waiting_fence_)
 	{
 		const vk::Result result = VulkanDevice::get_instance()->get_logical_device()
-		                                                ->waitForFences(1, owner->waiting_fence_, true, 10000);
+		                                                ->waitForFences(1, owner->waiting_fence_, true, 100);
 		if (result == vk::Result::eSuccess) {
 			owner->waiting_fence_ = nullptr;
 		}else if(result == vk::Result::eTimeout)
@@ -125,6 +125,7 @@ ScrapEngine::Render::Camera* ScrapEngine::Render::RenderManager::get_default_ren
 void ScrapEngine::Render::RenderManager::set_render_camera(Camera* new_camera)
 {
 	render_camera_ = new_camera;
+	render_camera_->set_swap_chain_extent(vulkan_render_swap_chain_->get_swap_chain_extent());
 }
 
 void ScrapEngine::Render::RenderManager::initialize_vulkan(const game_base_info* received_base_game_info)
@@ -231,6 +232,7 @@ void ScrapEngine::Render::RenderManager::create_command_buffer(const bool flip_f
 	command_buffers_[index].command_buffer->init_command_buffer(vulkan_render_frame_buffer_,
 	                                                            &vulkan_render_swap_chain_->get_swap_chain_extent(),
 	                                                            command_buffers_[index].command_pool);
+	command_buffers_[index].command_buffer->init_current_camera(render_camera_);
 	if (skybox_)
 	{
 		command_buffers_[index].command_buffer->load_skybox(skybox_);
@@ -313,6 +315,7 @@ ScrapEngine::Render::VulkanSkyboxInstance* ScrapEngine::Render::RenderManager::l
 
 void ScrapEngine::Render::RenderManager::draw_frame()
 {
+	Debug::DebugLog::print_to_console_log(std::to_string(command_buffers_[command_buffer_flip_flop_].command_buffer->test));
 	//Check if i can build another command buffer in background
 	check_start_new_thread();
 	//Prepare draw frame
@@ -335,15 +338,19 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 	{
 		throw std::runtime_error("RenderManager: Failed to acquire swap chain image!");
 	}
-	//Update uniform buffer
+	//Update uniform buffers
+	//Models
 	for (auto& loaded_model : loaded_models_)
 	{
 		loaded_model->update_uniform_buffer(image_index_, render_camera_);
 	}
+	//Skybox
 	if (skybox_)
 	{
 		skybox_->update_uniform_buffer(image_index_, render_camera_);
 	}
+	//Camera
+	render_camera_->update_frustum();
 	//Submit the frame
 	vk::SubmitInfo submit_info;
 
@@ -419,4 +426,5 @@ void ScrapEngine::Render::RenderManager::create_camera()
 {
 	render_camera_ = new Camera();
 	default_camera_ = render_camera_;
+	render_camera_->set_swap_chain_extent(vulkan_render_swap_chain_->get_swap_chain_extent());
 }

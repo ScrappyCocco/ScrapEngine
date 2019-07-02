@@ -61,6 +61,7 @@
     <ClCompile Include="Engine\Rendering\Buffer\UniformBuffer\UniformBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\VertexBuffer\VertexBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Camera\Camera.cpp" />
+    <ClCompile Include="Engine\Rendering\Camera\CameraFrustum.cpp" />
     <ClCompile Include="Engine\Rendering\CommandPool\Singleton\SingletonCommandPool.cpp" />
     <ClCompile Include="Engine\Rendering\CommandPool\Standard\StandardCommandPool.cpp" />
     <ClCompile Include="Engine\Rendering\CommandPool\VulkanCommandPool.cpp" />
@@ -151,6 +152,7 @@
     <ClInclude Include="Engine\Rendering\Buffer\UniformBuffer\UniformBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\VertexBuffer\VertexBuffer.h" />
     <ClInclude Include="Engine\Rendering\Camera\Camera.h" />
+    <ClInclude Include="Engine\Rendering\Camera\CameraFrustum.h" />
     <ClInclude Include="Engine\Rendering\CommandPool\Singleton\SingletonCommandPool.h" />
     <ClInclude Include="Engine\Rendering\CommandPool\Standard\StandardCommandPool.h" />
     <ClInclude Include="Engine\Rendering\CommandPool\VulkanCommandPool.h" />
