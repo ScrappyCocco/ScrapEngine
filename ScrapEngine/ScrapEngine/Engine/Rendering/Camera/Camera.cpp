@@ -16,6 +16,12 @@ void ScrapEngine::Render::Camera::set_camera_location(const Core::SVector3& new_
 	camera_location_ = new_camera_location;
 }
 
+void ScrapEngine::Render::Camera::execute_camera_update()
+{
+	update_camera_vectors();
+	update_frustum();
+}
+
 void ScrapEngine::Render::Camera::process_mouse_movement(float xpos, float ypos, bool constrain_pitch)
 {
 	if (first_mouse_read_)
@@ -43,8 +49,6 @@ void ScrapEngine::Render::Camera::process_mouse_movement(float xpos, float ypos,
 		if (pitch_ < -89.0f)
 			pitch_ = -89.0f;
 	}
-
-	update_camera_vectors();
 }
 
 void ScrapEngine::Render::Camera::update_camera_vectors()
@@ -81,14 +85,24 @@ float ScrapEngine::Render::Camera::get_camera_pitch() const
 	return pitch_;
 }
 
-void ScrapEngine::Render::Camera::set_camera_yaw(float yaw)
+float ScrapEngine::Render::Camera::get_camera_roll() const
+{
+	return roll_;
+}
+
+void ScrapEngine::Render::Camera::set_camera_yaw(const float yaw)
 {
 	yaw_ = yaw;
 }
 
-void ScrapEngine::Render::Camera::set_camera_pitch(float pitch)
+void ScrapEngine::Render::Camera::set_camera_pitch(const float pitch)
 {
 	pitch_ = pitch;
+}
+
+void ScrapEngine::Render::Camera::set_camera_roll(const float roll)
+{
+	roll_ = roll;
 }
 
 float ScrapEngine::Render::Camera::get_mouse_sensivity() const
@@ -128,13 +142,10 @@ void ScrapEngine::Render::Camera::set_swap_chain_extent(const vk::Extent2D& swap
 
 void ScrapEngine::Render::Camera::update_frustum()
 {
-	//Traslate
-	glm::mat4 model = translate(glm::mat4(1.0f), camera_location_.get_glm_vector());
-
 	//Rotate
-	model = glm::rotate(model, glm::radians(yaw_), glm::vec3(1.0f, 0.0f, 0.0f));
+	glm::mat4 model = glm::rotate(glm::mat4(1.0f), glm::radians(pitch_), glm::vec3(1.0f, 0.0f, 0.0f));
 	model = glm::rotate(model, glm::radians(yaw_), glm::vec3(0.0f, 1.0f, 0.0f));
-	model = glm::rotate(model, glm::radians(pitch_), glm::vec3(0.0f, 0.0f, 1.0f));
+	model = glm::rotate(model, glm::radians(roll_), glm::vec3(0.0f, 0.0f, 1.0f));
 
 	//Perspective stuff
 	glm::mat4 proj = glm::perspective(glm::radians(45.0f),

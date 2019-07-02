@@ -350,7 +350,7 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 		skybox_->update_uniform_buffer(image_index_, render_camera_);
 	}
 	//Camera
-	render_camera_->update_frustum();
+	render_camera_->execute_camera_update();
 	//Submit the frame
 	vk::SubmitInfo submit_info;
 
