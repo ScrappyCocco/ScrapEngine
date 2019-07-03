@@ -19,6 +19,9 @@ void ScrapEngine::Render::Camera::set_camera_location(const Core::SVector3& new_
 void ScrapEngine::Render::Camera::execute_camera_update()
 {
 	update_camera_vectors();
+	//Ri-generate look matrix
+	generate_look_matrix();
+	//Update view frustum
 	update_frustum();
 }
 
@@ -68,11 +71,13 @@ void ScrapEngine::Render::Camera::set_mouse_sensivity(float new_sensivity)
 void ScrapEngine::Render::Camera::set_min_render_distance(float new_render_distance)
 {
 	min_draw_distance_ = new_render_distance;
+	generate_projection_matrix();
 }
 
 void ScrapEngine::Render::Camera::set_max_render_distance(float new_render_distance)
 {
 	max_draw_distance_ = new_render_distance;
+	generate_projection_matrix();
 }
 
 float ScrapEngine::Render::Camera::get_camera_yaw() const
@@ -135,26 +140,66 @@ ScrapEngine::Core::SVector3 ScrapEngine::Render::Camera::get_camera_location() c
 	return camera_location_;
 }
 
+const glm::mat4* ScrapEngine::Render::Camera::get_camera_projection_matrix() const
+{
+	return &projection_matrix_;
+}
+
+const glm::mat4* ScrapEngine::Render::Camera::get_camera_look_matrix() const
+{
+	return &look_matrix_;
+}
+
 void ScrapEngine::Render::Camera::set_swap_chain_extent(const vk::Extent2D& swap_chain_extent)
 {
 	swap_chain_extent_ = swap_chain_extent;
+	generate_matrices();
 }
 
 void ScrapEngine::Render::Camera::update_frustum()
 {
+	glm::mat4 model = glm::mat4(1.0f);
+
+	//Translate
+	model = translate(model, camera_location_.get_glm_vector());
+
 	//Rotate
-	glm::mat4 model = glm::rotate(glm::mat4(1.0f), glm::radians(pitch_), glm::vec3(1.0f, 0.0f, 0.0f));
+	model = glm::rotate(model, glm::radians(pitch_), glm::vec3(1.0f, 0.0f, 0.0f));
 	model = glm::rotate(model, glm::radians(yaw_), glm::vec3(0.0f, 1.0f, 0.0f));
 	model = glm::rotate(model, glm::radians(roll_), glm::vec3(0.0f, 0.0f, 1.0f));
 
 	//Perspective stuff
 	glm::mat4 proj = glm::perspective(glm::radians(45.0f),
-		swap_chain_extent_.width / static_cast<float>(swap_chain_extent_.height),
-		min_draw_distance_,
-		max_draw_distance_);
-	//proj[1][1] *= -1;
+	                                  swap_chain_extent_.width / static_cast<float>(swap_chain_extent_.height),
+	                                  min_draw_distance_,
+	                                  max_draw_distance_);
+	proj[1][1] *= -1;
 
 	frustum_.update(proj * model);
+}
+
+void ScrapEngine::Render::Camera::generate_matrices()
+{
+	generate_projection_matrix();
+	generate_look_matrix();
+}
+
+void ScrapEngine::Render::Camera::generate_projection_matrix()
+{
+	//Perspective stuff
+	projection_matrix_ = glm::perspective(glm::radians(45.0f),
+	                                      swap_chain_extent_.width / static_cast<float>(swap_chain_extent_.height),
+	                                      min_draw_distance_,
+	                                      max_draw_distance_);
+	//Invert image for openGL style
+	projection_matrix_[1][1] *= -1;
+}
+
+void ScrapEngine::Render::Camera::generate_look_matrix()
+{
+	look_matrix_ = lookAt(camera_location_.get_glm_vector(),
+	                      camera_location_.get_glm_vector() + camera_front_,
+	                      camera_up_);
 }
 
 bool ScrapEngine::Render::Camera::frustum_check_sphere(const glm::vec3& pos, const float radius)

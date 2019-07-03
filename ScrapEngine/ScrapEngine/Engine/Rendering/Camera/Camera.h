@@ -10,9 +10,14 @@ namespace ScrapEngine
 	{
 		class Camera
 		{
+		private:
 			Core::SVector3 camera_location_;
 			CameraFrustum frustum_;
 			vk::Extent2D swap_chain_extent_;
+
+			//Camera matrices
+			glm::mat4 projection_matrix_;
+			glm::mat4 look_matrix_;
 
 			float min_draw_distance_, max_draw_distance_;
 
@@ -32,6 +37,9 @@ namespace ScrapEngine
 
 			virtual void update_camera_vectors();
 			virtual void update_frustum();
+			void generate_matrices();
+			void generate_projection_matrix();
+			void generate_look_matrix();
 		public:
 			Camera(float input_min_draw_distance = 0.1f,
 			       float input_max_draw_distance = 100.f);
@@ -59,6 +67,10 @@ namespace ScrapEngine
 			Core::SVector3 get_camera_front() const;
 			Core::SVector3 get_camera_up() const;
 			Core::SVector3 get_camera_location() const;
+
+			//Returna a pointer to avoid per-frame copy of the matrix
+			const glm::mat4* get_camera_projection_matrix() const;
+			const glm::mat4* get_camera_look_matrix() const;
 
 			void set_swap_chain_extent(const vk::Extent2D& swap_chain_extent);
 			bool frustum_check_sphere(const glm::vec3& pos, float radius);

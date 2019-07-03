@@ -339,6 +339,8 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 		throw std::runtime_error("RenderManager: Failed to acquire swap chain image!");
 	}
 	//Update uniform buffers
+	//Camera
+	render_camera_->execute_camera_update();
 	//Models
 	for (auto& loaded_model : loaded_models_)
 	{
@@ -349,8 +351,6 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 	{
 		skybox_->update_uniform_buffer(image_index_, render_camera_);
 	}
-	//Camera
-	render_camera_->execute_camera_update();
 	//Submit the frame
 	vk::SubmitInfo submit_info;
 

@@ -57,16 +57,9 @@ void ScrapEngine::Render::UniformBuffer::update_uniform_buffer(const uint32_t& c
 	//Scale
 	ubo.model = scale(ubo.model, object_transform.get_scale().get_glm_vector());
 
-	//Perspective stuff
-	ubo.proj = glm::perspective(glm::radians(45.0f),
-	                            swap_chain_extent_.width / static_cast<float>(swap_chain_extent_.height),
-	                            render_camera->get_camera_min_draw_distance(),
-	                            render_camera->get_camera_max_draw_distance());
-	//Invert image for openGL style
-	ubo.proj[1][1] *= -1;
-	ubo.view = lookAt(render_camera->get_camera_location().get_glm_vector(),
-	                  (render_camera->get_camera_location() + render_camera->get_camera_front()).get_glm_vector(),
-	                  render_camera->get_camera_up().get_glm_vector());
+	//Perspective and look stuff
+	ubo.proj = *(render_camera->get_camera_projection_matrix());
+	ubo.view = *(render_camera->get_camera_look_matrix());
 
 	memcpy(mapped_memory_[current_image], &ubo, sizeof(ubo));
 }
