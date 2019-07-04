@@ -69,8 +69,8 @@ namespace ScrapEngine
 			Core::SVector3 get_camera_location() const;
 
 			//Returna a pointer to avoid per-frame copy of the matrix
-			const glm::mat4* get_camera_projection_matrix() const;
-			const glm::mat4* get_camera_look_matrix() const;
+			glm::mat4 get_camera_projection_matrix() const;
+			glm::mat4 get_camera_look_matrix() const;
 
 			void set_swap_chain_extent(const vk::Extent2D& swap_chain_extent);
 			bool frustum_check_sphere(const glm::vec3& pos, float radius);

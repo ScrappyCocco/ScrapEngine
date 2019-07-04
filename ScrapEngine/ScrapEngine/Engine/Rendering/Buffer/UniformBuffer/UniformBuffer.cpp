@@ -58,8 +58,8 @@ void ScrapEngine::Render::UniformBuffer::update_uniform_buffer(const uint32_t& c
 	ubo.model = scale(ubo.model, object_transform.get_scale().get_glm_vector());
 
 	//Perspective and look stuff
-	ubo.proj = *(render_camera->get_camera_projection_matrix());
-	ubo.view = *(render_camera->get_camera_look_matrix());
+	ubo.proj = render_camera->get_camera_projection_matrix();
+	ubo.view = render_camera->get_camera_look_matrix();
 
 	memcpy(mapped_memory_[current_image], &ubo, sizeof(ubo));
 }

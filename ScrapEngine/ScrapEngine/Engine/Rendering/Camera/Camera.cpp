@@ -140,14 +140,14 @@ ScrapEngine::Core::SVector3 ScrapEngine::Render::Camera::get_camera_location() c
 	return camera_location_;
 }
 
-const glm::mat4* ScrapEngine::Render::Camera::get_camera_projection_matrix() const
+glm::mat4 ScrapEngine::Render::Camera::get_camera_projection_matrix() const
 {
-	return &projection_matrix_;
+	return projection_matrix_;
 }
 
-const glm::mat4* ScrapEngine::Render::Camera::get_camera_look_matrix() const
+glm::mat4 ScrapEngine::Render::Camera::get_camera_look_matrix() const
 {
-	return &look_matrix_;
+	return look_matrix_;
 }
 
 void ScrapEngine::Render::Camera::set_swap_chain_extent(const vk::Extent2D& swap_chain_extent)
