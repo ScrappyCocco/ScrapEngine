@@ -99,12 +99,12 @@ void ScrapEngine::Render::VulkanCommandBuffer::load_mesh(const VulkanMeshInstanc
 		return;
 	}
 	//Check if the mesh is in view
-	/*if (!current_camera_->frustum_check_sphere(
+	if (!current_camera_->frustum_check_sphere(
 		mesh->get_mesh_location().get_glm_vector(),
-		mesh->get_mesh_scale().get_max_value()))
+		mesh->get_mesh_scale().get_max_value() * 2.f))
 	{
 		return;
-	}*/
+	}
 	test++;
 	//Add the drawcall for the mesh
 	vk::DeviceSize offsets[] = {0};

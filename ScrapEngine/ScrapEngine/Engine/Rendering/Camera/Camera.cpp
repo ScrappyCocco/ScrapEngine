@@ -172,24 +172,7 @@ void ScrapEngine::Render::Camera::set_swap_chain_extent(const vk::Extent2D& swap
 
 void ScrapEngine::Render::Camera::update_frustum()
 {
-	glm::mat4 model = glm::mat4(1.0f);
-
-	//Translate
-	model = translate(model, camera_location_.get_glm_vector());
-
-	//Rotate
-	model = glm::rotate(model, glm::radians(pitch_), glm::vec3(1.0f, 0.0f, 0.0f));
-	model = glm::rotate(model, glm::radians(yaw_), glm::vec3(0.0f, 1.0f, 0.0f));
-	model = glm::rotate(model, glm::radians(roll_), glm::vec3(0.0f, 0.0f, 1.0f));
-
-	//Perspective stuff
-	glm::mat4 proj = glm::perspective(glm::radians(fov_),
-	                                  swap_chain_extent_.width / static_cast<float>(swap_chain_extent_.height),
-	                                  min_draw_distance_,
-	                                  max_draw_distance_);
-	proj[1][1] *= -1;
-
-	frustum_.update(proj * model);
+	frustum_.update(projection_matrix_ * look_matrix_);
 }
 
 void ScrapEngine::Render::Camera::generate_matrices()
