@@ -71,12 +71,14 @@ void ScrapEngine::Render::Camera::set_mouse_sensivity(float new_sensivity)
 void ScrapEngine::Render::Camera::set_min_render_distance(float new_render_distance)
 {
 	min_draw_distance_ = new_render_distance;
+	//Update projection matrix
 	generate_projection_matrix();
 }
 
 void ScrapEngine::Render::Camera::set_max_render_distance(float new_render_distance)
 {
 	max_draw_distance_ = new_render_distance;
+	//Update projection matrix
 	generate_projection_matrix();
 }
 
@@ -140,6 +142,18 @@ ScrapEngine::Core::SVector3 ScrapEngine::Render::Camera::get_camera_location() c
 	return camera_location_;
 }
 
+float ScrapEngine::Render::Camera::get_camera_fov() const
+{
+	return fov_;
+}
+
+void ScrapEngine::Render::Camera::set_camera_fov(const float fov)
+{
+	fov_ = fov;
+	//Update projection matrix
+	generate_projection_matrix();
+}
+
 glm::mat4 ScrapEngine::Render::Camera::get_camera_projection_matrix() const
 {
 	return projection_matrix_;
@@ -169,7 +183,7 @@ void ScrapEngine::Render::Camera::update_frustum()
 	model = glm::rotate(model, glm::radians(roll_), glm::vec3(0.0f, 0.0f, 1.0f));
 
 	//Perspective stuff
-	glm::mat4 proj = glm::perspective(glm::radians(45.0f),
+	glm::mat4 proj = glm::perspective(glm::radians(fov_),
 	                                  swap_chain_extent_.width / static_cast<float>(swap_chain_extent_.height),
 	                                  min_draw_distance_,
 	                                  max_draw_distance_);
@@ -187,7 +201,7 @@ void ScrapEngine::Render::Camera::generate_matrices()
 void ScrapEngine::Render::Camera::generate_projection_matrix()
 {
 	//Perspective stuff
-	projection_matrix_ = glm::perspective(glm::radians(45.0f),
+	projection_matrix_ = glm::perspective(glm::radians(fov_),
 	                                      swap_chain_extent_.width / static_cast<float>(swap_chain_extent_.height),
 	                                      min_draw_distance_,
 	                                      max_draw_distance_);

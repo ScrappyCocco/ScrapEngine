@@ -28,9 +28,14 @@ namespace ScrapEngine
 			//Z rotation
 			float roll_ = 0;
 
+			//Camera fov
+			float fov_ = 45.0f;
+
+			//Free mouse look values
 			float mouse_sensivity_ = 0.05f;
 			float last_x_ = 400, last_y_ = 300;
 			bool first_mouse_read_ = true;
+
 			//Current view values
 			glm::vec3 camera_front_ = glm::vec3(0.0f, 0.0f, -1.0f);
 			glm::vec3 camera_up_ = glm::vec3(0.0f, 1.0f, 0.0f);
@@ -67,6 +72,9 @@ namespace ScrapEngine
 			Core::SVector3 get_camera_front() const;
 			Core::SVector3 get_camera_up() const;
 			Core::SVector3 get_camera_location() const;
+
+			float get_camera_fov() const;
+			void set_camera_fov(float fov);
 
 			//Returna a pointer to avoid per-frame copy of the matrix
 			glm::mat4 get_camera_projection_matrix() const;
