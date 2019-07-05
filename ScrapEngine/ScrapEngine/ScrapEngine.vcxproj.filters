@@ -526,6 +526,9 @@
     <ClCompile Include="Engine\Rendering\CommandPool\Singleton\SingletonCommandPool.cpp">
       <Filter>Engine\Rendering\CommandPool\Singleton</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Rendering\Camera\CameraFrustum.cpp">
+      <Filter>Engine\Rendering\Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Manager\EngineManager.h">
@@ -797,6 +800,9 @@
     </ClInclude>
     <ClInclude Include="Engine\Rendering\CommandPool\Singleton\SingletonCommandPool.h">
       <Filter>Engine\Rendering\CommandPool\Singleton</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Camera\CameraFrustum.h">
+      <Filter>Engine\Rendering\Camera</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

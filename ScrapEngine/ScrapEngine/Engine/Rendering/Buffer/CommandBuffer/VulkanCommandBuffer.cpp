@@ -56,6 +56,11 @@ void ScrapEngine::Render::VulkanCommandBuffer::init_command_buffer(
 	}
 }
 
+void ScrapEngine::Render::VulkanCommandBuffer::init_current_camera(Camera* current_camera)
+{
+	current_camera_ = current_camera;
+}
+
 void ScrapEngine::Render::VulkanCommandBuffer::load_skybox(VulkanSkyboxInstance* skybox_ref)
 {
 	vk::DeviceSize offsets[] = {0};
@@ -88,10 +93,18 @@ void ScrapEngine::Render::VulkanCommandBuffer::load_skybox(VulkanSkyboxInstance*
 void ScrapEngine::Render::VulkanCommandBuffer::load_mesh(const VulkanMeshInstance* mesh)
 {
 	//Check if the mesh is visible
-	if(!mesh->get_is_visible())
+	if (!mesh->get_is_visible())
 	{
 		return;
 	}
+	//Check if the mesh is in view
+	if (!current_camera_->frustum_check_sphere(
+		mesh->get_mesh_location().get_glm_vector(),
+		mesh->get_mesh_scale().get_max_value() * 2.f))
+	{
+		return;
+	}
+	//Add the drawcall for the mesh
 	vk::DeviceSize offsets[] = {0};
 	for (size_t i = 0; i < command_buffers_.size(); i++)
 	{
@@ -151,7 +164,8 @@ void ScrapEngine::Render::VulkanCommandBuffer::close_command_buffer()
 
 void ScrapEngine::Render::VulkanCommandBuffer::free_command_buffers()
 {
-	if (command_buffers_.size() > 0) {
+	if (!command_buffers_.empty())
+	{
 		VulkanDevice::get_instance()->get_logical_device()->freeCommandBuffers(
 			*command_pool_ref_->get_command_pool(),
 			static_cast<uint32_t>(command_buffers_.size()),

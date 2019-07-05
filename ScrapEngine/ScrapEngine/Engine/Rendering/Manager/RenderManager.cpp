@@ -14,13 +14,16 @@ void ScrapEngine::Render::RenderManager::ParallelCommandBufferCreation::ExecuteR
 	if (owner->waiting_fence_)
 	{
 		const vk::Result result = VulkanDevice::get_instance()->get_logical_device()
-		                                                ->waitForFences(1, owner->waiting_fence_, true, 10000);
-		if (result == vk::Result::eSuccess) {
+		                                                      ->waitForFences(1, owner->waiting_fence_, true, 100);
+		if (result == vk::Result::eSuccess)
+		{
 			owner->waiting_fence_ = nullptr;
-		}else if(result == vk::Result::eTimeout)
+		}
+		else if (result == vk::Result::eTimeout)
 		{
 			throw std::runtime_error("Fence timeout");
-		}else
+		}
+		else
 		{
 			throw std::runtime_error("An error occurred while waiting a fence...");
 		}
@@ -125,6 +128,7 @@ ScrapEngine::Render::Camera* ScrapEngine::Render::RenderManager::get_default_ren
 void ScrapEngine::Render::RenderManager::set_render_camera(Camera* new_camera)
 {
 	render_camera_ = new_camera;
+	render_camera_->set_swap_chain_extent(vulkan_render_swap_chain_->get_swap_chain_extent());
 }
 
 void ScrapEngine::Render::RenderManager::initialize_vulkan(const game_base_info* received_base_game_info)
@@ -231,6 +235,7 @@ void ScrapEngine::Render::RenderManager::create_command_buffer(const bool flip_f
 	command_buffers_[index].command_buffer->init_command_buffer(vulkan_render_frame_buffer_,
 	                                                            &vulkan_render_swap_chain_->get_swap_chain_extent(),
 	                                                            command_buffers_[index].command_pool);
+	command_buffers_[index].command_buffer->init_current_camera(render_camera_);
 	if (skybox_)
 	{
 		command_buffers_[index].command_buffer->load_skybox(skybox_);
@@ -335,16 +340,20 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 	{
 		throw std::runtime_error("RenderManager: Failed to acquire swap chain image!");
 	}
-	//Update uniform buffer
+	//Update objects and uniform buffers
+	//Camera
+	render_camera_->execute_camera_update();
+	//Models
 	for (auto& loaded_model : loaded_models_)
 	{
 		loaded_model->update_uniform_buffer(image_index_, render_camera_);
 	}
+	//Skybox
 	if (skybox_)
 	{
 		skybox_->update_uniform_buffer(image_index_, render_camera_);
 	}
-	//Submit the frame
+	//Submit the command buffer and the frame
 	vk::SubmitInfo submit_info;
 
 	vk::Semaphore wait_semaphores[] = {(*image_available_semaphores_ref_)[current_frame_]};;
@@ -397,7 +406,8 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 		throw std::runtime_error("RenderManager: Failed to present swap chain image!");
 	}
 
-	//Check if i can swap the command buffers
+	//Check if i the other command buffer if ready
+	//If yes i can swap the command buffers
 	swap_command_buffers();
 	//Update the current frame index
 	current_frame_ = (current_frame_ + 1) % max_frames_in_flight_;
@@ -419,4 +429,5 @@ void ScrapEngine::Render::RenderManager::create_camera()
 {
 	render_camera_ = new Camera();
 	default_camera_ = render_camera_;
+	render_camera_->set_swap_chain_extent(vulkan_render_swap_chain_->get_swap_chain_extent());
 }
