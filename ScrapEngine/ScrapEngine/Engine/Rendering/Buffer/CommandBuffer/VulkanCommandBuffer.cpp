@@ -12,7 +12,6 @@ void ScrapEngine::Render::VulkanCommandBuffer::init_command_buffer(
 	vk::Extent2D* input_swap_chain_extent_ref,
 	VulkanCommandPool* command_pool)
 {
-	test = 0;
 	command_pool_ref_ = command_pool;
 
 	const std::vector<vk::Framebuffer>* swap_chain_framebuffers = swap_chain_frame_buffer->
@@ -105,7 +104,6 @@ void ScrapEngine::Render::VulkanCommandBuffer::load_mesh(const VulkanMeshInstanc
 	{
 		return;
 	}
-	test++;
 	//Add the drawcall for the mesh
 	vk::DeviceSize offsets[] = {0};
 	for (size_t i = 0; i < command_buffers_.size(); i++)

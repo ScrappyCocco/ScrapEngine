@@ -14,13 +14,16 @@ void ScrapEngine::Render::RenderManager::ParallelCommandBufferCreation::ExecuteR
 	if (owner->waiting_fence_)
 	{
 		const vk::Result result = VulkanDevice::get_instance()->get_logical_device()
-		                                                ->waitForFences(1, owner->waiting_fence_, true, 100);
-		if (result == vk::Result::eSuccess) {
+		                                                      ->waitForFences(1, owner->waiting_fence_, true, 100);
+		if (result == vk::Result::eSuccess)
+		{
 			owner->waiting_fence_ = nullptr;
-		}else if(result == vk::Result::eTimeout)
+		}
+		else if (result == vk::Result::eTimeout)
 		{
 			throw std::runtime_error("Fence timeout");
-		}else
+		}
+		else
 		{
 			throw std::runtime_error("An error occurred while waiting a fence...");
 		}
@@ -315,7 +318,6 @@ ScrapEngine::Render::VulkanSkyboxInstance* ScrapEngine::Render::RenderManager::l
 
 void ScrapEngine::Render::RenderManager::draw_frame()
 {
-	Debug::DebugLog::print_to_console_log(std::to_string(command_buffers_[command_buffer_flip_flop_].command_buffer->test));
 	//Check if i can build another command buffer in background
 	check_start_new_thread();
 	//Prepare draw frame
@@ -338,7 +340,7 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 	{
 		throw std::runtime_error("RenderManager: Failed to acquire swap chain image!");
 	}
-	//Update uniform buffers
+	//Update objects and uniform buffers
 	//Camera
 	render_camera_->execute_camera_update();
 	//Models
@@ -351,7 +353,7 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 	{
 		skybox_->update_uniform_buffer(image_index_, render_camera_);
 	}
-	//Submit the frame
+	//Submit the command buffer and the frame
 	vk::SubmitInfo submit_info;
 
 	vk::Semaphore wait_semaphores[] = {(*image_available_semaphores_ref_)[current_frame_]};;
@@ -404,7 +406,8 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 		throw std::runtime_error("RenderManager: Failed to present swap chain image!");
 	}
 
-	//Check if i can swap the command buffers
+	//Check if i the other command buffer if ready
+	//If yes i can swap the command buffers
 	swap_command_buffers();
 	//Update the current frame index
 	current_frame_ = (current_frame_ + 1) % max_frames_in_flight_;

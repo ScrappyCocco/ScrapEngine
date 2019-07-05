@@ -19,7 +19,6 @@ namespace ScrapEngine
 			VulkanCommandPool* command_pool_ref_;
 			Camera* current_camera_;
 		public:
-			int test = 0;
 			VulkanCommandBuffer() = default;
 
 			~VulkanCommandBuffer();
