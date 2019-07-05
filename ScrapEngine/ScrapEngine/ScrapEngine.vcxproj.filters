@@ -44,9 +44,6 @@
     <Filter Include="Engine\Rendering\Buffer">
       <UniqueIdentifier>{23542afa-b170-4efb-b4c1-17e5d137e7f3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Rendering\Command">
-      <UniqueIdentifier>{b7bcb601-9970-4774-a2cc-8824f33ebfa9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Rendering\Semaphores">
       <UniqueIdentifier>{716c604c-d45d-4842-a4f1-9d83fed85d2c}</UniqueIdentifier>
     </Filter>
@@ -269,6 +266,15 @@
     <Filter Include="Engine\LogicCore\Components\TriggerComponent\BoxTriggerComponent">
       <UniqueIdentifier>{06f0350a-5851-4310-ae28-a56fa8ecc6dd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Rendering\CommandPool">
+      <UniqueIdentifier>{b7bcb601-9970-4774-a2cc-8824f33ebfa9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\CommandPool\Singleton">
+      <UniqueIdentifier>{df2ba8fa-647e-4c47-8e17-657d5ec5e6eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\CommandPool\Standard">
+      <UniqueIdentifier>{1ec1fa25-5548-4756-ac2b-ee242e2b0b10}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Manager\EngineManager.cpp">
@@ -300,9 +306,6 @@
     </ClCompile>
     <ClCompile Include="Engine\Rendering\RenderPass\VulkanRenderPass.cpp">
       <Filter>Engine\Rendering\RenderPass</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Rendering\Command\VulkanCommandPool.cpp">
-      <Filter>Engine\Rendering\Command</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Rendering\Semaphores\VulkanSemaphoresManager.cpp">
       <Filter>Engine\Rendering\Semaphores</Filter>
@@ -514,6 +517,18 @@
     <ClCompile Include="Engine\LogicCore\Components\TriggerComponent\TriggerComponent.cpp">
       <Filter>Engine\LogicCore\Components\TriggerComponent</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Rendering\CommandPool\VulkanCommandPool.cpp">
+      <Filter>Engine\Rendering\CommandPool</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\CommandPool\Standard\StandardCommandPool.cpp">
+      <Filter>Engine\Rendering\CommandPool\Standard</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\CommandPool\Singleton\SingletonCommandPool.cpp">
+      <Filter>Engine\Rendering\CommandPool\Singleton</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Camera\CameraFrustum.cpp">
+      <Filter>Engine\Rendering\Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Manager\EngineManager.h">
@@ -545,9 +560,6 @@
     </ClInclude>
     <ClInclude Include="Engine\Rendering\RenderPass\VulkanRenderPass.h">
       <Filter>Engine\Rendering\RenderPass</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Rendering\Command\VulkanCommandPool.h">
-      <Filter>Engine\Rendering\Command</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Semaphores\VulkanSemaphoresManager.h">
       <Filter>Engine\Rendering\Semaphores</Filter>
@@ -779,6 +791,18 @@
     </ClInclude>
     <ClInclude Include="Engine\LogicCore\Components\TriggerComponent\TriggerComponent.h">
       <Filter>Engine\LogicCore\Components\TriggerComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\CommandPool\VulkanCommandPool.h">
+      <Filter>Engine\Rendering\CommandPool</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\CommandPool\Standard\StandardCommandPool.h">
+      <Filter>Engine\Rendering\CommandPool\Standard</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\CommandPool\Singleton\SingletonCommandPool.h">
+      <Filter>Engine\Rendering\CommandPool\Singleton</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Camera\CameraFrustum.h">
+      <Filter>Engine\Rendering\Camera</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

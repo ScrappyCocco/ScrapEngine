@@ -23,6 +23,16 @@ void ScrapEngine::Core::MeshComponent::set_component_scale(const SVector3& scale
 	vulkan_mesh_->set_mesh_scale(scale);
 }
 
+bool ScrapEngine::Core::MeshComponent::get_is_visible() const
+{
+	return vulkan_mesh_->get_is_visible();
+}
+
+void ScrapEngine::Core::MeshComponent::set_is_visible(const bool visible) const
+{
+	vulkan_mesh_->set_is_visible(visible);
+}
+
 void ScrapEngine::Core::MeshComponent::update_component_location()
 {
 	SComponent::update_component_location();

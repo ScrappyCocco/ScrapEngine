@@ -22,6 +22,8 @@ void ScrapEngine::Manager::EngineManager::start_game_loop()
 {
 	//Execute Game Objects start events
 	scrap_logic_manager_->execute_game_objects_start_event();
+	//Prepare draw frame
+	scrap_render_manager_->prepare_to_draw_frame();
 	//Execute game loop until end
 	main_game_loop();
 	//Execution ended, close the engine

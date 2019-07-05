@@ -1,6 +1,7 @@
 #include <Engine/LogicCore/Math/Vector/SVector3.h>
 #include <glm/ext/quaternion_geometric.inl>
 #include <glm/detail/func_geometric.inl>
+#include <algorithm>
 
 ScrapEngine::Core::SVector3::SVector3(const glm::vec3 input)
 {
@@ -75,6 +76,11 @@ void ScrapEngine::Core::SVector3::set_y(const float y)
 void ScrapEngine::Core::SVector3::set_z(const float z)
 {
 	vec3_.z = z;
+}
+
+float ScrapEngine::Core::SVector3::get_max_value() const
+{
+	return std::max(std::max(vec3_.x, vec3_.y), vec3_.z);
 }
 
 ScrapEngine::Core::SVector3 ScrapEngine::Core::SVector3::get_vector() const

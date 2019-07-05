@@ -72,6 +72,16 @@ ScrapEngine::Core::SVector3 ScrapEngine::Render::VulkanMeshInstance::get_mesh_sc
 	return object_location_.get_scale();
 }
 
+bool ScrapEngine::Render::VulkanMeshInstance::get_is_visible() const
+{
+	return is_visible_;
+}
+
+void ScrapEngine::Render::VulkanMeshInstance::set_is_visible(const bool visible)
+{
+	is_visible_ = visible;
+}
+
 void ScrapEngine::Render::VulkanMeshInstance::update_uniform_buffer(const uint32_t& current_image,
                                                                     Camera* render_camera) const
 {

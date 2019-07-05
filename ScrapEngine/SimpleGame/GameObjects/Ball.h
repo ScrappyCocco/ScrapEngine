@@ -10,6 +10,7 @@ private:
 	ScrapEngine::Input::InputManager* InputManagerRef;
 
 	ScrapEngine::Core::RigidBodyComponent* collider;
+	ScrapEngine::Core::MeshComponent* mesh;
 public:
 	Ball(ScrapEngine::Core::ComponentsManager* input_ComponentManager,
 	               ScrapEngine::Input::InputManager* CreatedInputManagerf);

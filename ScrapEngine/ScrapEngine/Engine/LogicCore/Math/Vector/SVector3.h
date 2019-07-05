@@ -36,6 +36,7 @@ namespace ScrapEngine
 			void set_x(float x);
 			void set_y(float y);
 			void set_z(float z);
+			float get_max_value() const;
 			SVector3 get_vector() const;
 			glm::vec3 get_glm_vector() const;
 			void set_vector(const SVector3& other);

@@ -1,12 +1,6 @@
-#include <Engine/Rendering/Command/VulkanCommandPool.h>
-
+#include <Engine/Rendering/CommandPool/VulkanCommandPool.h>
 #include <stdexcept>
 #include <Engine/Rendering/Device/VulkanDevice.h>
-
-//Init static instance reference
-
-ScrapEngine::Render::VulkanCommandPool* ScrapEngine::Render::VulkanCommandPool::instance_ = nullptr;
-
 //Class
 
 void ScrapEngine::Render::VulkanCommandPool::init(const BaseQueue::QueueFamilyIndices queue_family_indices)
@@ -23,15 +17,6 @@ void ScrapEngine::Render::VulkanCommandPool::init(const BaseQueue::QueueFamilyIn
 ScrapEngine::Render::VulkanCommandPool::~VulkanCommandPool()
 {
 	VulkanDevice::get_instance()->get_logical_device()->destroyCommandPool(command_pool_);
-}
-
-ScrapEngine::Render::VulkanCommandPool* ScrapEngine::Render::VulkanCommandPool::get_instance()
-{
-	if (instance_ == nullptr)
-	{
-		instance_ = new VulkanCommandPool();
-	}
-	return instance_;
 }
 
 vk::CommandPool* ScrapEngine::Render::VulkanCommandPool::get_command_pool()

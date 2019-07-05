@@ -1,6 +1,4 @@
 #include <Engine/Rendering/Buffer/CommandBuffer/VulkanCommandBuffer.h>
-#include <Engine/Debug/DebugLog.h>
-#include <Engine/Rendering/Command/VulkanCommandPool.h>
 #include <Engine/Rendering/RenderPass/VulkanRenderPass.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
 
@@ -11,15 +9,17 @@ ScrapEngine::Render::VulkanCommandBuffer::~VulkanCommandBuffer()
 
 void ScrapEngine::Render::VulkanCommandBuffer::init_command_buffer(
 	VulkanFrameBuffer* swap_chain_frame_buffer,
-	vk::Extent2D* input_swap_chain_extent_ref)
+	vk::Extent2D* input_swap_chain_extent_ref,
+	VulkanCommandPool* command_pool)
 {
-	Debug::DebugLog::print_to_console_log("[VulkanCommandBuffer] Initializing...");
+	command_pool_ref_ = command_pool;
+
 	const std::vector<vk::Framebuffer>* swap_chain_framebuffers = swap_chain_frame_buffer->
 		get_swap_chain_framebuffers_vector();
 	command_buffers_.resize(swap_chain_framebuffers->size());
 
 	vk::CommandBufferAllocateInfo alloc_info(
-		*VulkanCommandPool::get_instance()->get_command_pool(),
+		*command_pool_ref_->get_command_pool(),
 		vk::CommandBufferLevel::ePrimary,
 		static_cast<uint32_t>(command_buffers_.size())
 	);
@@ -54,7 +54,11 @@ void ScrapEngine::Render::VulkanCommandBuffer::init_command_buffer(
 
 		command_buffers_[i].beginRenderPass(&render_pass_info_, vk::SubpassContents::eInline);
 	}
-	Debug::DebugLog::print_to_console_log("[VulkanCommandBuffer] Command Buffer successfully initialized");
+}
+
+void ScrapEngine::Render::VulkanCommandBuffer::init_current_camera(Camera* current_camera)
+{
+	current_camera_ = current_camera;
 }
 
 void ScrapEngine::Render::VulkanCommandBuffer::load_skybox(VulkanSkyboxInstance* skybox_ref)
@@ -88,6 +92,19 @@ void ScrapEngine::Render::VulkanCommandBuffer::load_skybox(VulkanSkyboxInstance*
 
 void ScrapEngine::Render::VulkanCommandBuffer::load_mesh(const VulkanMeshInstance* mesh)
 {
+	//Check if the mesh is visible
+	if (!mesh->get_is_visible())
+	{
+		return;
+	}
+	//Check if the mesh is in view
+	if (!current_camera_->frustum_check_sphere(
+		mesh->get_mesh_location().get_glm_vector(),
+		mesh->get_mesh_scale().get_max_value() * 5.f))
+	{
+		return;
+	}
+	//Add the drawcall for the mesh
 	vk::DeviceSize offsets[] = {0};
 	for (size_t i = 0; i < command_buffers_.size(); i++)
 	{
@@ -137,7 +154,6 @@ void ScrapEngine::Render::VulkanCommandBuffer::load_mesh(const VulkanMeshInstanc
 
 void ScrapEngine::Render::VulkanCommandBuffer::close_command_buffer()
 {
-	Debug::DebugLog::print_to_console_log("[VulkanCommandBuffer] Closing Command Buffer");
 	for (auto& command_buffer : command_buffers_)
 	{
 		command_buffer.endRenderPass();
@@ -148,12 +164,14 @@ void ScrapEngine::Render::VulkanCommandBuffer::close_command_buffer()
 
 void ScrapEngine::Render::VulkanCommandBuffer::free_command_buffers()
 {
-	Debug::DebugLog::print_to_console_log("[VulkanCommandBuffer] Clearing Command Buffer");
-	VulkanDevice::get_instance()->get_logical_device()->freeCommandBuffers(
-		*VulkanCommandPool::get_instance()->get_command_pool(),
-		static_cast<uint32_t>(command_buffers_.size()),
-		command_buffers_.data());
-	command_buffers_.clear();
+	if (!command_buffers_.empty())
+	{
+		VulkanDevice::get_instance()->get_logical_device()->freeCommandBuffers(
+			*command_pool_ref_->get_command_pool(),
+			static_cast<uint32_t>(command_buffers_.size()),
+			command_buffers_.data());
+		command_buffers_.clear();
+	}
 }
 
 const std::vector<vk::CommandBuffer>* ScrapEngine::Render::VulkanCommandBuffer::get_command_buffers_vector() const

@@ -61,7 +61,10 @@
     <ClCompile Include="Engine\Rendering\Buffer\UniformBuffer\UniformBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\VertexBuffer\VertexBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Camera\Camera.cpp" />
-    <ClCompile Include="Engine\Rendering\Command\VulkanCommandPool.cpp" />
+    <ClCompile Include="Engine\Rendering\Camera\CameraFrustum.cpp" />
+    <ClCompile Include="Engine\Rendering\CommandPool\Singleton\SingletonCommandPool.cpp" />
+    <ClCompile Include="Engine\Rendering\CommandPool\Standard\StandardCommandPool.cpp" />
+    <ClCompile Include="Engine\Rendering\CommandPool\VulkanCommandPool.cpp" />
     <ClCompile Include="Engine\Rendering\DepthResources\VulkanDepthResources.cpp" />
     <ClCompile Include="Engine\Rendering\Descriptor\VulkanDescriptorPool.cpp" />
     <ClCompile Include="Engine\Rendering\Descriptor\VulkanDescriptorSet.cpp" />
@@ -149,7 +152,10 @@
     <ClInclude Include="Engine\Rendering\Buffer\UniformBuffer\UniformBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\VertexBuffer\VertexBuffer.h" />
     <ClInclude Include="Engine\Rendering\Camera\Camera.h" />
-    <ClInclude Include="Engine\Rendering\Command\VulkanCommandPool.h" />
+    <ClInclude Include="Engine\Rendering\Camera\CameraFrustum.h" />
+    <ClInclude Include="Engine\Rendering\CommandPool\Singleton\SingletonCommandPool.h" />
+    <ClInclude Include="Engine\Rendering\CommandPool\Standard\StandardCommandPool.h" />
+    <ClInclude Include="Engine\Rendering\CommandPool\VulkanCommandPool.h" />
     <ClInclude Include="Engine\Rendering\DepthResources\VulkanDepthResources.h" />
     <ClInclude Include="Engine\Rendering\Descriptor\VulkanDescriptorPool.h" />
     <ClInclude Include="Engine\Rendering\Descriptor\VulkanDescriptorSet.h" />
@@ -249,7 +255,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)ScrapEngine;$(SolutionDir)..\external\VulkanSDK\Vulkan-Headers\include;$(SolutionDir)..\external\glm;$(SolutionDir)..\external\stb;$(SolutionDir)..\external\gli;$(SolutionDir)..\external\glfw\include;$(SolutionDir)..\external\reactphysics\src;$(SolutionDir)..\external\assimp\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)ScrapEngine;$(SolutionDir)..\external\VulkanSDK\Vulkan-Headers\include;$(SolutionDir)..\external\glm;$(SolutionDir)..\external\stb;$(SolutionDir)..\external\gli;$(SolutionDir)..\external\glfw\include;$(SolutionDir)..\external\reactphysics\src;$(SolutionDir)..\external\assimp\include;$(SolutionDir)..\external\enkits\src;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -257,7 +263,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)ScrapEngine;$(SolutionDir)..\external\VulkanSDK\Vulkan-Headers\include;$(SolutionDir)..\external\glm;$(SolutionDir)..\external\stb;$(SolutionDir)..\external\gli;$(SolutionDir)..\external\glfw\include;$(SolutionDir)..\external\reactphysics\src;$(SolutionDir)..\external\assimp\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)ScrapEngine;$(SolutionDir)..\external\VulkanSDK\Vulkan-Headers\include;$(SolutionDir)..\external\glm;$(SolutionDir)..\external\stb;$(SolutionDir)..\external\gli;$(SolutionDir)..\external\glfw\include;$(SolutionDir)..\external\reactphysics\src;$(SolutionDir)..\external\assimp\include;$(SolutionDir)..\external\enkits\src;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
