@@ -17,8 +17,8 @@ void ScrapEngine::Render::BaseBuffer::create_buffer(const vk::DeviceSize& size, 
 		vk::SharingMode::eExclusive
 	);
 
-	if (VulkanDevice::get_instance()->get_logical_device()->createBuffer(&buffer_info, nullptr, &buffer) != vk::Result::
-		eSuccess)
+	if (VulkanDevice::get_instance()->get_logical_device()->createBuffer(&buffer_info, nullptr, &buffer)
+		!= vk::Result::eSuccess)
 	{
 		throw std::runtime_error("BaseBuffer: Failed to create buffer!");
 	}
@@ -29,8 +29,8 @@ void ScrapEngine::Render::BaseBuffer::create_buffer(const vk::DeviceSize& size, 
 	vk::MemoryAllocateInfo alloc_info(mem_requirements.size,
 	                                  find_memory_type(mem_requirements.memoryTypeBits, properties));
 
-	if (VulkanDevice::get_instance()->get_logical_device()->allocateMemory(&alloc_info, nullptr, &buffer_memory) != vk::
-		Result::eSuccess
+	if (VulkanDevice::get_instance()->get_logical_device()->allocateMemory(&alloc_info, nullptr, &buffer_memory)
+		!= vk::Result::eSuccess
 	)
 	{
 		throw std::runtime_error("BaseBuffer: Failed to allocate buffer memory!");
