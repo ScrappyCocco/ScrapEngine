@@ -12,7 +12,7 @@ Ball::Ball(ScrapEngine::Core::ComponentsManager* input_ComponentManager, ScrapEn
 		"../assets/shader/compiled_shaders/shader_base.vert.spv",
 		"../assets/shader/compiled_shaders/shader_base.frag.spv",
 		"../assets/models/sphere.obj",
-		{ "../assets/textures/SimpleRedTexture2.png" }
+		{ "../assets/textures/SimpleBallTexture.png" }
 	);
 	add_component(mesh);
 
