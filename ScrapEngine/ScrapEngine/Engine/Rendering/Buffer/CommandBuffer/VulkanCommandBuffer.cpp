@@ -100,7 +100,7 @@ void ScrapEngine::Render::VulkanCommandBuffer::load_mesh(const VulkanMeshInstanc
 	//Check if the mesh is in view
 	if (!current_camera_->frustum_check_sphere(
 		mesh->get_mesh_location().get_glm_vector(),
-		mesh->get_mesh_scale().get_max_value() * 2.f))
+		mesh->get_mesh_scale().get_max_value() * 5.f))
 	{
 		return;
 	}
