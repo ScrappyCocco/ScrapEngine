@@ -17,5 +17,5 @@ public:
 	~Ball() = default;
 
 	virtual void game_start() override;
-	virtual void game_update(float time) override;
+	virtual void game_update(float delta_time) override;
 };
