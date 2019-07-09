@@ -37,6 +37,7 @@ void ScrapEngine::Manager::EngineManager::initialize_engine()
 	initialize_render_manager(&received_base_game_info_); //Create the base rendering module
 	initialize_logic_manager(); //Create the base logic manager
 	initialize_physics_manager(); // Create the physics manager
+	initialize_audio_manager(); // Create the audio manager
 	initialize_views(); //Create the views for the user
 	Debug::DebugLog::print_to_console_log("---initializeEngine() completed---");
 }
@@ -54,6 +55,12 @@ void ScrapEngine::Manager::EngineManager::initialize_logic_manager()
 void ScrapEngine::Manager::EngineManager::initialize_physics_manager()
 {
 	physics_manager_ = new Physics::PhysicsManager();
+}
+
+void ScrapEngine::Manager::EngineManager::initialize_audio_manager()
+{
+	audio_manager_ = new Audio::AudioManager();
+	audio_manager_->load_wav_sound("../assets/sounds/test_shot.wav");
 }
 
 void ScrapEngine::Manager::EngineManager::initialize_views()
@@ -105,6 +112,7 @@ void ScrapEngine::Manager::EngineManager::cleanup_engine()
 	delete render_manager_view;
 	delete logic_manager_view;
 	delete physics_manager_;
+	delete audio_manager_;
 	delete scrap_logic_manager_;
 
 	cleanup_done_ = true;
