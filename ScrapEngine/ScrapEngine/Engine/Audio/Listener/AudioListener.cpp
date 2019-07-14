@@ -10,3 +10,19 @@ void ScrapEngine::Audio::AudioListener::set_listener_velocity(const Core::SVecto
 {
 	alListener3f(AL_VELOCITY, velocity.get_x(), velocity.get_y(), velocity.get_z());
 }
+
+void ScrapEngine::Audio::AudioListener::set_listener_orientation(
+	const Core::SVector3& rot1,
+	const Core::SVector3& rot2) const
+{
+	ALfloat pt[6];
+	pt[0] = rot1.get_x();
+	pt[1] = rot1.get_y();
+	pt[2] = rot1.get_z();
+	pt[3] = rot2.get_x();
+	pt[4] = rot2.get_y();
+	pt[5] = rot2.get_z();
+
+	alListenerfv(AL_ORIENTATION, pt);
+	assert(alGetError() == AL_NO_ERROR);
+}

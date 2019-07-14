@@ -46,6 +46,7 @@ namespace ScrapEngine
 			const float time_step_ = 1.0f / 240.0f;
 			float accumulator_ = 0;
 			void physics_update(float delta_time);
+			void audio_update() const;
 
 			void cleanup_engine();
 		};

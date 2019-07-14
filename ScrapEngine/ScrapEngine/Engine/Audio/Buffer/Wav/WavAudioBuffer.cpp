@@ -1,11 +1,6 @@
 #define DR_WAV_IMPLEMENTATION
 #include <Engine/Audio/Buffer/Wav/WavAudioBuffer.h>
 
-ScrapEngine::Audio::WavAudioBuffer::~WavAudioBuffer()
-{
-	drwav_close(p_wav_);
-}
-
 void ScrapEngine::Audio::WavAudioBuffer::load_file(const std::string& filename)
 {
 	p_wav_ = drwav_open_file(filename.c_str());
@@ -15,6 +10,7 @@ void ScrapEngine::Audio::WavAudioBuffer::load_file(const std::string& filename)
 
 	//Set the format
 	const ALenum format = to_al_format(p_wav_->channels, p_wav_->bitsPerSample);
+	is_stereo_ = is_stereo(p_wav_->channels);
 
 	//Set the sample rate
 	const ALsizei freq = static_cast<ALsizei>(p_wav_->sampleRate);
@@ -27,5 +23,9 @@ void ScrapEngine::Audio::WavAudioBuffer::load_file(const std::string& filename)
 	//Convert size
 	const ALsizei buffer_size = static_cast<ALsizei>(memory_size);
 
+	//Fill buffer
 	alBufferData(buffer_, format, p_sample_data, buffer_size, freq);
+
+	//Free memory
+	drwav_close(p_wav_);
 }

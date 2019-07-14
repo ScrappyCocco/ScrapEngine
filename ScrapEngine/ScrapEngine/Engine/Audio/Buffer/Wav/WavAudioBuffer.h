@@ -13,7 +13,7 @@ namespace ScrapEngine
 			drwav* p_wav_ = nullptr;
 		public:
 			WavAudioBuffer() = default;
-			~WavAudioBuffer();
+			~WavAudioBuffer() = default;
 
 			void load_file(const std::string& filename) override;
 		};

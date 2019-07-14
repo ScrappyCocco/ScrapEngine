@@ -1,8 +1,13 @@
 #include <Engine/Audio/Buffer/AudioBuffer.h>
 
+bool ScrapEngine::Audio::AudioBuffer::is_stereo(const short channels)
+{
+	return channels > 1;
+}
+
 ALenum ScrapEngine::Audio::AudioBuffer::to_al_format(const short channels, const short samples)
 {
-	const bool stereo = (channels > 1);
+	const bool stereo = is_stereo(channels);
 
 	switch (samples)
 	{
@@ -40,4 +45,9 @@ ScrapEngine::Audio::AudioBuffer::~AudioBuffer()
 ALuint* ScrapEngine::Audio::AudioBuffer::get_buffer()
 {
 	return &buffer_;
+}
+
+bool ScrapEngine::Audio::AudioBuffer::get_is_stereo() const
+{
+	return is_stereo_;
 }

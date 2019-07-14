@@ -11,15 +11,18 @@ namespace ScrapEngine
 		{
 		protected:
 			ALuint buffer_;
+			bool is_stereo_ = false;
 
+			static bool is_stereo(short channels);
 			static ALenum to_al_format(short channels, short samples);
 		public:
 			AudioBuffer();
-			virtual ~AudioBuffer() = 0;
+			virtual ~AudioBuffer();
 
 			virtual void load_file(const std::string& filename) = 0;
 
 			ALuint* get_buffer();
+			bool get_is_stereo() const;
 		};
 	}
 }

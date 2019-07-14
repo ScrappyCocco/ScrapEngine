@@ -60,7 +60,11 @@ void ScrapEngine::Manager::EngineManager::initialize_physics_manager()
 void ScrapEngine::Manager::EngineManager::initialize_audio_manager()
 {
 	audio_manager_ = new Audio::AudioManager();
-	audio_manager_->load_wav_sound("../assets/sounds/test_shot.wav");
+	auto test = audio_manager_->load_3d_sound("../assets/sounds/mono_test_shot.wav");
+	test->set_source_loop(true);
+	test->set_source_location(Core::SVector3(0, 0, 0));
+	test->set_source_gain(100);
+	test->play();
 }
 
 void ScrapEngine::Manager::EngineManager::initialize_views()
@@ -83,6 +87,8 @@ void ScrapEngine::Manager::EngineManager::main_game_loop()
 		scrap_logic_manager_->execute_game_objects_update_event(time);
 		//Update physics
 		physics_update(time);
+		//Update audio
+		audio_update();
 		//Draw frame and compute new times
 		start_time = std::chrono::high_resolution_clock::now();
 		scrap_render_manager_->draw_frame();
@@ -102,6 +108,12 @@ void ScrapEngine::Manager::EngineManager::physics_update(const float delta_time)
 	const float factor = accumulator_ / time_step_;
 	//Once physics ended updating, update the rigidbody component position
 	logic_manager_view->get_components_manager()->update_rigidbody_physics(factor);
+}
+
+void ScrapEngine::Manager::EngineManager::audio_update() const
+{
+	Debug::DebugLog::print_to_console_log(scrap_render_manager_->get_render_camera()->get_camera_location());
+	audio_manager_->audio_update(scrap_render_manager_->get_render_camera());
 }
 
 void ScrapEngine::Manager::EngineManager::cleanup_engine()
