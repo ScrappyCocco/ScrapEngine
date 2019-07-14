@@ -22,6 +22,9 @@ namespace ScrapEngine
 			void set_source_loop(bool loop) const;
 
 			void play() const;
+			void stop() const;
+			void pause() const;
+			void rewind() const;
 		};
 	}
 }

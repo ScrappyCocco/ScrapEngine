@@ -19,8 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\external\AudioFile\AudioFile.cpp" />
     <ClCompile Include="Engine\Audio\Buffer\AudioBuffer.cpp" />
+    <ClCompile Include="Engine\Audio\Buffer\Wav\WavAudioBuffer.cpp" />
     <ClCompile Include="Engine\Audio\Context\AudioContext.cpp" />
     <ClCompile Include="Engine\Audio\Device\AudioDevice.cpp" />
     <ClCompile Include="Engine\Audio\Listener\AudioListener.cpp" />
@@ -112,9 +112,9 @@
     <ClCompile Include="Engine\Utility\UsefulMethods.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\external\AudioFile\AudioFile.h" />
     <ClInclude Include="..\..\external\stb\stb_image.h" />
     <ClInclude Include="Engine\Audio\Buffer\AudioBuffer.h" />
+    <ClInclude Include="Engine\Audio\Buffer\Wav\WavAudioBuffer.h" />
     <ClInclude Include="Engine\Audio\Context\AudioContext.h" />
     <ClInclude Include="Engine\Audio\Device\AudioDevice.h" />
     <ClInclude Include="Engine\Audio\Listener\AudioListener.h" />
@@ -269,7 +269,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)ScrapEngine;$(SolutionDir)..\external\VulkanSDK\Vulkan-Headers\include;$(SolutionDir)..\external\glm;$(SolutionDir)..\external\stb;$(SolutionDir)..\external\gli;$(SolutionDir)..\external\glfw\include;$(SolutionDir)..\external\reactphysics\src;$(SolutionDir)..\external\assimp\include;$(SolutionDir)..\external\openal-soft\include;$(SolutionDir)..\external\openal-soft\common;$(SolutionDir)..\external\openal-soft\Alc;$(SolutionDir)..\external\openal-soft\OpenAL32\Include;$(SolutionDir)..\external\AudioFile;$(SolutionDir)..\external\enkits\src;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)ScrapEngine;$(SolutionDir)..\external\VulkanSDK\Vulkan-Headers\include;$(SolutionDir)..\external\glm;$(SolutionDir)..\external\stb;$(SolutionDir)..\external\gli;$(SolutionDir)..\external\glfw\include;$(SolutionDir)..\external\assimp\include;$(SolutionDir)..\external\reactphysics\src;$(SolutionDir)..\external\enkits\src;$(SolutionDir)..\external\openal-soft\include;$(SolutionDir)..\external\openal-soft\common;$(SolutionDir)..\external\openal-soft\Alc;$(SolutionDir)..\external\openal-soft\OpenAL32\Include;$(SolutionDir)..\external\dr_libs;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -277,7 +277,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)ScrapEngine;$(SolutionDir)..\external\VulkanSDK\Vulkan-Headers\include;$(SolutionDir)..\external\glm;$(SolutionDir)..\external\stb;$(SolutionDir)..\external\gli;$(SolutionDir)..\external\glfw\include;$(SolutionDir)..\external\reactphysics\src;$(SolutionDir)..\external\assimp\include;$(SolutionDir)..\external\openal-soft\include;$(SolutionDir)..\external\openal-soft\common;$(SolutionDir)..\external\openal-soft\Alc;$(SolutionDir)..\external\openal-soft\OpenAL32\Include;$(SolutionDir)..\external\AudioFile;$(SolutionDir)..\external\enkits\src;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)ScrapEngine;$(SolutionDir)..\external\VulkanSDK\Vulkan-Headers\include;$(SolutionDir)..\external\glm;$(SolutionDir)..\external\stb;$(SolutionDir)..\external\gli;$(SolutionDir)..\external\glfw\include;$(SolutionDir)..\external\assimp\include;$(SolutionDir)..\external\reactphysics\src;$(SolutionDir)..\external\enkits\src;$(SolutionDir)..\external\openal-soft\include;$(SolutionDir)..\external\openal-soft\common;$(SolutionDir)..\external\openal-soft\Alc;$(SolutionDir)..\external\openal-soft\OpenAL32\Include;$(SolutionDir)..\external\dr_libs;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

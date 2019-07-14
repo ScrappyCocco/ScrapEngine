@@ -46,3 +46,18 @@ void ScrapEngine::Audio::AudioSource::play() const
 {
 	alSourcePlay(source_);
 }
+
+void ScrapEngine::Audio::AudioSource::stop() const
+{
+	alSourceStop(source_);
+}
+
+void ScrapEngine::Audio::AudioSource::pause() const
+{
+	alSourcePause(source_);
+}
+
+void ScrapEngine::Audio::AudioSource::rewind() const
+{
+	alSourceRewind(source_);
+}

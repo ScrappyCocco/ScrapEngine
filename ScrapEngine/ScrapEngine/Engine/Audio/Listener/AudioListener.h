@@ -14,6 +14,7 @@ namespace ScrapEngine
 
 			void set_listener_location(const Core::SVector3& location) const;
 			void set_listener_velocity(const Core::SVector3& velocity) const;
+			void set_listener_orientation(const Core::Quaternion& orientation) const;
 		};
 	}
 }

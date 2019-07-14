@@ -296,6 +296,9 @@
     <Filter Include="Engine\Audio\Source">
       <UniqueIdentifier>{4f2266ac-6005-4f67-8f28-22324682b792}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Audio\Buffer\Wav">
+      <UniqueIdentifier>{382215c7-0a5a-49d2-9d6c-c6c7c689b46a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Manager\EngineManager.cpp">
@@ -559,9 +562,6 @@
     <ClCompile Include="Engine\Audio\Context\AudioContext.cpp">
       <Filter>Engine\Audio\Context</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\external\AudioFile\AudioFile.cpp">
-      <Filter>Engine\External</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Audio\Buffer\AudioBuffer.cpp">
       <Filter>Engine\Audio\Buffer</Filter>
     </ClCompile>
@@ -570,6 +570,9 @@
     </ClCompile>
     <ClCompile Include="Engine\Audio\Source\AudioSource.cpp">
       <Filter>Engine\Audio\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Audio\Buffer\Wav\WavAudioBuffer.cpp">
+      <Filter>Engine\Audio\Buffer\Wav</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -855,9 +858,6 @@
     <ClInclude Include="Engine\Audio\Context\AudioContext.h">
       <Filter>Engine\Audio\Context</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\external\AudioFile\AudioFile.h">
-      <Filter>Engine\External</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Audio\Buffer\AudioBuffer.h">
       <Filter>Engine\Audio\Buffer</Filter>
     </ClInclude>
@@ -866,6 +866,9 @@
     </ClInclude>
     <ClInclude Include="Engine\Audio\Source\AudioSource.h">
       <Filter>Engine\Audio\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Audio\Buffer\Wav\WavAudioBuffer.h">
+      <Filter>Engine\Audio\Buffer\Wav</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
