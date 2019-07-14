@@ -4,7 +4,8 @@
 void ScrapEngine::Audio::WavAudioBuffer::load_file(const std::string& filename)
 {
 	p_wav_ = drwav_open_file(filename.c_str());
-	if (p_wav_ == nullptr) {
+	if (p_wav_ == nullptr)
+	{
 		throw std::runtime_error("[WavAudioBuffer]Error opening wav file: " + filename);
 	}
 

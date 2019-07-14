@@ -28,6 +28,7 @@ namespace ScrapEngine
 			AudioSource* load_2d_sound(const std::string& filename);
 			AudioSource* load_3d_sound(const std::string& filename);
 
+			void unload_sound(AudioSource* sound);
 			void audio_update(const Render::Camera* camera_ref) const;
 		};
 	}

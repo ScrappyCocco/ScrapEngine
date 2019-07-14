@@ -60,11 +60,6 @@ void ScrapEngine::Manager::EngineManager::initialize_physics_manager()
 void ScrapEngine::Manager::EngineManager::initialize_audio_manager()
 {
 	audio_manager_ = new Audio::AudioManager();
-	auto test = audio_manager_->load_3d_sound("../assets/sounds/mono_test_shot.wav");
-	test->set_source_loop(true);
-	test->set_source_location(Core::SVector3(0, 0, 0));
-	test->set_source_gain(100);
-	test->play();
 }
 
 void ScrapEngine::Manager::EngineManager::initialize_views()
