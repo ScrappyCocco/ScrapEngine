@@ -299,6 +299,15 @@
     <Filter Include="Engine\Audio\Buffer\Wav">
       <UniqueIdentifier>{382215c7-0a5a-49d2-9d6c-c6c7c689b46a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\LogicCore\Components\AudioComponent">
+      <UniqueIdentifier>{8c553e94-f36e-412b-bb53-322ddcf4c9c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\LogicCore\Components\AudioComponent\2dAudioComponent">
+      <UniqueIdentifier>{b246769a-4a7d-4500-abf1-f65b497a6054}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\LogicCore\Components\AudioComponent\3dAudioComponent">
+      <UniqueIdentifier>{c17ef7df-d3f6-45d4-be8d-c1a58e27eafd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Manager\EngineManager.cpp">
@@ -573,6 +582,15 @@
     </ClCompile>
     <ClCompile Include="Engine\Audio\Buffer\Wav\WavAudioBuffer.cpp">
       <Filter>Engine\Audio\Buffer\Wav</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\LogicCore\Components\AudioComponent\AudioComponent.cpp">
+      <Filter>Engine\LogicCore\Components\AudioComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\LogicCore\Components\AudioComponent\2dAudioComponent\2DAudioComponent.cpp">
+      <Filter>Engine\LogicCore\Components\AudioComponent\2dAudioComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\LogicCore\Components\AudioComponent\3dAudioComponent\3DAudioComponent.cpp">
+      <Filter>Engine\LogicCore\Components\AudioComponent\3dAudioComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -869,6 +887,15 @@
     </ClInclude>
     <ClInclude Include="Engine\Audio\Buffer\Wav\WavAudioBuffer.h">
       <Filter>Engine\Audio\Buffer\Wav</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\LogicCore\Components\AudioComponent\AudioComponent.h">
+      <Filter>Engine\LogicCore\Components\AudioComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\LogicCore\Components\AudioComponent\2dAudioComponent\2DAudioComponent.h">
+      <Filter>Engine\LogicCore\Components\AudioComponent\2dAudioComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\LogicCore\Components\AudioComponent\3dAudioComponent\3DAudioComponent.h">
+      <Filter>Engine\LogicCore\Components\AudioComponent\3dAudioComponent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

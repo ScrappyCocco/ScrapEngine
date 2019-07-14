@@ -28,6 +28,9 @@
     <ClCompile Include="Engine\Audio\Source\AudioSource.cpp" />
     <ClCompile Include="Engine\Debug\DebugLog.cpp" />
     <ClCompile Include="Engine\Input\Manager\InputManager.cpp" />
+    <ClCompile Include="Engine\LogicCore\Components\AudioComponent\2dAudioComponent\2DAudioComponent.cpp" />
+    <ClCompile Include="Engine\LogicCore\Components\AudioComponent\3dAudioComponent\3DAudioComponent.cpp" />
+    <ClCompile Include="Engine\LogicCore\Components\AudioComponent\AudioComponent.cpp" />
     <ClCompile Include="Engine\LogicCore\Components\Manager\ComponentsManager.cpp" />
     <ClCompile Include="Engine\LogicCore\Components\MeshComponent\MeshComponent.cpp" />
     <ClCompile Include="Engine\LogicCore\Components\RigidBodyComponent\BoxRigidBodyComponent\BoxRigidBodyComponent.cpp" />
@@ -124,6 +127,9 @@
     <ClInclude Include="Engine\Input\KeyboardKeys.h" />
     <ClInclude Include="Engine\Input\Manager\InputManager.h" />
     <ClInclude Include="Engine\Input\MouseButtons.h" />
+    <ClInclude Include="Engine\LogicCore\Components\AudioComponent\2dAudioComponent\2DAudioComponent.h" />
+    <ClInclude Include="Engine\LogicCore\Components\AudioComponent\3dAudioComponent\3DAudioComponent.h" />
+    <ClInclude Include="Engine\LogicCore\Components\AudioComponent\AudioComponent.h" />
     <ClInclude Include="Engine\LogicCore\Components\Manager\ComponentsManager.h" />
     <ClInclude Include="Engine\LogicCore\Components\MeshComponent\MeshComponent.h" />
     <ClInclude Include="Engine\LogicCore\Components\RigidBodyComponent\BoxRigidBodyComponent\BoxRigidBodyComponent.h" />

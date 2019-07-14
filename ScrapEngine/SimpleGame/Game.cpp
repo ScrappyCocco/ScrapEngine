@@ -6,6 +6,7 @@
 #include "GameObjects/Ball.h"
 #include "GameObjects/Crate.h"
 #include "GameObjects/Trigger.h"
+#include "GameObjects/Music.h"
 
 int main() {
 	short exit_value = EXIT_SUCCESS;
@@ -65,6 +66,8 @@ int main() {
 			box_trigger->add_collision_test(crate);
 		}
 		ScrapEngineManager->logic_manager_view->register_game_object(box_trigger);
+		//Create basic music object
+		ScrapEngineManager->logic_manager_view->register_game_object(new Music(ComponentManagerRef));
 		//Create the camera
 		GameCamera* GameCameraRef = new GameCamera(inputmanager, ScrapEngineManager->render_manager_view->get_default_render_camera());
 		GameCameraRef->set_game_window_ref(gameWindowRef);

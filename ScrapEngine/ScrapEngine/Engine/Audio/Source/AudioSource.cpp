@@ -8,6 +8,7 @@ ScrapEngine::Audio::AudioSource::AudioSource(const ALuint* audio_buffer)
 
 ScrapEngine::Audio::AudioSource::~AudioSource()
 {
+	stop();
 	alDeleteSources(1, &source_);
 }
 

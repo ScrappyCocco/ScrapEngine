@@ -3,7 +3,7 @@
 #include <Engine/Input/KeyboardKeys.h>
 
 Ball::Ball(ScrapEngine::Core::ComponentsManager* input_ComponentManager, ScrapEngine::Input::InputManager* CreatedInputManagerf)
-	: SGameObject("Test game object"), ComponentManagerRef(input_ComponentManager), InputManagerRef(CreatedInputManagerf)
+	: SGameObject("Ball game object"), ComponentManagerRef(input_ComponentManager), InputManagerRef(CreatedInputManagerf)
 {
 	//Add mesh to that GameObject
 	set_object_scale(ScrapEngine::Core::SVector3(0.5f, 0.5f, 0.5f));

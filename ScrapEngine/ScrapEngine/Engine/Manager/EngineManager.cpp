@@ -66,7 +66,9 @@ void ScrapEngine::Manager::EngineManager::initialize_views()
 {
 	render_manager_view = new Render::RenderManagerView(scrap_render_manager_);
 	logic_manager_view = new Core::LogicManagerView(scrap_render_manager_, scrap_logic_manager_);
+	//Set managers to logic core
 	logic_manager_view->set_physics_manager(physics_manager_);
+	logic_manager_view->set_audio_manager(audio_manager_);
 }
 
 void ScrapEngine::Manager::EngineManager::main_game_loop()
@@ -107,7 +109,6 @@ void ScrapEngine::Manager::EngineManager::physics_update(const float delta_time)
 
 void ScrapEngine::Manager::EngineManager::audio_update() const
 {
-	Debug::DebugLog::print_to_console_log(scrap_render_manager_->get_render_camera()->get_camera_location());
 	audio_manager_->audio_update(scrap_render_manager_->get_render_camera());
 }
 

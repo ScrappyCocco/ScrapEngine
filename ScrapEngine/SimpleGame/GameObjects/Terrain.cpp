@@ -2,7 +2,7 @@
 #include <Engine/Debug/DebugLog.h>
 
 Terrain::Terrain(ScrapEngine::Core::ComponentsManager* input_ComponentManager)
-	: SGameObject("Test game object"), ComponentManagerRef(input_ComponentManager)
+	: SGameObject("Terrain game object"), ComponentManagerRef(input_ComponentManager)
 {
 	//Add mesh to that GameObject
 	set_object_location(ScrapEngine::Core::SVector3(0, -20, 0));

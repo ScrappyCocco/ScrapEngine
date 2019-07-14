@@ -2,7 +2,7 @@
 #include <Engine/Debug/DebugLog.h>
 
 Trigger::Trigger(ScrapEngine::Core::ComponentsManager* input_ComponentManager)
-	: SGameObject("Test game object"), ComponentManagerRef(input_ComponentManager)
+	: SGameObject("Trigger test game object"), ComponentManagerRef(input_ComponentManager)
 {
 	box_trigger = input_ComponentManager->create_box_trigger_component(
 		ScrapEngine::Core::SVector3(2500, 10, 2500),

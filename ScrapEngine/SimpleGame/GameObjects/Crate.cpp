@@ -2,7 +2,7 @@
 #include <Engine/Debug/DebugLog.h>
 
 Crate::Crate(ScrapEngine::Core::ComponentsManager* input_ComponentManager, const ScrapEngine::Core::SVector3& start_pos)
-	: SGameObject("Test game object"), ComponentManagerRef(input_ComponentManager)
+	: SGameObject("Crate game object"), ComponentManagerRef(input_ComponentManager)
 {
 	//Add mesh to that GameObject
 	ScrapEngine::Core::MeshComponent* mesh = input_ComponentManager->create_new_mesh_component(

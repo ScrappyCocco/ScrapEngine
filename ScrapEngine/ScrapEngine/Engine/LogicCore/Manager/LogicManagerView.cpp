@@ -19,6 +19,11 @@ void ScrapEngine::Core::LogicManagerView::set_physics_manager(Physics::PhysicsMa
 	component_manager_->set_physics_manager(physics_manager);
 }
 
+void ScrapEngine::Core::LogicManagerView::set_audio_manager(Audio::AudioManager* audio_manager) const
+{
+	component_manager_->set_audio_manager(audio_manager);
+}
+
 ScrapEngine::Core::SGameObject* ScrapEngine::Core::LogicManagerView::register_game_object(
 	SGameObject* input_game_object) const
 {

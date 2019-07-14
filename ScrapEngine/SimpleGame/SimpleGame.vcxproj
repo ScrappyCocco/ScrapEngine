@@ -163,6 +163,7 @@
     <ClCompile Include="GameObjects\Ball.cpp" />
     <ClCompile Include="GameObjects\Camera\GameCamera.cpp" />
     <ClCompile Include="GameObjects\Crate.cpp" />
+    <ClCompile Include="GameObjects\Music.cpp" />
     <ClCompile Include="GameObjects\Terrain.cpp" />
     <ClCompile Include="GameObjects\Trigger.cpp" />
   </ItemGroup>
@@ -170,6 +171,7 @@
     <ClInclude Include="GameObjects\Ball.h" />
     <ClInclude Include="GameObjects\Camera\GameCamera.h" />
     <ClInclude Include="GameObjects\Crate.h" />
+    <ClInclude Include="GameObjects\Music.h" />
     <ClInclude Include="GameObjects\Terrain.h" />
     <ClInclude Include="GameObjects\Trigger.h" />
     <ClInclude Include="resource.h" />
