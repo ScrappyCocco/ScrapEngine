@@ -5,10 +5,18 @@ ScrapEngine::Audio::AudioBuffer* ScrapEngine::Audio::AudioManager::build_buffer(
 {
 	const std::string extension = filename.substr(filename.length() - 3);
 
+	//THe buffer already exist, return it
+	if (loaded_buffers_.find(filename) != loaded_buffers_.end())
+	{
+		return loaded_buffers_[filename];
+	}
+
+	//The buffer is not present in the map, create it and add it
 	if (extension == "wav")
 	{
 		AudioBuffer* buffer = new WavAudioBuffer();
 		buffer->load_file(filename);
+		loaded_buffers_[filename] = buffer;
 		return buffer;
 	}
 
@@ -17,6 +25,7 @@ ScrapEngine::Audio::AudioBuffer* ScrapEngine::Audio::AudioManager::build_buffer(
 		Other files can be added in the future
 	}*/
 
+	//If no extension is found return an error
 	throw std::runtime_error("[AudioManager]This audio extension is not supported: " + extension);
 }
 

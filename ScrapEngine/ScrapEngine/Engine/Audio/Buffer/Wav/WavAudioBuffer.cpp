@@ -19,7 +19,7 @@ void ScrapEngine::Audio::WavAudioBuffer::load_file(const std::string& filename)
 	//Allocate and read content of file
 	const size_t memory_size = static_cast<size_t>(p_wav_->totalPCMFrameCount) * p_wav_->channels * sizeof(int32_t);
 	int32_t* p_sample_data = static_cast<int32_t*>(malloc(memory_size));
-	drwav_read_s32(p_wav_, p_wav_->totalPCMFrameCount, p_sample_data);
+	drwav_read_s32(p_wav_, p_wav_->totalPCMFrameCount * p_wav_->channels, p_sample_data);
 
 	//Convert size
 	const ALsizei buffer_size = static_cast<ALsizei>(memory_size);

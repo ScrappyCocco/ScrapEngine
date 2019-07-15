@@ -6,6 +6,7 @@
 #include <Engine/Audio/Source/AudioSource.h>
 #include <Engine/Audio/Buffer/AudioBuffer.h>
 #include <string>
+#include <map>
 
 namespace ScrapEngine
 {
@@ -21,6 +22,7 @@ namespace ScrapEngine
 			AudioBuffer* build_buffer(const std::string& filename);
 
 			std::vector<std::pair<AudioBuffer*, AudioSource*>> loaded_audio_;
+			std::map<std::string, AudioBuffer*> loaded_buffers_;
 		public:
 			AudioManager();
 			~AudioManager();
