@@ -11,15 +11,19 @@ void ScrapEngine::Audio::WavAudioBuffer::load_file(const std::string& filename)
 
 	//Set the format
 	const ALenum format = to_al_format(p_wav_->channels, p_wav_->bitsPerSample);
+	if(format == -1)
+	{
+		throw std::runtime_error("[WavAudioBuffer]Audio format error, only 16bit audio are supported...");
+	}
 	is_stereo_ = is_stereo(p_wav_->channels);
 
 	//Set the sample rate
 	const ALsizei freq = static_cast<ALsizei>(p_wav_->sampleRate);
 
 	//Allocate and read content of file
-	const size_t memory_size = static_cast<size_t>(p_wav_->totalPCMFrameCount) * p_wav_->channels * sizeof(int32_t);
-	int32_t* p_sample_data = static_cast<int32_t*>(malloc(memory_size));
-	drwav_read_s32(p_wav_, p_wav_->totalPCMFrameCount * p_wav_->channels, p_sample_data);
+	const size_t memory_size = static_cast<size_t>(p_wav_->totalPCMFrameCount) * p_wav_->channels * sizeof(int16_t);
+	int16_t* p_sample_data = static_cast<int16_t*>(malloc(memory_size));
+	drwav_read_pcm_frames_s16(p_wav_, p_wav_->totalPCMFrameCount, p_sample_data);
 
 	//Convert size
 	const ALsizei buffer_size = static_cast<ALsizei>(memory_size);

@@ -12,9 +12,9 @@ Music::Music(ScrapEngine::Core::ComponentsManager* input_ComponentManager)
 	audio_->set_source_gain(100);
 	audio_->set_source_loop(true);*/
 
-	//In the example scene i will just add a 2d loop music
+	//In the example scene i will just add a 2d background loop music
 	audio_ = input_ComponentManager->create_2d_sound("../assets/sounds/ambient_music_loop.wav");
-	audio_->set_source_pitch(2);
+	audio_->set_source_gain(0.5);
 	audio_->set_source_loop(true);
 }
 

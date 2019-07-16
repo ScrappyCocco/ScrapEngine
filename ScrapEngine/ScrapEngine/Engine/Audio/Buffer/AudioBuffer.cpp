@@ -19,14 +19,6 @@ ALenum ScrapEngine::Audio::AudioBuffer::to_al_format(const short channels, const
 			}
 			return AL_FORMAT_MONO16;
 		}
-	case 8:
-		{
-			if (stereo)
-			{
-				return AL_FORMAT_STEREO8;
-			}
-			return AL_FORMAT_MONO8;
-		}
 	default:
 		return -1;
 	}
