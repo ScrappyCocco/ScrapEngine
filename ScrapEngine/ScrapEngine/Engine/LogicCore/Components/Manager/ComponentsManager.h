@@ -10,6 +10,9 @@
 #include <Engine/LogicCore/Components/RigidBodyComponent/BoxRigidBodyComponent/BoxRigidBodyComponent.h>
 #include <Engine/LogicCore/Components/RigidBodyComponent/CapsuleRigidBodyComponent/CapsuleRigidBodyComponent.h>
 #include <Engine/LogicCore/Components/RigidBodyComponent/SphereRigidBodyComponent/SphereRigidBodyComponent.h>
+#include <Engine/Audio/Manager/AudioManager.h>
+#include <Engine/LogicCore/Components/AudioComponent/2dAudioComponent/2DAudioComponent.h>
+#include <Engine/LogicCore/Components/AudioComponent/3dAudioComponent/3DAudioComponent.h>
 
 namespace ScrapEngine
 {
@@ -20,6 +23,7 @@ namespace ScrapEngine
 		private:
 			Render::RenderManager* render_manager_ref_ = nullptr;
 			Physics::PhysicsManager* physics_manager_ref_ = nullptr;
+			Audio::AudioManager* audio_manager_ref_ = nullptr;
 
 			std::map<MeshComponent*, Render::VulkanMeshInstance*> loaded_meshes_;
 			std::map<RigidBodyComponent*, Physics::RigidBody*> loaded_rigidbody_collisions_;
@@ -30,6 +34,7 @@ namespace ScrapEngine
 
 			void set_render_manager(Render::RenderManager* input_render_manager_ref);
 			void set_physics_manager(Physics::PhysicsManager* input_physics_manager);
+			void set_audio_manager(Audio::AudioManager* input_audio_manager);
 
 			//----------------------------------------
 			//MeshStuff
@@ -65,6 +70,10 @@ namespace ScrapEngine
 			SphereRigidBodyComponent* create_sphere_rigidbody_component(float radius,
 			                                                            const Core::SVector3& start_position,
 			                                                            float mass = 0.f);
+			//----------------------------------------
+			//AudioStuff
+			AudioComponent2D* create_2d_sound(const std::string filename) const;
+			AudioComponent3D* create_3d_sound(const std::string filename) const;
 		};
 	}
 }

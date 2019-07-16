@@ -37,6 +37,7 @@ void ScrapEngine::Manager::EngineManager::initialize_engine()
 	initialize_render_manager(&received_base_game_info_); //Create the base rendering module
 	initialize_logic_manager(); //Create the base logic manager
 	initialize_physics_manager(); // Create the physics manager
+	initialize_audio_manager(); // Create the audio manager
 	initialize_views(); //Create the views for the user
 	Debug::DebugLog::print_to_console_log("---initializeEngine() completed---");
 }
@@ -56,11 +57,18 @@ void ScrapEngine::Manager::EngineManager::initialize_physics_manager()
 	physics_manager_ = new Physics::PhysicsManager();
 }
 
+void ScrapEngine::Manager::EngineManager::initialize_audio_manager()
+{
+	audio_manager_ = new Audio::AudioManager();
+}
+
 void ScrapEngine::Manager::EngineManager::initialize_views()
 {
 	render_manager_view = new Render::RenderManagerView(scrap_render_manager_);
 	logic_manager_view = new Core::LogicManagerView(scrap_render_manager_, scrap_logic_manager_);
+	//Set managers to logic core
 	logic_manager_view->set_physics_manager(physics_manager_);
+	logic_manager_view->set_audio_manager(audio_manager_);
 }
 
 void ScrapEngine::Manager::EngineManager::main_game_loop()
@@ -76,6 +84,8 @@ void ScrapEngine::Manager::EngineManager::main_game_loop()
 		scrap_logic_manager_->execute_game_objects_update_event(time);
 		//Update physics
 		physics_update(time);
+		//Update audio
+		audio_update();
 		//Draw frame and compute new times
 		start_time = std::chrono::high_resolution_clock::now();
 		scrap_render_manager_->draw_frame();
@@ -97,6 +107,11 @@ void ScrapEngine::Manager::EngineManager::physics_update(const float delta_time)
 	logic_manager_view->get_components_manager()->update_rigidbody_physics(factor);
 }
 
+void ScrapEngine::Manager::EngineManager::audio_update() const
+{
+	audio_manager_->audio_update(scrap_render_manager_->get_render_camera());
+}
+
 void ScrapEngine::Manager::EngineManager::cleanup_engine()
 {
 	Debug::DebugLog::print_to_console_log("---cleanupEngine()---");
@@ -105,6 +120,7 @@ void ScrapEngine::Manager::EngineManager::cleanup_engine()
 	delete render_manager_view;
 	delete logic_manager_view;
 	delete physics_manager_;
+	delete audio_manager_;
 	delete scrap_logic_manager_;
 
 	cleanup_done_ = true;

@@ -35,6 +35,9 @@
     <ClCompile Include="GameObjects\Trigger.cpp">
       <Filter>File di origine\GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="GameObjects\Music.cpp">
+      <Filter>File di origine\GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
@@ -51,6 +54,9 @@
       <Filter>File di origine\GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="GameObjects\Trigger.h">
+      <Filter>File di origine\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\Music.h">
       <Filter>File di origine\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>

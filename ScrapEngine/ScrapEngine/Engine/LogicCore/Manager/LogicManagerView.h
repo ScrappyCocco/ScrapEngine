@@ -21,6 +21,7 @@ namespace ScrapEngine
 			~LogicManagerView();
 
 			void set_physics_manager(Physics::PhysicsManager* physics_manager) const;
+			void set_audio_manager(Audio::AudioManager* audio_manager) const;
 
 			SGameObject* register_game_object(SGameObject* input_game_object) const;
 			void un_register_game_object(SGameObject* input_game_object) const;

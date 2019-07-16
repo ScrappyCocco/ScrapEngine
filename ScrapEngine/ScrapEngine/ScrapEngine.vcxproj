@@ -19,8 +19,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\Audio\Buffer\AudioBuffer.cpp" />
+    <ClCompile Include="Engine\Audio\Buffer\Wav\WavAudioBuffer.cpp" />
+    <ClCompile Include="Engine\Audio\Context\AudioContext.cpp" />
+    <ClCompile Include="Engine\Audio\Device\AudioDevice.cpp" />
+    <ClCompile Include="Engine\Audio\Listener\AudioListener.cpp" />
+    <ClCompile Include="Engine\Audio\Manager\AudioManager.cpp" />
+    <ClCompile Include="Engine\Audio\Source\AudioSource.cpp" />
     <ClCompile Include="Engine\Debug\DebugLog.cpp" />
     <ClCompile Include="Engine\Input\Manager\InputManager.cpp" />
+    <ClCompile Include="Engine\LogicCore\Components\AudioComponent\2dAudioComponent\2DAudioComponent.cpp" />
+    <ClCompile Include="Engine\LogicCore\Components\AudioComponent\3dAudioComponent\3DAudioComponent.cpp" />
+    <ClCompile Include="Engine\LogicCore\Components\AudioComponent\AudioComponent.cpp" />
     <ClCompile Include="Engine\LogicCore\Components\Manager\ComponentsManager.cpp" />
     <ClCompile Include="Engine\LogicCore\Components\MeshComponent\MeshComponent.cpp" />
     <ClCompile Include="Engine\LogicCore\Components\RigidBodyComponent\BoxRigidBodyComponent\BoxRigidBodyComponent.cpp" />
@@ -106,10 +116,20 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\external\stb\stb_image.h" />
+    <ClInclude Include="Engine\Audio\Buffer\AudioBuffer.h" />
+    <ClInclude Include="Engine\Audio\Buffer\Wav\WavAudioBuffer.h" />
+    <ClInclude Include="Engine\Audio\Context\AudioContext.h" />
+    <ClInclude Include="Engine\Audio\Device\AudioDevice.h" />
+    <ClInclude Include="Engine\Audio\Listener\AudioListener.h" />
+    <ClInclude Include="Engine\Audio\Manager\AudioManager.h" />
+    <ClInclude Include="Engine\Audio\Source\AudioSource.h" />
     <ClInclude Include="Engine\Debug\DebugLog.h" />
     <ClInclude Include="Engine\Input\KeyboardKeys.h" />
     <ClInclude Include="Engine\Input\Manager\InputManager.h" />
     <ClInclude Include="Engine\Input\MouseButtons.h" />
+    <ClInclude Include="Engine\LogicCore\Components\AudioComponent\2dAudioComponent\2DAudioComponent.h" />
+    <ClInclude Include="Engine\LogicCore\Components\AudioComponent\3dAudioComponent\3DAudioComponent.h" />
+    <ClInclude Include="Engine\LogicCore\Components\AudioComponent\AudioComponent.h" />
     <ClInclude Include="Engine\LogicCore\Components\Manager\ComponentsManager.h" />
     <ClInclude Include="Engine\LogicCore\Components\MeshComponent\MeshComponent.h" />
     <ClInclude Include="Engine\LogicCore\Components\RigidBodyComponent\BoxRigidBodyComponent\BoxRigidBodyComponent.h" />
@@ -255,7 +275,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)ScrapEngine;$(SolutionDir)..\external\VulkanSDK\Vulkan-Headers\include;$(SolutionDir)..\external\glm;$(SolutionDir)..\external\stb;$(SolutionDir)..\external\gli;$(SolutionDir)..\external\glfw\include;$(SolutionDir)..\external\reactphysics\src;$(SolutionDir)..\external\assimp\include;$(SolutionDir)..\external\enkits\src;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)ScrapEngine;$(SolutionDir)..\external\VulkanSDK\Vulkan-Headers\include;$(SolutionDir)..\external\glm;$(SolutionDir)..\external\stb;$(SolutionDir)..\external\gli;$(SolutionDir)..\external\glfw\include;$(SolutionDir)..\external\assimp\include;$(SolutionDir)..\external\reactphysics\src;$(SolutionDir)..\external\enkits\src;$(SolutionDir)..\external\openal-soft\include;$(SolutionDir)..\external\openal-soft\common;$(SolutionDir)..\external\openal-soft\Alc;$(SolutionDir)..\external\openal-soft\OpenAL32\Include;$(SolutionDir)..\external\dr_libs;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -263,7 +283,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)ScrapEngine;$(SolutionDir)..\external\VulkanSDK\Vulkan-Headers\include;$(SolutionDir)..\external\glm;$(SolutionDir)..\external\stb;$(SolutionDir)..\external\gli;$(SolutionDir)..\external\glfw\include;$(SolutionDir)..\external\reactphysics\src;$(SolutionDir)..\external\assimp\include;$(SolutionDir)..\external\enkits\src;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)ScrapEngine;$(SolutionDir)..\external\VulkanSDK\Vulkan-Headers\include;$(SolutionDir)..\external\glm;$(SolutionDir)..\external\stb;$(SolutionDir)..\external\gli;$(SolutionDir)..\external\glfw\include;$(SolutionDir)..\external\assimp\include;$(SolutionDir)..\external\reactphysics\src;$(SolutionDir)..\external\enkits\src;$(SolutionDir)..\external\openal-soft\include;$(SolutionDir)..\external\openal-soft\common;$(SolutionDir)..\external\openal-soft\Alc;$(SolutionDir)..\external\openal-soft\OpenAL32\Include;$(SolutionDir)..\external\dr_libs;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

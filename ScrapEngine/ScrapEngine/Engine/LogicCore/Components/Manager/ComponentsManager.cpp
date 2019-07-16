@@ -10,6 +10,11 @@ void ScrapEngine::Core::ComponentsManager::set_physics_manager(Physics::PhysicsM
 	physics_manager_ref_ = input_physics_manager;
 }
 
+void ScrapEngine::Core::ComponentsManager::set_audio_manager(Audio::AudioManager* input_audio_manager)
+{
+	audio_manager_ref_ = input_audio_manager;
+}
+
 ScrapEngine::Core::MeshComponent* ScrapEngine::Core::ComponentsManager::create_new_mesh_component(
 	const std::string& vertex_shader_path, const std::string& fragment_shader_path, const std::string& model_path,
 	const std::vector<std::string>& textures_path)
@@ -78,6 +83,16 @@ ScrapEngine::Core::SphereRigidBodyComponent* ScrapEngine::Core::ComponentsManage
 	loaded_rigidbody_collisions_.insert(pair_to_insert);
 
 	return component;
+}
+
+ScrapEngine::Core::AudioComponent2D* ScrapEngine::Core::ComponentsManager::create_2d_sound(const std::string filename) const
+{
+	return new AudioComponent2D(audio_manager_ref_->load_2d_sound(filename));
+}
+
+ScrapEngine::Core::AudioComponent3D* ScrapEngine::Core::ComponentsManager::create_3d_sound(const std::string filename) const
+{
+	return new AudioComponent3D(audio_manager_ref_->load_3d_sound(filename));
 }
 
 void ScrapEngine::Core::ComponentsManager::destroy_rigidbody_component(RigidBodyComponent* component_to_destroy)

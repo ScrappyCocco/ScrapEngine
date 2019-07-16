@@ -275,6 +275,39 @@
     <Filter Include="Engine\Rendering\CommandPool\Standard">
       <UniqueIdentifier>{1ec1fa25-5548-4756-ac2b-ee242e2b0b10}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Audio">
+      <UniqueIdentifier>{ae2e3b9e-931c-4e14-ba85-e45f02cb9e78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Audio\Device">
+      <UniqueIdentifier>{8cd288e7-f257-4380-b6a0-e3bfaa4d7423}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Audio\Manager">
+      <UniqueIdentifier>{ce780bf8-b79c-4667-b6e2-a230d7ee40b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Audio\Context">
+      <UniqueIdentifier>{b181c1ce-e91e-48ce-858d-ab31ced5b79e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Audio\Buffer">
+      <UniqueIdentifier>{4c502a01-4888-4987-b14a-abec82083726}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Audio\Listener">
+      <UniqueIdentifier>{4ae8f4b9-ad1f-43e6-a928-5cdbfac94761}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Audio\Source">
+      <UniqueIdentifier>{4f2266ac-6005-4f67-8f28-22324682b792}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Audio\Buffer\Wav">
+      <UniqueIdentifier>{382215c7-0a5a-49d2-9d6c-c6c7c689b46a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\LogicCore\Components\AudioComponent">
+      <UniqueIdentifier>{8c553e94-f36e-412b-bb53-322ddcf4c9c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\LogicCore\Components\AudioComponent\2dAudioComponent">
+      <UniqueIdentifier>{b246769a-4a7d-4500-abf1-f65b497a6054}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\LogicCore\Components\AudioComponent\3dAudioComponent">
+      <UniqueIdentifier>{c17ef7df-d3f6-45d4-be8d-c1a58e27eafd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Manager\EngineManager.cpp">
@@ -528,6 +561,36 @@
     </ClCompile>
     <ClCompile Include="Engine\Rendering\Camera\CameraFrustum.cpp">
       <Filter>Engine\Rendering\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Audio\Device\AudioDevice.cpp">
+      <Filter>Engine\Audio\Device</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Audio\Manager\AudioManager.cpp">
+      <Filter>Engine\Audio\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Audio\Context\AudioContext.cpp">
+      <Filter>Engine\Audio\Context</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Audio\Buffer\AudioBuffer.cpp">
+      <Filter>Engine\Audio\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Audio\Listener\AudioListener.cpp">
+      <Filter>Engine\Audio\Listener</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Audio\Source\AudioSource.cpp">
+      <Filter>Engine\Audio\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Audio\Buffer\Wav\WavAudioBuffer.cpp">
+      <Filter>Engine\Audio\Buffer\Wav</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\LogicCore\Components\AudioComponent\AudioComponent.cpp">
+      <Filter>Engine\LogicCore\Components\AudioComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\LogicCore\Components\AudioComponent\2dAudioComponent\2DAudioComponent.cpp">
+      <Filter>Engine\LogicCore\Components\AudioComponent\2dAudioComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\LogicCore\Components\AudioComponent\3dAudioComponent\3DAudioComponent.cpp">
+      <Filter>Engine\LogicCore\Components\AudioComponent\3dAudioComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -803,6 +866,36 @@
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Camera\CameraFrustum.h">
       <Filter>Engine\Rendering\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Audio\Device\AudioDevice.h">
+      <Filter>Engine\Audio\Device</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Audio\Manager\AudioManager.h">
+      <Filter>Engine\Audio\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Audio\Context\AudioContext.h">
+      <Filter>Engine\Audio\Context</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Audio\Buffer\AudioBuffer.h">
+      <Filter>Engine\Audio\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Audio\Listener\AudioListener.h">
+      <Filter>Engine\Audio\Listener</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Audio\Source\AudioSource.h">
+      <Filter>Engine\Audio\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Audio\Buffer\Wav\WavAudioBuffer.h">
+      <Filter>Engine\Audio\Buffer\Wav</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\LogicCore\Components\AudioComponent\AudioComponent.h">
+      <Filter>Engine\LogicCore\Components\AudioComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\LogicCore\Components\AudioComponent\2dAudioComponent\2DAudioComponent.h">
+      <Filter>Engine\LogicCore\Components\AudioComponent\2dAudioComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\LogicCore\Components\AudioComponent\3dAudioComponent\3DAudioComponent.h">
+      <Filter>Engine\LogicCore\Components\AudioComponent\3dAudioComponent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -72,7 +72,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)ScrapEngine;$(SolutionDir)..\external\stb;$(SolutionDir)..\external\VulkanSDK\Vulkan-Headers\include;$(SolutionDir)..\external\glm;$(SolutionDir)..\external\gli;$(SolutionDir)..\external\glfw\include;$(SolutionDir)..\external\assimp\include;$(SolutionDir)..\external\reactphysics\src;$(SolutionDir)..\external\enkits\src;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)ScrapEngine;$(SolutionDir)..\external\stb;$(SolutionDir)..\external\VulkanSDK\Vulkan-Headers\include;$(SolutionDir)..\external\glm;$(SolutionDir)..\external\gli;$(SolutionDir)..\external\glfw\include;$(SolutionDir)..\external\assimp\include;$(SolutionDir)..\external\reactphysics\src;$(SolutionDir)..\external\enkits\src;$(SolutionDir)..\external\openal-soft\include;$(SolutionDir)..\external\openal-soft\Alc;$(SolutionDir)..\external\openal-soft\common;$(SolutionDir)..\external\openal-soft\OpenAL32\Include;$(SolutionDir)..\external\dr_libs;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
@@ -84,7 +84,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)ScrapEngine;$(SolutionDir)..\external\stb;$(SolutionDir)..\external\VulkanSDK\Vulkan-Headers\include;$(SolutionDir)..\external\glm;$(SolutionDir)..\external\gli;$(SolutionDir)..\external\glfw\include;$(SolutionDir)..\external\assimp\include;$(SolutionDir)..\external\reactphysics\src;$(SolutionDir)..\external\enkits\src;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)ScrapEngine;$(SolutionDir)..\external\stb;$(SolutionDir)..\external\VulkanSDK\Vulkan-Headers\include;$(SolutionDir)..\external\glm;$(SolutionDir)..\external\gli;$(SolutionDir)..\external\glfw\include;$(SolutionDir)..\external\assimp\include;$(SolutionDir)..\external\reactphysics\src;$(SolutionDir)..\external\enkits\src;$(SolutionDir)..\external\openal-soft\include;$(SolutionDir)..\external\openal-soft\Alc;$(SolutionDir)..\external\openal-soft\common;$(SolutionDir)..\external\openal-soft\OpenAL32\Include;$(SolutionDir)..\external\dr_libs;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -97,8 +97,8 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>$(SolutionDir)x64\Debug;$(SolutionDir)..\external\VulkanSDK\Lib;$(SolutionDir)..\external\glfw\build\src\Debug;$(SolutionDir)..\external\assimp\build\code\Debug;$(SolutionDir)..\external\reactphysics\build\lib\Debug;$(SolutionDir)..\external\enkits\build\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>vulkan-1.lib;assimp-vc140-mt.lib;glfw3.lib;reactphysics3d.lib;enkiTS.lib;ScrapEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)x64\Debug;$(SolutionDir)..\external\VulkanSDK\Lib;$(SolutionDir)..\external\glfw\build\src\Debug;$(SolutionDir)..\external\assimp\build\code\Debug;$(SolutionDir)..\external\reactphysics\build\lib\Debug;$(SolutionDir)..\external\openal-soft\build\Debug;$(SolutionDir)..\external\enkits\build\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>vulkan-1.lib;assimp-vc140-mt.lib;glfw3.lib;reactphysics3d.lib;enkiTS.lib;OpenAL32.lib;ScrapEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -151,8 +151,8 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>$(SolutionDir)x64\Release;$(SolutionDir)..\external\VulkanSDK\Lib;$(SolutionDir)..\external\glfw\build\src\Release;$(SolutionDir)..\external\assimp\build\code\Release;$(SolutionDir)..\external\reactphysics\build\lib\Release;$(SolutionDir)..\external\enkits\build\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>vulkan-1.lib;assimp-vc140-mt.lib;glfw3.lib;reactphysics3d.lib;enkiTS.lib;ScrapEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)x64\Release;$(SolutionDir)..\external\VulkanSDK\Lib;$(SolutionDir)..\external\glfw\build\src\Release;$(SolutionDir)..\external\assimp\build\code\Release;$(SolutionDir)..\external\reactphysics\build\lib\Release;$(SolutionDir)..\external\enkits\build\Release;$(SolutionDir)..\external\openal-soft\build\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>vulkan-1.lib;assimp-vc140-mt.lib;glfw3.lib;reactphysics3d.lib;enkiTS.lib;OpenAL32.lib;ScrapEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>
@@ -163,6 +163,7 @@
     <ClCompile Include="GameObjects\Ball.cpp" />
     <ClCompile Include="GameObjects\Camera\GameCamera.cpp" />
     <ClCompile Include="GameObjects\Crate.cpp" />
+    <ClCompile Include="GameObjects\Music.cpp" />
     <ClCompile Include="GameObjects\Terrain.cpp" />
     <ClCompile Include="GameObjects\Trigger.cpp" />
   </ItemGroup>
@@ -170,6 +171,7 @@
     <ClInclude Include="GameObjects\Ball.h" />
     <ClInclude Include="GameObjects\Camera\GameCamera.h" />
     <ClInclude Include="GameObjects\Crate.h" />
+    <ClInclude Include="GameObjects\Music.h" />
     <ClInclude Include="GameObjects\Terrain.h" />
     <ClInclude Include="GameObjects\Trigger.h" />
     <ClInclude Include="resource.h" />
