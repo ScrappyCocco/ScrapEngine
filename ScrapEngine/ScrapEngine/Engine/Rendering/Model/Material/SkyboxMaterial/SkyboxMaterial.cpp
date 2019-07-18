@@ -47,11 +47,9 @@ void ScrapEngine::Render::SkyboxMaterial::create_descriptor_sets(VulkanSwapChain
                                                                  UniformBuffer* uniform_buffer)
 {
 	vulkan_render_descriptor_pool_ = new VulkanDescriptorPool(swap_chain->get_swap_chain_images_vector());
-	Debug::DebugLog::print_to_console_log("VulkanDescriptorPool created");
 	vulkan_render_descriptor_set_->create_descriptor_sets(vulkan_render_descriptor_pool_->get_descriptor_pool(),
 	                                                      swap_chain->get_swap_chain_images_vector(),
 	                                                      uniform_buffer->get_uniform_buffers(),
 	                                                      vulkan_texture_image_view_->get_texture_image_view(),
 	                                                      vulkan_texture_sampler_->get_texture_sampler());
-	Debug::DebugLog::print_to_console_log("(DescriptorSets created)");
 }

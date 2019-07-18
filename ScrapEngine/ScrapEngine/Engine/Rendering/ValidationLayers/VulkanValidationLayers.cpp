@@ -20,6 +20,8 @@ void ScrapEngine::Render::VulkanValidationLayers::setup_debug_callback()
 {
 	if (!enable_validation_layers) return;
 
+	Debug::DebugLog::print_to_console_log("Loading VulkanValidationLayers...");
+
 	const vk::DebugUtilsMessengerCreateInfoEXT create_info(
 		vk::DebugUtilsMessengerCreateFlagsEXT(),
 		vk::DebugUtilsMessageSeverityFlagBitsEXT::eVerbose | vk::DebugUtilsMessageSeverityFlagBitsEXT::eWarning | vk::

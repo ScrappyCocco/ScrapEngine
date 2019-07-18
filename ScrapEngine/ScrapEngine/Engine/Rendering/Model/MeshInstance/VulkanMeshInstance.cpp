@@ -12,9 +12,7 @@ ScrapEngine::Render::VulkanMeshInstance::VulkanMeshInstance(const std::string& v
 	//CREATE UNIFORM BUFFER
 	vulkan_render_uniform_buffer_ = new UniformBuffer(swap_chain->get_swap_chain_images_vector(),
 	                                                  swap_chain->get_swap_chain_extent());
-	Debug::DebugLog::print_to_console_log("UniformBuffer created");
 	vulkan_render_model_ = VulkanModelPool::get_instance()->get_model(model_path);
-	Debug::DebugLog::print_to_console_log("VulkanModel loaded");
 	if (vulkan_render_model_->get_meshes()->size() != textures_path.size() && textures_path.size() > 1)
 	{
 		throw std::runtime_error("The texture array must have size 1 or equal number of meshes!");

@@ -4,7 +4,6 @@
 ScrapEngine::Render::BasicMaterial::BasicMaterial()
 {
 	vulkan_render_descriptor_set_ = new VulkanDescriptorSet();
-	Debug::DebugLog::print_to_console_log("VulkanDescriptorSet created");
 }
 
 ScrapEngine::Render::BasicMaterial::~BasicMaterial()

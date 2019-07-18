@@ -15,7 +15,6 @@ ScrapEngine::Render::VulkanSkyboxInstance::VulkanSkyboxInstance(const std::strin
 	Debug::DebugLog::print_to_console_log("UniformBuffer created");
 	//CREATE MATERIAL(S)
 	skybox_material_ = new SkyboxMaterial();
-	Debug::DebugLog::print_to_console_log("VulkanDescriptorSet created");
 	skybox_material_->create_pipeline(vertex_shader_path,
 	                                  fragment_shader_path, swap_chain);
 	skybox_material_->create_skybox_texture(texture_path);
