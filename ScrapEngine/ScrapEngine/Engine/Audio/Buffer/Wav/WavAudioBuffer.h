@@ -1,7 +1,6 @@
 #pragma once
 
 #include <Engine/Audio/Buffer/AudioBuffer.h>
-#include <dr_wav.h>
 
 namespace ScrapEngine
 {
@@ -9,8 +8,6 @@ namespace ScrapEngine
 	{
 		class WavAudioBuffer : public AudioBuffer
 		{
-		private:
-			drwav* p_wav_ = nullptr;
 		public:
 			WavAudioBuffer() = default;
 			~WavAudioBuffer() = default;
