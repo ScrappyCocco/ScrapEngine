@@ -311,6 +311,15 @@
     <Filter Include="Engine\External\imgui">
       <UniqueIdentifier>{d567bca8-3433-428e-ad9d-ec29eca444ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Rendering\Gui">
+      <UniqueIdentifier>{512ffe86-251c-449c-a36f-be76664e9ae9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Descriptor\StandardDescriptorSet">
+      <UniqueIdentifier>{75c3fae8-99c2-4b50-af50-ca8baa173d81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Descriptor\GuiDescriptorSet">
+      <UniqueIdentifier>{575f84b8-6d55-4234-a439-872c427c871b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Manager\EngineManager.cpp">
@@ -348,9 +357,6 @@
     </ClCompile>
     <ClCompile Include="Engine\Rendering\Buffer\BaseBuffer.cpp">
       <Filter>Engine\Rendering\Buffer</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Rendering\Descriptor\VulkanDescriptorSet.cpp">
-      <Filter>Engine\Rendering\Descriptor</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Rendering\Descriptor\VulkanDescriptorPool.cpp">
       <Filter>Engine\Rendering\Descriptor</Filter>
@@ -607,6 +613,18 @@
     <ClCompile Include="..\..\external\imgui\imgui_widgets.cpp">
       <Filter>Engine\External\imgui</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Rendering\Gui\VulkanImGui.cpp">
+      <Filter>Engine\Rendering\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Descriptor\BaseDescriptorSet.cpp">
+      <Filter>Engine\Rendering\Descriptor</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Descriptor\StandardDescriptorSet\StandardDescriptorSet.cpp">
+      <Filter>Engine\Rendering\Descriptor\StandardDescriptorSet</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Descriptor\GuiDescriptorSet\GuiDescriptorSet.cpp">
+      <Filter>Engine\Rendering\Descriptor\GuiDescriptorSet</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Manager\EngineManager.h">
@@ -647,9 +665,6 @@
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Buffer\BaseBuffer.h">
       <Filter>Engine\Rendering\Buffer</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Rendering\Descriptor\VulkanDescriptorSet.h">
-      <Filter>Engine\Rendering\Descriptor</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Descriptor\VulkanDescriptorPool.h">
       <Filter>Engine\Rendering\Descriptor</Filter>
@@ -926,6 +941,18 @@
     </ClInclude>
     <ClInclude Include="..\..\external\imgui\imstb_truetype.h">
       <Filter>Engine\External\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Gui\VulkanImGui.h">
+      <Filter>Engine\Rendering\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Descriptor\BaseDescriptorSet.h">
+      <Filter>Engine\Rendering\Descriptor</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Descriptor\StandardDescriptorSet\StandardDescriptorSet.h">
+      <Filter>Engine\Rendering\Descriptor\StandardDescriptorSet</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Descriptor\GuiDescriptorSet\GuiDescriptorSet.h">
+      <Filter>Engine\Rendering\Descriptor\GuiDescriptorSet</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
