@@ -308,6 +308,9 @@
     <Filter Include="Engine\LogicCore\Components\AudioComponent\3dAudioComponent">
       <UniqueIdentifier>{c17ef7df-d3f6-45d4-be8d-c1a58e27eafd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\External\imgui">
+      <UniqueIdentifier>{d567bca8-3433-428e-ad9d-ec29eca444ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Manager\EngineManager.cpp">
@@ -591,6 +594,18 @@
     </ClCompile>
     <ClCompile Include="Engine\LogicCore\Components\AudioComponent\3dAudioComponent\3DAudioComponent.cpp">
       <Filter>Engine\LogicCore\Components\AudioComponent\3dAudioComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\imgui\imgui.cpp">
+      <Filter>Engine\External\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\imgui\imgui_demo.cpp">
+      <Filter>Engine\External\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\imgui\imgui_draw.cpp">
+      <Filter>Engine\External\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\imgui\imgui_widgets.cpp">
+      <Filter>Engine\External\imgui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -896,6 +911,21 @@
     </ClInclude>
     <ClInclude Include="Engine\LogicCore\Components\AudioComponent\3dAudioComponent\3DAudioComponent.h">
       <Filter>Engine\LogicCore\Components\AudioComponent\3dAudioComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\imgui\imgui.h">
+      <Filter>Engine\External\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\imgui\imgui_internal.h">
+      <Filter>Engine\External\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\imgui\imstb_rectpack.h">
+      <Filter>Engine\External\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\imgui\imstb_textedit.h">
+      <Filter>Engine\External\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\imgui\imstb_truetype.h">
+      <Filter>Engine\External\imgui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
