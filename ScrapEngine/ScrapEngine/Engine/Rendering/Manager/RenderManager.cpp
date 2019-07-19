@@ -7,6 +7,7 @@
 #include <Engine/Rendering/Model/ObjectPool/VulkanSimpleMaterialPool/VulkanSimpleMaterialPool.h>
 #include <Engine/Rendering/CommandPool/Singleton/SingletonCommandPool.h>
 #include <Engine/Rendering/CommandPool/Standard/StandardCommandPool.h>
+#include <Engine/Rendering/Shader/ShaderManager.h>
 
 void ScrapEngine::Render::RenderManager::ParallelCommandBufferCreation::ExecuteRange(enki::TaskSetPartition range,
                                                                                      uint32_t threadnum)
@@ -88,6 +89,7 @@ void ScrapEngine::Render::RenderManager::cleanup_swap_chain()
 			model_material->delete_graphics_pipeline();
 		}
 	}
+	ShaderManager::get_instance()->cleanup_shaders();
 	delete vulkan_rendering_pass_;
 	delete vulkan_render_image_view_;
 	delete vulkan_render_swap_chain_;
@@ -183,6 +185,9 @@ void ScrapEngine::Render::RenderManager::initialize_vulkan(const game_base_info*
 	Debug::DebugLog::print_to_console_log("VulkanSemaphoresManager created");
 	create_camera();
 	Debug::DebugLog::print_to_console_log("User View Camera created");
+	Debug::DebugLog::print_to_console_log("Creating gui render...");
+	initialize_gui(received_base_game_info->window_width, received_base_game_info->window_height);
+	Debug::DebugLog::print_to_console_log("Gui render initialized!");
 	Debug::DebugLog::print_to_console_log("---initializeVulkan() completed---");
 }
 
@@ -190,6 +195,13 @@ void ScrapEngine::Render::RenderManager::initialize_scheduler()
 {
 	//Initialize enkiTS scheduler
 	g_TS.Initialize();
+}
+
+void ScrapEngine::Render::RenderManager::initialize_gui(const float width, const float height)
+{
+	gui_render_ = new VulkanImGui();
+	gui_render_->init(width, height);
+	gui_render_->init_resources(vulkan_render_swap_chain_);
 }
 
 void ScrapEngine::Render::RenderManager::initialize_command_buffers()

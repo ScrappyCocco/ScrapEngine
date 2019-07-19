@@ -41,6 +41,8 @@ namespace ScrapEngine
 			VulkanDepthResources* vulkan_render_depth_ = nullptr;
 			VulkanColorResources* vulkan_render_color_ = nullptr;
 
+			VulkanImGui* gui_render_ = nullptr;
+
 			Camera* render_camera_ = nullptr;
 			Camera* default_camera_ = nullptr;
 
@@ -92,6 +94,7 @@ namespace ScrapEngine
 		private:
 			void initialize_vulkan(const game_base_info* received_base_game_info);
 			void initialize_scheduler();
+			void initialize_gui(float width, float height);
 			void initialize_command_buffers();
 
 			void create_queues();

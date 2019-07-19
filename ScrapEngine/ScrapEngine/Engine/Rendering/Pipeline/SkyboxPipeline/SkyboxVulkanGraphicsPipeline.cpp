@@ -114,7 +114,7 @@ ScrapEngine::Render::SkyboxVulkanGraphicsPipeline::SkyboxVulkanGraphicsPipeline(
 			&pipeline_layout_info, nullptr, &pipeline_layout_)
 		!= vk::Result::eSuccess)
 	{
-		throw std::runtime_error("VulkanGraphicsPipeline: Failed to create pipeline layout!");
+		throw std::runtime_error("SkyboxVulkanGraphicsPipeline: Failed to create pipeline layout!");
 	}
 
 	vk::GraphicsPipelineCreateInfo pipeline_info(
@@ -139,9 +139,6 @@ ScrapEngine::Render::SkyboxVulkanGraphicsPipeline::SkyboxVulkanGraphicsPipeline(
 	                                                                                &graphics_pipeline_)
 		!= vk::Result::eSuccess)
 	{
-		throw std::runtime_error("VulkanGraphicsPipeline: Failed to create graphics pipeline!");
+		throw std::runtime_error("SkyboxVulkanGraphicsPipeline: Failed to create graphics pipeline!");
 	}
-
-	VulkanDevice::get_instance()->get_logical_device()->destroyShaderModule(frag_shader_module);
-	VulkanDevice::get_instance()->get_logical_device()->destroyShaderModule(vert_shader_module);
 }

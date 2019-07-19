@@ -1,6 +1,7 @@
 #include <Engine/Rendering/Shader/ShaderManager.h>
 #include <fstream>
 #include <Engine/Rendering/Device/VulkanDevice.h>
+#include <Engine/Debug/DebugLog.h>
 
 //Init static instance reference
 
@@ -21,6 +22,7 @@ vk::ShaderModule ScrapEngine::Render::ShaderManager::get_shader_module(const std
 	{
 		// Shader not found, load it
 		loaded_shaders_[filename] = create_shader_module(read_file(filename));
+		Debug::DebugLog::print_to_console_log("[ShaderManager] Shader loaded");
 	}
 	//Return the shader
 	return loaded_shaders_[filename];
@@ -60,4 +62,20 @@ std::vector<char> ScrapEngine::Render::ShaderManager::read_file(const std::strin
 	file.close();
 
 	return buffer;
+}
+
+ScrapEngine::Render::ShaderManager::~ShaderManager()
+{
+	cleanup_shaders();
+}
+
+void ScrapEngine::Render::ShaderManager::cleanup_shaders()
+{
+	vk::Device* device = VulkanDevice::get_instance()->get_logical_device();
+	for (const auto& element : loaded_shaders_)
+	{
+		device->destroyShaderModule(element.second);
+		Debug::DebugLog::print_to_console_log("[ShaderManager] Destroying Shader:" + element.first);
+	}
+	loaded_shaders_.clear();
 }

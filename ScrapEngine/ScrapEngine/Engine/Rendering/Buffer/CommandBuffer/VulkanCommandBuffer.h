@@ -6,6 +6,7 @@
 #include <Engine/Rendering/Model/SkyboxInstance/VulkanSkyboxInstance.h>
 #include <Engine/Rendering/Model/MeshInstance/VulkanMeshInstance.h>
 #include <Engine/Rendering/CommandPool/VulkanCommandPool.h>
+#include <Engine/Rendering/Gui/VulkanImGui.h>
 
 namespace ScrapEngine
 {
@@ -30,6 +31,8 @@ namespace ScrapEngine
 
 			void load_skybox(VulkanSkyboxInstance* skybox_ref);
 			void load_mesh(const VulkanMeshInstance* mesh);
+			void load_ui(VulkanImGui* gui);
+
 			void close_command_buffer();
 
 			void free_command_buffers();

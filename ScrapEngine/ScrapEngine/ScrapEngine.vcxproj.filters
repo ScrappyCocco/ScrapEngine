@@ -326,6 +326,12 @@
     <Filter Include="Engine\Rendering\Descriptor\DescriptorSet\StandardDescriptorSet">
       <UniqueIdentifier>{75c3fae8-99c2-4b50-af50-ca8baa173d81}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Rendering\Pipeline\GuiPipeline">
+      <UniqueIdentifier>{c8df292f-77b0-4fa6-8f94-95f84ea333fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Buffer\GenericBuffer">
+      <UniqueIdentifier>{940c2eac-c69d-460c-9aae-92d44d4a5293}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Manager\EngineManager.cpp">
@@ -630,6 +636,12 @@
     </ClCompile>
     <ClCompile Include="Engine\Rendering\Descriptor\DescriptorSet\BaseDescriptorSet.cpp">
       <Filter>Engine\Rendering\Descriptor\DescriptorSet</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Pipeline\GuiPipeline\GuiVulkanGraphicsPipeline.cpp">
+      <Filter>Engine\Rendering\Pipeline\GuiPipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Buffer\GenericBuffer\GenericBuffer.cpp">
+      <Filter>Engine\Rendering\Buffer\GenericBuffer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -959,6 +971,12 @@
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Descriptor\DescriptorSet\BaseDescriptorSet.h">
       <Filter>Engine\Rendering\Descriptor\DescriptorSet</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Pipeline\GuiPipeline\GuiVulkanGraphicsPipeline.h">
+      <Filter>Engine\Rendering\Pipeline\GuiPipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Buffer\GenericBuffer\GenericBuffer.h">
+      <Filter>Engine\Rendering\Buffer\GenericBuffer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

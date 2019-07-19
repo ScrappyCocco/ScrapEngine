@@ -23,7 +23,9 @@ namespace ScrapEngine
 
 			static std::vector<char> read_file(const std::string& filename);
 		public:
-			~ShaderManager() = default;
+			~ShaderManager();
+
+			void cleanup_shaders();
 
 			//Singleton static function to get or create a class instance
 			static ShaderManager* get_instance();

@@ -67,6 +67,7 @@
     <ClCompile Include="Engine\Rendering\Buffer\BufferContainer\VertexBufferContainer\VertexBufferContainer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\CommandBuffer\VulkanCommandBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\FrameBuffer\VulkanFrameBuffer.cpp" />
+    <ClCompile Include="Engine\Rendering\Buffer\GenericBuffer\GenericBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\IndexBuffer\IndexBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\StagingBuffer\BaseStagingBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\StagingBuffer\ImageStagingBuffer\ImageStagingBuffer.cpp" />
@@ -100,6 +101,7 @@
     <ClCompile Include="Engine\Rendering\Model\ObjectPool\VulkanSimpleMaterialPool\VulkanSimpleMaterialPool.cpp" />
     <ClCompile Include="Engine\Rendering\Model\SkyboxInstance\VulkanSkyboxInstance.cpp" />
     <ClCompile Include="Engine\Rendering\Pipeline\BaseVulkanGraphicsPipeline.cpp" />
+    <ClCompile Include="Engine\Rendering\Pipeline\GuiPipeline\GuiVulkanGraphicsPipeline.cpp" />
     <ClCompile Include="Engine\Rendering\Pipeline\SkyboxPipeline\SkyboxVulkanGraphicsPipeline.cpp" />
     <ClCompile Include="Engine\Rendering\Pipeline\StandardPipeline\StandardVulkanGraphicsPipeline.cpp" />
     <ClCompile Include="Engine\Rendering\Queue\BaseQueue.cpp" />
@@ -176,6 +178,7 @@
     <ClInclude Include="Engine\Rendering\Buffer\BufferContainer\VertexBufferContainer\VertexBufferContainer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\CommandBuffer\VulkanCommandBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\FrameBuffer\VulkanFrameBuffer.h" />
+    <ClInclude Include="Engine\Rendering\Buffer\GenericBuffer\GenericBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\IndexBuffer\IndexBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\StagingBuffer\BaseStagingBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\StagingBuffer\ImageStagingBuffer\ImageStagingBuffer.h" />
@@ -210,6 +213,7 @@
     <ClInclude Include="Engine\Rendering\Model\ObjectPool\VulkanSimpleMaterialPool\VulkanSimpleMaterialPool.h" />
     <ClInclude Include="Engine\Rendering\Model\SkyboxInstance\VulkanSkyboxInstance.h" />
     <ClInclude Include="Engine\Rendering\Pipeline\BaseVulkanGraphicsPipeline.h" />
+    <ClInclude Include="Engine\Rendering\Pipeline\GuiPipeline\GuiVulkanGraphicsPipeline.h" />
     <ClInclude Include="Engine\Rendering\Pipeline\SkyboxPipeline\SkyboxVulkanGraphicsPipeline.h" />
     <ClInclude Include="Engine\Rendering\Pipeline\StandardPipeline\StandardVulkanGraphicsPipeline.h" />
     <ClInclude Include="Engine\Rendering\Queue\BaseQueue.h" />
