@@ -1,4 +1,4 @@
-#include <Engine/Rendering/Descriptor/StandardDescriptorSet/StandardDescriptorSet.h>
+#include <Engine/Rendering/Descriptor/DescriptorSet/StandardDescriptorSet/StandardDescriptorSet.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
 
 ScrapEngine::Render::StandardDescriptorSet::StandardDescriptorSet() : BaseDescriptorSet()

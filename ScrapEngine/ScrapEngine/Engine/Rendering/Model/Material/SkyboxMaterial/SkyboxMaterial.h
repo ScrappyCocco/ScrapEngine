@@ -3,7 +3,7 @@
 #include <Engine/Rendering/Model/Material/BasicMaterial.h>
 #include <Engine/Rendering/Texture/TextureSampler/TextureSampler.h>
 #include <Engine/Rendering/Texture/TextureImageView/TextureImageView.h>
-#include <Engine/Rendering/Descriptor/VulkanDescriptorPool.h>
+#include <Engine/Rendering/Descriptor/DescriptorPool/VulkanDescriptorPool.h>
 #include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
 #include <Engine/Rendering/Texture/Texture/BaseTexture.h>
 

@@ -1,4 +1,4 @@
-#include <Engine/Rendering/Descriptor/GuiDescriptorSet/GuiDescriptorSet.h>
+#include <Engine/Rendering/Descriptor/DescriptorSet/GuiDescriptorSet/GuiDescriptorSet.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
 
 ScrapEngine::Render::GuiDescriptorSet::GuiDescriptorSet() : BaseDescriptorSet()

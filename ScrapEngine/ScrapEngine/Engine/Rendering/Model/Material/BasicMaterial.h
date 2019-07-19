@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Engine/Rendering/Pipeline/BaseVulkanGraphicsPipeline.h>
-#include <Engine/Rendering/Descriptor/StandardDescriptorSet/StandardDescriptorSet.h>
+#include <Engine/Rendering/Descriptor/DescriptorSet/StandardDescriptorSet/StandardDescriptorSet.h>
 
 namespace ScrapEngine
 {

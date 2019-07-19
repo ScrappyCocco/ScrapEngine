@@ -1,6 +1,6 @@
 #include <Engine/Rendering/Model/Material/BasicMaterial.h>
 #include <Engine/Debug/DebugLog.h>
-#include <Engine/Rendering/Descriptor/StandardDescriptorSet/StandardDescriptorSet.h>
+#include <Engine/Rendering/Descriptor/DescriptorSet/StandardDescriptorSet/StandardDescriptorSet.h>
 
 ScrapEngine::Render::BasicMaterial::BasicMaterial()
 {

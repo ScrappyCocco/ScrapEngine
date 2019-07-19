@@ -314,11 +314,17 @@
     <Filter Include="Engine\Rendering\Gui">
       <UniqueIdentifier>{512ffe86-251c-449c-a36f-be76664e9ae9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Rendering\Descriptor\StandardDescriptorSet">
-      <UniqueIdentifier>{75c3fae8-99c2-4b50-af50-ca8baa173d81}</UniqueIdentifier>
+    <Filter Include="Engine\Rendering\Descriptor\DescriptorSet">
+      <UniqueIdentifier>{5b962464-cc5f-4659-a4c7-45267055c472}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Rendering\Descriptor\GuiDescriptorSet">
+    <Filter Include="Engine\Rendering\Descriptor\DescriptorSet\GuiDescriptorSet">
       <UniqueIdentifier>{575f84b8-6d55-4234-a439-872c427c871b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Descriptor\DescriptorPool">
+      <UniqueIdentifier>{9370ab92-b2db-42d9-9f60-64aa1331c7fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Descriptor\DescriptorSet\StandardDescriptorSet">
+      <UniqueIdentifier>{75c3fae8-99c2-4b50-af50-ca8baa173d81}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -357,9 +363,6 @@
     </ClCompile>
     <ClCompile Include="Engine\Rendering\Buffer\BaseBuffer.cpp">
       <Filter>Engine\Rendering\Buffer</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Rendering\Descriptor\VulkanDescriptorPool.cpp">
-      <Filter>Engine\Rendering\Descriptor</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Rendering\DepthResources\VulkanDepthResources.cpp">
       <Filter>Engine\Rendering\DepthResources</Filter>
@@ -616,14 +619,17 @@
     <ClCompile Include="Engine\Rendering\Gui\VulkanImGui.cpp">
       <Filter>Engine\Rendering\Gui</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Rendering\Descriptor\BaseDescriptorSet.cpp">
-      <Filter>Engine\Rendering\Descriptor</Filter>
+    <ClCompile Include="Engine\Rendering\Descriptor\DescriptorPool\VulkanDescriptorPool.cpp">
+      <Filter>Engine\Rendering\Descriptor\DescriptorPool</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Rendering\Descriptor\StandardDescriptorSet\StandardDescriptorSet.cpp">
-      <Filter>Engine\Rendering\Descriptor\StandardDescriptorSet</Filter>
+    <ClCompile Include="Engine\Rendering\Descriptor\DescriptorSet\GuiDescriptorSet\GuiDescriptorSet.cpp">
+      <Filter>Engine\Rendering\Descriptor\DescriptorSet\GuiDescriptorSet</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Rendering\Descriptor\GuiDescriptorSet\GuiDescriptorSet.cpp">
-      <Filter>Engine\Rendering\Descriptor\GuiDescriptorSet</Filter>
+    <ClCompile Include="Engine\Rendering\Descriptor\DescriptorSet\StandardDescriptorSet\StandardDescriptorSet.cpp">
+      <Filter>Engine\Rendering\Descriptor\DescriptorSet\StandardDescriptorSet</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Descriptor\DescriptorSet\BaseDescriptorSet.cpp">
+      <Filter>Engine\Rendering\Descriptor\DescriptorSet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -665,9 +671,6 @@
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Buffer\BaseBuffer.h">
       <Filter>Engine\Rendering\Buffer</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Rendering\Descriptor\VulkanDescriptorPool.h">
-      <Filter>Engine\Rendering\Descriptor</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Rendering\DepthResources\VulkanDepthResources.h">
       <Filter>Engine\Rendering\DepthResources</Filter>
@@ -945,14 +948,17 @@
     <ClInclude Include="Engine\Rendering\Gui\VulkanImGui.h">
       <Filter>Engine\Rendering\Gui</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Rendering\Descriptor\BaseDescriptorSet.h">
-      <Filter>Engine\Rendering\Descriptor</Filter>
+    <ClInclude Include="Engine\Rendering\Descriptor\DescriptorPool\VulkanDescriptorPool.h">
+      <Filter>Engine\Rendering\Descriptor\DescriptorPool</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Rendering\Descriptor\StandardDescriptorSet\StandardDescriptorSet.h">
-      <Filter>Engine\Rendering\Descriptor\StandardDescriptorSet</Filter>
+    <ClInclude Include="Engine\Rendering\Descriptor\DescriptorSet\GuiDescriptorSet\GuiDescriptorSet.h">
+      <Filter>Engine\Rendering\Descriptor\DescriptorSet\GuiDescriptorSet</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Rendering\Descriptor\GuiDescriptorSet\GuiDescriptorSet.h">
-      <Filter>Engine\Rendering\Descriptor\GuiDescriptorSet</Filter>
+    <ClInclude Include="Engine\Rendering\Descriptor\DescriptorSet\StandardDescriptorSet\StandardDescriptorSet.h">
+      <Filter>Engine\Rendering\Descriptor\DescriptorSet\StandardDescriptorSet</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Descriptor\DescriptorSet\BaseDescriptorSet.h">
+      <Filter>Engine\Rendering\Descriptor\DescriptorSet</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

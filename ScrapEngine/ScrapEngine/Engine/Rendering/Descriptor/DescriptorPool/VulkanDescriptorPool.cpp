@@ -1,4 +1,4 @@
-#include <Engine/Rendering/Descriptor/VulkanDescriptorPool.h>
+#include <Engine/Rendering/Descriptor/DescriptorPool/VulkanDescriptorPool.h>
 #include <array>
 #include <Engine/Rendering/Device/VulkanDevice.h>
 

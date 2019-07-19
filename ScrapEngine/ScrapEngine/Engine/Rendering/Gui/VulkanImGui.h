@@ -4,9 +4,9 @@
 #include <Engine/Rendering/RenderPass/VulkanRenderPass.h>
 #include <Engine/Rendering/Texture/TextureImageView/TextureImageView.h>
 #include <Engine/Rendering/Texture/TextureSampler/TextureSampler.h>
-#include <Engine/Rendering/Descriptor/VulkanDescriptorPool.h>
+#include <Engine/Rendering/Descriptor/DescriptorPool/VulkanDescriptorPool.h>
 #include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
-#include <Engine/Rendering/Descriptor/GuiDescriptorSet/GuiDescriptorSet.h>
+#include <Engine/Rendering/Descriptor/DescriptorSet/GuiDescriptorSet/GuiDescriptorSet.h>
 
 namespace ScrapEngine
 {
