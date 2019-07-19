@@ -244,20 +244,27 @@ void ScrapEngine::Render::RenderManager::create_queues()
 
 void ScrapEngine::Render::RenderManager::create_command_buffer(const bool flip_flop)
 {
+	//Init
 	const short int index = flip_flop ? 1 : 0;
 	command_buffers_[index].command_buffer->free_command_buffers();
 	command_buffers_[index].command_buffer->init_command_buffer(vulkan_render_frame_buffer_,
 	                                                            &vulkan_render_swap_chain_->get_swap_chain_extent(),
 	                                                            command_buffers_[index].command_pool);
+	//Set camera
 	command_buffers_[index].command_buffer->init_current_camera(render_camera_);
+	//Skybox
 	if (skybox_)
 	{
 		command_buffers_[index].command_buffer->load_skybox(skybox_);
 	}
+	//3d models
 	for (auto mesh : loaded_models_)
 	{
 		command_buffers_[index].command_buffer->load_mesh(mesh);
 	}
+	//gui
+	command_buffers_[index].command_buffer->load_ui(gui_render_);
+	//close
 	command_buffers_[index].command_buffer->close_command_buffer();
 }
 

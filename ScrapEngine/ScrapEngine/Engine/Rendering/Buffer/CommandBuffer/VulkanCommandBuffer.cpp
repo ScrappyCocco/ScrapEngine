@@ -1,6 +1,7 @@
 #include <Engine/Rendering/Buffer/CommandBuffer/VulkanCommandBuffer.h>
 #include <Engine/Rendering/RenderPass/VulkanRenderPass.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
+#include <imgui.h>
 
 ScrapEngine::Render::VulkanCommandBuffer::~VulkanCommandBuffer()
 {
@@ -157,6 +158,65 @@ void ScrapEngine::Render::VulkanCommandBuffer::load_ui(VulkanImGui* gui)
 	gui->new_frame();
 
 	gui->update_buffers();
+
+	ImGuiIO& io = ImGui::GetIO();
+
+	for (size_t i = 0; i < command_buffers_.size(); i++)
+	{
+		command_buffers_[i].bindDescriptorSets(vk::PipelineBindPoint::eGraphics,
+			*gui->get_pipeline()->get_pipeline_layout(), 0, 1,
+			&(*gui->get_descriptor_set()->get_descriptor_sets())[i], 0, nullptr);
+
+		command_buffers_[i].bindPipeline(vk::PipelineBindPoint::eGraphics,
+			*gui->get_pipeline()->get_graphics_pipeline());
+
+		vk::Viewport viewport;
+		viewport.setWidth(ImGui::GetIO().DisplaySize.x);
+		viewport.setHeight(ImGui::GetIO().DisplaySize.y);
+		viewport.setMinDepth(0.0f);
+		viewport.setMaxDepth(1.0f);
+		command_buffers_[i].setViewport(0, 1, &viewport);
+
+		VulkanImGui::PushConstBlock* const_block = gui->get_push_const_block();
+		const_block->scale = glm::vec2(2.0f / io.DisplaySize.x, 2.0f / io.DisplaySize.y);
+		const_block->translate = glm::vec2(-1.0f);
+		command_buffers_[i].pushConstants(*gui->get_pipeline()->get_pipeline_layout(), vk::ShaderStageFlagBits::eVertex,
+			0, sizeof(VulkanImGui::PushConstBlock), const_block);
+
+		ImDrawData* im_draw_data = ImGui::GetDrawData();
+		int32_t vertex_offset = 0;
+		int32_t index_offset = 0;
+
+		if (im_draw_data->CmdListsCount > 0) {
+			vk::DeviceSize offsets[1] = { 0 };
+
+			command_buffers_[i].bindVertexBuffers(0, 1, gui->get_vertex_buffer()->get_buffer(), offsets);
+			command_buffers_[i].bindIndexBuffer(*gui->get_index_buffer()->get_buffer(), 0, vk::IndexType::eUint16);
+
+			for (int32_t i = 0; i < im_draw_data->CmdListsCount; i++)
+			{
+				const ImDrawList* cmd_list = im_draw_data->CmdLists[i];
+				for (int32_t j = 0; j < cmd_list->CmdBuffer.Size; j++)
+				{
+					const ImDrawCmd* pcmd = &cmd_list->CmdBuffer[j];
+					vk::Rect2D scissor_rect;
+					vk::Offset2D scissor_offset;
+					vk::Extent2D scissor_extend;
+					scissor_offset.setX(std::max((int32_t)(pcmd->ClipRect.x), 0));
+					scissor_offset.setY(std::max((int32_t)(pcmd->ClipRect.y), 0));
+					scissor_rect.setOffset(scissor_offset);
+					scissor_extend.setWidth(static_cast<uint32_t>(pcmd->ClipRect.z - pcmd->ClipRect.x));
+					scissor_extend.setHeight(static_cast<uint32_t>(pcmd->ClipRect.w - pcmd->ClipRect.y));
+					scissor_rect.setExtent(scissor_extend);
+
+					command_buffers_[i].setScissor(0, 1, &scissor_rect);
+					command_buffers_[i].drawIndexed(pcmd->ElemCount, 1, index_offset, vertex_offset, 0);
+					index_offset += pcmd->ElemCount;
+				}
+				vertex_offset += cmd_list->VtxBuffer.Size;
+			}
+		}
+	}
 }
 
 void ScrapEngine::Render::VulkanCommandBuffer::close_command_buffer()

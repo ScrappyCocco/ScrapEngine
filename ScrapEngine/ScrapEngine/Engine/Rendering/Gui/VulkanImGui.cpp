@@ -171,3 +171,28 @@ void ScrapEngine::Render::VulkanImGui::update_buffers()
 	vertex_buffer_->flush();
 	index_buffer_->flush();
 }
+
+ScrapEngine::Render::GuiDescriptorSet* ScrapEngine::Render::VulkanImGui::get_descriptor_set() const
+{
+	return descriptor_set_;
+}
+
+ScrapEngine::Render::GuiVulkanGraphicsPipeline* ScrapEngine::Render::VulkanImGui::get_pipeline() const
+{
+	return pipeline_;
+}
+
+ScrapEngine::Render::GenericBuffer* ScrapEngine::Render::VulkanImGui::get_vertex_buffer() const
+{
+	return vertex_buffer_;
+}
+
+ScrapEngine::Render::GenericBuffer* ScrapEngine::Render::VulkanImGui::get_index_buffer() const
+{
+	return index_buffer_;
+}
+
+ScrapEngine::Render::VulkanImGui::PushConstBlock* ScrapEngine::Render::VulkanImGui::get_push_const_block()
+{
+	return &push_const_block_;
+}

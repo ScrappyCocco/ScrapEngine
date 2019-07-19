@@ -16,6 +16,11 @@ namespace ScrapEngine
 
 		class VulkanImGui
 		{
+		public:
+			struct PushConstBlock {
+				glm::vec2 scale;
+				glm::vec2 translate;
+			};
 		private:
 			vk::Image front_image_;
 			vk::DeviceMemory font_memory_;
@@ -30,21 +35,22 @@ namespace ScrapEngine
 			int32_t vertex_count_ = 0;
 			int32_t index_count_ = 0;
 
-			struct PushConstBlock {
-				glm::vec2 scale;
-				glm::vec2 translate;
-			} push_const_block_;
+			PushConstBlock push_const_block_;
 		public:
 			VulkanImGui();
 			~VulkanImGui();
 
 			void init(float width, float height);
-
 			void init_resources(VulkanSwapChain* swap_chain);
 
 			void new_frame();
-
 			void update_buffers();
+
+			GuiDescriptorSet* get_descriptor_set() const;
+			GuiVulkanGraphicsPipeline* get_pipeline() const;
+			GenericBuffer* get_vertex_buffer() const;
+			GenericBuffer* get_index_buffer() const;
+			PushConstBlock* get_push_const_block();
 		};
 
 	}
