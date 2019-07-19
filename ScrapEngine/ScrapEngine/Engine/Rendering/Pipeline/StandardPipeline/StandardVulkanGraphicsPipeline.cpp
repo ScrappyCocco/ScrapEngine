@@ -12,12 +12,9 @@ ScrapEngine::Render::StandardVulkanGraphicsPipeline::StandardVulkanGraphicsPipel
                                                                                     vk::SampleCountFlagBits
                                                                                     msaa_samples)
 {
-	vk::ShaderModule vert_shader_module = ShaderManager::create_shader_module(
-		ShaderManager::read_file(vertex_shader)
-	);
-	vk::ShaderModule frag_shader_module = ShaderManager::create_shader_module(
-		ShaderManager::read_file(fragment_shader)
-	);
+	vk::ShaderModule vert_shader_module = ShaderManager::get_instance()->get_shader_module(vertex_shader);
+
+	vk::ShaderModule frag_shader_module = ShaderManager::get_instance()->get_shader_module(fragment_shader);
 
 	vk::PipelineShaderStageCreateInfo vert_shader_stage_info(
 		vk::PipelineShaderStageCreateFlags(),

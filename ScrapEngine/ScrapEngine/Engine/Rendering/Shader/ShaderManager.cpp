@@ -2,6 +2,30 @@
 #include <fstream>
 #include <Engine/Rendering/Device/VulkanDevice.h>
 
+//Init static instance reference
+
+ScrapEngine::Render::ShaderManager* ScrapEngine::Render::ShaderManager::instance_ = nullptr;
+
+ScrapEngine::Render::ShaderManager* ScrapEngine::Render::ShaderManager::get_instance()
+{
+	if (instance_ == nullptr)
+	{
+		instance_ = new ShaderManager();
+	}
+	return instance_;
+}
+
+vk::ShaderModule ScrapEngine::Render::ShaderManager::get_shader_module(const std::string& filename)
+{
+	if (loaded_shaders_.find(filename) == loaded_shaders_.end())
+	{
+		// Shader not found, load it
+		loaded_shaders_[filename] = create_shader_module(read_file(filename));
+	}
+	//Return the shader
+	return loaded_shaders_[filename];
+}
+
 vk::ShaderModule ScrapEngine::Render::ShaderManager::create_shader_module(const std::vector<char>& code)
 {
 	vk::ShaderModuleCreateInfo create_info(
