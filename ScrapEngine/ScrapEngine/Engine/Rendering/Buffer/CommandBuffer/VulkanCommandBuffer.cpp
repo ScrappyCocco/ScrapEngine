@@ -193,9 +193,9 @@ void ScrapEngine::Render::VulkanCommandBuffer::load_ui(VulkanImGui* gui)
 			command_buffers_[i].bindVertexBuffers(0, 1, gui->get_vertex_buffer()->get_buffer(), offsets);
 			command_buffers_[i].bindIndexBuffer(*gui->get_index_buffer()->get_buffer(), 0, vk::IndexType::eUint16);
 
-			for (int32_t i = 0; i < im_draw_data->CmdListsCount; i++)
+			for (int32_t k = 0; k < im_draw_data->CmdListsCount; k++)
 			{
-				const ImDrawList* cmd_list = im_draw_data->CmdLists[i];
+				const ImDrawList* cmd_list = im_draw_data->CmdLists[k];
 				for (int32_t j = 0; j < cmd_list->CmdBuffer.Size; j++)
 				{
 					const ImDrawCmd* pcmd = &cmd_list->CmdBuffer[j];

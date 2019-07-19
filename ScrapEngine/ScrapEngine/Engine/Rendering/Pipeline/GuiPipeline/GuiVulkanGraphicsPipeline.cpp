@@ -53,6 +53,7 @@ ScrapEngine::Render::GuiVulkanGraphicsPipeline::GuiVulkanGraphicsPipeline(const 
 		vk::CullModeFlagBits::eNone,
 		vk::FrontFace::eCounterClockwise
 	);
+	rasterizer.setLineWidth(1.0f);
 
 	// Enable blending
 	vk::PipelineColorBlendAttachmentState color_blend_attachment;
@@ -111,28 +112,17 @@ ScrapEngine::Render::GuiVulkanGraphicsPipeline::GuiVulkanGraphicsPipeline(const 
 		vertex_input_attributes.data()
 	);
 
-	vk::Viewport viewport(
-		0,
-		0,
-		static_cast<float>(swap_chain_extent->width),
-		static_cast<float>(swap_chain_extent->height),
-		0.0f,
-		1.0f);
+	vk::PipelineViewportStateCreateInfo viewport_state;
+	viewport_state.setScissorCount(1);
+	viewport_state.setViewportCount(1);
 
-	vk::Rect2D scissor(
-		vk::Offset2D(),
-		*swap_chain_extent
-	);
-
-	vk::PipelineViewportStateCreateInfo viewport_state(
-		vk::PipelineViewportStateCreateFlags(),
-		1,
-		&viewport,
-		1,
-		&scissor
-	);
-
-	rasterizer.setLineWidth(1.0f);
+	std::vector<vk::DynamicState> dynamic_state_enables = {
+		vk::DynamicState::eViewport,
+		vk::DynamicState::eScissor
+	};
+	vk::PipelineDynamicStateCreateInfo dynamic_state;
+	dynamic_state.setDynamicStateCount(static_cast<uint32_t>(dynamic_state_enables.size()));
+	dynamic_state.setPDynamicStates(dynamic_state_enables.data());
 
 	vk::PipelineMultisampleStateCreateInfo multisampling(
 		vk::PipelineMultisampleStateCreateFlags(),
@@ -158,15 +148,15 @@ ScrapEngine::Render::GuiVulkanGraphicsPipeline::GuiVulkanGraphicsPipeline(const 
 		&multisampling,
 		&depth_stencil,
 		&color_blending,
-		nullptr,
+		&dynamic_state,
 		pipeline_layout_,
 		*VulkanRenderPass::get_instance()->get_render_pass(),
 		0
 	);
 
-	if (VulkanDevice::get_instance()->get_logical_device()->createGraphicsPipelines(nullptr, 1, &pipeline_info, nullptr,
-	                                                                                &graphics_pipeline_) != vk::Result::
-		eSuccess)
+	if (VulkanDevice::get_instance()->get_logical_device()->createGraphicsPipelines(pipeline_cache_, 1, &pipeline_info, nullptr,
+	                                                                                &graphics_pipeline_)
+		!= vk::Result::eSuccess)
 	{
 		throw std::runtime_error("GuiVulkanGraphicsPipeline: Failed to create graphics pipeline!");
 	}

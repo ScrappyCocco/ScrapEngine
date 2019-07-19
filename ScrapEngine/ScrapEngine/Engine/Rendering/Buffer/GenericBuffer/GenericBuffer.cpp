@@ -11,7 +11,6 @@ void ScrapEngine::Render::GenericBuffer::create_buffer(const vk::BufferCreateInf
 {
 	BaseBuffer::create_buffer(crate_info.size, crate_info.usage, vk::MemoryPropertyFlagBits::eHostVisible,
 	                          buffer_, buffer_memory_);
-	bind();
 }
 
 void ScrapEngine::Render::GenericBuffer::map(const vk::DeviceSize size, const vk::DeviceSize offset)

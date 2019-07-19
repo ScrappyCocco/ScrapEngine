@@ -174,6 +174,11 @@ void ScrapEngine::Render::RenderManager::initialize_vulkan(const game_base_info*
 	                                                    vulkan_render_depth_->get_depth_image_view(),
 	                                                    vulkan_render_color_->get_color_image_view());
 	Debug::DebugLog::print_to_console_log("VulkanFrameBuffer created");
+	//Gui render
+	Debug::DebugLog::print_to_console_log("Creating gui render...");
+	initialize_gui(static_cast<float>(received_base_game_info->window_width),
+		static_cast<float>(received_base_game_info->window_height));
+	Debug::DebugLog::print_to_console_log("Gui render initialized!");
 	//Create both empty CommandBuffers
 	Debug::DebugLog::print_to_console_log("Creating command buffers...");
 	initialize_command_buffers();
@@ -186,10 +191,6 @@ void ScrapEngine::Render::RenderManager::initialize_vulkan(const game_base_info*
 	Debug::DebugLog::print_to_console_log("VulkanSemaphoresManager created");
 	create_camera();
 	Debug::DebugLog::print_to_console_log("User View Camera created");
-	Debug::DebugLog::print_to_console_log("Creating gui render...");
-	initialize_gui(static_cast<float>(received_base_game_info->window_width),
-	               static_cast<float>(received_base_game_info->window_height));
-	Debug::DebugLog::print_to_console_log("Gui render initialized!");
 	Debug::DebugLog::print_to_console_log("---initializeVulkan() completed---");
 }
 

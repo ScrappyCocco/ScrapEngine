@@ -78,7 +78,6 @@ void ScrapEngine::Render::VulkanImGui::init_resources(VulkanSwapChain* swap_chai
 	buffer_copy_region.setImageSubresource(image_subresource_layer);
 	buffer_copy_region.setImageExtent(vk::Extent3D(tex_width, tex_height, 1));
 	//Copy
-	// TODO BROKEN
 	ImageStagingBuffer::copy_buffer_to_image(staginf_buffer_ref->get_staging_buffer(), &front_image_, tex_width,
 	                                         tex_height, &buffer_copy_region, 1,
 	                                         vk::ImageLayout::eTransferDstOptimal);
@@ -139,7 +138,7 @@ void ScrapEngine::Render::VulkanImGui::update_buffers()
 		vertex_buffer_->create_buffer(vertex_buffer_info);
 		//Update data
 		vertex_count_ = im_draw_data->TotalVtxCount;
-		vertex_buffer_->unmap();
+		//vertex_buffer_->unmap();
 		vertex_buffer_->map();
 	}
 
