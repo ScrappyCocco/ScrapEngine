@@ -56,6 +56,7 @@ ScrapEngine::Render::RenderManager::~RenderManager()
 	{
 		delete current_model;
 	}
+	delete gui_render_;
 	VulkanModelBuffersPool::get_instance()->clear_memory();
 	VulkanModelPool::get_instance()->clear_memory();
 	VulkanSimpleMaterialPool::get_instance()->clear_memory();
@@ -186,7 +187,8 @@ void ScrapEngine::Render::RenderManager::initialize_vulkan(const game_base_info*
 	create_camera();
 	Debug::DebugLog::print_to_console_log("User View Camera created");
 	Debug::DebugLog::print_to_console_log("Creating gui render...");
-	initialize_gui(received_base_game_info->window_width, received_base_game_info->window_height);
+	initialize_gui(static_cast<float>(received_base_game_info->window_width),
+	               static_cast<float>(received_base_game_info->window_height));
 	Debug::DebugLog::print_to_console_log("Gui render initialized!");
 	Debug::DebugLog::print_to_console_log("---initializeVulkan() completed---");
 }

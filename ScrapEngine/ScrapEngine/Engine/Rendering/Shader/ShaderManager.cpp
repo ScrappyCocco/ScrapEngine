@@ -22,7 +22,7 @@ vk::ShaderModule ScrapEngine::Render::ShaderManager::get_shader_module(const std
 	{
 		// Shader not found, load it
 		loaded_shaders_[filename] = create_shader_module(read_file(filename));
-		Debug::DebugLog::print_to_console_log("[ShaderManager] Shader loaded");
+		Debug::DebugLog::print_to_console_log("[ShaderManager] Shader " + filename + " loaded");
 	}
 	//Return the shader
 	return loaded_shaders_[filename];

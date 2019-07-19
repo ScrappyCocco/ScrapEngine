@@ -72,7 +72,10 @@ void ScrapEngine::Render::VulkanImGui::init_resources(VulkanSwapChain* swap_chai
 	ImageStagingBuffer* staginf_buffer_ref = new ImageStagingBuffer(upload_size, font_data);
 	//Set copy region data
 	vk::BufferImageCopy buffer_copy_region;
-	buffer_copy_region.setImageSubresource(vk::ImageSubresourceLayers(vk::ImageAspectFlagBits::eColor, 1, 1, 1));
+	vk::ImageSubresourceLayers image_subresource_layer;
+	image_subresource_layer.setAspectMask(vk::ImageAspectFlagBits::eColor);
+	image_subresource_layer.setLayerCount(1);
+	buffer_copy_region.setImageSubresource(image_subresource_layer);
 	buffer_copy_region.setImageExtent(vk::Extent3D(tex_width, tex_height, 1));
 	//Copy
 	// TODO BROKEN
