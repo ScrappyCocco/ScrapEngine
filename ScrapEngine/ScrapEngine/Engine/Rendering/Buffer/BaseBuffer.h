@@ -11,7 +11,7 @@ namespace ScrapEngine
 		public:
 			static void create_buffer(const vk::DeviceSize& size, const vk::BufferUsageFlags& usage,
 			                          const vk::MemoryPropertyFlags& properties, vk::Buffer& buffer,
-			                          vk::DeviceMemory& buffer_memory);
+			                          vk::DeviceMemory& buffer_memory, bool auto_bind_memory = true);
 
 			static void copy_buffer(vk::Buffer* src_buffer, vk::Buffer& dst_buffer, const vk::DeviceSize& size);
 

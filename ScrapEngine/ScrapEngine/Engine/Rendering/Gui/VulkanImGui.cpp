@@ -128,6 +128,10 @@ void ScrapEngine::Render::VulkanImGui::update_buffers()
 	const vk::DeviceSize vertex_buffer_size = im_draw_data->TotalVtxCount * sizeof(ImDrawVert);
 	const vk::DeviceSize index_buffer_size = im_draw_data->TotalIdxCount * sizeof(ImDrawIdx);
 
+	if (vertex_buffer_size == 0 || index_buffer_size == 0) {
+		return;
+	}
+
 	// Vertex buffer
 	if ((vertex_buffer_->get_buffer() == nullptr) || (vertex_count_ != im_draw_data->TotalVtxCount)) {
 		vertex_buffer_->unmap();
@@ -139,7 +143,7 @@ void ScrapEngine::Render::VulkanImGui::update_buffers()
 		vertex_buffer_->create_buffer(vertex_buffer_info);
 		//Update data
 		vertex_count_ = im_draw_data->TotalVtxCount;
-		//vertex_buffer_->unmap();
+		vertex_buffer_->unmap();
 		vertex_buffer_->map();
 	}
 

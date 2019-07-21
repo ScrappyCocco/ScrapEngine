@@ -11,6 +11,7 @@ namespace ScrapEngine
 		private:
 			vk::Buffer buffer_ = nullptr;
 			vk::DeviceMemory buffer_memory_ = nullptr;
+			vk::DescriptorBufferInfo descriptor_;
 
 			void* mapped_memory_ = nullptr;
 		public:
@@ -19,6 +20,7 @@ namespace ScrapEngine
 
 			void create_buffer(const vk::BufferCreateInfo& crate_info);
 
+			void setup_descriptor(vk::DeviceSize size = VK_WHOLE_SIZE, vk::DeviceSize offset = 0);
 			void map(vk::DeviceSize size = VK_WHOLE_SIZE, vk::DeviceSize offset = 0);
 			void unmap();
 			void flush(vk::DeviceSize size = VK_WHOLE_SIZE, vk::DeviceSize offset = 0) const;
@@ -26,7 +28,7 @@ namespace ScrapEngine
 			void destroy() const;
 
 			vk::Buffer* get_buffer();
-			void** get_mapped_memory();
+			void* get_mapped_memory() const;
 		};
 	}
 }
