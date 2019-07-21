@@ -126,7 +126,7 @@ ScrapEngine::Render::GuiVulkanGraphicsPipeline::GuiVulkanGraphicsPipeline(const 
 
 	vk::PipelineMultisampleStateCreateInfo multisampling(
 		vk::PipelineMultisampleStateCreateFlags(),
-		vk::SampleCountFlagBits::e1
+		VulkanDevice::get_instance()->get_msaa_samples()
 	);
 
 	vk::PipelineDepthStencilStateCreateInfo depth_stencil(
@@ -154,8 +154,9 @@ ScrapEngine::Render::GuiVulkanGraphicsPipeline::GuiVulkanGraphicsPipeline(const 
 		0
 	);
 
-	if (VulkanDevice::get_instance()->get_logical_device()->createGraphicsPipelines(pipeline_cache_, 1, &pipeline_info, nullptr,
-	                                                                                &graphics_pipeline_)
+	if (VulkanDevice::get_instance()->get_logical_device()->createGraphicsPipelines(
+			pipeline_cache_, 1, &pipeline_info, nullptr,
+			&graphics_pipeline_)
 		!= vk::Result::eSuccess)
 	{
 		throw std::runtime_error("GuiVulkanGraphicsPipeline: Failed to create graphics pipeline!");
