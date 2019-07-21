@@ -3,6 +3,7 @@
 #include <Engine/Rendering/Texture/Texture/BaseTexture.h>
 #include <Engine/Rendering/Buffer/StagingBuffer/ImageStagingBuffer/ImageStagingBuffer.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
+#include <Engine/Rendering/Descriptor/DescriptorPool/GuiDescriptorPool/GuiDescriptorPool.h>
 
 
 ScrapEngine::Render::VulkanImGui::VulkanImGui()
@@ -94,7 +95,7 @@ void ScrapEngine::Render::VulkanImGui::init_resources(VulkanSwapChain* swap_chai
 	                              vk::BorderColor::eFloatOpaqueWhite);
 
 	// Descriptor pool
-	descriptor_pool_ = new VulkanDescriptorPool(swap_chain->get_swap_chain_images_vector());
+	descriptor_pool_ = new GuiDescriptorPool(swap_chain->get_swap_chain_images_vector());
 	// Descriptor set
 	descriptor_set_ = new GuiDescriptorSet();
 	descriptor_set_->create_descriptor_sets(descriptor_pool_->get_descriptor_pool(),

@@ -13,7 +13,7 @@ ScrapEngine::Render::GuiVulkanGraphicsPipeline::GuiVulkanGraphicsPipeline(const 
 {
 	// Pipeline cache
 	vk::PipelineCacheCreateInfo pipeline_cache_create_info;
-	vk::Result res = VulkanDevice::get_instance()->get_logical_device()->createPipelineCache(
+	const vk::Result res = VulkanDevice::get_instance()->get_logical_device()->createPipelineCache(
 		&pipeline_cache_create_info, nullptr, &pipeline_cache_);
 	if (res != vk::Result::eSuccess)
 	{

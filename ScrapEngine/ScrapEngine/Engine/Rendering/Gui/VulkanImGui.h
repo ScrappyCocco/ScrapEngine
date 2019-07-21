@@ -3,7 +3,7 @@
 #include <vulkan/vulkan.hpp>
 #include <Engine/Rendering/Texture/TextureImageView/TextureImageView.h>
 #include <Engine/Rendering/Texture/TextureSampler/TextureSampler.h>
-#include <Engine/Rendering/Descriptor/DescriptorPool/VulkanDescriptorPool.h>
+#include <Engine/Rendering/Descriptor/DescriptorPool/BaseDescriptorPool.h>
 #include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
 #include <Engine/Rendering/Descriptor/DescriptorSet/GuiDescriptorSet/GuiDescriptorSet.h>
 #include <Engine/Rendering/Pipeline/GuiPipeline/GuiVulkanGraphicsPipeline.h>
@@ -26,7 +26,7 @@ namespace ScrapEngine
 			vk::DeviceMemory font_memory_;
 			TextureImageView* front_view_ = nullptr;
 			TextureSampler* sampler_ = nullptr;
-			VulkanDescriptorPool* descriptor_pool_ = nullptr;
+			BaseDescriptorPool* descriptor_pool_ = nullptr;
 			GuiDescriptorSet* descriptor_set_ = nullptr;
 			GuiVulkanGraphicsPipeline* pipeline_ = nullptr;
 			//Buffers

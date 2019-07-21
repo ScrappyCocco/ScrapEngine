@@ -31,7 +31,7 @@ ScrapEngine::Render::StandardDescriptorSet::StandardDescriptorSet() : BaseDescri
 			&layout_info, nullptr, &descriptor_set_layout_)
 		!= vk::Result::eSuccess)
 	{
-		throw std::runtime_error("VulkanDescriptorSet: Failed to create descriptor set layout!");
+		throw std::runtime_error("StandardDescriptorSet: Failed to create descriptor set layout!");
 	}
 }
 
@@ -55,7 +55,7 @@ void ScrapEngine::Render::StandardDescriptorSet::create_descriptor_sets(vk::Desc
 	if (VulkanDevice::get_instance()->get_logical_device()->allocateDescriptorSets(&alloc_info, &descriptor_sets_[0])
 		!= vk::Result::eSuccess)
 	{
-		throw std::runtime_error("DescriptorSetLayout: Failed to allocate descriptor sets!");
+		throw std::runtime_error("StandardDescriptorSet - DescriptorSetLayout: Failed to allocate descriptor sets!");
 	}
 
 	for (size_t i = 0; i < swap_chain_images->size(); i++)

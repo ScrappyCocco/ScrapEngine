@@ -7,8 +7,7 @@ ScrapEngine::Render::GuiDescriptorSet::GuiDescriptorSet() : BaseDescriptorSet()
 		0,
 		vk::DescriptorType::eCombinedImageSampler,
 		1,
-		vk::ShaderStageFlagBits::eFragment,
-		nullptr
+		vk::ShaderStageFlagBits::eFragment
 	);
 
 	std::array<vk::DescriptorSetLayoutBinding, 1> bindings = {sampler_layout_binding};
@@ -23,7 +22,7 @@ ScrapEngine::Render::GuiDescriptorSet::GuiDescriptorSet() : BaseDescriptorSet()
 			&layout_info, nullptr, &descriptor_set_layout_)
 		!= vk::Result::eSuccess)
 	{
-		throw std::runtime_error("VulkanDescriptorSet: Failed to create descriptor set layout!");
+		throw std::runtime_error("GuiDescriptorSet: Failed to create descriptor set layout!");
 	}
 }
 
@@ -45,7 +44,7 @@ void ScrapEngine::Render::GuiDescriptorSet::create_descriptor_sets(vk::Descripto
 	if (VulkanDevice::get_instance()->get_logical_device()->allocateDescriptorSets(&alloc_info, &descriptor_sets_[0])
 		!= vk::Result::eSuccess)
 	{
-		throw std::runtime_error("DescriptorSetLayout: Failed to allocate descriptor sets!");
+		throw std::runtime_error("GuiDescriptorSet - DescriptorSetLayout: Failed to allocate descriptor sets!");
 	}
 
 	for (size_t i = 0; i < swap_chain_images->size(); i++)

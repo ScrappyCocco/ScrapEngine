@@ -332,6 +332,12 @@
     <Filter Include="Engine\Rendering\Buffer\GenericBuffer">
       <UniqueIdentifier>{940c2eac-c69d-460c-9aae-92d44d4a5293}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Rendering\Descriptor\DescriptorPool\StandardDescriptorPool">
+      <UniqueIdentifier>{312e480b-a386-4304-86aa-004c9f78c216}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Descriptor\DescriptorPool\GuiDescriptorPool">
+      <UniqueIdentifier>{45fbc751-8ee1-462b-a018-7c18351ba7ca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Manager\EngineManager.cpp">
@@ -625,9 +631,6 @@
     <ClCompile Include="Engine\Rendering\Gui\VulkanImGui.cpp">
       <Filter>Engine\Rendering\Gui</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Rendering\Descriptor\DescriptorPool\VulkanDescriptorPool.cpp">
-      <Filter>Engine\Rendering\Descriptor\DescriptorPool</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Rendering\Descriptor\DescriptorSet\GuiDescriptorSet\GuiDescriptorSet.cpp">
       <Filter>Engine\Rendering\Descriptor\DescriptorSet\GuiDescriptorSet</Filter>
     </ClCompile>
@@ -642,6 +645,15 @@
     </ClCompile>
     <ClCompile Include="Engine\Rendering\Buffer\GenericBuffer\GenericBuffer.cpp">
       <Filter>Engine\Rendering\Buffer\GenericBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Descriptor\DescriptorPool\GuiDescriptorPool\GuiDescriptorPool.cpp">
+      <Filter>Engine\Rendering\Descriptor\DescriptorPool\GuiDescriptorPool</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Descriptor\DescriptorPool\StandardDescriptorPool\StandardDescriptorPool.cpp">
+      <Filter>Engine\Rendering\Descriptor\DescriptorPool\StandardDescriptorPool</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Descriptor\DescriptorPool\BaseDescriptorPool.cpp">
+      <Filter>Engine\Rendering\Descriptor\DescriptorPool</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -960,9 +972,6 @@
     <ClInclude Include="Engine\Rendering\Gui\VulkanImGui.h">
       <Filter>Engine\Rendering\Gui</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Rendering\Descriptor\DescriptorPool\VulkanDescriptorPool.h">
-      <Filter>Engine\Rendering\Descriptor\DescriptorPool</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Rendering\Descriptor\DescriptorSet\GuiDescriptorSet\GuiDescriptorSet.h">
       <Filter>Engine\Rendering\Descriptor\DescriptorSet\GuiDescriptorSet</Filter>
     </ClInclude>
@@ -977,6 +986,15 @@
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Buffer\GenericBuffer\GenericBuffer.h">
       <Filter>Engine\Rendering\Buffer\GenericBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Descriptor\DescriptorPool\GuiDescriptorPool\GuiDescriptorPool.h">
+      <Filter>Engine\Rendering\Descriptor\DescriptorPool\GuiDescriptorPool</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Descriptor\DescriptorPool\StandardDescriptorPool\StandardDescriptorPool.h">
+      <Filter>Engine\Rendering\Descriptor\DescriptorPool\StandardDescriptorPool</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Descriptor\DescriptorPool\BaseDescriptorPool.h">
+      <Filter>Engine\Rendering\Descriptor\DescriptorPool</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

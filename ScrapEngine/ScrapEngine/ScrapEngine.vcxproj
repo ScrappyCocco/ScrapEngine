@@ -81,7 +81,9 @@
     <ClCompile Include="Engine\Rendering\CommandPool\Standard\StandardCommandPool.cpp" />
     <ClCompile Include="Engine\Rendering\CommandPool\VulkanCommandPool.cpp" />
     <ClCompile Include="Engine\Rendering\DepthResources\VulkanDepthResources.cpp" />
-    <ClCompile Include="Engine\Rendering\Descriptor\DescriptorPool\VulkanDescriptorPool.cpp" />
+    <ClCompile Include="Engine\Rendering\Descriptor\DescriptorPool\BaseDescriptorPool.cpp" />
+    <ClCompile Include="Engine\Rendering\Descriptor\DescriptorPool\GuiDescriptorPool\GuiDescriptorPool.cpp" />
+    <ClCompile Include="Engine\Rendering\Descriptor\DescriptorPool\StandardDescriptorPool\StandardDescriptorPool.cpp" />
     <ClCompile Include="Engine\Rendering\Descriptor\DescriptorSet\BaseDescriptorSet.cpp" />
     <ClCompile Include="Engine\Rendering\Descriptor\DescriptorSet\GuiDescriptorSet\GuiDescriptorSet.cpp" />
     <ClCompile Include="Engine\Rendering\Descriptor\DescriptorSet\StandardDescriptorSet\StandardDescriptorSet.cpp" />
@@ -192,7 +194,9 @@
     <ClInclude Include="Engine\Rendering\CommandPool\Standard\StandardCommandPool.h" />
     <ClInclude Include="Engine\Rendering\CommandPool\VulkanCommandPool.h" />
     <ClInclude Include="Engine\Rendering\DepthResources\VulkanDepthResources.h" />
-    <ClInclude Include="Engine\Rendering\Descriptor\DescriptorPool\VulkanDescriptorPool.h" />
+    <ClInclude Include="Engine\Rendering\Descriptor\DescriptorPool\BaseDescriptorPool.h" />
+    <ClInclude Include="Engine\Rendering\Descriptor\DescriptorPool\GuiDescriptorPool\GuiDescriptorPool.h" />
+    <ClInclude Include="Engine\Rendering\Descriptor\DescriptorPool\StandardDescriptorPool\StandardDescriptorPool.h" />
     <ClInclude Include="Engine\Rendering\Descriptor\DescriptorSet\BaseDescriptorSet.h" />
     <ClInclude Include="Engine\Rendering\Descriptor\DescriptorSet\GuiDescriptorSet\GuiDescriptorSet.h" />
     <ClInclude Include="Engine\Rendering\Descriptor\DescriptorSet\StandardDescriptorSet\StandardDescriptorSet.h" />
