@@ -155,8 +155,7 @@ void ScrapEngine::Render::VulkanCommandBuffer::load_mesh(const VulkanMeshInstanc
 
 void ScrapEngine::Render::VulkanCommandBuffer::load_ui(VulkanImGui* gui)
 {
-	gui->new_frame();
-
+	//Update buffers
 	gui->update_buffers();
 
 	ImGuiIO& io = ImGui::GetIO();

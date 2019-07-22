@@ -5,7 +5,6 @@
 #include <Engine/Rendering/Device/VulkanDevice.h>
 #include <Engine/Rendering/Descriptor/DescriptorPool/GuiDescriptorPool/GuiDescriptorPool.h>
 
-
 ScrapEngine::Render::VulkanImGui::VulkanImGui()
 {
 	ImGui::CreateContext();
@@ -107,47 +106,14 @@ void ScrapEngine::Render::VulkanImGui::init_resources(VulkanSwapChain* swap_chai
 	                                          "../assets/shader/compiled_shaders/ui.frag.spv",
 	                                          &swap_chain->get_swap_chain_extent(),
 	                                          descriptor_set_->get_descriptor_set_layout(), sizeof(PushConstBlock));
+
+	//Empty frame initialization
+	generate_gui_frame();
 }
 
-void ScrapEngine::Render::VulkanImGui::new_frame()
+void ScrapEngine::Render::VulkanImGui::init_reference(Core::LogicManager* logic_manager_ref)
 {
-	ImGui::NewFrame();
-
-	static int corner = 0;
-	const float DISTANCE = 10.0f;
-	ImGuiIO& io = ImGui::GetIO();
-
-	if (corner != -1)
-	{
-		const ImVec2 window_pos = ImVec2((corner & 1) ? io.DisplaySize.x - DISTANCE : DISTANCE, (corner & 2) ? io.DisplaySize.y - DISTANCE : DISTANCE);
-		const ImVec2 window_pos_pivot = ImVec2((corner & 1) ? 1.0f : 0.0f, (corner & 2) ? 1.0f : 0.0f);
-		ImGui::SetNextWindowPos(window_pos, ImGuiCond_Always, window_pos_pivot);
-	}
-
-	ImGui::SetNextWindowBgAlpha(0.35f); // Transparent background
-
-	if (ImGui::Begin("Example: Simple overlay", nullptr, (corner != -1 ? ImGuiWindowFlags_NoMove : 0) | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav))
-	{
-		ImGui::Text("Simple overlay\n" "in the corner of the screen.\n" "(right-click to change position)");
-		ImGui::Separator();
-		if (ImGui::IsMousePosValid())
-			ImGui::Text("Mouse Position: (%.1f,%.1f)", io.MousePos.x, io.MousePos.y);
-		else
-			ImGui::Text("Mouse Position: <invalid>");
-		if (ImGui::BeginPopupContextWindow())
-		{
-			if (ImGui::MenuItem("Custom", nullptr, corner == -1)) corner = -1;
-			if (ImGui::MenuItem("Top-left", nullptr, corner == 0)) corner = 0;
-			if (ImGui::MenuItem("Top-right", nullptr, corner == 1)) corner = 1;
-			if (ImGui::MenuItem("Bottom-left", nullptr, corner == 2)) corner = 2;
-			if (ImGui::MenuItem("Bottom-right", nullptr, corner == 3)) corner = 3;
-			ImGui::EndPopup();
-		}
-	}
-	ImGui::End();
-
-	// Render to generate draw buffers
-	ImGui::Render();
+	logic_manager_ref_ = logic_manager_ref;
 }
 
 void ScrapEngine::Render::VulkanImGui::update_buffers()
@@ -172,7 +138,6 @@ void ScrapEngine::Render::VulkanImGui::update_buffers()
 		vertex_buffer_->create_buffer(vertex_buffer_info);
 		//Update data
 		vertex_count_ = im_draw_data->TotalVtxCount;
-		vertex_buffer_->unmap();
 		vertex_buffer_->map();
 	}
 
@@ -203,6 +168,19 @@ void ScrapEngine::Render::VulkanImGui::update_buffers()
 	// Flush to make writes visible to GPU
 	vertex_buffer_->flush();
 	index_buffer_->flush();
+}
+
+void ScrapEngine::Render::VulkanImGui::generate_gui_frame() const
+{
+	//prepare the ongui() event generating a new gui event
+	ImGui::NewFrame();
+	//Call ongui
+	if(logic_manager_ref_)
+	{
+		logic_manager_ref_->execute_game_objects_ongui_event();
+	}
+	//Render to generate draw buffers
+	ImGui::Render();
 }
 
 ScrapEngine::Render::GuiDescriptorSet* ScrapEngine::Render::VulkanImGui::get_descriptor_set() const

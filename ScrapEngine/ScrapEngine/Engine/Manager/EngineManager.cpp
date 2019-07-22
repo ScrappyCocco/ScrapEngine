@@ -50,6 +50,8 @@ void ScrapEngine::Manager::EngineManager::initialize_render_manager(const game_b
 void ScrapEngine::Manager::EngineManager::initialize_logic_manager()
 {
 	scrap_logic_manager_ = new Core::LogicManager();
+	//Reference for ongui()
+	scrap_render_manager_->init_gui_reference(scrap_logic_manager_);
 }
 
 void ScrapEngine::Manager::EngineManager::initialize_physics_manager()

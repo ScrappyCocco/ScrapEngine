@@ -229,6 +229,11 @@ void ScrapEngine::Render::RenderManager::prepare_to_draw_frame()
 	create_command_buffer(false);
 }
 
+void ScrapEngine::Render::RenderManager::init_gui_reference(Core::LogicManager* logic_manager) const
+{
+	gui_render_->init_reference(logic_manager);
+}
+
 void ScrapEngine::Render::RenderManager::create_queues()
 {
 	Debug::DebugLog::print_to_console_log("---Begin queues creation---");
@@ -264,6 +269,7 @@ void ScrapEngine::Render::RenderManager::create_command_buffer(const bool flip_f
 		command_buffers_[index].command_buffer->load_mesh(mesh);
 	}
 	//gui
+	gui_render_->generate_gui_frame();
 	command_buffers_[index].command_buffer->load_ui(gui_render_);
 	//close
 	command_buffers_[index].command_buffer->close_command_buffer();

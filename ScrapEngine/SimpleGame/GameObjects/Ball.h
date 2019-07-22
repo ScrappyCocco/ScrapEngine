@@ -18,4 +18,5 @@ public:
 
 	virtual void game_start() override;
 	virtual void game_update(float delta_time) override;
+	void on_gui() override;
 };

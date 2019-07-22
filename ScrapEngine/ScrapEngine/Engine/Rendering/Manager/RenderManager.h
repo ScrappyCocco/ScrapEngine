@@ -18,6 +18,7 @@
 #include <Engine/Rendering/Model/MeshInstance/VulkanMeshInstance.h>
 #include <Engine/Rendering/Model/SkyboxInstance/VulkanSkyboxInstance.h>
 #include <TaskScheduler.h>
+#include <Engine/LogicCore/Manager/LogicManager.h>
 
 namespace ScrapEngine
 {
@@ -91,6 +92,7 @@ namespace ScrapEngine
 			RenderManager(const game_base_info* received_base_game_info);
 			~RenderManager();
 			void prepare_to_draw_frame();
+			void init_gui_reference(Core::LogicManager* logic_manager) const;
 		private:
 			void initialize_vulkan(const game_base_info* received_base_game_info);
 			void initialize_scheduler();
