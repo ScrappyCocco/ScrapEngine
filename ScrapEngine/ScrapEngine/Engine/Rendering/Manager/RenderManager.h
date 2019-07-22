@@ -18,7 +18,6 @@
 #include <Engine/Rendering/Model/MeshInstance/VulkanMeshInstance.h>
 #include <Engine/Rendering/Model/SkyboxInstance/VulkanSkyboxInstance.h>
 #include <TaskScheduler.h>
-#include <Engine/LogicCore/Manager/LogicManager.h>
 
 namespace ScrapEngine
 {

@@ -85,12 +85,12 @@ ScrapEngine::Core::SphereRigidBodyComponent* ScrapEngine::Core::ComponentsManage
 	return component;
 }
 
-ScrapEngine::Core::AudioComponent2D* ScrapEngine::Core::ComponentsManager::create_2d_sound(const std::string filename) const
+ScrapEngine::Core::AudioComponent2D* ScrapEngine::Core::ComponentsManager::create_2d_sound(const std::string& filename) const
 {
 	return new AudioComponent2D(audio_manager_ref_->load_2d_sound(filename));
 }
 
-ScrapEngine::Core::AudioComponent3D* ScrapEngine::Core::ComponentsManager::create_3d_sound(const std::string filename) const
+ScrapEngine::Core::AudioComponent3D* ScrapEngine::Core::ComponentsManager::create_3d_sound(const std::string& filename) const
 {
 	return new AudioComponent3D(audio_manager_ref_->load_3d_sound(filename));
 }
