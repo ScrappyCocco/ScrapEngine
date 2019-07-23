@@ -129,7 +129,7 @@ void ScrapEngine::Manager::EngineManager::gui_update(const float time) const
 	);
 
 	//Delta time
-	//Input::GuiInput::update_delta_time(time);
+	Input::GuiInput::update_delta_time(time);
 }
 
 void ScrapEngine::Manager::EngineManager::audio_update() const

@@ -53,6 +53,13 @@ void ScrapEngine::Render::GameWindow::center_window(GLFWmonitor* monitor) const
 	                 monitor_y + (mode->height - window_height) / 2);
 }
 
+ScrapEngine::Render::GameWindow::window_pos ScrapEngine::Render::GameWindow::get_window_pos() const
+{
+	window_pos return_pos{};
+	glfwGetWindowPos(window_, &return_pos.xpos, &return_pos.ypos);
+	return return_pos;
+}
+
 void ScrapEngine::Render::GameWindow::set_window_size(int input_width, int input_height) const
 {
 	glfwSetWindowSize(window_, input_width, input_height);

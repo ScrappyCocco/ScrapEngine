@@ -6,7 +6,9 @@ void ScrapEngine::Input::GuiInput::update_mouse_location(const double x, const d
 	// Update imGui - mouse location
 	ImGuiIO& io = ImGui::GetIO();
 
-	io.MousePos = ImVec2(static_cast<float>(x), static_cast<float>(y));
+	if (x > 0 && y > 0 && x < io.DisplaySize.x && y < io.DisplaySize.y) {
+		io.MousePos = ImVec2(static_cast<float>(x), static_cast<float>(y));
+	}
 }
 
 void ScrapEngine::Input::GuiInput::update_mouse_click(const bool left, const bool right)
