@@ -19,7 +19,7 @@ int main() {
 		gameWindowRef->set_window_icon("../assets/game_icon/crate_icon.png");
 		//Create the input manager
 		ScrapEngine::Input::InputManager* inputmanager = gameWindowRef->create_window_input_manager();
-		inputmanager->set_cursor_input_mode(ScrapEngine::Input::cursor_mode::cursor_grabbed_mode);
+		//inputmanager->set_cursor_input_mode(ScrapEngine::Input::cursor_mode::cursor_grabbed_mode);
 		//Get the component manager
 		ScrapEngine::Core::ComponentsManager* ComponentManagerRef = ScrapEngineManager->logic_manager_view->get_components_manager();
 		//Set the world skybox

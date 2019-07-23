@@ -31,6 +31,7 @@
     <ClCompile Include="Engine\Audio\Manager\AudioManager.cpp" />
     <ClCompile Include="Engine\Audio\Source\AudioSource.cpp" />
     <ClCompile Include="Engine\Debug\DebugLog.cpp" />
+    <ClCompile Include="Engine\Input\Gui\GuiInput.cpp" />
     <ClCompile Include="Engine\Input\Manager\InputManager.cpp" />
     <ClCompile Include="Engine\LogicCore\Components\AudioComponent\2dAudioComponent\2DAudioComponent.cpp" />
     <ClCompile Include="Engine\LogicCore\Components\AudioComponent\3dAudioComponent\3DAudioComponent.cpp" />
@@ -140,6 +141,7 @@
     <ClInclude Include="Engine\Audio\Manager\AudioManager.h" />
     <ClInclude Include="Engine\Audio\Source\AudioSource.h" />
     <ClInclude Include="Engine\Debug\DebugLog.h" />
+    <ClInclude Include="Engine\Input\Gui\GuiInput.h" />
     <ClInclude Include="Engine\Input\KeyboardKeys.h" />
     <ClInclude Include="Engine\Input\Manager\InputManager.h" />
     <ClInclude Include="Engine\Input\MouseButtons.h" />

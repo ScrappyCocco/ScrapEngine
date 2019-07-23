@@ -16,6 +16,8 @@ ScrapEngine::Render::GameWindow::GameWindow(
 
 ScrapEngine::Render::GameWindow::~GameWindow()
 {
+	delete input_;
+
 	glfwDestroyWindow(window_);
 
 	glfwTerminate();
@@ -71,9 +73,12 @@ void ScrapEngine::Render::GameWindow::close_window() const
 	glfwSetWindowShouldClose(window_, GLFW_TRUE);
 }
 
-ScrapEngine::Input::InputManager* ScrapEngine::Render::GameWindow::create_window_input_manager() const
+ScrapEngine::Input::InputManager* ScrapEngine::Render::GameWindow::create_window_input_manager()
 {
-	return new Input::InputManager(window_);
+	if (input_ == nullptr) {
+		input_ = new Input::InputManager(window_);
+	}
+	return input_;
 }
 
 bool ScrapEngine::Render::GameWindow::check_window_should_close() const

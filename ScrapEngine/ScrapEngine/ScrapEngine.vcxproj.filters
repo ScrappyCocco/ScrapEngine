@@ -338,6 +338,9 @@
     <Filter Include="Engine\Rendering\Descriptor\DescriptorPool\GuiDescriptorPool">
       <UniqueIdentifier>{45fbc751-8ee1-462b-a018-7c18351ba7ca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Input\Gui">
+      <UniqueIdentifier>{d7385f92-ac6b-4585-89c5-65a530b0b5e8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Manager\EngineManager.cpp">
@@ -654,6 +657,9 @@
     </ClCompile>
     <ClCompile Include="Engine\Rendering\Descriptor\DescriptorPool\BaseDescriptorPool.cpp">
       <Filter>Engine\Rendering\Descriptor\DescriptorPool</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Input\Gui\GuiInput.cpp">
+      <Filter>Engine\Input\Gui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -995,6 +1001,9 @@
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Descriptor\DescriptorPool\BaseDescriptorPool.h">
       <Filter>Engine\Rendering\Descriptor\DescriptorPool</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Input\Gui\GuiInput.h">
+      <Filter>Engine\Input\Gui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

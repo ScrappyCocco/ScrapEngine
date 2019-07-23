@@ -54,7 +54,7 @@ void Ball::game_update(const float delta_time)
 void Ball::on_gui()
 {
 	static int corner = 0;
-	const float DISTANCE = 10.0f;
+	const float DISTANCE = 0.0f;
 	ImGuiIO& io = ImGui::GetIO();
 
 	if (corner != -1)
@@ -82,6 +82,10 @@ void Ball::on_gui()
 			if (ImGui::MenuItem("Bottom-left", nullptr, corner == 2)) corner = 2;
 			if (ImGui::MenuItem("Bottom-right", nullptr, corner == 3)) corner = 3;
 			ImGui::EndPopup();
+		}
+		if (ImGui::Button("Hello button"))
+		{
+			ScrapEngine::Debug::DebugLog::print_to_console_log("Test");
 		}
 	}
 	ImGui::End();
