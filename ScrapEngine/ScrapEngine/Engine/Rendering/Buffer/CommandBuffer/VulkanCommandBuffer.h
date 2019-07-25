@@ -31,7 +31,7 @@ namespace ScrapEngine
 
 			void load_skybox(VulkanSkyboxInstance* skybox_ref);
 			void load_mesh(const VulkanMeshInstance* mesh);
-			void load_ui(VulkanImGui* gui);
+			void load_ui(VulkanImGui* gui, short int index);
 
 			void close_command_buffer();
 

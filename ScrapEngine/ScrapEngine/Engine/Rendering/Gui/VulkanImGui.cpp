@@ -9,9 +9,14 @@ ScrapEngine::Render::VulkanImGui::VulkanImGui()
 {
 	ImGui::CreateContext();
 
-	//Create empty buffers
-	vertex_buffer_ = new GenericBuffer;
-	index_buffer_ = new GenericBuffer;
+	//Create empty buffers, 2 for 2 command buffers
+	for (int i = 0; i < 2; i++)
+	{
+		vertex_buffer_vector_.push_back(new GenericBuffer());
+		index_buffer_vector_.push_back(new GenericBuffer());
+		vertex_count_vector_.push_back(0);
+		index_count_vector_.push_back(0);
+	}
 }
 
 ScrapEngine::Render::VulkanImGui::~VulkanImGui()
@@ -20,8 +25,15 @@ ScrapEngine::Render::VulkanImGui::~VulkanImGui()
 	// Release all Vulkan resources required for rendering imGui
 	vk::Device* device = VulkanDevice::get_instance()->get_logical_device();
 
-	delete vertex_buffer_;
-	delete index_buffer_;
+	//Clear buffers
+	for (int i = 0; i < 2; i++)
+	{
+		delete vertex_buffer_vector_[i];
+		delete index_buffer_vector_[i];
+	}
+	vertex_buffer_vector_.clear();
+	index_buffer_vector_.clear();
+	//Clear other resources
 	device->destroyImage(front_image_);
 	delete front_view_;
 	device->freeMemory(font_memory_);
@@ -33,13 +45,6 @@ ScrapEngine::Render::VulkanImGui::~VulkanImGui()
 
 void ScrapEngine::Render::VulkanImGui::init(const float width, const float height)
 {
-	// Color scheme
-	ImGuiStyle& style = ImGui::GetStyle();
-	style.Colors[ImGuiCol_TitleBg] = ImVec4(1.0f, 0.0f, 0.0f, 0.6f);
-	style.Colors[ImGuiCol_TitleBgActive] = ImVec4(1.0f, 0.0f, 0.0f, 0.8f);
-	style.Colors[ImGuiCol_MenuBarBg] = ImVec4(1.0f, 0.0f, 0.0f, 0.4f);
-	style.Colors[ImGuiCol_Header] = ImVec4(1.0f, 0.0f, 0.0f, 0.4f);
-	style.Colors[ImGuiCol_CheckMark] = ImVec4(0.0f, 1.0f, 0.0f, 1.0f);
 	// Dimensions
 	ImGuiIO& io = ImGui::GetIO();
 	io.DisplaySize = ImVec2(width, height);
@@ -116,48 +121,54 @@ void ScrapEngine::Render::VulkanImGui::init_reference(Core::LogicManager* logic_
 	logic_manager_ref_ = logic_manager_ref;
 }
 
-void ScrapEngine::Render::VulkanImGui::update_buffers()
+void ScrapEngine::Render::VulkanImGui::update_buffers(short int index)
 {
 	ImDrawData* im_draw_data = ImGui::GetDrawData();
 
 	const vk::DeviceSize vertex_buffer_size = im_draw_data->TotalVtxCount * sizeof(ImDrawVert);
 	const vk::DeviceSize index_buffer_size = im_draw_data->TotalIdxCount * sizeof(ImDrawIdx);
 
-	if (vertex_buffer_size == 0 || index_buffer_size == 0) {
+	if (vertex_buffer_size == 0 || index_buffer_size == 0)
+	{
 		return;
 	}
 
 	// Vertex buffer
-	if ((vertex_buffer_->get_buffer() == nullptr) || (vertex_count_ != im_draw_data->TotalVtxCount)) {
-		vertex_buffer_->unmap();
-		vertex_buffer_->destroy();
+	GenericBuffer* vertex_buffer = vertex_buffer_vector_[index];
+	if ((vertex_buffer->get_buffer() == nullptr) || (vertex_count_vector_[index] != im_draw_data->TotalVtxCount))
+	{
+		vertex_buffer->unmap();
+		vertex_buffer->destroy();
 		//Create it
 		vk::BufferCreateInfo vertex_buffer_info;
 		vertex_buffer_info.setUsage(vk::BufferUsageFlagBits::eVertexBuffer);
 		vertex_buffer_info.setSize(vertex_buffer_size);
-		vertex_buffer_->create_buffer(vertex_buffer_info);
+		vertex_buffer->create_buffer(vertex_buffer_info);
 		//Update data
-		vertex_count_ = im_draw_data->TotalVtxCount;
-		vertex_buffer_->map();
+		vertex_count_vector_[index] = im_draw_data->TotalVtxCount;
+		vertex_buffer->map();
 	}
 
 	// Index buffer
-	if ((index_buffer_->get_buffer() == nullptr) || (index_count_ < im_draw_data->TotalIdxCount)) {
-		index_buffer_->unmap();
-		index_buffer_->destroy();
+	GenericBuffer* index_buffer = index_buffer_vector_[index];
+	if ((index_buffer->get_buffer() == nullptr) || (index_count_vector_[index] < im_draw_data->TotalIdxCount))
+	{
+		index_buffer->unmap();
+		index_buffer->destroy();
 		vk::BufferCreateInfo index_buffer_info;
 		index_buffer_info.setUsage(vk::BufferUsageFlagBits::eIndexBuffer);
 		index_buffer_info.setSize(index_buffer_size);
-		index_buffer_->create_buffer(index_buffer_info);
-		index_count_ = im_draw_data->TotalIdxCount;
-		index_buffer_->map();
+		index_buffer->create_buffer(index_buffer_info);
+		index_count_vector_[index] = im_draw_data->TotalIdxCount;
+		index_buffer->map();
 	}
 
 	// Upload data
-	ImDrawVert* vtx_dst = reinterpret_cast<ImDrawVert*>(vertex_buffer_->get_mapped_memory());
-	ImDrawIdx* idx_dst = reinterpret_cast<ImDrawIdx*>(index_buffer_->get_mapped_memory());
+	ImDrawVert* vtx_dst = reinterpret_cast<ImDrawVert*>(vertex_buffer->get_mapped_memory());
+	ImDrawIdx* idx_dst = reinterpret_cast<ImDrawIdx*>(index_buffer->get_mapped_memory());
 
-	for (int n = 0; n < im_draw_data->CmdListsCount; n++) {
+	for (int n = 0; n < im_draw_data->CmdListsCount; n++)
+	{
 		const ImDrawList* cmd_list = im_draw_data->CmdLists[n];
 		memcpy(vtx_dst, cmd_list->VtxBuffer.Data, cmd_list->VtxBuffer.Size * sizeof(ImDrawVert));
 		memcpy(idx_dst, cmd_list->IdxBuffer.Data, cmd_list->IdxBuffer.Size * sizeof(ImDrawIdx));
@@ -166,8 +177,8 @@ void ScrapEngine::Render::VulkanImGui::update_buffers()
 	}
 
 	// Flush to make writes visible to GPU
-	vertex_buffer_->flush();
-	index_buffer_->flush();
+	vertex_buffer->flush();
+	index_buffer->flush();
 }
 
 void ScrapEngine::Render::VulkanImGui::generate_gui_frame() const
@@ -175,7 +186,7 @@ void ScrapEngine::Render::VulkanImGui::generate_gui_frame() const
 	//prepare the ongui() event generating a new gui event
 	ImGui::NewFrame();
 	//Call ongui
-	if(logic_manager_ref_)
+	if (logic_manager_ref_)
 	{
 		logic_manager_ref_->execute_game_objects_ongui_event();
 	}
@@ -193,14 +204,14 @@ ScrapEngine::Render::GuiVulkanGraphicsPipeline* ScrapEngine::Render::VulkanImGui
 	return pipeline_;
 }
 
-ScrapEngine::Render::GenericBuffer* ScrapEngine::Render::VulkanImGui::get_vertex_buffer() const
+ScrapEngine::Render::GenericBuffer* ScrapEngine::Render::VulkanImGui::get_vertex_buffer(short int index) const
 {
-	return vertex_buffer_;
+	return vertex_buffer_vector_[index];
 }
 
-ScrapEngine::Render::GenericBuffer* ScrapEngine::Render::VulkanImGui::get_index_buffer() const
+ScrapEngine::Render::GenericBuffer* ScrapEngine::Render::VulkanImGui::get_index_buffer(short int index) const
 {
-	return index_buffer_;
+	return index_buffer_vector_[index];
 }
 
 ScrapEngine::Render::VulkanImGui::PushConstBlock* ScrapEngine::Render::VulkanImGui::get_push_const_block()

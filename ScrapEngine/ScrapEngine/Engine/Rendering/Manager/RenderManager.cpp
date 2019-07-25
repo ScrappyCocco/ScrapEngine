@@ -270,7 +270,7 @@ void ScrapEngine::Render::RenderManager::create_command_buffer(const bool flip_f
 	}
 	//gui
 	gui_render_->generate_gui_frame();
-	command_buffers_[index].command_buffer->load_ui(gui_render_);
+	command_buffers_[index].command_buffer->load_ui(gui_render_, index);
 	//close
 	command_buffers_[index].command_buffer->close_command_buffer();
 }

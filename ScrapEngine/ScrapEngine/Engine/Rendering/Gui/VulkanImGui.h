@@ -14,14 +14,15 @@ namespace ScrapEngine
 {
 	namespace Render
 	{
-
 		class VulkanImGui
 		{
 		public:
-			struct PushConstBlock {
+			struct PushConstBlock
+			{
 				glm::vec2 scale;
 				glm::vec2 translate;
 			};
+
 		private:
 			vk::Image front_image_;
 			vk::DeviceMemory font_memory_;
@@ -31,10 +32,11 @@ namespace ScrapEngine
 			GuiDescriptorSet* descriptor_set_ = nullptr;
 			GuiVulkanGraphicsPipeline* pipeline_ = nullptr;
 			//Buffers
-			GenericBuffer* vertex_buffer_;
-			GenericBuffer* index_buffer_;
-			int32_t vertex_count_ = 0;
-			int32_t index_count_ = 0;
+			//I need vectors because i need one for each command buffer (2 in total)
+			std::vector<GenericBuffer*> vertex_buffer_vector_;
+			std::vector<GenericBuffer*> index_buffer_vector_;
+			std::vector<int32_t> vertex_count_vector_;
+			std::vector<int32_t> index_count_vector_;
 
 			PushConstBlock push_const_block_;
 
@@ -50,16 +52,17 @@ namespace ScrapEngine
 			void init_resources(VulkanSwapChain* swap_chain);
 			void init_reference(Core::LogicManager* logic_manager_ref);
 
-			void update_buffers();
+			//index is necessary because i build more than 1 command buffer
+			//i have to know what vertex/index buffer i can delete and update
+			void update_buffers(short int index);
 
 			void generate_gui_frame() const;
 
 			GuiDescriptorSet* get_descriptor_set() const;
 			GuiVulkanGraphicsPipeline* get_pipeline() const;
-			GenericBuffer* get_vertex_buffer() const;
-			GenericBuffer* get_index_buffer() const;
+			GenericBuffer* get_vertex_buffer(short int index) const;
+			GenericBuffer* get_index_buffer(short int index) const;
 			PushConstBlock* get_push_const_block();
 		};
-
 	}
 }

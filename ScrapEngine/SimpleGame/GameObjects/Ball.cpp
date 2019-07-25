@@ -53,7 +53,7 @@ void Ball::game_update(const float delta_time)
 
 void Ball::on_gui()
 {
-	static int corner = 0;
+	static int corner = 3;
 	const float DISTANCE = 0.0f;
 	ImGuiIO& io = ImGui::GetIO();
 
@@ -87,6 +87,8 @@ void Ball::on_gui()
 		{
 			ScrapEngine::Debug::DebugLog::print_to_console_log("Test");
 		}
+
+		ImGui::End();
 	}
-	ImGui::End();
+	
 }

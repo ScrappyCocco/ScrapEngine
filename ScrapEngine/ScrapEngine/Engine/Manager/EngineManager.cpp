@@ -120,6 +120,7 @@ void ScrapEngine::Manager::EngineManager::gui_update(const float time) const
 {
 	//Mouse location
 	const Input::mouse_location loc = scrap_input_manager_->get_last_mouse_location();
+
 	Input::GuiInput::update_mouse_location(loc.xpos, loc.ypos);
 
 	//Mouse click

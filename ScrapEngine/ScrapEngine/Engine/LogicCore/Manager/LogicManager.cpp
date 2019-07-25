@@ -49,8 +49,6 @@ void ScrapEngine::Core::LogicManager::execute_game_objects_ongui_event()
 {
 	for (SGameObject* game_object : registered_game_objects_)
 	{
-		if (game_object->get_should_update()) {
-			game_object->on_gui();
-		}
+		game_object->on_gui();
 	}
 }

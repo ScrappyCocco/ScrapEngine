@@ -153,10 +153,10 @@ void ScrapEngine::Render::VulkanCommandBuffer::load_mesh(const VulkanMeshInstanc
 	}
 }
 
-void ScrapEngine::Render::VulkanCommandBuffer::load_ui(VulkanImGui* gui)
+void ScrapEngine::Render::VulkanCommandBuffer::load_ui(VulkanImGui* gui, const short int index)
 {
 	//Update buffers
-	gui->update_buffers();
+	gui->update_buffers(index);
 
 	ImGuiIO& io = ImGui::GetIO();
 
@@ -189,8 +189,8 @@ void ScrapEngine::Render::VulkanCommandBuffer::load_ui(VulkanImGui* gui)
 		if (im_draw_data->CmdListsCount > 0) {
 			vk::DeviceSize offsets[1] = { 0 };
 
-			command_buffers_[i].bindVertexBuffers(0, 1, gui->get_vertex_buffer()->get_buffer(), offsets);
-			command_buffers_[i].bindIndexBuffer(*gui->get_index_buffer()->get_buffer(), 0, vk::IndexType::eUint16);
+			command_buffers_[i].bindVertexBuffers(0, 1, gui->get_vertex_buffer(index)->get_buffer(), offsets);
+			command_buffers_[i].bindIndexBuffer(*gui->get_index_buffer(index)->get_buffer(), 0, vk::IndexType::eUint16);
 
 			for (int32_t k = 0; k < im_draw_data->CmdListsCount; k++)
 			{
@@ -201,8 +201,8 @@ void ScrapEngine::Render::VulkanCommandBuffer::load_ui(VulkanImGui* gui)
 					vk::Rect2D scissor_rect;
 					vk::Offset2D scissor_offset;
 					vk::Extent2D scissor_extend;
-					scissor_offset.setX(std::max((int32_t)(pcmd->ClipRect.x), 0));
-					scissor_offset.setY(std::max((int32_t)(pcmd->ClipRect.y), 0));
+					scissor_offset.setX(std::max(static_cast<int32_t>(pcmd->ClipRect.x), 0));
+					scissor_offset.setY(std::max(static_cast<int32_t>(pcmd->ClipRect.y), 0));
 					scissor_rect.setOffset(scissor_offset);
 					scissor_extend.setWidth(static_cast<uint32_t>(pcmd->ClipRect.z - pcmd->ClipRect.x));
 					scissor_extend.setHeight(static_cast<uint32_t>(pcmd->ClipRect.w - pcmd->ClipRect.y));

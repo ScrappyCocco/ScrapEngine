@@ -27,10 +27,9 @@ namespace ScrapEngine
 			virtual void game_update(float time);
 			//Note: on_gui() is not called on the main thread
 			//Will be called on different times than game_update()
+			//If you have variables to update do it on game_update()
 			virtual void on_gui();
 
-			//Remember that disabling the update disable also on_gui() event
-			//If you register this object only start() will be executed
 			void set_should_update(bool should_update);
 			bool get_should_update() const;
 
