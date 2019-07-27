@@ -75,7 +75,7 @@ void ScrapEngine::Render::Camera::set_min_render_distance(const float new_render
 	generate_projection_matrix();
 }
 
-void ScrapEngine::Render::Camera::set_max_render_distance(float new_render_distance)
+void ScrapEngine::Render::Camera::set_max_render_distance(const float new_render_distance)
 {
 	max_draw_distance_ = new_render_distance;
 	//Update projection matrix

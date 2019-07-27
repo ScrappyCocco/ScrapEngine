@@ -1,7 +1,7 @@
 #pragma once
 #include <unordered_map>
 #include <memory>
-#include <Engine/Rendering/Model/Material/BasicMaterial.h>
+#include <Engine/Rendering/Pipeline/BaseVulkanGraphicsPipeline.h>
 #include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
 #include <Engine/Rendering/Texture/Texture/BaseTexture.h>
 #include <Engine/Rendering/Texture/TextureImageView/TextureImageView.h>

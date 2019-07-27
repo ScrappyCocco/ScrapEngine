@@ -51,8 +51,6 @@ void ScrapEngine::Manager::EngineManager::initialize_render_manager(const game_b
 void ScrapEngine::Manager::EngineManager::initialize_logic_manager()
 {
 	scrap_logic_manager_ = new Core::LogicManager();
-	//Reference for ongui()
-	scrap_render_manager_->init_gui_reference(scrap_logic_manager_);
 	//Reference to update gui input
 	scrap_input_manager_ = scrap_render_manager_->get_game_window()->create_window_input_manager();
 }
@@ -130,7 +128,14 @@ void ScrapEngine::Manager::EngineManager::gui_update(const float time) const
 	);
 
 	//Delta time
-	Input::GuiInput::update_delta_time(time);
+	if (time > 0) {
+		Input::GuiInput::update_delta_time(time);
+	}
+
+	//Run gui render update
+	scrap_render_manager_->pre_gui_render();
+	scrap_logic_manager_->execute_game_objects_ongui_event();
+	scrap_render_manager_->post_gui_render();
 }
 
 void ScrapEngine::Manager::EngineManager::audio_update() const

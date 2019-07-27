@@ -1,7 +1,6 @@
 #include <Engine/Rendering/Pipeline/GuiPipeline/GuiVulkanGraphicsPipeline.h>
 #include <Engine/Rendering/Shader/ShaderManager.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
-#include <Engine/Rendering/RenderPass/VulkanRenderPass.h>
 #include <imgui.h>
 
 ScrapEngine::Render::GuiVulkanGraphicsPipeline::GuiVulkanGraphicsPipeline(const char* vertex_shader,
@@ -9,7 +8,8 @@ ScrapEngine::Render::GuiVulkanGraphicsPipeline::GuiVulkanGraphicsPipeline(const 
                                                                           vk::Extent2D* swap_chain_extent,
                                                                           vk::DescriptorSetLayout*
                                                                           descriptor_set_layout,
-                                                                          size_t block_size)
+                                                                          size_t block_size,
+                                                                          BaseRenderPass* render_pass)
 {
 	// Pipeline cache
 	vk::PipelineCacheCreateInfo pipeline_cache_create_info;
@@ -150,7 +150,7 @@ ScrapEngine::Render::GuiVulkanGraphicsPipeline::GuiVulkanGraphicsPipeline(const 
 		&color_blending,
 		&dynamic_state,
 		pipeline_layout_,
-		*VulkanRenderPass::get_instance()->get_render_pass(),
+		*render_pass->get_render_pass(),
 		0
 	);
 

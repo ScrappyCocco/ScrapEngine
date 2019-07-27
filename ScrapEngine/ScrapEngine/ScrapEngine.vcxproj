@@ -66,7 +66,9 @@
     <ClCompile Include="Engine\Rendering\Buffer\BufferContainer\BufferContainer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\BufferContainer\IndicesBufferContainer\IndicesBufferContainer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\BufferContainer\VertexBufferContainer\VertexBufferContainer.cpp" />
-    <ClCompile Include="Engine\Rendering\Buffer\CommandBuffer\VulkanCommandBuffer.cpp" />
+    <ClCompile Include="Engine\Rendering\Buffer\CommandBuffer\BaseCommandBuffer.cpp" />
+    <ClCompile Include="Engine\Rendering\Buffer\CommandBuffer\GuiCommandBuffer\GuiCommandBuffer.cpp" />
+    <ClCompile Include="Engine\Rendering\Buffer\CommandBuffer\StandardCommandBuffer\StandardCommandBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\FrameBuffer\VulkanFrameBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\GenericBuffer\GenericBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\IndexBuffer\IndexBuffer.cpp" />
@@ -110,7 +112,9 @@
     <ClCompile Include="Engine\Rendering\Queue\BaseQueue.cpp" />
     <ClCompile Include="Engine\Rendering\Queue\GraphicsQueue\GraphicsQueue.cpp" />
     <ClCompile Include="Engine\Rendering\Queue\PresentationQueue\PresentQueue.cpp" />
-    <ClCompile Include="Engine\Rendering\RenderPass\VulkanRenderPass.cpp" />
+    <ClCompile Include="Engine\Rendering\RenderPass\BaseRenderPass.cpp" />
+    <ClCompile Include="Engine\Rendering\RenderPass\GuiRenderPass\GuiRenderPass.cpp" />
+    <ClCompile Include="Engine\Rendering\RenderPass\StandardRenderPass\StandardRenderPass.cpp" />
     <ClCompile Include="Engine\Rendering\Semaphores\VulkanSemaphoresManager.cpp" />
     <ClCompile Include="Engine\Rendering\Shader\ShaderManager.cpp" />
     <ClCompile Include="Engine\Rendering\SwapChain\VulkanImageView.cpp" />
@@ -180,7 +184,9 @@
     <ClInclude Include="Engine\Rendering\Buffer\BufferContainer\BufferContainer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\BufferContainer\IndicesBufferContainer\IndicesBufferContainer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\BufferContainer\VertexBufferContainer\VertexBufferContainer.h" />
-    <ClInclude Include="Engine\Rendering\Buffer\CommandBuffer\VulkanCommandBuffer.h" />
+    <ClInclude Include="Engine\Rendering\Buffer\CommandBuffer\BaseCommandBuffer.h" />
+    <ClInclude Include="Engine\Rendering\Buffer\CommandBuffer\GuiCommandBuffer\GuiCommandBuffer.h" />
+    <ClInclude Include="Engine\Rendering\Buffer\CommandBuffer\StandardCommandBuffer\StandardCommandBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\FrameBuffer\VulkanFrameBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\GenericBuffer\GenericBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\IndexBuffer\IndexBuffer.h" />
@@ -225,7 +231,9 @@
     <ClInclude Include="Engine\Rendering\Queue\BaseQueue.h" />
     <ClInclude Include="Engine\Rendering\Queue\GraphicsQueue\GraphicsQueue.h" />
     <ClInclude Include="Engine\Rendering\Queue\PresentationQueue\PresentQueue.h" />
-    <ClInclude Include="Engine\Rendering\RenderPass\VulkanRenderPass.h" />
+    <ClInclude Include="Engine\Rendering\RenderPass\BaseRenderPass.h" />
+    <ClInclude Include="Engine\Rendering\RenderPass\GuiRenderPass\GuiRenderPass.h" />
+    <ClInclude Include="Engine\Rendering\RenderPass\StandardRenderPass\StandardRenderPass.h" />
     <ClInclude Include="Engine\Rendering\Semaphores\VulkanSemaphoresManager.h" />
     <ClInclude Include="Engine\Rendering\Shader\ShaderManager.h" />
     <ClInclude Include="Engine\Rendering\SwapChain\VulkanImageView.h" />

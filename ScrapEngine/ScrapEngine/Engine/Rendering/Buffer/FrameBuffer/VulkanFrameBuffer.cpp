@@ -1,6 +1,6 @@
 #include <Engine/Rendering/Buffer/FrameBuffer/VulkanFrameBuffer.h>
 #include <array>
-#include <Engine/Rendering/RenderPass/VulkanRenderPass.h>
+#include <Engine/Rendering/RenderPass/StandardRenderPass/StandardRenderPass.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
 
 ScrapEngine::Render::VulkanFrameBuffer::VulkanFrameBuffer(VulkanImageView* input_image_view_ref,
@@ -23,7 +23,7 @@ ScrapEngine::Render::VulkanFrameBuffer::VulkanFrameBuffer(VulkanImageView* input
 
 		vk::FramebufferCreateInfo framebuffer_info(
 			vk::FramebufferCreateFlags(),
-			*VulkanRenderPass::get_instance()->get_render_pass(),
+			*StandardRenderPass::get_instance()->get_render_pass(),
 			static_cast<uint32_t>(attachments.size()),
 			attachments.data(),
 			input_swap_chain_extent->width,
