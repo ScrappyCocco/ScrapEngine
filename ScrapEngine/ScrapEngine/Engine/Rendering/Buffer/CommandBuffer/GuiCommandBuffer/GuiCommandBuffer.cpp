@@ -1,7 +1,6 @@
 #include <Engine/Rendering/Buffer/CommandBuffer/GuiCommandBuffer/GuiCommandBuffer.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
 #include <imgui.h>
-#include <Engine/Rendering/RenderPass/GuiRenderPass/GuiRenderPass.h>
 
 ScrapEngine::Render::GuiCommandBuffer::GuiCommandBuffer(BaseRenderPass* render_pass)
 	: render_pass_ref_(render_pass)
