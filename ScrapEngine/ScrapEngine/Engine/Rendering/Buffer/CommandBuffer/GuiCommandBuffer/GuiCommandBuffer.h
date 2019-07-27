@@ -10,7 +10,7 @@ namespace ScrapEngine
 {
 	namespace Render
 	{
-		class GuiCommandBuffer : BaseCommandBuffer
+		class GuiCommandBuffer : public BaseCommandBuffer
 		{
 		private:
 			BaseRenderPass* render_pass_ref_ = nullptr;
