@@ -53,10 +53,10 @@ void ScrapEngine::Render::GuiCommandBuffer::init_command_buffer(
 	}
 }
 
-void ScrapEngine::Render::GuiCommandBuffer::load_ui(VulkanImGui* gui, const short int index)
+void ScrapEngine::Render::GuiCommandBuffer::load_ui(VulkanImGui* gui)
 {
 	//Update buffers
-	gui->update_buffers(index);
+	gui->update_buffers();
 
 	ImGuiIO& io = ImGui::GetIO();
 
@@ -90,8 +90,8 @@ void ScrapEngine::Render::GuiCommandBuffer::load_ui(VulkanImGui* gui, const shor
 		{
 			vk::DeviceSize offsets[1] = {0};
 
-			command_buffers_[i].bindVertexBuffers(0, 1, gui->get_vertex_buffer(index)->get_buffer(), offsets);
-			command_buffers_[i].bindIndexBuffer(*gui->get_index_buffer(index)->get_buffer(), 0, vk::IndexType::eUint16);
+			command_buffers_[i].bindVertexBuffers(0, 1, gui->get_vertex_buffer()->get_buffer(), offsets);
+			command_buffers_[i].bindIndexBuffer(*gui->get_index_buffer()->get_buffer(), 0, vk::IndexType::eUint16);
 
 			for (int32_t k = 0; k < im_draw_data->CmdListsCount; k++)
 			{

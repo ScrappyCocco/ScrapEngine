@@ -23,7 +23,7 @@ namespace ScrapEngine
 			                         vk::Extent2D* input_swap_chain_extent_ref,
 			                         VulkanCommandPool* command_pool);
 
-			void load_ui(VulkanImGui* gui, short int index);
+			void load_ui(VulkanImGui* gui);
 		};
 	}
 }
