@@ -63,6 +63,7 @@ namespace ScrapEngine
 			//Scheduler tasks
 			enki::TaskScheduler g_TS;
 
+			//---standard command buffers
 			//Multi threaded command buffers
 			struct threaded_command_buffer
 			{
@@ -88,9 +89,22 @@ namespace ScrapEngine
 			//This is the fence used to wait that the previous command buffer has finished and can be deleted
 			const vk::Fence* waiting_fence_ = nullptr;
 
+			//---gui
 			//The gui command buffer, is rebuilt every frame
 			GuiCommandBuffer* gui_command_buffer_;
 			BaseRenderPass* gui_render_pass_ = nullptr;
+
+			//Parallel task used to create command buffer while other updates() execute
+			//Must be ready before draw frame() or will be waited
+			struct ParallelGuiCommandBufferCreation : enki::ITaskSet
+			{
+				RenderManager* owner;
+				void ExecuteRange(enki::TaskSetPartition range, uint32_t threadnum) override;
+			};
+			ParallelGuiCommandBufferCreation* gui_command_buffer_task_;
+
+			//This is the fence used to wait that the previous command buffer has finished and can be deleted
+			const vk::Fence* gui_waiting_fence_ = nullptr;
 		public:
 			RenderManager(const game_base_info* received_base_game_info);
 			~RenderManager();
@@ -100,6 +114,7 @@ namespace ScrapEngine
 			void initialize_scheduler();
 			void initialize_gui(float width, float height);
 			void initialize_command_buffers();
+			void initialize_gui_command_buffers();
 
 			void create_queues();
 			void delete_queues() const;
@@ -138,7 +153,7 @@ namespace ScrapEngine
 			void set_render_camera(Camera* new_camera);
 
 			//Gui stuff
-			void pre_gui_render();
+			void pre_gui_render() const;
 			void post_gui_render();
 		};
 	}
