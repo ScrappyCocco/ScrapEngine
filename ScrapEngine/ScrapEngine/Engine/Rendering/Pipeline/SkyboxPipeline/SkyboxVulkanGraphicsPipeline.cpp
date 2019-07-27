@@ -2,7 +2,7 @@
 #include <Engine/Rendering/Base/Vertex.h>
 #include <Engine/Rendering/Shader/ShaderManager.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
-#include <Engine/Rendering/RenderPass/VulkanRenderPass.h>
+#include <Engine/Rendering/RenderPass/StandardRenderPass/StandardRenderPass.h>
 
 ScrapEngine::Render::SkyboxVulkanGraphicsPipeline::SkyboxVulkanGraphicsPipeline(const char* vertex_shader,
                                                                                 const char* fragment_shader,
@@ -131,7 +131,7 @@ ScrapEngine::Render::SkyboxVulkanGraphicsPipeline::SkyboxVulkanGraphicsPipeline(
 		&color_blending,
 		nullptr,
 		pipeline_layout_,
-		*VulkanRenderPass::get_instance()->get_render_pass(),
+		*StandardRenderPass::get_instance()->get_render_pass(),
 		0
 	);
 

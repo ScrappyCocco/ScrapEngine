@@ -8,6 +8,9 @@
 ScrapEngine::Render::VulkanImGui::VulkanImGui()
 {
 	ImGui::CreateContext();
+
+	vertex_buffer_ = new GenericBuffer();
+	index_buffer_ = new GenericBuffer();
 }
 
 ScrapEngine::Render::VulkanImGui::~VulkanImGui()

@@ -1,7 +1,7 @@
 #include <Engine/Rendering/Pipeline/GuiPipeline/GuiVulkanGraphicsPipeline.h>
 #include <Engine/Rendering/Shader/ShaderManager.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
-#include <Engine/Rendering/RenderPass/VulkanRenderPass.h>
+#include <Engine/Rendering/RenderPass/StandardRenderPass/StandardRenderPass.h>
 #include <imgui.h>
 
 ScrapEngine::Render::GuiVulkanGraphicsPipeline::GuiVulkanGraphicsPipeline(const char* vertex_shader,
@@ -150,7 +150,7 @@ ScrapEngine::Render::GuiVulkanGraphicsPipeline::GuiVulkanGraphicsPipeline(const 
 		&color_blending,
 		&dynamic_state,
 		pipeline_layout_,
-		*VulkanRenderPass::get_instance()->get_render_pass(),
+		*StandardRenderPass::get_instance()->get_render_pass(),
 		0
 	);
 

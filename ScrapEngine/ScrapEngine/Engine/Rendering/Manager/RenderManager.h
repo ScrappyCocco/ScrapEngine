@@ -7,16 +7,18 @@
 #include <Engine/Rendering/Device/VulkanDevice.h>
 #include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
 #include <Engine/Rendering/SwapChain/VulkanImageView.h>
-#include <Engine/Rendering/RenderPass/VulkanRenderPass.h>
+#include <Engine/Rendering/RenderPass/BaseRenderPass.h>
 #include <Engine/Rendering/Buffer/FrameBuffer/VulkanFrameBuffer.h>
 #include <Engine/Rendering/CommandPool/VulkanCommandPool.h>
-#include <Engine/Rendering/Buffer/CommandBuffer/VulkanCommandBuffer.h>
+#include <Engine/Rendering/Buffer/CommandBuffer/GuiCommandBuffer/GuiCommandBuffer.h>
+#include <Engine/Rendering/Buffer/CommandBuffer/StandardCommandBuffer/StandardCommandBuffer.h>
 #include <Engine/Rendering/Semaphores/VulkanSemaphoresManager.h>
 #include <Engine/Rendering/Buffer/UniformBuffer/UniformBuffer.h>
 #include <Engine/Rendering/DepthResources/VulkanDepthResources.h>
 #include <Engine/Rendering/Texture/ColorResources/VulkanColorResources.h>
 #include <Engine/Rendering/Model/MeshInstance/VulkanMeshInstance.h>
 #include <Engine/Rendering/Model/SkyboxInstance/VulkanSkyboxInstance.h>
+#include <Engine/Rendering/Gui/VulkanImGui.h>
 #include <TaskScheduler.h>
 
 namespace ScrapEngine
@@ -31,7 +33,6 @@ namespace ScrapEngine
 			VulkanDevice* vulkan_render_device_ = nullptr;
 			VulkanSwapChain* vulkan_render_swap_chain_ = nullptr;
 			VulkanImageView* vulkan_render_image_view_ = nullptr;
-			VulkanRenderPass* vulkan_rendering_pass_ = nullptr;
 			VulkanFrameBuffer* vulkan_render_frame_buffer_ = nullptr;
 			VulkanCommandPool* vulkan_render_command_pool_ = nullptr;
 			BaseQueue* vulkan_graphics_queue_ = nullptr;
@@ -40,7 +41,6 @@ namespace ScrapEngine
 			VulkanSurface* vulkan_window_surface_ = nullptr;
 			VulkanDepthResources* vulkan_render_depth_ = nullptr;
 			VulkanColorResources* vulkan_render_color_ = nullptr;
-
 			VulkanImGui* gui_render_ = nullptr;
 
 			Camera* render_camera_ = nullptr;
@@ -68,7 +68,7 @@ namespace ScrapEngine
 			{
 				bool is_running = false;
 				VulkanCommandPool* command_pool = nullptr;
-				VulkanCommandBuffer* command_buffer = nullptr;
+				StandardCommandBuffer* command_buffer = nullptr;
 			};
 			//Flag to know if i'm using the first or the second command buffer
 			bool command_buffer_flip_flop_ = false;
@@ -87,11 +87,14 @@ namespace ScrapEngine
 			std::vector<ParallelCommandBufferCreation*> command_buffers_tasks_;
 			//This is the fence used to wait that the previous command buffer has finished and can be deleted
 			const vk::Fence* waiting_fence_ = nullptr;
+
+			//The gui command buffer, is rebuilt every frame
+			GuiCommandBuffer* gui_command_buffer_;
+			BaseRenderPass* gui_render_pass_ = nullptr;
 		public:
 			RenderManager(const game_base_info* received_base_game_info);
 			~RenderManager();
 			void prepare_to_draw_frame();
-			void init_gui_reference(Core::LogicManager* logic_manager) const;
 		private:
 			void initialize_vulkan(const game_base_info* received_base_game_info);
 			void initialize_scheduler();
@@ -100,6 +103,8 @@ namespace ScrapEngine
 
 			void create_queues();
 			void delete_queues() const;
+
+			void rebuild_gui_command_buffer() const;
 
 			void create_command_buffer(bool flip_flop);
 			void check_start_new_thread();
@@ -131,6 +136,10 @@ namespace ScrapEngine
 			Camera* get_render_camera() const;
 			Camera* get_default_render_camera() const;
 			void set_render_camera(Camera* new_camera);
+
+			//Gui stuff
+			void pre_gui_render();
+			void post_gui_render();
 		};
 	}
 }
