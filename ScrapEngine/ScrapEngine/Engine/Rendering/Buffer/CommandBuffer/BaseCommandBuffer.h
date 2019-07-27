@@ -13,7 +13,7 @@ namespace ScrapEngine
 		protected:
 			std::vector<vk::CommandBuffer> command_buffers_;
 			vk::RenderPassBeginInfo render_pass_info_;
-			VulkanCommandPool* command_pool_ref_;
+			VulkanCommandPool* command_pool_ref_ = nullptr;
 		public:
 			BaseCommandBuffer() = default;
 

@@ -13,7 +13,7 @@ namespace ScrapEngine
 		class StandardCommandBuffer : public BaseCommandBuffer
 		{
 		private:
-			Camera* current_camera_;
+			Camera* current_camera_ = nullptr;
 		public:
 			StandardCommandBuffer() = default;
 
