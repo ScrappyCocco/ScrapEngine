@@ -40,7 +40,7 @@ void ScrapEngine::Render::VulkanImGui::init(const float width, const float heigh
 	io.DisplayFramebufferScale = ImVec2(1.0f, 1.0f);
 }
 
-void ScrapEngine::Render::VulkanImGui::init_resources(VulkanSwapChain* swap_chain)
+void ScrapEngine::Render::VulkanImGui::init_resources(VulkanSwapChain* swap_chain, BaseRenderPass* render_pass)
 {
 	ImGuiIO& io = ImGui::GetIO();
 
@@ -99,7 +99,8 @@ void ScrapEngine::Render::VulkanImGui::init_resources(VulkanSwapChain* swap_chai
 	pipeline_ = new GuiVulkanGraphicsPipeline("../assets/shader/compiled_shaders/ui.vert.spv",
 	                                          "../assets/shader/compiled_shaders/ui.frag.spv",
 	                                          &swap_chain->get_swap_chain_extent(),
-	                                          descriptor_set_->get_descriptor_set_layout(), sizeof(PushConstBlock));
+	                                          descriptor_set_->get_descriptor_set_layout(), sizeof(PushConstBlock),
+	                                          render_pass);
 
 	//Empty frame initialization
 	generate_gui_frame();

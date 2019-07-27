@@ -2,6 +2,7 @@
 
 #include <vulkan/vulkan.hpp>
 #include <Engine/Rendering/Pipeline/BaseVulkanGraphicsPipeline.h>
+#include <Engine/Rendering/RenderPass/BaseRenderPass.h>
 
 namespace ScrapEngine
 {
@@ -14,7 +15,8 @@ namespace ScrapEngine
 		public:
 			GuiVulkanGraphicsPipeline(const char* vertex_shader, const char* fragment_shader,
 			                       vk::Extent2D* swap_chain_extent,
-			                       vk::DescriptorSetLayout* descriptor_set_layout, size_t block_size);
+			                       vk::DescriptorSetLayout* descriptor_set_layout, size_t block_size,
+			                       BaseRenderPass* render_pass);
 			~GuiVulkanGraphicsPipeline();
 
 			vk::PipelineCache* get_pipeline_cache();

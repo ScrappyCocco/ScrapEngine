@@ -237,7 +237,7 @@ void ScrapEngine::Render::RenderManager::initialize_gui(const float width, const
 {
 	gui_render_ = new VulkanImGui();
 	gui_render_->init(width, height);
-	gui_render_->init_resources(vulkan_render_swap_chain_);
+	gui_render_->init_resources(vulkan_render_swap_chain_, gui_render_pass_);
 }
 
 void ScrapEngine::Render::RenderManager::initialize_command_buffers()

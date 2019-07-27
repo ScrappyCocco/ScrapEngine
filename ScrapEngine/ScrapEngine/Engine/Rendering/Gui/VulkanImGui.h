@@ -43,7 +43,7 @@ namespace ScrapEngine
 			~VulkanImGui();
 
 			void init(float width, float height);
-			void init_resources(VulkanSwapChain* swap_chain);
+			void init_resources(VulkanSwapChain* swap_chain, BaseRenderPass* render_pass);
 
 			void update_buffers();
 
