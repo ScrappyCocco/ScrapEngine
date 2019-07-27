@@ -1,5 +1,4 @@
-#include <Engine/Rendering/RenderPass/VulkanRenderPass.h>
-
+#include <Engine/Rendering/RenderPass/StandardRenderPass/StandardRenderPass.h>
 #include <stdexcept>
 #include <array>
 #include <Engine/Rendering/DepthResources/VulkanDepthResources.h>
@@ -7,12 +6,12 @@
 
 //Init static instance reference
 
-ScrapEngine::Render::VulkanRenderPass* ScrapEngine::Render::VulkanRenderPass::instance_ = nullptr;
+ScrapEngine::Render::StandardRenderPass* ScrapEngine::Render::StandardRenderPass::instance_ = nullptr;
 
 //Class
 
-void ScrapEngine::Render::VulkanRenderPass::init(const vk::Format& swap_chain_image_format,
-                                                 const vk::SampleCountFlagBits msaa_samples)
+void ScrapEngine::Render::StandardRenderPass::init(const vk::Format& swap_chain_image_format,
+                                                   const vk::SampleCountFlagBits msaa_samples)
 {
 	const vk::AttachmentDescription color_attachment(
 		vk::AttachmentDescriptionFlags(),
@@ -104,21 +103,11 @@ void ScrapEngine::Render::VulkanRenderPass::init(const vk::Format& swap_chain_im
 	}
 }
 
-ScrapEngine::Render::VulkanRenderPass::~VulkanRenderPass()
-{
-	VulkanDevice::get_instance()->get_logical_device()->destroyRenderPass(render_pass_);
-}
-
-ScrapEngine::Render::VulkanRenderPass* ScrapEngine::Render::VulkanRenderPass::get_instance()
+ScrapEngine::Render::StandardRenderPass* ScrapEngine::Render::StandardRenderPass::get_instance()
 {
 	if (instance_ == nullptr)
 	{
-		instance_ = new VulkanRenderPass();
+		instance_ = new StandardRenderPass();
 	}
 	return instance_;
-}
-
-vk::RenderPass* ScrapEngine::Render::VulkanRenderPass::get_render_pass()
-{
-	return &render_pass_;
 }
