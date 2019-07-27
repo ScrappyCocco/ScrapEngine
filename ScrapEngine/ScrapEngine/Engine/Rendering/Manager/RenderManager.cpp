@@ -307,7 +307,7 @@ void ScrapEngine::Render::RenderManager::rebuild_gui_command_buffer() const
 	//Init
 	gui_command_buffer_->init_command_buffer(vulkan_render_frame_buffer_,
 		&vulkan_render_swap_chain_->get_swap_chain_extent(),
-		vulkan_render_command_pool_);
+		vulkan_render_command_pool_, (last_image_index_ + 1) % 3);
 	//Load ui
 	gui_command_buffer_->load_ui(gui_render_);
 	//close
@@ -462,13 +462,12 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 	std::vector<vk::CommandBuffer> command_buffers;
 	command_buffers.push_back(
 		(*command_buffers_[command_buffer_flip_flop_].command_buffer->get_command_buffers_vector())[image_index_]);
-	command_buffers.push_back((*gui_command_buffer_->get_command_buffers_vector())[image_index_]);
+	command_buffers.push_back((*gui_command_buffer_->get_command_buffers_vector())[0]);
 	submit_info.setPCommandBuffers(command_buffers.data());
 
 	vk::Semaphore signal_semaphores[] = {(*render_finished_semaphores_ref_)[current_frame_]};
 	submit_info.setSignalSemaphoreCount(1);
 	submit_info.setPSignalSemaphores(signal_semaphores);
-
 	VulkanDevice::get_instance()->get_logical_device()->resetFences(1, &(*in_flight_fences_ref_)[current_frame_]);
 
 	result_ = vulkan_graphics_queue_->get_queue()->submit(1, &submit_info,
@@ -510,6 +509,7 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 	gui_waiting_fence_ = &(*in_flight_fences_ref_)[current_frame_];
 	//Update the current frame index
 	current_frame_ = (current_frame_ + 1) % max_frames_in_flight_;
+	last_image_index_ = image_index_;
 }
 
 void ScrapEngine::Render::RenderManager::wait_device_idle() const

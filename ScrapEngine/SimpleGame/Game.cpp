@@ -13,7 +13,6 @@ int main() {
 	ScrapEngine::Manager::EngineManager* ScrapEngineManager = nullptr;
 	try {
 		//init engine
-		//ScrapEngineManager = new ScrapEngine::Manager::EngineManager("ScrapEngine Simple Chess Game", 0, 1280, 720);
 		ScrapEngineManager = new ScrapEngine::Manager::EngineManager("Example Game", 0, 1280, 720);
 		ScrapEngine::Render::GameWindow* gameWindowRef = ScrapEngineManager->render_manager_view->get_game_window();
 		gameWindowRef->set_window_icon("../assets/game_icon/crate_icon.png");

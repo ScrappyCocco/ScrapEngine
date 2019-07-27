@@ -10,18 +10,22 @@ ScrapEngine::Render::GuiCommandBuffer::GuiCommandBuffer(BaseRenderPass* render_p
 void ScrapEngine::Render::GuiCommandBuffer::init_command_buffer(
 	VulkanFrameBuffer* swap_chain_frame_buffer,
 	vk::Extent2D* input_swap_chain_extent_ref,
-	VulkanCommandPool* command_pool)
+	VulkanCommandPool* command_pool,
+	const uint32_t current_image)
 {
 	command_pool_ref_ = command_pool;
 
 	const std::vector<vk::Framebuffer>* swap_chain_framebuffers = swap_chain_frame_buffer->
 		get_swap_chain_framebuffers_vector();
-	command_buffers_.resize(swap_chain_framebuffers->size());
+	//Optimize the GuiCommandBuffer generating only 1 command buffer instead of 3
+	//This because the GuiCommandBuffer is rebuilt every frame
+	//So it has no sense to allocate and build 2 unused command buffers
+	command_buffers_.resize(1);
 
 	vk::CommandBufferAllocateInfo alloc_info(
 		*command_pool_ref_->get_command_pool(),
 		vk::CommandBufferLevel::ePrimary,
-		static_cast<uint32_t>(command_buffers_.size())
+		static_cast<uint32_t>(1)
 	);
 
 	if (VulkanDevice::get_instance()->get_logical_device()->allocateCommandBuffers(&alloc_info, command_buffers_.data())
@@ -41,7 +45,9 @@ void ScrapEngine::Render::GuiCommandBuffer::init_command_buffer(
 
 		render_pass_info_ = vk::RenderPassBeginInfo(
 			*render_pass_ref_->get_render_pass(),
-			(*swap_chain_framebuffers)[i],
+			//So here i read the frame buffer corresponding to the next image frame
+			//It must be passed as parameter from the Render Manager
+			(*swap_chain_framebuffers)[current_image],
 			vk::Rect2D(vk::Offset2D(), *input_swap_chain_extent_ref)
 		);
 

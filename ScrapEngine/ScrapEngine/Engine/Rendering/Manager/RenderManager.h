@@ -94,7 +94,8 @@ namespace ScrapEngine
 			GuiCommandBuffer* gui_command_buffer_;
 			BaseRenderPass* gui_render_pass_ = nullptr;
 
-			//Parallel task used to create command buffer while other updates() execute
+			//Parallel task used to create gui command buffer while other updates() execute
+			//It's started at post_gui_render() and run during audio and physics update
 			//Must be ready before draw frame() or will be waited
 			struct ParallelGuiCommandBufferCreation : enki::ITaskSet
 			{
@@ -105,6 +106,11 @@ namespace ScrapEngine
 
 			//This is the fence used to wait that the previous command buffer has finished and can be deleted
 			const vk::Fence* gui_waiting_fence_ = nullptr;
+
+			//Necessary to rebuild the gui command buffer
+			//This because "image_index_" might be updated before the gui thread read it and this will lead to error
+			//So this variable is updated only at the end of the frame
+			uint32_t last_image_index_ = 0;
 		public:
 			RenderManager(const game_base_info* received_base_game_info);
 			~RenderManager();
