@@ -14,9 +14,20 @@ void ScrapEngine::Debug::DebugLog::print_to_console_log(const glm::vec3& vector)
 		<< vector.y << ", " << vector.z << ")" << std::endl;
 }
 
+void ScrapEngine::Debug::DebugLog::print_to_console_log(const glm::quat& quaternion)
+{
+	std::cout << now_to_string().c_str() << "Quat: (" << quaternion.x << ", "
+		<< quaternion.y << ", " << quaternion.z << ", " << quaternion.w << ")" << std::endl;
+}
+
 void ScrapEngine::Debug::DebugLog::print_to_console_log(const Core::SVector3& vector)
 {
 	print_to_console_log(vector.get_glm_vector());
+}
+
+void ScrapEngine::Debug::DebugLog::print_to_console_log(const Core::SQuaternion& quaternion)
+{
+	print_to_console_log(quaternion.get_glm_quat());
 }
 
 void ScrapEngine::Debug::DebugLog::print_to_console_log(const glm::mat4& matrix)
