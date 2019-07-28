@@ -1,8 +1,8 @@
 #include <Engine/Rendering/Model/Material/SimpleMaterial/SimpleMaterial.h>
-#include <Engine/Debug/DebugLog.h>
 #include <Engine/Rendering/Pipeline/StandardPipeline/StandardVulkanGraphicsPipeline.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
 #include <Engine/Rendering/Model/ObjectPool/VulkanSimpleMaterialPool/VulkanSimpleMaterialPool.h>
+#include <Engine/Rendering/Descriptor/DescriptorPool/StandardDescriptorPool/StandardDescriptorPool.h>
 
 ScrapEngine::Render::SimpleMaterial::~SimpleMaterial()
 {
@@ -30,7 +30,7 @@ void ScrapEngine::Render::SimpleMaterial::create_texture(const std::string& text
 void ScrapEngine::Render::SimpleMaterial::create_descriptor_sets(VulkanSwapChain* swap_chain,
                                                                  UniformBuffer* uniform_buffer)
 {
-	vulkan_render_descriptor_pool_ = new VulkanDescriptorPool(swap_chain->get_swap_chain_images_vector());
+	vulkan_render_descriptor_pool_ = new StandardDescriptorPool(swap_chain->get_swap_chain_images_vector());
 	vulkan_render_descriptor_set_->create_descriptor_sets(vulkan_render_descriptor_pool_->get_descriptor_pool(),
 	                                                      swap_chain->get_swap_chain_images_vector(),
 	                                                      uniform_buffer->get_uniform_buffers(),

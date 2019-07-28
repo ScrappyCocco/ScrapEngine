@@ -13,7 +13,6 @@ namespace ScrapEngine
 		private:
 			STransform object_transform_;
 			STransform object_relative_transform_;
-			bool is_static_ = false;
 			bool should_update = true;
 
 			std::vector<SComponent*> object_components_;
@@ -21,12 +20,12 @@ namespace ScrapEngine
 			SGameObject* father_object_ = nullptr;
 		public:
 			explicit SGameObject(const std::string& object_name,
-			                     const STransform& input_object_transform = STransform(),
-			                     bool is_static_object = false);
+			                     const STransform& input_object_transform = STransform());
 			~SGameObject() = 0;
 
 			virtual void game_start();
 			virtual void game_update(float time);
+			virtual void on_gui();
 
 			void set_should_update(bool should_update);
 			bool get_should_update() const;

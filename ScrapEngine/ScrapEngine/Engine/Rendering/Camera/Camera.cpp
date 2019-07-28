@@ -1,7 +1,7 @@
 #include <Engine/Rendering/Camera/Camera.h>
 #include <glm/gtx/quaternion.hpp>
 
-ScrapEngine::Render::Camera::Camera(float input_min_draw_distance, float input_max_draw_distance)
+ScrapEngine::Render::Camera::Camera(const float input_min_draw_distance, const float input_max_draw_distance)
 	: camera_location_(Core::SVector3(0.f, 0.f, 1.f))
 {
 	min_draw_distance_ = input_min_draw_distance;
@@ -25,7 +25,7 @@ void ScrapEngine::Render::Camera::execute_camera_update()
 	update_frustum();
 }
 
-void ScrapEngine::Render::Camera::process_mouse_movement(float xpos, float ypos, bool constrain_pitch)
+void ScrapEngine::Render::Camera::process_mouse_movement(const float xpos, const float ypos, const bool constrain_pitch)
 {
 	if (first_mouse_read_)
 	{
@@ -63,19 +63,19 @@ void ScrapEngine::Render::Camera::update_camera_vectors()
 	camera_front_ = normalize(front);
 }
 
-void ScrapEngine::Render::Camera::set_mouse_sensivity(float new_sensivity)
+void ScrapEngine::Render::Camera::set_mouse_sensivity(const float new_sensivity)
 {
 	mouse_sensivity_ = new_sensivity;
 }
 
-void ScrapEngine::Render::Camera::set_min_render_distance(float new_render_distance)
+void ScrapEngine::Render::Camera::set_min_render_distance(const float new_render_distance)
 {
 	min_draw_distance_ = new_render_distance;
 	//Update projection matrix
 	generate_projection_matrix();
 }
 
-void ScrapEngine::Render::Camera::set_max_render_distance(float new_render_distance)
+void ScrapEngine::Render::Camera::set_max_render_distance(const float new_render_distance)
 {
 	max_draw_distance_ = new_render_distance;
 	//Update projection matrix

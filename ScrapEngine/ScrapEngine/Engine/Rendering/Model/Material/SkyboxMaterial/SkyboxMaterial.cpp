@@ -3,6 +3,7 @@
 #include <Engine/Rendering/Pipeline/SkyboxPipeline/SkyboxVulkanGraphicsPipeline.h>
 #include <Engine/Rendering/Texture/Texture/SkyboxTexture/SkyboxTexture.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
+#include <Engine/Rendering/Descriptor/DescriptorPool/StandardDescriptorPool/StandardDescriptorPool.h>
 
 ScrapEngine::Render::SkyboxMaterial::~SkyboxMaterial()
 {
@@ -46,7 +47,7 @@ void ScrapEngine::Render::SkyboxMaterial::create_skybox_texture(const std::array
 void ScrapEngine::Render::SkyboxMaterial::create_descriptor_sets(VulkanSwapChain* swap_chain,
                                                                  UniformBuffer* uniform_buffer)
 {
-	vulkan_render_descriptor_pool_ = new VulkanDescriptorPool(swap_chain->get_swap_chain_images_vector());
+	vulkan_render_descriptor_pool_ = new StandardDescriptorPool(swap_chain->get_swap_chain_images_vector());
 	vulkan_render_descriptor_set_->create_descriptor_sets(vulkan_render_descriptor_pool_->get_descriptor_pool(),
 	                                                      swap_chain->get_swap_chain_images_vector(),
 	                                                      uniform_buffer->get_uniform_buffers(),

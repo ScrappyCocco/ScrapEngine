@@ -2,7 +2,7 @@
 #include <Engine/Rendering/Base/Vertex.h>
 #include <Engine/Rendering/Shader/ShaderManager.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
-#include <Engine/Rendering/RenderPass/VulkanRenderPass.h>
+#include <Engine/Rendering/RenderPass/StandardRenderPass/StandardRenderPass.h>
 
 ScrapEngine::Render::SkyboxVulkanGraphicsPipeline::SkyboxVulkanGraphicsPipeline(const char* vertex_shader,
                                                                                 const char* fragment_shader,
@@ -11,12 +11,9 @@ ScrapEngine::Render::SkyboxVulkanGraphicsPipeline::SkyboxVulkanGraphicsPipeline(
                                                                                 descriptor_set_layout,
                                                                                 vk::SampleCountFlagBits msaa_samples)
 {
-	vk::ShaderModule vert_shader_module = ShaderManager::create_shader_module(
-		ShaderManager::read_file(vertex_shader)
-	);
-	vk::ShaderModule frag_shader_module = ShaderManager::create_shader_module(
-		ShaderManager::read_file(fragment_shader)
-	);
+	vk::ShaderModule vert_shader_module = ShaderManager::get_instance()->get_shader_module(vertex_shader);
+
+	vk::ShaderModule frag_shader_module = ShaderManager::get_instance()->get_shader_module(fragment_shader);
 
 	vk::PipelineShaderStageCreateInfo vert_shader_stage_info(
 		vk::PipelineShaderStageCreateFlags(),
@@ -117,7 +114,7 @@ ScrapEngine::Render::SkyboxVulkanGraphicsPipeline::SkyboxVulkanGraphicsPipeline(
 			&pipeline_layout_info, nullptr, &pipeline_layout_)
 		!= vk::Result::eSuccess)
 	{
-		throw std::runtime_error("VulkanGraphicsPipeline: Failed to create pipeline layout!");
+		throw std::runtime_error("SkyboxVulkanGraphicsPipeline: Failed to create pipeline layout!");
 	}
 
 	vk::GraphicsPipelineCreateInfo pipeline_info(
@@ -134,7 +131,7 @@ ScrapEngine::Render::SkyboxVulkanGraphicsPipeline::SkyboxVulkanGraphicsPipeline(
 		&color_blending,
 		nullptr,
 		pipeline_layout_,
-		*VulkanRenderPass::get_instance()->get_render_pass(),
+		*StandardRenderPass::get_instance()->get_render_pass(),
 		0
 	);
 
@@ -142,9 +139,6 @@ ScrapEngine::Render::SkyboxVulkanGraphicsPipeline::SkyboxVulkanGraphicsPipeline(
 	                                                                                &graphics_pipeline_)
 		!= vk::Result::eSuccess)
 	{
-		throw std::runtime_error("VulkanGraphicsPipeline: Failed to create graphics pipeline!");
+		throw std::runtime_error("SkyboxVulkanGraphicsPipeline: Failed to create graphics pipeline!");
 	}
-
-	VulkanDevice::get_instance()->get_logical_device()->destroyShaderModule(frag_shader_module);
-	VulkanDevice::get_instance()->get_logical_device()->destroyShaderModule(vert_shader_module);
 }

@@ -48,7 +48,7 @@ int ScrapEngine::Render::VulkanSkyboxInstance::get_cubemap_size() const
 	return static_cast<int>(skybox_transform_.get_scale().get_x());
 }
 
-void ScrapEngine::Render::VulkanSkyboxInstance::set_cubemap_size(unsigned int new_size)
+void ScrapEngine::Render::VulkanSkyboxInstance::set_cubemap_size(const unsigned int new_size)
 {
 	const float size = static_cast<float>(new_size);
 	skybox_transform_.set_scale(Core::SVector3(size, size, size));

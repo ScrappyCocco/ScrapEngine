@@ -19,8 +19,13 @@ namespace ScrapEngine
 			const std::string window_title_ = "ScrapEngine Game";
 
 			GLFWwindow* window_; //actual window reference
-
+			Input::InputManager* input_ = nullptr;
 		public:
+			struct window_pos
+			{
+				int xpos, ypos;
+			};
+
 			GameWindow(uint32_t input_width = 800, uint32_t input_height = 600,
 			           std::string input_window_title = "ScrapEngine Game");
 			~GameWindow();
@@ -28,13 +33,15 @@ namespace ScrapEngine
 			void initialize_window();
 			void center_window(GLFWmonitor* monitor) const;
 
+			window_pos get_window_pos() const;
+
 			void set_window_size(int input_width, int input_height) const;
 			void set_window_title(const std::string& title) const;
 			void set_window_icon(const std::string& path_to_file) const;
 
 			void close_window() const;
 
-			Input::InputManager* create_window_input_manager() const;
+			Input::InputManager* create_window_input_manager();
 
 			bool check_window_should_close() const;
 		};

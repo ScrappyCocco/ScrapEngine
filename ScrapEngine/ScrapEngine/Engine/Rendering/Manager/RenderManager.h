@@ -7,16 +7,18 @@
 #include <Engine/Rendering/Device/VulkanDevice.h>
 #include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
 #include <Engine/Rendering/SwapChain/VulkanImageView.h>
-#include <Engine/Rendering/RenderPass/VulkanRenderPass.h>
+#include <Engine/Rendering/RenderPass/BaseRenderPass.h>
 #include <Engine/Rendering/Buffer/FrameBuffer/VulkanFrameBuffer.h>
 #include <Engine/Rendering/CommandPool/VulkanCommandPool.h>
-#include <Engine/Rendering/Buffer/CommandBuffer/VulkanCommandBuffer.h>
+#include <Engine/Rendering/Buffer/CommandBuffer/GuiCommandBuffer/GuiCommandBuffer.h>
+#include <Engine/Rendering/Buffer/CommandBuffer/StandardCommandBuffer/StandardCommandBuffer.h>
 #include <Engine/Rendering/Semaphores/VulkanSemaphoresManager.h>
 #include <Engine/Rendering/Buffer/UniformBuffer/UniformBuffer.h>
 #include <Engine/Rendering/DepthResources/VulkanDepthResources.h>
 #include <Engine/Rendering/Texture/ColorResources/VulkanColorResources.h>
 #include <Engine/Rendering/Model/MeshInstance/VulkanMeshInstance.h>
 #include <Engine/Rendering/Model/SkyboxInstance/VulkanSkyboxInstance.h>
+#include <Engine/Rendering/Gui/VulkanImGui.h>
 #include <TaskScheduler.h>
 
 namespace ScrapEngine
@@ -31,7 +33,6 @@ namespace ScrapEngine
 			VulkanDevice* vulkan_render_device_ = nullptr;
 			VulkanSwapChain* vulkan_render_swap_chain_ = nullptr;
 			VulkanImageView* vulkan_render_image_view_ = nullptr;
-			VulkanRenderPass* vulkan_rendering_pass_ = nullptr;
 			VulkanFrameBuffer* vulkan_render_frame_buffer_ = nullptr;
 			VulkanCommandPool* vulkan_render_command_pool_ = nullptr;
 			BaseQueue* vulkan_graphics_queue_ = nullptr;
@@ -40,6 +41,7 @@ namespace ScrapEngine
 			VulkanSurface* vulkan_window_surface_ = nullptr;
 			VulkanDepthResources* vulkan_render_depth_ = nullptr;
 			VulkanColorResources* vulkan_render_color_ = nullptr;
+			VulkanImGui* gui_render_ = nullptr;
 
 			Camera* render_camera_ = nullptr;
 			Camera* default_camera_ = nullptr;
@@ -61,12 +63,13 @@ namespace ScrapEngine
 			//Scheduler tasks
 			enki::TaskScheduler g_TS;
 
+			//---standard command buffers
 			//Multi threaded command buffers
 			struct threaded_command_buffer
 			{
 				bool is_running = false;
 				VulkanCommandPool* command_pool = nullptr;
-				VulkanCommandBuffer* command_buffer = nullptr;
+				StandardCommandBuffer* command_buffer = nullptr;
 			};
 			//Flag to know if i'm using the first or the second command buffer
 			bool command_buffer_flip_flop_ = false;
@@ -85,17 +88,43 @@ namespace ScrapEngine
 			std::vector<ParallelCommandBufferCreation*> command_buffers_tasks_;
 			//This is the fence used to wait that the previous command buffer has finished and can be deleted
 			const vk::Fence* waiting_fence_ = nullptr;
+
+			//---gui
+			//The gui command buffer, is rebuilt every frame
+			GuiCommandBuffer* gui_command_buffer_;
+			BaseRenderPass* gui_render_pass_ = nullptr;
+
+			//Parallel task used to create gui command buffer while other updates() execute
+			//It's started at post_gui_render() and run during audio and physics update
+			//Must be ready before draw frame() or will be waited
+			struct ParallelGuiCommandBufferCreation : enki::ITaskSet
+			{
+				RenderManager* owner;
+				void ExecuteRange(enki::TaskSetPartition range, uint32_t threadnum) override;
+			};
+			ParallelGuiCommandBufferCreation* gui_command_buffer_task_;
+
+			//This is the fence used to wait that the previous command buffer has finished and can be deleted
+			const vk::Fence* gui_waiting_fence_ = nullptr;
+
+			//Necessary to rebuild the gui command buffer
+			//This because "image_index_" might be updated before the gui thread read it and this will lead to error
+			//So this variable is updated only at the end of the frame
+			uint32_t last_image_index_ = 0;
 		public:
 			RenderManager(const game_base_info* received_base_game_info);
 			~RenderManager();
-			void prepare_to_draw_frame();
 		private:
 			void initialize_vulkan(const game_base_info* received_base_game_info);
 			void initialize_scheduler();
+			void initialize_gui(float width, float height);
 			void initialize_command_buffers();
+			void initialize_gui_command_buffers();
 
 			void create_queues();
 			void delete_queues() const;
+
+			void rebuild_gui_command_buffer(bool for_next_image = true) const;
 
 			void create_command_buffer(bool flip_flop);
 			void check_start_new_thread();
@@ -107,6 +136,17 @@ namespace ScrapEngine
 
 			void create_camera();
 		public:
+			//Rebuild the command buffer
+			//Is better to call this before starting the main loop
+			//So there's a command buffer ready to use with all the objects loaded
+			void prepare_to_draw_frame();
+
+			//Draw call used to display the loading screen
+			//Is not very different from draw_frame, but is used only at startup now
+			//Is useful because doesn't call multithreaded tasks
+			void draw_loading_frame();
+
+			//Standard draw frame call
 			void draw_frame();
 			void wait_device_idle() const;
 
@@ -127,6 +167,10 @@ namespace ScrapEngine
 			Camera* get_render_camera() const;
 			Camera* get_default_render_camera() const;
 			void set_render_camera(Camera* new_camera);
+
+			//Gui stuff
+			void pre_gui_render() const;
+			void post_gui_render();
 		};
 	}
 }

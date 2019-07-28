@@ -1,9 +1,7 @@
-#include <Engine/Rendering/Descriptor/VulkanDescriptorSet.h>
-#include <stdexcept>
-#include <array>
+#include <Engine/Rendering/Descriptor/DescriptorSet/StandardDescriptorSet/StandardDescriptorSet.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
 
-ScrapEngine::Render::VulkanDescriptorSet::VulkanDescriptorSet()
+ScrapEngine::Render::StandardDescriptorSet::StandardDescriptorSet() : BaseDescriptorSet()
 {
 	const vk::DescriptorSetLayoutBinding ubo_layout_binding(
 		0,
@@ -33,16 +31,11 @@ ScrapEngine::Render::VulkanDescriptorSet::VulkanDescriptorSet()
 			&layout_info, nullptr, &descriptor_set_layout_)
 		!= vk::Result::eSuccess)
 	{
-		throw std::runtime_error("VulkanDescriptorSet: Failed to create descriptor set layout!");
+		throw std::runtime_error("StandardDescriptorSet: Failed to create descriptor set layout!");
 	}
 }
 
-ScrapEngine::Render::VulkanDescriptorSet::~VulkanDescriptorSet()
-{
-	VulkanDevice::get_instance()->get_logical_device()->destroyDescriptorSetLayout(descriptor_set_layout_);
-}
-
-void ScrapEngine::Render::VulkanDescriptorSet::create_descriptor_sets(vk::DescriptorPool* descriptor_pool,
+void ScrapEngine::Render::StandardDescriptorSet::create_descriptor_sets(vk::DescriptorPool* descriptor_pool,
                                                                       const std::vector<vk::Image>* swap_chain_images,
                                                                       const std::vector<vk::Buffer>* uniform_buffers,
                                                                       vk::ImageView* texture_image_view,
@@ -62,7 +55,7 @@ void ScrapEngine::Render::VulkanDescriptorSet::create_descriptor_sets(vk::Descri
 	if (VulkanDevice::get_instance()->get_logical_device()->allocateDescriptorSets(&alloc_info, &descriptor_sets_[0])
 		!= vk::Result::eSuccess)
 	{
-		throw std::runtime_error("DescriptorSetLayout: Failed to allocate descriptor sets!");
+		throw std::runtime_error("StandardDescriptorSet - DescriptorSetLayout: Failed to allocate descriptor sets!");
 	}
 
 	for (size_t i = 0; i < swap_chain_images->size(); i++)
@@ -103,19 +96,4 @@ void ScrapEngine::Render::VulkanDescriptorSet::create_descriptor_sets(vk::Descri
 			static_cast<uint32_t>(descriptor_writes.size()),
 			descriptor_writes.data(), 0, nullptr);
 	}
-}
-
-vk::DescriptorSetLayout* ScrapEngine::Render::VulkanDescriptorSet::get_descriptor_set_layout()
-{
-	return &descriptor_set_layout_;
-}
-
-vk::PipelineLayout* ScrapEngine::Render::VulkanDescriptorSet::get_pipeline_layout()
-{
-	return &pipeline_layout_;
-}
-
-const std::vector<vk::DescriptorSet>* ScrapEngine::Render::VulkanDescriptorSet::get_descriptor_sets() const
-{
-	return &descriptor_sets_;
 }

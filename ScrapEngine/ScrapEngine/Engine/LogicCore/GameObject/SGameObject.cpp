@@ -2,9 +2,8 @@
 #include <algorithm>
 
 ScrapEngine::Core::SGameObject::SGameObject(const std::string& object_name,
-                                            const STransform& input_object_transform,
-                                            const bool is_static_object) :
-	SObject(object_name), object_transform_(input_object_transform), is_static_(is_static_object)
+                                            const STransform& input_object_transform)
+	: SObject(object_name), object_transform_(input_object_transform)
 {
 }
 
@@ -26,7 +25,12 @@ void ScrapEngine::Core::SGameObject::game_update(float time)
 	//This will be defined by the user when is necessary, otherwise it will have no effect
 }
 
-void ScrapEngine::Core::SGameObject::set_should_update(bool should_update)
+void ScrapEngine::Core::SGameObject::on_gui()
+{
+	//This will be defined by the user when is necessary, otherwise it will have no effect
+}
+
+void ScrapEngine::Core::SGameObject::set_should_update(const bool should_update)
 {
 	this->should_update = should_update;
 }

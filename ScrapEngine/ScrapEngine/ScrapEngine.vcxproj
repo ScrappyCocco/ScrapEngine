@@ -19,6 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\external\imgui\imgui.cpp" />
+    <ClCompile Include="..\..\external\imgui\imgui_demo.cpp" />
+    <ClCompile Include="..\..\external\imgui\imgui_draw.cpp" />
+    <ClCompile Include="..\..\external\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Engine\Audio\Buffer\AudioBuffer.cpp" />
     <ClCompile Include="Engine\Audio\Buffer\Wav\WavAudioBuffer.cpp" />
     <ClCompile Include="Engine\Audio\Context\AudioContext.cpp" />
@@ -27,6 +31,7 @@
     <ClCompile Include="Engine\Audio\Manager\AudioManager.cpp" />
     <ClCompile Include="Engine\Audio\Source\AudioSource.cpp" />
     <ClCompile Include="Engine\Debug\DebugLog.cpp" />
+    <ClCompile Include="Engine\Input\Gui\GuiInput.cpp" />
     <ClCompile Include="Engine\Input\Manager\InputManager.cpp" />
     <ClCompile Include="Engine\LogicCore\Components\AudioComponent\2dAudioComponent\2DAudioComponent.cpp" />
     <ClCompile Include="Engine\LogicCore\Components\AudioComponent\3dAudioComponent\3DAudioComponent.cpp" />
@@ -61,8 +66,11 @@
     <ClCompile Include="Engine\Rendering\Buffer\BufferContainer\BufferContainer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\BufferContainer\IndicesBufferContainer\IndicesBufferContainer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\BufferContainer\VertexBufferContainer\VertexBufferContainer.cpp" />
-    <ClCompile Include="Engine\Rendering\Buffer\CommandBuffer\VulkanCommandBuffer.cpp" />
+    <ClCompile Include="Engine\Rendering\Buffer\CommandBuffer\BaseCommandBuffer.cpp" />
+    <ClCompile Include="Engine\Rendering\Buffer\CommandBuffer\GuiCommandBuffer\GuiCommandBuffer.cpp" />
+    <ClCompile Include="Engine\Rendering\Buffer\CommandBuffer\StandardCommandBuffer\StandardCommandBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\FrameBuffer\VulkanFrameBuffer.cpp" />
+    <ClCompile Include="Engine\Rendering\Buffer\GenericBuffer\GenericBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\IndexBuffer\IndexBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\StagingBuffer\BaseStagingBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\StagingBuffer\ImageStagingBuffer\ImageStagingBuffer.cpp" />
@@ -76,9 +84,14 @@
     <ClCompile Include="Engine\Rendering\CommandPool\Standard\StandardCommandPool.cpp" />
     <ClCompile Include="Engine\Rendering\CommandPool\VulkanCommandPool.cpp" />
     <ClCompile Include="Engine\Rendering\DepthResources\VulkanDepthResources.cpp" />
-    <ClCompile Include="Engine\Rendering\Descriptor\VulkanDescriptorPool.cpp" />
-    <ClCompile Include="Engine\Rendering\Descriptor\VulkanDescriptorSet.cpp" />
+    <ClCompile Include="Engine\Rendering\Descriptor\DescriptorPool\BaseDescriptorPool.cpp" />
+    <ClCompile Include="Engine\Rendering\Descriptor\DescriptorPool\GuiDescriptorPool\GuiDescriptorPool.cpp" />
+    <ClCompile Include="Engine\Rendering\Descriptor\DescriptorPool\StandardDescriptorPool\StandardDescriptorPool.cpp" />
+    <ClCompile Include="Engine\Rendering\Descriptor\DescriptorSet\BaseDescriptorSet.cpp" />
+    <ClCompile Include="Engine\Rendering\Descriptor\DescriptorSet\GuiDescriptorSet\GuiDescriptorSet.cpp" />
+    <ClCompile Include="Engine\Rendering\Descriptor\DescriptorSet\StandardDescriptorSet\StandardDescriptorSet.cpp" />
     <ClCompile Include="Engine\Rendering\Device\VulkanDevice.cpp" />
+    <ClCompile Include="Engine\Rendering\Gui\VulkanImGui.cpp" />
     <ClCompile Include="Engine\Rendering\Instance\VukanInstance.cpp" />
     <ClCompile Include="Engine\Rendering\Manager\RenderManager.cpp" />
     <ClCompile Include="Engine\Rendering\Manager\RenderManagerView.cpp" />
@@ -93,12 +106,15 @@
     <ClCompile Include="Engine\Rendering\Model\ObjectPool\VulkanSimpleMaterialPool\VulkanSimpleMaterialPool.cpp" />
     <ClCompile Include="Engine\Rendering\Model\SkyboxInstance\VulkanSkyboxInstance.cpp" />
     <ClCompile Include="Engine\Rendering\Pipeline\BaseVulkanGraphicsPipeline.cpp" />
+    <ClCompile Include="Engine\Rendering\Pipeline\GuiPipeline\GuiVulkanGraphicsPipeline.cpp" />
     <ClCompile Include="Engine\Rendering\Pipeline\SkyboxPipeline\SkyboxVulkanGraphicsPipeline.cpp" />
     <ClCompile Include="Engine\Rendering\Pipeline\StandardPipeline\StandardVulkanGraphicsPipeline.cpp" />
     <ClCompile Include="Engine\Rendering\Queue\BaseQueue.cpp" />
     <ClCompile Include="Engine\Rendering\Queue\GraphicsQueue\GraphicsQueue.cpp" />
     <ClCompile Include="Engine\Rendering\Queue\PresentationQueue\PresentQueue.cpp" />
-    <ClCompile Include="Engine\Rendering\RenderPass\VulkanRenderPass.cpp" />
+    <ClCompile Include="Engine\Rendering\RenderPass\BaseRenderPass.cpp" />
+    <ClCompile Include="Engine\Rendering\RenderPass\GuiRenderPass\GuiRenderPass.cpp" />
+    <ClCompile Include="Engine\Rendering\RenderPass\StandardRenderPass\StandardRenderPass.cpp" />
     <ClCompile Include="Engine\Rendering\Semaphores\VulkanSemaphoresManager.cpp" />
     <ClCompile Include="Engine\Rendering\Shader\ShaderManager.cpp" />
     <ClCompile Include="Engine\Rendering\SwapChain\VulkanImageView.cpp" />
@@ -115,6 +131,11 @@
     <ClCompile Include="Engine\Utility\UsefulMethods.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\external\imgui\imgui.h" />
+    <ClInclude Include="..\..\external\imgui\imgui_internal.h" />
+    <ClInclude Include="..\..\external\imgui\imstb_rectpack.h" />
+    <ClInclude Include="..\..\external\imgui\imstb_textedit.h" />
+    <ClInclude Include="..\..\external\imgui\imstb_truetype.h" />
     <ClInclude Include="..\..\external\stb\stb_image.h" />
     <ClInclude Include="Engine\Audio\Buffer\AudioBuffer.h" />
     <ClInclude Include="Engine\Audio\Buffer\Wav\WavAudioBuffer.h" />
@@ -124,6 +145,7 @@
     <ClInclude Include="Engine\Audio\Manager\AudioManager.h" />
     <ClInclude Include="Engine\Audio\Source\AudioSource.h" />
     <ClInclude Include="Engine\Debug\DebugLog.h" />
+    <ClInclude Include="Engine\Input\Gui\GuiInput.h" />
     <ClInclude Include="Engine\Input\KeyboardKeys.h" />
     <ClInclude Include="Engine\Input\Manager\InputManager.h" />
     <ClInclude Include="Engine\Input\MouseButtons.h" />
@@ -162,8 +184,11 @@
     <ClInclude Include="Engine\Rendering\Buffer\BufferContainer\BufferContainer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\BufferContainer\IndicesBufferContainer\IndicesBufferContainer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\BufferContainer\VertexBufferContainer\VertexBufferContainer.h" />
-    <ClInclude Include="Engine\Rendering\Buffer\CommandBuffer\VulkanCommandBuffer.h" />
+    <ClInclude Include="Engine\Rendering\Buffer\CommandBuffer\BaseCommandBuffer.h" />
+    <ClInclude Include="Engine\Rendering\Buffer\CommandBuffer\GuiCommandBuffer\GuiCommandBuffer.h" />
+    <ClInclude Include="Engine\Rendering\Buffer\CommandBuffer\StandardCommandBuffer\StandardCommandBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\FrameBuffer\VulkanFrameBuffer.h" />
+    <ClInclude Include="Engine\Rendering\Buffer\GenericBuffer\GenericBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\IndexBuffer\IndexBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\StagingBuffer\BaseStagingBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\StagingBuffer\ImageStagingBuffer\ImageStagingBuffer.h" />
@@ -177,9 +202,14 @@
     <ClInclude Include="Engine\Rendering\CommandPool\Standard\StandardCommandPool.h" />
     <ClInclude Include="Engine\Rendering\CommandPool\VulkanCommandPool.h" />
     <ClInclude Include="Engine\Rendering\DepthResources\VulkanDepthResources.h" />
-    <ClInclude Include="Engine\Rendering\Descriptor\VulkanDescriptorPool.h" />
-    <ClInclude Include="Engine\Rendering\Descriptor\VulkanDescriptorSet.h" />
+    <ClInclude Include="Engine\Rendering\Descriptor\DescriptorPool\BaseDescriptorPool.h" />
+    <ClInclude Include="Engine\Rendering\Descriptor\DescriptorPool\GuiDescriptorPool\GuiDescriptorPool.h" />
+    <ClInclude Include="Engine\Rendering\Descriptor\DescriptorPool\StandardDescriptorPool\StandardDescriptorPool.h" />
+    <ClInclude Include="Engine\Rendering\Descriptor\DescriptorSet\BaseDescriptorSet.h" />
+    <ClInclude Include="Engine\Rendering\Descriptor\DescriptorSet\GuiDescriptorSet\GuiDescriptorSet.h" />
+    <ClInclude Include="Engine\Rendering\Descriptor\DescriptorSet\StandardDescriptorSet\StandardDescriptorSet.h" />
     <ClInclude Include="Engine\Rendering\Device\VulkanDevice.h" />
+    <ClInclude Include="Engine\Rendering\Gui\VulkanImGui.h" />
     <ClInclude Include="Engine\Rendering\Instance\VukanInstance.h" />
     <ClInclude Include="Engine\Rendering\Manager\RenderManager.h" />
     <ClInclude Include="Engine\Rendering\Manager\RenderManagerView.h" />
@@ -195,12 +225,15 @@
     <ClInclude Include="Engine\Rendering\Model\ObjectPool\VulkanSimpleMaterialPool\VulkanSimpleMaterialPool.h" />
     <ClInclude Include="Engine\Rendering\Model\SkyboxInstance\VulkanSkyboxInstance.h" />
     <ClInclude Include="Engine\Rendering\Pipeline\BaseVulkanGraphicsPipeline.h" />
+    <ClInclude Include="Engine\Rendering\Pipeline\GuiPipeline\GuiVulkanGraphicsPipeline.h" />
     <ClInclude Include="Engine\Rendering\Pipeline\SkyboxPipeline\SkyboxVulkanGraphicsPipeline.h" />
     <ClInclude Include="Engine\Rendering\Pipeline\StandardPipeline\StandardVulkanGraphicsPipeline.h" />
     <ClInclude Include="Engine\Rendering\Queue\BaseQueue.h" />
     <ClInclude Include="Engine\Rendering\Queue\GraphicsQueue\GraphicsQueue.h" />
     <ClInclude Include="Engine\Rendering\Queue\PresentationQueue\PresentQueue.h" />
-    <ClInclude Include="Engine\Rendering\RenderPass\VulkanRenderPass.h" />
+    <ClInclude Include="Engine\Rendering\RenderPass\BaseRenderPass.h" />
+    <ClInclude Include="Engine\Rendering\RenderPass\GuiRenderPass\GuiRenderPass.h" />
+    <ClInclude Include="Engine\Rendering\RenderPass\StandardRenderPass\StandardRenderPass.h" />
     <ClInclude Include="Engine\Rendering\Semaphores\VulkanSemaphoresManager.h" />
     <ClInclude Include="Engine\Rendering\Shader\ShaderManager.h" />
     <ClInclude Include="Engine\Rendering\SwapChain\VulkanImageView.h" />
@@ -275,7 +308,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)ScrapEngine;$(SolutionDir)..\external\VulkanSDK\Vulkan-Headers\include;$(SolutionDir)..\external\glm;$(SolutionDir)..\external\stb;$(SolutionDir)..\external\gli;$(SolutionDir)..\external\glfw\include;$(SolutionDir)..\external\assimp\include;$(SolutionDir)..\external\reactphysics\src;$(SolutionDir)..\external\enkits\src;$(SolutionDir)..\external\openal-soft\include;$(SolutionDir)..\external\openal-soft\common;$(SolutionDir)..\external\openal-soft\Alc;$(SolutionDir)..\external\openal-soft\OpenAL32\Include;$(SolutionDir)..\external\dr_libs;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)ScrapEngine;$(SolutionDir)..\external\VulkanSDK\Vulkan-Headers\include;$(SolutionDir)..\external\glm;$(SolutionDir)..\external\stb;$(SolutionDir)..\external\gli;$(SolutionDir)..\external\glfw\include;$(SolutionDir)..\external\assimp\include;$(SolutionDir)..\external\reactphysics\src;$(SolutionDir)..\external\enkits\src;$(SolutionDir)..\external\openal-soft\include;$(SolutionDir)..\external\openal-soft\common;$(SolutionDir)..\external\openal-soft\Alc;$(SolutionDir)..\external\openal-soft\OpenAL32\Include;$(SolutionDir)..\external\dr_libs;$(SolutionDir)..\external\imgui;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -283,7 +316,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)ScrapEngine;$(SolutionDir)..\external\VulkanSDK\Vulkan-Headers\include;$(SolutionDir)..\external\glm;$(SolutionDir)..\external\stb;$(SolutionDir)..\external\gli;$(SolutionDir)..\external\glfw\include;$(SolutionDir)..\external\assimp\include;$(SolutionDir)..\external\reactphysics\src;$(SolutionDir)..\external\enkits\src;$(SolutionDir)..\external\openal-soft\include;$(SolutionDir)..\external\openal-soft\common;$(SolutionDir)..\external\openal-soft\Alc;$(SolutionDir)..\external\openal-soft\OpenAL32\Include;$(SolutionDir)..\external\dr_libs;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)ScrapEngine;$(SolutionDir)..\external\VulkanSDK\Vulkan-Headers\include;$(SolutionDir)..\external\glm;$(SolutionDir)..\external\stb;$(SolutionDir)..\external\gli;$(SolutionDir)..\external\glfw\include;$(SolutionDir)..\external\assimp\include;$(SolutionDir)..\external\reactphysics\src;$(SolutionDir)..\external\enkits\src;$(SolutionDir)..\external\openal-soft\include;$(SolutionDir)..\external\openal-soft\common;$(SolutionDir)..\external\openal-soft\Alc;$(SolutionDir)..\external\openal-soft\OpenAL32\Include;$(SolutionDir)..\external\dr_libs;$(SolutionDir)..\external\imgui;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

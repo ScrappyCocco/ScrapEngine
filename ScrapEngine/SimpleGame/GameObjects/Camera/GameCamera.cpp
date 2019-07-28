@@ -22,7 +22,7 @@ void GameCamera::game_start()
 void GameCamera::game_update(const float time)
 {
 	//look position
-	const ScrapEngine::Input::mouse_location mouse = InputManagerRef->get_last_mouse_location();
+	/*const ScrapEngine::Input::mouse_location mouse = InputManagerRef->get_last_mouse_location();
 	GameCameraRef->process_mouse_movement(static_cast<float>(mouse.xpos), static_cast<float>(mouse.ypos), true);
 
 	//speed
@@ -48,7 +48,7 @@ void GameCamera::game_update(const float time)
 	}
 	if (InputManagerRef->get_keyboard_key_pressed(KEYBOARD_KEY_A)) {
 		GameCameraRef->set_camera_location(GameCameraRef->get_camera_location() - (((GameCameraRef->get_camera_front() ^ GameCameraRef->get_camera_up()).normalize()) * camera_speed_));
-	}
+	}*/
 
 	//Close game
 	if (InputManagerRef->get_keyboard_key_pressed(KEYBOARD_KEY_ESCAPE)) {

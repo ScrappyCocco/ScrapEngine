@@ -16,6 +16,8 @@ ScrapEngine::Render::GameWindow::GameWindow(
 
 ScrapEngine::Render::GameWindow::~GameWindow()
 {
+	delete input_;
+
 	glfwDestroyWindow(window_);
 
 	glfwTerminate();
@@ -51,6 +53,13 @@ void ScrapEngine::Render::GameWindow::center_window(GLFWmonitor* monitor) const
 	                 monitor_y + (mode->height - window_height) / 2);
 }
 
+ScrapEngine::Render::GameWindow::window_pos ScrapEngine::Render::GameWindow::get_window_pos() const
+{
+	window_pos return_pos{};
+	glfwGetWindowPos(window_, &return_pos.xpos, &return_pos.ypos);
+	return return_pos;
+}
+
 void ScrapEngine::Render::GameWindow::set_window_size(int input_width, int input_height) const
 {
 	glfwSetWindowSize(window_, input_width, input_height);
@@ -71,9 +80,12 @@ void ScrapEngine::Render::GameWindow::close_window() const
 	glfwSetWindowShouldClose(window_, GLFW_TRUE);
 }
 
-ScrapEngine::Input::InputManager* ScrapEngine::Render::GameWindow::create_window_input_manager() const
+ScrapEngine::Input::InputManager* ScrapEngine::Render::GameWindow::create_window_input_manager()
 {
-	return new Input::InputManager(window_);
+	if (input_ == nullptr) {
+		input_ = new Input::InputManager(window_);
+	}
+	return input_;
 }
 
 bool ScrapEngine::Render::GameWindow::check_window_should_close() const

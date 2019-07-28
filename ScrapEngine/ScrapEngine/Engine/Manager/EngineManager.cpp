@@ -1,6 +1,7 @@
 #include <Engine/Manager/EngineManager.h>
 #include <chrono>
 #include <Engine/Debug/DebugLog.h>
+#include <Engine/Input/Gui/GuiInput.h>
 
 ScrapEngine::Manager::EngineManager::EngineManager(std::string app_name, int app_version, uint32_t window_width,
                                                    uint32_t window_height, bool fullscreen, bool vsync)
@@ -50,6 +51,8 @@ void ScrapEngine::Manager::EngineManager::initialize_render_manager(const game_b
 void ScrapEngine::Manager::EngineManager::initialize_logic_manager()
 {
 	scrap_logic_manager_ = new Core::LogicManager();
+	//Reference to update gui input
+	scrap_input_manager_ = scrap_render_manager_->get_game_window()->create_window_input_manager();
 }
 
 void ScrapEngine::Manager::EngineManager::initialize_physics_manager()
@@ -79,9 +82,12 @@ void ScrapEngine::Manager::EngineManager::main_game_loop()
 	while (!window_ref->check_window_should_close())
 	{
 		//Compute frame delta time
-		const float time = std::chrono::duration<float, std::chrono::seconds::period>(current_time - start_time).count();
+		const float time = std::chrono::duration<float, std::chrono::seconds::period>(current_time - start_time).
+			count();
 		//Execute objects update()
 		scrap_logic_manager_->execute_game_objects_update_event(time);
+		//Gui data update
+		gui_update(time);
 		//Update physics
 		physics_update(time);
 		//Update audio
@@ -98,13 +104,38 @@ void ScrapEngine::Manager::EngineManager::main_game_loop()
 void ScrapEngine::Manager::EngineManager::physics_update(const float delta_time)
 {
 	accumulator_ += delta_time;
-	while (accumulator_ >= time_step_) {
+	while (accumulator_ >= time_step_)
+	{
 		physics_manager_->update_physics(time_step_);
 		accumulator_ -= time_step_;
 	}
 	const float factor = accumulator_ / time_step_;
 	//Once physics ended updating, update the rigidbody component position
 	logic_manager_view->get_components_manager()->update_rigidbody_physics(factor);
+}
+
+void ScrapEngine::Manager::EngineManager::gui_update(const float time) const
+{
+	//Mouse location
+	const Input::mouse_location loc = scrap_input_manager_->get_last_mouse_location();
+
+	Input::GuiInput::update_mouse_location(loc.xpos, loc.ypos);
+
+	//Mouse click
+	Input::GuiInput::update_mouse_click(
+		scrap_input_manager_->get_mouse_button_pressed(0),
+		scrap_input_manager_->get_mouse_button_pressed(1)
+	);
+
+	//Delta time
+	if (time > 0) {
+		Input::GuiInput::update_delta_time(time);
+	}
+
+	//Run gui render update
+	scrap_render_manager_->pre_gui_render();
+	scrap_logic_manager_->execute_game_objects_ongui_event();
+	scrap_render_manager_->post_gui_render();
 }
 
 void ScrapEngine::Manager::EngineManager::audio_update() const

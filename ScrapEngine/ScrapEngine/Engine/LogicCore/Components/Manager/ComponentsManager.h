@@ -72,8 +72,8 @@ namespace ScrapEngine
 			                                                            float mass = 0.f);
 			//----------------------------------------
 			//AudioStuff
-			AudioComponent2D* create_2d_sound(const std::string filename) const;
-			AudioComponent3D* create_3d_sound(const std::string filename) const;
+			AudioComponent2D* create_2d_sound(const std::string& filename) const;
+			AudioComponent3D* create_3d_sound(const std::string& filename) const;
 		};
 	}
 }
