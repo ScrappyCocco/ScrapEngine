@@ -47,9 +47,12 @@ namespace ScrapEngine
 
 			void update_buffers();
 
-			void generate_gui_frame() const;
+			void generate_empty_gui_frame() const;
+			void generate_loading_gui_frame() const;
 			void pre_gui_frame() const;
 			void post_gui_frame() const;
+
+			void loading_ui() const;
 
 			GuiDescriptorSet* get_descriptor_set() const;
 			GuiVulkanGraphicsPipeline* get_pipeline() const;

@@ -103,7 +103,7 @@ void ScrapEngine::Render::VulkanImGui::init_resources(VulkanSwapChain* swap_chai
 	                                          render_pass);
 
 	//Empty frame initialization
-	generate_gui_frame();
+	generate_empty_gui_frame();
 }
 
 void ScrapEngine::Render::VulkanImGui::update_buffers()
@@ -164,9 +164,16 @@ void ScrapEngine::Render::VulkanImGui::update_buffers()
 	index_buffer_->flush();
 }
 
-void ScrapEngine::Render::VulkanImGui::generate_gui_frame() const
+void ScrapEngine::Render::VulkanImGui::generate_empty_gui_frame() const
 {
 	pre_gui_frame();
+	post_gui_frame();
+}
+
+void ScrapEngine::Render::VulkanImGui::generate_loading_gui_frame() const
+{
+	pre_gui_frame();
+	loading_ui();
 	post_gui_frame();
 }
 
@@ -180,6 +187,19 @@ void ScrapEngine::Render::VulkanImGui::post_gui_frame() const
 {
 	//Render to generate draw buffers
 	ImGui::Render();
+}
+
+void ScrapEngine::Render::VulkanImGui::loading_ui() const
+{
+	ImGui::SetNextWindowPosCenter(ImGuiCond_Once);
+	ImGui::SetNextWindowBgAlpha(0.35f); // Transparent background
+
+	if (ImGui::Begin("Loading UI Overlay", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav))
+	{
+		ImGui::Text("ScrapEngine - Loading...");
+
+		ImGui::End();
+	}
 }
 
 ScrapEngine::Render::GuiDescriptorSet* ScrapEngine::Render::VulkanImGui::get_descriptor_set() const

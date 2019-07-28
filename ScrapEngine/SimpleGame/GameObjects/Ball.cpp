@@ -61,13 +61,14 @@ void Ball::on_gui()
 	{
 		const ImVec2 window_pos = ImVec2((corner & 1) ? io.DisplaySize.x - DISTANCE : DISTANCE, (corner & 2) ? io.DisplaySize.y - DISTANCE : DISTANCE);
 		const ImVec2 window_pos_pivot = ImVec2((corner & 1) ? 1.0f : 0.0f, (corner & 2) ? 1.0f : 0.0f);
-		ImGui::SetNextWindowPos(window_pos, ImGuiCond_Always, window_pos_pivot);
+		//ImGui::SetNextWindowPos(window_pos, ImGuiCond_Always, window_pos_pivot);
 	}
-
+	ImGui::SetNextWindowPosCenter(ImGuiCond_Once);
 	ImGui::SetNextWindowBgAlpha(0.35f); // Transparent background
 
 	if (ImGui::Begin("Example: Simple overlay", nullptr, (corner != -1 ? ImGuiWindowFlags_NoMove : 0) | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav))
 	{
+		auto size = ImGui::GetWindowSize();
 		ImGui::Text("Simple overlay\n" "in the corner of the screen.\n" "(right-click to change position)");
 		ImGui::Separator();
 		if (ImGui::IsMousePosValid())

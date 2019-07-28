@@ -114,7 +114,6 @@ namespace ScrapEngine
 		public:
 			RenderManager(const game_base_info* received_base_game_info);
 			~RenderManager();
-			void prepare_to_draw_frame();
 		private:
 			void initialize_vulkan(const game_base_info* received_base_game_info);
 			void initialize_scheduler();
@@ -137,6 +136,7 @@ namespace ScrapEngine
 
 			void create_camera();
 		public:
+			void prepare_to_draw_frame();
 			void draw_frame();
 			void wait_device_idle() const;
 
