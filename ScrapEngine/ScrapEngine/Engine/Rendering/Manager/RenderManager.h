@@ -124,7 +124,7 @@ namespace ScrapEngine
 			void create_queues();
 			void delete_queues() const;
 
-			void rebuild_gui_command_buffer() const;
+			void rebuild_gui_command_buffer(bool for_next_image = true) const;
 
 			void create_command_buffer(bool flip_flop);
 			void check_start_new_thread();
@@ -136,7 +136,17 @@ namespace ScrapEngine
 
 			void create_camera();
 		public:
+			//Rebuild the command buffer
+			//Is better to call this before starting the main loop
+			//So there's a command buffer ready to use with all the objects loaded
 			void prepare_to_draw_frame();
+
+			//Draw call used to display the loading screen
+			//Is not very different from draw_frame, but is used only at startup now
+			//Is useful because doesn't call multithreaded tasks
+			void draw_loading_frame();
+
+			//Standard draw frame call
 			void draw_frame();
 			void wait_device_idle() const;
 
