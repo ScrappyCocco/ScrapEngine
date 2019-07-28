@@ -25,6 +25,8 @@ namespace ScrapEngine
 			SQuaternion& operator=(SQuaternion&&) = default;
 			~SQuaternion() = default;
 
+			SQuaternion operator*(const SQuaternion& other) const;
+
 			SVector3 get_axis_x() const;
 			SVector3 get_axis_y() const;
 			SVector3 get_axis_z() const;

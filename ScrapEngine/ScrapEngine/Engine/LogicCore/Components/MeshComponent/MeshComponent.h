@@ -18,6 +18,7 @@ namespace ScrapEngine
 			void set_component_location(const SVector3& location) override;
 			void set_component_rotation(const SVector3& rotation) override;
 			void set_component_scale(const SVector3& scale) override;
+			void add_component_rotation(const SVector3& rotation) override;
 
 			bool get_is_visible() const;
 			void set_is_visible(bool visible) const;

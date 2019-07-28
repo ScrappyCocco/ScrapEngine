@@ -23,6 +23,12 @@ void ScrapEngine::Core::MeshComponent::set_component_scale(const SVector3& scale
 	vulkan_mesh_->set_mesh_scale(scale);
 }
 
+void ScrapEngine::Core::MeshComponent::add_component_rotation(const SVector3& rotation)
+{
+	SComponent::add_component_rotation(rotation);
+	vulkan_mesh_->set_mesh_rotation(get_component_rotation());
+}
+
 bool ScrapEngine::Core::MeshComponent::get_is_visible() const
 {
 	return vulkan_mesh_->get_is_visible();

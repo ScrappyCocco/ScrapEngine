@@ -34,6 +34,7 @@ namespace ScrapEngine
 			void set_object_location(const SVector3& location, bool should_update_relative = true);
 			void set_object_rotation(const SVector3& rotation, bool should_update_relative = true);
 			void set_object_scale(const SVector3& scale, bool should_update_relative = true);
+			void add_object_rotation(const SVector3& rotation);
 
 			SVector3 get_object_location() const;
 			SVector3 get_object_rotation() const;

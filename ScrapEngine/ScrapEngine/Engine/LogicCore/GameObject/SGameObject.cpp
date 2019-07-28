@@ -103,6 +103,13 @@ void ScrapEngine::Core::SGameObject::set_object_scale(const SVector3& scale, con
 	}
 }
 
+void ScrapEngine::Core::SGameObject::add_object_rotation(const SVector3& rotation)
+{
+	object_transform_.add_rotation(rotation);
+	//Update the rotation
+	set_object_rotation(get_object_rotation());
+}
+
 ScrapEngine::Core::SVector3 ScrapEngine::Core::SGameObject::get_object_location() const
 {
 	return object_transform_.get_position();
