@@ -1,59 +1,77 @@
 #include "GameCamera.h"
-#include <Engine/Debug/DebugLog.h>
 #include <Engine/Input/KeyboardKeys.h>
+#include "Engine/Debug/DebugLog.h"
 
-GameCamera::GameCamera(ScrapEngine::Input::InputManager* CreatedInputManagerf, ScrapEngine::Render::Camera* input_GameCameraRef) 
-:SGameObject("Camera-Controller Object"), GameCameraRef(input_GameCameraRef), InputManagerRef(CreatedInputManagerf)
+GameCamera::GameCamera(ScrapEngine::Input::InputManager* created_input_managerf,
+                       ScrapEngine::Render::Camera* input_game_camera_ref,
+                       Ball* player)
+	: SGameObject("Camera-Controller Object"), game_camera_ref_(input_game_camera_ref),
+	  input_manager_ref_(created_input_managerf), player_ref_(player)
 {
-	GameCameraRef->set_max_render_distance(100000);
+	game_camera_ref_->set_max_render_distance(100000);
 }
 
 void GameCamera::set_game_window_ref(ScrapEngine::Render::GameWindow* window_ref)
 {
-	GameWindowRef = window_ref;
+	game_window_ref_ = window_ref;
 }
 
 void GameCamera::game_start()
 {
-	GameCameraRef->set_camera_location(ScrapEngine::Core::SVector3(0.20f, 150.f, 234.f));
-	GameCameraRef->set_camera_pitch(-40.f);
+	game_camera_ref_->set_camera_location(ScrapEngine::Core::SVector3(0.20f, 150.f, 234.f));
+	game_camera_ref_->set_camera_pitch(-40.f);
 }
 
 void GameCamera::game_update(const float time)
 {
+	ScrapEngine::Core::SVector3 player_location = player_ref_->get_rigidbody_location();
+	player_location.set_y(player_location.get_y() + 160);
+	player_location.set_z(player_location.get_z() + 250);
+	game_camera_ref_->set_camera_location(player_location);
 	//look position
-	const ScrapEngine::Input::mouse_location mouse = InputManagerRef->get_last_mouse_location();
-	GameCameraRef->process_mouse_movement(static_cast<float>(mouse.xpos), static_cast<float>(mouse.ypos), true);
+	/*const ScrapEngine::Input::mouse_location mouse = input_manager_ref_->get_last_mouse_location();
+	game_camera_ref_->process_mouse_movement(static_cast<float>(mouse.xpos), static_cast<float>(mouse.ypos), true);
 
 	//speed
-	const ScrapEngine::Input::scroll_status scroll = InputManagerRef->get_mouse_scroll_status();
+	const ScrapEngine::Input::scroll_status scroll = input_manager_ref_->get_mouse_scroll_status();
 	if (scroll == ScrapEngine::Input::scroll_status::scroll_up)
 	{
 		camera_multiplier_++;
-	}else if (scroll == ScrapEngine::Input::scroll_status::scroll_down)
+	}
+	else if (scroll == ScrapEngine::Input::scroll_status::scroll_down)
 	{
 		camera_multiplier_--;
 	}
 	camera_speed_ = camera_multiplier_ * time;
 
 	//Update location
-	if (InputManagerRef->get_keyboard_key_pressed(KEYBOARD_KEY_W)) {
-		GameCameraRef->set_camera_location(GameCameraRef->get_camera_location() + (GameCameraRef->get_camera_front() * camera_speed_));
+	if (input_manager_ref_->get_keyboard_key_pressed(KEYBOARD_KEY_W))
+	{
+		game_camera_ref_->set_camera_location(
+			game_camera_ref_->get_camera_location() + (game_camera_ref_->get_camera_front() * camera_speed_));
 	}
-	if (InputManagerRef->get_keyboard_key_pressed(KEYBOARD_KEY_S)) {
-		GameCameraRef->set_camera_location(GameCameraRef->get_camera_location() - (GameCameraRef->get_camera_front() * camera_speed_));
+	if (input_manager_ref_->get_keyboard_key_pressed(KEYBOARD_KEY_S))
+	{
+		game_camera_ref_->set_camera_location(
+			game_camera_ref_->get_camera_location() - (game_camera_ref_->get_camera_front() * camera_speed_));
 	}
-	if (InputManagerRef->get_keyboard_key_pressed(KEYBOARD_KEY_D)) {
-		GameCameraRef->set_camera_location(GameCameraRef->get_camera_location() + (((GameCameraRef->get_camera_front() ^ GameCameraRef->get_camera_up()).normalize()) * camera_speed_));
+	if (input_manager_ref_->get_keyboard_key_pressed(KEYBOARD_KEY_D))
+	{
+		game_camera_ref_->set_camera_location(
+			game_camera_ref_->get_camera_location() + (((game_camera_ref_->get_camera_front() ^ game_camera_ref_->get_camera_up()
+			).normalize()) * camera_speed_));
 	}
-	if (InputManagerRef->get_keyboard_key_pressed(KEYBOARD_KEY_A)) {
-		GameCameraRef->set_camera_location(GameCameraRef->get_camera_location() - (((GameCameraRef->get_camera_front() ^ GameCameraRef->get_camera_up()).normalize()) * camera_speed_));
-	}
+	if (input_manager_ref_->get_keyboard_key_pressed(KEYBOARD_KEY_A))
+	{
+		game_camera_ref_->set_camera_location(
+			game_camera_ref_->get_camera_location() - (((game_camera_ref_->get_camera_front() ^ game_camera_ref_->get_camera_up()
+			).normalize()) * camera_speed_));
+	}*/
 
 	//Close game
-	if (InputManagerRef->get_keyboard_key_pressed(KEYBOARD_KEY_ESCAPE)) {
+	if (input_manager_ref_->get_keyboard_key_pressed(KEYBOARD_KEY_ESCAPE))
+	{
 		ScrapEngine::Debug::DebugLog::print_to_console_log("ESC pressed - leaving game");
-		GameWindowRef->close_window();
+		game_window_ref_->close_window();
 	}
 }
-

@@ -4,7 +4,7 @@
 Terrain::Terrain(ScrapEngine::Core::ComponentsManager* input_component_manager,
                  const ScrapEngine::Core::SVector3& position,
                  const ScrapEngine::Core::SVector3& scale)
-	: SGameObject("Terrain game object"), component_manager_ref_(input_component_manager)
+	: SGameObject("Terrain game object")
 {
 	set_object_location(position);
 	set_object_scale(scale);

@@ -26,4 +26,6 @@ public:
 
 	void set_can_move(bool can_move);
 	void set_spawnpoint(const ScrapEngine::Core::SVector3& pos);
+
+	ScrapEngine::Core::SVector3 get_rigidbody_location() const;
 };

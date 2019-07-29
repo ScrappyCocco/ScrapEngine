@@ -7,4 +7,8 @@ WorldTerrainCreator::WorldTerrainCreator(ScrapEngine::Core::ComponentsManager* i
 	new Terrain(input_component_manager,
 	            ScrapEngine::Core::SVector3(0, -20, 0),
 	            ScrapEngine::Core::SVector3(25, 0.5f, 25));
+
+	new Terrain(input_component_manager,
+		ScrapEngine::Core::SVector3(0, -20, -250),
+		ScrapEngine::Core::SVector3(5, 0.5f, 25));
 }

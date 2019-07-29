@@ -61,3 +61,8 @@ void Ball::set_spawnpoint(const ScrapEngine::Core::SVector3& pos)
 {
 	respawn_point_ = pos;
 }
+
+ScrapEngine::Core::SVector3 Ball::get_rigidbody_location() const
+{
+	return mesh_->get_component_location();
+}

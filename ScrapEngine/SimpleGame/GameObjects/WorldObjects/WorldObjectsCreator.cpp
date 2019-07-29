@@ -34,7 +34,11 @@ void WorldObjectsCreator::create_crates()
 
 void WorldObjectsCreator::create_coins() const
 {
-	create_coin( ScrapEngine::Core::SVector3(0, -10, -60));
+	create_coin(ScrapEngine::Core::SVector3(0, -10, -150));
+	create_coin(ScrapEngine::Core::SVector3(0, -10, -200));
+	create_coin(ScrapEngine::Core::SVector3(0, -10, -250));
+	create_coin(ScrapEngine::Core::SVector3(0, -10, -300));
+	create_coin(ScrapEngine::Core::SVector3(0, -10, -350));
 }
 
 WorldObjectsCreator::WorldObjectsCreator(ScrapEngine::Core::LogicManagerView* logic_manager_ref, ScrapEngine::Core::SGameObject* player)

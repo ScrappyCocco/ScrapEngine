@@ -8,10 +8,12 @@
 #include "GameObjects/WorldTerrain/WorldTerrainCreator.h"
 #include "GameObjects/WorldObjects/WorldObjectsCreator.h"
 
-int main() {
+int main()
+{
 	short exit_value = EXIT_SUCCESS;
 	ScrapEngine::Manager::EngineManager* ScrapEngineManager = nullptr;
-	try {
+	try
+	{
 		//Init engine
 		ScrapEngineManager = new ScrapEngine::Manager::EngineManager("Example Game", 0, 1280, 720);
 		ScrapEngine::Render::GameWindow* gameWindowRef = ScrapEngineManager->render_manager_view->get_game_window();
@@ -20,7 +22,8 @@ int main() {
 		ScrapEngine::Input::InputManager* inputmanager = gameWindowRef->create_window_input_manager();
 		//inputmanager->set_cursor_input_mode(ScrapEngine::Input::cursor_mode::cursor_grabbed_mode);
 		//Get the component manager
-		ScrapEngine::Core::ComponentsManager* ComponentManagerRef = ScrapEngineManager->logic_manager_view->get_components_manager();
+		ScrapEngine::Core::ComponentsManager* ComponentManagerRef = ScrapEngineManager
+		                                                            ->logic_manager_view->get_components_manager();
 		//Set the world skybox
 		ScrapEngine::Core::SceneManager* SceneManagerRef = ScrapEngineManager->logic_manager_view->get_scene_manager();
 		SceneManagerRef->set_skybox(
@@ -47,31 +50,38 @@ int main() {
 		delete terrain_creator;
 		//Terrain objects
 		WorldObjectsCreator* terrain_objects_creator = new WorldObjectsCreator(ScrapEngineManager->logic_manager_view,
-			BallGameObject);
+		                                                                       BallGameObject);
 		terrain_objects_creator->register_crates_to_trigger(box_trigger);
 		delete terrain_objects_creator;
 		//Create basic music object
 		ScrapEngineManager->logic_manager_view->register_game_object(new Music(ComponentManagerRef));
 		//Create the camera
-		GameCamera* GameCameraRef = new GameCamera(inputmanager, ScrapEngineManager->render_manager_view->get_default_render_camera());
+		GameCamera* GameCameraRef = new GameCamera(inputmanager,
+		                                           ScrapEngineManager->render_manager_view->get_default_render_camera(),
+		                                           BallGameObject);
 		GameCameraRef->set_game_window_ref(gameWindowRef);
 		ScrapEngineManager->logic_manager_view->register_game_object(GameCameraRef);
 		//Begin gameplay
 		ScrapEngineManager->start_game_loop();
 		//End gameplay
-	}catch (const std::exception& e) {
+	}
+	catch (const std::exception& e)
+	{
 		std::cerr << "EXCEPTION MESSAGE-->" << e.what() << std::endl;
 		exit_value = EXIT_FAILURE;
 	}
 	//Delete
 	delete ScrapEngineManager;
 	//Display error message
-	if (exit_value == EXIT_FAILURE) { //Exit failure, whait to close
+	if (exit_value == EXIT_FAILURE)
+	{
+		//Exit failure, whait to close
 		std::cout << std::endl << "EXIT_FAILURE - Press to exit..." << std::endl;
 		fflush(stdin);
 		getchar();
 	}
-	else {
+	else
+	{
 		std::cout << std::endl << "EXIT_SUCCESS" << std::endl;
 	}
 	//End of program
