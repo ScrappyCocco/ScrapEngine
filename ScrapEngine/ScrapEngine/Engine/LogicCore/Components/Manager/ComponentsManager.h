@@ -74,6 +74,7 @@ namespace ScrapEngine
 			//AudioStuff
 			AudioComponent2D* create_2d_sound(const std::string& filename) const;
 			AudioComponent3D* create_3d_sound(const std::string& filename) const;
+			void unload_sound(AudioComponent* audio) const;
 		};
 	}
 }

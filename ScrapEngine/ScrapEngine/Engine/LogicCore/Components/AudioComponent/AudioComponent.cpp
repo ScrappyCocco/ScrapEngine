@@ -25,6 +25,11 @@ void ScrapEngine::Core::AudioComponent::set_source_loop(const bool loop) const
 	audio_source_->set_source_loop(loop);
 }
 
+bool ScrapEngine::Core::AudioComponent::is_playing() const
+{
+	return audio_source_->is_playing();
+}
+
 void ScrapEngine::Core::AudioComponent::play() const
 {
 	audio_source_->play();
@@ -43,4 +48,9 @@ void ScrapEngine::Core::AudioComponent::pause() const
 void ScrapEngine::Core::AudioComponent::rewind() const
 {
 	audio_source_->rewind();
+}
+
+ScrapEngine::Audio::AudioSource* ScrapEngine::Core::AudioComponent::get_raw_source() const
+{
+	return audio_source_;
 }

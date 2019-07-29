@@ -36,7 +36,7 @@ void ScrapEngine::Core::ComponentsManager::destroy_mesh_component(
 		loaded_meshes_.find(component_to_destroy);
 	if (position != loaded_meshes_.end())
 	{
-		render_manager_ref_->unload_mesh(position->second);
+		position->second->set_for_deletion();
 		loaded_meshes_.erase(position);
 	}
 }
@@ -93,6 +93,11 @@ ScrapEngine::Core::AudioComponent2D* ScrapEngine::Core::ComponentsManager::creat
 ScrapEngine::Core::AudioComponent3D* ScrapEngine::Core::ComponentsManager::create_3d_sound(const std::string& filename) const
 {
 	return new AudioComponent3D(audio_manager_ref_->load_3d_sound(filename));
+}
+
+void ScrapEngine::Core::ComponentsManager::unload_sound(AudioComponent* audio) const
+{
+	audio_manager_ref_->unload_sound(audio->get_raw_source());
 }
 
 void ScrapEngine::Core::ComponentsManager::destroy_rigidbody_component(RigidBodyComponent* component_to_destroy)

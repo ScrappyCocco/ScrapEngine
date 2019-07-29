@@ -43,6 +43,15 @@ void ScrapEngine::Audio::AudioSource::set_source_loop(const bool loop) const
 	}
 }
 
+bool ScrapEngine::Audio::AudioSource::is_playing() const
+{
+	ALenum state;
+
+	alGetSourcei(source_, AL_SOURCE_STATE, &state);
+
+	return (state == AL_PLAYING);
+}
+
 void ScrapEngine::Audio::AudioSource::play() const
 {
 	alSourcePlay(source_);
