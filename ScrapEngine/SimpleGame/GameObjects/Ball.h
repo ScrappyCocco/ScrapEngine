@@ -16,7 +16,6 @@ public:
 	               ScrapEngine::Input::InputManager* CreatedInputManagerf);
 	~Ball() = default;
 
-	virtual void game_start() override;
-	virtual void game_update(float delta_time) override;
-	void on_gui() override;
+	void game_start() override;
+	void game_update(float delta_time) override;
 };

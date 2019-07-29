@@ -348,7 +348,6 @@ void ScrapEngine::Render::RenderManager::cleanup_meshes()
 		                                                                mesh_to_delete);
 		if (element != loaded_models_.end())
 		{
-			Debug::DebugLog::print_to_console_log("Mesh deleted");
 			delete (*element);
 			loaded_models_.erase(element);
 		}

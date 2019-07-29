@@ -38,6 +38,9 @@
     <ClCompile Include="GameObjects\Music.cpp">
       <Filter>File di origine\GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="GameObjects\Coin.cpp">
+      <Filter>File di origine\GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
@@ -57,6 +60,9 @@
       <Filter>File di origine\GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="GameObjects\Music.h">
+      <Filter>File di origine\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\Coin.h">
       <Filter>File di origine\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>

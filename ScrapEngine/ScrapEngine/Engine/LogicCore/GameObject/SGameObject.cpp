@@ -30,6 +30,26 @@ void ScrapEngine::Core::SGameObject::on_gui()
 	//This will be defined by the user when is necessary, otherwise it will have no effect
 }
 
+void ScrapEngine::Core::SGameObject::spawn()
+{
+	//This will be defined by the user when is necessary, otherwise it will have no effect
+}
+
+void ScrapEngine::Core::SGameObject::respawn()
+{
+	//This will be defined by the user when is necessary, otherwise it will have no effect
+}
+
+void ScrapEngine::Core::SGameObject::die()
+{
+	//This will be defined by the user when is necessary, otherwise it will have no effect
+}
+
+void ScrapEngine::Core::SGameObject::kill()
+{
+	//This will be defined by the user when is necessary, otherwise it will have no effect
+}
+
 void ScrapEngine::Core::SGameObject::set_should_update(const bool should_update)
 {
 	this->should_update = should_update;

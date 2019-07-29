@@ -23,9 +23,18 @@ namespace ScrapEngine
 			                     const STransform& input_object_transform = STransform());
 			~SGameObject() = 0;
 
+			//Basics events
 			virtual void game_start();
 			virtual void game_update(float time);
 			virtual void on_gui();
+
+			//More events the user can decide to define
+			//None of these is called by the engine
+			//These are called and defined by you when needed
+			virtual void spawn();
+			virtual void respawn();
+			virtual void die();
+			virtual void kill();
 
 			void set_should_update(bool should_update);
 			bool get_should_update() const;

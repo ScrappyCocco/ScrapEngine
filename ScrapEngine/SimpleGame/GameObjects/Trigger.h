@@ -6,17 +6,17 @@
 class Trigger : public ScrapEngine::Core::SGameObject
 {
 private:
-	ScrapEngine::Core::ComponentsManager* ComponentManagerRef;
-
-	ScrapEngine::Core::TriggerComponent* box_trigger;
-
-	std::vector<ScrapEngine::Core::RigidBodyComponent*> test_collision_objects_;
+	//Utils
+	ScrapEngine::Core::ComponentsManager* component_manager_ref_;
+	//Trigger
+	ScrapEngine::Core::TriggerComponent* box_trigger_;
+	//Object to test collision
+	std::vector<std::pair<SGameObject*, ScrapEngine::Core::RigidBodyComponent*>> test_collision_objects_;
 public:
-	Trigger(ScrapEngine::Core::ComponentsManager* input_ComponentManager);
+	Trigger(ScrapEngine::Core::ComponentsManager* input_component_manager);
 	~Trigger() = default;
 
 	void add_collision_test(SGameObject* obj, int index = 1);
 
 	void game_update(float time) override;
 };
-
