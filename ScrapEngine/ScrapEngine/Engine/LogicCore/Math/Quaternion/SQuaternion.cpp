@@ -62,6 +62,26 @@ ScrapEngine::Core::SVector3 ScrapEngine::Core::SQuaternion::get_axis_z() const
 	return rotate_vector(SVector3(0.f, 0.f, 1.f));
 }
 
+float ScrapEngine::Core::SQuaternion::get_x() const
+{
+	return quat_.x;
+}
+
+float ScrapEngine::Core::SQuaternion::get_y() const
+{
+	return quat_.y;
+}
+
+float ScrapEngine::Core::SQuaternion::get_z() const
+{
+	return quat_.z;
+}
+
+float ScrapEngine::Core::SQuaternion::get_w() const
+{
+	return quat_.w;
+}
+
 ScrapEngine::Core::SVector3 ScrapEngine::Core::SQuaternion::get_forward_vector() const
 {
 	return get_axis_x();
