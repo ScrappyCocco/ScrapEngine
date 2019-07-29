@@ -1,13 +1,12 @@
-#include "Engine/Manager/EngineManager.h"
-#include "Engine/Input/Manager/InputManager.h"
-#include "GameObjects/Camera/GameCamera.h"
 #include <iostream>
-#include "GameObjects/WorldTerrain/Terrain.h"
+#include <Engine/Manager/EngineManager.h>
+#include <Engine/Input/Manager/InputManager.h>
+#include "GameObjects/Camera/GameCamera.h"
 #include "GameObjects/Player/Ball.h"
-#include "GameObjects/WorldObjects/Crate.h"
 #include "GameObjects/RespawnTrigger/Trigger.h"
 #include "GameObjects/Music/Music.h"
-#include "GameObjects/WorldObjects/Coin.h"
+#include "GameObjects/WorldTerrain/WorldTerrainCreator.h"
+#include "GameObjects/WorldObjects/WorldObjectsCreator.h"
 
 int main() {
 	short exit_value = EXIT_SUCCESS;
@@ -39,39 +38,18 @@ int main() {
 		//Ball - Player
 		Ball* BallGameObject = new Ball(ComponentManagerRef, inputmanager);
 		ScrapEngineManager->logic_manager_view->register_game_object(BallGameObject);
-		//Terrain pieces
-		Terrain* TerrainGameObject = new Terrain(ComponentManagerRef,
-			ScrapEngine::Core::SVector3(0, -20, 0),
-			ScrapEngine::Core::SVector3(25, 0.5f, 25));
-		ScrapEngineManager->logic_manager_view->register_game_object(TerrainGameObject);
-		//Coin test
-		Coin* coin = new Coin(ScrapEngineManager->logic_manager_view, ScrapEngine::Core::SVector3(0, -10, -60));
-		coin->set_collision_test(BallGameObject);
-		ScrapEngineManager->logic_manager_view->register_game_object(coin);
-		//Crates
-		std::vector<ScrapEngine::Core::SGameObject*> crates;
-		// First group
-		crates.push_back(new Crate(ScrapEngineManager->logic_manager_view, ScrapEngine::Core::SVector3(70, 0, -50)));
-		crates.push_back(new Crate(ScrapEngineManager->logic_manager_view, ScrapEngine::Core::SVector3(80, 0, -50)));
-		crates.push_back(new Crate(ScrapEngineManager->logic_manager_view, ScrapEngine::Core::SVector3(60, 0, -50)));
-		crates.push_back(new Crate(ScrapEngineManager->logic_manager_view, ScrapEngine::Core::SVector3(75, 10, -50)));
-		crates.push_back(new Crate(ScrapEngineManager->logic_manager_view, ScrapEngine::Core::SVector3(65, 10, -50)));
-		crates.push_back(new Crate(ScrapEngineManager->logic_manager_view, ScrapEngine::Core::SVector3(70, 20, -50)));
-		// Second group
-		crates.push_back(new Crate(ScrapEngineManager->logic_manager_view, ScrapEngine::Core::SVector3(-70, 0, -50)));
-		crates.push_back(new Crate(ScrapEngineManager->logic_manager_view, ScrapEngine::Core::SVector3(-80, 0, -50)));
-		crates.push_back(new Crate(ScrapEngineManager->logic_manager_view, ScrapEngine::Core::SVector3(-60, 0, -50)));
-		crates.push_back(new Crate(ScrapEngineManager->logic_manager_view, ScrapEngine::Core::SVector3(-75, 10, -50)));
-		crates.push_back(new Crate(ScrapEngineManager->logic_manager_view, ScrapEngine::Core::SVector3(-65, 10, -50)));
-		crates.push_back(new Crate(ScrapEngineManager->logic_manager_view, ScrapEngine::Core::SVector3(-70, 20, -50)));
 		//Respawn box trigger under the map
 		Trigger* box_trigger = new Trigger(ComponentManagerRef);
-		box_trigger->add_collision_test(BallGameObject);
-		for(auto crate : crates)
-		{
-			box_trigger->add_collision_test(crate);
-		}
 		ScrapEngineManager->logic_manager_view->register_game_object(box_trigger);
+		box_trigger->add_collision_test(BallGameObject);
+		//Terrain pieces
+		WorldTerrainCreator* terrain_creator = new WorldTerrainCreator(ComponentManagerRef);
+		delete terrain_creator;
+		//Terrain objects
+		WorldObjectsCreator* terrain_objects_creator = new WorldObjectsCreator(ScrapEngineManager->logic_manager_view,
+			BallGameObject);
+		terrain_objects_creator->register_crates_to_trigger(box_trigger);
+		delete terrain_objects_creator;
 		//Create basic music object
 		ScrapEngineManager->logic_manager_view->register_game_object(new Music(ComponentManagerRef));
 		//Create the camera

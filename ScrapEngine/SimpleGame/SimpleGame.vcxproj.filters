@@ -56,6 +56,12 @@
     <ClCompile Include="GameObjects\Player\Ball.cpp">
       <Filter>File di origine\GameObjects\Player</Filter>
     </ClCompile>
+    <ClCompile Include="GameObjects\WorldTerrain\WorldTerrainCreator.cpp">
+      <Filter>File di origine\GameObjects\WorldTerrain</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\WorldObjects\WorldObjectsCreator.cpp">
+      <Filter>File di origine\GameObjects\WorldObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
@@ -79,6 +85,12 @@
     </ClInclude>
     <ClInclude Include="GameObjects\Player\Ball.h">
       <Filter>File di origine\GameObjects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\WorldTerrain\WorldTerrainCreator.h">
+      <Filter>File di origine\GameObjects\WorldTerrain</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\WorldObjects\WorldObjectsCreator.h">
+      <Filter>File di origine\GameObjects\WorldObjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

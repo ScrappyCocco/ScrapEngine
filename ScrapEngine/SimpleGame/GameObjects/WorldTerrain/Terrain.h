@@ -13,6 +13,5 @@ public:
 	        const ScrapEngine::Core::SVector3& position,
 	        const ScrapEngine::Core::SVector3& scale);
 	~Terrain() = default;
-
 };
 
