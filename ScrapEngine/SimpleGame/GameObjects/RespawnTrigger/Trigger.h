@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Engine/LogicCore/GameObject/SGameObject.h"
-#include "Engine/LogicCore/Components/Manager/ComponentsManager.h"
+#include <Engine/LogicCore/GameObject/SGameObject.h>
+#include <Engine/LogicCore/Components/Manager/ComponentsManager.h>
 
 class Trigger : public ScrapEngine::Core::SGameObject
 {

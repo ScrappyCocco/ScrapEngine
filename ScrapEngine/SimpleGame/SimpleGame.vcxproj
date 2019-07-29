@@ -160,22 +160,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GameObjects\Ball.cpp" />
     <ClCompile Include="GameObjects\Camera\GameCamera.cpp" />
-    <ClCompile Include="GameObjects\Coin.cpp" />
-    <ClCompile Include="GameObjects\Crate.cpp" />
-    <ClCompile Include="GameObjects\Music.cpp" />
-    <ClCompile Include="GameObjects\Terrain.cpp" />
-    <ClCompile Include="GameObjects\Trigger.cpp" />
+    <ClCompile Include="GameObjects\Music\Music.cpp" />
+    <ClCompile Include="GameObjects\Player\Ball.cpp" />
+    <ClCompile Include="GameObjects\RespawnTrigger\Trigger.cpp" />
+    <ClCompile Include="GameObjects\WorldObjects\Coin.cpp" />
+    <ClCompile Include="GameObjects\WorldObjects\Crate.cpp" />
+    <ClCompile Include="GameObjects\WorldTerrain\Terrain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameObjects\Ball.h" />
     <ClInclude Include="GameObjects\Camera\GameCamera.h" />
-    <ClInclude Include="GameObjects\Coin.h" />
-    <ClInclude Include="GameObjects\Crate.h" />
-    <ClInclude Include="GameObjects\Music.h" />
-    <ClInclude Include="GameObjects\Terrain.h" />
-    <ClInclude Include="GameObjects\Trigger.h" />
+    <ClInclude Include="GameObjects\Music\Music.h" />
+    <ClInclude Include="GameObjects\Player\Ball.h" />
+    <ClInclude Include="GameObjects\RespawnTrigger\Trigger.h" />
+    <ClInclude Include="GameObjects\WorldObjects\Coin.h" />
+    <ClInclude Include="GameObjects\WorldObjects\Crate.h" />
+    <ClInclude Include="GameObjects\WorldTerrain\Terrain.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>

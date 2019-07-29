@@ -1,5 +1,4 @@
 #include "Trigger.h"
-#include <Engine/Debug/DebugLog.h>
 
 Trigger::Trigger(ScrapEngine::Core::ComponentsManager* input_component_manager)
 	: SGameObject("Trigger test game object"), component_manager_ref_(input_component_manager)
@@ -51,7 +50,6 @@ void Trigger::game_update(float time)
 				object);
 		if (element != test_collision_objects_.end())
 		{
-			ScrapEngine::Debug::DebugLog::print_to_console_log("Collision removed from list");
 			test_collision_objects_.erase(element);
 		}
 	}

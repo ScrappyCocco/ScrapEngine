@@ -2,18 +2,18 @@
 #include "Engine/Input/Manager/InputManager.h"
 #include "GameObjects/Camera/GameCamera.h"
 #include <iostream>
-#include "GameObjects/Terrain.h"
-#include "GameObjects/Ball.h"
-#include "GameObjects/Crate.h"
-#include "GameObjects/Trigger.h"
-#include "GameObjects/Music.h"
-#include "GameObjects/Coin.h"
+#include "GameObjects/WorldTerrain/Terrain.h"
+#include "GameObjects/Player/Ball.h"
+#include "GameObjects/WorldObjects/Crate.h"
+#include "GameObjects/RespawnTrigger/Trigger.h"
+#include "GameObjects/Music/Music.h"
+#include "GameObjects/WorldObjects/Coin.h"
 
 int main() {
 	short exit_value = EXIT_SUCCESS;
 	ScrapEngine::Manager::EngineManager* ScrapEngineManager = nullptr;
 	try {
-		//init engine
+		//Init engine
 		ScrapEngineManager = new ScrapEngine::Manager::EngineManager("Example Game", 0, 1280, 720);
 		ScrapEngine::Render::GameWindow* gameWindowRef = ScrapEngineManager->render_manager_view->get_game_window();
 		gameWindowRef->set_window_icon("../assets/game_icon/crate_icon.png");
@@ -36,11 +36,13 @@ int main() {
 		);
 		SceneManagerRef->set_skybox_size(150);
 		//Create the first game object
-		//Ball
+		//Ball - Player
 		Ball* BallGameObject = new Ball(ComponentManagerRef, inputmanager);
 		ScrapEngineManager->logic_manager_view->register_game_object(BallGameObject);
-		//Terrain
-		Terrain* TerrainGameObject = new Terrain(ComponentManagerRef);
+		//Terrain pieces
+		Terrain* TerrainGameObject = new Terrain(ComponentManagerRef,
+			ScrapEngine::Core::SVector3(0, -20, 0),
+			ScrapEngine::Core::SVector3(25, 0.5f, 25));
 		ScrapEngineManager->logic_manager_view->register_game_object(TerrainGameObject);
 		//Coin test
 		Coin* coin = new Coin(ScrapEngineManager->logic_manager_view, ScrapEngine::Core::SVector3(0, -10, -60));
@@ -62,7 +64,7 @@ int main() {
 		crates.push_back(new Crate(ScrapEngineManager->logic_manager_view, ScrapEngine::Core::SVector3(-75, 10, -50)));
 		crates.push_back(new Crate(ScrapEngineManager->logic_manager_view, ScrapEngine::Core::SVector3(-65, 10, -50)));
 		crates.push_back(new Crate(ScrapEngineManager->logic_manager_view, ScrapEngine::Core::SVector3(-70, 20, -50)));
-		//Simple box trigger
+		//Respawn box trigger under the map
 		Trigger* box_trigger = new Trigger(ComponentManagerRef);
 		box_trigger->add_collision_test(BallGameObject);
 		for(auto crate : crates)
