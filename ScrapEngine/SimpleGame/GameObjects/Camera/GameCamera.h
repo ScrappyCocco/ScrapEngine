@@ -8,13 +8,16 @@
 class GameCamera : public ScrapEngine::Core::SGameObject
 {
 private:
-	ScrapEngine::Render::Camera* game_camera_ref_;
-	ScrapEngine::Input::InputManager* input_manager_ref_;
-	ScrapEngine::Render::GameWindow* game_window_ref_;
-	Ball* player_ref_;
+	ScrapEngine::Render::Camera* game_camera_ref_ = nullptr;
+	ScrapEngine::Input::InputManager* input_manager_ref_ = nullptr;
+	ScrapEngine::Render::GameWindow* game_window_ref_ = nullptr;
+	Ball* player_ref_ = nullptr;
 
-	float camera_speed_ = 0.5f;
+	float camera_speed_ = 5.5f;
 	float camera_multiplier_ = 10.f;
+	//Free camera switch
+	bool free_camera_ = false;
+	bool free_camera_key_pressed_ = false;
 public:
 	GameCamera(ScrapEngine::Input::InputManager* created_input_managerf, 
 		ScrapEngine::Render::Camera* input_game_camera_ref,
