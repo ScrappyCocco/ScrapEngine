@@ -7,6 +7,7 @@
 #include "GameObjects/Music/Music.h"
 #include "GameObjects/WorldTerrain/WorldTerrainCreator.h"
 #include "GameObjects/WorldObjects/WorldObjectsCreator.h"
+#include "GameObjects/MainMenu/MainMenu.h"
 
 int main()
 {
@@ -22,9 +23,10 @@ int main()
 		ScrapEngine::Input::InputManager* inputmanager = game_window_ref->create_window_input_manager();
 		//Get the component manager
 		ScrapEngine::Core::ComponentsManager* component_manager_ref = scrap_engine_manager
-		                                                            ->logic_manager_view->get_components_manager();
+		                                                              ->logic_manager_view->get_components_manager();
 		//Set the world skybox
-		ScrapEngine::Core::SceneManager* scene_manager_ref = scrap_engine_manager->logic_manager_view->get_scene_manager();
+		ScrapEngine::Core::SceneManager* scene_manager_ref = scrap_engine_manager
+		                                                     ->logic_manager_view->get_scene_manager();
 		scene_manager_ref->set_skybox(
 			std::array<std::string, 6>{
 				"../assets/skybox/stormydays_ft.png", //FRONT TEXTURE
@@ -42,7 +44,6 @@ int main()
 		//Ball - Player
 		Ball* ball_game_object = new Ball(component_manager_ref, inputmanager);
 		scrap_engine_manager->logic_manager_view->register_game_object(ball_game_object);
-		ball_game_object->set_can_move(true);
 		//Respawn box trigger under the map
 		Trigger* box_trigger = new Trigger(component_manager_ref);
 		scrap_engine_manager->logic_manager_view->register_game_object(box_trigger);
@@ -59,10 +60,15 @@ int main()
 		scrap_engine_manager->logic_manager_view->register_game_object(new Music(component_manager_ref));
 		//Create the camera
 		GameCamera* game_camera_ref = new GameCamera(inputmanager,
-		                                           scrap_engine_manager->render_manager_view->get_default_render_camera(),
-		                                           ball_game_object);
+		                                             scrap_engine_manager
+		                                             ->render_manager_view->get_default_render_camera(),
+		                                             ball_game_object);
 		game_camera_ref->set_game_window_ref(game_window_ref);
 		scrap_engine_manager->logic_manager_view->register_game_object(game_camera_ref);
+		//MainMenu
+		scrap_engine_manager->logic_manager_view->register_game_object(new MainMenu(
+			scrap_engine_manager->logic_manager_view,
+			ball_game_object, game_window_ref));
 		//Begin gameplay
 		scrap_engine_manager->start_game_loop();
 		//End gameplay

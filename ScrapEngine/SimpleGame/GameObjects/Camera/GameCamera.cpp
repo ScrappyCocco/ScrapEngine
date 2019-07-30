@@ -27,13 +27,16 @@ void GameCamera::game_update(const float time)
 	//Free camera switch
 	if (input_manager_ref_->get_keyboard_key_pressed(KEYBOARD_KEY_F) && !free_camera_key_pressed_)
 	{
-		free_camera_key_pressed_ = true;
-		free_camera_ = !free_camera_;
-		if(!free_camera_) //Reset rotation
+		if (player_ref_->get_can_move())
 		{
-			game_camera_ref_->set_camera_pitch(-40.f);
-			game_camera_ref_->set_camera_yaw(-90);
-			game_camera_ref_->set_camera_roll(0);
+			free_camera_key_pressed_ = true;
+			free_camera_ = !free_camera_;
+			if (!free_camera_) //Reset rotation
+			{
+				game_camera_ref_->set_camera_pitch(-40.f);
+				game_camera_ref_->set_camera_yaw(-90);
+				game_camera_ref_->set_camera_roll(0);
+			}
 		}
 	}
 	if (input_manager_ref_->get_keyboard_key_released(KEYBOARD_KEY_F) && free_camera_key_pressed_)
@@ -42,14 +45,15 @@ void GameCamera::game_update(const float time)
 	}
 
 	//Movement with free camera or with the player ball
-	if (!free_camera_) {
-		
+	if (!free_camera_)
+	{
 		ScrapEngine::Core::SVector3 player_location = player_ref_->get_rigidbody_location();
 		player_location.set_y(player_location.get_y() + 160);
 		player_location.set_z(player_location.get_z() + 250);
 		game_camera_ref_->set_camera_location(player_location);
 	}
-	else {
+	else
+	{
 		//look position
 		const ScrapEngine::Input::mouse_location mouse = input_manager_ref_->get_last_mouse_location();
 		game_camera_ref_->process_mouse_movement(static_cast<float>(mouse.xpos), static_cast<float>(mouse.ypos), true);
@@ -80,14 +84,16 @@ void GameCamera::game_update(const float time)
 		if (input_manager_ref_->get_keyboard_key_pressed(KEYBOARD_KEY_D))
 		{
 			game_camera_ref_->set_camera_location(
-				game_camera_ref_->get_camera_location() + (((game_camera_ref_->get_camera_front() ^ game_camera_ref_->get_camera_up()
-					).normalize()) * camera_speed_));
+				game_camera_ref_->get_camera_location() + (((game_camera_ref_->get_camera_front() ^ game_camera_ref_->
+					get_camera_up()
+				).normalize()) * camera_speed_));
 		}
 		if (input_manager_ref_->get_keyboard_key_pressed(KEYBOARD_KEY_A))
 		{
 			game_camera_ref_->set_camera_location(
-				game_camera_ref_->get_camera_location() - (((game_camera_ref_->get_camera_front() ^ game_camera_ref_->get_camera_up()
-					).normalize()) * camera_speed_));
+				game_camera_ref_->get_camera_location() - (((game_camera_ref_->get_camera_front() ^ game_camera_ref_->
+					get_camera_up()
+				).normalize()) * camera_speed_));
 		}
 	}
 

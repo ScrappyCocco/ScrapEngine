@@ -30,6 +30,9 @@
     <Filter Include="File di origine\GameObjects\WorldTerrain">
       <UniqueIdentifier>{fd2db6f7-2df5-4521-8ebc-36975166a66b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="File di origine\GameObjects\MainMenu">
+      <UniqueIdentifier>{8adf95d4-f045-4c81-a645-bb5810d98a18}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -62,6 +65,9 @@
     <ClCompile Include="GameObjects\WorldObjects\WorldObjectsCreator.cpp">
       <Filter>File di origine\GameObjects\WorldObjects</Filter>
     </ClCompile>
+    <ClCompile Include="GameObjects\MainMenu\MainMenu.cpp">
+      <Filter>File di origine\GameObjects\MainMenu</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
@@ -91,6 +97,9 @@
     </ClInclude>
     <ClInclude Include="GameObjects\WorldObjects\WorldObjectsCreator.h">
       <Filter>File di origine\GameObjects\WorldObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\MainMenu\MainMenu.h">
+      <Filter>File di origine\GameObjects\MainMenu</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

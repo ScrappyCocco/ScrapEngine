@@ -26,7 +26,7 @@ public:
 
 	void set_game_window_ref(ScrapEngine::Render::GameWindow* window_ref);
 
-	virtual void game_start() override;
-	virtual void game_update(float time) override;
+	void game_start() override;
+	void game_update(float time) override;
 };
 

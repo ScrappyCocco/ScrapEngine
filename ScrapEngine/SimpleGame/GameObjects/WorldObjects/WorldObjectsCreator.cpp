@@ -17,12 +17,12 @@ void WorldObjectsCreator::create_coin(const ScrapEngine::Core::SVector3& pos) co
 void WorldObjectsCreator::create_crates()
 {
 	// First group in the spawn platform
-	crates_.push_back(new Crate(logic_manager_ref_, ScrapEngine::Core::SVector3(70, 0, -50)));
-	crates_.push_back(new Crate(logic_manager_ref_, ScrapEngine::Core::SVector3(80, 0, -50)));
-	crates_.push_back(new Crate(logic_manager_ref_, ScrapEngine::Core::SVector3(60, 0, -50)));
-	crates_.push_back(new Crate(logic_manager_ref_, ScrapEngine::Core::SVector3(75, 10, -50)));
-	crates_.push_back(new Crate(logic_manager_ref_, ScrapEngine::Core::SVector3(65, 10, -50)));
-	crates_.push_back(new Crate(logic_manager_ref_, ScrapEngine::Core::SVector3(70, 20, -50)));
+	crates_.push_back(new Crate(logic_manager_ref_, ScrapEngine::Core::SVector3(70, -10, -50)));
+	crates_.push_back(new Crate(logic_manager_ref_, ScrapEngine::Core::SVector3(80, -10, -50)));
+	crates_.push_back(new Crate(logic_manager_ref_, ScrapEngine::Core::SVector3(60, -10, -50)));
+	crates_.push_back(new Crate(logic_manager_ref_, ScrapEngine::Core::SVector3(75, 0, -50)));
+	crates_.push_back(new Crate(logic_manager_ref_, ScrapEngine::Core::SVector3(65, 0, -50)));
+	crates_.push_back(new Crate(logic_manager_ref_, ScrapEngine::Core::SVector3(70, 10, -50)));
 	// Second group in the spawn platform
 	crates_.push_back(new Crate(logic_manager_ref_,
 	                            ScrapEngine::Core::SVector3(-70, 0, -50),
