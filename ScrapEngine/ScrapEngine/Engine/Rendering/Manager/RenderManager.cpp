@@ -332,10 +332,20 @@ void ScrapEngine::Render::RenderManager::rebuild_gui_command_buffer(const bool f
 void ScrapEngine::Render::RenderManager::cleanup_meshes()
 {
 	//Create a list of mesh pending for deletion
-	std::vector<VulkanMeshInstance*> mesh_pending_deletion;
+	// TODO after game
+	for (size_t i = 0; i < loaded_models_.size(); i++)
+	{
+		if (loaded_models_[i]->get_pending_deletion() && loaded_models_[i]->get_deletion_counter() >= 1)
+		{
+			delete loaded_models_[i];
+			loaded_models_.erase(loaded_models_.begin() + i);
+			i--;
+		}
+	}
+	/*std::vector<VulkanMeshInstance*> mesh_pending_deletion;
 	for (auto mesh : loaded_models_)
 	{
-		if (mesh->get_pending_deletion() && mesh->get_deletion_counter() >= 2)
+		if (mesh->get_pending_deletion() && mesh->get_deletion_counter() >= 1)
 		{
 			mesh_pending_deletion.push_back(mesh);
 		}
@@ -351,7 +361,7 @@ void ScrapEngine::Render::RenderManager::cleanup_meshes()
 			delete (*element);
 			loaded_models_.erase(element);
 		}
-	}
+	}*/
 }
 
 void ScrapEngine::Render::RenderManager::create_command_buffer(const bool flip_flop)
@@ -370,7 +380,9 @@ void ScrapEngine::Render::RenderManager::create_command_buffer(const bool flip_f
 		command_buffers_[index].command_buffer->load_skybox(skybox_);
 	}
 	//3d models
+	//Remove deleted meshes
 	cleanup_meshes();
+	//Now render the meshes
 	for (auto mesh : loaded_models_)
 	{
 		command_buffers_[index].command_buffer->load_mesh(mesh);
