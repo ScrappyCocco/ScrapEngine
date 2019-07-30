@@ -22,11 +22,11 @@ int main()
 		ScrapEngine::Input::InputManager* inputmanager = gameWindowRef->create_window_input_manager();
 		//inputmanager->set_cursor_input_mode(ScrapEngine::Input::cursor_mode::cursor_grabbed_mode);
 		//Get the component manager
-		ScrapEngine::Core::ComponentsManager* ComponentManagerRef = ScrapEngineManager
+		ScrapEngine::Core::ComponentsManager* component_manager_ref = ScrapEngineManager
 		                                                            ->logic_manager_view->get_components_manager();
 		//Set the world skybox
-		ScrapEngine::Core::SceneManager* SceneManagerRef = ScrapEngineManager->logic_manager_view->get_scene_manager();
-		SceneManagerRef->set_skybox(
+		ScrapEngine::Core::SceneManager* scene_manager_ref = ScrapEngineManager->logic_manager_view->get_scene_manager();
+		scene_manager_ref->set_skybox(
 			std::array<std::string, 6>{
 				"../assets/skybox/stormydays_ft.png", //FRONT TEXTURE
 				"../assets/skybox/stormydays_bk.png", //BACK TEXTURE
@@ -36,31 +36,33 @@ int main()
 				"../assets/skybox/stormydays_lf.png", //LEFT TEXTURE
 			}
 		);
-		SceneManagerRef->set_skybox_size(150);
+		scene_manager_ref->set_skybox_size(500);
+		//Set world gravity
+		component_manager_ref->set_gravity(ScrapEngine::Core::SVector3(0, -50, 0));
 		//Create the first game object
 		//Ball - Player
-		Ball* BallGameObject = new Ball(ComponentManagerRef, inputmanager);
-		ScrapEngineManager->logic_manager_view->register_game_object(BallGameObject);
+		Ball* ball_game_object = new Ball(component_manager_ref, inputmanager);
+		ScrapEngineManager->logic_manager_view->register_game_object(ball_game_object);
 		//Respawn box trigger under the map
-		Trigger* box_trigger = new Trigger(ComponentManagerRef);
+		Trigger* box_trigger = new Trigger(component_manager_ref);
 		ScrapEngineManager->logic_manager_view->register_game_object(box_trigger);
-		box_trigger->add_collision_test(BallGameObject);
+		box_trigger->add_collision_test(ball_game_object);
 		//Terrain pieces
-		WorldTerrainCreator* terrain_creator = new WorldTerrainCreator(ComponentManagerRef);
+		WorldTerrainCreator* terrain_creator = new WorldTerrainCreator(component_manager_ref);
 		delete terrain_creator;
 		//Terrain objects
 		WorldObjectsCreator* terrain_objects_creator = new WorldObjectsCreator(ScrapEngineManager->logic_manager_view,
-		                                                                       BallGameObject);
+		                                                                       ball_game_object);
 		terrain_objects_creator->register_crates_to_trigger(box_trigger);
 		delete terrain_objects_creator;
 		//Create basic music object
-		ScrapEngineManager->logic_manager_view->register_game_object(new Music(ComponentManagerRef));
+		ScrapEngineManager->logic_manager_view->register_game_object(new Music(component_manager_ref));
 		//Create the camera
-		GameCamera* GameCameraRef = new GameCamera(inputmanager,
+		GameCamera* game_camera_ref = new GameCamera(inputmanager,
 		                                           ScrapEngineManager->render_manager_view->get_default_render_camera(),
-		                                           BallGameObject);
-		GameCameraRef->set_game_window_ref(gameWindowRef);
-		ScrapEngineManager->logic_manager_view->register_game_object(GameCameraRef);
+		                                           ball_game_object);
+		game_camera_ref->set_game_window_ref(gameWindowRef);
+		ScrapEngineManager->logic_manager_view->register_game_object(game_camera_ref);
 		//Begin gameplay
 		ScrapEngineManager->start_game_loop();
 		//End gameplay

@@ -1,22 +1,24 @@
 #include "Crate.h"
 
-Crate::Crate(ScrapEngine::Core::LogicManagerView* logic_manager_ref, const ScrapEngine::Core::SVector3& start_pos)
+Crate::Crate(ScrapEngine::Core::LogicManagerView* logic_manager_ref,
+             const ScrapEngine::Core::SVector3& start_pos,
+             const ScrapEngine::Core::SVector3& size)
 	: SGameObject("Crate game object"), logic_manager_view_(logic_manager_ref),
-	component_manager_ref_(logic_manager_ref->get_components_manager())
+	  component_manager_ref_(logic_manager_ref->get_components_manager())
 {
 	//Add mesh to that GameObject
 	mesh_ = component_manager_ref_->create_new_mesh_component(
 		"../assets/shader/compiled_shaders/shader_base.vert.spv",
 		"../assets/shader/compiled_shaders/shader_base.frag.spv",
 		"../assets/models/cube.obj",
-		{ "../assets/textures/Simple_Wood_Crate_Color.png" }
+		{"../assets/textures/Simple_Wood_Crate_Color.png"}
 	);
 	add_component(mesh_);
 
 	box_collider_ = component_manager_ref_->create_box_rigidbody_component(
-		ScrapEngine::Core::SVector3(8.f, 8.f, 8.f),
+		size * 5,
 		start_pos, 1.f);
-	
+
 	add_component(box_collider_);
 
 	box_collider_->attach_to_mesh(mesh_);
@@ -27,7 +29,7 @@ Crate::Crate(ScrapEngine::Core::LogicManagerView* logic_manager_ref, const Scrap
 	set_should_update(false);
 
 	//Set mesh scale
-	mesh_->set_component_scale(ScrapEngine::Core::SVector3(1.5f, 1.5f, 1.5f));
+	mesh_->set_component_scale(size);
 }
 
 void Crate::die()

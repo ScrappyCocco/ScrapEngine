@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Engine/LogicCore/GameObject/SGameObject.h"
-#include "Engine/LogicCore/Manager/LogicManagerView.h"
+#include <Engine/LogicCore/GameObject/SGameObject.h>
+#include <Engine/LogicCore/Manager/LogicManagerView.h>
 
 class Coin : public ScrapEngine::Core::SGameObject
 {

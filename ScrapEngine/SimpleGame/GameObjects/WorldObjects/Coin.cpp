@@ -1,5 +1,4 @@
 #include "Coin.h"
-#include <Engine/Debug/DebugLog.h>
 
 Coin::Coin(ScrapEngine::Core::LogicManagerView* logic_manager_ref, const ScrapEngine::Core::SVector3& start_pos)
 	: SGameObject("Crate game object"), logic_manager_view_(logic_manager_ref),

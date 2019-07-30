@@ -1,5 +1,4 @@
 #include "Terrain.h"
-#include <Engine/Debug/DebugLog.h>
 
 Terrain::Terrain(ScrapEngine::Core::ComponentsManager* input_component_manager,
                  const ScrapEngine::Core::SVector3& position,
