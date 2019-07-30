@@ -2,7 +2,8 @@
 
 Crate::Crate(ScrapEngine::Core::LogicManagerView* logic_manager_ref,
              const ScrapEngine::Core::SVector3& start_pos,
-             const ScrapEngine::Core::SVector3& size)
+             const ScrapEngine::Core::SVector3& size,
+             float mass)
 	: SGameObject("Crate game object"), logic_manager_view_(logic_manager_ref),
 	  component_manager_ref_(logic_manager_ref->get_components_manager())
 {
@@ -17,12 +18,12 @@ Crate::Crate(ScrapEngine::Core::LogicManagerView* logic_manager_ref,
 
 	box_collider_ = component_manager_ref_->create_box_rigidbody_component(
 		size * 5,
-		start_pos, 1.f);
+		start_pos, mass);
 
 	add_component(box_collider_);
 
 	box_collider_->attach_to_mesh(mesh_);
-	box_collider_->set_bounciness(0.f);
+	box_collider_->set_bounciness(0);
 	box_collider_->set_friction_coefficient(1);
 
 	//Disable update()

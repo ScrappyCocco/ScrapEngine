@@ -16,7 +16,8 @@ private:
 public:
 	Crate(ScrapEngine::Core::LogicManagerView* logic_manager_ref, 
 		const ScrapEngine::Core::SVector3& start_pos,
-		const ScrapEngine::Core::SVector3& size = ScrapEngine::Core::SVector3(1.5f, 1.5f, 1.5f));
+		const ScrapEngine::Core::SVector3& size = ScrapEngine::Core::SVector3(1.5f, 1.5f, 1.5f),
+		float mass = 1);
 	~Crate() = default;
 
 	void die() override;

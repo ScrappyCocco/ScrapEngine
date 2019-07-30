@@ -12,7 +12,7 @@ private:
 	void create_crates();
 	void create_coins() const;
 	//List of crates, used to add them to kill trigger
-	std::vector<ScrapEngine::Core::SGameObject*> crates_;
+	std::list<ScrapEngine::Core::SGameObject*> crates_;
 	//Utils
 	ScrapEngine::Core::LogicManagerView* logic_manager_ref_ = nullptr;
 	ScrapEngine::Core::SGameObject* player_ref_ = nullptr;

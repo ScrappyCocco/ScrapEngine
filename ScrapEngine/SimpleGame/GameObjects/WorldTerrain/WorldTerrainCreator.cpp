@@ -45,17 +45,17 @@ WorldTerrainCreator::WorldTerrainCreator(ScrapEngine::Core::ComponentsManager* i
 
 	//Wall(s)
 	new Terrain(input_component_manager,
-		ScrapEngine::Core::SVector3(435, -5, -400),
+		ScrapEngine::Core::SVector3(435, -10, -400),
 		ScrapEngine::Core::SVector3(2, 1.5f, 0.5f),
 		Terrain::green);
 
 	new Terrain(input_component_manager,
-		ScrapEngine::Core::SVector3(465, -5, -350),
+		ScrapEngine::Core::SVector3(465, -10, -350),
 		ScrapEngine::Core::SVector3(2, 1.5f, 0.5f),
 		Terrain::green);
 
 	new Terrain(input_component_manager,
-		ScrapEngine::Core::SVector3(450, -5, -300),
+		ScrapEngine::Core::SVector3(450, -10, -300),
 		ScrapEngine::Core::SVector3(2, 1.5f, 0.5f),
 		Terrain::green);
 
