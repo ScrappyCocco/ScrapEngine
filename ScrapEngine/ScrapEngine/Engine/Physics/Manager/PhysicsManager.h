@@ -31,6 +31,10 @@ namespace ScrapEngine
 			void remove_collider(CollisionBody* collider);
 			void remove_rigidbody(RigidBody* rigidbody);
 
+			//Physics world stuff
+			void set_gravity(const Core::SVector3& gravity) const;
+			Core::SVector3 get_gravity() const;
+
 			//Standard collider (is not moved from the engine, basically a trigger)
 			CollisionBody* create_box_trigger(const Core::SVector3& size,
 			                                  const Core::SVector3& start_position);

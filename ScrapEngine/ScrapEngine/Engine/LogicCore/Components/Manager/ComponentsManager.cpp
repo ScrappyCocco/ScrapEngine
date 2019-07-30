@@ -111,6 +111,16 @@ void ScrapEngine::Core::ComponentsManager::destroy_rigidbody_component(RigidBody
 	}
 }
 
+void ScrapEngine::Core::ComponentsManager::set_gravity(const Core::SVector3& gravity) const
+{
+	physics_manager_ref_->set_gravity(gravity);
+}
+
+ScrapEngine::Core::SVector3 ScrapEngine::Core::ComponentsManager::get_gravity() const
+{
+	return physics_manager_ref_->get_gravity();
+}
+
 ScrapEngine::Core::BoxTriggerComponent* ScrapEngine::Core::ComponentsManager::create_box_trigger_component(
 	const Core::SVector3& size, const Core::SVector3& start_position)
 {
