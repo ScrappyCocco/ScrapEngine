@@ -21,17 +21,18 @@ void MainMenu::on_gui()
 		                 ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoNav))
 		{
 			ImGui::Text("ScrapEngine - Example game");
+			const ImVec2 text_box_size = ImGui::GetItemRectSize();
 
 			ImGui::Separator();
 
-			if (ImGui::Button("Play", ImVec2(85, 20)))
+			if (ImGui::Button("Play", ImVec2(text_box_size.x / 2, 20)))
 			{
 				game_started_ = true;
 				player_ref_->set_can_move(true);
 				logic_view_ref_->un_register_game_object(this);
 			}
 			ImGui::SameLine();
-			if (ImGui::Button("Exit", ImVec2(85, 20)))
+			if (ImGui::Button("Exit", ImVec2(text_box_size.x / 2, 20)))
 			{
 				window_ref_->close_window();
 			}

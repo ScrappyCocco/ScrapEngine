@@ -4,6 +4,7 @@
 #include "GameObjects/Camera/GameCamera.h"
 #include "GameObjects/Player/Ball.h"
 #include "GameObjects/RespawnTrigger/Trigger.h"
+#include "GameObjects/FinishTriggerMenu/FinishMenu.h"
 #include "GameObjects/Music/Music.h"
 #include "GameObjects/WorldTerrain/WorldTerrainCreator.h"
 #include "GameObjects/WorldObjects/WorldObjectsCreator.h"
@@ -48,6 +49,12 @@ int main()
 		Trigger* box_trigger = new Trigger(component_manager_ref);
 		scrap_engine_manager->logic_manager_view->register_game_object(box_trigger);
 		box_trigger->add_collision_test(ball_game_object);
+		//Finish trigger
+		scrap_engine_manager->logic_manager_view->register_game_object(new FinishTriggerMenu(
+				scrap_engine_manager->logic_manager_view,
+				ball_game_object,
+				game_window_ref)
+		);
 		//Terrain pieces
 		WorldTerrainCreator* terrain_creator = new WorldTerrainCreator(component_manager_ref);
 		delete terrain_creator;
