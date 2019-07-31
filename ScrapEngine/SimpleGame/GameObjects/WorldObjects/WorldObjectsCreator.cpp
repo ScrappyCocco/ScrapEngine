@@ -49,26 +49,15 @@ void WorldObjectsCreator::create_crates()
 	crates_.push_back(new Crate(logic_manager_ref_, ScrapEngine::Core::SVector3(400, 5, -220)));
 	crates_.push_back(new Crate(logic_manager_ref_, ScrapEngine::Core::SVector3(400, 5, -230)));
 	//Last huge block of crates
-	crates_.push_back(new Crate(logic_manager_ref_, ScrapEngine::Core::SVector3(385, -10, -90)));
-	crates_.push_back(new Crate(logic_manager_ref_, ScrapEngine::Core::SVector3(385, -10, -110)));
 	crates_.push_back(new Crate(logic_manager_ref_, ScrapEngine::Core::SVector3(375, -10, -90)));
 	crates_.push_back(new Crate(logic_manager_ref_, ScrapEngine::Core::SVector3(375, -10, -110)));
 	crates_.push_back(new Crate(logic_manager_ref_, ScrapEngine::Core::SVector3(365, -10, -90)));
 	crates_.push_back(new Crate(logic_manager_ref_, ScrapEngine::Core::SVector3(365, -10, -110)));
-	crates_.push_back(new Crate(logic_manager_ref_, ScrapEngine::Core::SVector3(355, -10, -90)));
-	crates_.push_back(new Crate(logic_manager_ref_, ScrapEngine::Core::SVector3(355, -10, -110)));
-	crates_.push_back(new Crate(logic_manager_ref_, ScrapEngine::Core::SVector3(345, -10, -90)));
-	crates_.push_back(new Crate(logic_manager_ref_, ScrapEngine::Core::SVector3(345, -10, -110)));
-	crates_.push_back(new Crate(logic_manager_ref_, ScrapEngine::Core::SVector3(385, 0, -90)));
-	crates_.push_back(new Crate(logic_manager_ref_, ScrapEngine::Core::SVector3(385, 0, -110)));
 	crates_.push_back(new Crate(logic_manager_ref_, ScrapEngine::Core::SVector3(375, 0, -90)));
 	crates_.push_back(new Crate(logic_manager_ref_, ScrapEngine::Core::SVector3(375, 0, -110)));
 	crates_.push_back(new Crate(logic_manager_ref_, ScrapEngine::Core::SVector3(365, 0, -90)));
 	crates_.push_back(new Crate(logic_manager_ref_, ScrapEngine::Core::SVector3(365, 0, -110)));
-	crates_.push_back(new Crate(logic_manager_ref_, ScrapEngine::Core::SVector3(355, 0, -90)));
-	crates_.push_back(new Crate(logic_manager_ref_, ScrapEngine::Core::SVector3(355, 0, -110)));
-	crates_.push_back(new Crate(logic_manager_ref_, ScrapEngine::Core::SVector3(345, 0, -90)));
-	crates_.push_back(new Crate(logic_manager_ref_, ScrapEngine::Core::SVector3(345, 0, -110)));
+	crates_.push_back(new Crate(logic_manager_ref_, ScrapEngine::Core::SVector3(370, 15, -100)));
 }
 
 void WorldObjectsCreator::create_coins() const
