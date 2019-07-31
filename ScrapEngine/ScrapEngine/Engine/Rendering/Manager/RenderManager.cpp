@@ -332,8 +332,8 @@ void ScrapEngine::Render::RenderManager::rebuild_gui_command_buffer(const bool f
 void ScrapEngine::Render::RenderManager::cleanup_meshes()
 {
 	//Create a list of mesh pending for deletion
-	// TODO after game
-	for (size_t i = 0; i < loaded_models_.size(); i++)
+	// TODO after game - currently disabled
+	/*for (size_t i = 0; i < loaded_models_.size(); i++)
 	{
 		if (loaded_models_[i]->get_pending_deletion() && loaded_models_[i]->get_deletion_counter() >= 1)
 		{
@@ -341,7 +341,7 @@ void ScrapEngine::Render::RenderManager::cleanup_meshes()
 			loaded_models_.erase(loaded_models_.begin() + i);
 			i--;
 		}
-	}
+	}*/
 	/*std::vector<VulkanMeshInstance*> mesh_pending_deletion;
 	for (auto mesh : loaded_models_)
 	{
