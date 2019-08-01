@@ -1,8 +1,8 @@
 #include <Engine/Physics/Manager/PhysicsManager.h>
 #include <Engine/Physics/CollisionShape/BoxShape/BoxShape.h>
-#include <algorithm>
 #include <Engine/Physics/CollisionShape/SphereShape/SphereShape.h>
 #include <Engine/Physics/CollisionShape/CapsuleShape/CapsuleShape.h>
+#include <algorithm>
 
 ScrapEngine::Physics::RigidBody* ScrapEngine::Physics::PhysicsManager::create_rigidbody(
 	const Core::SVector3& start_position, const float mass, CollisionShape* c_shape) const

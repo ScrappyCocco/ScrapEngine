@@ -5,4 +5,3 @@ ScrapEngine::Physics::CapsuleShape::CapsuleShape(const float radius, const float
 	: CollisionShape(new rp3d::CapsuleShape(radius, height))
 {
 }
-
