@@ -17,7 +17,7 @@ void MainMenu::on_gui()
 		ImGui::SetNextWindowBgAlpha(0.55f); // Transparent background
 
 		if (ImGui::Begin("Main Menu UI Overlay", nullptr,
-		                 ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_AlwaysAutoResize |
+		                 ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_AlwaysAutoResize |
 		                 ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoNav))
 		{
 			ImGui::Text("ScrapEngine - Example game");

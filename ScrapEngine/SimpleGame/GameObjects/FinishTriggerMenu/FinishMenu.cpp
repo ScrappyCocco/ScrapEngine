@@ -43,7 +43,7 @@ void FinishTriggerMenu::on_gui()
 		ImGui::SetNextWindowBgAlpha(0.85f); // Transparent background
 
 		if (ImGui::Begin("Finish Menu UI Overlay", nullptr,
-		                 ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_AlwaysAutoResize |
+		                 ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_AlwaysAutoResize |
 		                 ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoNav))
 		{
 			ImGui::Text("Game Completed!");
