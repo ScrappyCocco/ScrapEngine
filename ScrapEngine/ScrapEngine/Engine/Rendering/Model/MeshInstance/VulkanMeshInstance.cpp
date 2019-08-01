@@ -15,7 +15,8 @@ ScrapEngine::Render::VulkanMeshInstance::VulkanMeshInstance(const std::string& v
 	vulkan_render_model_ = VulkanModelPool::get_instance()->get_model(model_path);
 	if (vulkan_render_model_->get_meshes()->size() != textures_path.size() && textures_path.size() > 1)
 	{
-		throw std::runtime_error("The texture array must have size 1 or equal number of meshes!");
+		throw std::runtime_error("The texture array must have size 1 or equal number of meshes ("
+			+ std::to_string(vulkan_render_model_->get_meshes()->size()) + ")");
 	}
 	for (const auto& texture_path : textures_path)
 	{
