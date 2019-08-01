@@ -1,6 +1,7 @@
 #include "WorldObjectsCreator.h"
 #include "Crate.h"
 #include "Coin.h"
+#include "../CheckpointTrigger/CheckpointTrigger.h"
 
 void WorldObjectsCreator::create_crate(const ScrapEngine::Core::SVector3& pos)
 {
@@ -12,6 +13,11 @@ void WorldObjectsCreator::create_coin(const ScrapEngine::Core::SVector3& pos) co
 	Coin* coin = new Coin(logic_manager_ref_, pos, score_manager_ref_);
 	coin->set_collision_test(player_ref_);
 	logic_manager_ref_->register_game_object(coin);
+}
+
+void WorldObjectsCreator::create_checkpoint(const ScrapEngine::Core::SVector3& pos) const
+{
+	logic_manager_ref_->register_game_object(new CheckpointTrigger(logic_manager_ref_, player_ref_, pos));
 }
 
 void WorldObjectsCreator::create_crates()
@@ -73,13 +79,20 @@ void WorldObjectsCreator::create_coins() const
 	create_coin(ScrapEngine::Core::SVector3(100, -10, -400));
 }
 
+void WorldObjectsCreator::create_checkpoints() const
+{
+	create_checkpoint(ScrapEngine::Core::SVector3(0, -18, -400));
+	create_checkpoint(ScrapEngine::Core::SVector3(275, -18, -225));
+}
+
 WorldObjectsCreator::WorldObjectsCreator(ScrapEngine::Core::LogicManagerView* logic_manager_ref,
-                                         ScrapEngine::Core::SGameObject* player,
+                                         Ball* player,
                                          ScoreManager* score_manager)
 	: logic_manager_ref_(logic_manager_ref), player_ref_(player), score_manager_ref_(score_manager)
 {
 	create_crates();
 	create_coins();
+	create_checkpoints();
 }
 
 void WorldObjectsCreator::register_crates_to_trigger(Trigger* kill_trigger)

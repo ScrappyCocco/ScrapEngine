@@ -45,7 +45,6 @@ void ScoreManager::on_gui()
 			ImGui::SetNextWindowBgAlpha(0.75f); // Transparent background
 
 			//Set pos in the corner
-			ImGuiIO& io = ImGui::GetIO();
 			const float distance = 10.0f;
 			const ImVec2 window_pos = ImVec2(distance, distance);
 			const ImVec2 window_pos_pivot = ImVec2(0.0f, 0.0f);

@@ -39,6 +39,9 @@
     <Filter Include="File di origine\GameObjects\ScoreManager">
       <UniqueIdentifier>{48d7127a-45f1-4864-b168-3303f9d90f0a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="File di origine\GameObjects\CheckpointTrigger">
+      <UniqueIdentifier>{ff75f059-a700-4fdf-9ec9-d2dbea561ce0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -80,6 +83,9 @@
     <ClCompile Include="GameObjects\ScoreManager\ScoreManager.cpp">
       <Filter>File di origine\GameObjects\ScoreManager</Filter>
     </ClCompile>
+    <ClCompile Include="GameObjects\CheckpointTrigger\CheckpointTrigger.cpp">
+      <Filter>File di origine\GameObjects\CheckpointTrigger</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
@@ -118,6 +124,9 @@
     </ClInclude>
     <ClInclude Include="GameObjects\ScoreManager\ScoreManager.h">
       <Filter>File di origine\GameObjects\ScoreManager</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\CheckpointTrigger\CheckpointTrigger.h">
+      <Filter>File di origine\GameObjects\CheckpointTrigger</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -161,6 +161,7 @@
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObjects\Camera\GameCamera.cpp" />
+    <ClCompile Include="GameObjects\CheckpointTrigger\CheckpointTrigger.cpp" />
     <ClCompile Include="GameObjects\FinishTriggerMenu\FinishMenu.cpp" />
     <ClCompile Include="GameObjects\MainMenu\MainMenu.cpp" />
     <ClCompile Include="GameObjects\Music\Music.cpp" />
@@ -175,6 +176,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObjects\Camera\GameCamera.h" />
+    <ClInclude Include="GameObjects\CheckpointTrigger\CheckpointTrigger.h" />
     <ClInclude Include="GameObjects\FinishTriggerMenu\FinishMenu.h" />
     <ClInclude Include="GameObjects\MainMenu\MainMenu.h" />
     <ClInclude Include="GameObjects\Music\Music.h" />
