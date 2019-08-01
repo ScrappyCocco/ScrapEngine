@@ -1,5 +1,4 @@
 #include <Engine/Rendering/Buffer/BaseBuffer.h>
-
 #include <stdexcept>
 #include <Engine/Rendering/Memory/MemoryManager.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
@@ -38,7 +37,9 @@ void ScrapEngine::Render::BaseBuffer::create_buffer(const vk::DeviceSize& size, 
 		throw std::runtime_error("BaseBuffer: Failed to allocate buffer memory!");
 	}
 
-	if (auto_bind_memory) { //bind memory
+	if (auto_bind_memory)
+	{
+		//bind memory
 		device->bindBufferMemory(buffer, buffer_memory, 0);
 	}
 }
