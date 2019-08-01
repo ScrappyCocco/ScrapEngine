@@ -55,7 +55,7 @@ namespace ScrapEngine
 			//--->Trigger collisions
 			//BoxColliderComponent
 			BoxTriggerComponent* create_box_trigger_component(const Core::SVector3& size,
-			                                                    const Core::SVector3& start_position);
+			                                                  const Core::SVector3& start_position);
 
 			//--->Rigidbodies
 			//BoxColliderComponent
