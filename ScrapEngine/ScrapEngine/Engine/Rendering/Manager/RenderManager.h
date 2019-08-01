@@ -71,6 +71,7 @@ namespace ScrapEngine
 				VulkanCommandPool* command_pool = nullptr;
 				StandardCommandBuffer* command_buffer = nullptr;
 			};
+
 			//Flag to know if i'm using the first or the second command buffer
 			bool command_buffer_flip_flop_ = false;
 			std::vector<threaded_command_buffer> command_buffers_;
@@ -102,6 +103,7 @@ namespace ScrapEngine
 				RenderManager* owner;
 				void ExecuteRange(enki::TaskSetPartition range, uint32_t threadnum) override;
 			};
+
 			ParallelGuiCommandBufferCreation* gui_command_buffer_task_;
 
 			//This is the fence used to wait that the previous command buffer has finished and can be deleted

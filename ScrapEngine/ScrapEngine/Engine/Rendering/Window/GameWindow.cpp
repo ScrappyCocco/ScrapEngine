@@ -82,7 +82,8 @@ void ScrapEngine::Render::GameWindow::close_window() const
 
 ScrapEngine::Input::InputManager* ScrapEngine::Render::GameWindow::create_window_input_manager()
 {
-	if (input_ == nullptr) {
+	if (input_ == nullptr)
+	{
 		input_ = new Input::InputManager(window_);
 	}
 	return input_;
