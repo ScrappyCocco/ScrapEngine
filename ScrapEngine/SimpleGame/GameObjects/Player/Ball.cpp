@@ -19,7 +19,7 @@ Ball::Ball(ScrapEngine::Core::ComponentsManager* input_component_manager,
 
 	collider_ = input_component_manager->create_sphere_rigidbody_component(
 		10.f,
-		ScrapEngine::Core::SVector3(0, -10, 0), 5.f);
+		ScrapEngine::Core::SVector3(0, -10, 0), 8.f);
 	add_component(collider_);
 
 	collider_->attach_to_mesh(mesh_);
@@ -31,6 +31,10 @@ void Ball::game_update(const float delta_time)
 {
 	if (can_move_)
 	{
+		if(get_rigidbody_location().get_y() > 10)
+		{
+			return;
+		}
 		if (input_manager_ref_->get_keyboard_key_pressed(KEYBOARD_KEY_ARROW_UP))
 		{
 			collider_->apply_force_to_center(ScrapEngine::Core::SVector3(0, 0, -700 * (delta_time * 100)));
