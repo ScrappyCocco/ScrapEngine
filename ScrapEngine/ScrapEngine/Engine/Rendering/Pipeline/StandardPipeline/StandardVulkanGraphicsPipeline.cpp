@@ -111,7 +111,8 @@ ScrapEngine::Render::StandardVulkanGraphicsPipeline::StandardVulkanGraphicsPipel
 		&(*descriptor_set_layout)
 	);
 
-	if (VulkanDevice::get_instance()->get_logical_device()->createPipelineLayout(&pipeline_layout_info, nullptr, &pipeline_layout_)
+	if (VulkanDevice::get_instance()->get_logical_device()->createPipelineLayout(
+			&pipeline_layout_info, nullptr, &pipeline_layout_)
 		!= vk::Result::eSuccess)
 	{
 		throw std::runtime_error("StandardVulkanGraphicsPipeline: Failed to create pipeline layout!");
@@ -136,7 +137,8 @@ ScrapEngine::Render::StandardVulkanGraphicsPipeline::StandardVulkanGraphicsPipel
 	);
 
 	if (VulkanDevice::get_instance()->get_logical_device()->createGraphicsPipelines(nullptr, 1, &pipeline_info, nullptr,
-	                                                                   &graphics_pipeline_) != vk::Result::eSuccess)
+	                                                                                &graphics_pipeline_) != vk::Result::
+		eSuccess)
 	{
 		throw std::runtime_error("StandardVulkanGraphicsPipeline: Failed to create graphics pipeline!");
 	}
