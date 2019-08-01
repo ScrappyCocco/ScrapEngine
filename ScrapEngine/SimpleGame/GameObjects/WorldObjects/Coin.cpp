@@ -1,8 +1,11 @@
 #include "Coin.h"
 
-Coin::Coin(ScrapEngine::Core::LogicManagerView* logic_manager_ref, const ScrapEngine::Core::SVector3& start_pos)
+Coin::Coin(ScrapEngine::Core::LogicManagerView* logic_manager_ref,
+           const ScrapEngine::Core::SVector3& start_pos,
+           ScoreManager* score_manager)
 	: SGameObject("Crate game object"), logic_manager_view_(logic_manager_ref),
-	  component_manager_ref_(logic_manager_ref->get_components_manager())
+	  component_manager_ref_(logic_manager_ref->get_components_manager()),
+	  score_manager_ref_(score_manager)
 {
 	set_object_location(start_pos);
 	//Add mesh to that GameObject
@@ -43,7 +46,6 @@ void Coin::game_update(const float time)
 	if (sound_started_ && !coin_sound_->is_playing())
 	{
 		set_should_update(false);
-		mesh_->set_is_visible(false);
 		//Destroy sound
 		coin_sound_->stop();
 		component_manager_ref_->unload_sound(coin_sound_);
@@ -64,6 +66,10 @@ void Coin::game_update(const float time)
 			{
 				sound_started_ = true;
 				coin_sound_->play();
+				//Hide mesh immediatly
+				mesh_->set_is_visible(false);
+				//Add score
+				score_manager_ref_->increase_score();
 			}
 		}
 	}

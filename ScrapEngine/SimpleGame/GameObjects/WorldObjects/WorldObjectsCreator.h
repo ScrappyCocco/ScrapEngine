@@ -2,6 +2,7 @@
 
 #include <Engine/LogicCore/Manager/LogicManagerView.h>
 #include "../RespawnTrigger/Trigger.h"
+#include "../ScoreManager/ScoreManager.h"
 
 class WorldObjectsCreator
 {
@@ -16,11 +17,12 @@ private:
 	//Utils
 	ScrapEngine::Core::LogicManagerView* logic_manager_ref_ = nullptr;
 	ScrapEngine::Core::SGameObject* player_ref_ = nullptr;
+	ScoreManager* score_manager_ref_ = nullptr;
 public:
 	WorldObjectsCreator(ScrapEngine::Core::LogicManagerView* logic_manager_ref,
-	                    ScrapEngine::Core::SGameObject* player);
+	                    ScrapEngine::Core::SGameObject* player,
+	                    ScoreManager* score_manager);
 	~WorldObjectsCreator() = default;
 
 	void register_crates_to_trigger(Trigger* kill_trigger);
 };
-

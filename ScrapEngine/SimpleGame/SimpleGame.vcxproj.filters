@@ -36,6 +36,9 @@
     <Filter Include="File di origine\GameObjects\FinishTriggerMenu">
       <UniqueIdentifier>{1bd05d4e-dfda-4097-b262-acd3dfaf1bf4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="File di origine\GameObjects\ScoreManager">
+      <UniqueIdentifier>{48d7127a-45f1-4864-b168-3303f9d90f0a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -74,6 +77,9 @@
     <ClCompile Include="GameObjects\FinishTriggerMenu\FinishMenu.cpp">
       <Filter>File di origine\GameObjects\FinishTriggerMenu</Filter>
     </ClCompile>
+    <ClCompile Include="GameObjects\ScoreManager\ScoreManager.cpp">
+      <Filter>File di origine\GameObjects\ScoreManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
@@ -109,6 +115,9 @@
     </ClInclude>
     <ClInclude Include="GameObjects\FinishTriggerMenu\FinishMenu.h">
       <Filter>File di origine\GameObjects\FinishTriggerMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\ScoreManager\ScoreManager.h">
+      <Filter>File di origine\GameObjects\ScoreManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

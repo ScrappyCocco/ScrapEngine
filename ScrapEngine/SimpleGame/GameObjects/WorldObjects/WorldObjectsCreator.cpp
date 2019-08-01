@@ -9,7 +9,7 @@ void WorldObjectsCreator::create_crate(const ScrapEngine::Core::SVector3& pos)
 
 void WorldObjectsCreator::create_coin(const ScrapEngine::Core::SVector3& pos) const
 {
-	Coin* coin = new Coin(logic_manager_ref_, pos);
+	Coin* coin = new Coin(logic_manager_ref_, pos, score_manager_ref_);
 	coin->set_collision_test(player_ref_);
 	logic_manager_ref_->register_game_object(coin);
 }
@@ -74,8 +74,9 @@ void WorldObjectsCreator::create_coins() const
 }
 
 WorldObjectsCreator::WorldObjectsCreator(ScrapEngine::Core::LogicManagerView* logic_manager_ref,
-                                         ScrapEngine::Core::SGameObject* player)
-	: logic_manager_ref_(logic_manager_ref), player_ref_(player)
+                                         ScrapEngine::Core::SGameObject* player,
+                                         ScoreManager* score_manager)
+	: logic_manager_ref_(logic_manager_ref), player_ref_(player), score_manager_ref_(score_manager)
 {
 	create_crates();
 	create_coins();

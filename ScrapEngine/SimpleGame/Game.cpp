@@ -9,6 +9,7 @@
 #include "GameObjects/WorldTerrain/WorldTerrainCreator.h"
 #include "GameObjects/WorldObjects/WorldObjectsCreator.h"
 #include "GameObjects/MainMenu/MainMenu.h"
+#include "GameObjects/ScoreManager/ScoreManager.h"
 
 int main()
 {
@@ -49,18 +50,23 @@ int main()
 		Trigger* box_trigger = new Trigger(component_manager_ref);
 		scrap_engine_manager->logic_manager_view->register_game_object(box_trigger);
 		box_trigger->add_collision_test(ball_game_object);
+		//Score manager
+		ScoreManager* score_manager = new ScoreManager(scrap_engine_manager->logic_manager_view,
+		                                               ball_game_object, game_window_ref);
+		scrap_engine_manager->logic_manager_view->register_game_object(score_manager);
 		//Finish trigger
 		scrap_engine_manager->logic_manager_view->register_game_object(new FinishTriggerMenu(
 				scrap_engine_manager->logic_manager_view,
 				ball_game_object,
-				game_window_ref)
+				game_window_ref, score_manager)
 		);
 		//Terrain pieces
 		WorldTerrainCreator* terrain_creator = new WorldTerrainCreator(component_manager_ref);
 		delete terrain_creator;
 		//Terrain objects
 		WorldObjectsCreator* terrain_objects_creator = new WorldObjectsCreator(scrap_engine_manager->logic_manager_view,
-		                                                                       ball_game_object);
+		                                                                       ball_game_object,
+		                                                                       score_manager);
 		terrain_objects_creator->register_crates_to_trigger(box_trigger);
 		delete terrain_objects_creator;
 		//Create basic music object

@@ -166,6 +166,7 @@
     <ClCompile Include="GameObjects\Music\Music.cpp" />
     <ClCompile Include="GameObjects\Player\Ball.cpp" />
     <ClCompile Include="GameObjects\RespawnTrigger\Trigger.cpp" />
+    <ClCompile Include="GameObjects\ScoreManager\ScoreManager.cpp" />
     <ClCompile Include="GameObjects\WorldObjects\Coin.cpp" />
     <ClCompile Include="GameObjects\WorldObjects\Crate.cpp" />
     <ClCompile Include="GameObjects\WorldObjects\WorldObjectsCreator.cpp" />
@@ -179,6 +180,7 @@
     <ClInclude Include="GameObjects\Music\Music.h" />
     <ClInclude Include="GameObjects\Player\Ball.h" />
     <ClInclude Include="GameObjects\RespawnTrigger\Trigger.h" />
+    <ClInclude Include="GameObjects\ScoreManager\ScoreManager.h" />
     <ClInclude Include="GameObjects\WorldObjects\Coin.h" />
     <ClInclude Include="GameObjects\WorldObjects\Crate.h" />
     <ClInclude Include="GameObjects\WorldObjects\WorldObjectsCreator.h" />
