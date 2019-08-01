@@ -34,10 +34,11 @@ void ScrapEngine::Audio::AudioSource::set_source_gain(const float gain) const
 
 void ScrapEngine::Audio::AudioSource::set_source_loop(const bool loop) const
 {
-	if(loop)
+	if (loop)
 	{
 		alSourcei(source_, AL_LOOPING, AL_TRUE);
-	}else
+	}
+	else
 	{
 		alSourcei(source_, AL_LOOPING, AL_FALSE);
 	}
