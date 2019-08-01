@@ -22,7 +22,7 @@ namespace ScrapEngine
 
 			AudioBuffer* build_buffer(const std::string& filename);
 
-			std::vector<std::pair<AudioBuffer*, AudioSource*>> loaded_audio_;
+			std::list<std::pair<AudioBuffer*, AudioSource*>> loaded_audio_;
 			std::unordered_map<std::string, AudioBuffer*> loaded_buffers_;
 		public:
 			AudioManager();
