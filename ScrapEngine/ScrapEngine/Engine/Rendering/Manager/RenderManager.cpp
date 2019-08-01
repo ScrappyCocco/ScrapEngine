@@ -356,7 +356,7 @@ void ScrapEngine::Render::RenderManager::wait_pre_frame_tasks()
 
 void ScrapEngine::Render::RenderManager::cleanup_meshes()
 {
-	std::vector<VulkanMeshInstance*> loaded_models_copy;
+	std::list<VulkanMeshInstance*> loaded_models_copy;
 	//Create a list with non-deleted elements
 	for (auto& loaded_model : loaded_models_)
 	{
@@ -369,6 +369,7 @@ void ScrapEngine::Render::RenderManager::cleanup_meshes()
 		}
 	}
 	//Re-assign cleaned list
+	//loaded_models_ = std::move(loaded_models_copy);
 	loaded_models_ = loaded_models_copy;
 }
 

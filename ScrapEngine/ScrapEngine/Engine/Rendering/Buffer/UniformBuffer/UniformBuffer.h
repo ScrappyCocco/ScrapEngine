@@ -26,12 +26,14 @@ namespace ScrapEngine
 
 			vk::Extent2D swap_chain_extent_;
 			size_t swap_chain_images_size_;
+
+			UniformBufferObject ubo_ = {};
 		public:
 			UniformBuffer(const std::vector<vk::Image>* swap_chain_images, const vk::Extent2D& input_swap_chain_extent);
 			~UniformBuffer();
 
 			void update_uniform_buffer(const uint32_t& current_image, const Core::STransform& object_transform,
-			                           Camera* render_camera);
+			                           Camera* render_camera, bool update_transform = true);
 			const std::vector<vk::Buffer>* get_uniform_buffers() const;
 			const std::vector<vk::DeviceMemory>* get_uniform_buffers_memory() const;
 		};

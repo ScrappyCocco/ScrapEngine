@@ -20,6 +20,7 @@
 #include <Engine/Rendering/Model/SkyboxInstance/VulkanSkyboxInstance.h>
 #include <Engine/Rendering/Gui/VulkanImGui.h>
 #include <TaskScheduler.h>
+#include <list>
 
 namespace ScrapEngine
 {
@@ -48,7 +49,7 @@ namespace ScrapEngine
 
 			VulkanSkyboxInstance* skybox_ = nullptr;
 
-			std::vector<VulkanMeshInstance*> loaded_models_;
+			std::list<VulkanMeshInstance*> loaded_models_;
 
 			size_t current_frame_ = 0;
 			uint32_t image_index_;

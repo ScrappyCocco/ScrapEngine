@@ -71,6 +71,16 @@ ScrapEngine::Core::SVector3 ScrapEngine::Render::VulkanMeshInstance::get_mesh_sc
 	return object_location_.get_scale();
 }
 
+bool ScrapEngine::Render::VulkanMeshInstance::get_is_static() const
+{
+	return is_static_;
+}
+
+void ScrapEngine::Render::VulkanMeshInstance::set_is_static(const bool is_static)
+{
+	is_static_ = is_static;
+}
+
 bool ScrapEngine::Render::VulkanMeshInstance::get_is_visible() const
 {
 	return is_visible_;
@@ -102,9 +112,21 @@ uint16_t ScrapEngine::Render::VulkanMeshInstance::get_deletion_counter() const
 }
 
 void ScrapEngine::Render::VulkanMeshInstance::update_uniform_buffer(const uint32_t& current_image,
-                                                                    Camera* render_camera) const
+                                                                    Camera* render_camera)
 {
-	vulkan_render_uniform_buffer_->update_uniform_buffer(current_image, object_location_, render_camera);
+	if(is_static_){
+		if(transform_dirty_)
+		{
+			vulkan_render_uniform_buffer_->update_uniform_buffer(current_image, object_location_, render_camera);
+			transform_dirty_ = false;
+		}else
+		{
+			vulkan_render_uniform_buffer_->update_uniform_buffer(current_image, object_location_, render_camera, false);
+		}
+	}else
+	{
+		vulkan_render_uniform_buffer_->update_uniform_buffer(current_image, object_location_, render_camera);
+	}
 }
 
 ScrapEngine::Render::UniformBuffer* ScrapEngine::Render::VulkanMeshInstance::get_vulkan_render_uniform_buffer() const
