@@ -36,11 +36,11 @@ ScrapEngine::Render::StandardDescriptorSet::StandardDescriptorSet() : BaseDescri
 }
 
 void ScrapEngine::Render::StandardDescriptorSet::create_descriptor_sets(vk::DescriptorPool* descriptor_pool,
-                                                                      const std::vector<vk::Image>* swap_chain_images,
-                                                                      const std::vector<vk::Buffer>* uniform_buffers,
-                                                                      vk::ImageView* texture_image_view,
-                                                                      vk::Sampler* texture_sampler,
-                                                                      const vk::DeviceSize& buffer_info_size)
+                                                                        const std::vector<vk::Image>* swap_chain_images,
+                                                                        const std::vector<vk::Buffer>* uniform_buffers,
+                                                                        vk::ImageView* texture_image_view,
+                                                                        vk::Sampler* texture_sampler,
+                                                                        const vk::DeviceSize& buffer_info_size)
 {
 	std::vector<vk::DescriptorSetLayout> layouts(swap_chain_images->size(), descriptor_set_layout_);
 

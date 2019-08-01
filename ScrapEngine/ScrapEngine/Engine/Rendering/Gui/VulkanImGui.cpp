@@ -175,13 +175,13 @@ void ScrapEngine::Render::VulkanImGui::generate_loading_gui_frame() const
 	//Try 10 times to generate the loading frame
 	//Dear ImGui can't give you guarantee that things will appear on the first frame
 	//if it fails, loading screen will not appear: not a big deal
-	for(int i=0;i < 10; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		pre_gui_frame();
 		loading_ui();
 		post_gui_frame();
 		ImDrawData* im_draw_data = ImGui::GetDrawData();
-		if(im_draw_data->TotalVtxCount > 0)
+		if (im_draw_data->TotalVtxCount > 0)
 		{
 			break;
 		}
@@ -205,7 +205,9 @@ void ScrapEngine::Render::VulkanImGui::loading_ui() const
 	ImGui::SetNextWindowPosCenter(ImGuiCond_Once);
 	ImGui::SetNextWindowBgAlpha(0.35f); // Transparent background
 
-	if (ImGui::Begin("Loading UI Overlay", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoNav))
+	if (ImGui::Begin("Loading UI Overlay", nullptr,
+	                 ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_AlwaysAutoResize |
+	                 ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoNav))
 	{
 		ImGui::Text("ScrapEngine - Loading...");
 

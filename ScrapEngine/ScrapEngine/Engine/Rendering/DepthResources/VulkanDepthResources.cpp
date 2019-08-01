@@ -13,11 +13,12 @@ ScrapEngine::Render::VulkanDepthResources::VulkanDepthResources(const vk::Extent
 	                          vk::ImageTiling::eOptimal, vk::ImageUsageFlagBits::eDepthStencilAttachment,
 	                          vk::MemoryPropertyFlagBits::eDeviceLocal, depth_image_, depth_image_memory_, 1,
 	                          msaa_samples);
-	depth_image_view_ = TextureImageView::create_image_view(&depth_image_, depth_format, vk::ImageAspectFlagBits::eDepth,
-	                                                      1);
+	depth_image_view_ = TextureImageView::create_image_view(&depth_image_, depth_format,
+	                                                        vk::ImageAspectFlagBits::eDepth,
+	                                                        1);
 
 	BaseTexture::transition_image_layout(&depth_image_, depth_format, vk::ImageLayout::eUndefined,
-	                                    vk::ImageLayout::eDepthStencilAttachmentOptimal, 1);
+	                                     vk::ImageLayout::eDepthStencilAttachmentOptimal, 1);
 }
 
 
