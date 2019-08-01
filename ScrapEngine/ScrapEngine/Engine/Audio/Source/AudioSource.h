@@ -21,6 +21,8 @@ namespace ScrapEngine
 			void set_source_gain(float gain) const;
 			void set_source_loop(bool loop) const;
 
+			bool is_playing() const;
+
 			void play() const;
 			void stop() const;
 			void pause() const;

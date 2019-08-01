@@ -25,7 +25,7 @@ namespace ScrapEngine
 			void init_current_camera(Camera* current_camera);
 
 			void load_skybox(VulkanSkyboxInstance* skybox_ref);
-			void load_mesh(const VulkanMeshInstance* mesh);
+			void load_mesh(VulkanMeshInstance* mesh);
 		};
 	}
 }

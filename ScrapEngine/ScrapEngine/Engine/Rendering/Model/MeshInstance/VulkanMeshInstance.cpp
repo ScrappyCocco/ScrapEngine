@@ -15,7 +15,8 @@ ScrapEngine::Render::VulkanMeshInstance::VulkanMeshInstance(const std::string& v
 	vulkan_render_model_ = VulkanModelPool::get_instance()->get_model(model_path);
 	if (vulkan_render_model_->get_meshes()->size() != textures_path.size() && textures_path.size() > 1)
 	{
-		throw std::runtime_error("The texture array must have size 1 or equal number of meshes!");
+		throw std::runtime_error("The texture array must have size 1 or equal number of meshes ("
+			+ std::to_string(vulkan_render_model_->get_meshes()->size()) + ")");
 	}
 	for (const auto& texture_path : textures_path)
 	{
@@ -78,6 +79,26 @@ bool ScrapEngine::Render::VulkanMeshInstance::get_is_visible() const
 void ScrapEngine::Render::VulkanMeshInstance::set_is_visible(const bool visible)
 {
 	is_visible_ = visible;
+}
+
+void ScrapEngine::Render::VulkanMeshInstance::set_for_deletion()
+{
+	pending_deletion_ = true;
+}
+
+bool ScrapEngine::Render::VulkanMeshInstance::get_pending_deletion() const
+{
+	return pending_deletion_;
+}
+
+void ScrapEngine::Render::VulkanMeshInstance::increase_deletion_counter()
+{
+	deletion_counter_++;
+}
+
+uint16_t ScrapEngine::Render::VulkanMeshInstance::get_deletion_counter() const
+{
+	return deletion_counter_;
 }
 
 void ScrapEngine::Render::VulkanMeshInstance::update_uniform_buffer(const uint32_t& current_image,

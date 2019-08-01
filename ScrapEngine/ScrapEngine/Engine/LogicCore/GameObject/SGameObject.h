@@ -23,9 +23,18 @@ namespace ScrapEngine
 			                     const STransform& input_object_transform = STransform());
 			~SGameObject() = 0;
 
+			//Basics events
 			virtual void game_start();
 			virtual void game_update(float time);
 			virtual void on_gui();
+
+			//More events the user can decide to define
+			//None of these is called by the engine
+			//These are called and defined by you when needed
+			virtual void spawn();
+			virtual void respawn();
+			virtual void die();
+			virtual void kill();
 
 			void set_should_update(bool should_update);
 			bool get_should_update() const;
@@ -34,6 +43,7 @@ namespace ScrapEngine
 			void set_object_location(const SVector3& location, bool should_update_relative = true);
 			void set_object_rotation(const SVector3& rotation, bool should_update_relative = true);
 			void set_object_scale(const SVector3& scale, bool should_update_relative = true);
+			void add_object_rotation(const SVector3& rotation);
 
 			SVector3 get_object_location() const;
 			SVector3 get_object_rotation() const;

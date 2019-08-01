@@ -17,6 +17,11 @@ void ScrapEngine::Physics::DiscreteDynamicsWorld::set_gravity(const Core::SVecto
 	world_->setGravity(gravity_vector);
 }
 
+rp3d::Vector3 ScrapEngine::Physics::DiscreteDynamicsWorld::get_gravity() const
+{
+	return world_->getGravity();
+}
+
 void ScrapEngine::Physics::DiscreteDynamicsWorld::step_simulation(const float delta_time) const
 {
 	world_->update(delta_time);

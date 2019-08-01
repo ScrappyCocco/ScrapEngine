@@ -23,11 +23,11 @@ rp3d::Transform ScrapEngine::Physics::RigidBody::convert_transform(const Core::S
 	const rp3d::Vector3 pos = convert_vector(other.get_position());
 
 	const Core::SVector3& other_rot = other.get_rotation();
-	rp3d::Quaternion rotation = rp3d::Quaternion::identity();
-	if (other_rot.get_x() != 0 || other_rot.get_y() != 0 || other_rot.get_z() != 0)
-	{
-		rotation = rp3d::Quaternion(other_rot.get_x(), other_rot.get_y(), other_rot.get_z(), 0);
-	}
+	const rp3d::Quaternion rotation = rp3d::Quaternion::fromEulerAngles(
+		other_rot.get_x(),
+		other_rot.get_y(),
+		other_rot.get_z()
+	);
 
 	return rp3d::Transform(pos, rotation);
 }

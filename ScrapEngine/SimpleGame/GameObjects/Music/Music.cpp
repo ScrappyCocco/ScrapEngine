@@ -1,6 +1,6 @@
 #include "Music.h"
 
-Music::Music(ScrapEngine::Core::ComponentsManager* input_ComponentManager)
+Music::Music(ScrapEngine::Core::ComponentsManager* input_component_manager)
 	: SGameObject("Music object")
 {
 	//Disable update call
@@ -13,7 +13,7 @@ Music::Music(ScrapEngine::Core::ComponentsManager* input_ComponentManager)
 	audio_->set_source_loop(true);*/
 
 	//In the example scene i will just add a 2d background loop music
-	audio_ = input_ComponentManager->create_2d_sound("../assets/sounds/ambient_music_loop.wav");
+	audio_ = input_component_manager->create_2d_sound("../assets/sounds/ambient_music_loop.wav");
 	audio_->set_source_gain(0.5);
 	audio_->set_source_loop(true);
 }

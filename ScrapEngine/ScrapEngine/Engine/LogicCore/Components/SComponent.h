@@ -21,6 +21,7 @@ namespace ScrapEngine
 			virtual void set_component_location(const SVector3& location);
 			virtual void set_component_rotation(const SVector3& rotation);
 			virtual void set_component_scale(const SVector3& scale);
+			virtual void add_component_rotation(const SVector3& rotation);
 
 			//Update the relative transform based on father_transform_
 			virtual void update_relative_transform();

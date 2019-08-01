@@ -312,20 +312,56 @@ void ScrapEngine::Render::RenderManager::rebuild_gui_command_buffer(const bool f
 	gui_command_buffer_->free_command_buffers();
 	//Init
 	uint32_t image_index_to_use;
-	if(for_next_image)
+	if (for_next_image)
 	{
 		image_index_to_use = (last_image_index_ + 1) % 3;
-	}else
+	}
+	else
 	{
 		image_index_to_use = last_image_index_;
 	}
 	gui_command_buffer_->init_command_buffer(vulkan_render_frame_buffer_,
-		&vulkan_render_swap_chain_->get_swap_chain_extent(),
-		vulkan_render_command_pool_, image_index_to_use);
+	                                         &vulkan_render_swap_chain_->get_swap_chain_extent(),
+	                                         vulkan_render_command_pool_, image_index_to_use);
 	//Load ui
 	gui_command_buffer_->load_ui(gui_render_);
 	//close
 	gui_command_buffer_->close_command_buffer();
+}
+
+void ScrapEngine::Render::RenderManager::cleanup_meshes()
+{
+	//Create a list of mesh pending for deletion
+	// TODO after game - currently disabled
+	/*for (size_t i = 0; i < loaded_models_.size(); i++)
+	{
+		if (loaded_models_[i]->get_pending_deletion() && loaded_models_[i]->get_deletion_counter() >= 1)
+		{
+			delete loaded_models_[i];
+			loaded_models_.erase(loaded_models_.begin() + i);
+			i--;
+		}
+	}*/
+	/*std::vector<VulkanMeshInstance*> mesh_pending_deletion;
+	for (auto mesh : loaded_models_)
+	{
+		if (mesh->get_pending_deletion() && mesh->get_deletion_counter() >= 1)
+		{
+			mesh_pending_deletion.push_back(mesh);
+		}
+	}
+	//Now delete pending meshes
+	for (auto mesh_to_delete : mesh_pending_deletion)
+	{
+		const std::vector<VulkanMeshInstance*>::iterator element = find(loaded_models_.begin(),
+		                                                                loaded_models_.end(),
+		                                                                mesh_to_delete);
+		if (element != loaded_models_.end())
+		{
+			delete (*element);
+			loaded_models_.erase(element);
+		}
+	}*/
 }
 
 void ScrapEngine::Render::RenderManager::create_command_buffer(const bool flip_flop)
@@ -344,6 +380,9 @@ void ScrapEngine::Render::RenderManager::create_command_buffer(const bool flip_f
 		command_buffers_[index].command_buffer->load_skybox(skybox_);
 	}
 	//3d models
+	//Remove deleted meshes
+	cleanup_meshes();
+	//Now render the meshes
 	for (auto mesh : loaded_models_)
 	{
 		command_buffers_[index].command_buffer->load_mesh(mesh);
@@ -398,17 +437,6 @@ ScrapEngine::Render::VulkanMeshInstance* ScrapEngine::Render::RenderManager::loa
 	                 "../assets/shader/compiled_shaders/shader_base.frag.spv", model_path, textures_path);
 }
 
-void ScrapEngine::Render::RenderManager::unload_mesh(VulkanMeshInstance* mesh_to_unload)
-{
-	const std::vector<VulkanMeshInstance*>::iterator element = find(loaded_models_.begin(), loaded_models_.end(),
-	                                                                mesh_to_unload);
-	if (element != loaded_models_.end())
-	{
-		delete *element;
-		loaded_models_.erase(element);
-	}
-}
-
 ScrapEngine::Render::VulkanSkyboxInstance* ScrapEngine::Render::RenderManager::load_skybox(
 	const std::array<std::string, 6>& files_path)
 {
@@ -441,14 +469,14 @@ void ScrapEngine::Render::RenderManager::draw_loading_frame()
 
 	vk::SubmitInfo submit_info;
 
-	vk::Semaphore wait_semaphores[] = { (*image_available_semaphores_ref_)[current_frame_] };
-	vk::PipelineStageFlags wait_stages[] = { vk::PipelineStageFlagBits::eColorAttachmentOutput };
+	vk::Semaphore wait_semaphores[] = {(*image_available_semaphores_ref_)[current_frame_]};
+	vk::PipelineStageFlags wait_stages[] = {vk::PipelineStageFlagBits::eColorAttachmentOutput};
 
 	submit_info.setWaitSemaphoreCount(1);
 	submit_info.setPWaitDstStageMask(wait_stages);
 	submit_info.setPWaitSemaphores(wait_semaphores);
 
-	vk::Semaphore signal_semaphores[] = { (*render_finished_semaphores_ref_)[current_frame_] };
+	vk::Semaphore signal_semaphores[] = {(*render_finished_semaphores_ref_)[current_frame_]};
 	submit_info.setSignalSemaphoreCount(1);
 	submit_info.setPSignalSemaphores(signal_semaphores);
 
@@ -463,7 +491,7 @@ void ScrapEngine::Render::RenderManager::draw_loading_frame()
 	VulkanDevice::get_instance()->get_logical_device()->resetFences(1, &(*in_flight_fences_ref_)[current_frame_]);
 
 	result_ = vulkan_graphics_queue_->get_queue()->submit(1, &submit_info,
-		(*in_flight_fences_ref_)[current_frame_]);
+	                                                      (*in_flight_fences_ref_)[current_frame_]);
 	if (result_ != vk::Result::eSuccess)
 	{
 		std::cout << "RESULT TYPE:" << result_ << std::endl;
@@ -475,7 +503,7 @@ void ScrapEngine::Render::RenderManager::draw_loading_frame()
 	present_info.setWaitSemaphoreCount(1);
 	present_info.setPWaitSemaphores(signal_semaphores);
 
-	vk::SwapchainKHR swap_chains[] = { vulkan_render_swap_chain_->get_swap_chain() };
+	vk::SwapchainKHR swap_chains[] = {vulkan_render_swap_chain_->get_swap_chain()};
 	present_info.setSwapchainCount(1);
 	present_info.setPSwapchains(swap_chains);
 
@@ -533,7 +561,9 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 	submit_info.setPWaitDstStageMask(wait_stages);
 
 	//Wait for the gui command buffer task to finish
-	while(!gui_command_buffer_task_->GetIsComplete()){}
+	while (!gui_command_buffer_task_->GetIsComplete())
+	{
+	}
 	//Submit
 	submit_info.setCommandBufferCount(2);
 	std::vector<vk::CommandBuffer> command_buffers;

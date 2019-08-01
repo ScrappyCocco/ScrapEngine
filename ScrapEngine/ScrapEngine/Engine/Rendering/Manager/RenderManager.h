@@ -126,6 +126,7 @@ namespace ScrapEngine
 
 			void rebuild_gui_command_buffer(bool for_next_image = true) const;
 
+			void cleanup_meshes();
 			void create_command_buffer(bool flip_flop);
 			void check_start_new_thread();
 			void swap_command_buffers();
@@ -157,7 +158,6 @@ namespace ScrapEngine
 			                              const std::vector<std::string>& textures_path);
 			VulkanMeshInstance* load_mesh(const std::string& model_path,
 			                              const std::vector<std::string>& textures_path);
-			void unload_mesh(VulkanMeshInstance* mesh_to_unload);
 			VulkanSkyboxInstance* load_skybox(const std::array<std::string, 6>& files_path);
 
 			//User-Window stuff

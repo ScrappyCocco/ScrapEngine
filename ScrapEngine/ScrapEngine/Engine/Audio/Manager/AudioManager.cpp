@@ -43,7 +43,10 @@ ScrapEngine::Audio::AudioManager::~AudioManager()
 	for (auto& loaded_sound : loaded_audio_)
 	{
 		delete loaded_sound.second;
-		delete loaded_sound.first;
+	}
+	for (auto& loaded_buffer : loaded_buffers_)
+	{
+		delete loaded_buffer.second;
 	}
 	delete context_;
 	delete device_;
@@ -106,7 +109,6 @@ void ScrapEngine::Audio::AudioManager::unload_sound(AudioSource* sound)
 	                    loaded_audio_.end());
 	//Delete pointers
 	delete element_to_remove.second;
-	delete element_to_remove.first;
 }
 
 void ScrapEngine::Audio::AudioManager::audio_update(const Render::Camera* camera_ref) const

@@ -28,6 +28,12 @@ void ScrapEngine::Core::SComponent::set_component_scale(const SVector3& scale)
 	object_relative_transform_.set_scale(object_world_transform_.get_scale() - father_transform_.get_scale());
 }
 
+void ScrapEngine::Core::SComponent::add_component_rotation(const SVector3& rotation)
+{
+	object_world_transform_.add_rotation(rotation);
+	object_relative_transform_.set_rotation(object_world_transform_.get_rotation() - father_transform_.get_rotation());
+}
+
 void ScrapEngine::Core::SComponent::update_relative_transform()
 {
 	object_relative_transform_.set_position(object_world_transform_.get_position() - father_transform_.get_position());

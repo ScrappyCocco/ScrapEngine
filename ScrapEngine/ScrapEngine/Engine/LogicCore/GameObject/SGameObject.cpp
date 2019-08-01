@@ -30,6 +30,26 @@ void ScrapEngine::Core::SGameObject::on_gui()
 	//This will be defined by the user when is necessary, otherwise it will have no effect
 }
 
+void ScrapEngine::Core::SGameObject::spawn()
+{
+	//This will be defined by the user when is necessary, otherwise it will have no effect
+}
+
+void ScrapEngine::Core::SGameObject::respawn()
+{
+	//This will be defined by the user when is necessary, otherwise it will have no effect
+}
+
+void ScrapEngine::Core::SGameObject::die()
+{
+	//This will be defined by the user when is necessary, otherwise it will have no effect
+}
+
+void ScrapEngine::Core::SGameObject::kill()
+{
+	//This will be defined by the user when is necessary, otherwise it will have no effect
+}
+
 void ScrapEngine::Core::SGameObject::set_should_update(const bool should_update)
 {
 	this->should_update = should_update;
@@ -101,6 +121,13 @@ void ScrapEngine::Core::SGameObject::set_object_scale(const SVector3& scale, con
 	{
 		child_object->update_object_scale();
 	}
+}
+
+void ScrapEngine::Core::SGameObject::add_object_rotation(const SVector3& rotation)
+{
+	object_transform_.add_rotation(rotation);
+	//Update the rotation
+	set_object_rotation(get_object_rotation());
 }
 
 ScrapEngine::Core::SVector3 ScrapEngine::Core::SGameObject::get_object_location() const

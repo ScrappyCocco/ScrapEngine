@@ -49,6 +49,8 @@ namespace ScrapEngine
 			void update_rigidbody_physics(float factor);
 			void destroy_trigger_component(TriggerComponent* component_to_destroy);
 			void destroy_rigidbody_component(RigidBodyComponent* component_to_destroy);
+			void set_gravity(const SVector3& gravity) const;
+			SVector3 get_gravity() const;
 
 			//--->Trigger collisions
 			//BoxColliderComponent
@@ -74,6 +76,7 @@ namespace ScrapEngine
 			//AudioStuff
 			AudioComponent2D* create_2d_sound(const std::string& filename) const;
 			AudioComponent3D* create_3d_sound(const std::string& filename) const;
+			void unload_sound(AudioComponent* audio) const;
 		};
 	}
 }

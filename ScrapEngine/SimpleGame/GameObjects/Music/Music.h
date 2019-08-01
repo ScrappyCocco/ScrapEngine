@@ -8,8 +8,8 @@ class Music : public ScrapEngine::Core::SGameObject
 private:
 	ScrapEngine::Core::AudioComponent* audio_;
 public:
-	Music(ScrapEngine::Core::ComponentsManager* input_ComponentManager);
+	Music(ScrapEngine::Core::ComponentsManager* input_component_manager);
 	~Music() = default;
 
-	virtual void game_start() override;
+	void game_start() override;
 };

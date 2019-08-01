@@ -72,6 +72,17 @@ void ScrapEngine::Physics::PhysicsManager::remove_rigidbody(RigidBody* rigidbody
 	rigidbody->remove_from_world(p_world_->get_dynamic_world());
 }
 
+void ScrapEngine::Physics::PhysicsManager::set_gravity(const Core::SVector3& gravity) const
+{
+	p_world_->set_gravity(gravity);
+}
+
+ScrapEngine::Core::SVector3 ScrapEngine::Physics::PhysicsManager::get_gravity() const
+{
+	const rp3d::Vector3 grav = p_world_->get_gravity();
+	return Core::SVector3(grav.x, grav.y, grav.z);
+}
+
 ScrapEngine::Physics::CollisionBody* ScrapEngine::Physics::PhysicsManager::create_box_trigger(
 	const Core::SVector3& size,
 	const Core::SVector3&

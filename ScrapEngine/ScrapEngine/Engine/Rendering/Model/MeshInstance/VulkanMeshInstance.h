@@ -27,6 +27,15 @@ namespace ScrapEngine
 
 			Core::STransform object_location_;
 			bool is_visible_ = true;
+
+			//Set that the mesh will be deleted as soon as possible
+			//During command buffer re-creation
+			//This is necessary because the mesh can't be deleted during command buffer creation
+			bool pending_deletion_ = false;
+
+			//I also need a deletion counter, to know how many command buffers read this mesh
+			//When i'm sure no command buffer contain it this mesh can be deleted
+			uint16_t deletion_counter_ = 0;
 		public:
 			VulkanMeshInstance(const std::string& vertex_shader_path, const std::string& fragment_shader_path,
 			                   const std::string& model_path, const std::vector<std::string>& textures_path,
@@ -43,6 +52,11 @@ namespace ScrapEngine
 
 			bool get_is_visible() const;
 			void set_is_visible(bool visible);
+
+			void set_for_deletion();
+			bool get_pending_deletion() const;
+			void increase_deletion_counter();
+			uint16_t get_deletion_counter() const;
 
 			void update_uniform_buffer(const uint32_t& current_image, Camera* render_camera) const;
 

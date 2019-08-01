@@ -36,7 +36,7 @@ void ScrapEngine::Core::ComponentsManager::destroy_mesh_component(
 		loaded_meshes_.find(component_to_destroy);
 	if (position != loaded_meshes_.end())
 	{
-		render_manager_ref_->unload_mesh(position->second);
+		position->second->set_for_deletion();
 		loaded_meshes_.erase(position);
 	}
 }
@@ -95,6 +95,11 @@ ScrapEngine::Core::AudioComponent3D* ScrapEngine::Core::ComponentsManager::creat
 	return new AudioComponent3D(audio_manager_ref_->load_3d_sound(filename));
 }
 
+void ScrapEngine::Core::ComponentsManager::unload_sound(AudioComponent* audio) const
+{
+	audio_manager_ref_->unload_sound(audio->get_raw_source());
+}
+
 void ScrapEngine::Core::ComponentsManager::destroy_rigidbody_component(RigidBodyComponent* component_to_destroy)
 {
 	const std::map<RigidBodyComponent*, Physics::RigidBody*>::iterator position =
@@ -104,6 +109,16 @@ void ScrapEngine::Core::ComponentsManager::destroy_rigidbody_component(RigidBody
 		physics_manager_ref_->remove_rigidbody(position->second);
 		loaded_rigidbody_collisions_.erase(position);
 	}
+}
+
+void ScrapEngine::Core::ComponentsManager::set_gravity(const Core::SVector3& gravity) const
+{
+	physics_manager_ref_->set_gravity(gravity);
+}
+
+ScrapEngine::Core::SVector3 ScrapEngine::Core::ComponentsManager::get_gravity() const
+{
+	return physics_manager_ref_->get_gravity();
 }
 
 ScrapEngine::Core::BoxTriggerComponent* ScrapEngine::Core::ComponentsManager::create_box_trigger_component(

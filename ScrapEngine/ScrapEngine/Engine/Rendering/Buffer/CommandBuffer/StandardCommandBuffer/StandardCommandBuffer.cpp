@@ -85,8 +85,14 @@ void ScrapEngine::Render::StandardCommandBuffer::load_skybox(VulkanSkyboxInstanc
 	}
 }
 
-void ScrapEngine::Render::StandardCommandBuffer::load_mesh(const VulkanMeshInstance* mesh)
+void ScrapEngine::Render::StandardCommandBuffer::load_mesh(VulkanMeshInstance* mesh)
 {
+	//Do not include mesh to delete
+	if(mesh->get_pending_deletion())
+	{
+		mesh->increase_deletion_counter();
+		return;
+	}
 	//Check if the mesh is visible
 	if (!mesh->get_is_visible())
 	{

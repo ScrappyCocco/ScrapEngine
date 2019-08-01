@@ -160,20 +160,34 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GameObjects\Ball.cpp" />
     <ClCompile Include="GameObjects\Camera\GameCamera.cpp" />
-    <ClCompile Include="GameObjects\Crate.cpp" />
-    <ClCompile Include="GameObjects\Music.cpp" />
-    <ClCompile Include="GameObjects\Terrain.cpp" />
-    <ClCompile Include="GameObjects\Trigger.cpp" />
+    <ClCompile Include="GameObjects\CheckpointTrigger\CheckpointTrigger.cpp" />
+    <ClCompile Include="GameObjects\FinishTriggerMenu\FinishMenu.cpp" />
+    <ClCompile Include="GameObjects\MainMenu\MainMenu.cpp" />
+    <ClCompile Include="GameObjects\Music\Music.cpp" />
+    <ClCompile Include="GameObjects\Player\Ball.cpp" />
+    <ClCompile Include="GameObjects\RespawnTrigger\Trigger.cpp" />
+    <ClCompile Include="GameObjects\ScoreManager\ScoreManager.cpp" />
+    <ClCompile Include="GameObjects\WorldObjects\Coin.cpp" />
+    <ClCompile Include="GameObjects\WorldObjects\Crate.cpp" />
+    <ClCompile Include="GameObjects\WorldObjects\WorldObjectsCreator.cpp" />
+    <ClCompile Include="GameObjects\WorldTerrain\Terrain.cpp" />
+    <ClCompile Include="GameObjects\WorldTerrain\WorldTerrainCreator.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameObjects\Ball.h" />
     <ClInclude Include="GameObjects\Camera\GameCamera.h" />
-    <ClInclude Include="GameObjects\Crate.h" />
-    <ClInclude Include="GameObjects\Music.h" />
-    <ClInclude Include="GameObjects\Terrain.h" />
-    <ClInclude Include="GameObjects\Trigger.h" />
+    <ClInclude Include="GameObjects\CheckpointTrigger\CheckpointTrigger.h" />
+    <ClInclude Include="GameObjects\FinishTriggerMenu\FinishMenu.h" />
+    <ClInclude Include="GameObjects\MainMenu\MainMenu.h" />
+    <ClInclude Include="GameObjects\Music\Music.h" />
+    <ClInclude Include="GameObjects\Player\Ball.h" />
+    <ClInclude Include="GameObjects\RespawnTrigger\Trigger.h" />
+    <ClInclude Include="GameObjects\ScoreManager\ScoreManager.h" />
+    <ClInclude Include="GameObjects\WorldObjects\Coin.h" />
+    <ClInclude Include="GameObjects\WorldObjects\Crate.h" />
+    <ClInclude Include="GameObjects\WorldObjects\WorldObjectsCreator.h" />
+    <ClInclude Include="GameObjects\WorldTerrain\Terrain.h" />
+    <ClInclude Include="GameObjects\WorldTerrain\WorldTerrainCreator.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
