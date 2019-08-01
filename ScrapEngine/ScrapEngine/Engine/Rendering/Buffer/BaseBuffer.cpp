@@ -83,5 +83,6 @@ void ScrapEngine::Render::BaseBuffer::end_single_time_commands(vk::CommandBuffer
 
 	VulkanDevice::get_instance()->get_logical_device()->freeCommandBuffers(
 		*SingletonCommandPool::get_instance()->get_command_pool(), 1, command_buffer);
+
 	delete command_buffer;
 }
