@@ -358,14 +358,14 @@ void ScrapEngine::Render::RenderManager::cleanup_meshes()
 {
 	std::vector<VulkanMeshInstance*> loaded_models_copy;
 	//Create a list with non-deleted elements
-	for (size_t i = 0; i < loaded_models_.size(); i++)
+	for (auto& loaded_model : loaded_models_)
 	{
-		if (loaded_models_[i]->get_pending_deletion() && loaded_models_[i]->get_deletion_counter() >= 2)
+		if (loaded_model->get_pending_deletion() && loaded_model->get_deletion_counter() >= 2)
 		{
-			delete loaded_models_[i];
+			delete loaded_model;
 		}else
 		{
-			loaded_models_copy.push_back(loaded_models_[i]);
+			loaded_models_copy.push_back(loaded_model);
 		}
 	}
 	//Re-assign cleaned list
