@@ -77,6 +77,18 @@ void WorldObjectsCreator::create_coins() const
 	//After first respawn
 	create_coin(ScrapEngine::Core::SVector3(75, -10, -400));
 	create_coin(ScrapEngine::Core::SVector3(100, -10, -400));
+	//Second right terrain after first respawn
+	create_coin(ScrapEngine::Core::SVector3(300, -10, -475));
+	create_coin(ScrapEngine::Core::SVector3(350, -10, -475));
+	create_coin(ScrapEngine::Core::SVector3(400, -10, -475));
+	create_coin(ScrapEngine::Core::SVector3(470, -10, -500));
+	//Before second respawn
+	create_coin(ScrapEngine::Core::SVector3(350, -10, -225));
+	//Before crates after second respawn
+	create_coin(ScrapEngine::Core::SVector3(325, -10, -100));
+	//Last coins on angles
+	create_coin(ScrapEngine::Core::SVector3(250, -10, -70));
+	create_coin(ScrapEngine::Core::SVector3(450, -10, -120));
 }
 
 void WorldObjectsCreator::create_checkpoints() const
