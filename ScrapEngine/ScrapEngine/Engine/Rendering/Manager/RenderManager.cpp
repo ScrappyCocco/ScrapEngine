@@ -404,18 +404,15 @@ void ScrapEngine::Render::RenderManager::check_start_new_thread()
 
 void ScrapEngine::Render::RenderManager::swap_command_buffers()
 {
-	if (current_frame_ >= 1)
+	const short int index = command_buffer_flip_flop_ ? 0 : 1;
+	//If the thread is done, swap the command buffers
+	if (command_buffers_[index].is_running && command_buffers_tasks_[index]->GetIsComplete())
 	{
-		const short int index = command_buffer_flip_flop_ ? 0 : 1;
-		//If the thread is done, swap the command buffers
-		if (command_buffers_[index].is_running && command_buffers_tasks_[index]->GetIsComplete())
-		{
-			//Take a reference to the fence we must wait before deleting the current command buffer
-			waiting_fence_ = &(*in_flight_fences_ref_)[current_frame_];
-			//And swap them
-			command_buffers_[index].is_running = false;
-			command_buffer_flip_flop_ = !command_buffer_flip_flop_;
-		}
+		//Take a reference to the fence we must wait before deleting the current command buffer
+		waiting_fence_ = &(*in_flight_fences_ref_)[current_frame_];
+		//And swap them
+		command_buffers_[index].is_running = false;
+		command_buffer_flip_flop_ = !command_buffer_flip_flop_;
 	}
 }
 
