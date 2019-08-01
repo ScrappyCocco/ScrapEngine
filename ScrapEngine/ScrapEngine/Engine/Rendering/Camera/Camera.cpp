@@ -14,13 +14,14 @@ ScrapEngine::Render::Camera::Camera(const float input_min_draw_distance, const f
 void ScrapEngine::Render::Camera::set_camera_location(const Core::SVector3& new_camera_location)
 {
 	camera_location_ = new_camera_location;
+
+	update_camera_vectors();
+	//Ri-generate look matrix
+	generate_look_matrix();
 }
 
 void ScrapEngine::Render::Camera::execute_camera_update()
 {
-	update_camera_vectors();
-	//Ri-generate look matrix
-	generate_look_matrix();
 	//Update view frustum
 	update_frustum();
 }
@@ -52,6 +53,10 @@ void ScrapEngine::Render::Camera::process_mouse_movement(const float xpos, const
 		if (pitch_ < -89.0f)
 			pitch_ = -89.0f;
 	}
+	//Update data
+	update_camera_vectors();
+	//Ri-generate look matrix
+	generate_look_matrix();
 }
 
 void ScrapEngine::Render::Camera::update_camera_vectors()
@@ -100,16 +105,44 @@ float ScrapEngine::Render::Camera::get_camera_roll() const
 void ScrapEngine::Render::Camera::set_camera_yaw(const float yaw)
 {
 	yaw_ = yaw;
+	//Update data
+	update_camera_vectors();
+	//Ri-generate look matrix
+	generate_look_matrix();
 }
 
 void ScrapEngine::Render::Camera::set_camera_pitch(const float pitch)
 {
 	pitch_ = pitch;
+	//Update data
+	update_camera_vectors();
+	//Ri-generate look matrix
+	generate_look_matrix();
 }
 
 void ScrapEngine::Render::Camera::set_camera_roll(const float roll)
 {
 	roll_ = roll;
+	//Update data
+	update_camera_vectors();
+	//Ri-generate look matrix
+	generate_look_matrix();
+}
+
+bool ScrapEngine::Render::Camera::get_projection_matrix_dirty() const
+{
+	return projection_matrix_dirty_;
+}
+
+bool ScrapEngine::Render::Camera::get_look_matrix_dirt() const
+{
+	return look_matrix_dirty_;
+}
+
+void ScrapEngine::Render::Camera::cancel_dirty_matrix()
+{
+	projection_matrix_dirty_ = false;
+	look_matrix_dirty_ = false;
 }
 
 float ScrapEngine::Render::Camera::get_mouse_sensivity() const
@@ -183,6 +216,7 @@ void ScrapEngine::Render::Camera::generate_matrices()
 
 void ScrapEngine::Render::Camera::generate_projection_matrix()
 {
+	projection_matrix_dirty_ = true;
 	//Perspective stuff
 	projection_matrix_ = glm::perspective(glm::radians(fov_),
 	                                      swap_chain_extent_.width / static_cast<float>(swap_chain_extent_.height),
@@ -194,6 +228,7 @@ void ScrapEngine::Render::Camera::generate_projection_matrix()
 
 void ScrapEngine::Render::Camera::generate_look_matrix()
 {
+	look_matrix_dirty_ = true;
 	look_matrix_ = lookAt(camera_location_.get_glm_vector(),
 	                      camera_location_.get_glm_vector() + camera_front_,
 	                      camera_up_);

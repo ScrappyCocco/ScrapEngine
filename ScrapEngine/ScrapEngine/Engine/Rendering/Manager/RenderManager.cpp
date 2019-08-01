@@ -560,6 +560,8 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 	{
 		skybox_->update_uniform_buffer(image_index_, render_camera_);
 	}
+	//cancel dirty matrix
+	render_camera_->cancel_dirty_matrix();
 	//Submit the command buffer and the frame
 	vk::SubmitInfo submit_info;
 
