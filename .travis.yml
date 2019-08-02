@@ -1,0 +1,8 @@
+language: cpp
+dist: trusty
+
+script: 
+  # run cppcheck
+  # 4 threads
+  # ignore errors on external/**
+  - cppcheck -j 4 --language=c++ --platform=win64 --suppress='*:external/**' --error-exitcode=1 --project=ScrapEngine/ScrapEngine.sln
