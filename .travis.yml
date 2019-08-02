@@ -1,6 +1,10 @@
 language: cpp
 dist: trusty
 
+branches:
+  only:
+  - master
+
 script: 
   # run cppcheck
   # 4 threads
