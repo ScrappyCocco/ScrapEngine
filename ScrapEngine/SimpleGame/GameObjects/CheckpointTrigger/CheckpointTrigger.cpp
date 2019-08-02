@@ -61,7 +61,7 @@ CheckpointTrigger::CheckpointTrigger(ScrapEngine::Core::LogicManagerView* logic_
 
 	const ScrapEngine::Core::SVector3 arrow_collider_size = ScrapEngine::Core::SVector3(0.5, 0.05f, 0.5) * 5;
 
-	const ScrapEngine::Core::SVector3 right_angle = pos + ScrapEngine::Core::SVector3(25, 5, 0);
+	const ScrapEngine::Core::SVector3 right_angle = pos + ScrapEngine::Core::SVector3(25, 1, 0);
 	ScrapEngine::Core::RigidBodyComponent* right_angle_collider = logic_view
 	                                                              ->get_components_manager()->
 	                                                              create_box_rigidbody_component(
@@ -71,7 +71,7 @@ CheckpointTrigger::CheckpointTrigger(ScrapEngine::Core::LogicManagerView* logic_
 	right_angle_collider->set_bounciness(0);
 	right_angle_collider->set_friction_coefficient(1);
 
-	const ScrapEngine::Core::SVector3 left_angle = pos + ScrapEngine::Core::SVector3(-25, 5, 0);
+	const ScrapEngine::Core::SVector3 left_angle = pos + ScrapEngine::Core::SVector3(-25, 1, 0);
 	ScrapEngine::Core::RigidBodyComponent* left_angle_collider = logic_view
 	                                                             ->get_components_manager()->
 	                                                             create_box_rigidbody_component(
@@ -81,7 +81,7 @@ CheckpointTrigger::CheckpointTrigger(ScrapEngine::Core::LogicManagerView* logic_
 	left_angle_collider->set_bounciness(0);
 	left_angle_collider->set_friction_coefficient(1);
 
-	const ScrapEngine::Core::SVector3 up_angle = pos + ScrapEngine::Core::SVector3(0, 5, -25);
+	const ScrapEngine::Core::SVector3 up_angle = pos + ScrapEngine::Core::SVector3(0, 1, -25);
 	ScrapEngine::Core::RigidBodyComponent* up_angle_collider = logic_view
 	                                                           ->get_components_manager()->
 	                                                           create_box_rigidbody_component(
@@ -91,7 +91,7 @@ CheckpointTrigger::CheckpointTrigger(ScrapEngine::Core::LogicManagerView* logic_
 	up_angle_collider->set_bounciness(0);
 	up_angle_collider->set_friction_coefficient(1);
 
-	const ScrapEngine::Core::SVector3 bottom_angle = pos + ScrapEngine::Core::SVector3(0, 5, 25);
+	const ScrapEngine::Core::SVector3 bottom_angle = pos + ScrapEngine::Core::SVector3(0, 1, 25);
 	ScrapEngine::Core::RigidBodyComponent* bottom_angle_collider = logic_view
 	                                                               ->get_components_manager()->
 	                                                               create_box_rigidbody_component(
