@@ -30,6 +30,6 @@ After checking that few parts of the engine code are ok, slowly, i want to add b
 
 # Example game gameplay gif
 
-You can download this example game [here]()
+You can download this example game [here](https://github.com/ScrappyCocco/ScrapEngine/releases/tag/demo_1)
 
 ![Example game Gif gameplay](readme_images/game_animation.gif)
