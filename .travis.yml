@@ -5,6 +5,10 @@ branches:
   only:
   - master
 
+install:
+  # cppcheck
+  - sudo apt-get install -qq cppcheck
+
 script: 
   # run cppcheck
   # 4 threads
