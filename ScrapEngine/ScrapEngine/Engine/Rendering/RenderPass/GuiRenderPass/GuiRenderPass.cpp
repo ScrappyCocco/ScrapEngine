@@ -7,7 +7,7 @@
 //Class
 
 void ScrapEngine::Render::GuiRenderPass::init(const vk::Format& swap_chain_image_format,
-                                                 const vk::SampleCountFlagBits msaa_samples)
+                                              const vk::SampleCountFlagBits msaa_samples)
 {
 	const vk::AttachmentDescription color_attachment(
 		vk::AttachmentDescriptionFlags(),

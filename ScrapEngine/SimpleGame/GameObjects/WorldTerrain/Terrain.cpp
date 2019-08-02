@@ -43,4 +43,5 @@ Terrain::Terrain(ScrapEngine::Core::ComponentsManager* input_component_manager,
 
 	//Disable update()
 	set_should_update(false);
+	mesh->set_is_static(true);
 }

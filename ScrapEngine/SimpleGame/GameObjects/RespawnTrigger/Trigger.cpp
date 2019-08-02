@@ -23,7 +23,7 @@ void Trigger::add_collision_test(SGameObject* obj, const int index)
 
 void Trigger::game_update(float time)
 {
-	std::vector<std::pair<SGameObject*, ScrapEngine::Core::RigidBodyComponent*>> elements_to_remove;
+	std::vector<std::pair<SGameObject*, ScrapEngine::Core::RigidBodyComponent*>> test_collision_objects_clean;
 	for (auto object : test_collision_objects_)
 	{
 		if (box_trigger_->test_collision(object.second))
@@ -32,25 +32,19 @@ void Trigger::game_update(float time)
 			{
 				//Respawn the ball
 				object.first->respawn();
+				//And keep it in the list
+				test_collision_objects_clean.push_back(object);
 			}
 			else
 			{
 				//Kill the fallen object
-				elements_to_remove.push_back(object);
 				object.first->die();
 			}
-		}
-	}
-	for (auto object : elements_to_remove)
-	{
-		const std::vector<std::pair<SGameObject*, ScrapEngine::Core::RigidBodyComponent*>>::iterator element =
-			std::find(
-				test_collision_objects_.begin(),
-				test_collision_objects_.end(),
-				object);
-		if (element != test_collision_objects_.end())
+		}else
 		{
-			test_collision_objects_.erase(element);
+			//If the object is not in the trigger re-add it to the list
+			test_collision_objects_clean.push_back(object);
 		}
 	}
+	test_collision_objects_ = test_collision_objects_clean;
 }

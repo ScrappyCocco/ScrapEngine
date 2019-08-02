@@ -28,6 +28,11 @@ namespace ScrapEngine
 			Core::STransform object_location_;
 			bool is_visible_ = true;
 
+			//If this is true, the transform matrices not will be updated
+			//The other flag says if i already updated the uniform buffer once
+			bool is_static_ = false;
+			bool transform_dirty_ = true;
+
 			//Set that the mesh will be deleted as soon as possible
 			//During command buffer re-creation
 			//This is necessary because the mesh can't be deleted during command buffer creation
@@ -50,6 +55,9 @@ namespace ScrapEngine
 			Core::SVector3 get_mesh_rotation() const;
 			Core::SVector3 get_mesh_scale() const;
 
+			bool get_is_static() const;
+			void set_is_static(bool is_static);
+
 			bool get_is_visible() const;
 			void set_is_visible(bool visible);
 
@@ -58,7 +66,7 @@ namespace ScrapEngine
 			void increase_deletion_counter();
 			uint16_t get_deletion_counter() const;
 
-			void update_uniform_buffer(const uint32_t& current_image, Camera* render_camera) const;
+			void update_uniform_buffer(const uint32_t& current_image, Camera* render_camera);
 
 			UniformBuffer* get_vulkan_render_uniform_buffer() const;
 			const std::vector<BasicMaterial*>* get_mesh_materials() const;

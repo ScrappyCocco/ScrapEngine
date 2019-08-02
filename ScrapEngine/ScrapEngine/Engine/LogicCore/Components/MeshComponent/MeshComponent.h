@@ -23,6 +23,9 @@ namespace ScrapEngine
 			bool get_is_visible() const;
 			void set_is_visible(bool visible) const;
 
+			bool get_is_static() const;
+			void set_is_static(bool is_static) const;
+
 			//Call the standard implementation, then update vulkan_mesh_ values
 			void update_component_location() override;
 			void update_component_rotation() override;

@@ -4,4 +4,3 @@ ScrapEngine::Core::CapsuleRigidBodyComponent::CapsuleRigidBodyComponent(Physics:
 	: RigidBodyComponent(rigidbody)
 {
 }
-

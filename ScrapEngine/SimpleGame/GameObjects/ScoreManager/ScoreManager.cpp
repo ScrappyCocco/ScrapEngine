@@ -70,8 +70,8 @@ void ScoreManager::on_gui()
 			ImGui::SetNextWindowBgAlpha(0.75f); // Transparent background
 
 			if (ImGui::Begin("Lose Menu UI Overlay", nullptr,
-			                 ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_AlwaysAutoResize |
-			                 ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoNav))
+			                 ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_AlwaysAutoResize
+			                 | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoNav))
 			{
 				ImGui::Text("You lose!");
 

@@ -4,4 +4,3 @@ ScrapEngine::Core::SphereRigidBodyComponent::SphereRigidBodyComponent(Physics::R
 	: RigidBodyComponent(rigidbody)
 {
 }
-

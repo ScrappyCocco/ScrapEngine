@@ -61,6 +61,12 @@ void ScrapEngine::Render::RenderManager::ParallelGuiCommandBufferCreation::Execu
 	owner->rebuild_gui_command_buffer();
 }
 
+void ScrapEngine::Render::RenderManager::ParallelMeshCleanup::ExecuteRange(enki::TaskSetPartition range,
+	uint32_t threadnum)
+{
+	owner->cleanup_meshes();
+}
+
 ScrapEngine::Render::RenderManager::RenderManager(const game_base_info* received_base_game_info)
 {
 	game_window_ = new GameWindow(received_base_game_info->window_width,
@@ -234,6 +240,9 @@ void ScrapEngine::Render::RenderManager::initialize_vulkan(const game_base_info*
 	//Init objects and tasks
 	initialize_command_buffers();
 	initialize_gui_command_buffers();
+	//Create mesh cleanup task
+	mesh_cleanup_task_ = new ParallelMeshCleanup();
+	mesh_cleanup_task_->owner = this;
 	//Create empty command buffers
 	create_command_buffer(false);
 	rebuild_gui_command_buffer(false);
@@ -329,39 +338,39 @@ void ScrapEngine::Render::RenderManager::rebuild_gui_command_buffer(const bool f
 	gui_command_buffer_->close_command_buffer();
 }
 
+void ScrapEngine::Render::RenderManager::wait_cleanup_task()
+{
+	g_TS.WaitforTask(mesh_cleanup_task_);
+}
+
+void ScrapEngine::Render::RenderManager::wait_gui_commandbuffer_task()
+{
+	g_TS.WaitforTask(gui_command_buffer_task_);
+}
+
+void ScrapEngine::Render::RenderManager::wait_pre_frame_tasks()
+{
+	wait_cleanup_task();
+	wait_gui_commandbuffer_task();
+}
+
 void ScrapEngine::Render::RenderManager::cleanup_meshes()
 {
-	//Create a list of mesh pending for deletion
-	// TODO after game - currently disabled
-	/*for (size_t i = 0; i < loaded_models_.size(); i++)
+	std::list<VulkanMeshInstance*> loaded_models_copy;
+	//Create a list with non-deleted elements
+	for (auto& loaded_model : loaded_models_)
 	{
-		if (loaded_models_[i]->get_pending_deletion() && loaded_models_[i]->get_deletion_counter() >= 1)
+		if (loaded_model->get_pending_deletion() && loaded_model->get_deletion_counter() >= 2)
 		{
-			delete loaded_models_[i];
-			loaded_models_.erase(loaded_models_.begin() + i);
-			i--;
-		}
-	}*/
-	/*std::vector<VulkanMeshInstance*> mesh_pending_deletion;
-	for (auto mesh : loaded_models_)
-	{
-		if (mesh->get_pending_deletion() && mesh->get_deletion_counter() >= 1)
+			delete loaded_model;
+		}else
 		{
-			mesh_pending_deletion.push_back(mesh);
+			loaded_models_copy.push_back(loaded_model);
 		}
 	}
-	//Now delete pending meshes
-	for (auto mesh_to_delete : mesh_pending_deletion)
-	{
-		const std::vector<VulkanMeshInstance*>::iterator element = find(loaded_models_.begin(),
-		                                                                loaded_models_.end(),
-		                                                                mesh_to_delete);
-		if (element != loaded_models_.end())
-		{
-			delete (*element);
-			loaded_models_.erase(element);
-		}
-	}*/
+	//Re-assign cleaned list
+	//loaded_models_ = std::move(loaded_models_copy);
+	loaded_models_ = loaded_models_copy;
 }
 
 void ScrapEngine::Render::RenderManager::create_command_buffer(const bool flip_flop)
@@ -402,21 +411,21 @@ void ScrapEngine::Render::RenderManager::check_start_new_thread()
 	}
 }
 
-void ScrapEngine::Render::RenderManager::swap_command_buffers()
+bool ScrapEngine::Render::RenderManager::swap_command_buffers()
 {
-	if (current_frame_ >= 1)
+	const short int index = command_buffer_flip_flop_ ? 0 : 1;
+	//If the thread is done, swap the command buffers
+	if (command_buffers_[index].is_running && command_buffers_tasks_[index]->GetIsComplete())
 	{
-		const short int index = command_buffer_flip_flop_ ? 0 : 1;
-		//If the thread is done, swap the command buffers
-		if (command_buffers_[index].is_running && command_buffers_tasks_[index]->GetIsComplete())
-		{
-			//Take a reference to the fence we must wait before deleting the current command buffer
-			waiting_fence_ = &(*in_flight_fences_ref_)[current_frame_];
-			//And swap them
-			command_buffers_[index].is_running = false;
-			command_buffer_flip_flop_ = !command_buffer_flip_flop_;
-		}
+		//Take a reference to the fence we must wait before deleting the current command buffer
+		waiting_fence_ = &(*in_flight_fences_ref_)[current_frame_];
+		//And swap them
+		command_buffers_[index].is_running = false;
+		command_buffer_flip_flop_ = !command_buffer_flip_flop_;
+
+		return true;
 	}
+	return false;
 }
 
 ScrapEngine::Render::VulkanMeshInstance* ScrapEngine::Render::RenderManager::load_mesh(
@@ -536,6 +545,8 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 	{
 		throw std::runtime_error("RenderManager: Failed to acquire swap chain image!");
 	}
+	//Before updating the command buffer wait for the cleanup task to end
+	wait_cleanup_task();
 	//Update objects and uniform buffers
 	//Camera
 	render_camera_->execute_camera_update();
@@ -549,6 +560,8 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 	{
 		skybox_->update_uniform_buffer(image_index_, render_camera_);
 	}
+	//cancel dirty matrix
+	render_camera_->cancel_dirty_matrix();
 	//Submit the command buffer and the frame
 	vk::SubmitInfo submit_info;
 
@@ -561,9 +574,7 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 	submit_info.setPWaitDstStageMask(wait_stages);
 
 	//Wait for the gui command buffer task to finish
-	while (!gui_command_buffer_task_->GetIsComplete())
-	{
-	}
+	wait_gui_commandbuffer_task();
 	//Submit
 	submit_info.setCommandBufferCount(2);
 	std::vector<vk::CommandBuffer> command_buffers;
@@ -611,7 +622,11 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 
 	//Check if i the other command buffer if ready
 	//If yes i can swap the command buffers
-	swap_command_buffers();
+	if(swap_command_buffers())
+	{
+		//Start mesh cleanup
+		g_TS.AddTaskSetToPipe(mesh_cleanup_task_);
+	}
 	//Update gui fence to wait
 	gui_waiting_fence_ = &(*in_flight_fences_ref_)[current_frame_];
 	//Update the current frame index

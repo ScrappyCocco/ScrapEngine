@@ -13,7 +13,7 @@ void ScrapEngine::Audio::WavAudioBuffer::load_file(const std::string& filename)
 
 	//Set the format
 	const ALenum format = to_al_format(p_wav->channels, p_wav->bitsPerSample);
-	if(format == -1)
+	if (format == -1)
 	{
 		throw std::runtime_error("[WavAudioBuffer]Audio format error, only 16bit audio are supported...");
 	}

@@ -20,6 +20,7 @@
 #include <Engine/Rendering/Model/SkyboxInstance/VulkanSkyboxInstance.h>
 #include <Engine/Rendering/Gui/VulkanImGui.h>
 #include <TaskScheduler.h>
+#include <list>
 
 namespace ScrapEngine
 {
@@ -48,7 +49,7 @@ namespace ScrapEngine
 
 			VulkanSkyboxInstance* skybox_ = nullptr;
 
-			std::vector<VulkanMeshInstance*> loaded_models_;
+			std::list<VulkanMeshInstance*> loaded_models_;
 
 			size_t current_frame_ = 0;
 			uint32_t image_index_;
@@ -71,6 +72,7 @@ namespace ScrapEngine
 				VulkanCommandPool* command_pool = nullptr;
 				StandardCommandBuffer* command_buffer = nullptr;
 			};
+
 			//Flag to know if i'm using the first or the second command buffer
 			bool command_buffer_flip_flop_ = false;
 			std::vector<threaded_command_buffer> command_buffers_;
@@ -102,6 +104,7 @@ namespace ScrapEngine
 				RenderManager* owner;
 				void ExecuteRange(enki::TaskSetPartition range, uint32_t threadnum) override;
 			};
+
 			ParallelGuiCommandBufferCreation* gui_command_buffer_task_;
 
 			//This is the fence used to wait that the previous command buffer has finished and can be deleted
@@ -111,6 +114,18 @@ namespace ScrapEngine
 			//This because "image_index_" might be updated before the gui thread read it and this will lead to error
 			//So this variable is updated only at the end of the frame
 			uint32_t last_image_index_ = 0;
+
+			//---cleanup
+
+			//Parallel task used to delete meshes in background while other updates() execute
+			//Every mesh has a flag that say if it can be deleted or not
+			struct ParallelMeshCleanup : enki::ITaskSet
+			{
+				RenderManager* owner;
+				void ExecuteRange(enki::TaskSetPartition range, uint32_t threadnum) override;
+			};
+
+			ParallelMeshCleanup* mesh_cleanup_task_;
 		public:
 			RenderManager(const game_base_info* received_base_game_info);
 			~RenderManager();
@@ -126,10 +141,14 @@ namespace ScrapEngine
 
 			void rebuild_gui_command_buffer(bool for_next_image = true) const;
 
+			void wait_cleanup_task();
+			void wait_gui_commandbuffer_task();
+			void wait_pre_frame_tasks();
+
 			void cleanup_meshes();
 			void create_command_buffer(bool flip_flop);
 			void check_start_new_thread();
-			void swap_command_buffers();
+			bool swap_command_buffers();
 			void delete_command_buffers() const;
 
 			void cleanup_swap_chain();

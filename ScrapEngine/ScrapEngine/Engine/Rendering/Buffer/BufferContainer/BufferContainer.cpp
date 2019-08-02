@@ -2,7 +2,6 @@
 
 ScrapEngine::Render::BufferContainer::BufferContainer(vk::Buffer* input_buffer) : buffer_(input_buffer)
 {
-	
 }
 
 ScrapEngine::Render::BufferContainer::~BufferContainer()

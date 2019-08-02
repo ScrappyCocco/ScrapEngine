@@ -34,8 +34,6 @@ ScrapEngine::Audio::AudioManager::AudioManager()
 	device_ = new AudioDevice();
 
 	context_ = new AudioContext(device_->get_audio_device());
-
-	loaded_audio_ = std::vector<std::pair<AudioBuffer*, AudioSource*>>();
 }
 
 ScrapEngine::Audio::AudioManager::~AudioManager()

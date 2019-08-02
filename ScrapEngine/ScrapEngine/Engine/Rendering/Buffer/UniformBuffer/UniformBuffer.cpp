@@ -43,25 +43,29 @@ ScrapEngine::Render::UniformBuffer::~UniformBuffer()
 
 void ScrapEngine::Render::UniformBuffer::update_uniform_buffer(const uint32_t& current_image,
                                                                const Core::STransform& object_transform,
-                                                               Camera* render_camera)
+                                                               Camera* render_camera, const bool update_transform)
 {
-	UniformBufferObject ubo = {};
+	if (update_transform) {
+		//Traslate
+		ubo_.model = translate(glm::mat4(1.0f), object_transform.get_position().get_glm_vector());
 
-	//Traslate
-	ubo.model = translate(glm::mat4(1.0f), object_transform.get_position().get_glm_vector());
+		//Rotate
+		const glm::mat4 rotation_matrix = glm::toMat4(object_transform.get_quat_rotation().get_glm_quat());
+		ubo_.model = ubo_.model * rotation_matrix;
 
-	//Rotate
-	const glm::mat4 rotation_matrix = glm::toMat4(object_transform.get_quat_rotation().get_glm_quat());
-	ubo.model = ubo.model * rotation_matrix;
-
-	//Scale
-	ubo.model = scale(ubo.model, object_transform.get_scale().get_glm_vector());
+		//Scale
+		ubo_.model = scale(ubo_.model, object_transform.get_scale().get_glm_vector());
+	}
 
 	//Perspective and look stuff
-	ubo.proj = render_camera->get_camera_projection_matrix();
-	ubo.view = render_camera->get_camera_look_matrix();
+	if (render_camera->get_projection_matrix_dirty()) {
+		ubo_.proj = render_camera->get_camera_projection_matrix();
+	}
+	if (render_camera->get_look_matrix_dirt()) {
+		ubo_.view = render_camera->get_camera_look_matrix();
+	}
 
-	memcpy(mapped_memory_[current_image], &ubo, sizeof(ubo));
+	memcpy(mapped_memory_[current_image], &ubo_, sizeof(ubo_));
 }
 
 const std::vector<vk::Buffer>* ScrapEngine::Render::UniformBuffer::get_uniform_buffers() const

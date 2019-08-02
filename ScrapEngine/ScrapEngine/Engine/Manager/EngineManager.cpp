@@ -3,8 +3,8 @@
 #include <Engine/Debug/DebugLog.h>
 #include <Engine/Input/Gui/GuiInput.h>
 
-ScrapEngine::Manager::EngineManager::EngineManager(std::string app_name, int app_version, uint32_t window_width,
-                                                   uint32_t window_height, bool fullscreen, bool vsync)
+ScrapEngine::Manager::EngineManager::EngineManager(const std::string& app_name, const int app_version, const uint32_t window_width,
+                                                   const uint32_t window_height, const bool fullscreen, const bool vsync)
 	: received_base_game_info_(app_name, app_version, window_width, window_height, fullscreen, vsync)
 {
 	initialize_engine();
@@ -128,7 +128,8 @@ void ScrapEngine::Manager::EngineManager::gui_update(const float time) const
 	);
 
 	//Delta time
-	if (time > 0) {
+	if (time > 0)
+	{
 		Input::GuiInput::update_delta_time(time);
 	}
 

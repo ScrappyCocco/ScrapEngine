@@ -3,7 +3,7 @@
 Crate::Crate(ScrapEngine::Core::LogicManagerView* logic_manager_ref,
              const ScrapEngine::Core::SVector3& start_pos,
              const ScrapEngine::Core::SVector3& size,
-             float mass)
+             const float mass)
 	: SGameObject("Crate game object"), logic_manager_view_(logic_manager_ref),
 	  component_manager_ref_(logic_manager_ref->get_components_manager())
 {

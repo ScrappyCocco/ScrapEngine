@@ -46,6 +46,7 @@ CheckpointTrigger::CheckpointTrigger(ScrapEngine::Core::LogicManagerView* logic_
 	);
 	add_component(mesh);
 	mesh->set_component_scale(ScrapEngine::Core::SVector3(3, 3, 3));
+	mesh->set_is_static(true);
 
 	//Main center Collider
 	ScrapEngine::Core::RigidBodyComponent* box_collider = logic_view

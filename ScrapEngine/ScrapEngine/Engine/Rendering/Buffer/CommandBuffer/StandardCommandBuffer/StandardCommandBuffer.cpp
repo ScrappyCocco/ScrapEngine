@@ -88,7 +88,7 @@ void ScrapEngine::Render::StandardCommandBuffer::load_skybox(VulkanSkyboxInstanc
 void ScrapEngine::Render::StandardCommandBuffer::load_mesh(VulkanMeshInstance* mesh)
 {
 	//Do not include mesh to delete
-	if(mesh->get_pending_deletion())
+	if (mesh->get_pending_deletion())
 	{
 		mesh->increase_deletion_counter();
 		return;
@@ -101,7 +101,7 @@ void ScrapEngine::Render::StandardCommandBuffer::load_mesh(VulkanMeshInstance* m
 	//Check if the mesh is in view
 	if (!current_camera_->frustum_check_sphere(
 		mesh->get_mesh_location().get_glm_vector(),
-		mesh->get_mesh_scale().get_max_value() * 5.f))
+		mesh->get_mesh_scale().get_max_value() * 7.5f))
 	{
 		return;
 	}

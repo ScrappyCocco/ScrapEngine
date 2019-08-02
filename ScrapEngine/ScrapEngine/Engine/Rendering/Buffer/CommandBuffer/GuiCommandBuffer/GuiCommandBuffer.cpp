@@ -36,7 +36,7 @@ void ScrapEngine::Render::GuiCommandBuffer::init_command_buffer(
 
 	for (size_t i = 0; i < command_buffers_.size(); i++)
 	{
-		vk::CommandBufferBeginInfo begin_info(vk::CommandBufferUsageFlagBits::eSimultaneousUse);
+		vk::CommandBufferBeginInfo begin_info(vk::CommandBufferUsageFlagBits::eOneTimeSubmit);
 
 		if (command_buffers_[i].begin(&begin_info) != vk::Result::eSuccess)
 		{
