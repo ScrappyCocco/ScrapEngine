@@ -2,6 +2,8 @@
 
 ## An engine made of scrap code [/s](https://www.urbandictionary.com/define.php?term=%2Fs)
 
+[![Build Status](https://travis-ci.org/ScrappyCocco/ScrapEngine.svg?branch=master)](https://travis-ci.org/ScrappyCocco/ScrapEngine)
+
 # Description
 I have always been passionate about game development and rendering, and i wanted to go deeper into it. With the arrival of Vulkan, i thought it was a good time to start learning how a game engine works. The development of his game engine started on July 2018, and at the beginning of August 2018 it was able to render the basic triangle. Since then i had to slow down for a few months because of University and its projects, but on August 2019 this repository has been made public.
 

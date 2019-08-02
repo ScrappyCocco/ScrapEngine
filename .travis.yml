@@ -9,4 +9,5 @@ script:
   # run cppcheck
   # 4 threads
   # ignore errors on external/**
-  - cppcheck -j 4 --language=c++ --platform=win64 --suppress='*:external/**' --error-exitcode=1 --project=ScrapEngine/ScrapEngine.sln
+  # do not use .sln to avoid to scan all import files of third party stuff
+  - cppcheck -j 4 --language=c++ --platform=win64 --suppress='*:external/*' --error-exitcode=1 ./ScrapEngine/ScrapEngine/Engine/**
