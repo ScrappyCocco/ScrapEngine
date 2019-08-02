@@ -5,6 +5,10 @@ branches:
   only:
   - master
 
+# faster build ignoring submodules
+git:
+  submodules: false
+
 install:
   # cppcheck
   - sudo apt-get install -qq cppcheck
