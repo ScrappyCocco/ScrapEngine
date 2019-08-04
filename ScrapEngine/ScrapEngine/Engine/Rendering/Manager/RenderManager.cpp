@@ -304,7 +304,7 @@ void ScrapEngine::Render::RenderManager::prepare_to_draw_frame()
 void ScrapEngine::Render::RenderManager::create_queues()
 {
 	Debug::DebugLog::print_to_console_log("---Begin queues creation---");
-	//_graphics_queue
+	//graphics_queue
 	GraphicsQueue* g_queue = GraphicsQueue::get_instance();
 	g_queue->init(vulkan_render_device_->get_cached_queue_family_indices());
 	vulkan_graphics_queue_ = g_queue;
@@ -369,7 +369,6 @@ void ScrapEngine::Render::RenderManager::cleanup_meshes()
 		}
 	}
 	//Re-assign cleaned list
-	//loaded_models_ = std::move(loaded_models_copy);
 	loaded_models_ = loaded_models_copy;
 }
 

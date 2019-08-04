@@ -5,7 +5,7 @@ ScrapEngine::Audio::AudioBuffer* ScrapEngine::Audio::AudioManager::build_buffer(
 {
 	const std::string extension = filename.substr(filename.length() - 3);
 
-	//THe buffer already exist, return it
+	//The buffer already exist, return it
 	if (loaded_buffers_.find(filename) != loaded_buffers_.end())
 	{
 		return loaded_buffers_[filename];

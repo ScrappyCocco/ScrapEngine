@@ -13,12 +13,12 @@ ScrapEngine::Render::SkyboxTexture::SkyboxTexture(const std::array<std::string, 
 
 	for (const std::string& file : files_path)
 	{
-		Debug::DebugLog::print_to_console_log("Loading skybox texture:" + file);
+		Debug::DebugLog::print_to_console_log("Loading skybox texture: '" + file + "'");
 		images_.push_back(new StandardTexture(file, false));
-		Debug::DebugLog::print_to_console_log("A skybox texture has loaded (" + file + ")");
+		Debug::DebugLog::print_to_console_log("Skybox texture '" + file + "' successfully loaded!");
 	}
 	cube_image_size = images_.back()->get_texture_height();
-	Debug::DebugLog::print_to_console_log("Textures loaded...");
+	Debug::DebugLog::print_to_console_log("All skybox textures loaded...");
 	//-----------------------
 	// create cubemap base image
 	//-----------------------

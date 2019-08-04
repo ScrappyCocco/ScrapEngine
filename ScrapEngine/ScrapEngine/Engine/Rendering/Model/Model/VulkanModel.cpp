@@ -6,7 +6,7 @@
 
 ScrapEngine::Render::VulkanModel::VulkanModel(const std::string& input_model_path)
 {
-	Debug::DebugLog::print_to_console_log("[VulkanModel] Loading 3D model " + input_model_path);
+	Debug::DebugLog::print_to_console_log("[VulkanModel] Loading 3D model '" + input_model_path + "'");
 	Debug::DebugLog::print_to_console_log("[VulkanModel] Loading assimp...");
 	Assimp::Importer importer;
 	const aiScene* scene = importer.ReadFile(input_model_path,

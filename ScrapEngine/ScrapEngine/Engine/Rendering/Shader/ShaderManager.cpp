@@ -22,7 +22,7 @@ vk::ShaderModule ScrapEngine::Render::ShaderManager::get_shader_module(const std
 	{
 		// Shader not found, load it
 		loaded_shaders_[filename] = create_shader_module(read_file(filename));
-		Debug::DebugLog::print_to_console_log("[ShaderManager] Shader " + filename + " loaded");
+		Debug::DebugLog::print_to_console_log("[ShaderManager] Shader '" + filename + "' loaded");
 	}
 	//Return the shader
 	return loaded_shaders_[filename];
@@ -52,7 +52,7 @@ std::vector<char> ScrapEngine::Render::ShaderManager::read_file(const std::strin
 
 	if (!file.is_open())
 	{
-		throw std::runtime_error("ShaderManager: Failed to open file " + filename + "!");
+		throw std::runtime_error("ShaderManager: Failed to open file '" + filename + "'!");
 	}
 
 	const size_t file_size = static_cast<size_t>(file.tellg());
@@ -75,7 +75,7 @@ void ScrapEngine::Render::ShaderManager::cleanup_shaders()
 	for (const auto& element : loaded_shaders_)
 	{
 		device->destroyShaderModule(element.second);
-		Debug::DebugLog::print_to_console_log("[ShaderManager] Destroying Shader:" + element.first);
+		Debug::DebugLog::print_to_console_log("[ShaderManager] Destroying Shader: '" + element.first + "'");
 	}
 	loaded_shaders_.clear();
 }
