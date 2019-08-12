@@ -3,7 +3,7 @@
 #include <Engine/Rendering/Device/VulkanDevice.h>
 
 void ScrapEngine::Render::StandardCommandBuffer::init_command_buffer(
-	ScrapEngine::Render::VulkanFrameBuffer* swap_chain_frame_buffer,
+	VulkanFrameBuffer* swap_chain_frame_buffer,
 	vk::Extent2D* input_swap_chain_extent_ref,
 	VulkanCommandPool* command_pool)
 {

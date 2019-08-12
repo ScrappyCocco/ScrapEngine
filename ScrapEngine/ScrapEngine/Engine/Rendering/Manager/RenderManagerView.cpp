@@ -21,7 +21,7 @@ ScrapEngine::Render::Camera* ScrapEngine::Render::RenderManagerView::get_current
 	return render_manager_ref_->get_render_camera();
 }
 
-void ScrapEngine::Render::RenderManagerView::set_render_camera(Camera* newCamera) const
+void ScrapEngine::Render::RenderManagerView::set_render_camera(Camera* new_camera) const
 {
-	render_manager_ref_->set_render_camera(newCamera);
+	render_manager_ref_->set_render_camera(new_camera);
 }

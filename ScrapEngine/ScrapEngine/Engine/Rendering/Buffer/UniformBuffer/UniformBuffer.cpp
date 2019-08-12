@@ -50,7 +50,7 @@ void ScrapEngine::Render::UniformBuffer::update_uniform_buffer(const uint32_t& c
 		ubo_.model = translate(glm::mat4(1.0f), object_transform.get_position().get_glm_vector());
 
 		//Rotate
-		const glm::mat4 rotation_matrix = glm::toMat4(object_transform.get_quat_rotation().get_glm_quat());
+		const glm::mat4 rotation_matrix = toMat4(object_transform.get_quat_rotation().get_glm_quat());
 		ubo_.model = ubo_.model * rotation_matrix;
 
 		//Scale
