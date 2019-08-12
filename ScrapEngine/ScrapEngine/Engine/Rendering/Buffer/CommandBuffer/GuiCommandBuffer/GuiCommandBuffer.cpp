@@ -34,11 +34,11 @@ void ScrapEngine::Render::GuiCommandBuffer::init_command_buffer(
 		throw std::runtime_error("[VulkanCommandBuffer] Failed to allocate command buffers!");
 	}
 
-	for (size_t i = 0; i < command_buffers_.size(); i++)
+	for (auto& command_buffer : command_buffers_)
 	{
 		vk::CommandBufferBeginInfo begin_info(vk::CommandBufferUsageFlagBits::eOneTimeSubmit);
 
-		if (command_buffers_[i].begin(&begin_info) != vk::Result::eSuccess)
+		if (command_buffer.begin(&begin_info) != vk::Result::eSuccess)
 		{
 			throw std::runtime_error("[VulkanCommandBuffer] Failed to begin recording command buffer!");
 		}
@@ -54,7 +54,7 @@ void ScrapEngine::Render::GuiCommandBuffer::init_command_buffer(
 		//Don't clear the frame
 		render_pass_info_.clearValueCount = 0;
 
-		command_buffers_[i].beginRenderPass(&render_pass_info_, vk::SubpassContents::eInline);
+		command_buffer.beginRenderPass(&render_pass_info_, vk::SubpassContents::eInline);
 	}
 }
 
