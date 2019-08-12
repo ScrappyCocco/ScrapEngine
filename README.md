@@ -20,6 +20,8 @@ To see how to build the engine from the source code, please read the [wiki page]
 Since it's a engine made from zero, the GameObject-Component structure is not perfect and may lead to bugs or errors involving transformations or rotation. Specially when moving the GameObject with multiple components or a GameObject and its childs.
 This is known when the user try to rotate a RigidbodyComponent.
 
+There may be other parts of the engine that do not work perfectly or as expected.
+
 I will try to make it better and to fix all the issues about it.
 
 # What's next
