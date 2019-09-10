@@ -502,11 +502,11 @@ void ScrapEngine::Render::RenderManager::draw_loading_frame()
 
 	//Submit
 	submit_info.setCommandBufferCount(2);
-	std::vector<vk::CommandBuffer> command_buffers;
-	command_buffers.push_back(
-		(*command_buffers_[command_buffer_flip_flop_].command_buffer->get_command_buffers_vector())[image_index_]);
-	command_buffers.push_back((*gui_command_buffer_->get_command_buffers_vector())[0]);
-	submit_info.setPCommandBuffers(command_buffers.data());
+	vk::CommandBuffer command_buffers[2];
+	command_buffers[0] =
+		(*command_buffers_[command_buffer_flip_flop_].command_buffer->get_command_buffers_vector())[image_index_];
+	command_buffers[1] = (*gui_command_buffer_->get_command_buffers_vector())[0];
+	submit_info.setPCommandBuffers(&command_buffers[0]);
 
 	VulkanDevice::get_instance()->get_logical_device()->resetFences(1, &(*in_flight_fences_ref_)[current_frame_]);
 
@@ -588,13 +588,13 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 	wait_gui_commandbuffer_task();
 	//Submit
 	submit_info.setCommandBufferCount(2);
-	std::vector<vk::CommandBuffer> command_buffers;
+	vk::CommandBuffer command_buffers[2];
 	//Push main command buffer
-	command_buffers.push_back(
-		(*command_buffers_[command_buffer_flip_flop_].command_buffer->get_command_buffers_vector())[image_index_]);
+	command_buffers[0] =
+		(*command_buffers_[command_buffer_flip_flop_].command_buffer->get_command_buffers_vector())[image_index_];
 	//Push GUI command buffer
-	command_buffers.push_back((*gui_command_buffer_->get_command_buffers_vector())[0]);
-	submit_info.setPCommandBuffers(command_buffers.data());
+	command_buffers[1] = (*gui_command_buffer_->get_command_buffers_vector())[0];
+	submit_info.setPCommandBuffers(&command_buffers[0]);
 
 	vk::Semaphore signal_semaphores[] = {(*render_finished_semaphores_ref_)[current_frame_]};
 	submit_info.setSignalSemaphoreCount(1);
