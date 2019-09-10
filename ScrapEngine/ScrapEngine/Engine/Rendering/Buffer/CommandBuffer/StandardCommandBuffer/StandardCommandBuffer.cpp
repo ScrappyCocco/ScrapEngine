@@ -2,16 +2,12 @@
 #include <Engine/Rendering/RenderPass/StandardRenderPass/StandardRenderPass.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
 
-void ScrapEngine::Render::StandardCommandBuffer::init_command_buffer(
-	VulkanFrameBuffer* swap_chain_frame_buffer,
-	vk::Extent2D* input_swap_chain_extent_ref,
-	VulkanCommandPool* command_pool)
+ScrapEngine::Render::StandardCommandBuffer::StandardCommandBuffer(VulkanCommandPool* command_pool,
+                                                                  const int16_t cb_size)
 {
 	command_pool_ref_ = command_pool;
 
-	const std::vector<vk::Framebuffer>* swap_chain_framebuffers = swap_chain_frame_buffer->
-		get_swap_chain_framebuffers_vector();
-	command_buffers_.resize(swap_chain_framebuffers->size());
+	command_buffers_.resize(cb_size);
 
 	vk::CommandBufferAllocateInfo alloc_info(
 		*command_pool_ref_->get_command_pool(),
@@ -24,7 +20,11 @@ void ScrapEngine::Render::StandardCommandBuffer::init_command_buffer(
 	{
 		throw std::runtime_error("[VulkanCommandBuffer] Failed to allocate command buffers!");
 	}
+}
 
+void ScrapEngine::Render::StandardCommandBuffer::init_command_buffer(
+	vk::Extent2D* input_swap_chain_extent_ref, VulkanFrameBuffer* swap_chain_frame_buffer)
+{
 	for (size_t i = 0; i < command_buffers_.size(); i++)
 	{
 		vk::CommandBufferBeginInfo begin_info(vk::CommandBufferUsageFlagBits::eSimultaneousUse);
@@ -34,6 +34,8 @@ void ScrapEngine::Render::StandardCommandBuffer::init_command_buffer(
 			throw std::runtime_error("[VulkanCommandBuffer] Failed to begin recording command buffer!");
 		}
 
+		const std::vector<vk::Framebuffer>* swap_chain_framebuffers = swap_chain_frame_buffer->
+			get_swap_chain_framebuffers_vector();
 		render_pass_info_ = vk::RenderPassBeginInfo(
 			*StandardRenderPass::get_instance()->get_render_pass(),
 			(*swap_chain_framebuffers)[i],

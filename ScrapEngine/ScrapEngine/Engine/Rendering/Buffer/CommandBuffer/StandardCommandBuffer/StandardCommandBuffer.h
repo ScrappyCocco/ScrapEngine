@@ -15,13 +15,12 @@ namespace ScrapEngine
 		private:
 			Camera* current_camera_ = nullptr;
 		public:
-			StandardCommandBuffer() = default;
+			explicit StandardCommandBuffer(VulkanCommandPool* command_pool, int16_t cb_size);
 
 			~StandardCommandBuffer() = default;
 
-			void init_command_buffer(VulkanFrameBuffer* swap_chain_frame_buffer,
-			                         vk::Extent2D* input_swap_chain_extent_ref,
-			                         VulkanCommandPool* command_pool);
+			void init_command_buffer(vk::Extent2D* input_swap_chain_extent_ref,
+			                         VulkanFrameBuffer* swap_chain_frame_buffer);
 			void init_current_camera(Camera* current_camera);
 
 			void load_skybox(VulkanSkyboxInstance* skybox_ref);

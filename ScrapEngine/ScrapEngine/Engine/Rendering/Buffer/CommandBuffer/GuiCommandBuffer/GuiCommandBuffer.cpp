@@ -2,21 +2,11 @@
 #include <Engine/Rendering/Device/VulkanDevice.h>
 #include <imgui.h>
 
-ScrapEngine::Render::GuiCommandBuffer::GuiCommandBuffer(BaseRenderPass* render_pass)
+ScrapEngine::Render::GuiCommandBuffer::GuiCommandBuffer(BaseRenderPass* render_pass, VulkanCommandPool* command_pool)
 	: render_pass_ref_(render_pass)
-{
-}
-
-void ScrapEngine::Render::GuiCommandBuffer::init_command_buffer(
-	VulkanFrameBuffer* swap_chain_frame_buffer,
-	vk::Extent2D* input_swap_chain_extent_ref,
-	VulkanCommandPool* command_pool,
-	const uint32_t current_image)
 {
 	command_pool_ref_ = command_pool;
 
-	const std::vector<vk::Framebuffer>* swap_chain_framebuffers = swap_chain_frame_buffer->
-		get_swap_chain_framebuffers_vector();
 	//Optimize the GuiCommandBuffer generating only 1 command buffer instead of 3
 	//This because the GuiCommandBuffer is rebuilt every frame
 	//So it has no sense to allocate and build 2 unused command buffers
@@ -33,6 +23,15 @@ void ScrapEngine::Render::GuiCommandBuffer::init_command_buffer(
 	{
 		throw std::runtime_error("[VulkanCommandBuffer] Failed to allocate command buffers!");
 	}
+}
+
+void ScrapEngine::Render::GuiCommandBuffer::init_command_buffer(
+	VulkanFrameBuffer* swap_chain_frame_buffer,
+	vk::Extent2D* input_swap_chain_extent_ref,
+	const uint32_t current_image)
+{
+	const std::vector<vk::Framebuffer>* swap_chain_framebuffers = swap_chain_frame_buffer->
+		get_swap_chain_framebuffers_vector();
 
 	for (auto& command_buffer : command_buffers_)
 	{

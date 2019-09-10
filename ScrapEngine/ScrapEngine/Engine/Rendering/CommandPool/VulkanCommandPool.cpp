@@ -3,9 +3,10 @@
 #include <Engine/Rendering/Device/VulkanDevice.h>
 //Class
 
-void ScrapEngine::Render::VulkanCommandPool::init(const BaseQueue::QueueFamilyIndices queue_family_indices)
+void ScrapEngine::Render::VulkanCommandPool::init(const BaseQueue::QueueFamilyIndices queue_family_indices,
+                                                  const vk::CommandPoolCreateFlags& flags)
 {
-	vk::CommandPoolCreateInfo pool_info(vk::CommandPoolCreateFlags(), queue_family_indices.graphics_family);
+	vk::CommandPoolCreateInfo pool_info(flags, queue_family_indices.graphics_family);
 
 	if (VulkanDevice::get_instance()->get_logical_device()->createCommandPool(&pool_info, nullptr, &command_pool_)
 		!= vk::Result::eSuccess)

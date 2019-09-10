@@ -22,9 +22,14 @@ void ScrapEngine::Core::LogicManager::un_register_game_object(SGameObject* input
 	                                                         input_game_object);
 	if (element != registered_game_objects_.end())
 	{
-		delete *element;
+		delete_game_object(*element);
 		registered_game_objects_.erase(element);
 	}
+}
+
+void ScrapEngine::Core::LogicManager::delete_game_object(SGameObject* input_game_object)
+{
+	delete input_game_object;
 }
 
 void ScrapEngine::Core::LogicManager::execute_game_objects_start_event()

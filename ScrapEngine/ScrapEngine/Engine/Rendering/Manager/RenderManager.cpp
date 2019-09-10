@@ -62,7 +62,7 @@ void ScrapEngine::Render::RenderManager::ParallelGuiCommandBufferCreation::Execu
 }
 
 void ScrapEngine::Render::RenderManager::ParallelMeshCleanup::ExecuteRange(enki::TaskSetPartition range,
-	uint32_t threadnum)
+                                                                           uint32_t threadnum)
 {
 	owner->cleanup_meshes();
 }
@@ -96,6 +96,8 @@ ScrapEngine::Render::RenderManager::~RenderManager()
 	VulkanModelPool::get_instance()->clear_memory();
 	VulkanSimpleMaterialPool::get_instance()->clear_memory();
 	delete vulkan_render_semaphores_;
+	delete command_buffer_command_pool_;
+	delete gui_buffer_command_pool_;
 	delete vulkan_render_command_pool_;
 	delete vulkan_render_device_;
 	delete vulkan_window_surface_;
@@ -214,8 +216,18 @@ void ScrapEngine::Render::RenderManager::initialize_vulkan(const game_base_info*
 	                      vulkan_render_device_->get_msaa_samples());
 	gui_render_pass_ = gui_render_pass;
 	Debug::DebugLog::print_to_console_log("VulkanRenderPass created");
+	//Create command pools
+	//Main command pool used to generate resources
 	vulkan_render_command_pool_ = SingletonCommandPool::get_instance();
 	vulkan_render_command_pool_->init(vulkan_render_device_->get_cached_queue_family_indices());
+	//Command pool for the CommandBuffer
+	command_buffer_command_pool_ = new StandardCommandPool();
+	command_buffer_command_pool_->init(vulkan_render_device_->get_cached_queue_family_indices(),
+	                                   vk::CommandPoolCreateFlagBits::eResetCommandBuffer);
+	//Command pool for the GUI-CommandBuffer
+	gui_buffer_command_pool_ = new StandardCommandPool();
+	gui_buffer_command_pool_->init(vulkan_render_device_->get_cached_queue_family_indices(),
+	                               vk::CommandPoolCreateFlagBits::eResetCommandBuffer);
 	Debug::DebugLog::print_to_console_log("VulkanCommandPool created");
 	vulkan_render_color_ = new VulkanColorResources(vulkan_render_device_->get_msaa_samples(),
 	                                                vulkan_render_swap_chain_);
@@ -280,7 +292,9 @@ void ScrapEngine::Render::RenderManager::initialize_command_buffers()
 		command_buffers_.emplace_back();
 		command_buffers_[i].command_pool = new StandardCommandPool();
 		command_buffers_[i].command_pool->init(vulkan_render_device_->get_cached_queue_family_indices());
-		command_buffers_[i].command_buffer = new StandardCommandBuffer();
+		const int16_t cb_size = static_cast<int16_t>(vulkan_render_frame_buffer_
+		                                             ->get_swap_chain_framebuffers_vector()->size());
+		command_buffers_[i].command_buffer = new StandardCommandBuffer(command_buffer_command_pool_, cb_size);
 		//Add a task
 		command_buffers_tasks_.push_back(new ParallelCommandBufferCreation());
 		command_buffers_tasks_[i]->owner = this;
@@ -291,7 +305,7 @@ void ScrapEngine::Render::RenderManager::initialize_command_buffers()
 
 void ScrapEngine::Render::RenderManager::initialize_gui_command_buffers()
 {
-	gui_command_buffer_ = new GuiCommandBuffer(gui_render_pass_);
+	gui_command_buffer_ = new GuiCommandBuffer(gui_render_pass_, gui_buffer_command_pool_);
 	gui_command_buffer_task_ = new ParallelGuiCommandBufferCreation();
 	gui_command_buffer_task_->owner = this;
 }
@@ -317,8 +331,8 @@ void ScrapEngine::Render::RenderManager::create_queues()
 
 void ScrapEngine::Render::RenderManager::rebuild_gui_command_buffer(const bool for_next_image) const
 {
-	//Free previous command buffer
-	gui_command_buffer_->free_command_buffers();
+	//Reset previous command buffer
+	gui_command_buffer_->reset_command_buffer();
 	//Init
 	uint32_t image_index_to_use;
 	if (for_next_image)
@@ -331,7 +345,7 @@ void ScrapEngine::Render::RenderManager::rebuild_gui_command_buffer(const bool f
 	}
 	gui_command_buffer_->init_command_buffer(vulkan_render_frame_buffer_,
 	                                         &vulkan_render_swap_chain_->get_swap_chain_extent(),
-	                                         vulkan_render_command_pool_, image_index_to_use);
+	                                         image_index_to_use);
 	//Load ui
 	gui_command_buffer_->load_ui(gui_render_);
 	//close
@@ -363,23 +377,23 @@ void ScrapEngine::Render::RenderManager::cleanup_meshes()
 		if (loaded_model->get_pending_deletion() && loaded_model->get_deletion_counter() >= 2)
 		{
 			delete loaded_model;
-		}else
+		}
+		else
 		{
 			loaded_models_copy.push_back(loaded_model);
 		}
 	}
 	//Re-assign cleaned list
-	loaded_models_ = loaded_models_copy;
+	loaded_models_ = std::move(loaded_models_copy);
 }
 
 void ScrapEngine::Render::RenderManager::create_command_buffer(const bool flip_flop)
 {
 	//Init
 	const short int index = flip_flop ? 1 : 0;
-	command_buffers_[index].command_buffer->free_command_buffers();
-	command_buffers_[index].command_buffer->init_command_buffer(vulkan_render_frame_buffer_,
-	                                                            &vulkan_render_swap_chain_->get_swap_chain_extent(),
-	                                                            command_buffers_[index].command_pool);
+	command_buffers_[index].command_buffer->reset_command_buffer();
+	command_buffers_[index].command_buffer->init_command_buffer(&vulkan_render_swap_chain_->get_swap_chain_extent(),
+	                                                            vulkan_render_frame_buffer_);
 	//Set camera
 	command_buffers_[index].command_buffer->init_current_camera(render_camera_);
 	//Skybox
@@ -388,8 +402,6 @@ void ScrapEngine::Render::RenderManager::create_command_buffer(const bool flip_f
 		command_buffers_[index].command_buffer->load_skybox(skybox_);
 	}
 	//3d models
-	//Remove deleted meshes
-	cleanup_meshes();
 	//Now render the meshes
 	for (auto mesh : loaded_models_)
 	{
@@ -490,11 +502,11 @@ void ScrapEngine::Render::RenderManager::draw_loading_frame()
 
 	//Submit
 	submit_info.setCommandBufferCount(2);
-	std::vector<vk::CommandBuffer> command_buffers;
-	command_buffers.push_back(
-		(*command_buffers_[command_buffer_flip_flop_].command_buffer->get_command_buffers_vector())[image_index_]);
-	command_buffers.push_back((*gui_command_buffer_->get_command_buffers_vector())[0]);
-	submit_info.setPCommandBuffers(command_buffers.data());
+	vk::CommandBuffer command_buffers[2];
+	command_buffers[0] =
+		(*command_buffers_[command_buffer_flip_flop_].command_buffer->get_command_buffers_vector())[image_index_];
+	command_buffers[1] = (*gui_command_buffer_->get_command_buffers_vector())[0];
+	submit_info.setPCommandBuffers(&command_buffers[0]);
 
 	VulkanDevice::get_instance()->get_logical_device()->resetFences(1, &(*in_flight_fences_ref_)[current_frame_]);
 
@@ -522,6 +534,8 @@ void ScrapEngine::Render::RenderManager::draw_loading_frame()
 
 void ScrapEngine::Render::RenderManager::draw_frame()
 {
+	//Wait the cleanup before continuing
+	wait_cleanup_task();
 	//Check if i can build another command buffer in background
 	check_start_new_thread();
 	//Prepare draw frame
@@ -544,8 +558,6 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 	{
 		throw std::runtime_error("RenderManager: Failed to acquire swap chain image!");
 	}
-	//Before updating the command buffer wait for the cleanup task to end
-	wait_cleanup_task();
 	//Update objects and uniform buffers
 	//Camera
 	render_camera_->execute_camera_update();
@@ -576,11 +588,13 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 	wait_gui_commandbuffer_task();
 	//Submit
 	submit_info.setCommandBufferCount(2);
-	std::vector<vk::CommandBuffer> command_buffers;
-	command_buffers.push_back(
-		(*command_buffers_[command_buffer_flip_flop_].command_buffer->get_command_buffers_vector())[image_index_]);
-	command_buffers.push_back((*gui_command_buffer_->get_command_buffers_vector())[0]);
-	submit_info.setPCommandBuffers(command_buffers.data());
+	vk::CommandBuffer command_buffers[2];
+	//Push main command buffer
+	command_buffers[0] =
+		(*command_buffers_[command_buffer_flip_flop_].command_buffer->get_command_buffers_vector())[image_index_];
+	//Push GUI command buffer
+	command_buffers[1] = (*gui_command_buffer_->get_command_buffers_vector())[0];
+	submit_info.setPCommandBuffers(&command_buffers[0]);
 
 	vk::Semaphore signal_semaphores[] = {(*render_finished_semaphores_ref_)[current_frame_]};
 	submit_info.setSignalSemaphoreCount(1);
@@ -621,7 +635,7 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 
 	//Check if i the other command buffer if ready
 	//If yes i can swap the command buffers
-	if(swap_command_buffers())
+	if (swap_command_buffers())
 	{
 		//Start mesh cleanup
 		g_TS.AddTaskSetToPipe(mesh_cleanup_task_);

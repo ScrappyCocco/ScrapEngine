@@ -16,6 +16,7 @@ namespace ScrapEngine
 
 			SGameObject* register_game_object(SGameObject* input_game_object);
 			void un_register_game_object(SGameObject* input_game_object);
+			void delete_game_object(SGameObject* input_game_object);
 
 			//Events
 			void execute_game_objects_start_event();

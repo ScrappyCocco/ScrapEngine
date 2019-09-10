@@ -23,14 +23,16 @@ namespace ScrapEngine
 					VertexBufferContainer*,
 					IndicesBufferContainer*>
 			>> mesh_buffers_;
+			
 			Core::STransform skybox_transform_;
+			bool skybox_transform_updated_ = false;
 		public:
 			VulkanSkyboxInstance(const std::string& vertex_shader_path, const std::string& fragment_shader_path,
 			                     const std::string& model_path, const std::array<std::string, 6>& texture_path,
 			                     VulkanSwapChain* swap_chain);
 			~VulkanSkyboxInstance();
 
-			void update_uniform_buffer(const uint32_t& current_image, Camera* render_camera) const;
+			void update_uniform_buffer(const uint32_t& current_image, Camera* render_camera);
 
 			int get_cubemap_size() const;
 			void set_cubemap_size(unsigned int new_size);
