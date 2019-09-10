@@ -52,6 +52,8 @@ void Coin::game_update(const float time)
 		//Delete trigger
 		component_manager_ref_->destroy_trigger_component(box_trigger_);
 		//Delete mesh
+		//REMEMBER, after this call the pointer is no longer valid and should not be used
+		//ALSO if the mesh is connected to a rigidbody, you must delete BOTH togheder to avoid errors
 		component_manager_ref_->destroy_mesh_component(mesh_);
 		//Delete this
 		logic_manager_view_->un_register_game_object(this);
