@@ -36,6 +36,11 @@ void ScrapEngine::Core::LogicManagerView::un_register_game_object(
 	logic_manager_ref_->un_register_game_object(input_game_object);
 }
 
+void ScrapEngine::Core::LogicManagerView::delete_game_object(SGameObject* input_game_object) const
+{
+	logic_manager_ref_->delete_game_object(input_game_object);
+}
+
 ScrapEngine::Core::ComponentsManager* ScrapEngine::Core::LogicManagerView::get_components_manager() const
 {
 	return component_manager_;

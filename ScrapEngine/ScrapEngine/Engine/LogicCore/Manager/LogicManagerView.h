@@ -24,7 +24,10 @@ namespace ScrapEngine
 			void set_audio_manager(Audio::AudioManager* audio_manager) const;
 
 			SGameObject* register_game_object(SGameObject* input_game_object) const;
+			//WARNING un-registering an object also delete it!
 			void un_register_game_object(SGameObject* input_game_object) const;
+			void delete_game_object(SGameObject* input_game_object) const;
+
 			ComponentsManager* get_components_manager() const;
 			SceneManager* get_scene_manager() const;
 		};
