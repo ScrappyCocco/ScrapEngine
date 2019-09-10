@@ -369,7 +369,7 @@ void ScrapEngine::Render::RenderManager::cleanup_meshes()
 		}
 	}
 	//Re-assign cleaned list
-	loaded_models_ = loaded_models_copy;
+	loaded_models_ = std::move(loaded_models_copy);
 }
 
 void ScrapEngine::Render::RenderManager::create_command_buffer(const bool flip_flop)
@@ -520,6 +520,8 @@ void ScrapEngine::Render::RenderManager::draw_loading_frame()
 
 void ScrapEngine::Render::RenderManager::draw_frame()
 {
+	//Wait the cleanup before continuing
+	wait_cleanup_task();
 	//Check if i can build another command buffer in background
 	check_start_new_thread();
 	//Prepare draw frame
@@ -542,8 +544,6 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 	{
 		throw std::runtime_error("RenderManager: Failed to acquire swap chain image!");
 	}
-	//Before updating the uniform buffer wait for the cleanup task to end
-	wait_cleanup_task();
 	//Update objects and uniform buffers
 	//Camera
 	render_camera_->execute_camera_update();
@@ -575,8 +575,10 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 	//Submit
 	submit_info.setCommandBufferCount(2);
 	std::vector<vk::CommandBuffer> command_buffers;
+	//Push main command buffer
 	command_buffers.push_back(
 		(*command_buffers_[command_buffer_flip_flop_].command_buffer->get_command_buffers_vector())[image_index_]);
+	//Push GUI command buffer
 	command_buffers.push_back((*gui_command_buffer_->get_command_buffers_vector())[0]);
 	submit_info.setPCommandBuffers(command_buffers.data());
 
