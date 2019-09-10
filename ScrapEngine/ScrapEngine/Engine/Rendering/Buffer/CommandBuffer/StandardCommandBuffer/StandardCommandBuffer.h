@@ -15,7 +15,7 @@ namespace ScrapEngine
 		private:
 			Camera* current_camera_ = nullptr;
 		public:
-			explicit StandardCommandBuffer(VulkanCommandPool* command_pool, int16_t size);
+			explicit StandardCommandBuffer(VulkanCommandPool* command_pool, int16_t cb_size);
 
 			~StandardCommandBuffer() = default;
 
