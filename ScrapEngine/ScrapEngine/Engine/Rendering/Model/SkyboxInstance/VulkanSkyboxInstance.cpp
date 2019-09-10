@@ -28,6 +28,7 @@ ScrapEngine::Render::VulkanSkyboxInstance::VulkanSkyboxInstance(const std::strin
 	}
 	mesh_buffers_ = VulkanModelBuffersPool::get_instance()->get_model_buffers(model_path, vulkan_render_model_);
 	skybox_transform_.set_position(Core::SVector3());
+	skybox_transform_updated_ = true;
 	skybox_transform_.set_scale(Core::SVector3(50, 50, 50));
 }
 
@@ -38,9 +39,10 @@ ScrapEngine::Render::VulkanSkyboxInstance::~VulkanSkyboxInstance()
 }
 
 void ScrapEngine::Render::VulkanSkyboxInstance::update_uniform_buffer(const uint32_t& current_image,
-                                                                      Camera* render_camera) const
+                                                                      Camera* render_camera)
 {
-	vulkan_render_uniform_buffer_->update_uniform_buffer(current_image, skybox_transform_, render_camera);
+	vulkan_render_uniform_buffer_->update_uniform_buffer(current_image, skybox_transform_, render_camera, skybox_transform_updated_);
+	skybox_transform_updated_ = false;
 }
 
 int ScrapEngine::Render::VulkanSkyboxInstance::get_cubemap_size() const
@@ -52,6 +54,7 @@ void ScrapEngine::Render::VulkanSkyboxInstance::set_cubemap_size(const unsigned 
 {
 	const float size = static_cast<float>(new_size);
 	skybox_transform_.set_scale(Core::SVector3(size, size, size));
+	skybox_transform_updated_ = true;
 }
 
 ScrapEngine::Render::UniformBuffer* ScrapEngine::Render::VulkanSkyboxInstance::get_vulkan_render_uniform_buffer() const
