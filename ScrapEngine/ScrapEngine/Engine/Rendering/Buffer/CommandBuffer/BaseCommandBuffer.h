@@ -21,6 +21,8 @@ namespace ScrapEngine
 
 			void close_command_buffer();
 
+			void reset_command_buffer();
+
 			void free_command_buffers();
 
 			const std::vector<vk::CommandBuffer>* get_command_buffers_vector() const;

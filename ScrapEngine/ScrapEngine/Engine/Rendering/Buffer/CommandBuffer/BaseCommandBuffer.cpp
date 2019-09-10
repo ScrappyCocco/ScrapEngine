@@ -17,6 +17,14 @@ void ScrapEngine::Render::BaseCommandBuffer::close_command_buffer()
 	}
 }
 
+void ScrapEngine::Render::BaseCommandBuffer::reset_command_buffer()
+{
+	for (auto& command_buffer : command_buffers_)
+	{
+		command_buffer.reset(vk::CommandBufferResetFlags());
+	}
+}
+
 void ScrapEngine::Render::BaseCommandBuffer::free_command_buffers()
 {
 	if (!command_buffers_.empty())
