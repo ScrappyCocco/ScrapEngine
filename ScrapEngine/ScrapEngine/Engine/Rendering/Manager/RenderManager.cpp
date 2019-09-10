@@ -388,8 +388,6 @@ void ScrapEngine::Render::RenderManager::create_command_buffer(const bool flip_f
 		command_buffers_[index].command_buffer->load_skybox(skybox_);
 	}
 	//3d models
-	//Remove deleted meshes
-	cleanup_meshes();
 	//Now render the meshes
 	for (auto mesh : loaded_models_)
 	{
@@ -544,7 +542,7 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 	{
 		throw std::runtime_error("RenderManager: Failed to acquire swap chain image!");
 	}
-	//Before updating the command buffer wait for the cleanup task to end
+	//Before updating the uniform buffer wait for the cleanup task to end
 	wait_cleanup_task();
 	//Update objects and uniform buffers
 	//Camera
