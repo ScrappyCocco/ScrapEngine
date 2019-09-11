@@ -147,7 +147,6 @@ void ScrapEngine::Render::RenderManager::delete_command_buffers() const
 	{
 		cb.command_buffer->free_command_buffers();
 		delete cb.command_buffer;
-		delete cb.command_pool;
 	}
 }
 
@@ -219,7 +218,8 @@ void ScrapEngine::Render::RenderManager::initialize_vulkan(const game_base_info*
 	//Create command pools
 	//Main command pool used to generate resources
 	vulkan_render_command_pool_ = SingletonCommandPool::get_instance();
-	vulkan_render_command_pool_->init(vulkan_render_device_->get_cached_queue_family_indices());
+	vulkan_render_command_pool_->init(vulkan_render_device_->get_cached_queue_family_indices(),
+	                                  vk::CommandPoolCreateFlagBits::eTransient);
 	//Command pool for the CommandBuffer
 	command_buffer_command_pool_ = new StandardCommandPool();
 	command_buffer_command_pool_->init(vulkan_render_device_->get_cached_queue_family_indices(),
@@ -290,8 +290,6 @@ void ScrapEngine::Render::RenderManager::initialize_command_buffers()
 	{
 		//Create a new struct and create objects in it
 		command_buffers_.emplace_back();
-		command_buffers_[i].command_pool = new StandardCommandPool();
-		command_buffers_[i].command_pool->init(vulkan_render_device_->get_cached_queue_family_indices());
 		const int16_t cb_size = static_cast<int16_t>(vulkan_render_frame_buffer_
 		                                             ->get_swap_chain_framebuffers_vector()->size());
 		command_buffers_[i].command_buffer = new StandardCommandBuffer(command_buffer_command_pool_, cb_size);

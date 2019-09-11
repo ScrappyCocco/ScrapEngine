@@ -74,7 +74,6 @@ namespace ScrapEngine
 			struct threaded_command_buffer
 			{
 				bool is_running = false;
-				VulkanCommandPool* command_pool = nullptr;
 				StandardCommandBuffer* command_buffer = nullptr;
 			};
 
