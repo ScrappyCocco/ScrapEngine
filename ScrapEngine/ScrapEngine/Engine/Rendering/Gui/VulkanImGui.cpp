@@ -72,9 +72,8 @@ void ScrapEngine::Render::VulkanImGui::init_resources(VulkanSwapChain* swap_chai
 	buffer_copy_region.setImageSubresource(image_subresource_layer);
 	buffer_copy_region.setImageExtent(vk::Extent3D(tex_width, tex_height, 1));
 	//Copy
-	ImageStagingBuffer::copy_buffer_to_image(staginf_buffer_ref->get_staging_buffer(), &front_image_, tex_width,
-	                                         tex_height, &buffer_copy_region, 1,
-	                                         vk::ImageLayout::eTransferDstOptimal);
+	ImageStagingBuffer::copy_buffer_to_image(staginf_buffer_ref->get_staging_buffer(), &front_image_,
+	                                         &buffer_copy_region, 1, vk::ImageLayout::eTransferDstOptimal);
 	delete staginf_buffer_ref;
 	staginf_buffer_ref = nullptr;
 	// Prepare for shader read

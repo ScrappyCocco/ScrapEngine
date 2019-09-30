@@ -15,26 +15,17 @@ ScrapEngine::Render::ImageStagingBuffer::ImageStagingBuffer(const vk::DeviceSize
 }
 
 void ScrapEngine::Render::ImageStagingBuffer::copy_buffer_to_image(vk::Buffer* buffer, vk::Image* image,
-                                                                   const uint32_t& width, const uint32_t& height)
+                                                                   const uint32_t width, const uint32_t height)
 {
-	vk::CommandBuffer* command_buffer = BaseBuffer::begin_single_time_commands();
-
 	vk::BufferImageCopy region(0, 0, 0, vk::ImageSubresourceLayers(vk::ImageAspectFlagBits::eColor, 0, 0, 1),
 	                           vk::Offset3D(), vk::Extent3D(width, height, 1));
 
-	command_buffer->copyBufferToImage(*buffer, *image, vk::ImageLayout::eTransferDstOptimal, 1, &region);
-
-	BaseBuffer::end_single_time_commands(command_buffer);
+	copy_buffer_to_image(buffer, image, &region, 1, vk::ImageLayout::eTransferDstOptimal);
 }
 
 void ScrapEngine::Render::ImageStagingBuffer::copy_buffer_to_image(vk::Buffer* buffer, vk::Image* image,
-                                                                   const uint32_t& width, const uint32_t& height,
                                                                    vk::BufferImageCopy* region, const int regioncount,
                                                                    const vk::ImageLayout layout)
 {
-	vk::CommandBuffer* command_buffer = BaseBuffer::begin_single_time_commands();
-
-	command_buffer->copyBufferToImage(*buffer, *image, layout, regioncount, region);
-
-	BaseBuffer::end_single_time_commands(command_buffer);
+	BaseBuffer::copy_buffer_to_image(buffer, image, region, regioncount, layout);
 }

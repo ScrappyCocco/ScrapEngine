@@ -93,8 +93,7 @@ ScrapEngine::Render::SkyboxTexture::SkyboxTexture(const std::array<std::string, 
 	{
 		ImageStagingBuffer::copy_buffer_to_image(
 			images_[i]->get_texture_staging_buffer()->get_staging_buffer(), &texture_image_,
-			images_[i]->get_texture_width(),
-			images_[i]->get_texture_height(), &buffer_copy_regions[i], 1);
+			&buffer_copy_regions[i], 1);
 	}
 
 	transition_image_layout(&texture_image_, vk::Format::eR8G8B8A8Unorm,

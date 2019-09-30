@@ -78,7 +78,7 @@ void ScrapEngine::Render::BaseTexture::transition_image_layout(vk::Image* image,
                                                                const vk::ImageLayout& new_layout,
                                                                const uint32_t& mip_levels_data, const int layercount)
 {
-	vk::CommandBuffer* command_buffer = BaseBuffer::begin_single_time_commands();
+	vk::CommandBuffer* command_buffer = BaseBuffer::begin_single_time_command();
 
 	vk::ImageMemoryBarrier barrier(vk::AccessFlags(), vk::AccessFlags(), old_layout, new_layout, 0, 0, *image);
 
@@ -151,7 +151,7 @@ void ScrapEngine::Render::BaseTexture::transition_image_layout(vk::Image* image,
 		1, &barrier
 	);
 
-	BaseBuffer::end_single_time_commands(command_buffer);
+	BaseBuffer::end_and_submit_single_time_command(command_buffer);
 }
 
 void ScrapEngine::Render::BaseTexture::generate_mipmaps(vk::Image* image, const vk::Format& image_format,
@@ -167,7 +167,7 @@ void ScrapEngine::Render::BaseTexture::generate_mipmaps(vk::Image* image, const 
 		throw std::runtime_error("TextureImage: Texture image format does not support linear blitting!");
 	}
 
-	vk::CommandBuffer* command_buffer = BaseBuffer::begin_single_time_commands();
+	vk::CommandBuffer* command_buffer = BaseBuffer::begin_single_time_command();
 
 	vk::ImageMemoryBarrier barrier(
 		vk::AccessFlags(),
@@ -244,5 +244,5 @@ void ScrapEngine::Render::BaseTexture::generate_mipmaps(vk::Image* image, const 
 	command_buffer->pipelineBarrier(vk::PipelineStageFlagBits::eTransfer, vk::PipelineStageFlagBits::eFragmentShader,
 	                                vk::DependencyFlags(), 0, nullptr, 0, nullptr, 1, &barrier);
 
-	BaseBuffer::end_single_time_commands(command_buffer);
+	BaseBuffer::end_and_submit_single_time_command(command_buffer);
 }
