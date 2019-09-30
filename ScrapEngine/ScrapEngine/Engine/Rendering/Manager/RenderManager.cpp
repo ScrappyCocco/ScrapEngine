@@ -381,8 +381,12 @@ void ScrapEngine::Render::RenderManager::cleanup_meshes()
 			loaded_models_copy.push_back(loaded_model);
 		}
 	}
-	//Re-assign cleaned list
-	loaded_models_ = std::move(loaded_models_copy);
+	//Check if the new list has fewer elements than the old one
+	if (loaded_models_copy.size() != loaded_models_.size())
+	{
+		//Re-assign cleaned list
+		loaded_models_ = std::move(loaded_models_copy);
+	}
 }
 
 void ScrapEngine::Render::RenderManager::create_command_buffer(const bool flip_flop)
@@ -441,11 +445,27 @@ ScrapEngine::Render::VulkanMeshInstance* ScrapEngine::Render::RenderManager::loa
 	const std::string& vertex_shader_path, const std::string& fragment_shader_path, const std::string& model_path,
 	const std::vector<std::string>& textures_path)
 {
-	loaded_models_.push_back(
-		new VulkanMeshInstance(vertex_shader_path, fragment_shader_path, model_path, textures_path,
-		                       vulkan_render_swap_chain_)
-	);
-	return loaded_models_.back();
+	//Read data from disk
+	VulkanMeshInstance* new_mesh = new VulkanMeshInstance(vertex_shader_path, fragment_shader_path,
+		model_path, textures_path, vulkan_render_swap_chain_);
+	
+	//Wait and block if necessary until the list loaded_models_ is editable
+	//Wait cleanup
+	wait_cleanup_task();
+	//Wait CB
+	const short int index = command_buffer_flip_flop_ ? 0 : 1;
+	if (command_buffers_[index].is_running) {
+		Debug::DebugLog::print_to_console_log("CommandBuffer updating... waiting before adding mesh to game...");
+		//Wait command buffer to finish loading meshes
+		while (!command_buffers_tasks_[index]->GetIsComplete())
+		{
+		}
+		Debug::DebugLog::print_to_console_log("Waiting completed! The mesh is being added to the game...");
+	}
+
+	//Push mesh into vector and return it
+	loaded_models_.push_back(new_mesh);
+	return new_mesh;
 }
 
 ScrapEngine::Render::VulkanMeshInstance* ScrapEngine::Render::RenderManager::load_mesh(

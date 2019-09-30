@@ -172,6 +172,8 @@ namespace ScrapEngine
 
 			//Standard draw frame call
 			void draw_frame();
+
+			//Wait for the render device to be in idle state
 			void wait_device_idle() const;
 
 			//3D mesh and scene stuff
