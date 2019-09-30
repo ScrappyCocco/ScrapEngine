@@ -447,14 +447,15 @@ ScrapEngine::Render::VulkanMeshInstance* ScrapEngine::Render::RenderManager::loa
 {
 	//Read data from disk
 	VulkanMeshInstance* new_mesh = new VulkanMeshInstance(vertex_shader_path, fragment_shader_path,
-		model_path, textures_path, vulkan_render_swap_chain_);
-	
+	                                                      model_path, textures_path, vulkan_render_swap_chain_);
+
 	//Wait and block if necessary until the list loaded_models_ is editable
 	//Wait cleanup
 	wait_cleanup_task();
 	//Wait CB
 	const short int index = command_buffer_flip_flop_ ? 0 : 1;
-	if (command_buffers_[index].is_running) {
+	if (command_buffers_[index].is_running)
+	{
 		Debug::DebugLog::print_to_console_log("CommandBuffer updating... waiting before adding mesh to game...");
 		//Wait command buffer to finish loading meshes
 		while (!command_buffers_tasks_[index]->GetIsComplete())
@@ -589,7 +590,7 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 	{
 		skybox_->update_uniform_buffer(image_index_, render_camera_);
 	}
-	//cancel dirty matrix
+	//Cancel dirty matrix
 	render_camera_->cancel_dirty_matrix();
 	//Submit the command buffer and the frame
 	vk::SubmitInfo submit_info;
@@ -605,13 +606,14 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 	//Wait for the gui command buffer task to finish
 	wait_gui_commandbuffer_task();
 	//Submit
-	submit_info.setCommandBufferCount(2);
 	vk::CommandBuffer command_buffers[2];
 	//Push main command buffer
 	command_buffers[0] =
 		(*command_buffers_[command_buffer_flip_flop_].command_buffer->get_command_buffers_vector())[image_index_];
 	//Push GUI command buffer
 	command_buffers[1] = (*gui_command_buffer_->get_command_buffers_vector())[0];
+	//Set command buffers size and array
+	submit_info.setCommandBufferCount(2);
 	submit_info.setPCommandBuffers(&command_buffers[0]);
 
 	vk::Semaphore signal_semaphores[] = {(*render_finished_semaphores_ref_)[current_frame_]};
@@ -619,6 +621,7 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 	submit_info.setPSignalSemaphores(signal_semaphores);
 	VulkanDevice::get_instance()->get_logical_device()->resetFences(1, &(*in_flight_fences_ref_)[current_frame_]);
 
+	//Queue submit
 	result_ = vulkan_graphics_queue_->get_queue()->submit(1, &submit_info,
 	                                                      (*in_flight_fences_ref_)[current_frame_]);
 	if (result_ != vk::Result::eSuccess)
@@ -651,11 +654,11 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 		throw std::runtime_error("RenderManager: Failed to present swap chain image!");
 	}
 
-	//Check if i the other command buffer if ready
+	//Check if if the other command buffer is ready
 	//If yes i can swap the command buffers
 	if (swap_command_buffers())
 	{
-		//Start mesh cleanup
+		//If yes i can also start mesh cleanup
 		g_TS.AddTaskSetToPipe(mesh_cleanup_task_);
 	}
 	//Update gui fence to wait
