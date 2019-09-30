@@ -2,7 +2,6 @@
 
 #include <Engine/Rendering/Manager/RenderManager.h>
 #include <Engine/LogicCore/Components/MeshComponent/MeshComponent.h>
-#include <map>
 #include <Engine/Physics/Manager/PhysicsManager.h>
 #include <Engine/LogicCore/Components/TriggerComponent/TriggerComponent.h>
 #include <Engine/LogicCore/Components/TriggerComponent/BoxTriggerComponent/BoxTriggerComponent.h>
@@ -13,6 +12,7 @@
 #include <Engine/Audio/Manager/AudioManager.h>
 #include <Engine/LogicCore/Components/AudioComponent/2dAudioComponent/2DAudioComponent.h>
 #include <Engine/LogicCore/Components/AudioComponent/3dAudioComponent/3DAudioComponent.h>
+#include <unordered_map>
 
 namespace ScrapEngine
 {
@@ -25,9 +25,9 @@ namespace ScrapEngine
 			Physics::PhysicsManager* physics_manager_ref_ = nullptr;
 			Audio::AudioManager* audio_manager_ref_ = nullptr;
 
-			std::map<MeshComponent*, Render::VulkanMeshInstance*> loaded_meshes_;
-			std::map<RigidBodyComponent*, Physics::RigidBody*> loaded_rigidbody_collisions_;
-			std::map<TriggerComponent*, Physics::CollisionBody*> loaded_collider_collisions_;
+			std::unordered_map<MeshComponent*, Render::VulkanMeshInstance*> loaded_meshes_;
+			std::unordered_map<RigidBodyComponent*, Physics::RigidBody*> loaded_rigidbody_collisions_;
+			std::unordered_map<TriggerComponent*, Physics::CollisionBody*> loaded_collider_collisions_;
 		public:
 			explicit ComponentsManager() = default;
 			~ComponentsManager() = default;
