@@ -10,7 +10,7 @@ ScrapEngine::Render::ImageStagingBuffer::ImageStagingBuffer(const vk::DeviceSize
 	void* data;
 	VulkanDevice::get_instance()->get_logical_device()->
 	                              mapMemory(staging_buffer_memory_, 0, image_size, vk::MemoryMapFlags(), &data);
-	memcpy(data, pixels, static_cast<size_t>(image_size));
+	std::memcpy(data, pixels, static_cast<size_t>(image_size));
 	VulkanDevice::get_instance()->get_logical_device()->unmapMemory(staging_buffer_memory_);
 }
 

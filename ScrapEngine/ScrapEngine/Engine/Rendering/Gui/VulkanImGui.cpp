@@ -152,8 +152,8 @@ void ScrapEngine::Render::VulkanImGui::update_buffers()
 	for (int n = 0; n < im_draw_data->CmdListsCount; n++)
 	{
 		const ImDrawList* cmd_list = im_draw_data->CmdLists[n];
-		memcpy(vtx_dst, cmd_list->VtxBuffer.Data, cmd_list->VtxBuffer.Size * sizeof(ImDrawVert));
-		memcpy(idx_dst, cmd_list->IdxBuffer.Data, cmd_list->IdxBuffer.Size * sizeof(ImDrawIdx));
+		std::memcpy(vtx_dst, cmd_list->VtxBuffer.Data, cmd_list->VtxBuffer.Size * sizeof(ImDrawVert));
+		std::memcpy(idx_dst, cmd_list->IdxBuffer.Data, cmd_list->IdxBuffer.Size * sizeof(ImDrawIdx));
 		vtx_dst += cmd_list->VtxBuffer.Size;
 		idx_dst += cmd_list->IdxBuffer.Size;
 	}

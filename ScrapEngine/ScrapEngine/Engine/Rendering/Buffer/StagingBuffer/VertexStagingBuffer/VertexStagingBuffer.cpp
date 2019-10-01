@@ -12,6 +12,6 @@ ScrapEngine::Render::VertexStagingBuffer::VertexStagingBuffer(const vk::DeviceSi
 	VulkanDevice::get_instance()->get_logical_device()->mapMemory(staging_buffer_memory_, 0, buffer_size,
 	                                                              vk::MemoryMapFlags(),
 	                                                              &data);
-	memcpy(data, vector_data->data(), static_cast<size_t>(buffer_size));
+	std::memcpy(data, vector_data->data(), static_cast<size_t>(buffer_size));
 	VulkanDevice::get_instance()->get_logical_device()->unmapMemory(staging_buffer_memory_);
 }

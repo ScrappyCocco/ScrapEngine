@@ -65,7 +65,7 @@ void ScrapEngine::Render::UniformBuffer::update_uniform_buffer(const uint32_t& c
 		ubo_.view = render_camera->get_camera_look_matrix();
 	}
 
-	memcpy(mapped_memory_[current_image], &ubo_, sizeof(ubo_));
+	std::memcpy(mapped_memory_[current_image], &ubo_, sizeof(ubo_));
 }
 
 const std::vector<vk::Buffer>* ScrapEngine::Render::UniformBuffer::get_uniform_buffers() const
