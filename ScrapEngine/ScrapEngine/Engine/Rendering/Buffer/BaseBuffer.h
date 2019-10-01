@@ -28,10 +28,9 @@ namespace ScrapEngine
 
 			//Return a new command buffer that can be used for simple commands (ex: copying stuff)
 			//This command buffer is for a SINGLE submission only
-			//Use with caution and remember to submit the command buffer creted
 			static std::unique_ptr<vk::CommandBuffer> begin_single_time_command();
 
-			//Submit the command buffer to the queue AND DELETE IT
+			//Submit the command buffer to the queue
 			static void end_and_submit_single_time_command(const std::unique_ptr<vk::CommandBuffer>& command_buffer);
 		};
 	}
