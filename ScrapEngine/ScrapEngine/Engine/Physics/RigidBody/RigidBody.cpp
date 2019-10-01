@@ -77,33 +77,12 @@ float ScrapEngine::Physics::RigidBody::get_mass() const
 
 void ScrapEngine::Physics::RigidBody::set_type(const RigidBody_Types type) const
 {
-	switch (type)
-	{
-	case static_rigidbody:
-		body_->setType(rp3d::BodyType::STATIC);
-		break;
-	case kinematic_rigidbody:
-		body_->setType(rp3d::BodyType::KINEMATIC);
-		break;
-	default:
-	case dynamic_rigidbody:
-		body_->setType(rp3d::BodyType::DYNAMIC);
-		break;
-	}
+	body_->setType(static_cast<rp3d::BodyType>(type));
 }
 
 ScrapEngine::Physics::RigidBody_Types ScrapEngine::Physics::RigidBody::get_type() const
 {
-	switch (body_->getType())
-	{
-	case rp3d::BodyType::STATIC:
-		return static_rigidbody;
-	case rp3d::BodyType::KINEMATIC:
-		return kinematic_rigidbody;
-	default:
-	case rp3d::BodyType::DYNAMIC:
-		return dynamic_rigidbody;
-	}
+	return static_cast<RigidBody_Types>(body_->getType());
 }
 
 void ScrapEngine::Physics::RigidBody::build_rigidbody(rp3d::DynamicsWorld* dynamic_world)

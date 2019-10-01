@@ -7,11 +7,11 @@ namespace ScrapEngine
 {
 	namespace Physics
 	{
-		enum RigidBody_Types
+		enum class RigidBody_Types
 		{
-			static_rigidbody = rp3d::BodyType::STATIC,
-			kinematic_rigidbody = rp3d::BodyType::KINEMATIC,
-			dynamic_rigidbody = rp3d::BodyType::DYNAMIC
+			static_rigidbody = static_cast<int>(rp3d::BodyType::STATIC),
+			kinematic_rigidbody = static_cast<int>(rp3d::BodyType::KINEMATIC),
+			dynamic_rigidbody = static_cast<int>(rp3d::BodyType::DYNAMIC)
 		};
 
 		class RigidBody
