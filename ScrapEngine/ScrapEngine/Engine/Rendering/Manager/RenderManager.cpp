@@ -19,7 +19,7 @@ void ScrapEngine::Render::RenderManager::ParallelCommandBufferCreation::ExecuteR
 	if (owner->waiting_fence_)
 	{
 		const vk::Result result = VulkanDevice::get_instance()->get_logical_device()
-		                                                      ->waitForFences(1, owner->waiting_fence_, true, 100);
+		                                                      ->waitForFences(1, owner->waiting_fence_, true, std::numeric_limits<uint64_t>::max());
 		if (result == vk::Result::eSuccess)
 		{
 			owner->waiting_fence_ = nullptr;
