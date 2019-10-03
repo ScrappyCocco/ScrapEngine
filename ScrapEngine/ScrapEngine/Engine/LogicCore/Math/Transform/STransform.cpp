@@ -32,13 +32,13 @@ void ScrapEngine::Core::STransform::set_position(const SVector3& new_position)
 
 void ScrapEngine::Core::STransform::set_rotation(const SVector3& new_rotation)
 {
-	quaternion_rotation_ = Core::SQuaternion(new_rotation);
+	quaternion_rotation_ = SQuaternion(new_rotation);
 	rotation_ = quaternion_rotation_.to_euler_angles();
 }
 
 void ScrapEngine::Core::STransform::set_rotation(const SQuaternion& new_rotation)
 {
-	quaternion_rotation_ = Core::SQuaternion(new_rotation);
+	quaternion_rotation_ = SQuaternion(new_rotation);
 	rotation_ = quaternion_rotation_.to_euler_angles();
 }
 
@@ -49,7 +49,7 @@ void ScrapEngine::Core::STransform::set_quat_rotation(const SQuaternion& new_rot
 
 void ScrapEngine::Core::STransform::add_rotation(const SVector3& rotation)
 {
-	set_rotation(quaternion_rotation_ * Core::SQuaternion(rotation));
+	set_rotation(quaternion_rotation_ * SQuaternion(rotation));
 }
 
 void ScrapEngine::Core::STransform::set_scale(const SVector3& new_scale)

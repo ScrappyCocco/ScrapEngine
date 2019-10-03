@@ -81,7 +81,7 @@ int main()
 		//MainMenu
 		scrap_engine_manager->logic_manager_view->register_game_object(new MainMenu(
 			scrap_engine_manager->logic_manager_view,
-			ball_game_object, game_window_ref));
+			ball_game_object, game_window_ref, inputmanager));
 		//Begin gameplay
 		scrap_engine_manager->start_game_loop();
 		//End gameplay

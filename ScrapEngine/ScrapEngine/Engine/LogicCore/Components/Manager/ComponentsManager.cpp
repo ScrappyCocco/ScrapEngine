@@ -24,20 +24,20 @@ ScrapEngine::Core::MeshComponent* ScrapEngine::Core::ComponentsManager::create_n
 	                                                                  textures_path);
 	MeshComponent* mesh_component = new MeshComponent(mesh);
 
-	std::pair<MeshComponent*, Render::VulkanMeshInstance*> pair_to_insert(mesh_component, mesh);
-	loaded_meshes_.insert(pair_to_insert);
+	loaded_meshes_.insert({mesh_component, mesh});
+
 	return mesh_component;
 }
 
 void ScrapEngine::Core::ComponentsManager::destroy_mesh_component(
 	MeshComponent* component_to_destroy)
 {
-	const std::map<MeshComponent*, Render::VulkanMeshInstance*>::iterator position =
-		loaded_meshes_.find(component_to_destroy);
-	if (position != loaded_meshes_.end())
+	//If the element is present
+	if (loaded_meshes_.find(component_to_destroy) != loaded_meshes_.end())
 	{
-		position->second->set_for_deletion();
-		loaded_meshes_.erase(position);
+		loaded_meshes_[component_to_destroy]->set_for_deletion();
+		//Erase by key
+		loaded_meshes_.erase(component_to_destroy);
 	}
 }
 
@@ -50,37 +50,34 @@ void ScrapEngine::Core::ComponentsManager::update_rigidbody_physics(const float 
 }
 
 ScrapEngine::Core::BoxRigidBodyComponent* ScrapEngine::Core::ComponentsManager::create_box_rigidbody_component(
-	const Core::SVector3& size, const Core::SVector3& start_position, const float mass)
+	const SVector3& size, const SVector3& start_position, const float mass)
 {
 	Physics::RigidBody* body = physics_manager_ref_->create_box_rigidbody(size, start_position, mass);
 	BoxRigidBodyComponent* component = new BoxRigidBodyComponent(body);
 
-	std::pair<RigidBodyComponent*, Physics::RigidBody*> pair_to_insert(component, body);
-	loaded_rigidbody_collisions_.insert(pair_to_insert);
+	loaded_rigidbody_collisions_.insert({component, body});
 
 	return component;
 }
 
 ScrapEngine::Core::CapsuleRigidBodyComponent* ScrapEngine::Core::ComponentsManager::create_capsule_rigidbody_component(
-	const float radius, const float height, const Core::SVector3& start_position, const float mass)
+	const float radius, const float height, const SVector3& start_position, const float mass)
 {
 	Physics::RigidBody* body = physics_manager_ref_->create_capsule_rigidbody(radius, height, start_position, mass);
 	CapsuleRigidBodyComponent* component = new CapsuleRigidBodyComponent(body);
 
-	std::pair<RigidBodyComponent*, Physics::RigidBody*> pair_to_insert(component, body);
-	loaded_rigidbody_collisions_.insert(pair_to_insert);
+	loaded_rigidbody_collisions_.insert({component, body});
 
 	return component;
 }
 
 ScrapEngine::Core::SphereRigidBodyComponent* ScrapEngine::Core::ComponentsManager::create_sphere_rigidbody_component(
-	const float radius, const Core::SVector3& start_position, const float mass)
+	const float radius, const SVector3& start_position, const float mass)
 {
 	Physics::RigidBody* body = physics_manager_ref_->create_sphere_rigidbody(radius, start_position, mass);
 	SphereRigidBodyComponent* component = new SphereRigidBodyComponent(body);
 
-	std::pair<RigidBodyComponent*, Physics::RigidBody*> pair_to_insert(component, body);
-	loaded_rigidbody_collisions_.insert(pair_to_insert);
+	loaded_rigidbody_collisions_.insert({component, body});
 
 	return component;
 }
@@ -104,16 +101,16 @@ void ScrapEngine::Core::ComponentsManager::unload_sound(AudioComponent* audio) c
 
 void ScrapEngine::Core::ComponentsManager::destroy_rigidbody_component(RigidBodyComponent* component_to_destroy)
 {
-	const std::map<RigidBodyComponent*, Physics::RigidBody*>::iterator position =
-		loaded_rigidbody_collisions_.find(component_to_destroy);
-	if (position != loaded_rigidbody_collisions_.end())
+	//If the element is present
+	if (loaded_rigidbody_collisions_.find(component_to_destroy) != loaded_rigidbody_collisions_.end())
 	{
-		physics_manager_ref_->remove_rigidbody(position->second);
-		loaded_rigidbody_collisions_.erase(position);
+		physics_manager_ref_->remove_rigidbody(loaded_rigidbody_collisions_[component_to_destroy]);
+		//Erase by key
+		loaded_rigidbody_collisions_.erase(component_to_destroy);
 	}
 }
 
-void ScrapEngine::Core::ComponentsManager::set_gravity(const Core::SVector3& gravity) const
+void ScrapEngine::Core::ComponentsManager::set_gravity(const SVector3& gravity) const
 {
 	physics_manager_ref_->set_gravity(gravity);
 }
@@ -124,24 +121,23 @@ ScrapEngine::Core::SVector3 ScrapEngine::Core::ComponentsManager::get_gravity() 
 }
 
 ScrapEngine::Core::BoxTriggerComponent* ScrapEngine::Core::ComponentsManager::create_box_trigger_component(
-	const Core::SVector3& size, const Core::SVector3& start_position)
+	const SVector3& size, const SVector3& start_position)
 {
 	Physics::CollisionBody* body = physics_manager_ref_->create_box_trigger(size, start_position);
 	BoxTriggerComponent* component = new BoxTriggerComponent(body);
 
-	std::pair<TriggerComponent*, Physics::CollisionBody*> pair_to_insert(component, body);
-	loaded_collider_collisions_.insert(pair_to_insert);
+	loaded_collider_collisions_.insert({component, body});
 
 	return component;
 }
 
 void ScrapEngine::Core::ComponentsManager::destroy_trigger_component(TriggerComponent* component_to_destroy)
 {
-	const std::map<TriggerComponent*, Physics::CollisionBody*>::iterator position =
-		loaded_collider_collisions_.find(component_to_destroy);
-	if (position != loaded_collider_collisions_.end())
+	//If the element is present
+	if (loaded_collider_collisions_.find(component_to_destroy) != loaded_collider_collisions_.end())
 	{
-		physics_manager_ref_->remove_collider(position->second);
-		loaded_collider_collisions_.erase(position);
+		physics_manager_ref_->remove_collider(loaded_collider_collisions_[component_to_destroy]);
+		//Erase by key
+		loaded_collider_collisions_.erase(component_to_destroy);
 	}
 }

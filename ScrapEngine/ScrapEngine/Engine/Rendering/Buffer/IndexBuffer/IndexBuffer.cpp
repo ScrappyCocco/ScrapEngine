@@ -7,15 +7,14 @@ ScrapEngine::Render::IndexBuffer::IndexBuffer(const std::vector<uint32_t>* indic
 {
 	const vk::DeviceSize buffer_size = sizeof((*indices)[0]) * indices->size();
 
-	BaseStagingBuffer* staging = new IndicesStagingBuffer(buffer_size, indices);
+	//unique_ptr to be deleted after constructor
+	std::unique_ptr<BaseStagingBuffer> staging = std::make_unique<IndicesStagingBuffer>(buffer_size, indices);
 
 	BaseBuffer::create_buffer(buffer_size,
 	                          vk::BufferUsageFlagBits::eTransferDst | vk::BufferUsageFlagBits::eIndexBuffer,
 	                          vk::MemoryPropertyFlagBits::eDeviceLocal, index_buffer_, index_buffer_memory_);
 
 	BaseBuffer::copy_buffer(staging->get_staging_buffer(), index_buffer_, buffer_size);
-
-	delete staging;
 }
 
 ScrapEngine::Render::IndexBuffer::~IndexBuffer()

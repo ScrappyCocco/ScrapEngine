@@ -7,15 +7,14 @@ ScrapEngine::Render::VertexBuffer::VertexBuffer(const std::vector<Vertex>* verti
 {
 	const vk::DeviceSize buffer_size(sizeof((*vertices)[0]) * vertices->size());
 
-	BaseStagingBuffer* staging = new VertexStagingBuffer(buffer_size, vertices);
+	//unique_ptr to be deleted after constructor
+	std::unique_ptr<BaseStagingBuffer> staging = std::make_unique<VertexStagingBuffer>(buffer_size, vertices);
 
 	BaseBuffer::create_buffer(buffer_size,
 	                          vk::BufferUsageFlagBits::eTransferDst | vk::BufferUsageFlagBits::eVertexBuffer,
 	                          vk::MemoryPropertyFlagBits::eDeviceLocal, vertex_buffer_, vertex_buffer_memory_);
 
 	BaseBuffer::copy_buffer(staging->get_staging_buffer(), vertex_buffer_, buffer_size);
-
-	delete staging;
 }
 
 ScrapEngine::Render::VertexBuffer::~VertexBuffer()

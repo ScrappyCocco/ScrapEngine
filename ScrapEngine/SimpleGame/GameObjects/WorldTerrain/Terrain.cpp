@@ -12,13 +12,13 @@ Terrain::Terrain(ScrapEngine::Core::ComponentsManager* input_component_manager,
 	std::string color_texture = "../assets/textures/SimpleWhiteTexture.png";
 	switch (c)
 	{
-	case green:
+	case color::green:
 		color_texture = "../assets/textures/SimpleGreenTexture.png";
 		break;
-	case red:
+	case color::red:
 		color_texture = "../assets/textures/SimpleRedTexture.png";
 		break;
-	case finish:
+	case color::finish:
 		color_texture = "../assets/textures/Finish.png";
 		break;
 	}

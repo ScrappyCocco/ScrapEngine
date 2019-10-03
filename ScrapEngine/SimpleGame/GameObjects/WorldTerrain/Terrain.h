@@ -6,7 +6,7 @@
 class Terrain : public ScrapEngine::Core::SGameObject
 {
 public:
-	enum color
+	enum class color
 	{
 		red,
 		white,
@@ -17,6 +17,6 @@ public:
 	Terrain(ScrapEngine::Core::ComponentsManager* input_component_manager,
 	        const ScrapEngine::Core::SVector3& position,
 	        const ScrapEngine::Core::SVector3& scale,
-	        color c = white);
+	        color c = color::white);
 	~Terrain() = default;
 };

@@ -45,18 +45,31 @@ void ScrapEngine::Render::BaseBuffer::create_buffer(const vk::DeviceSize& size, 
 }
 
 void ScrapEngine::Render::BaseBuffer::copy_buffer(vk::Buffer* src_buffer, vk::Buffer& dst_buffer,
-                                                  const vk::DeviceSize& size)
+                                                  const vk::DeviceSize& size, const vk::DeviceSize& scr_offset,
+                                                  const vk::DeviceSize& dst_offset,
+                                                  const uint32_t region_count)
 {
-	vk::CommandBuffer* command_buffer = begin_single_time_commands();
+	const std::unique_ptr<vk::CommandBuffer> command_buffer = begin_single_time_command();
 
-	vk::BufferCopy copy_region(0, 0, size);
+	vk::BufferCopy copy_region(scr_offset, dst_offset, size);
 
-	command_buffer->copyBuffer(*src_buffer, dst_buffer, 1, &copy_region);
+	command_buffer->copyBuffer(*src_buffer, dst_buffer, region_count, &copy_region);
 
-	end_single_time_commands(command_buffer);
+	end_and_submit_single_time_command(command_buffer);
 }
 
-vk::CommandBuffer* ScrapEngine::Render::BaseBuffer::begin_single_time_commands()
+void ScrapEngine::Render::BaseBuffer::copy_buffer_to_image(vk::Buffer* buffer, vk::Image* image,
+                                                           vk::BufferImageCopy* region,
+                                                           const int regioncount, const vk::ImageLayout layout)
+{
+	const std::unique_ptr<vk::CommandBuffer> command_buffer = begin_single_time_command();
+
+	command_buffer->copyBufferToImage(*buffer, *image, layout, regioncount, region);
+
+	end_and_submit_single_time_command(command_buffer);
+}
+
+std::unique_ptr<vk::CommandBuffer> ScrapEngine::Render::BaseBuffer::begin_single_time_command()
 {
 	vk::CommandBufferAllocateInfo alloc_info(*SingletonCommandPool::get_instance()->get_command_pool(),
 	                                         vk::CommandBufferLevel::ePrimary,
@@ -69,20 +82,20 @@ vk::CommandBuffer* ScrapEngine::Render::BaseBuffer::begin_single_time_commands()
 
 	command_buffer->begin(begin_info);
 
-	return command_buffer;
+	return std::unique_ptr<vk::CommandBuffer>(command_buffer);
 }
 
-void ScrapEngine::Render::BaseBuffer::end_single_time_commands(vk::CommandBuffer* command_buffer)
+void ScrapEngine::Render::BaseBuffer::end_and_submit_single_time_command(
+	const std::unique_ptr<vk::CommandBuffer>& command_buffer)
 {
 	command_buffer->end();
 
-	vk::SubmitInfo submit_info(0, nullptr, nullptr, 1, command_buffer);
+	vk::SubmitInfo submit_info(0, nullptr, nullptr, 1, command_buffer.get());
 	GraphicsQueue::get_instance()->get_queue()->submit(1, &submit_info, nullptr);
 
 	GraphicsQueue::get_instance()->get_queue()->waitIdle();
 
 	VulkanDevice::get_instance()->get_logical_device()->freeCommandBuffers(
-		*SingletonCommandPool::get_instance()->get_command_pool(), 1, command_buffer);
-
-	delete command_buffer;
+		*SingletonCommandPool::get_instance()->get_command_pool(),
+		1, command_buffer.get());
 }

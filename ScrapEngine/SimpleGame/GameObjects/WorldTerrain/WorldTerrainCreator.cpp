@@ -47,17 +47,17 @@ WorldTerrainCreator::WorldTerrainCreator(ScrapEngine::Core::ComponentsManager* i
 	new Terrain(input_component_manager,
 		ScrapEngine::Core::SVector3(435, -10, -400),
 		ScrapEngine::Core::SVector3(2, 1.5f, 0.5f),
-		Terrain::green);
+		Terrain::color::green);
 
 	new Terrain(input_component_manager,
 		ScrapEngine::Core::SVector3(465, -10, -350),
 		ScrapEngine::Core::SVector3(2, 1.5f, 0.5f),
-		Terrain::green);
+		Terrain::color::green);
 
 	new Terrain(input_component_manager,
 		ScrapEngine::Core::SVector3(450, -10, -300),
 		ScrapEngine::Core::SVector3(2, 1.5f, 0.5f),
-		Terrain::green);
+		Terrain::color::green);
 
 	//Left terrain
 	new Terrain(input_component_manager,
@@ -88,5 +88,5 @@ WorldTerrainCreator::WorldTerrainCreator(ScrapEngine::Core::ComponentsManager* i
 	new Terrain(input_component_manager,
 		ScrapEngine::Core::SVector3(425, -20, 75),
 		ScrapEngine::Core::SVector3(10, 0.01f, 10),
-		Terrain::finish);
+		Terrain::color::finish);
 }

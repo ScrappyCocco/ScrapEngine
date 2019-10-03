@@ -20,39 +20,39 @@ namespace ScrapEngine
 			}
 		};
 
-		enum cursor_mode
+		enum class cursor_mode
 		{
 			/**
 			 * \brief makes the cursor visible and behaving normally.
 			 */
-			cursor_normal_mode,
+			cursor_normal_mode = GLFW_CURSOR_NORMAL,
 			/**
 			 * \brief makes the cursor invisible when it is over the client area of the window but does not restrict the cursor from leaving.
 			 */
-			cursor_hidden_mode,
+			cursor_hidden_mode = GLFW_CURSOR_HIDDEN,
 			/**
 			 * \brief hides and grabs the cursor, providing virtual and unlimited cursor movement.
 			 */
-			cursor_grabbed_mode
+			cursor_grabbed_mode = GLFW_CURSOR_DISABLED
 		};
 
-		enum system_cursor_shapes
+		enum class system_cursor_shapes
 		{
-			cursor_regular_arrow,
-			cursor_crosshair_shape,
-			cursor_hand_shape,
-			cursor_horizontal_resize_arrow_shape,
-			cursor_vertical_resize_arrow_shape,
-			cursor_input_beam_shape
+			cursor_regular_arrow = GLFW_ARROW_CURSOR,
+			cursor_crosshair_shape = GLFW_CROSSHAIR_CURSOR,
+			cursor_hand_shape = GLFW_HAND_CURSOR,
+			cursor_horizontal_resize_arrow_shape = GLFW_HRESIZE_CURSOR,
+			cursor_vertical_resize_arrow_shape = GLFW_VRESIZE_CURSOR,
+			cursor_input_beam_shape = GLFW_IBEAM_CURSOR
 		};
 
-		enum button_state
+		enum class button_state
 		{
 			released,
 			pressed
 		};
 
-		enum scroll_status
+		enum class scroll_status
 		{
 			scroll_up,
 			scroll_down,

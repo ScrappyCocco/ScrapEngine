@@ -15,10 +15,10 @@ namespace ScrapEngine
 
 			~ImageStagingBuffer() = default;
 
-			static void copy_buffer_to_image(vk::Buffer* buffer, vk::Image* image, const uint32_t& width,
-			                                 const uint32_t& height);
-			static void copy_buffer_to_image(vk::Buffer* buffer, vk::Image* image, const uint32_t& width,
-			                                 const uint32_t& height, vk::BufferImageCopy* region, int regioncount = 1,
+			static void copy_buffer_to_image(vk::Buffer* buffer, vk::Image* image,
+			                                 uint32_t width, uint32_t height);
+			static void copy_buffer_to_image(vk::Buffer* buffer, vk::Image* image,
+			                                 vk::BufferImageCopy* region, int regioncount = 1,
 			                                 vk::ImageLayout layout = vk::ImageLayout::eTransferDstOptimal);
 		};
 	}

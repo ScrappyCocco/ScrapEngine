@@ -72,9 +72,8 @@ void ScrapEngine::Render::VulkanImGui::init_resources(VulkanSwapChain* swap_chai
 	buffer_copy_region.setImageSubresource(image_subresource_layer);
 	buffer_copy_region.setImageExtent(vk::Extent3D(tex_width, tex_height, 1));
 	//Copy
-	ImageStagingBuffer::copy_buffer_to_image(staginf_buffer_ref->get_staging_buffer(), &front_image_, tex_width,
-	                                         tex_height, &buffer_copy_region, 1,
-	                                         vk::ImageLayout::eTransferDstOptimal);
+	ImageStagingBuffer::copy_buffer_to_image(staginf_buffer_ref->get_staging_buffer(), &front_image_,
+	                                         &buffer_copy_region, 1, vk::ImageLayout::eTransferDstOptimal);
 	delete staginf_buffer_ref;
 	staginf_buffer_ref = nullptr;
 	// Prepare for shader read
@@ -98,7 +97,6 @@ void ScrapEngine::Render::VulkanImGui::init_resources(VulkanSwapChain* swap_chai
 	//Create pipeline
 	pipeline_ = new GuiVulkanGraphicsPipeline("../assets/shader/compiled_shaders/ui.vert.spv",
 	                                          "../assets/shader/compiled_shaders/ui.frag.spv",
-	                                          &swap_chain->get_swap_chain_extent(),
 	                                          descriptor_set_->get_descriptor_set_layout(), sizeof(PushConstBlock),
 	                                          render_pass);
 
@@ -153,8 +151,8 @@ void ScrapEngine::Render::VulkanImGui::update_buffers()
 	for (int n = 0; n < im_draw_data->CmdListsCount; n++)
 	{
 		const ImDrawList* cmd_list = im_draw_data->CmdLists[n];
-		memcpy(vtx_dst, cmd_list->VtxBuffer.Data, cmd_list->VtxBuffer.Size * sizeof(ImDrawVert));
-		memcpy(idx_dst, cmd_list->IdxBuffer.Data, cmd_list->IdxBuffer.Size * sizeof(ImDrawIdx));
+		std::memcpy(vtx_dst, cmd_list->VtxBuffer.Data, cmd_list->VtxBuffer.Size * sizeof(ImDrawVert));
+		std::memcpy(idx_dst, cmd_list->IdxBuffer.Data, cmd_list->IdxBuffer.Size * sizeof(ImDrawIdx));
 		vtx_dst += cmd_list->VtxBuffer.Size;
 		idx_dst += cmd_list->IdxBuffer.Size;
 	}

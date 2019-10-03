@@ -6,7 +6,6 @@
 #include <glm/vec3.hpp>
 #include <glm/vec2.hpp>
 #define GLM_ENABLE_EXPERIMENTAL
-#include <glm/gtx/hash.hpp>
 #include <array>
 
 namespace ScrapEngine
@@ -35,11 +34,6 @@ namespace ScrapEngine
 			};
 
 			return attribute_descriptions;
-		}
-
-		bool operator==(const Vertex& other) const
-		{
-			return pos == other.pos && color == other.color && tex_coord == other.tex_coord;
 		}
 	};
 }
