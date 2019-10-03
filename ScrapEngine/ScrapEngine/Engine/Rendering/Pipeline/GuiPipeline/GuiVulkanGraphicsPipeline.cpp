@@ -5,7 +5,6 @@
 
 ScrapEngine::Render::GuiVulkanGraphicsPipeline::GuiVulkanGraphicsPipeline(const char* vertex_shader,
                                                                           const char* fragment_shader,
-                                                                          vk::Extent2D* swap_chain_extent,
                                                                           vk::DescriptorSetLayout*
                                                                           descriptor_set_layout,
                                                                           size_t block_size,

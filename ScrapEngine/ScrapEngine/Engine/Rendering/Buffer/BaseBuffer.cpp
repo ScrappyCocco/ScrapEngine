@@ -47,7 +47,7 @@ void ScrapEngine::Render::BaseBuffer::create_buffer(const vk::DeviceSize& size, 
 void ScrapEngine::Render::BaseBuffer::copy_buffer(vk::Buffer* src_buffer, vk::Buffer& dst_buffer,
                                                   const vk::DeviceSize& size, const vk::DeviceSize& scr_offset,
                                                   const vk::DeviceSize& dst_offset,
-                                                  uint32_t region_count)
+                                                  const uint32_t region_count)
 {
 	const std::unique_ptr<vk::CommandBuffer> command_buffer = begin_single_time_command();
 

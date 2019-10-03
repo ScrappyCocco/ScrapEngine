@@ -97,7 +97,6 @@ void ScrapEngine::Render::VulkanImGui::init_resources(VulkanSwapChain* swap_chai
 	//Create pipeline
 	pipeline_ = new GuiVulkanGraphicsPipeline("../assets/shader/compiled_shaders/ui.vert.spv",
 	                                          "../assets/shader/compiled_shaders/ui.frag.spv",
-	                                          &swap_chain->get_swap_chain_extent(),
 	                                          descriptor_set_->get_descriptor_set_layout(), sizeof(PushConstBlock),
 	                                          render_pass);
 

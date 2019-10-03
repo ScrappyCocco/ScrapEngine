@@ -2,7 +2,6 @@
 
 #include <string>
 #include <vector>
-#include <Engine/Rendering/Base/Vertex.h>
 #include <Engine/Rendering/Model/Model/Mesh/Mesh.h>
 
 namespace ScrapEngine
