@@ -54,23 +54,23 @@ namespace ScrapEngine
 
 			//--->Trigger collisions
 			//BoxColliderComponent
-			BoxTriggerComponent* create_box_trigger_component(const Core::SVector3& size,
-			                                                  const Core::SVector3& start_position);
+			BoxTriggerComponent* create_box_trigger_component(const SVector3& size,
+			                                                  const SVector3& start_position);
 
 			//--->Rigidbodies
 			//BoxColliderComponent
-			BoxRigidBodyComponent* create_box_rigidbody_component(const Core::SVector3& size,
-			                                                      const Core::SVector3& start_position,
+			BoxRigidBodyComponent* create_box_rigidbody_component(const SVector3& size,
+			                                                      const SVector3& start_position,
 			                                                      float mass = 0.f);
 
 			//CapsuleColliderComponent
 			CapsuleRigidBodyComponent* create_capsule_rigidbody_component(float radius,
 			                                                              float height,
-			                                                              const Core::SVector3& start_position,
+			                                                              const SVector3& start_position,
 			                                                              float mass = 0.f);
 			//SphereColliderComponent
 			SphereRigidBodyComponent* create_sphere_rigidbody_component(float radius,
-			                                                            const Core::SVector3& start_position,
+			                                                            const SVector3& start_position,
 			                                                            float mass = 0.f);
 			//----------------------------------------
 			//AudioStuff

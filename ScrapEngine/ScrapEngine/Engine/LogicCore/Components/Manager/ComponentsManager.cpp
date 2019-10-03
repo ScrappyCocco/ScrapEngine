@@ -50,7 +50,7 @@ void ScrapEngine::Core::ComponentsManager::update_rigidbody_physics(const float 
 }
 
 ScrapEngine::Core::BoxRigidBodyComponent* ScrapEngine::Core::ComponentsManager::create_box_rigidbody_component(
-	const Core::SVector3& size, const Core::SVector3& start_position, const float mass)
+	const SVector3& size, const SVector3& start_position, const float mass)
 {
 	Physics::RigidBody* body = physics_manager_ref_->create_box_rigidbody(size, start_position, mass);
 	BoxRigidBodyComponent* component = new BoxRigidBodyComponent(body);
@@ -61,7 +61,7 @@ ScrapEngine::Core::BoxRigidBodyComponent* ScrapEngine::Core::ComponentsManager::
 }
 
 ScrapEngine::Core::CapsuleRigidBodyComponent* ScrapEngine::Core::ComponentsManager::create_capsule_rigidbody_component(
-	const float radius, const float height, const Core::SVector3& start_position, const float mass)
+	const float radius, const float height, const SVector3& start_position, const float mass)
 {
 	Physics::RigidBody* body = physics_manager_ref_->create_capsule_rigidbody(radius, height, start_position, mass);
 	CapsuleRigidBodyComponent* component = new CapsuleRigidBodyComponent(body);
@@ -72,7 +72,7 @@ ScrapEngine::Core::CapsuleRigidBodyComponent* ScrapEngine::Core::ComponentsManag
 }
 
 ScrapEngine::Core::SphereRigidBodyComponent* ScrapEngine::Core::ComponentsManager::create_sphere_rigidbody_component(
-	const float radius, const Core::SVector3& start_position, const float mass)
+	const float radius, const SVector3& start_position, const float mass)
 {
 	Physics::RigidBody* body = physics_manager_ref_->create_sphere_rigidbody(radius, start_position, mass);
 	SphereRigidBodyComponent* component = new SphereRigidBodyComponent(body);
@@ -110,7 +110,7 @@ void ScrapEngine::Core::ComponentsManager::destroy_rigidbody_component(RigidBody
 	}
 }
 
-void ScrapEngine::Core::ComponentsManager::set_gravity(const Core::SVector3& gravity) const
+void ScrapEngine::Core::ComponentsManager::set_gravity(const SVector3& gravity) const
 {
 	physics_manager_ref_->set_gravity(gravity);
 }
@@ -121,7 +121,7 @@ ScrapEngine::Core::SVector3 ScrapEngine::Core::ComponentsManager::get_gravity() 
 }
 
 ScrapEngine::Core::BoxTriggerComponent* ScrapEngine::Core::ComponentsManager::create_box_trigger_component(
-	const Core::SVector3& size, const Core::SVector3& start_position)
+	const SVector3& size, const SVector3& start_position)
 {
 	Physics::CollisionBody* body = physics_manager_ref_->create_box_trigger(size, start_position);
 	BoxTriggerComponent* component = new BoxTriggerComponent(body);
