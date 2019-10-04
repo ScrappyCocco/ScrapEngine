@@ -42,18 +42,21 @@ std::shared_ptr<std::vector<
 		>();
 
 		std::vector<std::pair<VertexBuffer*, IndexBuffer*>> concrete_mesh_buffers;
+		Debug::DebugLog::print_to_console_log("Loading '" + model_path + "' meshes in buffers...");
 		//LOADING MODEL BUFFERS
 		for (auto mesh : (*model_ref->get_meshes()))
 		{
 			//LOADING MODEL BUFFERS
 			std::pair<VertexBuffer*, IndexBuffer*> concrete_buffer_pair;
 			std::pair<VertexBufferContainer*, IndicesBufferContainer*> buffer_pair;
+			//VertexBuffer and container
 			concrete_buffer_pair.first = new VertexBuffer(mesh->get_vertices());
 			buffer_pair.first = new VertexBufferContainer(
 				concrete_buffer_pair.first->get_vertex_buffer(),
 				mesh->get_vertices());
 			Debug::DebugLog::print_to_console_log("[VulkanModelBuffersPool] VertexBuffer created");
 
+			//IndexBuffer and container
 			concrete_buffer_pair.second = new IndexBuffer(mesh->get_indices());
 			buffer_pair.second = new IndicesBufferContainer(
 				concrete_buffer_pair.second->get_index_buffer(),
@@ -88,11 +91,15 @@ void ScrapEngine::Render::VulkanModelBuffersPool::clear_memory()
 	{
 		Debug::DebugLog::print_to_console_log("[VulkanModelBuffersPool] Removing '"
 			+ model_key + "' buffers from pool memory");
+		//Clear concrete_buffers_
 		for (const auto& model_pair : concrete_buffers_[model_key])
 		{
 			delete model_pair.first;
 			delete model_pair.second;
 		}
+		concrete_buffers_[model_key].clear();
+		concrete_buffers_.erase(model_key);
+		//Clear model_buffers_pool_
 		model_buffers_pool_[model_key]->clear();
 		model_buffers_pool_[model_key] = nullptr;
 		model_buffers_pool_.erase(model_key);

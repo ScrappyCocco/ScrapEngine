@@ -20,7 +20,7 @@ namespace ScrapEngine
 			VulkanModelBuffersPool() = default;
 
 			//The pool associate the model path with a shared_ptr vector of VertexBufferContainer* & IndicesBufferContainer*
-			//This because for every model i can have N mesh, every mash has a VertexBufferContainer and a IndicesBufferContainer
+			//This because for every model i can have N mesh, every mesh has a VertexBufferContainer and a IndicesBufferContainer
 			std::unordered_map<std::string,
 			                   std::shared_ptr<std::vector<
 					                   std::pair<
