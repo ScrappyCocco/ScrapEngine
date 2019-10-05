@@ -18,11 +18,19 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ScrapEngine\ScrapEngine.vcxproj">
+      <Project>{1fad33be-87cf-4a6f-b81f-c3d33d2eb1d4}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Game.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{AF72F436-3963-43B7-9BEF-78B34B836958}</ProjectGuid>
+    <ProjectGuid>{32144FBE-8AEA-4291-995B-C48CA31CA945}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>SimpleGame</RootNamespace>
+    <RootNamespace>CityBuilderDemo</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -158,49 +166,6 @@
       <PreserveSbr>true</PreserveSbr>
     </Bscmake>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GameObjects\Camera\GameCamera.cpp" />
-    <ClCompile Include="GameObjects\CheckpointTrigger\CheckpointTrigger.cpp" />
-    <ClCompile Include="GameObjects\FinishTriggerMenu\FinishMenu.cpp" />
-    <ClCompile Include="GameObjects\MainMenu\MainMenu.cpp" />
-    <ClCompile Include="GameObjects\Music\Music.cpp" />
-    <ClCompile Include="GameObjects\Player\Ball.cpp" />
-    <ClCompile Include="GameObjects\RespawnTrigger\Trigger.cpp" />
-    <ClCompile Include="GameObjects\ScoreManager\ScoreManager.cpp" />
-    <ClCompile Include="GameObjects\WorldObjects\Coin.cpp" />
-    <ClCompile Include="GameObjects\WorldObjects\Crate.cpp" />
-    <ClCompile Include="GameObjects\WorldObjects\WorldObjectsCreator.cpp" />
-    <ClCompile Include="GameObjects\WorldTerrain\Terrain.cpp" />
-    <ClCompile Include="GameObjects\WorldTerrain\WorldTerrainCreator.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="GameObjects\Camera\GameCamera.h" />
-    <ClInclude Include="GameObjects\CheckpointTrigger\CheckpointTrigger.h" />
-    <ClInclude Include="GameObjects\FinishTriggerMenu\FinishMenu.h" />
-    <ClInclude Include="GameObjects\MainMenu\MainMenu.h" />
-    <ClInclude Include="GameObjects\Music\Music.h" />
-    <ClInclude Include="GameObjects\Player\Ball.h" />
-    <ClInclude Include="GameObjects\RespawnTrigger\Trigger.h" />
-    <ClInclude Include="GameObjects\ScoreManager\ScoreManager.h" />
-    <ClInclude Include="GameObjects\WorldObjects\Coin.h" />
-    <ClInclude Include="GameObjects\WorldObjects\Crate.h" />
-    <ClInclude Include="GameObjects\WorldObjects\WorldObjectsCreator.h" />
-    <ClInclude Include="GameObjects\WorldTerrain\Terrain.h" />
-    <ClInclude Include="GameObjects\WorldTerrain\WorldTerrainCreator.h" />
-    <ClInclude Include="resource.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="SimpleGame.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\assets\game_icon\crate_icon.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ScrapEngine\ScrapEngine.vcxproj">
-      <Project>{1fad33be-87cf-4a6f-b81f-c3d33d2eb1d4}</Project>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
