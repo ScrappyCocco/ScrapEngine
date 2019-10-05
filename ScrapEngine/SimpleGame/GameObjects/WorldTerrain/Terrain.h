@@ -8,7 +8,6 @@ class Terrain : public ScrapEngine::Core::SGameObject
 public:
 	enum class color
 	{
-		red,
 		white,
 		green,
 		finish

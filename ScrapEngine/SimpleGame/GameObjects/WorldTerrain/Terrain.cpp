@@ -15,9 +15,6 @@ Terrain::Terrain(ScrapEngine::Core::ComponentsManager* input_component_manager,
 	case color::green:
 		color_texture = "../assets/textures/SimpleGreenTexture.png";
 		break;
-	case color::red:
-		color_texture = "../assets/textures/SimpleRedTexture.png";
-		break;
 	case color::finish:
 		color_texture = "../assets/textures/Finish.png";
 		break;
