@@ -25,6 +25,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameObjects\Camera\GameCamera.cpp" />
+    <ClCompile Include="GameObjects\WorldTerrain\Terrain.cpp" />
+    <ClCompile Include="GameObjects\WorldTerrain\WorldTerrainCreator.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GameObjects\Camera\GameCamera.h" />
+    <ClInclude Include="GameObjects\WorldTerrain\Terrain.h" />
+    <ClInclude Include="GameObjects\WorldTerrain\WorldTerrainCreator.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

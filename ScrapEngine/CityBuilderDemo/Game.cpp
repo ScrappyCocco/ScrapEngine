@@ -1,6 +1,8 @@
 #include <iostream>
 #include <Engine/Manager/EngineManager.h>
 #include <Engine/Input/Manager/InputManager.h>
+#include "GameObjects/Camera/GameCamera.h"
+#include "GameObjects/WorldTerrain/WorldTerrainCreator.h"
 
 int main()
 {
@@ -9,7 +11,7 @@ int main()
 	try
 	{
 		//Init engine
-		scrap_engine_manager = new ScrapEngine::Manager::EngineManager("Example Game", 0, 1280, 720);
+		scrap_engine_manager = new ScrapEngine::Manager::EngineManager("City Builder Demo Game", 0, 1280, 720);
 		ScrapEngine::Render::GameWindow* game_window_ref = scrap_engine_manager->render_manager_view->get_game_window();
 		//Create the input manager
 		ScrapEngine::Input::InputManager* inputmanager = game_window_ref->create_window_input_manager();
@@ -31,12 +33,15 @@ int main()
 		);
 		scene_manager_ref->set_skybox_size(500);
 		//Create the camera
-		/*GameCamera* game_camera_ref = new GameCamera(inputmanager,
+		GameCamera* game_camera_ref = new GameCamera(inputmanager,
 		                                             scrap_engine_manager
-		                                             ->render_manager_view->get_default_render_camera(),
-		                                             ball_game_object);
+		                                             ->render_manager_view->get_default_render_camera());
 		game_camera_ref->set_game_window_ref(game_window_ref);
-		scrap_engine_manager->logic_manager_view->register_game_object(game_camera_ref);*/
+		scrap_engine_manager->logic_manager_view->register_game_object(game_camera_ref);
+		//Terrain
+		//Terrain pieces
+		WorldTerrainCreator* terrain_creator = new WorldTerrainCreator(component_manager_ref);
+		delete terrain_creator;
 		//Begin gameplay
 		scrap_engine_manager->start_game_loop();
 		//End gameplay

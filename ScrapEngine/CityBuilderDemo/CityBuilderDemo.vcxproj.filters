@@ -1,22 +1,47 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="File di origine">
+    <Filter Include="Resources">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="GameSourceCode">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="File di intestazione">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    <Filter Include="GameSourceCode\GameObjects">
+      <UniqueIdentifier>{cb1f04a4-49f5-4418-8936-32e3a9e63099}</UniqueIdentifier>
     </Filter>
-    <Filter Include="File di risorse">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="GameSourceCode\GameObjects\Camera">
+      <UniqueIdentifier>{b4de7a5b-10e9-4e9f-a161-034e0b407b85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSourceCode\GameObjects\WorldTerrain">
+      <UniqueIdentifier>{e7063905-652b-45d9-be6c-80344113bf61}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
-      <Filter>File di origine</Filter>
+      <Filter>GameSourceCode</Filter>
     </ClCompile>
+    <ClCompile Include="GameObjects\Camera\GameCamera.cpp">
+      <Filter>GameSourceCode\GameObjects\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\WorldTerrain\Terrain.cpp">
+      <Filter>GameSourceCode\GameObjects\WorldTerrain</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\WorldTerrain\WorldTerrainCreator.cpp">
+      <Filter>GameSourceCode\GameObjects\WorldTerrain</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GameObjects\Camera\GameCamera.h">
+      <Filter>GameSourceCode\GameObjects\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\WorldTerrain\Terrain.h">
+      <Filter>GameSourceCode\GameObjects\WorldTerrain</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\WorldTerrain\WorldTerrainCreator.h">
+      <Filter>GameSourceCode\GameObjects\WorldTerrain</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
