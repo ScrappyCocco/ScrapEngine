@@ -23,10 +23,6 @@ namespace ScrapEngine
 			rp3d::ProxyShape* proxy_shape_ = nullptr;
 
 			rp3d::RigidBody* body_ = nullptr;
-
-			static Core::STransform convert_transform(const rp3d::Transform& other);
-			static rp3d::Transform convert_transform(const Core::STransform& other);
-			static rp3d::Vector3 convert_vector(const Core::SVector3& vector);
 		public:
 			RigidBody() = default;
 			~RigidBody();
@@ -44,7 +40,10 @@ namespace ScrapEngine
 			void build_rigidbody(rp3d::DynamicsWorld* dynamic_world);
 			void remove_from_world(rp3d::DynamicsWorld* dynamic_world) const;
 
+			//Utils functions for engine
 			rp3d::RigidBody* get_rigidbody() const;
+			CollisionShape* get_collision_shape() const;
+			
 			Core::STransform get_updated_transform(float factor);
 			void set_new_transform(const Core::STransform& transform) const;
 			void set_new_location(const Core::SVector3& location) const;
