@@ -26,13 +26,21 @@
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObjects\Camera\GameCamera.cpp" />
+    <ClCompile Include="GameObjects\RaycastManager\RaycastManager.cpp" />
+    <ClCompile Include="GameObjects\WorldObjects\Building\BaseBuilding.cpp" />
+    <ClCompile Include="GameObjects\WorldObjects\Building\PlacementBuilding\PlacementBuilding.cpp" />
+    <ClCompile Include="GameObjects\WorldObjects\Building\StandardBuilding\StandardBuilding.cpp" />
+    <ClCompile Include="GameObjects\WorldObjects\Manager\BuildingManager.cpp" />
     <ClCompile Include="GameObjects\WorldTerrain\Terrain.cpp" />
-    <ClCompile Include="GameObjects\WorldTerrain\WorldTerrainCreator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObjects\Camera\GameCamera.h" />
+    <ClInclude Include="GameObjects\RaycastManager\RaycastManager.h" />
+    <ClInclude Include="GameObjects\WorldObjects\Building\BaseBuilding.h" />
+    <ClInclude Include="GameObjects\WorldObjects\Building\PlacementBuilding\PlacementBuilding.h" />
+    <ClInclude Include="GameObjects\WorldObjects\Building\StandardBuilding\StandardBuilding.h" />
+    <ClInclude Include="GameObjects\WorldObjects\Manager\BuildingManager.h" />
     <ClInclude Include="GameObjects\WorldTerrain\Terrain.h" />
-    <ClInclude Include="GameObjects\WorldTerrain\WorldTerrainCreator.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

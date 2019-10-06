@@ -18,6 +18,24 @@
     <Filter Include="GameSourceCode\GameObjects\WorldTerrain">
       <UniqueIdentifier>{e7063905-652b-45d9-be6c-80344113bf61}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameSourceCode\GameObjects\RaycastManager">
+      <UniqueIdentifier>{a7029f5a-168d-4785-864b-14902ec6d9ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSourceCode\GameObjects\WorldObjects">
+      <UniqueIdentifier>{767ca652-42f0-4798-93d6-aa02a83767bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSourceCode\GameObjects\WorldObjects\Building">
+      <UniqueIdentifier>{d6681c51-b6ee-4252-9140-45e6c9907ec3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSourceCode\GameObjects\WorldObjects\Manager">
+      <UniqueIdentifier>{1872054f-3ad8-422b-a27c-b43c48559f1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSourceCode\GameObjects\WorldObjects\Building\PlacementBuilding">
+      <UniqueIdentifier>{4c0ac770-cdec-4d18-afd8-ce2079882e8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameSourceCode\GameObjects\WorldObjects\Building\StandardBuilding">
+      <UniqueIdentifier>{8e537a12-a891-4532-a874-700d3f405732}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -29,8 +47,20 @@
     <ClCompile Include="GameObjects\WorldTerrain\Terrain.cpp">
       <Filter>GameSourceCode\GameObjects\WorldTerrain</Filter>
     </ClCompile>
-    <ClCompile Include="GameObjects\WorldTerrain\WorldTerrainCreator.cpp">
-      <Filter>GameSourceCode\GameObjects\WorldTerrain</Filter>
+    <ClCompile Include="GameObjects\RaycastManager\RaycastManager.cpp">
+      <Filter>GameSourceCode\GameObjects\RaycastManager</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\WorldObjects\Manager\BuildingManager.cpp">
+      <Filter>GameSourceCode\GameObjects\WorldObjects\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\WorldObjects\Building\BaseBuilding.cpp">
+      <Filter>GameSourceCode\GameObjects\WorldObjects\Building</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\WorldObjects\Building\StandardBuilding\StandardBuilding.cpp">
+      <Filter>GameSourceCode\GameObjects\WorldObjects\Building\StandardBuilding</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\WorldObjects\Building\PlacementBuilding\PlacementBuilding.cpp">
+      <Filter>GameSourceCode\GameObjects\WorldObjects\Building\PlacementBuilding</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -40,8 +70,20 @@
     <ClInclude Include="GameObjects\WorldTerrain\Terrain.h">
       <Filter>GameSourceCode\GameObjects\WorldTerrain</Filter>
     </ClInclude>
-    <ClInclude Include="GameObjects\WorldTerrain\WorldTerrainCreator.h">
-      <Filter>GameSourceCode\GameObjects\WorldTerrain</Filter>
+    <ClInclude Include="GameObjects\RaycastManager\RaycastManager.h">
+      <Filter>GameSourceCode\GameObjects\RaycastManager</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\WorldObjects\Manager\BuildingManager.h">
+      <Filter>GameSourceCode\GameObjects\WorldObjects\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\WorldObjects\Building\BaseBuilding.h">
+      <Filter>GameSourceCode\GameObjects\WorldObjects\Building</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\WorldObjects\Building\StandardBuilding\StandardBuilding.h">
+      <Filter>GameSourceCode\GameObjects\WorldObjects\Building\StandardBuilding</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\WorldObjects\Building\PlacementBuilding\PlacementBuilding.h">
+      <Filter>GameSourceCode\GameObjects\WorldObjects\Building\PlacementBuilding</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
