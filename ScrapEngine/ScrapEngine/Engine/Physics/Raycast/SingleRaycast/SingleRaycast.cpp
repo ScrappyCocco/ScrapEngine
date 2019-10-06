@@ -1,6 +1,5 @@
 #include <Engine/Physics/Raycast/SingleRaycast/SingleRaycast.h>
 #include <Engine/Physics/Utils/ConversionUtils.h>
-#include <Engine/Debug/DebugLog.h>
 
 ScrapEngine::Physics::SingleRaycast::SingleRaycast(rp3d::DynamicsWorld* world_ref)
 	: world_ref_(world_ref)
@@ -35,7 +34,6 @@ ScrapEngine::Physics::RaycastResultInfo ScrapEngine::Physics::SingleRaycast::exe
                                                                                          const std::vector<RigidBody*>*
                                                                                          created_rigidbodies)
 {
-	Debug::DebugLog::print_to_console_log("--execute_ray start--");
 	//Update vector pointer
 	created_rigidbodies_ref_ = created_rigidbodies;
 	//Clear last result
@@ -46,15 +44,12 @@ ScrapEngine::Physics::RaycastResultInfo ScrapEngine::Physics::SingleRaycast::exe
 		ConversionUtils::convert_vector(end));
 
 	world_ref_->raycast(ray, this);
-	Debug::DebugLog::print_to_console_log("--execute_ray end--");
 
 	return last_raycast_result_;
 }
 
 reactphysics3d::decimal ScrapEngine::Physics::SingleRaycast::notifyRaycastHit(const reactphysics3d::RaycastInfo& info)
 {
-	Debug::DebugLog::print_to_console_log("--notifyRaycastHit start--");
-
 	RigidBody* body = search_rigidbody(info.body);
 
 	if (body)
@@ -68,7 +63,6 @@ reactphysics3d::decimal ScrapEngine::Physics::SingleRaycast::notifyRaycastHit(co
 		);
 	}
 
-	Debug::DebugLog::print_to_console_log("--notifyRaycastHit end--");
 	//End the hit on the first object
 	return reactphysics3d::decimal(0.0);
 }
