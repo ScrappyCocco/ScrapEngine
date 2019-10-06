@@ -24,6 +24,10 @@ namespace ScrapEngine
 			std::vector<vk::DeviceMemory> uniform_buffers_memory_;
 			std::vector<void*> mapped_memory_;
 
+			//Used to force update of camera matrices the first time
+			//Otherwise an object created at runtime will see matrices not dirty
+			bool first_update_ = true;
+
 			vk::Extent2D swap_chain_extent_;
 			size_t swap_chain_images_size_;
 
