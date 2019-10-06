@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <Engine/Rendering/Manager/RenderManager.h>
 #include <Engine/LogicCore/Components/MeshComponent/MeshComponent.h>
@@ -18,6 +18,30 @@ namespace ScrapEngine
 {
 	namespace Core
 	{
+		/**
+		 * \brief Struct used to return the raycast result to the user
+		 */
+		struct raycast_result
+		{
+			/**
+			 * \brief Component hit by the ray or nullptr if none
+			 */
+			RigidBodyComponent* component_hit = nullptr;
+			/**
+			 * \brief Hit point in world-space coordinates 
+			 */
+			SVector3 world_point;
+			/**
+			 * \brief Surface normal of the proxy shape at the hit point in world-space coordinates 
+			 */
+			SVector3 world_normal;
+			/**
+			 * \brief Fraction distance of the hit point between startPoint and endPoint of the ray.
+			 * The hit point p is such that p = startPoint + hitFraction ⋅ (endPoint - startPoint)
+			 */
+			float hit_fraction;
+		};
+
 		class ComponentsManager
 		{
 		private:
@@ -25,8 +49,12 @@ namespace ScrapEngine
 			Physics::PhysicsManager* physics_manager_ref_ = nullptr;
 			Audio::AudioManager* audio_manager_ref_ = nullptr;
 
-			std::unordered_map<MeshComponent*, Render::VulkanMeshInstance*> loaded_meshes_;
+			//There is a double-map because this help me searching also by Physics::RigidBody
+			//For the raycast i want to get the component from Physics::RigidBody
 			std::unordered_map<RigidBodyComponent*, Physics::RigidBody*> loaded_rigidbody_collisions_;
+			std::unordered_map<Physics::RigidBody*, RigidBodyComponent*> loaded_rigidbody_inverse_;
+
+			std::unordered_map<MeshComponent*, Render::VulkanMeshInstance*> loaded_meshes_;
 			std::unordered_map<TriggerComponent*, Physics::CollisionBody*> loaded_collider_collisions_;
 		public:
 			explicit ComponentsManager() = default;
@@ -72,6 +100,9 @@ namespace ScrapEngine
 			SphereRigidBodyComponent* create_sphere_rigidbody_component(float radius,
 			                                                            const SVector3& start_position,
 			                                                            float mass = 0.f);
+			//Raycasting
+			raycast_result execute_single_raycast(const SVector3& start,
+			                                      const SVector3& end);
 			//----------------------------------------
 			//AudioStuff
 			AudioComponent2D* create_2d_sound(const std::string& filename) const;

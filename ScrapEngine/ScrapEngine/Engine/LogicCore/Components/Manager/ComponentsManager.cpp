@@ -56,6 +56,7 @@ ScrapEngine::Core::BoxRigidBodyComponent* ScrapEngine::Core::ComponentsManager::
 	BoxRigidBodyComponent* component = new BoxRigidBodyComponent(body);
 
 	loaded_rigidbody_collisions_.insert({component, body});
+	loaded_rigidbody_inverse_.insert({body, component});
 
 	return component;
 }
@@ -67,6 +68,7 @@ ScrapEngine::Core::CapsuleRigidBodyComponent* ScrapEngine::Core::ComponentsManag
 	CapsuleRigidBodyComponent* component = new CapsuleRigidBodyComponent(body);
 
 	loaded_rigidbody_collisions_.insert({component, body});
+	loaded_rigidbody_inverse_.insert({body, component});
 
 	return component;
 }
@@ -78,8 +80,26 @@ ScrapEngine::Core::SphereRigidBodyComponent* ScrapEngine::Core::ComponentsManage
 	SphereRigidBodyComponent* component = new SphereRigidBodyComponent(body);
 
 	loaded_rigidbody_collisions_.insert({component, body});
+	loaded_rigidbody_inverse_.insert({body, component});
 
 	return component;
+}
+
+ScrapEngine::Core::raycast_result ScrapEngine::Core::ComponentsManager::execute_single_raycast(
+	const SVector3& start, const SVector3& end)
+{
+	const Physics::RaycastResultInfo result = physics_manager_ref_->execute_single_raycast(start, end);
+	raycast_result return_info{};
+
+	if (result.body)
+	{
+		return_info.world_point = result.world_point;
+		return_info.world_normal = result.world_normal;
+		return_info.hit_fraction = result.hit_fraction;
+		return_info.component_hit = loaded_rigidbody_inverse_[result.body];
+	}
+
+	return return_info;
 }
 
 ScrapEngine::Core::AudioComponent2D* ScrapEngine::Core::ComponentsManager::create_2d_sound(
@@ -104,6 +124,9 @@ void ScrapEngine::Core::ComponentsManager::destroy_rigidbody_component(RigidBody
 	//If the element is present
 	if (loaded_rigidbody_collisions_.find(component_to_destroy) != loaded_rigidbody_collisions_.end())
 	{
+		//Erase in the first map
+		loaded_rigidbody_inverse_.erase(loaded_rigidbody_collisions_[component_to_destroy]);
+		//Remove it
 		physics_manager_ref_->remove_rigidbody(loaded_rigidbody_collisions_[component_to_destroy]);
 		//Erase by key
 		loaded_rigidbody_collisions_.erase(component_to_destroy);

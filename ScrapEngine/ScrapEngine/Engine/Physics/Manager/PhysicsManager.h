@@ -4,6 +4,7 @@
 #include <Engine/Physics/RigidBody/RigidBody.h>
 #include <vector>
 #include <Engine/Physics/CollisionBody/CollisionBody.h>
+#include <Engine/Physics/Raycast/SingleRaycast/SingleRaycast.h>
 
 namespace ScrapEngine
 {
@@ -16,6 +17,8 @@ namespace ScrapEngine
 
 			std::vector<RigidBody*> created_rigidbodies_;
 			std::vector<CollisionBody*> created_collisionbodies_;
+
+			SingleRaycast* single_raycast_manager_;
 
 			RigidBody* create_rigidbody(const Core::SVector3& start_position,
 			                            float mass, CollisionShape* c_shape) const;
@@ -52,6 +55,10 @@ namespace ScrapEngine
 			                                    float height,
 			                                    const Core::SVector3& start_position,
 			                                    float mass = 0.f);
+
+			//Raycast stuff
+			RaycastResultInfo execute_single_raycast(const Core::SVector3& start,
+			                                         const Core::SVector3& end) const;
 		};
 	}
 }

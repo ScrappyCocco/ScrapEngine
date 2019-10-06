@@ -353,6 +353,15 @@
     <Filter Include="Engine\Rendering\Buffer\CommandBuffer\StandardCommandBuffer">
       <UniqueIdentifier>{0481c4ee-6f77-4bc2-87f9-e85d30ea3683}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Physics\Raycast">
+      <UniqueIdentifier>{bb35a352-71d5-4ae9-aae2-ad4b5432cdbb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Physics\Raycast\SingleRaycast">
+      <UniqueIdentifier>{7ae6914d-640c-40e8-8f88-67cac3faa2b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Physics\Utils">
+      <UniqueIdentifier>{2f263215-9a88-4fd2-b463-6dc088c5dec2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Manager\EngineManager.cpp">
@@ -684,6 +693,15 @@
     </ClCompile>
     <ClCompile Include="Engine\Rendering\Buffer\CommandBuffer\StandardCommandBuffer\StandardCommandBuffer.cpp">
       <Filter>Engine\Rendering\Buffer\CommandBuffer\StandardCommandBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Physics\Raycast\SingleRaycast\SingleRaycast.cpp">
+      <Filter>Engine\Physics\Raycast\SingleRaycast</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Physics\Utils\ConversionUtils.cpp">
+      <Filter>Engine\Physics\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Physics\Raycast\RaycastResultInfo.cpp">
+      <Filter>Engine\Physics\Raycast</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1040,6 +1058,15 @@
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Buffer\CommandBuffer\StandardCommandBuffer\StandardCommandBuffer.h">
       <Filter>Engine\Rendering\Buffer\CommandBuffer\StandardCommandBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Physics\Raycast\SingleRaycast\SingleRaycast.h">
+      <Filter>Engine\Physics\Raycast\SingleRaycast</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Physics\Utils\ConversionUtils.h">
+      <Filter>Engine\Physics\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Physics\Raycast\RaycastResultInfo.h">
+      <Filter>Engine\Physics\Raycast</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
