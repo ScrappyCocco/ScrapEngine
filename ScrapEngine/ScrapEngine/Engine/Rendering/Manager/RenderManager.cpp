@@ -360,10 +360,17 @@ void ScrapEngine::Render::RenderManager::wait_gui_commandbuffer_task()
 	g_TS.WaitforTask(gui_command_buffer_task_);
 }
 
+void ScrapEngine::Render::RenderManager::wait_command_buffer_task()
+{
+	const short int index = command_buffer_flip_flop_ ? 0 : 1;
+	g_TS.WaitforTask(command_buffers_tasks_[index]);
+}
+
 void ScrapEngine::Render::RenderManager::wait_pre_frame_tasks()
 {
 	wait_cleanup_task();
 	wait_gui_commandbuffer_task();
+	wait_command_buffer_task();
 }
 
 void ScrapEngine::Render::RenderManager::cleanup_meshes()
@@ -450,20 +457,7 @@ ScrapEngine::Render::VulkanMeshInstance* ScrapEngine::Render::RenderManager::loa
 	                                                      model_path, textures_path, vulkan_render_swap_chain_);
 
 	//Wait and block if necessary until the list loaded_models_ is editable
-	//Wait cleanup
-	wait_cleanup_task();
-	//Wait CB
-	const short int index = command_buffer_flip_flop_ ? 0 : 1;
-	if (command_buffers_[index].is_running)
-	{
-		Debug::DebugLog::print_to_console_log("CommandBuffer updating... waiting before adding mesh to game...");
-		//Wait command buffer to finish loading meshes
-		while (!command_buffers_tasks_[index]->GetIsComplete())
-		{
-		}
-		Debug::DebugLog::print_to_console_log("Waiting completed! The mesh is being added to the game...");
-	}
-
+	wait_pre_frame_tasks();
 	//Push mesh into vector and return it
 	loaded_models_.push_back(new_mesh);
 	return new_mesh;

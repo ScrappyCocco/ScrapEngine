@@ -9,17 +9,17 @@ Terrain::Terrain(ScrapEngine::Core::ComponentsManager* input_component_manager,
 	set_object_location(position);
 	set_object_scale(scale);
 
-	std::string color_texture = "../assets/textures/SimpleWhiteTexture.png";
+	std::string color_texture = "";
 	switch (c)
 	{
 	case color::green:
 		color_texture = "../assets/textures/SimpleGreenTexture.png";
 		break;
-	case color::red:
-		color_texture = "../assets/textures/SimpleRedTexture.png";
-		break;
 	case color::finish:
 		color_texture = "../assets/textures/Finish.png";
+		break;
+	case color::white:
+		color_texture = "../assets/textures/SimpleWhiteTexture.png";
 		break;
 	}
 

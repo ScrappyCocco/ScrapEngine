@@ -58,11 +58,12 @@ void ScrapEngine::Render::UniformBuffer::update_uniform_buffer(const uint32_t& c
 	}
 
 	//Perspective and look stuff
-	if (render_camera->get_projection_matrix_dirty()) {
+	if (render_camera->get_projection_matrix_dirty() || first_update_) {
 		ubo_.proj = render_camera->get_camera_projection_matrix();
 	}
-	if (render_camera->get_look_matrix_dirt()) {
+	if (render_camera->get_look_matrix_dirt() || first_update_) {
 		ubo_.view = render_camera->get_camera_look_matrix();
+		first_update_ = false;
 	}
 
 	std::memcpy(mapped_memory_[current_image], &ubo_, sizeof(ubo_));

@@ -187,6 +187,11 @@ void ScrapEngine::Render::Camera::set_camera_fov(const float fov)
 	generate_projection_matrix();
 }
 
+float ScrapEngine::Render::Camera::get_camera_aspect_ratio() const
+{
+	return swap_chain_extent_.width / static_cast<float>(swap_chain_extent_.height);
+}
+
 glm::mat4 ScrapEngine::Render::Camera::get_camera_projection_matrix() const
 {
 	return projection_matrix_;
@@ -219,7 +224,7 @@ void ScrapEngine::Render::Camera::generate_projection_matrix()
 	projection_matrix_dirty_ = true;
 	//Perspective stuff
 	projection_matrix_ = glm::perspective(glm::radians(fov_),
-	                                      swap_chain_extent_.width / static_cast<float>(swap_chain_extent_.height),
+	                                      get_camera_aspect_ratio(),
 	                                      min_draw_distance_,
 	                                      max_draw_distance_);
 	//Invert image for openGL style

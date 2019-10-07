@@ -83,6 +83,8 @@ namespace ScrapEngine
 			float get_camera_fov() const;
 			void set_camera_fov(float fov);
 
+			float get_camera_aspect_ratio() const;
+
 			//Returna a pointer to avoid per-frame copy of the matrix
 			glm::mat4 get_camera_projection_matrix() const;
 			glm::mat4 get_camera_look_matrix() const;

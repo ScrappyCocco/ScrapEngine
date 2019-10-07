@@ -34,11 +34,14 @@ ScrapEngine::Physics::CollisionBody* ScrapEngine::Physics::PhysicsManager::creat
 ScrapEngine::Physics::PhysicsManager::PhysicsManager()
 {
 	p_world_ = new DiscreteDynamicsWorld();
+
+	single_raycast_manager_ = new SingleRaycast(p_world_->get_dynamic_world());
 }
 
 ScrapEngine::Physics::PhysicsManager::~PhysicsManager()
 {
 	//The responsibility to clear the RigidBody* is of the logic manager that create them
+	delete single_raycast_manager_;
 	created_rigidbodies_.clear();
 	delete p_world_;
 }
@@ -134,4 +137,11 @@ ScrapEngine::Physics::RigidBody* ScrapEngine::Physics::PhysicsManager::create_ca
 	created_rigidbodies_.push_back(body);
 
 	return body;
+}
+
+ScrapEngine::Physics::RaycastResultInfo ScrapEngine::Physics::PhysicsManager::execute_single_raycast(
+	const Core::SVector3& start,
+	const Core::SVector3& end) const
+{
+	return single_raycast_manager_->execute_ray(start, end, &created_rigidbodies_);
 }

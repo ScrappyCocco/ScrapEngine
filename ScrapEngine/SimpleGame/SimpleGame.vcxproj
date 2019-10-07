@@ -196,6 +196,11 @@
   <ItemGroup>
     <Image Include="..\assets\game_icon\crate_icon.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ScrapEngine\ScrapEngine.vcxproj">
+      <Project>{1fad33be-87cf-4a6f-b81f-c3d33d2eb1d4}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

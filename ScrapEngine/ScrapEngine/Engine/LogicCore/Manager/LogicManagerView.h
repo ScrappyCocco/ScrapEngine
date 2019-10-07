@@ -12,9 +12,9 @@ namespace ScrapEngine
 		class LogicManagerView
 		{
 		private:
-			LogicManager* logic_manager_ref_;
-			ComponentsManager* component_manager_;
-			SceneManager* scene_manager_;
+			LogicManager* logic_manager_ref_ = nullptr;
+			ComponentsManager* component_manager_ = nullptr;
+			SceneManager* scene_manager_ = nullptr;
 		public:
 			LogicManagerView(Render::RenderManager* input_render_manager_ref,
 			                 LogicManager* input_logic_manager_ref);

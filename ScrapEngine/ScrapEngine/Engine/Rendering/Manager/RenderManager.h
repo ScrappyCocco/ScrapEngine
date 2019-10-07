@@ -147,6 +147,7 @@ namespace ScrapEngine
 
 			void wait_cleanup_task();
 			void wait_gui_commandbuffer_task();
+			void wait_command_buffer_task();
 			void wait_pre_frame_tasks();
 
 			void cleanup_meshes();
