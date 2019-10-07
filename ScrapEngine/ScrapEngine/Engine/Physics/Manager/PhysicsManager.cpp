@@ -41,6 +41,7 @@ ScrapEngine::Physics::PhysicsManager::PhysicsManager()
 ScrapEngine::Physics::PhysicsManager::~PhysicsManager()
 {
 	//The responsibility to clear the RigidBody* is of the logic manager that create them
+	delete single_raycast_manager_;
 	created_rigidbodies_.clear();
 	delete p_world_;
 }
