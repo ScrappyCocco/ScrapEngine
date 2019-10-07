@@ -1,5 +1,5 @@
 #include <Engine/Audio/Listener/AudioListener.h>
-#include <alListener.h>
+#include <AL/al.h>
 
 void ScrapEngine::Audio::AudioListener::set_listener_location(const Core::SVector3& location) const
 {
