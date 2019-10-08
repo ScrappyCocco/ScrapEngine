@@ -25,10 +25,6 @@ namespace ScrapEngine
 			SVector3 operator*(float value) const;
 			//explicit conversion operator to glm::vec3
 			explicit operator glm::vec3() const;
-			/**
-			 * Calculate cross product between this and another vector.
-			 */
-			SVector3 operator^(const SVector3& other) const;
 
 			float get_x() const;
 			float get_y() const;
@@ -46,6 +42,7 @@ namespace ScrapEngine
 			float distance(const SVector3& other) const;
 
 			static SVector3 cross_product(const SVector3& a, const SVector3& b);
+			static float dot(const SVector3& a, const SVector3& b);
 		};
 	}
 }

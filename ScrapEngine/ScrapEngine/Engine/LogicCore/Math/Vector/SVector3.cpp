@@ -43,11 +43,6 @@ ScrapEngine::Core::SVector3::operator glm::vec3() const
 	return vec3_;
 }
 
-ScrapEngine::Core::SVector3 ScrapEngine::Core::SVector3::operator^(const SVector3& other) const
-{
-	return SVector3(cross(vec3_, other.vec3_));
-}
-
 float ScrapEngine::Core::SVector3::get_x() const
 {
 	return vec3_.x;
@@ -110,7 +105,13 @@ float ScrapEngine::Core::SVector3::distance(const SVector3& other) const
 
 ScrapEngine::Core::SVector3 ScrapEngine::Core::SVector3::cross_product(const SVector3& a, const SVector3& b)
 {
-	return a ^ b;
+	//call glm::cross
+	return SVector3(cross(a.vec3_, b.vec3_));
+}
+
+float ScrapEngine::Core::SVector3::dot(const SVector3& a, const SVector3& b)
+{
+	return glm::dot(a.vec3_, b.vec3_);
 }
 
 glm::vec3 ScrapEngine::Core::SVector3::get_glm_vector() const

@@ -84,16 +84,26 @@ void GameCamera::game_update(const float time)
 		if (input_manager_ref_->get_keyboard_key_pressed(KEYBOARD_KEY_D))
 		{
 			game_camera_ref_->set_camera_location(
-				game_camera_ref_->get_camera_location() + (((game_camera_ref_->get_camera_front() ^ game_camera_ref_->
-					get_camera_up()
-				).normalize()) * camera_speed_));
+				game_camera_ref_->get_camera_location() +
+				(
+					ScrapEngine::Core::SVector3::cross_product(
+						game_camera_ref_->get_camera_front(), game_camera_ref_->get_camera_up()
+					).normalize()
+					* camera_speed_
+				)
+			);
 		}
 		if (input_manager_ref_->get_keyboard_key_pressed(KEYBOARD_KEY_A))
 		{
 			game_camera_ref_->set_camera_location(
-				game_camera_ref_->get_camera_location() - (((game_camera_ref_->get_camera_front() ^ game_camera_ref_->
-					get_camera_up()
-				).normalize()) * camera_speed_));
+				game_camera_ref_->get_camera_location() -
+				(
+					ScrapEngine::Core::SVector3::cross_product(
+						game_camera_ref_->get_camera_front(), game_camera_ref_->get_camera_up()
+					).normalize()
+					* camera_speed_
+				)
+			);
 		}
 	}
 
