@@ -99,7 +99,7 @@ ScrapEngine::Core::SVector3 ScrapEngine::Core::SQuaternion::get_up_vector() cons
 
 ScrapEngine::Core::SVector3 ScrapEngine::Core::SQuaternion::to_euler_angles() const
 {
-	const glm::vec3 euler = eulerAngles(quat_);;
+	const glm::vec3 euler = eulerAngles(quat_);
 	const glm::vec3 degree_v = degrees(euler);
 
 	return SVector3(degree_v);
