@@ -60,7 +60,7 @@ void Coin::game_update(const float time)
 	}
 	else
 	{
-		mesh_->add_component_rotation(ScrapEngine::Core::SVector3(0, 5.f * time, 0));
+		mesh_->add_component_rotation(ScrapEngine::Core::SVector3(0, 500.f * time, 0));
 
 		if (box_trigger_->test_collision(test_collision_object_))
 		{
