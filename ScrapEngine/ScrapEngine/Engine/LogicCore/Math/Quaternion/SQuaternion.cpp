@@ -39,7 +39,7 @@ ScrapEngine::Core::SQuaternion ScrapEngine::Core::SQuaternion::identity()
 
 ScrapEngine::Core::SQuaternion::SQuaternion(const SVector3& euler_angles)
 {
-	quat_ = glm::quat(euler_angles.get_glm_vector());
+	quat_ = glm::quat(radians(euler_angles.get_glm_vector()));
 }
 
 ScrapEngine::Core::SQuaternion ScrapEngine::Core::SQuaternion::operator*(const SQuaternion& other) const
@@ -99,9 +99,10 @@ ScrapEngine::Core::SVector3 ScrapEngine::Core::SQuaternion::get_up_vector() cons
 
 ScrapEngine::Core::SVector3 ScrapEngine::Core::SQuaternion::to_euler_angles() const
 {
-	const glm::vec3 euler = eulerAngles(quat_);
+	const glm::vec3 euler = eulerAngles(quat_);;
+	const glm::vec3 degree_v = degrees(euler);
 
-	return SVector3(euler);
+	return SVector3(degree_v);
 }
 
 glm::quat ScrapEngine::Core::SQuaternion::get_glm_quat() const
