@@ -191,6 +191,7 @@ void ScrapEngine::Core::SGameObject::update_object_scale()
 void ScrapEngine::Core::SGameObject::add_component(SComponent* component)
 {
 	object_components_.push_back(component);
+	component->set_father_transform(object_transform_);
 	//Set component default values same as object
 	component->set_component_location(object_transform_.get_position());
 	component->set_component_rotation(object_transform_.get_rotation());
