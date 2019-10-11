@@ -82,6 +82,13 @@ float ScrapEngine::Core::SQuaternion::get_w() const
 	return quat_.w;
 }
 
+ScrapEngine::Core::SQuaternion ScrapEngine::Core::SQuaternion::get_inverse() const
+{
+	return SQuaternion(
+		glm::quat_cast(glm::inverse(glm::mat4_cast(quat_)))
+	);
+}
+
 ScrapEngine::Core::SVector3 ScrapEngine::Core::SQuaternion::get_forward_vector() const
 {
 	return get_axis_x();
