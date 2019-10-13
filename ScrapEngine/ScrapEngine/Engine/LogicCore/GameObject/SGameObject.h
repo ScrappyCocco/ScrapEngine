@@ -8,12 +8,18 @@ namespace ScrapEngine
 {
 	namespace Core
 	{
+		//Forward declaration to avoid include-loop
+		class SComponent;
+		
 		class SGameObject : public SObject
 		{
+			//Friend class to update relative transform
+			//Accessing private methods the user shouldn't see and use
+			friend class SComponent;
 		private:
 			STransform object_transform_;
 			STransform object_relative_transform_;
-			bool should_update = true;
+			bool should_update_ = true;
 
 			std::vector<SComponent*> object_components_;
 			std::vector<SGameObject*> object_child_;
@@ -49,14 +55,6 @@ namespace ScrapEngine
 			SVector3 get_object_rotation() const;
 			SVector3 get_object_scale() const;
 
-			//Update the relative values based on father_object_ transform
-			virtual void update_relative_location();
-			virtual void update_relative_rotation();
-			virtual void update_relative_scale();
-			virtual void update_object_location();
-			virtual void update_object_rotation();
-			virtual void update_object_scale();
-
 			void add_component(SComponent* component);
 			void remove_component(SComponent* component);
 			const std::vector<SComponent*>* get_components() const;
@@ -64,6 +62,15 @@ namespace ScrapEngine
 			void add_child(SGameObject* game_object);
 			void remove_child(SGameObject* game_object);
 			const std::vector<SGameObject*>* get_child() const;
+		private:
+			//Update the relative values based on father_object_ transform
+			virtual void update_relative_location();
+			virtual void update_relative_rotation();
+			virtual void update_relative_scale();
+			
+			virtual void update_object_location();
+			virtual void update_object_rotation();
+			virtual void update_object_scale();
 		};
 	}
 }

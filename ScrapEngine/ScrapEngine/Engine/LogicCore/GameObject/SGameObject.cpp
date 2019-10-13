@@ -52,12 +52,12 @@ void ScrapEngine::Core::SGameObject::kill()
 
 void ScrapEngine::Core::SGameObject::set_should_update(const bool should_update)
 {
-	this->should_update = should_update;
+	this->should_update_ = should_update;
 }
 
 bool ScrapEngine::Core::SGameObject::get_should_update() const
 {
-	return should_update;
+	return should_update_;
 }
 
 void ScrapEngine::Core::SGameObject::set_object_location(const SVector3& location, const bool should_update_relative)
@@ -71,7 +71,6 @@ void ScrapEngine::Core::SGameObject::set_object_location(const SVector3& locatio
 	//Update the transform of every component
 	for (SComponent* component : object_components_)
 	{
-		component->set_father_transform(object_transform_);
 		component->update_component_location();
 	}
 	//Update the transform of every child
@@ -92,7 +91,6 @@ void ScrapEngine::Core::SGameObject::set_object_rotation(const SVector3& rotatio
 	//Update the transform of every component
 	for (SComponent* component : object_components_)
 	{
-		component->set_father_transform(object_transform_);
 		component->update_component_rotation();
 	}
 	//Update the transform of every child
@@ -113,7 +111,6 @@ void ScrapEngine::Core::SGameObject::set_object_scale(const SVector3& scale, con
 	//Update the transform of every component
 	for (SComponent* component : object_components_)
 	{
-		component->set_father_transform(object_transform_);
 		component->update_component_scale();
 	}
 	//Update the transform of every child
@@ -205,7 +202,7 @@ void ScrapEngine::Core::SGameObject::update_object_scale()
 void ScrapEngine::Core::SGameObject::add_component(SComponent* component)
 {
 	object_components_.push_back(component);
-	component->set_father_transform(object_transform_);
+	component->owner_ = this;
 	//Set component default values same as object
 	component->set_component_location(object_transform_.get_position());
 	component->set_component_rotation(object_transform_.get_rotation());
@@ -219,6 +216,7 @@ void ScrapEngine::Core::SGameObject::remove_component(SComponent* component)
 		                         object_components_.end(),
 		                         component),
 	                         object_components_.end());
+	component->owner_ = nullptr;
 }
 
 const std::vector<ScrapEngine::Core::SComponent*>* ScrapEngine::Core::SGameObject::get_components() const
