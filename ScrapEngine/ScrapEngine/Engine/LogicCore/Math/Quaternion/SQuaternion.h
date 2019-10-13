@@ -36,6 +36,8 @@ namespace ScrapEngine
 			float get_z() const;
 			float get_w() const;
 
+			SQuaternion get_inverse() const;
+
 			SVector3 get_forward_vector() const;
 			SVector3 get_right_vector() const;
 			SVector3 get_up_vector() const;

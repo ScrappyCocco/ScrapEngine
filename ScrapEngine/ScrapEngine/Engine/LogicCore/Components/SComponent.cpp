@@ -19,7 +19,9 @@ void ScrapEngine::Core::SComponent::set_component_location(const SVector3& locat
 void ScrapEngine::Core::SComponent::set_component_rotation(const SVector3& rotation)
 {
 	object_world_transform_.set_rotation(rotation);
-	object_relative_transform_.set_rotation(object_world_transform_.get_rotation() - father_transform_.get_rotation());
+	object_relative_transform_.set_rotation(
+		father_transform_.get_quat_rotation().get_inverse() * object_world_transform_.get_quat_rotation()
+	);
 }
 
 void ScrapEngine::Core::SComponent::set_component_scale(const SVector3& scale)
@@ -31,14 +33,9 @@ void ScrapEngine::Core::SComponent::set_component_scale(const SVector3& scale)
 void ScrapEngine::Core::SComponent::add_component_rotation(const SVector3& rotation)
 {
 	object_world_transform_.add_rotation(rotation);
-	object_relative_transform_.set_rotation(object_world_transform_.get_rotation() - father_transform_.get_rotation());
-}
-
-void ScrapEngine::Core::SComponent::update_relative_transform()
-{
-	object_relative_transform_.set_position(object_world_transform_.get_position() - father_transform_.get_position());
-	object_relative_transform_.set_rotation(object_world_transform_.get_rotation() - father_transform_.get_rotation());
-	object_relative_transform_.set_scale(object_world_transform_.get_scale() - father_transform_.get_scale());
+	object_relative_transform_.set_rotation(
+		father_transform_.get_quat_rotation().get_inverse() * object_world_transform_.get_quat_rotation()
+	);
 }
 
 void ScrapEngine::Core::SComponent::update_component_location()
@@ -54,7 +51,9 @@ void ScrapEngine::Core::SComponent::update_component_location()
 
 void ScrapEngine::Core::SComponent::update_component_rotation()
 {
-	object_world_transform_.set_rotation(father_transform_.get_rotation() + object_relative_transform_.get_rotation());
+	object_world_transform_.set_rotation(
+		father_transform_.get_quat_rotation() * object_relative_transform_.get_quat_rotation()
+	);
 
 	update_component_location();
 }
