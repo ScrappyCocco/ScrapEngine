@@ -103,6 +103,9 @@ namespace ScrapEngine
 			//Raycasting
 			raycast_result execute_single_raycast(const SVector3& start,
 			                                      const SVector3& end);
+
+			std::vector<raycast_result> execute_multi_raycast(const SVector3& start,
+			                                                  const SVector3& end);
 			//----------------------------------------
 			//AudioStuff
 			AudioComponent2D* create_2d_sound(const std::string& filename) const;

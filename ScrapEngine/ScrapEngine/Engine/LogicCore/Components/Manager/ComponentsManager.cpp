@@ -102,6 +102,34 @@ ScrapEngine::Core::raycast_result ScrapEngine::Core::ComponentsManager::execute_
 	return return_info;
 }
 
+std::vector<ScrapEngine::Core::raycast_result> ScrapEngine::Core::ComponentsManager::execute_multi_raycast(
+	const SVector3& start, const SVector3& end)
+{
+	const std::vector<Physics::RaycastResultInfo> result = physics_manager_ref_->execute_multi_raycast(start, end);
+	std::vector<ScrapEngine::Core::raycast_result> return_info;
+
+	if (result.size() > 0)
+	{
+		for (auto element : result)
+		{
+			//double-check that element exist
+			if (element.body)
+			{
+				//set element info
+				raycast_result element_info{};
+				element_info.world_point = element.world_point;
+				element_info.world_normal = element.world_normal;
+				element_info.hit_fraction = element.hit_fraction;
+				element_info.component_hit = loaded_rigidbody_inverse_[element.body];
+				//Add it to results
+				return_info.push_back(element_info);
+			}
+		}
+	}
+
+	return return_info;
+}
+
 ScrapEngine::Core::AudioComponent2D* ScrapEngine::Core::ComponentsManager::create_2d_sound(
 	const std::string& filename) const
 {

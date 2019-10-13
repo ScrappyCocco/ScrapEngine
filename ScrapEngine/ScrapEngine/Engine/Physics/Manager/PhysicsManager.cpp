@@ -36,12 +36,15 @@ ScrapEngine::Physics::PhysicsManager::PhysicsManager()
 	p_world_ = new DiscreteDynamicsWorld();
 
 	single_raycast_manager_ = new SingleRaycast(p_world_->get_dynamic_world());
+	multi_raycast_manager_ = new MultiRaycast(p_world_->get_dynamic_world());
 }
 
 ScrapEngine::Physics::PhysicsManager::~PhysicsManager()
 {
 	//The responsibility to clear the RigidBody* is of the logic manager that create them
 	delete single_raycast_manager_;
+	delete multi_raycast_manager_;
+
 	created_rigidbodies_.clear();
 	delete p_world_;
 }
@@ -144,4 +147,10 @@ ScrapEngine::Physics::RaycastResultInfo ScrapEngine::Physics::PhysicsManager::ex
 	const Core::SVector3& end) const
 {
 	return single_raycast_manager_->execute_ray(start, end, &created_rigidbodies_);
+}
+
+std::vector<ScrapEngine::Physics::RaycastResultInfo> ScrapEngine::Physics::PhysicsManager::execute_multi_raycast(
+	const Core::SVector3& start, const Core::SVector3& end) const
+{
+	return multi_raycast_manager_->execute_ray(start, end, &created_rigidbodies_);
 }

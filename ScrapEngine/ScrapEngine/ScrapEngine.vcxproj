@@ -61,6 +61,7 @@
     <ClCompile Include="Engine\Physics\CollisionShape\SphereShape\SphereShape.cpp" />
     <ClCompile Include="Engine\Physics\CollisionWorld\DynamicsWorld\DiscreteDynamicsWorld.cpp" />
     <ClCompile Include="Engine\Physics\Manager\PhysicsManager.cpp" />
+    <ClCompile Include="Engine\Physics\Raycast\MultiRaycast\MultiRaycast.cpp" />
     <ClCompile Include="Engine\Physics\Raycast\RaycastResultInfo.cpp" />
     <ClCompile Include="Engine\Physics\Raycast\SingleRaycast\SingleRaycast.cpp" />
     <ClCompile Include="Engine\Physics\RigidBody\RigidBody.cpp" />
@@ -181,6 +182,7 @@
     <ClInclude Include="Engine\Physics\CollisionWorld\DynamicsWorld\DiscreteDynamicsWorld.h" />
     <ClInclude Include="Engine\Physics\Manager\PhysicsManager.h" />
     <ClInclude Include="Engine\Physics\PhysicsInclude.h" />
+    <ClInclude Include="Engine\Physics\Raycast\MultiRaycast\MultiRaycast.h" />
     <ClInclude Include="Engine\Physics\Raycast\RaycastResultInfo.h" />
     <ClInclude Include="Engine\Physics\Raycast\SingleRaycast\SingleRaycast.h" />
     <ClInclude Include="Engine\Physics\RigidBody\RigidBody.h" />
