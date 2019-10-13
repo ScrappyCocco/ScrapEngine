@@ -11,7 +11,7 @@ private:
 	//Trigger
 	ScrapEngine::Core::TriggerComponent* box_trigger_;
 	//Object to test collision
-	std::vector<std::pair<SGameObject*, ScrapEngine::Core::RigidBodyComponent*>> test_collision_objects_;
+	std::vector<ScrapEngine::Core::RigidBodyComponent*> test_collision_objects_;
 public:
 	Trigger(ScrapEngine::Core::ComponentsManager* input_component_manager);
 	~Trigger() = default;

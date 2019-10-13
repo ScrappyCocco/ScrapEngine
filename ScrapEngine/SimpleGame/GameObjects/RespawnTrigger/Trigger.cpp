@@ -14,37 +14,35 @@ void Trigger::add_collision_test(SGameObject* obj, const int index)
 	component = dynamic_cast<ScrapEngine::Core::RigidBodyComponent*>((*obj->get_components())[index]);
 	if (component)
 	{
-		std::pair<SGameObject*, ScrapEngine::Core::RigidBodyComponent*> pair_to_add;
-		pair_to_add.first = obj;
-		pair_to_add.second = component;
-		test_collision_objects_.push_back(pair_to_add);
+		test_collision_objects_.push_back(component);
 	}
 }
 
 void Trigger::game_update(float time)
 {
-	std::vector<std::pair<SGameObject*, ScrapEngine::Core::RigidBodyComponent*>> test_collision_objects_clean;
-	for (auto object : test_collision_objects_)
+	std::vector<ScrapEngine::Core::RigidBodyComponent*> test_collision_objects_clean;
+	for (auto collsion_comp : test_collision_objects_)
 	{
-		if (box_trigger_->test_collision(object.second))
+		if (box_trigger_->test_collision(collsion_comp))
 		{
-			if (object.first->to_string() == "Ball game object")
+			if (collsion_comp->get_owner()->to_string() == "Ball game object")
 			{
 				//Respawn the ball
-				object.first->respawn();
+				collsion_comp->get_owner()->respawn();
 				//And keep it in the list
-				test_collision_objects_clean.push_back(object);
+				test_collision_objects_clean.push_back(collsion_comp);
 			}
 			else
 			{
 				//Kill the fallen object
-				object.first->die();
+				collsion_comp->get_owner()->die();
 			}
-		}else
+		}
+		else
 		{
 			//If the object is not in the trigger re-add it to the list
-			test_collision_objects_clean.push_back(object);
+			test_collision_objects_clean.push_back(collsion_comp);
 		}
 	}
-	test_collision_objects_ = test_collision_objects_clean;
+	test_collision_objects_ = std::move(test_collision_objects_clean);
 }
