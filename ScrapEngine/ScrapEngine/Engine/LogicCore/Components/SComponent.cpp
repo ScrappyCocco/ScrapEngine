@@ -38,15 +38,6 @@ void ScrapEngine::Core::SComponent::add_component_rotation(const SVector3& rotat
 	);
 }
 
-void ScrapEngine::Core::SComponent::update_relative_transform()
-{
-	object_relative_transform_.set_position(object_world_transform_.get_position() - father_transform_.get_position());
-	object_relative_transform_.set_rotation(
-		father_transform_.get_quat_rotation().get_inverse() * object_world_transform_.get_quat_rotation()
-	);
-	object_relative_transform_.set_scale(object_world_transform_.get_scale() - father_transform_.get_scale());
-}
-
 void ScrapEngine::Core::SComponent::update_component_location()
 {
 	const glm::mat4 local_m = generate_unscaled_transform_matrix(object_relative_transform_);
