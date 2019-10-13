@@ -50,7 +50,9 @@ namespace ScrapEngine
 			SVector3 get_object_scale() const;
 
 			//Update the relative values based on father_object_ transform
-			virtual void update_relative_transform();
+			virtual void update_relative_location();
+			virtual void update_relative_rotation();
+			virtual void update_relative_scale();
 			virtual void update_object_location();
 			virtual void update_object_rotation();
 			virtual void update_object_scale();
