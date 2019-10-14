@@ -10,7 +10,7 @@ namespace ScrapEngine
 	{
 		//Forward declaration to avoid include-loop
 		class SComponent;
-		
+
 		class SGameObject : public SObject
 		{
 			//Friend class to update relative transform
@@ -62,12 +62,15 @@ namespace ScrapEngine
 			void add_child(SGameObject* game_object);
 			void remove_child(SGameObject* game_object);
 			const std::vector<SGameObject*>* get_child() const;
+
 		private:
 			//Update the relative values based on father_object_ transform
 			virtual void update_relative_location();
 			virtual void update_relative_rotation();
 			virtual void update_relative_scale();
-			
+
+		protected: //Because objects derived may need to re-define one of them
+			//Update world transform with the local transform data and owner_ transform
 			virtual void update_object_location();
 			virtual void update_object_rotation();
 			virtual void update_object_scale();

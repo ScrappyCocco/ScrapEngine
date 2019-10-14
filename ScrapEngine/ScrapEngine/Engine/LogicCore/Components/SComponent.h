@@ -42,12 +42,15 @@ namespace ScrapEngine
 			SVector3 get_component_relative_location() const;
 			SVector3 get_component_relative_rotation() const;
 			SVector3 get_component_relative_scale() const;
-		protected:
+
+		private:
 			//Update the relative values based on owner_ transform
 			virtual void update_relative_location();
 			virtual void update_relative_rotation();
 			virtual void update_relative_scale();
 
+		protected: //Because objects derived may need to re-define one of them
+			//Update world transform with the local transform data and owner_ transform
 			virtual void update_component_location();
 			virtual void update_component_rotation();
 			virtual void update_component_scale();
