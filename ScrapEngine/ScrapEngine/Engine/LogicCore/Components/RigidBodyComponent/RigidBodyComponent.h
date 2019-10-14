@@ -15,7 +15,12 @@ namespace ScrapEngine
 
 			MeshComponent* attached_mesh_ = nullptr;
 
+			//Friend class to let TriggerComponent get "rigidbody_"
 			friend class TriggerComponent;
+
+			//Parameters that check if a dynamic rigidbody should update mesh data
+			bool update_mesh_position_ = true;
+			bool update_mesh_rotation_ = true;
 		public:
 			RigidBodyComponent(Physics::RigidBody* rigidbody);
 			virtual ~RigidBodyComponent();
@@ -44,6 +49,10 @@ namespace ScrapEngine
 			void apply_torqe(const SVector3& force) const;
 
 			void cancel_rigidbody_forces() const;
+
+			//Set if the mesh must be updated with new rigidbody data or not
+			void set_update_mesh_position(bool update);
+			void set_update_mesh_rotation(bool update);
 		};
 	}
 }

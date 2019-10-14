@@ -46,8 +46,12 @@ void ScrapEngine::Core::RigidBodyComponent::update_transform(const float factor)
 	{
 		const STransform new_transform = rigidbody_->get_updated_transform(factor);
 
-		attached_mesh_->set_component_location(new_transform.get_position());
-		attached_mesh_->set_component_rotation(new_transform.get_rotation());
+		if (update_mesh_position_) {
+			attached_mesh_->set_component_location(new_transform.get_position());
+		}
+		if (update_mesh_rotation_) {
+			attached_mesh_->set_component_rotation(new_transform.get_rotation());
+		}
 	}
 }
 
@@ -99,4 +103,14 @@ void ScrapEngine::Core::RigidBodyComponent::apply_torqe(const SVector3& force) c
 void ScrapEngine::Core::RigidBodyComponent::cancel_rigidbody_forces() const
 {
 	rigidbody_->cancel_rigidbody_forces();
+}
+
+void ScrapEngine::Core::RigidBodyComponent::set_update_mesh_position(const bool update)
+{
+	update_mesh_position_ = update;
+}
+
+void ScrapEngine::Core::RigidBodyComponent::set_update_mesh_rotation(const bool update)
+{
+	update_mesh_rotation_ = update;
 }
