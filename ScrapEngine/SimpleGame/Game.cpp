@@ -73,8 +73,7 @@ int main()
 		scrap_engine_manager->logic_manager_view->register_game_object(new Music(component_manager_ref));
 		//Create the camera
 		GameCamera* game_camera_ref = new GameCamera(inputmanager,
-		                                             scrap_engine_manager
-		                                             ->render_manager_view->get_default_render_camera(),
+		                                             component_manager_ref,
 		                                             ball_game_object);
 		game_camera_ref->set_game_window_ref(game_window_ref);
 		scrap_engine_manager->logic_manager_view->register_game_object(game_camera_ref);
