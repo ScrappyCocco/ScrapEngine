@@ -50,6 +50,7 @@ void ScrapEngine::Core::SComponent::update_component_rotation()
 	object_world_transform_.set_rotation(
 		owner_->object_transform_.get_quat_rotation() * object_relative_transform_.get_quat_rotation()
 	);
+	set_component_rotation(object_world_transform_.get_rotation());
 
 	update_component_location();
 }

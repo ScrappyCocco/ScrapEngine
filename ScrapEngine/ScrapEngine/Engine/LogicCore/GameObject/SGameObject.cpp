@@ -189,6 +189,7 @@ void ScrapEngine::Core::SGameObject::update_object_rotation()
 	object_transform_.set_rotation(
 		father_object_->object_transform_.get_quat_rotation() * object_relative_transform_.get_quat_rotation()
 	);
+	set_object_rotation(object_transform_.get_rotation(), false);
 
 	//Update location based on new rotation
 	update_object_location();
