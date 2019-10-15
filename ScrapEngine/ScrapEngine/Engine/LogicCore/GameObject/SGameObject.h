@@ -63,6 +63,7 @@ namespace ScrapEngine
 			void remove_child(SGameObject* game_object);
 			const std::vector<SGameObject*>* get_child() const;
 
+			SGameObject* get_father() const;
 		private:
 			//Update the relative values based on father_object_ transform
 			virtual void update_relative_location();

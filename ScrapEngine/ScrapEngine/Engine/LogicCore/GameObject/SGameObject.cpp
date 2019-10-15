@@ -248,3 +248,8 @@ const std::vector<ScrapEngine::Core::SGameObject*>* ScrapEngine::Core::SGameObje
 {
 	return &object_child_;
 }
+
+ScrapEngine::Core::SGameObject* ScrapEngine::Core::SGameObject::get_father() const
+{
+	return father_object_;
+}
