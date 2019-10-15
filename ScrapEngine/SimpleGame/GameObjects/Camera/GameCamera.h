@@ -8,7 +8,7 @@
 class GameCamera : public ScrapEngine::Core::SGameObject
 {
 private:
-	ScrapEngine::Core::CameraComponent* camera_component_;
+	ScrapEngine::Core::CameraComponent* camera_component_ = nullptr;
 	ScrapEngine::Input::InputManager* input_manager_ref_ = nullptr;
 	ScrapEngine::Render::GameWindow* game_window_ref_ = nullptr;
 	Ball* player_ref_ = nullptr;

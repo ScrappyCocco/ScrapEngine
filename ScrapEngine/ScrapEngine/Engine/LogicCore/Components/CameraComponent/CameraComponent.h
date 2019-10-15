@@ -40,6 +40,10 @@ namespace ScrapEngine
 			//Call the standard implementation, then update camera values
 			void update_component_location() override;
 			void update_component_rotation() override;
+
+			//low-level matrix that might be useful to the user
+			glm::mat4 get_camera_projection_matrix() const;
+			glm::mat4 get_camera_look_matrix() const;
 		};
 	}
 }

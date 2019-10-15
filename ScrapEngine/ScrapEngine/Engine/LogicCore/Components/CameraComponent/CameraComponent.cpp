@@ -102,3 +102,13 @@ void ScrapEngine::Core::CameraComponent::update_component_rotation()
 	game_camera_ref_->set_camera_location(get_component_location());
 	set_rotation(get_component_rotation());
 }
+
+glm::mat4 ScrapEngine::Core::CameraComponent::get_camera_projection_matrix() const
+{
+	return game_camera_ref_->get_camera_projection_matrix();
+}
+
+glm::mat4 ScrapEngine::Core::CameraComponent::get_camera_look_matrix() const
+{
+	return game_camera_ref_->get_camera_look_matrix();
+}
