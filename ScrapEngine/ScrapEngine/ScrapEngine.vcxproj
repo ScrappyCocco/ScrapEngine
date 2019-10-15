@@ -36,6 +36,7 @@
     <ClCompile Include="Engine\LogicCore\Components\AudioComponent\2dAudioComponent\2DAudioComponent.cpp" />
     <ClCompile Include="Engine\LogicCore\Components\AudioComponent\3dAudioComponent\3DAudioComponent.cpp" />
     <ClCompile Include="Engine\LogicCore\Components\AudioComponent\AudioComponent.cpp" />
+    <ClCompile Include="Engine\LogicCore\Components\CameraComponent\CameraComponent.cpp" />
     <ClCompile Include="Engine\LogicCore\Components\Manager\ComponentsManager.cpp" />
     <ClCompile Include="Engine\LogicCore\Components\MeshComponent\MeshComponent.cpp" />
     <ClCompile Include="Engine\LogicCore\Components\RigidBodyComponent\BoxRigidBodyComponent\BoxRigidBodyComponent.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="Engine\LogicCore\Components\AudioComponent\2dAudioComponent\2DAudioComponent.h" />
     <ClInclude Include="Engine\LogicCore\Components\AudioComponent\3dAudioComponent\3DAudioComponent.h" />
     <ClInclude Include="Engine\LogicCore\Components\AudioComponent\AudioComponent.h" />
+    <ClInclude Include="Engine\LogicCore\Components\CameraComponent\CameraComponent.h" />
     <ClInclude Include="Engine\LogicCore\Components\Manager\ComponentsManager.h" />
     <ClInclude Include="Engine\LogicCore\Components\MeshComponent\MeshComponent.h" />
     <ClInclude Include="Engine\LogicCore\Components\RigidBodyComponent\BoxRigidBodyComponent\BoxRigidBodyComponent.h" />

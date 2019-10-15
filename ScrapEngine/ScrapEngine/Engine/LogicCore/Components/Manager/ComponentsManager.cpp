@@ -41,6 +41,15 @@ void ScrapEngine::Core::ComponentsManager::destroy_mesh_component(
 	}
 }
 
+ScrapEngine::Core::CameraComponent* ScrapEngine::Core::ComponentsManager::get_camera()
+{
+	if (!camera_)
+	{
+		camera_ = new CameraComponent(render_manager_ref_->get_default_render_camera());
+	}
+	return camera_;
+}
+
 void ScrapEngine::Core::ComponentsManager::update_rigidbody_physics(const float factor)
 {
 	for (auto const& element : loaded_rigidbody_collisions_)

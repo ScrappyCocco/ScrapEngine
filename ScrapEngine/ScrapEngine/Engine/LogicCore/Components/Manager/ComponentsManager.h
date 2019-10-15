@@ -12,6 +12,7 @@
 #include <Engine/Audio/Manager/AudioManager.h>
 #include <Engine/LogicCore/Components/AudioComponent/2dAudioComponent/2DAudioComponent.h>
 #include <Engine/LogicCore/Components/AudioComponent/3dAudioComponent/3DAudioComponent.h>
+#include <Engine/LogicCore/Components/CameraComponent/CameraComponent.h>
 #include <unordered_map>
 
 namespace ScrapEngine
@@ -56,6 +57,9 @@ namespace ScrapEngine
 
 			std::unordered_map<MeshComponent*, Render::VulkanMeshInstance*> loaded_meshes_;
 			std::unordered_map<TriggerComponent*, Physics::CollisionBody*> loaded_collider_collisions_;
+
+			//Keep a single camera component
+			CameraComponent* camera_ = nullptr;
 		public:
 			explicit ComponentsManager() = default;
 			~ComponentsManager() = default;
@@ -71,7 +75,10 @@ namespace ScrapEngine
 			                                         const std::string& model_path,
 			                                         const std::vector<std::string>& textures_path);
 			void destroy_mesh_component(MeshComponent* component_to_destroy);
-
+			//----------------------------------------
+			//Camera
+			//Remember the camera returned is always the same and unique one
+			CameraComponent* get_camera();
 			//----------------------------------------
 			//Physics stuff
 			void update_rigidbody_physics(float factor);

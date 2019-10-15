@@ -365,6 +365,9 @@
     <Filter Include="Engine\Physics\Raycast\MultiRaycast">
       <UniqueIdentifier>{64126ffb-3124-4a5b-b8a5-1b58182b5da8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\LogicCore\Components\CameraComponent">
+      <UniqueIdentifier>{05cd57cc-9333-4299-a33e-b307a70313de}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Manager\EngineManager.cpp">
@@ -708,6 +711,9 @@
     </ClCompile>
     <ClCompile Include="Engine\Physics\Raycast\MultiRaycast\MultiRaycast.cpp">
       <Filter>Engine\Physics\Raycast\MultiRaycast</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\LogicCore\Components\CameraComponent\CameraComponent.cpp">
+      <Filter>Engine\LogicCore\Components\CameraComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1076,6 +1082,9 @@
     </ClInclude>
     <ClInclude Include="Engine\Physics\Raycast\MultiRaycast\MultiRaycast.h">
       <Filter>Engine\Physics\Raycast\MultiRaycast</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\LogicCore\Components\CameraComponent\CameraComponent.h">
+      <Filter>Engine\LogicCore\Components\CameraComponent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

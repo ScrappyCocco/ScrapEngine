@@ -14,10 +14,6 @@ namespace ScrapEngine
 			~RenderManagerView() = default;
 
 			GameWindow* get_game_window() const;
-
-			Camera* get_default_render_camera() const;
-			Camera* get_current_render_camera() const;
-			void set_render_camera(Camera*) const;
 		};
 	}
 }
