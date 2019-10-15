@@ -1,7 +1,7 @@
 #include <Engine/LogicCore/Components/TriggerComponent/TriggerComponent.h>
 
 ScrapEngine::Core::TriggerComponent::TriggerComponent(Physics::CollisionBody* collisionbody)
-	: SComponent("ColliderComponent"), collisionbody_(collisionbody)
+	: SComponent("TriggerComponent"), collisionbody_(collisionbody)
 {
 }
 

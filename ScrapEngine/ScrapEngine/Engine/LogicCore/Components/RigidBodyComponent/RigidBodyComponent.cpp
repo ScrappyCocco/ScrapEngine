@@ -1,7 +1,7 @@
 #include <Engine/LogicCore/Components/RigidBodyComponent/RigidBodyComponent.h>
 
 ScrapEngine::Core::RigidBodyComponent::RigidBodyComponent(Physics::RigidBody* rigidbody)
-	: SComponent("ColliderComponent"), rigidbody_(rigidbody)
+	: SComponent("RigidbodyComponent"), rigidbody_(rigidbody)
 {
 }
 
