@@ -1,4 +1,5 @@
 #include <Engine/Physics/CollisionBody/CollisionBody.h>
+#include <Engine/Physics/Utils/ConversionUtils.h>
 
 
 ScrapEngine::Physics::CollisionBody::~CollisionBody()
@@ -43,14 +44,7 @@ rp3d::CollisionBody* ScrapEngine::Physics::CollisionBody::get_collision_body() c
 
 void ScrapEngine::Physics::CollisionBody::update_trasform(const Core::STransform& trasform) const
 {
-	const Core::SVector3 pos = trasform.get_position();
-	const Core::SVector3 rot = trasform.get_rotation();
-	const rp3d::Vector3 position(pos.get_x(), pos.get_y(), pos.get_z());
-	const rp3d::Vector3 rotation_v(rot.get_x(), rot.get_y(), rot.get_z());
-	const rp3d::Quaternion rotation(rotation_v, 0);
-
-	const rp3d::Transform new_transform(position, rotation);
-	body_->setTransform(new_transform);
+	body_->setTransform(ConversionUtils::convert_transform(trasform));
 }
 
 bool ScrapEngine::Physics::CollisionBody::test_collision(rp3d::CollisionBody* other_body) const
