@@ -64,29 +64,29 @@ void ScrapEngine::Render::VulkanDevice::create_logical_device()
 {
 	cached_indices_ = find_queue_families(&physical_device_, vulkan_surface_ref_);
 
-	std::vector<vk::DeviceQueueCreateInfo> queueCreateInfos;
-	std::set<int> unique_queue_families = {cached_indices_.graphics_family, cached_indices_.present_family};
+	std::vector<vk::DeviceQueueCreateInfo> queue_create_infos;
+	const std::set<int> unique_queue_families = {cached_indices_.graphics_family, cached_indices_.present_family};
 
 	float queue_priority = 1.0f;
 	for (int queue_family : unique_queue_families)
 	{
-		vk::DeviceQueueCreateInfo queueCreateInfo(
+		vk::DeviceQueueCreateInfo queue_create_info(
 			vk::DeviceQueueCreateFlags(),
 			queue_family,
 			1,
 			&queue_priority
 		);
-		queueCreateInfos.push_back(queueCreateInfo);
+		queue_create_infos.push_back(queue_create_info);
 	}
 
 	vk::PhysicalDeviceFeatures device_features;
 	device_features.setSamplerAnisotropy(true);
 	device_features.setSampleRateShading(true);
 
-	vk::DeviceCreateInfo create_info(
+	const vk::DeviceCreateInfo create_info(
 		vk::DeviceCreateFlags(),
-		static_cast<uint32_t>(queueCreateInfos.size()),
-		queueCreateInfos.data(),
+		static_cast<uint32_t>(queue_create_infos.size()),
+		queue_create_infos.data(),
 		0, nullptr,
 		static_cast<uint32_t>(device_extensions_.size()), device_extensions_.data(),
 		&device_features
@@ -117,15 +117,17 @@ get_cached_queue_family_indices() const
 bool ScrapEngine::Render::VulkanDevice::is_device_suitable(vk::PhysicalDevice* physical_device_input,
                                                            vk::SurfaceKHR* surface)
 {
-	vk::PhysicalDeviceProperties device_properties = physical_device_input->getProperties();
-	vk::PhysicalDeviceFeatures device_features = physical_device_input->getFeatures();
+	const vk::PhysicalDeviceProperties device_properties = physical_device_input->getProperties();
+	const vk::PhysicalDeviceFeatures device_features = physical_device_input->getFeatures();
 
 	std::string gpu_name(device_properties.deviceName);
 	Debug::DebugLog::print_to_console_log("GPU Selected:" + gpu_name);
+	Debug::DebugLog::print_to_console_log("GPU API v" + std::to_string(device_properties.apiVersion));
+	Debug::DebugLog::print_to_console_log("GPU Driver v" + std::to_string(device_properties.driverVersion));
 
 	BaseQueue::QueueFamilyIndices cached_indices = find_queue_families(physical_device_input, surface);
 
-	vk::PhysicalDeviceFeatures supported_features = physical_device_input->getFeatures();
+	const vk::PhysicalDeviceFeatures supported_features = physical_device_input->getFeatures();
 
 	bool extensions_supported = check_device_extension_support(physical_device_input);
 
@@ -147,12 +149,12 @@ bool ScrapEngine::Render::VulkanDevice::check_device_extension_support(vk::Physi
 	uint32_t extension_count;
 	device->enumerateDeviceExtensionProperties(nullptr, &extension_count, nullptr);
 
-	std::vector<vk::ExtensionProperties> availableExtensions(extension_count);
-	device->enumerateDeviceExtensionProperties(nullptr, &extension_count, availableExtensions.data());
+	std::vector<vk::ExtensionProperties> available_extensions(extension_count);
+	device->enumerateDeviceExtensionProperties(nullptr, &extension_count, available_extensions.data());
 
 	std::set<std::string> required_extensions(device_extensions_.begin(), device_extensions_.end());
 
-	for (const auto& extension : availableExtensions)
+	for (const auto& extension : available_extensions)
 	{
 		required_extensions.erase(extension.extensionName);
 	}
@@ -229,11 +231,11 @@ ScrapEngine::Render::BaseQueue::QueueFamilyIndices ScrapEngine::Render::VulkanDe
 	uint32_t queue_family_count = 0;
 	physical_device_input->getQueueFamilyProperties(&queue_family_count, nullptr);
 
-	std::vector<vk::QueueFamilyProperties> queueFamilies(queue_family_count);
-	physical_device_input->getQueueFamilyProperties(&queue_family_count, queueFamilies.data());
+	std::vector<vk::QueueFamilyProperties> queue_families(queue_family_count);
+	physical_device_input->getQueueFamilyProperties(&queue_family_count, queue_families.data());
 
 	int i = 0;
-	for (const auto& queue_family : queueFamilies)
+	for (const auto& queue_family : queue_families)
 	{
 		if (queue_family.queueCount > 0 && queue_family.queueFlags & vk::QueueFlagBits::eGraphics)
 		{
