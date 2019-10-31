@@ -9,8 +9,10 @@ ScrapEngine::Render::VukanInstance* ScrapEngine::Render::VukanInstance::instance
 
 //Class
 
-void ScrapEngine::Render::VukanInstance::init(const std::string& app_name, int app_version,
-                                              const std::string& engine_name, int engine_version)
+void ScrapEngine::Render::VukanInstance::init(const std::string& app_name,
+                                              const int app_version,
+                                              const std::string& engine_name,
+                                              const int engine_version)
 {
 	if (VulkanValidationLayers::are_validation_layers_enabled())
 	{
@@ -41,11 +43,13 @@ ScrapEngine::Render::VukanInstance* ScrapEngine::Render::VukanInstance::get_inst
 	return instance_;
 }
 
-void ScrapEngine::Render::VukanInstance::create_vulkan_instance(std::string app_name, int app_version,
-                                                                std::string engine_name, int engine_version)
+void ScrapEngine::Render::VukanInstance::create_vulkan_instance(const std::string& app_name,
+                                                                const int app_version,
+                                                                const std::string& engine_name,
+                                                                const int engine_version)
 {
 	vk::ApplicationInfo app_info(app_name.c_str(), app_version, engine_name.c_str(), engine_version,
-	                             VK_API_VERSION_1_0);
+	                             VK_API_VERSION_1_1);
 
 	std::vector<const char*> extensions = get_required_extensions();
 
@@ -79,10 +83,10 @@ vk::Instance* ScrapEngine::Render::VukanInstance::get_vulkan_instance()
 
 std::vector<const char*> ScrapEngine::Render::VukanInstance::get_required_extensions() const
 {
-	uint32_t glfwExtensionCount = 0;
-	const char** glfw_extensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
+	uint32_t glfw_extension_count = 0;
+	const char** glfw_extensions = glfwGetRequiredInstanceExtensions(&glfw_extension_count);
 
-	std::vector<const char*> extensions(glfw_extensions, glfw_extensions + glfwExtensionCount);
+	std::vector<const char*> extensions(glfw_extensions, glfw_extensions + glfw_extension_count);
 
 	if (validation_layers_manager_)
 	{

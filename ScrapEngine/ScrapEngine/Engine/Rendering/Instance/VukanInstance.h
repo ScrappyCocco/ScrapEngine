@@ -27,7 +27,9 @@ namespace ScrapEngine
 			VukanInstance() = default;
 		public:
 			//Method used to init the class with parameters because the constructor is private
-			void init(const std::string& app_name, int app_version, const std::string& engine_name = "ScrapEngine",
+			void init(const std::string& app_name,
+			          int app_version,
+			          const std::string& engine_name = "ScrapEngine",
 			          int engine_version = 1);
 
 			//Destroy the Vulkan Instance
@@ -37,7 +39,9 @@ namespace ScrapEngine
 			static VukanInstance* get_instance();
 
 			//Create the Vulkan Instance with the given data
-			void create_vulkan_instance(std::string app_name, int app_version, std::string engine_name = "ScrapEngine",
+			void create_vulkan_instance(const std::string& app_name,
+			                            int app_version,
+			                            const std::string& engine_name = "ScrapEngine",
 			                            int engine_version = 1);
 
 			//Return the current Vulkan Instance (if created)
