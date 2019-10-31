@@ -5,19 +5,28 @@
 
 void ScrapEngine::Debug::DebugLog::print_to_console_log(const std::string& log_string)
 {
-	std::cout << now_to_string().c_str() << log_string.c_str() << std::endl;
+	std::cout << now_to_string() << log_string.c_str() << std::endl;
 }
 
 void ScrapEngine::Debug::DebugLog::print_to_console_log(const glm::vec3& vector)
 {
-	std::cout << now_to_string().c_str() << "Vec3: (" << vector.x << ", "
+	std::cout << now_to_string() << "Vec3: (" << vector.x << ", "
 		<< vector.y << ", " << vector.z << ")" << std::endl;
 }
 
 void ScrapEngine::Debug::DebugLog::print_to_console_log(const glm::quat& quaternion)
 {
-	std::cout << now_to_string().c_str() << "Quat: (" << quaternion.x << ", "
+	std::cout << now_to_string() << "Quat: (" << quaternion.x << ", "
 		<< quaternion.y << ", " << quaternion.z << ", " << quaternion.w << ")" << std::endl;
+}
+
+void ScrapEngine::Debug::DebugLog::print_init_message()
+{
+	std::cout << "//INIT MESSAGE" << std::endl;
+	std::cout << "Day format used: day/month/year" << std::endl;
+	std::cout << "Time format used: hours(24h):minutes:seconds" << std::endl;
+	std::cout << "Begin time:" << now_to_string() << std::endl;
+	std::cout << "------------------------" << std::endl;
 }
 
 void ScrapEngine::Debug::DebugLog::print_to_console_log(const Core::SVector3& vector)
@@ -54,7 +63,7 @@ void ScrapEngine::Debug::DebugLog::print_exception_to_console_log(const std::str
 {
 	std::cout << "--------------------" << std::endl;
 	std::cout << "print_exception_to_console_log() call" << std::endl;
-	std::cout << std::endl << now_to_string().c_str() << message_severity << exception_string << std::endl << std::endl;
+	std::cout << std::endl << now_to_string() << message_severity << exception_string << std::endl << std::endl;
 	std::cout << "--------------------" << std::endl;
 }
 

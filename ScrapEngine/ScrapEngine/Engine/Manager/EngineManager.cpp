@@ -36,6 +36,7 @@ void ScrapEngine::Manager::EngineManager::start_game_loop()
 
 void ScrapEngine::Manager::EngineManager::initialize_engine()
 {
+	Debug::DebugLog::print_init_message();
 	Debug::DebugLog::print_to_console_log("---initializeEngine()---");
 	initialize_render_manager(&received_base_game_info_); //Create the base rendering module
 	initialize_logic_manager(); //Create the base logic manager

@@ -12,6 +12,9 @@ namespace ScrapEngine
 		class DebugLog
 		{
 		public:
+			//Print basic info before starting the engine
+			static void print_init_message();
+			
 			//Print the message to console log with time
 			static void print_to_console_log(const std::string&);
 
