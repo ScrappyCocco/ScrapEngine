@@ -10,15 +10,11 @@ namespace ScrapEngine
 	{
 		class GuiVulkanGraphicsPipeline : public BaseVulkanGraphicsPipeline
 		{
-		private:
-			vk::PipelineCache pipeline_cache_;
 		public:
 			GuiVulkanGraphicsPipeline(const char* vertex_shader, const char* fragment_shader,
 			                          vk::DescriptorSetLayout* descriptor_set_layout, size_t block_size,
 			                          BaseRenderPass* render_pass);
-			~GuiVulkanGraphicsPipeline();
-
-			vk::PipelineCache* get_pipeline_cache();
+			~GuiVulkanGraphicsPipeline() = default;
 		};
 	}
 }
