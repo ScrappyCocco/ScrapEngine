@@ -20,6 +20,11 @@ ScrapEngine::Render::VulkanCommandPool::~VulkanCommandPool()
 	VulkanDevice::get_instance()->get_logical_device()->destroyCommandPool(command_pool_);
 }
 
+void ScrapEngine::Render::VulkanCommandPool::reset_command_pool() const
+{
+	VulkanDevice::get_instance()->get_logical_device()->resetCommandPool(command_pool_, vk::CommandPoolResetFlags());
+}
+
 vk::CommandPool* ScrapEngine::Render::VulkanCommandPool::get_command_pool()
 {
 	return &command_pool_;
