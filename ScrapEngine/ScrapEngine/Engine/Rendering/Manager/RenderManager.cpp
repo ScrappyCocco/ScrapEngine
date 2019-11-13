@@ -202,6 +202,7 @@ void ScrapEngine::Render::RenderManager::initialize_vulkan(const game_base_info*
 		vulkan_render_device_->get_cached_queue_family_indices(),
 		vulkan_window_surface_->get_surface(), received_base_game_info->window_width,
 		received_base_game_info->window_height, received_base_game_info->vsync);
+	image_count_ = vulkan_render_swap_chain_->get_image_count();
 	Debug::DebugLog::print_to_console_log("VulkanSwapChain created");
 	vulkan_render_image_view_ = new VulkanImageView(vulkan_render_swap_chain_);
 	Debug::DebugLog::print_to_console_log("VulkanImageView created");
@@ -260,7 +261,7 @@ void ScrapEngine::Render::RenderManager::initialize_vulkan(const game_base_info*
 	rebuild_gui_command_buffer(false);
 	Debug::DebugLog::print_to_console_log("Command buffers created!");
 	//Vulkan Semaphores
-	vulkan_render_semaphores_ = new VulkanSemaphoresManager();
+	vulkan_render_semaphores_ = new VulkanSemaphoresManager(image_count_);
 	image_available_semaphores_ref_ = vulkan_render_semaphores_->get_image_available_semaphores_vector();
 	render_finished_semaphores_ref_ = vulkan_render_semaphores_->get_render_finished_semaphores_vector();
 	in_flight_fences_ref_ = vulkan_render_semaphores_->get_in_flight_fences_vector();
@@ -658,7 +659,7 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 	//Update gui fence to wait
 	gui_waiting_fence_ = &(*in_flight_fences_ref_)[current_frame_];
 	//Update the current frame index
-	current_frame_ = (current_frame_ + 1) % max_frames_in_flight_;
+	current_frame_ = (current_frame_ + 1) % image_count_;
 	last_image_index_ = image_index_;
 }
 

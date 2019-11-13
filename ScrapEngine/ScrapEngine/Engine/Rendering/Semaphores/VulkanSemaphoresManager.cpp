@@ -4,18 +4,18 @@
 #include <Engine/Rendering/Device/VulkanDevice.h>
 
 ScrapEngine::Render::VulkanSemaphoresManager::VulkanSemaphoresManager(
-	const unsigned short int input_max_frames_in_flight)
-	: MAX_FRAMES_IN_FLIGHT(input_max_frames_in_flight)
+	const uint32_t input_image_count)
+	: image_count_(input_image_count)
 {
-	image_available_semaphores_.resize(MAX_FRAMES_IN_FLIGHT);
-	render_finished_semaphores_.resize(MAX_FRAMES_IN_FLIGHT);
-	in_flight_fences_.resize(MAX_FRAMES_IN_FLIGHT);
+	image_available_semaphores_.resize(image_count_);
+	render_finished_semaphores_.resize(image_count_);
+	in_flight_fences_.resize(image_count_);
 
 	vk::SemaphoreCreateInfo semaphore_info;
 
 	vk::FenceCreateInfo fence_info(vk::FenceCreateFlagBits::eSignaled);
 
-	for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++)
+	for (size_t i = 0; i < image_count_; i++)
 	{
 		if (VulkanDevice::get_instance()->get_logical_device()->createSemaphore(&semaphore_info, nullptr,
 		                                                                        &image_available_semaphores_[i])
@@ -33,17 +33,12 @@ ScrapEngine::Render::VulkanSemaphoresManager::VulkanSemaphoresManager(
 
 ScrapEngine::Render::VulkanSemaphoresManager::~VulkanSemaphoresManager()
 {
-	for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++)
+	for (size_t i = 0; i < image_count_; i++)
 	{
 		VulkanDevice::get_instance()->get_logical_device()->destroySemaphore(render_finished_semaphores_[i]);
 		VulkanDevice::get_instance()->get_logical_device()->destroySemaphore(image_available_semaphores_[i]);
 		VulkanDevice::get_instance()->get_logical_device()->destroyFence(in_flight_fences_[i]);
 	}
-}
-
-int ScrapEngine::Render::VulkanSemaphoresManager::getMaxFramesInFlight() const
-{
-	return MAX_FRAMES_IN_FLIGHT;
 }
 
 const std::vector<vk::Semaphore>* ScrapEngine::Render::VulkanSemaphoresManager::

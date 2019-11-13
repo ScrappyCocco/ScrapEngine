@@ -60,7 +60,7 @@ namespace ScrapEngine
 			uint32_t image_index_;
 			vk::Result result_;
 
-			unsigned short int max_frames_in_flight_ = 2;
+			uint32_t image_count_ = -1;
 			bool framebuffer_resized_ = false;
 			const std::vector<vk::Semaphore>* image_available_semaphores_ref_;
 			const std::vector<vk::Semaphore>* render_finished_semaphores_ref_;
