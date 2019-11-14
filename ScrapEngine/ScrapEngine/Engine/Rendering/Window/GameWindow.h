@@ -27,7 +27,7 @@ namespace ScrapEngine
 			};
 
 			GameWindow(uint32_t input_width = 800, uint32_t input_height = 600,
-			           std::string input_window_title = "ScrapEngine Game");
+			           const std::string& input_window_title = "ScrapEngine Game");
 			~GameWindow();
 
 			void initialize_window();

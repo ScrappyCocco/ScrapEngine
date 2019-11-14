@@ -28,11 +28,11 @@ void ScrapEngine::Render::RenderManager::ParallelCommandBufferCreation::ExecuteR
 		}
 		else if (result == vk::Result::eTimeout)
 		{
-			throw std::runtime_error("Fence timeout");
+			throw std::runtime_error("[ParallelCommandBufferCreation] Fence timeout");
 		}
 		else
 		{
-			throw std::runtime_error("An error occurred while waiting a fence...");
+			throw std::runtime_error("[ParallelCommandBufferCreation] An error occurred while waiting a fence...");
 		}
 	}
 	owner->create_command_buffer(flip_flop);
@@ -53,11 +53,11 @@ void ScrapEngine::Render::RenderManager::ParallelGuiCommandBufferCreation::Execu
 		}
 		else if (result == vk::Result::eTimeout)
 		{
-			throw std::runtime_error("Fence timeout");
+			throw std::runtime_error("[ParallelGuiCommandBufferCreation] Fence timeout");
 		}
 		else
 		{
-			throw std::runtime_error("An error occurred while waiting a fence...");
+			throw std::runtime_error("[ParallelGuiCommandBufferCreation] An error occurred while waiting a fence...");
 		}
 	}
 	owner->rebuild_gui_command_buffer();
@@ -338,7 +338,7 @@ void ScrapEngine::Render::RenderManager::rebuild_gui_command_buffer(const bool f
 	uint32_t image_index_to_use;
 	if (for_next_image)
 	{
-		image_index_to_use = (last_image_index_ + 1) % 3;
+		image_index_to_use = (last_image_index_ + 1) % image_count_;
 	}
 	else
 	{

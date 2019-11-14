@@ -3,7 +3,7 @@
 #include <Engine/Utility/UsefulMethods.h>
 
 ScrapEngine::Render::GameWindow::GameWindow(
-	const uint32_t input_width, const uint32_t input_height, std::string input_window_title)
+	const uint32_t input_width, const uint32_t input_height, const std::string& input_window_title)
 	: width_(input_width), height_(input_height), window_title_(input_window_title)
 {
 	initialize_window();
@@ -60,7 +60,7 @@ ScrapEngine::Render::GameWindow::window_pos ScrapEngine::Render::GameWindow::get
 	return return_pos;
 }
 
-void ScrapEngine::Render::GameWindow::set_window_size(int input_width, int input_height) const
+void ScrapEngine::Render::GameWindow::set_window_size(const int input_width, const int input_height) const
 {
 	glfwSetWindowSize(window_, input_width, input_height);
 }
