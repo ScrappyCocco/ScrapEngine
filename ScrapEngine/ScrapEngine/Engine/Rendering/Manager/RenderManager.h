@@ -36,8 +36,7 @@ namespace ScrapEngine
 			VulkanImageView* vulkan_render_image_view_ = nullptr;
 			VulkanFrameBuffer* vulkan_render_frame_buffer_ = nullptr;
 			
-			VulkanCommandPool* vulkan_render_command_pool_ = nullptr;
-			VulkanCommandPool* command_buffer_command_pool_ = nullptr;
+			VulkanCommandPool* singleton_command_pool_ = nullptr;
 			VulkanCommandPool* gui_buffer_command_pool_ = nullptr;
 			
 			BaseQueue* vulkan_graphics_queue_ = nullptr;
@@ -60,7 +59,7 @@ namespace ScrapEngine
 			uint32_t image_index_;
 			vk::Result result_;
 
-			unsigned short int max_frames_in_flight_ = 2;
+			uint32_t image_count_ = -1;
 			bool framebuffer_resized_ = false;
 			const std::vector<vk::Semaphore>* image_available_semaphores_ref_;
 			const std::vector<vk::Semaphore>* render_finished_semaphores_ref_;
@@ -74,6 +73,7 @@ namespace ScrapEngine
 			struct threaded_command_buffer
 			{
 				bool is_running = false;
+				VulkanCommandPool* command_pool = nullptr;
 				StandardCommandBuffer* command_buffer = nullptr;
 			};
 

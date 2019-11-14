@@ -15,6 +15,7 @@ namespace ScrapEngine
 			std::vector<vk::Image> swap_chain_images_;
 			vk::Format swap_chain_image_format_;
 			vk::Extent2D swap_chain_extent_;
+			uint32_t image_count_ = -1;
 
 			vk::SurfaceKHR* surface_ref_;
 		public:
@@ -43,6 +44,7 @@ namespace ScrapEngine
 			const std::vector<vk::Image>* get_swap_chain_images_vector() const;
 			vk::Format get_swap_chain_image_format() const;
 			vk::Extent2D get_swap_chain_extent() const;
+			uint32_t get_image_count() const;
 		};
 	}
 }

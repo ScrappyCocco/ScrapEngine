@@ -21,7 +21,7 @@ namespace ScrapEngine
 					return i;
 				}
 			}
-			//Try a simpler way
+			//First for failed, try to find memory using only one check
 			for (uint32_t i = 0; i < mem_properties.memoryTypeCount; i++)
 			{
 				if (mem_properties.memoryTypes[i].propertyFlags == properties)

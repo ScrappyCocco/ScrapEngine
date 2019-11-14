@@ -14,17 +14,17 @@ ScrapEngine::Render::VulkanSwapChain::VulkanSwapChain(const SwapChainSupportDeta
 
 	//That +1 is necessary
 	//See https://github.com/KhronosGroup/Vulkan-Docs/issues/909
-	uint32_t image_count = swap_chain_support.capabilities.minImageCount + 1;
-	if (swap_chain_support.capabilities.maxImageCount > 0 && image_count > swap_chain_support.capabilities.maxImageCount
-	)
+	image_count_ = swap_chain_support.capabilities.minImageCount + 1;
+	if (swap_chain_support.capabilities.maxImageCount > 0 &&
+		image_count_ > swap_chain_support.capabilities.maxImageCount)
 	{
-		image_count = swap_chain_support.capabilities.maxImageCount;
+		image_count_ = swap_chain_support.capabilities.maxImageCount;
 	}
 
 	vk::SwapchainCreateInfoKHR create_info(
 		vk::SwapchainCreateFlagsKHR(),
 		*surface_ref_,
-		image_count,
+		image_count_,
 		surface_format.format,
 		surface_format.colorSpace,
 		extent,
@@ -58,10 +58,10 @@ ScrapEngine::Render::VulkanSwapChain::VulkanSwapChain(const SwapChainSupportDeta
 		throw std::runtime_error("VulkanSwapChain: Failed to create swap chain!");
 	}
 
-	VulkanDevice::get_instance()->get_logical_device()->getSwapchainImagesKHR(swap_chain_, &image_count, nullptr);
-	swap_chain_images_.resize(image_count);
+	VulkanDevice::get_instance()->get_logical_device()->getSwapchainImagesKHR(swap_chain_, &image_count_, nullptr);
+	swap_chain_images_.resize(image_count_);
 	VulkanDevice::get_instance()->get_logical_device()->getSwapchainImagesKHR(
-		swap_chain_, &image_count, swap_chain_images_.data());
+		swap_chain_, &image_count_, swap_chain_images_.data());
 
 	swap_chain_image_format_ = surface_format.format;
 	swap_chain_extent_ = extent;
@@ -156,4 +156,9 @@ vk::Format ScrapEngine::Render::VulkanSwapChain::get_swap_chain_image_format() c
 vk::Extent2D ScrapEngine::Render::VulkanSwapChain::get_swap_chain_extent() const
 {
 	return swap_chain_extent_;
+}
+
+uint32_t ScrapEngine::Render::VulkanSwapChain::get_image_count() const
+{
+	return image_count_;
 }

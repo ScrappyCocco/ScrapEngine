@@ -14,12 +14,10 @@ namespace ScrapEngine
 			std::vector<vk::Semaphore> render_finished_semaphores_;
 			std::vector<vk::Fence> in_flight_fences_;
 
-			const unsigned short int MAX_FRAMES_IN_FLIGHT = 2;
+			uint32_t image_count_ = -1;
 		public:
-			VulkanSemaphoresManager(unsigned short int input_max_frames_in_flight = 2);
+			VulkanSemaphoresManager(uint32_t input_image_count);
 			~VulkanSemaphoresManager();
-
-			int getMaxFramesInFlight() const;
 
 			const std::vector<vk::Semaphore>* get_image_available_semaphores_vector() const;
 			const std::vector<vk::Semaphore>* get_render_finished_semaphores_vector() const;

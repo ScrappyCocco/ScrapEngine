@@ -10,15 +10,6 @@ ScrapEngine::Render::GuiVulkanGraphicsPipeline::GuiVulkanGraphicsPipeline(const 
                                                                           size_t block_size,
                                                                           BaseRenderPass* render_pass)
 {
-	// Pipeline cache
-	vk::PipelineCacheCreateInfo pipeline_cache_create_info;
-	const vk::Result res = VulkanDevice::get_instance()->get_logical_device()->createPipelineCache(
-		&pipeline_cache_create_info, nullptr, &pipeline_cache_);
-	if (res != vk::Result::eSuccess)
-	{
-		throw std::runtime_error("GuiVulkanGraphicsPipeline: Failed to create pipeline cache!");
-	}
-
 	// Pipeline layout
 	vk::PushConstantRange push_constant_range;
 	push_constant_range.stageFlags = vk::ShaderStageFlagBits::eVertex;
@@ -154,20 +145,10 @@ ScrapEngine::Render::GuiVulkanGraphicsPipeline::GuiVulkanGraphicsPipeline(const 
 	);
 
 	if (VulkanDevice::get_instance()->get_logical_device()->createGraphicsPipelines(
-			pipeline_cache_, 1, &pipeline_info, nullptr,
+			nullptr, 1, &pipeline_info, nullptr,
 			&graphics_pipeline_)
 		!= vk::Result::eSuccess)
 	{
 		throw std::runtime_error("GuiVulkanGraphicsPipeline: Failed to create graphics pipeline!");
 	}
-}
-
-ScrapEngine::Render::GuiVulkanGraphicsPipeline::~GuiVulkanGraphicsPipeline()
-{
-	VulkanDevice::get_instance()->get_logical_device()->destroyPipelineCache(pipeline_cache_);
-}
-
-vk::PipelineCache* ScrapEngine::Render::GuiVulkanGraphicsPipeline::get_pipeline_cache()
-{
-	return &pipeline_cache_;
 }

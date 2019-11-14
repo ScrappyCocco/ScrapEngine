@@ -16,9 +16,12 @@ namespace ScrapEngine
 			VulkanCommandPool() = default;
 		public:
 			//Method used to init the class with parameters because the constructor is private
-			void init(BaseQueue::QueueFamilyIndices queue_family_indices, const vk::CommandPoolCreateFlags& flags = vk::CommandPoolCreateFlags());
+			void init(BaseQueue::QueueFamilyIndices queue_family_indices,
+			          const vk::CommandPoolCreateFlags& flags = vk::CommandPoolCreateFlags());
 
 			virtual ~VulkanCommandPool() = 0;
+
+			void reset_command_pool() const;
 
 			vk::CommandPool* get_command_pool();
 		};
