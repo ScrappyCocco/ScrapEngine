@@ -349,3 +349,5 @@ external/VulkanSDK/Lib/VkLayer_threading\.lib
 external/VulkanSDK/Lib/VkLayer_unique_objects\.lib
 
 external/VulkanSDK/Lib/VkLayer_utils\.lib
+
+ScrapEngine/compile_commands.json

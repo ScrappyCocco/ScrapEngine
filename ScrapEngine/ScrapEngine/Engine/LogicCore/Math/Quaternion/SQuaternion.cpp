@@ -96,12 +96,12 @@ ScrapEngine::Core::SVector3 ScrapEngine::Core::SQuaternion::get_forward_vector()
 
 ScrapEngine::Core::SVector3 ScrapEngine::Core::SQuaternion::get_right_vector() const
 {
-	return get_axis_y();
+	return get_axis_z();
 }
 
 ScrapEngine::Core::SVector3 ScrapEngine::Core::SQuaternion::get_up_vector() const
 {
-	return get_axis_z();
+	return get_axis_y();
 }
 
 ScrapEngine::Core::SVector3 ScrapEngine::Core::SQuaternion::to_euler_angles() const
