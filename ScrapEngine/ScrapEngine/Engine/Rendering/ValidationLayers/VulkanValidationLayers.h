@@ -22,7 +22,7 @@ namespace ScrapEngine
 
 			//List of validationLayers to load and use
 			const std::vector<const char*> validation_layers_ = {
-				"VK_LAYER_LUNARG_standard_validation"
+				"VK_LAYER_KHRONOS_validation"
 			};
 
 			//Callback function that display the messages
