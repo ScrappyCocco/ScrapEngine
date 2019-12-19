@@ -18,14 +18,12 @@ namespace ScrapEngine
 			std::vector<const char*> get_validation_layers() const;
 
 		private:
-			vk::DispatchLoaderDynamic dispatcher_;
+			VkDebugUtilsMessengerEXT callback;
 
 			//List of validationLayers to load and use
 			const std::vector<const char*> validation_layers_ = {
 				"VK_LAYER_LUNARG_standard_validation"
 			};
-
-			vk::DebugUtilsMessengerEXT callback_;
 
 			//Callback function that display the messages
 			static VKAPI_ATTR VkBool32 VKAPI_CALL debug_callback(
@@ -33,6 +31,14 @@ namespace ScrapEngine
 				VkDebugUtilsMessageTypeFlagsEXT message_type,
 				const VkDebugUtilsMessengerCallbackDataEXT* p_callback_data,
 				void* p_user_data);
+
+			//From https://github.com/bwasty/vulkan-tutorial-hpp/blob/master/steps/02_validation_layers.cpp
+			VkResult CreateDebugUtilsMessengerEXT(VkInstance instance,
+				const VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo,
+				const VkAllocationCallbacks* pAllocator,
+				VkDebugUtilsMessengerEXT* pCallback);
+			void DestroyDebugUtilsMessengerEXT(VkInstance instance, VkDebugUtilsMessengerEXT callback,
+				const VkAllocationCallbacks* pAllocator);
 
 #ifdef NDEBUG
 			static const bool enable_validation_layers = false;
