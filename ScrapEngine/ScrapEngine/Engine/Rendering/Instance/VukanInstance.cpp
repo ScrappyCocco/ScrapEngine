@@ -1,6 +1,8 @@
 #include <Engine/Rendering/Instance/VukanInstance.h>
 
+#ifndef GLFW_INCLUDE_VULKAN
 #define GLFW_INCLUDE_VULKAN
+#endif
 #include <GLFW/glfw3.h>
 
 //Init static instance reference

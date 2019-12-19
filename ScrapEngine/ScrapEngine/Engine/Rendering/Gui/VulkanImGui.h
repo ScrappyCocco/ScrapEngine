@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vulkan/vulkan.hpp>
+#include <Engine/Rendering/VulkanInclude.h>
 #include <Engine/Rendering/Texture/TextureImageView/TextureImageView.h>
 #include <Engine/Rendering/Texture/TextureSampler/TextureSampler.h>
 #include <Engine/Rendering/Descriptor/DescriptorPool/BaseDescriptorPool.h>

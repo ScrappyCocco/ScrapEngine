@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vulkan/vulkan.hpp>
+#include <Engine/Rendering/VulkanInclude.h>
 #include <stb_image.h>
 #include <Engine/Rendering/Buffer/StagingBuffer/BaseStagingBuffer.h>
 

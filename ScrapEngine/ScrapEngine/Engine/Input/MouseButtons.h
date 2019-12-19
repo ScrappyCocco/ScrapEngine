@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Windows.h>
 #include <GLFW/glfw3.h>
 
 #define MOUSE_BUTTON_1 GLFW_MOUSE_BUTTON_1

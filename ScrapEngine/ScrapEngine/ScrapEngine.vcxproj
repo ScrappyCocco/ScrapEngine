@@ -255,6 +255,7 @@
     <ClInclude Include="Engine\Rendering\Texture\Texture\SkyboxTexture\SkyboxTexture.h" />
     <ClInclude Include="Engine\Rendering\Texture\Texture\StandardTexture\StandardTexture.h" />
     <ClInclude Include="Engine\Rendering\ValidationLayers\VulkanValidationLayers.h" />
+    <ClInclude Include="Engine\Rendering\VulkanInclude.h" />
     <ClInclude Include="Engine\Rendering\Window\GameWindow.h" />
     <ClInclude Include="Engine\Rendering\Window\VulkanSurface.h" />
     <ClInclude Include="Engine\Utility\UsefulMethods.h" />

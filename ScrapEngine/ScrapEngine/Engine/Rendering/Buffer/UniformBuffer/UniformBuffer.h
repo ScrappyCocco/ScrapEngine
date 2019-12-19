@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vulkan/vulkan.hpp>
+#include <Engine/Rendering/VulkanInclude.h>
 #include <vector>
 #include <Engine/LogicCore/Math/Transform/STransform.h>
 #include <Engine/Rendering/Camera/Camera.h>

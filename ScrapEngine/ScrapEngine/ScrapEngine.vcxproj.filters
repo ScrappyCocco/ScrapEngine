@@ -1086,5 +1086,8 @@
     <ClInclude Include="Engine\LogicCore\Components\CameraComponent\CameraComponent.h">
       <Filter>Engine\LogicCore\Components\CameraComponent</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Rendering\VulkanInclude.h">
+      <Filter>Engine\Rendering</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

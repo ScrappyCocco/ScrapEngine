@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vulkan/vulkan.hpp>
+#include <Engine/Rendering/VulkanInclude.h>
 #include <Engine/Rendering/ValidationLayers/VulkanValidationLayers.h>
 #include <string>
 #include <vector>
