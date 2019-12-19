@@ -33,16 +33,12 @@ ScrapEngine::Render::VulkanDevice* ScrapEngine::Render::VulkanDevice::get_instan
 
 void ScrapEngine::Render::VulkanDevice::choose_physical_device()
 {
-	uint32_t device_count = 0;
-	instance_ref_->enumeratePhysicalDevices(&device_count, nullptr);
+	std::vector<vk::PhysicalDevice> devices = instance_ref_->enumeratePhysicalDevices();
 
-	if (device_count == 0)
+	if (devices.empty())
 	{
 		throw std::runtime_error("VulkanDevice: Failed to find GPUs with Vulkan support!");
 	}
-
-	std::vector<vk::PhysicalDevice> devices(device_count);
-	instance_ref_->enumeratePhysicalDevices(&device_count, devices.data());
 
 	for (auto& entry_device : devices)
 	{
@@ -146,11 +142,7 @@ bool ScrapEngine::Render::VulkanDevice::is_device_suitable(vk::PhysicalDevice* p
 
 bool ScrapEngine::Render::VulkanDevice::check_device_extension_support(vk::PhysicalDevice* device) const
 {
-	uint32_t extension_count;
-	device->enumerateDeviceExtensionProperties(nullptr, &extension_count, nullptr);
-
-	std::vector<vk::ExtensionProperties> available_extensions(extension_count);
-	device->enumerateDeviceExtensionProperties(nullptr, &extension_count, available_extensions.data());
+	std::vector<vk::ExtensionProperties> available_extensions = device->enumerateDeviceExtensionProperties();
 
 	std::set<std::string> required_extensions(device_extensions_.begin(), device_extensions_.end());
 
@@ -169,24 +161,9 @@ query_swap_chain_support(vk::PhysicalDevice* physical_device_input) const
 
 	physical_device_input->getSurfaceCapabilitiesKHR(*vulkan_surface_ref_, &details.capabilities);
 
-	uint32_t format_count;
-	physical_device_input->getSurfaceFormatsKHR(*vulkan_surface_ref_, &format_count, nullptr);
+	details.formats = physical_device_input->getSurfaceFormatsKHR(*vulkan_surface_ref_);
 
-	if (format_count != 0)
-	{
-		details.formats.resize(format_count);
-		physical_device_input->getSurfaceFormatsKHR(*vulkan_surface_ref_, &format_count, details.formats.data());
-	}
-
-	uint32_t present_mode_count;
-	physical_device_input->getSurfacePresentModesKHR(*vulkan_surface_ref_, &present_mode_count, nullptr);
-
-	if (present_mode_count != 0)
-	{
-		details.present_modes.resize(present_mode_count);
-		physical_device_input->getSurfacePresentModesKHR(*vulkan_surface_ref_, &present_mode_count,
-		                                                 details.present_modes.data());
-	}
+	details.present_modes = physical_device_input->getSurfacePresentModesKHR(*vulkan_surface_ref_);
 
 	return details;
 }
@@ -228,11 +205,7 @@ ScrapEngine::Render::BaseQueue::QueueFamilyIndices ScrapEngine::Render::VulkanDe
 {
 	BaseQueue::QueueFamilyIndices indices;
 
-	uint32_t queue_family_count = 0;
-	physical_device_input->getQueueFamilyProperties(&queue_family_count, nullptr);
-
-	std::vector<vk::QueueFamilyProperties> queue_families(queue_family_count);
-	physical_device_input->getQueueFamilyProperties(&queue_family_count, queue_families.data());
+	std::vector<vk::QueueFamilyProperties> queue_families = physical_device_input->getQueueFamilyProperties();
 
 	int i = 0;
 	for (const auto& queue_family : queue_families)
