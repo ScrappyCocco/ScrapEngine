@@ -95,7 +95,7 @@ int main()
 	//Display error message
 	if (exit_value == EXIT_FAILURE)
 	{
-		//Exit failure, whait to close
+		//Exit failure, wait to close
 		std::cout << std::endl << "EXIT_FAILURE - Press to exit..." << std::endl;
 		fflush(stdin);
 		getchar();
