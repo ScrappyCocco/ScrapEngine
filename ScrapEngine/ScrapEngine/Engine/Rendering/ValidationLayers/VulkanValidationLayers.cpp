@@ -12,8 +12,8 @@ ScrapEngine::Render::VulkanValidationLayers::VulkanValidationLayers()
 
 ScrapEngine::Render::VulkanValidationLayers::~VulkanValidationLayers()
 {
-	VkInstance* instance_reint = reinterpret_cast<VkInstance*>(VukanInstance::get_instance()->get_vulkan_instance());
-	DestroyDebugUtilsMessengerEXT(*instance_reint, callback, nullptr);
+	VukanInstance::get_instance()->get_vulkan_instance()->
+		destroyDebugUtilsMessengerEXT(callback_, nullptr, dispatcher_);
 }
 
 void ScrapEngine::Render::VulkanValidationLayers::setup_debug_callback()
@@ -24,23 +24,20 @@ void ScrapEngine::Render::VulkanValidationLayers::setup_debug_callback()
 
 	const vk::DebugUtilsMessengerCreateInfoEXT create_info(
 		vk::DebugUtilsMessengerCreateFlagsEXT(),
-		vk::DebugUtilsMessageSeverityFlagBitsEXT::eVerbose | vk::DebugUtilsMessageSeverityFlagBitsEXT::eWarning | vk::
-		DebugUtilsMessageSeverityFlagBitsEXT::eError
-		, vk::DebugUtilsMessageTypeFlagBitsEXT::eGeneral | vk::DebugUtilsMessageTypeFlagBitsEXT::eValidation | vk::
-		DebugUtilsMessageTypeFlagBitsEXT::ePerformance,
+		vk::DebugUtilsMessageSeverityFlagBitsEXT::eVerbose | vk::DebugUtilsMessageSeverityFlagBitsEXT::eWarning | 
+		vk::DebugUtilsMessageSeverityFlagBitsEXT::eError, 
+		vk::DebugUtilsMessageTypeFlagBitsEXT::eGeneral | vk::DebugUtilsMessageTypeFlagBitsEXT::eValidation | 
+		vk::DebugUtilsMessageTypeFlagBitsEXT::ePerformance,
 		debug_callback
 	);
 
-	VkInstance* instance_reint = reinterpret_cast<VkInstance*>(VukanInstance::get_instance()->get_vulkan_instance());
-	const VkDebugUtilsMessengerCreateInfoEXT* create_info_reint = reinterpret_cast<const
-		VkDebugUtilsMessengerCreateInfoEXT*>(&create_info);
-	const VkResult result = CreateDebugUtilsMessengerEXT(*instance_reint, create_info_reint, nullptr, &callback);
-	if (result != VK_SUCCESS)
-	{
-		Debug::DebugLog::print_exception_to_console_log("CRITICAL ERROR",
-		                                                "CreateDebugUtilsMessengerEXT result is not VK_SUCCESS - Fail!");
-		throw std::runtime_error("VulkanValidationLayers: error creating and initializing the validation layers!");
-	}
+	vk::DynamicLoader dl;
+	PFN_vkGetInstanceProcAddr vkGetInstanceProcAddr = dl.getProcAddress<PFN_vkGetInstanceProcAddr>("vkGetInstanceProcAddr");
+
+	dispatcher_ = vk::DispatchLoaderDynamic(*VukanInstance::get_instance(), vkGetInstanceProcAddr);
+
+	callback_ = VukanInstance::get_instance()->get_vulkan_instance()->createDebugUtilsMessengerEXT(
+		create_info, nullptr, dispatcher_);
 
 	Debug::DebugLog::print_to_console_log("VulkanValidationLayers: VulkanValidationLayers ENABLED!");
 }
@@ -112,42 +109,3 @@ VKAPI_ATTR VkBool32 VKAPI_CALL ScrapEngine::Render::VulkanValidationLayers::debu
 
 	return VK_FALSE;
 }
-
-//--------------------------------------------------------
-// BEGIN OF EXTERNAL FUNCTION LOADING
-// FROM https://github.com/bwasty/vulkan-tutorial-hpp/
-//--------------------------------------------------------
-
-VkResult ScrapEngine::Render::VulkanValidationLayers::CreateDebugUtilsMessengerEXT(VkInstance instance,
-                                                                                   const
-                                                                                   VkDebugUtilsMessengerCreateInfoEXT*
-                                                                                   pCreateInfo,
-                                                                                   const VkAllocationCallbacks*
-                                                                                   pAllocator,
-                                                                                   VkDebugUtilsMessengerEXT* pCallback)
-{
-	auto func = (PFN_vkCreateDebugUtilsMessengerEXT)vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT");
-	if (func != nullptr)
-	{
-		return func(instance, pCreateInfo, pAllocator, pCallback);
-	}
-	else
-	{
-		return VK_ERROR_EXTENSION_NOT_PRESENT;
-	}
-}
-
-void ScrapEngine::Render::VulkanValidationLayers::DestroyDebugUtilsMessengerEXT(VkInstance instance,
-                                                                                VkDebugUtilsMessengerEXT callback,
-                                                                                const VkAllocationCallbacks* pAllocator)
-{
-	auto func = (PFN_vkDestroyDebugUtilsMessengerEXT)vkGetInstanceProcAddr(instance, "vkDestroyDebugUtilsMessengerEXT");
-	if (func != nullptr)
-	{
-		func(instance, callback, pAllocator);
-	}
-}
-
-//--------------------------------------------------------
-// END OF EXTERNAL FUNCTION LOADING
-//--------------------------------------------------------
