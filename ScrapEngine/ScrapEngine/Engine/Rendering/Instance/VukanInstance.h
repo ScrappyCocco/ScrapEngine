@@ -46,6 +46,7 @@ namespace ScrapEngine
 
 			//Return the current Vulkan Instance (if created)
 			vk::Instance* get_vulkan_instance();
+			operator VkInstance();
 		private:
 			std::vector<const char*> get_required_extensions() const;
 		};

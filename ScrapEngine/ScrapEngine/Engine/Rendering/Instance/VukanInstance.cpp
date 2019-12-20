@@ -83,6 +83,11 @@ vk::Instance* ScrapEngine::Render::VukanInstance::get_vulkan_instance()
 	return &vulkan_instance_;
 }
 
+ScrapEngine::Render::VukanInstance::operator VkInstance_T*()
+{
+	return *get_vulkan_instance();
+}
+
 std::vector<const char*> ScrapEngine::Render::VukanInstance::get_required_extensions() const
 {
 	uint32_t glfw_extension_count = 0;
