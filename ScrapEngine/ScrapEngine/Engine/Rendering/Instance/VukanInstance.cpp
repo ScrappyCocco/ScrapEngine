@@ -65,11 +65,20 @@ void ScrapEngine::Render::VukanInstance::create_vulkan_instance(const std::strin
 	);
 
 	std::vector<const char*> layers;
+	vk::ValidationFeaturesEXT additional_features;
+	std::vector<vk::ValidationFeatureEnableEXT> additional_featues_list;
 	if (validation_layers_manager_)
 	{
+		//Load enabled layers
 		layers = validation_layers_manager_->get_validation_layers();
 		create_info.setEnabledLayerCount(static_cast<uint32_t>(layers.size()));
 		create_info.setPpEnabledLayerNames(layers.data());
+
+		//Load enabled additional features
+		additional_featues_list = validation_layers_manager_->get_enabled_features();
+		additional_features.setEnabledValidationFeatureCount(static_cast<uint32_t>(additional_featues_list.size()));
+		additional_features.setPEnabledValidationFeatures(additional_featues_list.data());
+		create_info.setPNext(&additional_features);
 	}
 
 	if (vk::createInstance(&create_info, nullptr, &vulkan_instance_) != vk::Result::eSuccess)
@@ -98,6 +107,7 @@ std::vector<const char*> ScrapEngine::Render::VukanInstance::get_required_extens
 	if (validation_layers_manager_)
 	{
 		extensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
+		extensions.push_back(VK_EXT_VALIDATION_FEATURES_EXTENSION_NAME);
 	}
 
 	return extensions;

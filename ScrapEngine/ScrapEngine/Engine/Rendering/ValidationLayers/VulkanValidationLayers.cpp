@@ -13,7 +13,7 @@ ScrapEngine::Render::VulkanValidationLayers::VulkanValidationLayers()
 ScrapEngine::Render::VulkanValidationLayers::~VulkanValidationLayers()
 {
 	VukanInstance::get_instance()->get_vulkan_instance()->
-		destroyDebugUtilsMessengerEXT(callback_, nullptr, dispatcher_);
+	                               destroyDebugUtilsMessengerEXT(callback_, nullptr, dispatcher_);
 }
 
 void ScrapEngine::Render::VulkanValidationLayers::setup_debug_callback()
@@ -24,15 +24,16 @@ void ScrapEngine::Render::VulkanValidationLayers::setup_debug_callback()
 
 	const vk::DebugUtilsMessengerCreateInfoEXT create_info(
 		vk::DebugUtilsMessengerCreateFlagsEXT(),
-		vk::DebugUtilsMessageSeverityFlagBitsEXT::eVerbose | vk::DebugUtilsMessageSeverityFlagBitsEXT::eWarning | 
-		vk::DebugUtilsMessageSeverityFlagBitsEXT::eError, 
-		vk::DebugUtilsMessageTypeFlagBitsEXT::eGeneral | vk::DebugUtilsMessageTypeFlagBitsEXT::eValidation | 
+		vk::DebugUtilsMessageSeverityFlagBitsEXT::eVerbose | vk::DebugUtilsMessageSeverityFlagBitsEXT::eWarning |
+		vk::DebugUtilsMessageSeverityFlagBitsEXT::eError,
+		vk::DebugUtilsMessageTypeFlagBitsEXT::eGeneral | vk::DebugUtilsMessageTypeFlagBitsEXT::eValidation |
 		vk::DebugUtilsMessageTypeFlagBitsEXT::ePerformance,
 		debug_callback
 	);
 
-	vk::DynamicLoader dl;
-	PFN_vkGetInstanceProcAddr vkGetInstanceProcAddr = dl.getProcAddress<PFN_vkGetInstanceProcAddr>("vkGetInstanceProcAddr");
+	const vk::DynamicLoader dl;
+	const PFN_vkGetInstanceProcAddr vkGetInstanceProcAddr =
+		dl.getProcAddress<PFN_vkGetInstanceProcAddr>("vkGetInstanceProcAddr");
 
 	dispatcher_ = vk::DispatchLoaderDynamic(*VukanInstance::get_instance(), vkGetInstanceProcAddr);
 
@@ -76,6 +77,11 @@ bool ScrapEngine::Render::VulkanValidationLayers::are_validation_layers_enabled(
 std::vector<const char*> ScrapEngine::Render::VulkanValidationLayers::get_validation_layers() const
 {
 	return validation_layers_;
+}
+
+std::vector<vk::ValidationFeatureEnableEXT> ScrapEngine::Render::VulkanValidationLayers::get_enabled_features() const
+{
+	return enabled_features_;
 }
 
 VKAPI_ATTR VkBool32 VKAPI_CALL ScrapEngine::Render::VulkanValidationLayers::debug_callback(
