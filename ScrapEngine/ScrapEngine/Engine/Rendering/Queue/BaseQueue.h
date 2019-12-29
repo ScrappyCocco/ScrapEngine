@@ -25,7 +25,10 @@ namespace ScrapEngine
 			BaseQueue() = default;
 			virtual ~BaseQueue();
 
+			//Function to get the queue
 			vk::Queue* get_queue();
+			//Conversion operators
+			operator vk::Queue() const;
 		};
 	}
 }
