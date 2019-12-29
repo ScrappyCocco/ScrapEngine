@@ -1,6 +1,8 @@
 #include <Engine/Rendering/Instance/VukanInstance.h>
 
+#ifndef GLFW_INCLUDE_VULKAN
 #define GLFW_INCLUDE_VULKAN
+#endif
 #include <GLFW/glfw3.h>
 
 //Init static instance reference
@@ -63,11 +65,20 @@ void ScrapEngine::Render::VukanInstance::create_vulkan_instance(const std::strin
 	);
 
 	std::vector<const char*> layers;
+	vk::ValidationFeaturesEXT additional_features;
+	std::vector<vk::ValidationFeatureEnableEXT> additional_featues_list;
 	if (validation_layers_manager_)
 	{
+		//Load enabled layers
 		layers = validation_layers_manager_->get_validation_layers();
 		create_info.setEnabledLayerCount(static_cast<uint32_t>(layers.size()));
 		create_info.setPpEnabledLayerNames(layers.data());
+
+		//Load enabled additional features
+		additional_featues_list = validation_layers_manager_->get_enabled_features();
+		additional_features.setEnabledValidationFeatureCount(static_cast<uint32_t>(additional_featues_list.size()));
+		additional_features.setPEnabledValidationFeatures(additional_featues_list.data());
+		create_info.setPNext(&additional_features);
 	}
 
 	if (vk::createInstance(&create_info, nullptr, &vulkan_instance_) != vk::Result::eSuccess)
@@ -81,6 +92,21 @@ vk::Instance* ScrapEngine::Render::VukanInstance::get_vulkan_instance()
 	return &vulkan_instance_;
 }
 
+ScrapEngine::Render::VukanInstance::operator VkInstance_T*()
+{
+	return *(reinterpret_cast<VkInstance*>(&vulkan_instance_));
+}
+
+ScrapEngine::Render::VukanInstance::operator vk::Instance() const
+{
+	return vulkan_instance_;
+}
+
+ScrapEngine::Render::VulkanValidationLayers* ScrapEngine::Render::VukanInstance::get_validation_layers_manager() const
+{
+	return validation_layers_manager_;
+}
+
 std::vector<const char*> ScrapEngine::Render::VukanInstance::get_required_extensions() const
 {
 	uint32_t glfw_extension_count = 0;
@@ -91,6 +117,7 @@ std::vector<const char*> ScrapEngine::Render::VukanInstance::get_required_extens
 	if (validation_layers_manager_)
 	{
 		extensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
+		extensions.push_back(VK_EXT_VALIDATION_FEATURES_EXTENSION_NAME);
 	}
 
 	return extensions;

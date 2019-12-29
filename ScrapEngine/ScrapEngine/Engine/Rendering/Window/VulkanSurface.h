@@ -1,8 +1,5 @@
 #pragma once
 
-#define GLFW_INCLUDE_VULKAN
-#include <GLFW/glfw3.h>
-
 #include <Engine/Rendering/Window/GameWindow.h>
 #include <Engine/Rendering/Instance/VukanInstance.h>
 

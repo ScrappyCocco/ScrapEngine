@@ -58,11 +58,8 @@ ScrapEngine::Render::VulkanSwapChain::VulkanSwapChain(const SwapChainSupportDeta
 		throw std::runtime_error("VulkanSwapChain: Failed to create swap chain!");
 	}
 
-	VulkanDevice::get_instance()->get_logical_device()->getSwapchainImagesKHR(swap_chain_, &image_count_, nullptr);
-	swap_chain_images_.resize(image_count_);
-	VulkanDevice::get_instance()->get_logical_device()->getSwapchainImagesKHR(
-		swap_chain_, &image_count_, swap_chain_images_.data());
-
+	swap_chain_images_ = VulkanDevice::get_instance()->get_logical_device()->getSwapchainImagesKHR(swap_chain_);
+	
 	swap_chain_image_format_ = surface_format.format;
 	swap_chain_extent_ = extent;
 }
@@ -77,13 +74,17 @@ vk::SurfaceFormatKHR ScrapEngine::Render::VulkanSwapChain::choose_swap_surface_f
 {
 	if (available_formats.size() == 1 && available_formats[0].format == vk::Format::eUndefined)
 	{
-		return {vk::Format::eB8G8R8A8Unorm, vk::ColorSpaceKHR::eSrgbNonlinear};
+		vk::SurfaceFormatKHR return_format;
+		return_format.format = vk::Format::eB8G8R8A8Unorm;
+		return_format.colorSpace = vk::ColorSpaceKHR::eSrgbNonlinear;
+
+		return return_format;
 	}
 
 	for (const auto& available_format : available_formats)
 	{
-		if (available_format.format == vk::Format::eB8G8R8A8Unorm && available_format.colorSpace == vk::ColorSpaceKHR::
-			eSrgbNonlinear)
+		if (available_format.format == vk::Format::eB8G8R8A8Unorm && 
+			available_format.colorSpace == vk::ColorSpaceKHR::eSrgbNonlinear)
 		{
 			return available_format;
 		}

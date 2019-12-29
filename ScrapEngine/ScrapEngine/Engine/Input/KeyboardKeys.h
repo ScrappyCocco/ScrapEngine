@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Windows.h>
 #include <GLFW/glfw3.h>
 
 #define KEYBOARD_KEY_SPACE GLFW_KEY_SPACE

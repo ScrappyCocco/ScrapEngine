@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vulkan/vulkan.hpp>
+#include <Engine/Rendering/VulkanInclude.h>
 #include <Engine/Rendering/ValidationLayers/VulkanValidationLayers.h>
 #include <string>
 #include <vector>
@@ -46,6 +46,12 @@ namespace ScrapEngine
 
 			//Return the current Vulkan Instance (if created)
 			vk::Instance* get_vulkan_instance();
+			//Conversion operators
+			operator VkInstance();
+			operator vk::Instance() const;
+
+			//Return the validation layers manager (useful to create the device)
+			VulkanValidationLayers* get_validation_layers_manager() const;
 		private:
 			std::vector<const char*> get_required_extensions() const;
 		};

@@ -132,7 +132,7 @@ ScrapEngine::Render::StandardVulkanGraphicsPipeline::StandardVulkanGraphicsPipel
 		&color_blending,
 		nullptr,
 		pipeline_layout_,
-		*StandardRenderPass::get_instance()->get_render_pass(),
+		*StandardRenderPass::get_instance(),
 		0
 	);
 

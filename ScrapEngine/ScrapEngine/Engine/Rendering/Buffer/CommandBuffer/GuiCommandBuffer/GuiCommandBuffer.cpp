@@ -13,7 +13,7 @@ ScrapEngine::Render::GuiCommandBuffer::GuiCommandBuffer(BaseRenderPass* render_p
 	command_buffers_.resize(1);
 
 	vk::CommandBufferAllocateInfo alloc_info(
-		*command_pool_ref_->get_command_pool(),
+		*command_pool_ref_,
 		vk::CommandBufferLevel::ePrimary,
 		static_cast<uint32_t>(1)
 	);
@@ -43,7 +43,7 @@ void ScrapEngine::Render::GuiCommandBuffer::init_command_buffer(
 		}
 
 		render_pass_info_ = vk::RenderPassBeginInfo(
-			*render_pass_ref_->get_render_pass(),
+			*render_pass_ref_,
 			//So here i read the frame buffer corresponding to the next image frame
 			//It must be passed as parameter from the Render Manager
 			(*swap_chain_framebuffers)[current_image],

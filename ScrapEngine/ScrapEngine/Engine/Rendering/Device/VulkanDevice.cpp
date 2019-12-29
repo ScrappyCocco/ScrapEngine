@@ -7,10 +7,8 @@
 
 ScrapEngine::Render::VulkanDevice* ScrapEngine::Render::VulkanDevice::instance_ = nullptr;
 
-void ScrapEngine::Render::VulkanDevice::init(vk::Instance* vulkan_instance_input_ref,
-                                             vk::SurfaceKHR* vulkan_surface_input_ref)
+void ScrapEngine::Render::VulkanDevice::init(vk::SurfaceKHR* vulkan_surface_input_ref)
 {
-	instance_ref_ = vulkan_instance_input_ref;
 	vulkan_surface_ref_ = vulkan_surface_input_ref;
 
 	choose_physical_device();
@@ -33,16 +31,13 @@ ScrapEngine::Render::VulkanDevice* ScrapEngine::Render::VulkanDevice::get_instan
 
 void ScrapEngine::Render::VulkanDevice::choose_physical_device()
 {
-	uint32_t device_count = 0;
-	instance_ref_->enumeratePhysicalDevices(&device_count, nullptr);
+	std::vector<vk::PhysicalDevice> devices =
+		VukanInstance::get_instance()->get_vulkan_instance()->enumeratePhysicalDevices();
 
-	if (device_count == 0)
+	if (devices.empty())
 	{
 		throw std::runtime_error("VulkanDevice: Failed to find GPUs with Vulkan support!");
 	}
-
-	std::vector<vk::PhysicalDevice> devices(device_count);
-	instance_ref_->enumeratePhysicalDevices(&device_count, devices.data());
 
 	for (auto& entry_device : devices)
 	{
@@ -83,18 +78,44 @@ void ScrapEngine::Render::VulkanDevice::create_logical_device()
 	device_features.setSamplerAnisotropy(true);
 	device_features.setSampleRateShading(true);
 
-	const vk::DeviceCreateInfo create_info(
+	vk::DeviceCreateInfo create_info(
 		vk::DeviceCreateFlags(),
 		static_cast<uint32_t>(queue_create_infos.size()),
 		queue_create_infos.data(),
-		0, nullptr,
-		static_cast<uint32_t>(device_extensions_.size()), device_extensions_.data(),
+		0,
+		nullptr,
+		static_cast<uint32_t>(device_extensions_.size()),
+		device_extensions_.data(),
 		&device_features
 	);
 
-	if (physical_device_.createDevice(&create_info, nullptr, &device_) != vk::Result::eSuccess)
+	VulkanValidationLayers* validation_layers = VukanInstance::get_instance()->get_validation_layers_manager();
+	//Fill the vector only if the layers are enabled
+	if (validation_layers && validation_layers->are_validation_layers_enabled())
 	{
-		throw std::runtime_error("VulkanDevice: Failed to create logical device!");
+		const std::vector<const char*> validation_layers_list = validation_layers->get_validation_layers();
+
+		create_info.setEnabledLayerCount(static_cast<uint32_t>(validation_layers_list.size()));
+		create_info.setPpEnabledLayerNames(validation_layers_list.data());
+
+		//Use the validation layer dynamic dispatcher
+		if (physical_device_.createDevice(&create_info, nullptr, &device_, *validation_layers->get_dynamic_dispatcher())
+			!= vk::Result::eSuccess)
+		{
+			throw std::runtime_error("VulkanDevice: Failed to create logical device!");
+		}
+
+		//Init the dispatcher with the device
+		validation_layers->get_dynamic_dispatcher()->init(device_);
+	}
+	else
+	{
+		//No dispatcher
+		if (physical_device_.createDevice(&create_info, nullptr, &device_)
+			!= vk::Result::eSuccess)
+		{
+			throw std::runtime_error("VulkanDevice: Failed to create logical device!");
+		}
 	}
 }
 
@@ -106,6 +127,16 @@ vk::PhysicalDevice* ScrapEngine::Render::VulkanDevice::get_physical_device()
 vk::Device* ScrapEngine::Render::VulkanDevice::get_logical_device()
 {
 	return &device_;
+}
+
+ScrapEngine::Render::VulkanDevice::operator VkDevice_T*()
+{
+	return *(reinterpret_cast<VkDevice*>(&device_));
+}
+
+ScrapEngine::Render::VulkanDevice::operator vk::Device() const
+{
+	return device_;
 }
 
 ScrapEngine::Render::BaseQueue::QueueFamilyIndices ScrapEngine::Render::VulkanDevice::
@@ -146,11 +177,7 @@ bool ScrapEngine::Render::VulkanDevice::is_device_suitable(vk::PhysicalDevice* p
 
 bool ScrapEngine::Render::VulkanDevice::check_device_extension_support(vk::PhysicalDevice* device) const
 {
-	uint32_t extension_count;
-	device->enumerateDeviceExtensionProperties(nullptr, &extension_count, nullptr);
-
-	std::vector<vk::ExtensionProperties> available_extensions(extension_count);
-	device->enumerateDeviceExtensionProperties(nullptr, &extension_count, available_extensions.data());
+	std::vector<vk::ExtensionProperties> available_extensions = device->enumerateDeviceExtensionProperties();
 
 	std::set<std::string> required_extensions(device_extensions_.begin(), device_extensions_.end());
 
@@ -169,24 +196,9 @@ query_swap_chain_support(vk::PhysicalDevice* physical_device_input) const
 
 	physical_device_input->getSurfaceCapabilitiesKHR(*vulkan_surface_ref_, &details.capabilities);
 
-	uint32_t format_count;
-	physical_device_input->getSurfaceFormatsKHR(*vulkan_surface_ref_, &format_count, nullptr);
+	details.formats = physical_device_input->getSurfaceFormatsKHR(*vulkan_surface_ref_);
 
-	if (format_count != 0)
-	{
-		details.formats.resize(format_count);
-		physical_device_input->getSurfaceFormatsKHR(*vulkan_surface_ref_, &format_count, details.formats.data());
-	}
-
-	uint32_t present_mode_count;
-	physical_device_input->getSurfacePresentModesKHR(*vulkan_surface_ref_, &present_mode_count, nullptr);
-
-	if (present_mode_count != 0)
-	{
-		details.present_modes.resize(present_mode_count);
-		physical_device_input->getSurfacePresentModesKHR(*vulkan_surface_ref_, &present_mode_count,
-		                                                 details.present_modes.data());
-	}
+	details.present_modes = physical_device_input->getSurfacePresentModesKHR(*vulkan_surface_ref_);
 
 	return details;
 }
@@ -228,11 +240,7 @@ ScrapEngine::Render::BaseQueue::QueueFamilyIndices ScrapEngine::Render::VulkanDe
 {
 	BaseQueue::QueueFamilyIndices indices;
 
-	uint32_t queue_family_count = 0;
-	physical_device_input->getQueueFamilyProperties(&queue_family_count, nullptr);
-
-	std::vector<vk::QueueFamilyProperties> queue_families(queue_family_count);
-	physical_device_input->getQueueFamilyProperties(&queue_family_count, queue_families.data());
+	std::vector<vk::QueueFamilyProperties> queue_families = physical_device_input->getQueueFamilyProperties();
 
 	int i = 0;
 	for (const auto& queue_family : queue_families)

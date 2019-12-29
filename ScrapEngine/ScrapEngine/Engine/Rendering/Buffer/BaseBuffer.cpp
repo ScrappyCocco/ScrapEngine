@@ -71,7 +71,7 @@ void ScrapEngine::Render::BaseBuffer::copy_buffer_to_image(vk::Buffer* buffer, v
 
 std::unique_ptr<vk::CommandBuffer> ScrapEngine::Render::BaseBuffer::begin_single_time_command()
 {
-	vk::CommandBufferAllocateInfo alloc_info(*SingletonCommandPool::get_instance()->get_command_pool(),
+	vk::CommandBufferAllocateInfo alloc_info(*SingletonCommandPool::get_instance(),
 	                                         vk::CommandBufferLevel::ePrimary,
 	                                         1);
 
@@ -96,6 +96,6 @@ void ScrapEngine::Render::BaseBuffer::end_and_submit_single_time_command(
 	GraphicsQueue::get_instance()->get_queue()->waitIdle();
 
 	VulkanDevice::get_instance()->get_logical_device()->freeCommandBuffers(
-		*SingletonCommandPool::get_instance()->get_command_pool(),
+		*SingletonCommandPool::get_instance(),
 		1, command_buffer.get());
 }

@@ -13,3 +13,8 @@ vk::Buffer* ScrapEngine::Render::BufferContainer::get_buffer() const
 {
 	return buffer_;
 }
+
+ScrapEngine::Render::BufferContainer::operator vk::Buffer()
+{
+	return *(buffer_);
+}

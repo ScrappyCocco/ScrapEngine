@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vulkan/vulkan.hpp>
+#include <Engine/Rendering/VulkanInclude.h>
 #include <Engine/Rendering/Base/Vertex.h>
 #include <Engine/Rendering/Buffer/BufferContainer/BufferContainer.h>
 

@@ -13,8 +13,7 @@ namespace ScrapEngine
 		private:
 			//Singleton static instance
 			static VulkanDevice* instance_;
-
-			vk::Instance* instance_ref_;
+			
 			vk::SurfaceKHR* vulkan_surface_ref_;
 
 			vk::SampleCountFlagBits msaa_samples_ = vk::SampleCountFlagBits::e1;
@@ -39,7 +38,7 @@ namespace ScrapEngine
 			VulkanDevice() = default;
 		public:
 			//Method used to init the class with parameters because the constructor is private
-			void init(vk::Instance* vulkan_instance_input_ref, vk::SurfaceKHR* vulkan_surface_input_ref);
+			void init(vk::SurfaceKHR* vulkan_surface_input_ref);
 
 			//Turn off the logical device
 			~VulkanDevice();
@@ -58,6 +57,9 @@ namespace ScrapEngine
 
 			//Return a reference to logical device
 			vk::Device* get_logical_device();
+			//Conversion operators
+			operator VkDevice();
+			operator vk::Device() const;
 
 			BaseQueue::QueueFamilyIndices get_cached_queue_family_indices() const;
 

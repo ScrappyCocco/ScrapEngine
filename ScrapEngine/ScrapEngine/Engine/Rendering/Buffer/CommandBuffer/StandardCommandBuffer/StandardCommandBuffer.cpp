@@ -10,7 +10,7 @@ ScrapEngine::Render::StandardCommandBuffer::StandardCommandBuffer(VulkanCommandP
 	command_buffers_.resize(cb_size);
 
 	vk::CommandBufferAllocateInfo alloc_info(
-		*command_pool_ref_->get_command_pool(),
+		*command_pool_ref_,
 		vk::CommandBufferLevel::ePrimary,
 		static_cast<uint32_t>(command_buffers_.size())
 	);
@@ -37,7 +37,7 @@ void ScrapEngine::Render::StandardCommandBuffer::init_command_buffer(
 		const std::vector<vk::Framebuffer>* swap_chain_framebuffers = swap_chain_frame_buffer->
 			get_swap_chain_framebuffers_vector();
 		render_pass_info_ = vk::RenderPassBeginInfo(
-			*StandardRenderPass::get_instance()->get_render_pass(),
+			*StandardRenderPass::get_instance(),
 			(*swap_chain_framebuffers)[i],
 			vk::Rect2D(vk::Offset2D(), *input_swap_chain_extent_ref)
 		);
@@ -69,9 +69,9 @@ void ScrapEngine::Render::StandardCommandBuffer::load_skybox(VulkanSkyboxInstanc
 		                                              get_graphics_pipeline());
 		const std::pair<VertexBufferContainer*, IndicesBufferContainer*>*
 			skybox_pair = skybox_ref->get_mesh_buffers();
-		vk::Buffer buff[] = {*skybox_pair->first->get_buffer()};
+		vk::Buffer buff[] = {*(skybox_pair->first)};
 		command_buffers_[i].bindVertexBuffers(0, 1, buff, offsets);
-		command_buffers_[i].bindIndexBuffer(*skybox_pair->second->get_buffer(), 0, vk::IndexType::eUint32);
+		command_buffers_[i].bindIndexBuffer(*(skybox_pair->second), 0, vk::IndexType::eUint32);
 		command_buffers_[i].bindDescriptorSets(vk::PipelineBindPoint::eGraphics,
 		                                       *skybox_ref->get_skybox_material()->
 		                                                    get_vulkan_render_graphics_pipeline()->
@@ -126,11 +126,11 @@ void ScrapEngine::Render::StandardCommandBuffer::load_mesh(VulkanMeshInstance* m
 			                                 *current_mat
 			                                  ->get_vulkan_render_graphics_pipeline()->get_graphics_pipeline());
 
-			vk::Buffer vertex_buffers[] = {*(mesh_buffer.first->get_buffer())};
+			vk::Buffer vertex_buffers[] = {*(mesh_buffer.first)};
 
 			command_buffers_[i].bindVertexBuffers(0, 1, vertex_buffers, offsets);
 
-			command_buffers_[i].bindIndexBuffer(*(mesh_buffer.second->get_buffer()), 0, vk::IndexType::eUint32);
+			command_buffers_[i].bindIndexBuffer(*(mesh_buffer.second), 0, vk::IndexType::eUint32);
 
 			command_buffers_[i].bindDescriptorSets(vk::PipelineBindPoint::eGraphics,
 			                                       *current_mat

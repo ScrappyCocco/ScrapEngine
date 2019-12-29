@@ -29,3 +29,8 @@ vk::CommandPool* ScrapEngine::Render::VulkanCommandPool::get_command_pool()
 {
 	return &command_pool_;
 }
+
+ScrapEngine::Render::VulkanCommandPool::operator vk::CommandPool() const
+{
+	return command_pool_;
+}
