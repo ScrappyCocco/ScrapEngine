@@ -30,7 +30,7 @@ void ScrapEngine::Render::BaseCommandBuffer::free_command_buffers()
 	if (!command_buffers_.empty())
 	{
 		VulkanDevice::get_instance()->get_logical_device()->freeCommandBuffers(
-			*command_pool_ref_->get_command_pool(),
+			*command_pool_ref_,
 			static_cast<uint32_t>(command_buffers_.size()),
 			command_buffers_.data());
 		command_buffers_.clear();

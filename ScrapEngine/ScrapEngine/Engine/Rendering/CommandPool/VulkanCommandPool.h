@@ -23,7 +23,10 @@ namespace ScrapEngine
 
 			void reset_command_pool() const;
 
+			//Function to get the command pool
 			vk::CommandPool* get_command_pool();
+			//Conversion operators
+			operator vk::CommandPool() const;
 		};
 	}
 }

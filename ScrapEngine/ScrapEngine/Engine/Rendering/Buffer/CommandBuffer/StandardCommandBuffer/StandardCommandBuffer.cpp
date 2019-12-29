@@ -10,7 +10,7 @@ ScrapEngine::Render::StandardCommandBuffer::StandardCommandBuffer(VulkanCommandP
 	command_buffers_.resize(cb_size);
 
 	vk::CommandBufferAllocateInfo alloc_info(
-		*command_pool_ref_->get_command_pool(),
+		*command_pool_ref_,
 		vk::CommandBufferLevel::ePrimary,
 		static_cast<uint32_t>(command_buffers_.size())
 	);

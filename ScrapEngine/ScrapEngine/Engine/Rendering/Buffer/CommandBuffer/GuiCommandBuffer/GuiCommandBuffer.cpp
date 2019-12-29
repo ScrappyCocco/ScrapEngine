@@ -13,7 +13,7 @@ ScrapEngine::Render::GuiCommandBuffer::GuiCommandBuffer(BaseRenderPass* render_p
 	command_buffers_.resize(1);
 
 	vk::CommandBufferAllocateInfo alloc_info(
-		*command_pool_ref_->get_command_pool(),
+		*command_pool_ref_,
 		vk::CommandBufferLevel::ePrimary,
 		static_cast<uint32_t>(1)
 	);
