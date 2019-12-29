@@ -110,6 +110,16 @@ vk::Device* ScrapEngine::Render::VulkanDevice::get_logical_device()
 	return &device_;
 }
 
+ScrapEngine::Render::VulkanDevice::operator VkDevice_T*()
+{
+	return reinterpret_cast<VkDevice>(&device_);
+}
+
+ScrapEngine::Render::VulkanDevice::operator vk::Device() const
+{
+	return device_;
+}
+
 ScrapEngine::Render::BaseQueue::QueueFamilyIndices ScrapEngine::Render::VulkanDevice::
 get_cached_queue_family_indices() const
 {

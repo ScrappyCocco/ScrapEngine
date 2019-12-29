@@ -57,6 +57,9 @@ namespace ScrapEngine
 
 			//Return a reference to logical device
 			vk::Device* get_logical_device();
+			//Conversion operators
+			operator VkDevice();
+			operator vk::Device() const;
 
 			BaseQueue::QueueFamilyIndices get_cached_queue_family_indices() const;
 
