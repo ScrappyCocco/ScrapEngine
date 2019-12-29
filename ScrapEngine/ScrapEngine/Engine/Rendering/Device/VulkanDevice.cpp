@@ -78,26 +78,45 @@ void ScrapEngine::Render::VulkanDevice::create_logical_device()
 	device_features.setSamplerAnisotropy(true);
 	device_features.setSampleRateShading(true);
 
-	VulkanValidationLayers* validation_layers = VukanInstance::get_instance()->get_validation_layers_manager();
-	const std::vector<const char*> validation_layers_list = validation_layers->get_validation_layers();
-
-	const vk::DeviceCreateInfo create_info(
+	vk::DeviceCreateInfo create_info(
 		vk::DeviceCreateFlags(),
 		static_cast<uint32_t>(queue_create_infos.size()),
 		queue_create_infos.data(),
-		static_cast<uint32_t>(validation_layers_list.size()),
-		validation_layers_list.data(),
+		0,
+		nullptr,
 		static_cast<uint32_t>(device_extensions_.size()),
 		device_extensions_.data(),
 		&device_features
 	);
 
-	if (physical_device_.createDevice(&create_info, nullptr, &device_, *validation_layers->get_dynamic_dispatcher()) != vk::Result::eSuccess)
+	VulkanValidationLayers* validation_layers = VukanInstance::get_instance()->get_validation_layers_manager();
+	//Fill the vector only if the layers are enabled
+	if (validation_layers && validation_layers->are_validation_layers_enabled())
 	{
-		throw std::runtime_error("VulkanDevice: Failed to create logical device!");
-	}
+		const std::vector<const char*> validation_layers_list = validation_layers->get_validation_layers();
 
-	validation_layers->get_dynamic_dispatcher()->init(device_);
+		create_info.setEnabledLayerCount(static_cast<uint32_t>(validation_layers_list.size()));
+		create_info.setPpEnabledLayerNames(validation_layers_list.data());
+
+		//Use the validation layer dynamic dispatcher
+		if (physical_device_.createDevice(&create_info, nullptr, &device_, *validation_layers->get_dynamic_dispatcher())
+			!= vk::Result::eSuccess)
+		{
+			throw std::runtime_error("VulkanDevice: Failed to create logical device!");
+		}
+
+		//Init the dispatcher with the device
+		validation_layers->get_dynamic_dispatcher()->init(device_);
+	}
+	else
+	{
+		//No dispatcher
+		if (physical_device_.createDevice(&create_info, nullptr, &device_)
+			!= vk::Result::eSuccess)
+		{
+			throw std::runtime_error("VulkanDevice: Failed to create logical device!");
+		}
+	}
 }
 
 vk::PhysicalDevice* ScrapEngine::Render::VulkanDevice::get_physical_device()
@@ -112,7 +131,7 @@ vk::Device* ScrapEngine::Render::VulkanDevice::get_logical_device()
 
 ScrapEngine::Render::VulkanDevice::operator VkDevice_T*()
 {
-	return reinterpret_cast<VkDevice>(&device_);
+	return *(reinterpret_cast<VkDevice*>(&device_));
 }
 
 ScrapEngine::Render::VulkanDevice::operator vk::Device() const

@@ -94,7 +94,7 @@ vk::Instance* ScrapEngine::Render::VukanInstance::get_vulkan_instance()
 
 ScrapEngine::Render::VukanInstance::operator VkInstance_T*()
 {
-	return reinterpret_cast<VkInstance>(&vulkan_instance_);
+	return *(reinterpret_cast<VkInstance*>(&vulkan_instance_));
 }
 
 ScrapEngine::Render::VukanInstance::operator vk::Instance() const

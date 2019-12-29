@@ -31,7 +31,7 @@ void ScrapEngine::Render::VulkanValidationLayers::setup_debug_callback()
 		debug_callback
 	);
 
-	if(enable_info_messages)
+	if (enable_info_messages)
 	{
 		create_info.setMessageSeverity(create_info.messageSeverity | vk::DebugUtilsMessageSeverityFlagBitsEXT::eInfo);
 	}
@@ -67,7 +67,8 @@ bool ScrapEngine::Render::VulkanValidationLayers::check_validation_layer_support
 
 		if (!layer_found)
 		{
-			Debug::DebugLog::print_to_console_log("VulkanValidationLayers: Unable to load layer: " + std::string(layer_name));
+			Debug::DebugLog::print_to_console_log(
+				"VulkanValidationLayers: Unable to load layer: " + std::string(layer_name));
 			return false;
 		}
 	}

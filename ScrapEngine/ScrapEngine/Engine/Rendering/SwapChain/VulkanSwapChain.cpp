@@ -57,7 +57,7 @@ ScrapEngine::Render::VulkanSwapChain::VulkanSwapChain(const SwapChainSupportDeta
 	{
 		throw std::runtime_error("VulkanSwapChain: Failed to create swap chain!");
 	}
-	
+
 	swap_chain_images_ = VulkanDevice::get_instance()->get_logical_device()->getSwapchainImagesKHR(swap_chain_);
 	
 	swap_chain_image_format_ = surface_format.format;
@@ -79,7 +79,6 @@ vk::SurfaceFormatKHR ScrapEngine::Render::VulkanSwapChain::choose_swap_surface_f
 		return_format.colorSpace = vk::ColorSpaceKHR::eSrgbNonlinear;
 
 		return return_format;
-		//return {vk::Format::eB8G8R8A8Unorm, vk::ColorSpaceKHR::eSrgbNonlinear};
 	}
 
 	for (const auto& available_format : available_formats)

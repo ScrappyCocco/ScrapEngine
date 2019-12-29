@@ -18,7 +18,7 @@ namespace ScrapEngine
 			std::vector<const char*> get_validation_layers() const;
 			std::vector<vk::ValidationFeatureEnableEXT> get_enabled_features() const;
 			vk::DispatchLoaderDynamic* get_dynamic_dispatcher();
-			
+
 		private:
 			vk::DispatchLoaderDynamic dispatcher_;
 
@@ -39,12 +39,12 @@ namespace ScrapEngine
 			const std::vector<const char*> validation_layers_ = {
 				"VK_LAYER_KHRONOS_validation"
 			};
-			
+
 			//List of additional features to be used
 			const std::vector<vk::ValidationFeatureEnableEXT> enabled_features_ = {
 				vk::ValidationFeatureEnableEXT::eBestPractices
 			};
-			
+
 			//If you want to see all infos messages
 			static const bool enable_info_messages = false;
 
