@@ -196,7 +196,7 @@ void ScrapEngine::Render::RenderManager::initialize_vulkan(const game_base_info*
 	vulkan_window_surface_->init(game_window_);
 	Debug::DebugLog::print_to_console_log("VulkanWindowSurface created");
 	vulkan_render_device_ = VulkanDevice::get_instance();
-	vulkan_render_device_->init(vulkan_instance_->get_vulkan_instance(), vulkan_window_surface_->get_surface());
+	vulkan_render_device_->init(vulkan_window_surface_->get_surface());
 	Debug::DebugLog::print_to_console_log("VulkanRenderDevice created");
 	create_queues();
 	vulkan_render_swap_chain_ = new VulkanSwapChain(

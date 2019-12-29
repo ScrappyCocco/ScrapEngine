@@ -7,10 +7,8 @@
 
 ScrapEngine::Render::VulkanDevice* ScrapEngine::Render::VulkanDevice::instance_ = nullptr;
 
-void ScrapEngine::Render::VulkanDevice::init(vk::Instance* vulkan_instance_input_ref,
-                                             vk::SurfaceKHR* vulkan_surface_input_ref)
+void ScrapEngine::Render::VulkanDevice::init(vk::SurfaceKHR* vulkan_surface_input_ref)
 {
-	instance_ref_ = vulkan_instance_input_ref;
 	vulkan_surface_ref_ = vulkan_surface_input_ref;
 
 	choose_physical_device();
@@ -33,7 +31,8 @@ ScrapEngine::Render::VulkanDevice* ScrapEngine::Render::VulkanDevice::get_instan
 
 void ScrapEngine::Render::VulkanDevice::choose_physical_device()
 {
-	std::vector<vk::PhysicalDevice> devices = instance_ref_->enumeratePhysicalDevices();
+	std::vector<vk::PhysicalDevice> devices =
+		VukanInstance::get_instance()->get_vulkan_instance()->enumeratePhysicalDevices();
 
 	if (devices.empty())
 	{
@@ -79,19 +78,26 @@ void ScrapEngine::Render::VulkanDevice::create_logical_device()
 	device_features.setSamplerAnisotropy(true);
 	device_features.setSampleRateShading(true);
 
+	VulkanValidationLayers* validation_layers = VukanInstance::get_instance()->get_validation_layers_manager();
+	const std::vector<const char*> validation_layers_list = validation_layers->get_validation_layers();
+
 	const vk::DeviceCreateInfo create_info(
 		vk::DeviceCreateFlags(),
 		static_cast<uint32_t>(queue_create_infos.size()),
 		queue_create_infos.data(),
-		0, nullptr,
-		static_cast<uint32_t>(device_extensions_.size()), device_extensions_.data(),
+		static_cast<uint32_t>(validation_layers_list.size()),
+		validation_layers_list.data(),
+		static_cast<uint32_t>(device_extensions_.size()),
+		device_extensions_.data(),
 		&device_features
 	);
 
-	if (physical_device_.createDevice(&create_info, nullptr, &device_) != vk::Result::eSuccess)
+	if (physical_device_.createDevice(&create_info, nullptr, &device_, *validation_layers->get_dynamic_dispatcher()) != vk::Result::eSuccess)
 	{
 		throw std::runtime_error("VulkanDevice: Failed to create logical device!");
 	}
+
+	validation_layers->get_dynamic_dispatcher()->init(device_);
 }
 
 vk::PhysicalDevice* ScrapEngine::Render::VulkanDevice::get_physical_device()

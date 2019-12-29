@@ -97,6 +97,11 @@ ScrapEngine::Render::VukanInstance::operator VkInstance_T*()
 	return *get_vulkan_instance();
 }
 
+ScrapEngine::Render::VulkanValidationLayers* ScrapEngine::Render::VukanInstance::get_validation_layers_manager() const
+{
+	return validation_layers_manager_;
+}
+
 std::vector<const char*> ScrapEngine::Render::VukanInstance::get_required_extensions() const
 {
 	uint32_t glfw_extension_count = 0;
