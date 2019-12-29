@@ -715,6 +715,9 @@
     <ClCompile Include="Engine\LogicCore\Components\CameraComponent\CameraComponent.cpp">
       <Filter>Engine\LogicCore\Components\CameraComponent</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Rendering\Memory\VulkanMemoryAllocator.cpp">
+      <Filter>Engine\Rendering\Memory</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Manager\EngineManager.h">
@@ -1088,6 +1091,9 @@
     </ClInclude>
     <ClInclude Include="Engine\Rendering\VulkanInclude.h">
       <Filter>Engine\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Memory\VulkanMemoryAllocator.h">
+      <Filter>Engine\Rendering\Memory</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

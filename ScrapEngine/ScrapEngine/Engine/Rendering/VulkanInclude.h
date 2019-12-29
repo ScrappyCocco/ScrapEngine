@@ -1,5 +1,12 @@
 #pragma once
 
+//---------------------------
+// VULKAN HPP
+// 
+// TO KNOW MORE SEE:
+// https://github.com/KhronosGroup/Vulkan-Headers
+//---------------------------
+
 //<Windows.h> header file includes macro definitions named max and min
 //We don't want that
 #define NOMINMAX
@@ -12,3 +19,12 @@
 //If you're porting the engine consider adding another define for the destination platform, it could be necessary
 
 #include <vulkan/vulkan.hpp>
+
+//---------------------------
+// MEMORY ALLOCATOR (From GPUOpen)
+// 
+// TO EDIT THIS FILE SEE:
+// https://gpuopen-librariesandsdks.github.io/VulkanMemoryAllocator/html/quick_start.html
+//---------------------------
+
+#include <vk_mem_alloc.h>

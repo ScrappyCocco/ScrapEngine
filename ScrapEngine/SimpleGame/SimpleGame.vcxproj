@@ -72,7 +72,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)ScrapEngine;$(SolutionDir)..\external\stb;$(SolutionDir)..\external\VulkanSDK\Vulkan-Headers\include;$(SolutionDir)..\external\glm;$(SolutionDir)..\external\gli;$(SolutionDir)..\external\glfw\include;$(SolutionDir)..\external\assimp\include;$(SolutionDir)..\external\reactphysics\src;$(SolutionDir)..\external\enkits\src;$(SolutionDir)..\external\openal-soft\include;$(SolutionDir)..\external\openal-soft\Alc;$(SolutionDir)..\external\openal-soft\common;$(SolutionDir)..\external\openal-soft\OpenAL32\Include;$(SolutionDir)..\external\dr_libs;$(SolutionDir)..\external\imgui;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)ScrapEngine;$(SolutionDir)..\external\stb;$(SolutionDir)..\external\VulkanSDK\Vulkan-Headers\include;$(SolutionDir)..\external\VulkanMemoryAllocator\src;$(SolutionDir)..\external\glm;$(SolutionDir)..\external\gli;$(SolutionDir)..\external\glfw\include;$(SolutionDir)..\external\assimp\include;$(SolutionDir)..\external\reactphysics\src;$(SolutionDir)..\external\enkits\src;$(SolutionDir)..\external\openal-soft\include;$(SolutionDir)..\external\openal-soft\Alc;$(SolutionDir)..\external\openal-soft\common;$(SolutionDir)..\external\openal-soft\OpenAL32\Include;$(SolutionDir)..\external\dr_libs;$(SolutionDir)..\external\imgui;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
@@ -84,7 +84,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)ScrapEngine;$(SolutionDir)..\external\stb;$(SolutionDir)..\external\VulkanSDK\Vulkan-Headers\include;$(SolutionDir)..\external\glm;$(SolutionDir)..\external\gli;$(SolutionDir)..\external\glfw\include;$(SolutionDir)..\external\assimp\include;$(SolutionDir)..\external\reactphysics\src;$(SolutionDir)..\external\enkits\src;$(SolutionDir)..\external\openal-soft\include;$(SolutionDir)..\external\openal-soft\Alc;$(SolutionDir)..\external\openal-soft\common;$(SolutionDir)..\external\openal-soft\OpenAL32\Include;$(SolutionDir)..\external\dr_libs;$(SolutionDir)..\external\imgui;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)ScrapEngine;$(SolutionDir)..\external\stb;$(SolutionDir)..\external\VulkanSDK\Vulkan-Headers\include;$(SolutionDir)..\external\VulkanMemoryAllocator\src;$(SolutionDir)..\external\glm;$(SolutionDir)..\external\gli;$(SolutionDir)..\external\glfw\include;$(SolutionDir)..\external\assimp\include;$(SolutionDir)..\external\reactphysics\src;$(SolutionDir)..\external\enkits\src;$(SolutionDir)..\external\openal-soft\include;$(SolutionDir)..\external\openal-soft\Alc;$(SolutionDir)..\external\openal-soft\common;$(SolutionDir)..\external\openal-soft\OpenAL32\Include;$(SolutionDir)..\external\dr_libs;$(SolutionDir)..\external\imgui;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>

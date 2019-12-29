@@ -77,6 +77,8 @@ namespace ScrapEngine
 			bool is_device_suitable(vk::PhysicalDevice* physical_device_input, vk::SurfaceKHR* surface);
 
 			bool check_device_extension_support(vk::PhysicalDevice* device) const;
+
+			void init_vulkan_allocator() const;
 		};
 	}
 }
