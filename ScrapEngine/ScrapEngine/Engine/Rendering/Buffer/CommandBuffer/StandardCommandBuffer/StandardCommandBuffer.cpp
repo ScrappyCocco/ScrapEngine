@@ -37,7 +37,7 @@ void ScrapEngine::Render::StandardCommandBuffer::init_command_buffer(
 		const std::vector<vk::Framebuffer>* swap_chain_framebuffers = swap_chain_frame_buffer->
 			get_swap_chain_framebuffers_vector();
 		render_pass_info_ = vk::RenderPassBeginInfo(
-			*StandardRenderPass::get_instance()->get_render_pass(),
+			*StandardRenderPass::get_instance(),
 			(*swap_chain_framebuffers)[i],
 			vk::Rect2D(vk::Offset2D(), *input_swap_chain_extent_ref)
 		);

@@ -140,7 +140,7 @@ ScrapEngine::Render::GuiVulkanGraphicsPipeline::GuiVulkanGraphicsPipeline(const 
 		&color_blending,
 		&dynamic_state,
 		pipeline_layout_,
-		*render_pass->get_render_pass(),
+		*render_pass,
 		0
 	);
 

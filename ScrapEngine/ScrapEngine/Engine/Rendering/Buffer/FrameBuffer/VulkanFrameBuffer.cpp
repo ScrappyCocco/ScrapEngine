@@ -23,7 +23,7 @@ ScrapEngine::Render::VulkanFrameBuffer::VulkanFrameBuffer(VulkanImageView* input
 
 		vk::FramebufferCreateInfo framebuffer_info(
 			vk::FramebufferCreateFlags(),
-			*StandardRenderPass::get_instance()->get_render_pass(),
+			*StandardRenderPass::get_instance(),
 			static_cast<uint32_t>(attachments.size()),
 			attachments.data(),
 			input_swap_chain_extent->width,

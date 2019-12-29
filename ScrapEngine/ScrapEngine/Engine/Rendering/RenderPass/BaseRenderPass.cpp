@@ -12,3 +12,8 @@ vk::RenderPass* ScrapEngine::Render::BaseRenderPass::get_render_pass()
 {
 	return &render_pass_;
 }
+
+ScrapEngine::Render::BaseRenderPass::operator vk::RenderPass() const
+{
+	return render_pass_;
+}
