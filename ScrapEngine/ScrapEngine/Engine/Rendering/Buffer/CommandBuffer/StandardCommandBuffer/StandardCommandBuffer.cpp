@@ -69,9 +69,9 @@ void ScrapEngine::Render::StandardCommandBuffer::load_skybox(VulkanSkyboxInstanc
 		                                              get_graphics_pipeline());
 		const std::pair<VertexBufferContainer*, IndicesBufferContainer*>*
 			skybox_pair = skybox_ref->get_mesh_buffers();
-		vk::Buffer buff[] = {*skybox_pair->first->get_buffer()};
+		vk::Buffer buff[] = {*(skybox_pair->first)};
 		command_buffers_[i].bindVertexBuffers(0, 1, buff, offsets);
-		command_buffers_[i].bindIndexBuffer(*skybox_pair->second->get_buffer(), 0, vk::IndexType::eUint32);
+		command_buffers_[i].bindIndexBuffer(*(skybox_pair->second), 0, vk::IndexType::eUint32);
 		command_buffers_[i].bindDescriptorSets(vk::PipelineBindPoint::eGraphics,
 		                                       *skybox_ref->get_skybox_material()->
 		                                                    get_vulkan_render_graphics_pipeline()->
@@ -126,11 +126,11 @@ void ScrapEngine::Render::StandardCommandBuffer::load_mesh(VulkanMeshInstance* m
 			                                 *current_mat
 			                                  ->get_vulkan_render_graphics_pipeline()->get_graphics_pipeline());
 
-			vk::Buffer vertex_buffers[] = {*(mesh_buffer.first->get_buffer())};
+			vk::Buffer vertex_buffers[] = {*(mesh_buffer.first)};
 
 			command_buffers_[i].bindVertexBuffers(0, 1, vertex_buffers, offsets);
 
-			command_buffers_[i].bindIndexBuffer(*(mesh_buffer.second->get_buffer()), 0, vk::IndexType::eUint32);
+			command_buffers_[i].bindIndexBuffer(*(mesh_buffer.second), 0, vk::IndexType::eUint32);
 
 			command_buffers_[i].bindDescriptorSets(vk::PipelineBindPoint::eGraphics,
 			                                       *current_mat
