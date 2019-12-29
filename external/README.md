@@ -10,3 +10,4 @@ List of external libraries used to build the engine:
 * [openal-soft](https://github.com/kcat/openal-soft) is used as audio engine;
 * [reactphysics3d](https://github.com/DanielChappuis/reactphysics3d) is used as physics engine;
 * [stb](https://github.com/nothings/stb) is used to load images/textures (using stb_image);
+* [VulkanMemoryAllocator](https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator) is used as memory allocator for Vulkan resources.
