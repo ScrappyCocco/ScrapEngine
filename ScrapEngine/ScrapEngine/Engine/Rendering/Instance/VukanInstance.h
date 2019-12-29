@@ -48,7 +48,7 @@ namespace ScrapEngine
 			vk::Instance* get_vulkan_instance();
 			//Conversion operators
 			operator VkInstance();
-			operator vk::Instance();
+			operator vk::Instance() const;
 
 			//Return the validation layers manager (useful to create the device)
 			VulkanValidationLayers* get_validation_layers_manager() const;

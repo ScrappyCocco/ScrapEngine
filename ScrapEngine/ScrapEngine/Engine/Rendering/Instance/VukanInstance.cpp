@@ -94,12 +94,12 @@ vk::Instance* ScrapEngine::Render::VukanInstance::get_vulkan_instance()
 
 ScrapEngine::Render::VukanInstance::operator VkInstance_T*()
 {
-	return *(reinterpret_cast<VkInstance*>(get_vulkan_instance()));
+	return reinterpret_cast<VkInstance>(&vulkan_instance_);
 }
 
-ScrapEngine::Render::VukanInstance::operator vk::Instance()
+ScrapEngine::Render::VukanInstance::operator vk::Instance() const
 {
-	return *(get_vulkan_instance());
+	return vulkan_instance_;
 }
 
 ScrapEngine::Render::VulkanValidationLayers* ScrapEngine::Render::VukanInstance::get_validation_layers_manager() const
