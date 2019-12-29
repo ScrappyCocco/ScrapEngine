@@ -94,7 +94,12 @@ vk::Instance* ScrapEngine::Render::VukanInstance::get_vulkan_instance()
 
 ScrapEngine::Render::VukanInstance::operator VkInstance_T*()
 {
-	return *get_vulkan_instance();
+	return *(reinterpret_cast<VkInstance*>(get_vulkan_instance()));
+}
+
+ScrapEngine::Render::VukanInstance::operator vk::Instance()
+{
+	return *(get_vulkan_instance());
 }
 
 ScrapEngine::Render::VulkanValidationLayers* ScrapEngine::Render::VukanInstance::get_validation_layers_manager() const
