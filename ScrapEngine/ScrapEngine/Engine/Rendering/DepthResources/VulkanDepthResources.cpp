@@ -24,7 +24,7 @@ ScrapEngine::Render::VulkanDepthResources::VulkanDepthResources(const vk::Extent
 	);
 
 	VulkanMemoryAllocator::get_instance()->
-		create_depth_image(&image_info, depth_image_, depth_image_memory_);
+		create_texture_image(&image_info, depth_image_, depth_image_memory_);
 
 	depth_image_view_ = TextureImageView::create_image_view(&depth_image_, depth_format,
 	                                                        vk::ImageAspectFlagBits::eDepth,

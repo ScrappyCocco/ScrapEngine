@@ -18,12 +18,6 @@ namespace ScrapEngine
 			BaseTexture() = default;
 			virtual ~BaseTexture() = 0;
 
-			static void create_image(const uint32_t& width, const uint32_t& height, const vk::Format& format,
-			                         vk::ImageTiling tiling, const vk::ImageUsageFlags& usage,
-			                         const vk::MemoryPropertyFlags& properties, vk::Image& image,
-			                         vk::DeviceMemory& image_memory, uint32_t mip_levels_data,
-			                         vk::SampleCountFlagBits num_samples);
-
 			static void transition_image_layout(vk::Image* image, const vk::Format& format,
 			                                    const vk::ImageLayout& old_layout, const vk::ImageLayout& new_layout,
 			                                    const uint32_t& mip_levels_data, int layercount = 1);

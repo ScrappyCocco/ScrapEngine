@@ -129,6 +129,7 @@
     <ClCompile Include="Engine\Rendering\Texture\TextureImageView\TextureImageView.cpp" />
     <ClCompile Include="Engine\Rendering\Texture\TextureSampler\TextureSampler.cpp" />
     <ClCompile Include="Engine\Rendering\Texture\Texture\BaseTexture.cpp" />
+    <ClCompile Include="Engine\Rendering\Texture\Texture\SkyboxTexture\SkyboxStagingTexture.cpp" />
     <ClCompile Include="Engine\Rendering\Texture\Texture\SkyboxTexture\SkyboxTexture.cpp" />
     <ClCompile Include="Engine\Rendering\Texture\Texture\StandardTexture\StandardTexture.cpp" />
     <ClCompile Include="Engine\Rendering\ValidationLayers\VulkanValidationLayers.cpp" />
@@ -254,6 +255,7 @@
     <ClInclude Include="Engine\Rendering\Texture\TextureImageView\TextureImageView.h" />
     <ClInclude Include="Engine\Rendering\Texture\TextureSampler\TextureSampler.h" />
     <ClInclude Include="Engine\Rendering\Texture\Texture\BaseTexture.h" />
+    <ClInclude Include="Engine\Rendering\Texture\Texture\SkyboxTexture\SkyboxStagingTexture.h" />
     <ClInclude Include="Engine\Rendering\Texture\Texture\SkyboxTexture\SkyboxTexture.h" />
     <ClInclude Include="Engine\Rendering\Texture\Texture\StandardTexture\StandardTexture.h" />
     <ClInclude Include="Engine\Rendering\ValidationLayers\VulkanValidationLayers.h" />

@@ -2,7 +2,8 @@
 #include <Engine/Rendering/Memory/MemoryManager.h>
 #include <Engine/Debug/DebugLog.h>
 #include <Engine/Rendering/Buffer/StagingBuffer/ImageStagingBuffer/ImageStagingBuffer.h>
-#include <Engine/Rendering/Texture/Texture/StandardTexture/StandardTexture.h>
+#include <Engine/Rendering/Texture/Texture/SkyboxTexture/SkyboxStagingTexture.h>
+#include <Engine/Rendering/Memory/VulkanMemoryAllocator.h>
 
 ScrapEngine::Render::SkyboxTexture::SkyboxTexture(const std::array<std::string, 6>& files_path)
 {
@@ -14,10 +15,10 @@ ScrapEngine::Render::SkyboxTexture::SkyboxTexture(const std::array<std::string, 
 	for (const std::string& file : files_path)
 	{
 		Debug::DebugLog::print_to_console_log("Loading skybox texture: '" + file + "'");
-		images_.push_back(new StandardTexture(file, false));
+		images_.push_back(new SkyboxStagingTexture(file, false));
 		Debug::DebugLog::print_to_console_log("Skybox texture '" + file + "' successfully loaded!");
 	}
-	cube_image_size = images_.back()->get_texture_height();
+	cube_image_size_ = images_.back()->get_texture_height();
 	Debug::DebugLog::print_to_console_log("All skybox textures loaded...");
 	//-----------------------
 	// create cubemap base image
@@ -43,27 +44,7 @@ ScrapEngine::Render::SkyboxTexture::SkyboxTexture(const std::array<std::string, 
 	// allocate cubemap space memory
 	//-----------------------
 
-	if (VulkanDevice::get_instance()->get_logical_device()->createImage(&image_create_info, nullptr, &texture_image_)
-		!= vk::Result::eSuccess)
-	{
-		throw std::runtime_error("TextureImage: Failed to create image!");
-	}
-
-	vk::MemoryRequirements mem_requirements;
-	VulkanDevice::get_instance()->get_logical_device()->getImageMemoryRequirements(texture_image_, &mem_requirements);
-
-	vk::MemoryAllocateInfo alloc_info(
-		mem_requirements.size,
-		find_memory_type(mem_requirements.memoryTypeBits, vk::MemoryPropertyFlagBits::eDeviceLocal)
-	);
-
-	if (VulkanDevice::get_instance()->get_logical_device()->allocateMemory(&alloc_info, nullptr, &texture_image_memory_)
-		!= vk::Result::eSuccess)
-	{
-		throw std::runtime_error("TextureImage: Failed to allocate image memory!");
-	}
-
-	VulkanDevice::get_instance()->get_logical_device()->bindImageMemory(texture_image_, texture_image_memory_, 0);
+	VulkanMemoryAllocator::get_instance()->create_texture_image(&image_create_info, texture_image_, texture_image_memory_);
 
 	//-----------------------
 	// copy images
@@ -126,5 +107,5 @@ int ScrapEngine::Render::SkyboxTexture::get_texture_width() const
 
 int ScrapEngine::Render::SkyboxTexture::get_texture_height() const
 {
-	return cube_image_size;
+	return cube_image_size_;
 }

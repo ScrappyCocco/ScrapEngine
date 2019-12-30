@@ -15,7 +15,7 @@ namespace ScrapEngine
 			int tex_width_, tex_height_, tex_channels_;
 		public:
 			StandardTexture(const std::string& file_path, bool should_copy_from_staging = true);
-			~StandardTexture();
+			~StandardTexture() = default;
 
 			void transition_image_layout(vk::Image* image, const vk::Format& format, const vk::ImageLayout& old_layout,
 			                             const vk::ImageLayout& new_layout) const;

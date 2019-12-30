@@ -63,13 +63,7 @@ namespace ScrapEngine
 			void create_generic_image(vk::ImageCreateInfo* image_info, VmaAllocationCreateInfo* alloc_info,
 			                          vk::Image& image, VmaAllocation& image_alloc) const;
 
-			void create_depth_image(vk::ImageCreateInfo* image_info,
-			                        vk::Image& image, VmaAllocation& image_alloc) const;
-
 			void create_texture_image(vk::ImageCreateInfo* image_info,
-			                          vk::Image& image, VmaAllocation& image_alloc) const;
-
-			void create_staging_image(vk::ImageCreateInfo* image_info,
 			                          vk::Image& image, VmaAllocation& image_alloc) const;
 		private:
 			//-----------------------------------

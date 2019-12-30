@@ -718,6 +718,9 @@
     <ClCompile Include="Engine\Rendering\Memory\VulkanMemoryAllocator.cpp">
       <Filter>Engine\Rendering\Memory</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Rendering\Texture\Texture\SkyboxTexture\SkyboxStagingTexture.cpp">
+      <Filter>Engine\Rendering\Texture\Texture\SkyboxTexture</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Manager\EngineManager.h">
@@ -1094,6 +1097,9 @@
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Memory\VulkanMemoryAllocator.h">
       <Filter>Engine\Rendering\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Texture\Texture\SkyboxTexture\SkyboxStagingTexture.h">
+      <Filter>Engine\Rendering\Texture\Texture\SkyboxTexture</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

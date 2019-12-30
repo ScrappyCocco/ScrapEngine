@@ -160,34 +160,11 @@ void ScrapEngine::Render::VulkanMemoryAllocator::create_generic_image(vk::ImageC
 	image = alloc_image;
 }
 
-void ScrapEngine::Render::VulkanMemoryAllocator::create_depth_image(vk::ImageCreateInfo* image_info, vk::Image& image,
-	VmaAllocation& image_alloc) const
-{
-	VmaAllocationCreateInfo alloc_info = {};
-	//alloc_info.requiredFlags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT;
-	alloc_info.usage = VMA_MEMORY_USAGE_GPU_ONLY;
-	alloc_info.preferredFlags = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
-
-	create_generic_image(image_info, &alloc_info, image, image_alloc);
-}
-
 void ScrapEngine::Render::VulkanMemoryAllocator::create_texture_image(vk::ImageCreateInfo* image_info, vk::Image& image,
-	VmaAllocation& image_alloc) const
+                                                                      VmaAllocation& image_alloc) const
 {
 	VmaAllocationCreateInfo alloc_info = {};
-	//alloc_info.requiredFlags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT;
 	alloc_info.usage = VMA_MEMORY_USAGE_GPU_ONLY;
-	alloc_info.preferredFlags = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
-
-	create_generic_image(image_info, &alloc_info, image, image_alloc);
-}
-
-void ScrapEngine::Render::VulkanMemoryAllocator::create_staging_image(vk::ImageCreateInfo* image_info, vk::Image& image,
-	VmaAllocation& image_alloc) const
-{
-	VmaAllocationCreateInfo alloc_info = {};
-	alloc_info.requiredFlags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT;
-	alloc_info.usage = VMA_MEMORY_USAGE_CPU_ONLY;
 	alloc_info.preferredFlags = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
 
 	create_generic_image(image_info, &alloc_info, image, image_alloc);

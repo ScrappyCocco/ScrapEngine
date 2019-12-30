@@ -23,8 +23,8 @@ namespace ScrapEngine
 			};
 
 		private:
-			vk::Image front_image_;
-			vk::DeviceMemory font_memory_;
+			vk::Image font_image_;
+			VmaAllocation font_memory_;
 			TextureImageView* front_view_ = nullptr;
 			TextureSampler* sampler_ = nullptr;
 			BaseDescriptorPool* descriptor_pool_ = nullptr;

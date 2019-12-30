@@ -25,49 +25,6 @@ ScrapEngine::Render::BaseStagingBuffer* ScrapEngine::Render::BaseTexture::get_te
 	return nullptr;
 }
 
-void ScrapEngine::Render::BaseTexture::create_image(const uint32_t& width, const uint32_t& height,
-                                                    const vk::Format& format, const vk::ImageTiling tiling,
-                                                    const vk::ImageUsageFlags& usage,
-                                                    const vk::MemoryPropertyFlags& properties, vk::Image& image,
-                                                    vk::DeviceMemory& image_memory, const uint32_t mip_levels_data,
-                                                    const vk::SampleCountFlagBits num_samples)
-{
-	vk::ImageCreateInfo image_info(
-		vk::ImageCreateFlags(),
-		vk::ImageType::e2D,
-		format,
-		vk::Extent3D(width, height, 1),
-		mip_levels_data,
-		1,
-		num_samples,
-		tiling,
-		usage,
-		vk::SharingMode::eExclusive
-	);
-	
-	if (VulkanDevice::get_instance()->get_logical_device()->createImage(&image_info, nullptr, &image)
-		!= vk::Result::eSuccess)
-	{
-		throw std::runtime_error("TextureImage: Failed to create image!");
-	}
-
-	vk::MemoryRequirements mem_requirements;
-	VulkanDevice::get_instance()->get_logical_device()->getImageMemoryRequirements(image, &mem_requirements);
-
-	vk::MemoryAllocateInfo alloc_info(
-		mem_requirements.size,
-		find_memory_type(mem_requirements.memoryTypeBits, properties)
-	);
-
-	if (VulkanDevice::get_instance()->get_logical_device()->allocateMemory(&alloc_info, nullptr, &image_memory)
-		!= vk::Result::eSuccess)
-	{
-		throw std::runtime_error("TextureImage: Failed to allocate image memory!");
-	}
-
-	VulkanDevice::get_instance()->get_logical_device()->bindImageMemory(image, image_memory, 0);
-}
-
 void ScrapEngine::Render::BaseTexture::transition_image_layout(vk::Image* image, const vk::Format& format,
                                                                const vk::ImageLayout& old_layout,
                                                                const vk::ImageLayout& new_layout,
