@@ -3,21 +3,16 @@
 #include <Engine/Rendering/Memory/MemoryManager.h>
 #include <Engine/Rendering/Buffer/BaseBuffer.h>
 #include <Engine/Rendering/DepthResources/VulkanDepthResources.h>
+#include <Engine/Rendering/Memory/VulkanMemoryAllocator.h>
 
 ScrapEngine::Render::BaseTexture::~BaseTexture()
 {
-	VulkanDevice::get_instance()->get_logical_device()->destroyImage(texture_image_);
-	VulkanDevice::get_instance()->get_logical_device()->freeMemory(texture_image_memory_);
+	VulkanMemoryAllocator::get_instance()->destroy_image(texture_image_, texture_image_memory_);
 }
 
 vk::Image* ScrapEngine::Render::BaseTexture::get_texture_image()
 {
 	return &texture_image_;
-}
-
-vk::DeviceMemory* ScrapEngine::Render::BaseTexture::get_texture_image_memory()
-{
-	return &texture_image_memory_;
 }
 
 uint32_t ScrapEngine::Render::BaseTexture::get_mip_levels() const
@@ -49,7 +44,7 @@ void ScrapEngine::Render::BaseTexture::create_image(const uint32_t& width, const
 		usage,
 		vk::SharingMode::eExclusive
 	);
-
+	
 	if (VulkanDevice::get_instance()->get_logical_device()->createImage(&image_info, nullptr, &image)
 		!= vk::Result::eSuccess)
 	{

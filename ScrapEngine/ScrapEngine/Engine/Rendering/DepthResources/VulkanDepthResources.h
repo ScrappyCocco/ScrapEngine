@@ -11,7 +11,7 @@ namespace ScrapEngine
 		{
 		private:
 			vk::Image depth_image_;
-			vk::DeviceMemory depth_image_memory_;
+			VmaAllocation depth_image_memory_;
 			vk::ImageView depth_image_view_;
 		public:
 			VulkanDepthResources(const vk::Extent2D* swap_chain_extent, vk::SampleCountFlagBits msaa_samples);
@@ -23,7 +23,6 @@ namespace ScrapEngine
 			static bool has_stencil_component(const vk::Format& format);
 
 			vk::Image* get_depth_image();
-			vk::DeviceMemory* get_depth_image_memory();
 			vk::ImageView* get_depth_image_view();
 		};
 	}

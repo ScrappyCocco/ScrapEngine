@@ -2,8 +2,8 @@
 #include <Engine/Rendering/Texture/Texture/StandardTexture/StandardTexture.h>
 #include <stdexcept>
 #include <Engine/Rendering/Memory/MemoryManager.h>
-#include <Engine/Rendering/DepthResources/VulkanDepthResources.h>
 #include <Engine/Rendering/Buffer/StagingBuffer/ImageStagingBuffer/ImageStagingBuffer.h>
+#include <Engine/Rendering/Memory/VulkanMemoryAllocator.h>
 
 ScrapEngine::Render::StandardTexture::StandardTexture(const std::string& file_path, const bool should_copy_from_staging)
 {
@@ -17,55 +17,43 @@ ScrapEngine::Render::StandardTexture::StandardTexture(const std::string& file_pa
 		throw std::runtime_error("TextureImage: Failed to load texture image! (pixels not valid) - " + file_path);
 	}
 
-	staginf_buffer_ref_ = new ImageStagingBuffer(image_size, pixels);
+	const std::unique_ptr<BaseStagingBuffer> staginf_buffer_ref =
+		std::make_unique<ImageStagingBuffer>(image_size, pixels);
 
 	stbi_image_free(pixels);
 
-	create_image(tex_width_, tex_height_, vk::Format::eR8G8B8A8Unorm, vk::ImageTiling::eOptimal,
-	             vk::ImageUsageFlagBits::eTransferSrc | vk::ImageUsageFlagBits::eTransferDst | vk::ImageUsageFlagBits::
-	             eSampled, vk::MemoryPropertyFlagBits::eDeviceLocal, texture_image_, texture_image_memory_);
+	//Create the image
+
+	vk::ImageCreateInfo image_info(
+		vk::ImageCreateFlags(),
+		vk::ImageType::e2D,
+		vk::Format::eR8G8B8A8Unorm,
+		vk::Extent3D(tex_width_, tex_height_, 1),
+		mip_levels_,
+		1,
+		vk::SampleCountFlagBits::e1,
+		vk::ImageTiling::eOptimal,
+		vk::ImageUsageFlagBits::eTransferSrc | vk::ImageUsageFlagBits::eTransferDst |
+		vk::ImageUsageFlagBits::eSampled,
+		vk::SharingMode::eExclusive
+	);
+
+	VulkanMemoryAllocator::get_instance()->create_texture_image(&image_info, texture_image_, texture_image_memory_);
 
 	transition_image_layout(&texture_image_, vk::Format::eR8G8B8A8Unorm, vk::ImageLayout::eUndefined,
 	                        vk::ImageLayout::eTransferDstOptimal);
 
-	if (should_copy_from_staging)
-	{
-		ImageStagingBuffer::copy_buffer_to_image(staginf_buffer_ref_->get_staging_buffer(), &texture_image_,
-		                                         static_cast<uint32_t>(tex_width_), static_cast<uint32_t>(tex_height_));
+	ImageStagingBuffer::copy_buffer_to_image(staginf_buffer_ref->get_staging_buffer(), &texture_image_,
+	                                         static_cast<uint32_t>(tex_width_), static_cast<uint32_t>(tex_height_));
 
-		delete staginf_buffer_ref_;
-		staginf_buffer_ref_ = nullptr;
-
-		generate_mipmaps(&texture_image_, vk::Format::eR8G8B8A8Unorm, tex_width_, tex_height_, mip_levels_);
-	}
+	generate_mipmaps(&texture_image_, vk::Format::eR8G8B8A8Unorm, tex_width_, tex_height_, mip_levels_);
 }
-
-ScrapEngine::Render::StandardTexture::~StandardTexture()
-{
-	delete staginf_buffer_ref_;
-}
-
-void ScrapEngine::Render::StandardTexture::create_image(const uint32_t& width, const uint32_t& height,
-                                                        const vk::Format& format, const vk::ImageTiling tiling,
-                                                        const vk::ImageUsageFlags& usage,
-                                                        const vk::MemoryPropertyFlags& properties,
-                                                        vk::Image& image, vk::DeviceMemory& image_memory) const
-{
-	BaseTexture::create_image(width, height, format, tiling, usage, properties, image, image_memory, mip_levels_,
-	                          vk::SampleCountFlagBits::e1);
-}
-
 
 void ScrapEngine::Render::StandardTexture::transition_image_layout(vk::Image* image, const vk::Format& format,
                                                                    const vk::ImageLayout& old_layout,
                                                                    const vk::ImageLayout& new_layout) const
 {
 	BaseTexture::transition_image_layout(image, format, old_layout, new_layout, mip_levels_);
-}
-
-ScrapEngine::Render::BaseStagingBuffer* ScrapEngine::Render::StandardTexture::get_texture_staging_buffer() const
-{
-	return staginf_buffer_ref_;
 }
 
 int ScrapEngine::Render::StandardTexture::get_texture_width() const

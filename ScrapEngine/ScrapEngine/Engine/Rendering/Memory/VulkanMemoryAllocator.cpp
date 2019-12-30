@@ -37,10 +37,15 @@ void ScrapEngine::Render::VulkanMemoryAllocator::destroy_buffer(vk::Buffer& buff
 	vmaDestroyBuffer(allocator_, buffer, buff_alloc);
 }
 
+void ScrapEngine::Render::VulkanMemoryAllocator::destroy_image(vk::Image& image, VmaAllocation& image_alloc) const
+{
+	vmaDestroyImage(allocator_, image, image_alloc);
+}
+
 void ScrapEngine::Render::VulkanMemoryAllocator::map_buffer_allocation(VmaAllocation& buff_alloc, void** data) const
 {
 	const VkResult res = vmaMapMemory(allocator_, buff_alloc, &(*data));
-	
+
 	if (res != VK_SUCCESS)
 	{
 		throw std::runtime_error("[VulkanMemoryAllocator][map_buffer_allocation] Unable to map buffer memory!");
@@ -90,7 +95,8 @@ void ScrapEngine::Render::VulkanMemoryAllocator::create_generic_buffer(vk::Buffe
 }
 
 void ScrapEngine::Render::VulkanMemoryAllocator::create_vertex_index_buffer(vk::BufferCreateInfo* buff_info,
-	vk::Buffer& buffer, VmaAllocation& buff_alloc) const
+                                                                            vk::Buffer& buffer,
+                                                                            VmaAllocation& buff_alloc) const
 {
 	VmaAllocationCreateInfo alloc_info = {};
 	alloc_info.requiredFlags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT;
@@ -117,8 +123,9 @@ void ScrapEngine::Render::VulkanMemoryAllocator::create_uniform_buffer(const vk:
 	create_generic_buffer(&buffer_info, &alloc_info, buffer, buff_alloc);
 }
 
-void ScrapEngine::Render::VulkanMemoryAllocator::create_transfer_staging_buffer(const vk::DeviceSize size, vk::Buffer& buffer,
-                                                                                VmaAllocation& buff_alloc) const
+void ScrapEngine::Render::VulkanMemoryAllocator::create_transfer_staging_buffer(
+	const vk::DeviceSize size, vk::Buffer& buffer,
+	VmaAllocation& buff_alloc) const
 {
 	vk::BufferCreateInfo buffer_info(
 		vk::BufferCreateFlags(),
@@ -134,8 +141,66 @@ void ScrapEngine::Render::VulkanMemoryAllocator::create_transfer_staging_buffer(
 	create_generic_buffer(&buffer_info, &alloc_info, buffer, buff_alloc);
 }
 
+void ScrapEngine::Render::VulkanMemoryAllocator::create_generic_image(vk::ImageCreateInfo* image_info,
+                                                                      VmaAllocationCreateInfo* alloc_info,
+                                                                      vk::Image& image,
+                                                                      VmaAllocation& image_alloc) const
+{
+	VkImage alloc_image;
+	VkImageCreateInfo* conv_image_info = convert_image_create_info(image_info);
+
+	const VkResult res = vmaCreateImage(allocator_, conv_image_info, alloc_info, &alloc_image, &image_alloc, nullptr);
+
+	if (res != VK_SUCCESS)
+	{
+		throw std::runtime_error("[VulkanMemoryAllocator][create_generic_image] Unable to create image!");
+	}
+
+	//Copy the allocated buffer to the c++ bindings
+	image = alloc_image;
+}
+
+void ScrapEngine::Render::VulkanMemoryAllocator::create_depth_image(vk::ImageCreateInfo* image_info, vk::Image& image,
+	VmaAllocation& image_alloc) const
+{
+	VmaAllocationCreateInfo alloc_info = {};
+	//alloc_info.requiredFlags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT;
+	alloc_info.usage = VMA_MEMORY_USAGE_GPU_ONLY;
+	alloc_info.preferredFlags = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
+
+	create_generic_image(image_info, &alloc_info, image, image_alloc);
+}
+
+void ScrapEngine::Render::VulkanMemoryAllocator::create_texture_image(vk::ImageCreateInfo* image_info, vk::Image& image,
+	VmaAllocation& image_alloc) const
+{
+	VmaAllocationCreateInfo alloc_info = {};
+	//alloc_info.requiredFlags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT;
+	alloc_info.usage = VMA_MEMORY_USAGE_GPU_ONLY;
+	alloc_info.preferredFlags = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
+
+	create_generic_image(image_info, &alloc_info, image, image_alloc);
+}
+
+void ScrapEngine::Render::VulkanMemoryAllocator::create_staging_image(vk::ImageCreateInfo* image_info, vk::Image& image,
+	VmaAllocation& image_alloc) const
+{
+	VmaAllocationCreateInfo alloc_info = {};
+	alloc_info.requiredFlags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT;
+	alloc_info.usage = VMA_MEMORY_USAGE_CPU_ONLY;
+	alloc_info.preferredFlags = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
+
+	create_generic_image(image_info, &alloc_info, image, image_alloc);
+}
+
 VkBufferCreateInfo* ScrapEngine::Render::VulkanMemoryAllocator::convert_buffer_create_info(
 	vk::BufferCreateInfo* buffer_info)
 {
 	return reinterpret_cast<VkBufferCreateInfo*>(buffer_info);
+}
+
+VkImageCreateInfo* ScrapEngine::Render::VulkanMemoryAllocator::convert_image_create_info(
+	vk::ImageCreateInfo* image_info)
+{
+	return reinterpret_cast<VkImageCreateInfo*>(image_info);
 }
