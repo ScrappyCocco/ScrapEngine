@@ -11,7 +11,7 @@ namespace ScrapEngine
 		private:
 			vk::Buffer buffer_ = nullptr;
 			vk::DescriptorBufferInfo descriptor_;
-			VmaAllocation buffer_allocation_;
+			VmaAllocation buffer_memory_;
 
 			void* mapped_memory_ = nullptr;
 		public:
