@@ -1,7 +1,6 @@
 #pragma once
 
 #include <Engine/LogicCore/SObject.h>
-#include <Engine/LogicCore/Components/SComponent.h>
 #include <vector>
 
 namespace ScrapEngine

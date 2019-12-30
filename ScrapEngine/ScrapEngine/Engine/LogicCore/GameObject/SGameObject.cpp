@@ -1,4 +1,5 @@
 #include <Engine/LogicCore/GameObject/SGameObject.h>
+#include <Engine/LogicCore/Components/SComponent.h>
 #include <algorithm>
 
 ScrapEngine::Core::SGameObject::SGameObject(const std::string& object_name,

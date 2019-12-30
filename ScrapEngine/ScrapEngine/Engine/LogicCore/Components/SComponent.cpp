@@ -1,4 +1,5 @@
 #include <Engine/LogicCore/Components/SComponent.h>
+#include <Engine/LogicCore/GameObject/SGameObject.h>
 #include <glm/mat4x4.hpp>
 
 ScrapEngine::Core::SComponent::SComponent(const std::string& component_name) : SObject(component_name)
