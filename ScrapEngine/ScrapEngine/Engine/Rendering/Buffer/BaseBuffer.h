@@ -17,7 +17,6 @@ namespace ScrapEngine
 			//Utils methods to works and copy stuff from/with buffers
 			//Every method use begin_single_time_command() and end_and_submit_single_time_command()
 
-
 			static void copy_buffer(vk::Buffer* src_buffer, vk::Buffer& dst_buffer, const vk::DeviceSize& size,
 			                        const vk::DeviceSize& scr_offset = 0, const vk::DeviceSize& dst_offset = 0,
 			                        uint32_t region_count = 1);

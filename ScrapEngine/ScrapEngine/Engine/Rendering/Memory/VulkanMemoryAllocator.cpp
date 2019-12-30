@@ -40,7 +40,7 @@ void ScrapEngine::Render::VulkanMemoryAllocator::destroy_buffer(vk::Buffer& buff
 void ScrapEngine::Render::VulkanMemoryAllocator::map_buffer_allocation(VmaAllocation& buff_alloc, void** data) const
 {
 	const VkResult res = vmaMapMemory(allocator_, buff_alloc, &(*data));
-
+	
 	if (res != VK_SUCCESS)
 	{
 		throw std::runtime_error("[VulkanMemoryAllocator][map_buffer_allocation] Unable to map buffer memory!");
@@ -98,6 +98,23 @@ void ScrapEngine::Render::VulkanMemoryAllocator::create_vertex_index_buffer(vk::
 	alloc_info.preferredFlags = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
 
 	create_generic_buffer(buff_info, &alloc_info, buffer, buff_alloc);
+}
+
+void ScrapEngine::Render::VulkanMemoryAllocator::create_uniform_buffer(const vk::DeviceSize size, vk::Buffer& buffer,
+                                                                       VmaAllocation& buff_alloc) const
+{
+	vk::BufferCreateInfo buffer_info(
+		vk::BufferCreateFlags(),
+		size,
+		vk::BufferUsageFlagBits::eUniformBuffer,
+		vk::SharingMode::eExclusive
+	);
+
+	VmaAllocationCreateInfo alloc_info = {};
+	alloc_info.usage = VMA_MEMORY_USAGE_CPU_TO_GPU;
+	alloc_info.preferredFlags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
+
+	create_generic_buffer(&buffer_info, &alloc_info, buffer, buff_alloc);
 }
 
 VkBufferCreateInfo* ScrapEngine::Render::VulkanMemoryAllocator::convert_buffer_create_info(
