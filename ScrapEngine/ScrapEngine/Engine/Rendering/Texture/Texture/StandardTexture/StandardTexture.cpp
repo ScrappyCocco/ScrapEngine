@@ -1,7 +1,6 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <Engine/Rendering/Texture/Texture/StandardTexture/StandardTexture.h>
 #include <stdexcept>
-#include <Engine/Rendering/Memory/MemoryManager.h>
 #include <Engine/Rendering/Buffer/StagingBuffer/ImageStagingBuffer/ImageStagingBuffer.h>
 #include <Engine/Rendering/Memory/VulkanMemoryAllocator.h>
 
