@@ -17,7 +17,7 @@ namespace ScrapEngine
 			//Function to get the buffer
 			vk::Buffer* get_buffer() const;
 			//Conversion operators
-			operator vk::Buffer();
+			operator vk::Buffer() const;
 		};
 	}
 }
