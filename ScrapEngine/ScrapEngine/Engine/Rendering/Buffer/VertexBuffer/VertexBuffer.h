@@ -12,7 +12,7 @@ namespace ScrapEngine
 		{
 		private:
 			vk::Buffer vertex_buffer_;
-			vk::DeviceMemory vertex_buffer_memory_;
+			VmaAllocation vertex_buffer_memory_;
 		public:
 			VertexBuffer(const std::vector<Vertex>* vertices);
 			~VertexBuffer();

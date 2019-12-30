@@ -89,6 +89,17 @@ void ScrapEngine::Render::VulkanMemoryAllocator::create_generic_buffer(vk::Buffe
 	buffer = alloc_buffer;
 }
 
+void ScrapEngine::Render::VulkanMemoryAllocator::create_vertex_index_buffer(vk::BufferCreateInfo* buff_info,
+	vk::Buffer& buffer, VmaAllocation& buff_alloc) const
+{
+	VmaAllocationCreateInfo alloc_info = {};
+	alloc_info.requiredFlags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT;
+	alloc_info.usage = VMA_MEMORY_USAGE_GPU_ONLY;
+	alloc_info.preferredFlags = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
+
+	create_generic_buffer(buff_info, &alloc_info, buffer, buff_alloc);
+}
+
 VkBufferCreateInfo* ScrapEngine::Render::VulkanMemoryAllocator::convert_buffer_create_info(
 	vk::BufferCreateInfo* buffer_info)
 {

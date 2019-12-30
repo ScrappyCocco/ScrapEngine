@@ -11,7 +11,7 @@ namespace ScrapEngine
 		{
 		private:
 			vk::Buffer index_buffer_;
-			vk::DeviceMemory index_buffer_memory_;
+			VmaAllocation index_buffer_memory_;
 		public:
 			IndexBuffer(const std::vector<uint32_t>* indices);
 			~IndexBuffer();
