@@ -753,9 +753,6 @@
     <ClInclude Include="Engine\Rendering\Semaphores\VulkanSemaphoresManager.h">
       <Filter>Engine\Rendering\Semaphores</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Rendering\Memory\MemoryManager.h">
-      <Filter>Engine\Rendering\Memory</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Rendering\Buffer\BaseBuffer.h">
       <Filter>Engine\Rendering\Buffer</Filter>
     </ClInclude>

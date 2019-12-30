@@ -225,7 +225,6 @@
     <ClInclude Include="Engine\Rendering\Instance\VukanInstance.h" />
     <ClInclude Include="Engine\Rendering\Manager\RenderManager.h" />
     <ClInclude Include="Engine\Rendering\Manager\RenderManagerView.h" />
-    <ClInclude Include="Engine\Rendering\Memory\MemoryManager.h" />
     <ClInclude Include="Engine\Rendering\Memory\VulkanMemoryAllocator.h" />
     <ClInclude Include="Engine\Rendering\Model\Material\BasicMaterial.h" />
     <ClInclude Include="Engine\Rendering\Model\Material\SimpleMaterial\SimpleMaterial.h" />

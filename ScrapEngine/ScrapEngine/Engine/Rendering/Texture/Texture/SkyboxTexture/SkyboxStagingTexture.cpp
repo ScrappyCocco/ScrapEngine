@@ -1,6 +1,5 @@
 #include <Engine/Rendering/Texture/Texture/SkyboxTexture/SkyboxStagingTexture.h>
 #include <stdexcept>
-#include <Engine/Rendering/Memory/MemoryManager.h>
 #include <Engine/Rendering/DepthResources/VulkanDepthResources.h>
 #include <Engine/Rendering/Buffer/StagingBuffer/ImageStagingBuffer/ImageStagingBuffer.h>
 

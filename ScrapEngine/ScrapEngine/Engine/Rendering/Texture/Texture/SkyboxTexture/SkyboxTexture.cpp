@@ -1,5 +1,4 @@
 #include <Engine/Rendering/Texture/Texture/SkyboxTexture/SkyboxTexture.h>
-#include <Engine/Rendering/Memory/MemoryManager.h>
 #include <Engine/Debug/DebugLog.h>
 #include <Engine/Rendering/Buffer/StagingBuffer/ImageStagingBuffer/ImageStagingBuffer.h>
 #include <Engine/Rendering/Texture/Texture/SkyboxTexture/SkyboxStagingTexture.h>

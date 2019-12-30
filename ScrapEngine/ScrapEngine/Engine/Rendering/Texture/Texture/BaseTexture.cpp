@@ -1,9 +1,9 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <Engine/Rendering/Texture/Texture/BaseTexture.h>
-#include <Engine/Rendering/Memory/MemoryManager.h>
 #include <Engine/Rendering/Buffer/BaseBuffer.h>
 #include <Engine/Rendering/DepthResources/VulkanDepthResources.h>
 #include <Engine/Rendering/Memory/VulkanMemoryAllocator.h>
+#include <Engine/Rendering/Device/VulkanDevice.h>
 
 ScrapEngine::Render::BaseTexture::~BaseTexture()
 {
