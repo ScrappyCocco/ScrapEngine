@@ -39,6 +39,9 @@ namespace ScrapEngine
 
 			void create_uniform_buffer(vk::DeviceSize size, vk::Buffer& buffer,
 			                           VmaAllocation& buff_alloc) const;
+
+			void create_transfer_staging_buffer(vk::DeviceSize size, vk::Buffer& buffer,
+			                                    VmaAllocation& buff_alloc) const;
 		private:
 			static VkBufferCreateInfo* convert_buffer_create_info(vk::BufferCreateInfo* buffer_info);
 		};

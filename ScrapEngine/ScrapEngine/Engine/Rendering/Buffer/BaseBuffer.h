@@ -9,11 +9,6 @@ namespace ScrapEngine
 		class BaseBuffer
 		{
 		public:
-			static void create_buffer(const vk::DeviceSize& size, const vk::BufferUsageFlags& usage,
-			                          const vk::MemoryPropertyFlags& properties, vk::Buffer& buffer,
-			                          vk::DeviceMemory& buffer_memory, bool auto_bind_memory = true);
-
-			//-------------
 			//Utils methods to works and copy stuff from/with buffers
 			//Every method use begin_single_time_command() and end_and_submit_single_time_command()
 

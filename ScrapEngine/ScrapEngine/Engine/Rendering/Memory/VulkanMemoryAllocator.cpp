@@ -117,6 +117,23 @@ void ScrapEngine::Render::VulkanMemoryAllocator::create_uniform_buffer(const vk:
 	create_generic_buffer(&buffer_info, &alloc_info, buffer, buff_alloc);
 }
 
+void ScrapEngine::Render::VulkanMemoryAllocator::create_transfer_staging_buffer(const vk::DeviceSize size, vk::Buffer& buffer,
+                                                                                VmaAllocation& buff_alloc) const
+{
+	vk::BufferCreateInfo buffer_info(
+		vk::BufferCreateFlags(),
+		size,
+		vk::BufferUsageFlagBits::eTransferSrc,
+		vk::SharingMode::eExclusive
+	);
+
+	VmaAllocationCreateInfo alloc_info = {};
+	alloc_info.usage = VMA_MEMORY_USAGE_CPU_ONLY;
+	alloc_info.preferredFlags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
+
+	create_generic_buffer(&buffer_info, &alloc_info, buffer, buff_alloc);
+}
+
 VkBufferCreateInfo* ScrapEngine::Render::VulkanMemoryAllocator::convert_buffer_create_info(
 	vk::BufferCreateInfo* buffer_info)
 {
