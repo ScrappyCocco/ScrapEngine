@@ -4,6 +4,7 @@
 #include <Engine/Rendering/Buffer/StagingBuffer/ImageStagingBuffer/ImageStagingBuffer.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
 #include <Engine/Rendering/Descriptor/DescriptorPool/GuiDescriptorPool/GuiDescriptorPool.h>
+#include <Engine/Rendering/Memory/VulkanMemoryAllocator.h>
 
 ScrapEngine::Render::VulkanImGui::VulkanImGui()
 {
@@ -17,15 +18,12 @@ ScrapEngine::Render::VulkanImGui::~VulkanImGui()
 {
 	ImGui::DestroyContext();
 	// Release all Vulkan resources required for rendering imGui
-	vk::Device* device = VulkanDevice::get_instance()->get_logical_device();
-
 	//Clear buffers
 	delete vertex_buffer_;
 	delete index_buffer_;
 	//Clear other resources
-	device->destroyImage(front_image_);
 	delete front_view_;
-	device->freeMemory(font_memory_);
+	VulkanMemoryAllocator::get_instance()->destroy_image(font_image_, font_memory_);
 	delete sampler_;
 	delete pipeline_;
 	delete descriptor_pool_;
@@ -51,16 +49,27 @@ void ScrapEngine::Render::VulkanImGui::init_resources(VulkanSwapChain* swap_chai
 	const vk::DeviceSize upload_size = tex_width * tex_height * 4 * sizeof(char);
 
 	// Create target image for copy
-	BaseTexture::create_image(tex_width, tex_height, vk::Format::eR8G8B8A8Unorm, vk::ImageTiling::eOptimal,
-	                          vk::ImageUsageFlagBits::eSampled | vk::ImageUsageFlagBits::eTransferDst,
-	                          vk::MemoryPropertyFlagBits::eDeviceLocal,
-	                          front_image_, font_memory_, 1, vk::SampleCountFlagBits::e1);
+
+	const vk::ImageCreateInfo image_info(
+		vk::ImageCreateFlags(),
+		vk::ImageType::e2D,
+		vk::Format::eR8G8B8A8Unorm,
+		vk::Extent3D(tex_width, tex_height, 1),
+		1,
+		1,
+		vk::SampleCountFlagBits::e1,
+		vk::ImageTiling::eOptimal,
+		vk::ImageUsageFlagBits::eSampled | vk::ImageUsageFlagBits::eTransferDst,
+		vk::SharingMode::eExclusive
+	);
+
+	VulkanMemoryAllocator::get_instance()->create_texture_image(&image_info, font_image_, font_memory_);
 
 	// Image view
-	front_view_ = new TextureImageView(&front_image_, 1);
+	front_view_ = new TextureImageView(&font_image_, 1);
 
 	// Prepare for transfer
-	BaseTexture::transition_image_layout(&front_image_, vk::Format::eR8G8B8A8Unorm, vk::ImageLayout::eUndefined,
+	BaseTexture::transition_image_layout(&font_image_, vk::Format::eR8G8B8A8Unorm, vk::ImageLayout::eUndefined,
 	                                     vk::ImageLayout::eTransferDstOptimal, 1);
 	//Prepare buffer
 	ImageStagingBuffer* staginf_buffer_ref = new ImageStagingBuffer(upload_size, font_data);
@@ -72,12 +81,12 @@ void ScrapEngine::Render::VulkanImGui::init_resources(VulkanSwapChain* swap_chai
 	buffer_copy_region.setImageSubresource(image_subresource_layer);
 	buffer_copy_region.setImageExtent(vk::Extent3D(tex_width, tex_height, 1));
 	//Copy
-	ImageStagingBuffer::copy_buffer_to_image(staginf_buffer_ref->get_staging_buffer(), &front_image_,
+	ImageStagingBuffer::copy_buffer_to_image(staginf_buffer_ref->get_staging_buffer(), &font_image_,
 	                                         &buffer_copy_region, 1, vk::ImageLayout::eTransferDstOptimal);
 	delete staginf_buffer_ref;
 	staginf_buffer_ref = nullptr;
 	// Prepare for shader read
-	BaseTexture::transition_image_layout(&front_image_, vk::Format::eR8G8B8A8Unorm,
+	BaseTexture::transition_image_layout(&font_image_, vk::Format::eR8G8B8A8Unorm,
 	                                     vk::ImageLayout::eTransferDstOptimal,
 	                                     vk::ImageLayout::eShaderReadOnlyOptimal, 1);
 	// Font texture Sampler

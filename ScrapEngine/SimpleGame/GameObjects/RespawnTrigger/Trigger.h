@@ -6,8 +6,6 @@
 class Trigger : public ScrapEngine::Core::SGameObject
 {
 private:
-	//Utils
-	ScrapEngine::Core::ComponentsManager* component_manager_ref_;
 	//Trigger
 	ScrapEngine::Core::TriggerComponent* box_trigger_;
 	//Object to test collision

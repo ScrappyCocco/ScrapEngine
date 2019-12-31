@@ -715,6 +715,12 @@
     <ClCompile Include="Engine\LogicCore\Components\CameraComponent\CameraComponent.cpp">
       <Filter>Engine\LogicCore\Components\CameraComponent</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Rendering\Memory\VulkanMemoryAllocator.cpp">
+      <Filter>Engine\Rendering\Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Texture\Texture\SkyboxTexture\SkyboxStagingTexture.cpp">
+      <Filter>Engine\Rendering\Texture\Texture\SkyboxTexture</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Manager\EngineManager.h">
@@ -746,9 +752,6 @@
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Semaphores\VulkanSemaphoresManager.h">
       <Filter>Engine\Rendering\Semaphores</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Rendering\Memory\MemoryManager.h">
-      <Filter>Engine\Rendering\Memory</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Buffer\BaseBuffer.h">
       <Filter>Engine\Rendering\Buffer</Filter>
@@ -1088,6 +1091,12 @@
     </ClInclude>
     <ClInclude Include="Engine\Rendering\VulkanInclude.h">
       <Filter>Engine\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Memory\VulkanMemoryAllocator.h">
+      <Filter>Engine\Rendering\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Texture\Texture\SkyboxTexture\SkyboxStagingTexture.h">
+      <Filter>Engine\Rendering\Texture\Texture\SkyboxTexture</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

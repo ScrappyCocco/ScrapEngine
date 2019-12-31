@@ -9,8 +9,6 @@
 class FinishTriggerMenu : public ScrapEngine::Core::SGameObject
 {
 private:
-	//Utils
-	ScrapEngine::Core::LogicManagerView* logic_view_ref_ = nullptr;
 	//Player
 	Ball* player_ref_ = nullptr;
 	//Window

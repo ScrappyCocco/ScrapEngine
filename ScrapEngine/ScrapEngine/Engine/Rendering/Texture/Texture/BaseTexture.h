@@ -12,17 +12,11 @@ namespace ScrapEngine
 		{
 		protected:
 			vk::Image texture_image_;
-			vk::DeviceMemory texture_image_memory_;
+			VmaAllocation texture_image_memory_;
 			uint32_t mip_levels_;
 		public:
 			BaseTexture() = default;
 			virtual ~BaseTexture() = 0;
-
-			static void create_image(const uint32_t& width, const uint32_t& height, const vk::Format& format,
-			                         vk::ImageTiling tiling, const vk::ImageUsageFlags& usage,
-			                         const vk::MemoryPropertyFlags& properties, vk::Image& image,
-			                         vk::DeviceMemory& image_memory, uint32_t mip_levels_data,
-			                         vk::SampleCountFlagBits num_samples);
 
 			static void transition_image_layout(vk::Image* image, const vk::Format& format,
 			                                    const vk::ImageLayout& old_layout, const vk::ImageLayout& new_layout,
@@ -32,7 +26,6 @@ namespace ScrapEngine
 			                             const int32_t& tex_height, const uint32_t& mip_levels);
 
 			vk::Image* get_texture_image();
-			vk::DeviceMemory* get_texture_image_memory();
 			uint32_t get_mip_levels() const;
 
 			virtual BaseStagingBuffer* get_texture_staging_buffer() const;

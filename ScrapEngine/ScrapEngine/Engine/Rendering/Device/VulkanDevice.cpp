@@ -2,6 +2,7 @@
 #include <vector>
 #include <set>
 #include <Engine/Debug/DebugLog.h>
+#include <Engine/Rendering/Memory/VulkanMemoryAllocator.h>
 
 //Init static instance reference
 
@@ -13,6 +14,7 @@ void ScrapEngine::Render::VulkanDevice::init(vk::SurfaceKHR* vulkan_surface_inpu
 
 	choose_physical_device();
 	create_logical_device();
+	init_vulkan_allocator();
 }
 
 ScrapEngine::Render::VulkanDevice::~VulkanDevice()
@@ -187,6 +189,13 @@ bool ScrapEngine::Render::VulkanDevice::check_device_extension_support(vk::Physi
 	}
 
 	return required_extensions.empty();
+}
+
+void ScrapEngine::Render::VulkanDevice::init_vulkan_allocator() const
+{
+	VulkanMemoryAllocator* allocator = VulkanMemoryAllocator::get_instance();
+	allocator->init(physical_device_, device_);
+	Debug::DebugLog::print_to_console_log("VulkanMemoryAllocator loaded!");
 }
 
 ScrapEngine::Render::VulkanSwapChain::SwapChainSupportDetails ScrapEngine::Render::VulkanDevice::

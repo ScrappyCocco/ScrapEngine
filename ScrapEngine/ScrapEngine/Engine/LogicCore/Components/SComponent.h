@@ -1,7 +1,6 @@
 #pragma once
 
 #include <Engine/LogicCore/SObject.h>
-#include <Engine/LogicCore/GameObject/SGameObject.h>
 #include <Engine/LogicCore/Math/Transform/STransform.h>
 
 namespace ScrapEngine

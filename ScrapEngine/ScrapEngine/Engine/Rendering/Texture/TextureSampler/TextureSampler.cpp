@@ -21,7 +21,7 @@ ScrapEngine::Render::TextureSampler::TextureSampler(const uint32_t& mip_levels, 
                                                     const bool anisotropy_enable, const uint16_t max_anisotropy,
                                                     const vk::BorderColor border_color)
 {
-	vk::SamplerCreateInfo samplerInfo(
+	const vk::SamplerCreateInfo sampler_info(
 		vk::SamplerCreateFlags(),
 		mag_filter,
 		min_filter,
@@ -39,7 +39,7 @@ ScrapEngine::Render::TextureSampler::TextureSampler(const uint32_t& mip_levels, 
 		border_color
 	);
 
-	if (VulkanDevice::get_instance()->get_logical_device()->createSampler(&samplerInfo, nullptr, &texture_sampler_)
+	if (VulkanDevice::get_instance()->get_logical_device()->createSampler(&sampler_info, nullptr, &texture_sampler_)
 		!= vk::Result::eSuccess)
 	{
 		throw std::runtime_error("TextureSampler: Failed to create texture sampler!");

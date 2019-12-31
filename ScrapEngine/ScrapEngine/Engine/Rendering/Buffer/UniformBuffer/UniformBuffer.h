@@ -21,7 +21,7 @@ namespace ScrapEngine
 		{
 		private:
 			std::vector<vk::Buffer> uniform_buffers_;
-			std::vector<vk::DeviceMemory> uniform_buffers_memory_;
+			std::vector<VmaAllocation> uniform_buffers_memory_;
 			std::vector<void*> mapped_memory_;
 
 			//Used to force update of camera matrices the first time
@@ -39,7 +39,6 @@ namespace ScrapEngine
 			void update_uniform_buffer(const uint32_t& current_image, const Core::STransform& object_transform,
 			                           Camera* render_camera, bool update_transform = true);
 			const std::vector<vk::Buffer>* get_uniform_buffers() const;
-			const std::vector<vk::DeviceMemory>* get_uniform_buffers_memory() const;
 		};
 	}
 }
