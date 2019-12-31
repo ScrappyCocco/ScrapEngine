@@ -51,8 +51,7 @@ int main()
 		scrap_engine_manager->logic_manager_view->register_game_object(box_trigger);
 		box_trigger->add_collision_test(ball_game_object);
 		//Score manager
-		ScoreManager* score_manager = new ScoreManager(scrap_engine_manager->logic_manager_view,
-		                                               ball_game_object, game_window_ref);
+		ScoreManager* score_manager = new ScoreManager(ball_game_object, game_window_ref);
 		scrap_engine_manager->logic_manager_view->register_game_object(score_manager);
 		//Finish trigger
 		scrap_engine_manager->logic_manager_view->register_game_object(new FinishTriggerMenu(

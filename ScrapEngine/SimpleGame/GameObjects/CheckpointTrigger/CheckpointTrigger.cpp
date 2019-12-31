@@ -4,8 +4,7 @@
 CheckpointTrigger::CheckpointTrigger(ScrapEngine::Core::LogicManagerView* logic_view,
                                      Ball* player,
                                      const ScrapEngine::Core::SVector3& pos)
-	: SGameObject("Main menu Gui manager"),
-	  logic_view_ref_(logic_view), player_ref_(player)
+	: SGameObject("Main menu Gui manager"), player_ref_(player)
 {
 	set_object_location(pos);
 	pos_ = pos;
@@ -139,9 +138,9 @@ void CheckpointTrigger::on_gui()
 		ImGui::SetNextWindowPos(window_pos, ImGuiCond_Always, window_pos_pivot);
 
 		if (ImGui::Begin("Checkpoint notification UI Overlay", nullptr,
-			ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDecoration |
-			ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoSavedSettings |
-			ImGuiWindowFlags_NoNav))
+		                 ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDecoration |
+		                 ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoSavedSettings |
+		                 ImGuiWindowFlags_NoNav))
 		{
 			ImGui::Text("Checkpoint activated!");
 

@@ -21,7 +21,7 @@ namespace ScrapEngine
 			void create_buffer(const vk::BufferCreateInfo& crate_info);
 
 			void setup_descriptor(vk::DeviceSize size = VK_WHOLE_SIZE, vk::DeviceSize offset = 0);
-			void map(vk::DeviceSize size = VK_WHOLE_SIZE, vk::DeviceSize offset = 0);
+			void map();
 			void unmap();
 			void flush(vk::DeviceSize size = VK_WHOLE_SIZE, vk::DeviceSize offset = 0);
 			void bind(vk::DeviceSize offset = 0);

@@ -36,7 +36,7 @@ void ScrapEngine::Render::GenericBuffer::setup_descriptor(const vk::DeviceSize s
 	descriptor_.setRange(size);
 }
 
-void ScrapEngine::Render::GenericBuffer::map(const vk::DeviceSize size, const vk::DeviceSize offset)
+void ScrapEngine::Render::GenericBuffer::map()
 {
 	VulkanMemoryAllocator::get_instance()->map_buffer_allocation(buffer_memory_, &mapped_memory_);
 }

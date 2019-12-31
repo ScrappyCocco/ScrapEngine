@@ -14,7 +14,7 @@ ScrapEngine::Render::SkyboxTexture::SkyboxTexture(const std::array<std::string, 
 	for (const std::string& file : files_path)
 	{
 		Debug::DebugLog::print_to_console_log("Loading skybox texture: '" + file + "'");
-		images_.push_back(new SkyboxStagingTexture(file, false));
+		images_.push_back(new SkyboxStagingTexture(file));
 		Debug::DebugLog::print_to_console_log("Skybox texture '" + file + "' successfully loaded!");
 	}
 	cube_image_size_ = images_.back()->get_texture_height();

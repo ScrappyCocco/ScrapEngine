@@ -6,6 +6,11 @@ namespace ScrapEngine
 {
 	namespace Render
 	{
+		/**
+		 * \brief This is a wrapper class for the VulkanMemoryAllocator lib
+		 * It expose calls to allocate the main buffers and textures types
+		 * This class is a Singleton
+		 */
 		class VulkanMemoryAllocator
 		{
 		private:

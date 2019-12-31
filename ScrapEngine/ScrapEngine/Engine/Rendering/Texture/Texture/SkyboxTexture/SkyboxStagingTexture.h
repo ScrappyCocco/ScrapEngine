@@ -17,7 +17,7 @@ namespace ScrapEngine
 			BaseStagingBuffer* staginf_buffer_ref_ = nullptr;
 
 		public:
-			SkyboxStagingTexture(const std::string& file_path, bool should_copy_from_staging = true);
+			SkyboxStagingTexture(const std::string& file_path);
 			~SkyboxStagingTexture();
 
 			BaseStagingBuffer* get_texture_staging_buffer() const override;

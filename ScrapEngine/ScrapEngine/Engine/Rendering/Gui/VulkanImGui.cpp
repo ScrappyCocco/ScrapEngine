@@ -18,8 +18,6 @@ ScrapEngine::Render::VulkanImGui::~VulkanImGui()
 {
 	ImGui::DestroyContext();
 	// Release all Vulkan resources required for rendering imGui
-	vk::Device* device = VulkanDevice::get_instance()->get_logical_device();
-
 	//Clear buffers
 	delete vertex_buffer_;
 	delete index_buffer_;

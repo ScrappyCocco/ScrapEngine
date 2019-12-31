@@ -1,10 +1,9 @@
 #include "ScoreManager.h"
 #include "imgui.h"
 
-ScoreManager::ScoreManager(ScrapEngine::Core::LogicManagerView* logic_view, Ball* player,
-                           ScrapEngine::Render::GameWindow* window_ref)
+ScoreManager::ScoreManager(Ball* player, ScrapEngine::Render::GameWindow* window_ref)
 	: SGameObject("Score & relative Gui manager"),
-	  logic_view_ref_(logic_view), player_ref_(player), window_ref_(window_ref)
+	  player_ref_(player), window_ref_(window_ref)
 {
 	current_time_ = static_cast<float>(max_time_);
 }

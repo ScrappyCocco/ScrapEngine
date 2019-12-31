@@ -3,7 +3,7 @@
 #include <Engine/Rendering/DepthResources/VulkanDepthResources.h>
 #include <Engine/Rendering/Buffer/StagingBuffer/ImageStagingBuffer/ImageStagingBuffer.h>
 
-ScrapEngine::Render::SkyboxStagingTexture::SkyboxStagingTexture(const std::string& file_path, const bool should_copy_from_staging)
+ScrapEngine::Render::SkyboxStagingTexture::SkyboxStagingTexture(const std::string& file_path)
 {
 	stbi_uc* pixels = stbi_load(file_path.c_str(), &tex_width_, &tex_height_, &tex_channels_, STBI_rgb_alpha);
 

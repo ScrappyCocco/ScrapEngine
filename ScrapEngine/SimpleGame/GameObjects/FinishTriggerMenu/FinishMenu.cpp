@@ -3,8 +3,8 @@
 
 FinishTriggerMenu::FinishTriggerMenu(ScrapEngine::Core::LogicManagerView* logic_view, Ball* player,
                                      ScrapEngine::Render::GameWindow* window_ref, ScoreManager* score_manager)
-	: SGameObject("Main menu Gui manager"),
-	  logic_view_ref_(logic_view), player_ref_(player), window_ref_(window_ref), score_manager_ref_(score_manager)
+	: SGameObject("Main menu Gui manager"), player_ref_(player),
+	  window_ref_(window_ref), score_manager_ref_(score_manager)
 {
 	//Get component
 	ScrapEngine::Core::RigidBodyComponent* component = dynamic_cast<ScrapEngine::Core::RigidBodyComponent*>((*
