@@ -10,7 +10,7 @@ ScrapEngine::Render::IndexBuffer::IndexBuffer(const std::vector<uint32_t>* indic
 	//unique_ptr to be deleted after constructor
 	std::unique_ptr<BaseStagingBuffer> staging = std::make_unique<IndicesStagingBuffer>(buffer_size, indices);
 
-	vk::BufferCreateInfo buffer_info(
+	const vk::BufferCreateInfo buffer_info(
 		vk::BufferCreateFlags(),
 		buffer_size,
 		vk::BufferUsageFlagBits::eTransferDst | vk::BufferUsageFlagBits::eIndexBuffer,

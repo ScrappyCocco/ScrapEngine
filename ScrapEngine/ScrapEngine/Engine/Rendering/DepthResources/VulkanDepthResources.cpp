@@ -10,7 +10,7 @@ ScrapEngine::Render::VulkanDepthResources::VulkanDepthResources(const vk::Extent
 {
 	const vk::Format depth_format = find_depth_format();
 
-	vk::ImageCreateInfo image_info(
+	const vk::ImageCreateInfo image_info(
 		vk::ImageCreateFlags(),
 		vk::ImageType::e2D,
 		depth_format,

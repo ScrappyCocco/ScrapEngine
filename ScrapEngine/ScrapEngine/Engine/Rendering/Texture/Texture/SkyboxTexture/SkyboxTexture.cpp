@@ -26,7 +26,7 @@ ScrapEngine::Render::SkyboxTexture::SkyboxTexture(const std::array<std::string, 
 	mip_levels_ = static_cast<uint32_t>(std::floor(
 		std::log2(std::max(images_[0]->get_texture_width(), images_[0]->get_texture_height())))) + 1;
 
-	vk::ImageCreateInfo image_create_info(
+	const vk::ImageCreateInfo image_create_info(
 		vk::ImageCreateFlagBits::eCubeCompatible,
 		vk::ImageType::e2D,
 		vk::Format::eR8G8B8A8Unorm,

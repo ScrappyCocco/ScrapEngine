@@ -9,7 +9,7 @@ ScrapEngine::Render::GenericBuffer::~GenericBuffer()
 
 void ScrapEngine::Render::GenericBuffer::create_buffer(const vk::BufferCreateInfo& crate_info)
 {
-	vk::BufferCreateInfo buffer_info(
+	const vk::BufferCreateInfo buffer_info(
 		vk::BufferCreateFlags(),
 		crate_info.size,
 		crate_info.usage,

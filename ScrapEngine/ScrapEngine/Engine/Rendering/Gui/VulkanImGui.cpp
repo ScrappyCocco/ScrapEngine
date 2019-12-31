@@ -52,7 +52,7 @@ void ScrapEngine::Render::VulkanImGui::init_resources(VulkanSwapChain* swap_chai
 
 	// Create target image for copy
 
-	vk::ImageCreateInfo image_info(
+	const vk::ImageCreateInfo image_info(
 		vk::ImageCreateFlags(),
 		vk::ImageType::e2D,
 		vk::Format::eR8G8B8A8Unorm,

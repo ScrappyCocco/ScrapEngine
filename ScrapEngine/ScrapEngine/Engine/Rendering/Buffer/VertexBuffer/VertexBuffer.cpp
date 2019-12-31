@@ -10,7 +10,7 @@ ScrapEngine::Render::VertexBuffer::VertexBuffer(const std::vector<Vertex>* verti
 	//unique_ptr to be deleted after constructor
 	std::unique_ptr<BaseStagingBuffer> staging = std::make_unique<VertexStagingBuffer>(buffer_size, vertices);
 
-	vk::BufferCreateInfo buffer_info(
+	const vk::BufferCreateInfo buffer_info(
 		vk::BufferCreateFlags(),
 		buffer_size,
 		vk::BufferUsageFlagBits::eTransferDst | vk::BufferUsageFlagBits::eVertexBuffer,

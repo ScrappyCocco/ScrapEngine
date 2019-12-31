@@ -75,13 +75,13 @@ void ScrapEngine::Render::VulkanMemoryAllocator::bind_buffer(vk::Buffer& buffer,
 	}
 }
 
-void ScrapEngine::Render::VulkanMemoryAllocator::create_generic_buffer(vk::BufferCreateInfo* buff_info,
-                                                                       VmaAllocationCreateInfo* alloc_info,
+void ScrapEngine::Render::VulkanMemoryAllocator::create_generic_buffer(const vk::BufferCreateInfo* buff_info,
+                                                                       const VmaAllocationCreateInfo* alloc_info,
                                                                        vk::Buffer& buffer,
                                                                        VmaAllocation& buff_alloc) const
 {
 	VkBuffer alloc_buffer;
-	VkBufferCreateInfo* conv_buff_info = convert_buffer_create_info(buff_info);
+	const VkBufferCreateInfo* conv_buff_info = convert_buffer_create_info(buff_info);
 
 	const VkResult res = vmaCreateBuffer(allocator_, conv_buff_info, alloc_info, &alloc_buffer, &buff_alloc, nullptr);
 
@@ -94,7 +94,7 @@ void ScrapEngine::Render::VulkanMemoryAllocator::create_generic_buffer(vk::Buffe
 	buffer = alloc_buffer;
 }
 
-void ScrapEngine::Render::VulkanMemoryAllocator::create_vertex_index_buffer(vk::BufferCreateInfo* buff_info,
+void ScrapEngine::Render::VulkanMemoryAllocator::create_vertex_index_buffer(const vk::BufferCreateInfo* buff_info,
                                                                             vk::Buffer& buffer,
                                                                             VmaAllocation& buff_alloc) const
 {
@@ -109,7 +109,7 @@ void ScrapEngine::Render::VulkanMemoryAllocator::create_vertex_index_buffer(vk::
 void ScrapEngine::Render::VulkanMemoryAllocator::create_uniform_buffer(const vk::DeviceSize size, vk::Buffer& buffer,
                                                                        VmaAllocation& buff_alloc) const
 {
-	vk::BufferCreateInfo buffer_info(
+	const vk::BufferCreateInfo buffer_info(
 		vk::BufferCreateFlags(),
 		size,
 		vk::BufferUsageFlagBits::eUniformBuffer,
@@ -127,7 +127,7 @@ void ScrapEngine::Render::VulkanMemoryAllocator::create_transfer_staging_buffer(
 	const vk::DeviceSize size, vk::Buffer& buffer,
 	VmaAllocation& buff_alloc) const
 {
-	vk::BufferCreateInfo buffer_info(
+	const vk::BufferCreateInfo buffer_info(
 		vk::BufferCreateFlags(),
 		size,
 		vk::BufferUsageFlagBits::eTransferSrc,
@@ -141,13 +141,13 @@ void ScrapEngine::Render::VulkanMemoryAllocator::create_transfer_staging_buffer(
 	create_generic_buffer(&buffer_info, &alloc_info, buffer, buff_alloc);
 }
 
-void ScrapEngine::Render::VulkanMemoryAllocator::create_generic_image(vk::ImageCreateInfo* image_info,
-                                                                      VmaAllocationCreateInfo* alloc_info,
+void ScrapEngine::Render::VulkanMemoryAllocator::create_generic_image(const vk::ImageCreateInfo* image_info,
+                                                                      const VmaAllocationCreateInfo* alloc_info,
                                                                       vk::Image& image,
                                                                       VmaAllocation& image_alloc) const
 {
 	VkImage alloc_image;
-	VkImageCreateInfo* conv_image_info = convert_image_create_info(image_info);
+	const VkImageCreateInfo* conv_image_info = convert_image_create_info(image_info);
 
 	const VkResult res = vmaCreateImage(allocator_, conv_image_info, alloc_info, &alloc_image, &image_alloc, nullptr);
 
@@ -160,7 +160,8 @@ void ScrapEngine::Render::VulkanMemoryAllocator::create_generic_image(vk::ImageC
 	image = alloc_image;
 }
 
-void ScrapEngine::Render::VulkanMemoryAllocator::create_texture_image(vk::ImageCreateInfo* image_info, vk::Image& image,
+void ScrapEngine::Render::VulkanMemoryAllocator::create_texture_image(const vk::ImageCreateInfo* image_info,
+                                                                      vk::Image& image,
                                                                       VmaAllocation& image_alloc) const
 {
 	VmaAllocationCreateInfo alloc_info = {};
@@ -170,14 +171,14 @@ void ScrapEngine::Render::VulkanMemoryAllocator::create_texture_image(vk::ImageC
 	create_generic_image(image_info, &alloc_info, image, image_alloc);
 }
 
-VkBufferCreateInfo* ScrapEngine::Render::VulkanMemoryAllocator::convert_buffer_create_info(
-	vk::BufferCreateInfo* buffer_info)
+const VkBufferCreateInfo* ScrapEngine::Render::VulkanMemoryAllocator::convert_buffer_create_info(
+	const vk::BufferCreateInfo* buffer_info)
 {
-	return reinterpret_cast<VkBufferCreateInfo*>(buffer_info);
+	return reinterpret_cast<const VkBufferCreateInfo*>(buffer_info);
 }
 
-VkImageCreateInfo* ScrapEngine::Render::VulkanMemoryAllocator::convert_image_create_info(
-	vk::ImageCreateInfo* image_info)
+const VkImageCreateInfo* ScrapEngine::Render::VulkanMemoryAllocator::convert_image_create_info(
+	const vk::ImageCreateInfo* image_info)
 {
-	return reinterpret_cast<VkImageCreateInfo*>(image_info);
+	return reinterpret_cast<const VkImageCreateInfo*>(image_info);
 }

@@ -23,7 +23,7 @@ ScrapEngine::Render::StandardTexture::StandardTexture(const std::string& file_pa
 
 	//Create the image
 
-	vk::ImageCreateInfo image_info(
+	const vk::ImageCreateInfo image_info(
 		vk::ImageCreateFlags(),
 		vk::ImageType::e2D,
 		vk::Format::eR8G8B8A8Unorm,
