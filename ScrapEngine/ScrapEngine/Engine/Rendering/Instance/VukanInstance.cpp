@@ -33,7 +33,7 @@ ScrapEngine::Render::VukanInstance::~VukanInstance()
 {
 	delete validation_layers_manager_;
 
-	vkDestroyInstance(vulkan_instance_, nullptr);
+	vulkan_instance_.destroy();
 }
 
 ScrapEngine::Render::VukanInstance* ScrapEngine::Render::VukanInstance::get_instance()

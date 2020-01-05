@@ -19,6 +19,7 @@ void ScrapEngine::Render::VulkanDevice::init(vk::SurfaceKHR* vulkan_surface_inpu
 
 ScrapEngine::Render::VulkanDevice::~VulkanDevice()
 {
+	delete VulkanMemoryAllocator::get_instance();
 	device_.destroy();
 }
 
