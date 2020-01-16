@@ -9,9 +9,7 @@ namespace ScrapEngine
 		class ShadowmappingRenderPass : public BaseRenderPass
 		{
 		public:
-			ShadowmappingRenderPass() = default;
-
-			void init(const vk::Format& depth_format);
+			ShadowmappingRenderPass(const vk::Format& depth_format);
 
 			~ShadowmappingRenderPass() = default;
 		};

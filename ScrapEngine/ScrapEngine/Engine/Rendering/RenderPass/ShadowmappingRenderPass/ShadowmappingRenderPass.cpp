@@ -4,7 +4,7 @@
 #include <Engine/Rendering/DepthResources/VulkanDepthResources.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
 
-void ScrapEngine::Render::ShadowmappingRenderPass::init(const vk::Format& depth_format)
+ScrapEngine::Render::ShadowmappingRenderPass::ShadowmappingRenderPass(const vk::Format& depth_format)
 {
 	const vk::AttachmentDescription attachment_description(
 		vk::AttachmentDescriptionFlags(),
@@ -69,3 +69,4 @@ void ScrapEngine::Render::ShadowmappingRenderPass::init(const vk::Format& depth_
 		throw std::runtime_error("VulkanRenderPass: Failed to create render pass!");
 	}
 }
+
