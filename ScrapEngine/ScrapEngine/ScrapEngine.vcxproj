@@ -74,7 +74,10 @@
     <ClCompile Include="Engine\Rendering\Buffer\CommandBuffer\BaseCommandBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\CommandBuffer\GuiCommandBuffer\GuiCommandBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\CommandBuffer\StandardCommandBuffer\StandardCommandBuffer.cpp" />
-    <ClCompile Include="Engine\Rendering\Buffer\FrameBuffer\VulkanFrameBuffer.cpp" />
+    <ClCompile Include="Engine\Rendering\Buffer\FrameBuffer\BaseFrameBuffer.cpp" />
+    <ClCompile Include="Engine\Rendering\Buffer\FrameBuffer\ShadowmappingFrameBuffer\ShadowmappingFrameBuffer.cpp" />
+    <ClCompile Include="Engine\Rendering\Buffer\FrameBuffer\ShadowmappingFrameBuffer\ShadowmappingFrameBufferAttachment.cpp" />
+    <ClCompile Include="Engine\Rendering\Buffer\FrameBuffer\StandardFrameBuffer\StandardFrameBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\GenericBuffer\GenericBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\IndexBuffer\IndexBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\StagingBuffer\BaseStagingBuffer.cpp" />
@@ -201,7 +204,10 @@
     <ClInclude Include="Engine\Rendering\Buffer\CommandBuffer\BaseCommandBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\CommandBuffer\GuiCommandBuffer\GuiCommandBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\CommandBuffer\StandardCommandBuffer\StandardCommandBuffer.h" />
-    <ClInclude Include="Engine\Rendering\Buffer\FrameBuffer\VulkanFrameBuffer.h" />
+    <ClInclude Include="Engine\Rendering\Buffer\FrameBuffer\BaseFrameBuffer.h" />
+    <ClInclude Include="Engine\Rendering\Buffer\FrameBuffer\ShadowmappingFrameBuffer\ShadowmappingFrameBuffer.h" />
+    <ClInclude Include="Engine\Rendering\Buffer\FrameBuffer\ShadowmappingFrameBuffer\ShadowmappingFrameBufferAttachment.h" />
+    <ClInclude Include="Engine\Rendering\Buffer\FrameBuffer\StandardFrameBuffer\StandardFrameBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\GenericBuffer\GenericBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\IndexBuffer\IndexBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\StagingBuffer\BaseStagingBuffer.h" />

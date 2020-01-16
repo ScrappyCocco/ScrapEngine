@@ -3,10 +3,10 @@
 #include <Engine/Rendering/VulkanInclude.h>
 #include <glm/vec3.hpp>
 #include <Engine/Rendering/RenderPass/ShadowmappingRenderPass/ShadowmappingRenderPass.h>
+#include <Engine/Rendering/Buffer/FrameBuffer/ShadowmappingFrameBuffer/ShadowmappingFrameBuffer.h>
 
 // 16 bits of depth is enough for such a small scene
 #define SHADOWMAP_DIM 2048
-#define SHADOWMAP_FILTER VK_FILTER_LINEAR
 
 // Offscreen frame buffer properties
 #define FB_COLOR_FORMAT VK_FORMAT_R8G8B8A8_UNORM
@@ -19,12 +19,14 @@ namespace ScrapEngine
 		{
 		private:
 			ShadowmappingRenderPass* offscreen_render_pass_ = nullptr;
+			ShadowmappingFrameBuffer* offscreen_frame_buffer_ = nullptr;
 		public:
 			StandardShadowmapping();
 			~StandardShadowmapping();
 		private:
 			// 16 bits of depth is enough for such a small scene
 			vk::Format depth_format_ = vk::Format::eD16Unorm;
+			vk::Filter shadowmap_filter_ = vk::Filter::eLinear;
 			
 			bool filter_pcf_ = true;
 			bool display_debug_shadow_map_ = false;

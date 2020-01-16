@@ -23,7 +23,7 @@ ScrapEngine::Render::StandardCommandBuffer::StandardCommandBuffer(VulkanCommandP
 }
 
 void ScrapEngine::Render::StandardCommandBuffer::init_command_buffer(
-	vk::Extent2D* input_swap_chain_extent_ref, VulkanFrameBuffer* swap_chain_frame_buffer)
+	vk::Extent2D* input_swap_chain_extent_ref, BaseFrameBuffer* swap_chain_frame_buffer)
 {
 	for (size_t i = 0; i < command_buffers_.size(); i++)
 	{

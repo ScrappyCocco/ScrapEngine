@@ -26,7 +26,7 @@ ScrapEngine::Render::GuiCommandBuffer::GuiCommandBuffer(BaseRenderPass* render_p
 }
 
 void ScrapEngine::Render::GuiCommandBuffer::init_command_buffer(
-	VulkanFrameBuffer* swap_chain_frame_buffer,
+	BaseFrameBuffer* swap_chain_frame_buffer,
 	vk::Extent2D* input_swap_chain_extent_ref,
 	const uint32_t current_image)
 {

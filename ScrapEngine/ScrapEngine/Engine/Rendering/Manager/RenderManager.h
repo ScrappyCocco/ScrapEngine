@@ -8,7 +8,7 @@
 #include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
 #include <Engine/Rendering/SwapChain/VulkanImageView.h>
 #include <Engine/Rendering/RenderPass/BaseRenderPass.h>
-#include <Engine/Rendering/Buffer/FrameBuffer/VulkanFrameBuffer.h>
+#include <Engine/Rendering/Buffer/FrameBuffer/BaseFrameBuffer.h>
 #include <Engine/Rendering/CommandPool/VulkanCommandPool.h>
 #include <Engine/Rendering/Buffer/CommandBuffer/GuiCommandBuffer/GuiCommandBuffer.h>
 #include <Engine/Rendering/Buffer/CommandBuffer/StandardCommandBuffer/StandardCommandBuffer.h>
@@ -34,7 +34,7 @@ namespace ScrapEngine
 			VulkanDevice* vulkan_render_device_ = nullptr;
 			VulkanSwapChain* vulkan_render_swap_chain_ = nullptr;
 			VulkanImageView* vulkan_render_image_view_ = nullptr;
-			VulkanFrameBuffer* vulkan_render_frame_buffer_ = nullptr;
+			BaseFrameBuffer* vulkan_render_frame_buffer_ = nullptr;
 			
 			VulkanCommandPool* singleton_command_pool_ = nullptr;
 			VulkanCommandPool* gui_buffer_command_pool_ = nullptr;

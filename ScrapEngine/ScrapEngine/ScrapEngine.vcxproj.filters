@@ -377,6 +377,12 @@
     <Filter Include="Engine\Rendering\RenderPass\ShadowmappingRenderPass">
       <UniqueIdentifier>{12efe8a7-c3fd-4df4-a83d-51e48a98768c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Rendering\Buffer\FrameBuffer\StandardFrameBuffer">
+      <UniqueIdentifier>{ea8c8e4a-7520-4bf5-a06a-3d357a8a6f7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Buffer\FrameBuffer\ShadowmappingFrameBuffer">
+      <UniqueIdentifier>{a16b2d6d-bd04-4837-8cea-e7248d9223f9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Manager\EngineManager.cpp">
@@ -456,9 +462,6 @@
     </ClCompile>
     <ClCompile Include="Engine\LogicCore\Scene\SceneManager.cpp">
       <Filter>Engine\LogicCore\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Rendering\Buffer\FrameBuffer\VulkanFrameBuffer.cpp">
-      <Filter>Engine\Rendering\Buffer\FrameBuffer</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Rendering\Buffer\IndexBuffer\IndexBuffer.cpp">
       <Filter>Engine\Rendering\Buffer\IndexBuffer</Filter>
@@ -736,6 +739,18 @@
     <ClCompile Include="Engine\Rendering\RenderPass\ShadowmappingRenderPass\ShadowmappingRenderPass.cpp">
       <Filter>Engine\Rendering\RenderPass\ShadowmappingRenderPass</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Rendering\Buffer\FrameBuffer\BaseFrameBuffer.cpp">
+      <Filter>Engine\Rendering\Buffer\FrameBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Buffer\FrameBuffer\StandardFrameBuffer\StandardFrameBuffer.cpp">
+      <Filter>Engine\Rendering\Buffer\FrameBuffer\StandardFrameBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Buffer\FrameBuffer\ShadowmappingFrameBuffer\ShadowmappingFrameBuffer.cpp">
+      <Filter>Engine\Rendering\Buffer\FrameBuffer\ShadowmappingFrameBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Buffer\FrameBuffer\ShadowmappingFrameBuffer\ShadowmappingFrameBufferAttachment.cpp">
+      <Filter>Engine\Rendering\Buffer\FrameBuffer\ShadowmappingFrameBuffer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Manager\EngineManager.h">
@@ -830,9 +845,6 @@
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Base\Vertex.h">
       <Filter>Engine\Rendering\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Rendering\Buffer\FrameBuffer\VulkanFrameBuffer.h">
-      <Filter>Engine\Rendering\Buffer\FrameBuffer</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Buffer\IndexBuffer\IndexBuffer.h">
       <Filter>Engine\Rendering\Buffer\IndexBuffer</Filter>
@@ -1118,6 +1130,18 @@
     </ClInclude>
     <ClInclude Include="Engine\Rendering\RenderPass\ShadowmappingRenderPass\ShadowmappingRenderPass.h">
       <Filter>Engine\Rendering\RenderPass\ShadowmappingRenderPass</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Buffer\FrameBuffer\BaseFrameBuffer.h">
+      <Filter>Engine\Rendering\Buffer\FrameBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Buffer\FrameBuffer\StandardFrameBuffer\StandardFrameBuffer.h">
+      <Filter>Engine\Rendering\Buffer\FrameBuffer\StandardFrameBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Buffer\FrameBuffer\ShadowmappingFrameBuffer\ShadowmappingFrameBuffer.h">
+      <Filter>Engine\Rendering\Buffer\FrameBuffer\ShadowmappingFrameBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Buffer\FrameBuffer\ShadowmappingFrameBuffer\ShadowmappingFrameBufferAttachment.h">
+      <Filter>Engine\Rendering\Buffer\FrameBuffer\ShadowmappingFrameBuffer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

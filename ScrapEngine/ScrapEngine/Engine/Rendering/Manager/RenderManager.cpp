@@ -12,6 +12,7 @@
 #include <Engine/Rendering/RenderPass/StandardRenderPass/StandardRenderPass.h>
 #include <Engine/Rendering/Buffer/CommandBuffer/StandardCommandBuffer/StandardCommandBuffer.h>
 #include <Engine/Rendering/Buffer/CommandBuffer/GuiCommandBuffer/GuiCommandBuffer.h>
+#include <Engine/Rendering/Buffer/FrameBuffer/StandardFrameBuffer/StandardFrameBuffer.h>
 
 void ScrapEngine::Render::RenderManager::ParallelCommandBufferCreation::ExecuteRange(enki::TaskSetPartition range,
                                                                                      uint32_t threadnum)
@@ -214,10 +215,8 @@ void ScrapEngine::Render::RenderManager::initialize_vulkan(const game_base_info*
 	vulkan_rendering_pass->init(vulkan_render_swap_chain_->get_swap_chain_image_format(),
 	                            vulkan_render_device_->get_msaa_samples());
 	//Gui
-	GuiRenderPass* gui_render_pass = new GuiRenderPass();
-	gui_render_pass->init(vulkan_render_swap_chain_->get_swap_chain_image_format(),
-	                      vulkan_render_device_->get_msaa_samples());
-	gui_render_pass_ = gui_render_pass;
+	gui_render_pass_ = new GuiRenderPass(vulkan_render_swap_chain_->get_swap_chain_image_format(),
+	                                     vulkan_render_device_->get_msaa_samples());
 	Debug::DebugLog::print_to_console_log("VulkanRenderPass created");
 	//Create command pools
 	//Main command pool used to generate resources
@@ -234,10 +233,10 @@ void ScrapEngine::Render::RenderManager::initialize_vulkan(const game_base_info*
 	vulkan_render_depth_ = new VulkanDepthResources(&vulkan_render_swap_chain_->get_swap_chain_extent(),
 	                                                vulkan_render_device_->get_msaa_samples());
 	Debug::DebugLog::print_to_console_log("VulkanDepthResources created");
-	vulkan_render_frame_buffer_ = new VulkanFrameBuffer(vulkan_render_image_view_,
-	                                                    &vulkan_render_swap_chain_->get_swap_chain_extent(),
-	                                                    vulkan_render_depth_->get_depth_image_view(),
-	                                                    vulkan_render_color_->get_color_image_view());
+	vulkan_render_frame_buffer_ = new StandardFrameBuffer(vulkan_render_image_view_,
+	                                                      &vulkan_render_swap_chain_->get_swap_chain_extent(),
+	                                                      vulkan_render_depth_->get_depth_image_view(),
+	                                                      vulkan_render_color_->get_color_image_view());
 	Debug::DebugLog::print_to_console_log("VulkanFrameBuffer created");
 	create_camera();
 	Debug::DebugLog::print_to_console_log("User View Camera created");
