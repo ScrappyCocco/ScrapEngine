@@ -368,6 +368,15 @@
     <Filter Include="Engine\LogicCore\Components\CameraComponent">
       <UniqueIdentifier>{05cd57cc-9333-4299-a33e-b307a70313de}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Rendering\Shadowmapping">
+      <UniqueIdentifier>{a9e3a928-19c0-4135-9456-f5194d7b8eca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Shadowmapping\Standard">
+      <UniqueIdentifier>{471cc78a-3884-4e79-9f46-cdb9b9a3cc17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\RenderPass\ShadowmappingRenderPass">
+      <UniqueIdentifier>{12efe8a7-c3fd-4df4-a83d-51e48a98768c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Manager\EngineManager.cpp">
@@ -720,6 +729,12 @@
     </ClCompile>
     <ClCompile Include="Engine\Rendering\Texture\Texture\SkyboxTexture\SkyboxStagingTexture.cpp">
       <Filter>Engine\Rendering\Texture\Texture\SkyboxTexture</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Shadowmapping\Standard\StandardShadowmapping.cpp">
+      <Filter>Engine\Rendering\Shadowmapping\Standard</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\RenderPass\ShadowmappingRenderPass\ShadowmappingRenderPass.cpp">
+      <Filter>Engine\Rendering\RenderPass\ShadowmappingRenderPass</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1097,6 +1112,12 @@
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Texture\Texture\SkyboxTexture\SkyboxStagingTexture.h">
       <Filter>Engine\Rendering\Texture\Texture\SkyboxTexture</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Shadowmapping\Standard\StandardShadowmapping.h">
+      <Filter>Engine\Rendering\Shadowmapping\Standard</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\RenderPass\ShadowmappingRenderPass\ShadowmappingRenderPass.h">
+      <Filter>Engine\Rendering\RenderPass\ShadowmappingRenderPass</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

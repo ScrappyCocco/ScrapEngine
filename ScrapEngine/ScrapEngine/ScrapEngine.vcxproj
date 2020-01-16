@@ -120,9 +120,11 @@
     <ClCompile Include="Engine\Rendering\Queue\PresentationQueue\PresentQueue.cpp" />
     <ClCompile Include="Engine\Rendering\RenderPass\BaseRenderPass.cpp" />
     <ClCompile Include="Engine\Rendering\RenderPass\GuiRenderPass\GuiRenderPass.cpp" />
+    <ClCompile Include="Engine\Rendering\RenderPass\ShadowmappingRenderPass\ShadowmappingRenderPass.cpp" />
     <ClCompile Include="Engine\Rendering\RenderPass\StandardRenderPass\StandardRenderPass.cpp" />
     <ClCompile Include="Engine\Rendering\Semaphores\VulkanSemaphoresManager.cpp" />
     <ClCompile Include="Engine\Rendering\Shader\ShaderManager.cpp" />
+    <ClCompile Include="Engine\Rendering\Shadowmapping\Standard\StandardShadowmapping.cpp" />
     <ClCompile Include="Engine\Rendering\SwapChain\VulkanImageView.cpp" />
     <ClCompile Include="Engine\Rendering\SwapChain\VulkanSwapChain.cpp" />
     <ClCompile Include="Engine\Rendering\Texture\ColorResources\VulkanColorResources.cpp" />
@@ -245,9 +247,11 @@
     <ClInclude Include="Engine\Rendering\Queue\PresentationQueue\PresentQueue.h" />
     <ClInclude Include="Engine\Rendering\RenderPass\BaseRenderPass.h" />
     <ClInclude Include="Engine\Rendering\RenderPass\GuiRenderPass\GuiRenderPass.h" />
+    <ClInclude Include="Engine\Rendering\RenderPass\ShadowmappingRenderPass\ShadowmappingRenderPass.h" />
     <ClInclude Include="Engine\Rendering\RenderPass\StandardRenderPass\StandardRenderPass.h" />
     <ClInclude Include="Engine\Rendering\Semaphores\VulkanSemaphoresManager.h" />
     <ClInclude Include="Engine\Rendering\Shader\ShaderManager.h" />
+    <ClInclude Include="Engine\Rendering\Shadowmapping\Standard\StandardShadowmapping.h" />
     <ClInclude Include="Engine\Rendering\SwapChain\VulkanImageView.h" />
     <ClInclude Include="Engine\Rendering\SwapChain\VulkanSwapChain.h" />
     <ClInclude Include="Engine\Rendering\Texture\ColorResources\VulkanColorResources.h" />
