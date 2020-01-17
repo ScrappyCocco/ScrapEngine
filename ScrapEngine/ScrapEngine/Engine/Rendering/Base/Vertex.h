@@ -16,6 +16,7 @@ namespace ScrapEngine
 		glm::vec3 pos;
 		glm::vec3 color;
 		glm::vec2 tex_coord;
+		glm::vec3 normal;
 
 		static vk::VertexInputBindingDescription get_binding_description()
 		{
@@ -25,12 +26,13 @@ namespace ScrapEngine
 			return binding_description;
 		}
 
-		static std::array<vk::VertexInputAttributeDescription, 3> get_attribute_descriptions()
+		static std::array<vk::VertexInputAttributeDescription, 4> get_attribute_descriptions()
 		{
-			const std::array<vk::VertexInputAttributeDescription, 3> attribute_descriptions = {
+			const std::array<vk::VertexInputAttributeDescription, 4> attribute_descriptions = {
 				vk::VertexInputAttributeDescription(0, 0, vk::Format::eR32G32B32Sfloat, offsetof(Vertex, pos)),
 				vk::VertexInputAttributeDescription(1, 0, vk::Format::eR32G32B32Sfloat, offsetof(Vertex, color)),
 				vk::VertexInputAttributeDescription(2, 0, vk::Format::eR32G32Sfloat, offsetof(Vertex, tex_coord)),
+				vk::VertexInputAttributeDescription(3, 0, vk::Format::eR32G32B32Sfloat, offsetof(Vertex, normal)),
 			};
 
 			return attribute_descriptions;

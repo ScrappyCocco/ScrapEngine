@@ -1,7 +1,6 @@
 #pragma once
 
-#include <Engine/Rendering/VulkanInclude.h>
-#include <vector>
+#include <Engine/Rendering/Buffer/UniformBuffer/BaseUniformBuffer.h>
 #include <Engine/LogicCore/Math/Transform/STransform.h>
 #include <Engine/Rendering/Camera/Camera.h>
 #include <glm/mat4x4.hpp>
@@ -15,30 +14,27 @@ namespace ScrapEngine
 			glm::mat4 model;
 			glm::mat4 view;
 			glm::mat4 proj;
+			glm::mat4 depth_bias_mvp;
+			glm::vec3 light_pos;
 		};
 
-		class UniformBuffer
+		class StandardUniformBuffer : public BaseUniformBuffer
 		{
 		private:
-			std::vector<vk::Buffer> uniform_buffers_;
-			std::vector<VmaAllocation> uniform_buffers_memory_;
-			std::vector<void*> mapped_memory_;
-
 			//Used to force update of camera matrices the first time
 			//Otherwise an object created at runtime will see matrices not dirty
 			bool first_update_ = true;
 
-			vk::Extent2D swap_chain_extent_;
 			size_t swap_chain_images_size_;
 
 			UniformBufferObject ubo_ = {};
 		public:
-			UniformBuffer(const std::vector<vk::Image>* swap_chain_images, const vk::Extent2D& input_swap_chain_extent);
-			~UniformBuffer();
+			StandardUniformBuffer(size_t swap_chain_images_size);
+			~StandardUniformBuffer() = default;
 
 			void update_uniform_buffer(const uint32_t& current_image, const Core::STransform& object_transform,
-			                           Camera* render_camera, bool update_transform = true);
-			const std::vector<vk::Buffer>* get_uniform_buffers() const;
+			                           Camera* render_camera, const glm::vec3& light_pos, const glm::mat4& depth_bias_m,
+			                           bool update_transform = true);
 		};
 	}
 }
