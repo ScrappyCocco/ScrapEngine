@@ -4,12 +4,14 @@
 #include <glm/vec3.hpp>
 #include <Engine/Rendering/RenderPass/ShadowmappingRenderPass/ShadowmappingRenderPass.h>
 #include <Engine/Rendering/Buffer/FrameBuffer/ShadowmappingFrameBuffer/ShadowmappingFrameBuffer.h>
+#include <Engine/Rendering/Buffer/VertexBuffer/VertexBuffer.h>
+#include <Engine/Rendering/Buffer/IndexBuffer/IndexBuffer.h>
+#include <Engine/Rendering/Descriptor/DescriptorSet/BaseDescriptorSet.h>
+#include <Engine/Rendering/Buffer/UniformBuffer/ShadowmappingUniformBuffer/DebugQuadUniformBuffer.h>
+#include <Engine/Rendering/Buffer/UniformBuffer/ShadowmappingUniformBuffer/ShadowmappingUniformBuffer.h>
 
 // 16 bits of depth is enough for such a small scene
 #define SHADOWMAP_DIM 2048
-
-// Offscreen frame buffer properties
-#define FB_COLOR_FORMAT VK_FORMAT_R8G8B8A8_UNORM
 
 namespace ScrapEngine
 {
@@ -20,14 +22,30 @@ namespace ScrapEngine
 		private:
 			ShadowmappingRenderPass* offscreen_render_pass_ = nullptr;
 			ShadowmappingFrameBuffer* offscreen_frame_buffer_ = nullptr;
+
+			BaseDescriptorSet* debug_quad_descriptor_set_ = nullptr;
+			BaseDescriptorSet* offscreen_descriptor_set_ = nullptr;
+
+			DebugQuadUniformBuffer* quad_ubo_ = nullptr;
+			ShadowmappingUniformBuffer* offscreen_ubo_ = nullptr;
 		public:
-			StandardShadowmapping();
+			StandardShadowmapping(BaseDescriptorSet* scene_descriptor,
+			                      size_t swap_chain_images_size);
 			~StandardShadowmapping();
+
+			void update_uniform_buffers(const uint32_t& current_image, Camera* render_camera) const;
+
+			glm::vec3 get_light_pos() const;
+			void set_light_post(const glm::vec3& light_pos_new);
+
+			glm::mat4 get_depth_bias() const;
+			
+			void test_update_light(float time);
 		private:
 			// 16 bits of depth is enough for such a small scene
 			vk::Format depth_format_ = vk::Format::eD16Unorm;
 			vk::Filter shadowmap_filter_ = vk::Filter::eLinear;
-			
+
 			bool filter_pcf_ = true;
 			bool display_debug_shadow_map_ = false;
 
@@ -44,7 +62,10 @@ namespace ScrapEngine
 
 			glm::vec3 light_pos_ = glm::vec3();
 			float light_fov_ = 45.0f;
+
+			VertexBuffer* quad_vertices_ = nullptr;
+			IndexBuffer* quad_indices_ = nullptr;
+			void generate_debug_quad();
 		};
 	}
 }
-

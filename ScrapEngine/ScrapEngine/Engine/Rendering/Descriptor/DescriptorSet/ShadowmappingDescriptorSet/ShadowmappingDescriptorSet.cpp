@@ -1,41 +1,23 @@
-#include <Engine/Rendering/Descriptor/DescriptorSet/StandardDescriptorSet/StandardDescriptorSet.h>
+#include <Engine/Rendering/Descriptor/DescriptorSet/ShadowmappingDescriptorSet/ShadowmappingDescriptorSet.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
 
-ScrapEngine::Render::StandardDescriptorSet::StandardDescriptorSet()
+ScrapEngine::Render::ShadowmappingDescriptorSet::ShadowmappingDescriptorSet(vk::DescriptorSetLayout* layout)
 {
-	const vk::DescriptorSetLayoutBinding ubo_layout_binding(
-		0,
-		vk::DescriptorType::eUniformBuffer,
+	vk::PipelineLayoutCreateInfo create_info(
+		vk::PipelineLayoutCreateFlags(),
 		1,
-		vk::ShaderStageFlagBits::eVertex,
-		nullptr
+		layout
 	);
 
-	const vk::DescriptorSetLayoutBinding sampler_layout_binding(
-		1,
-		vk::DescriptorType::eCombinedImageSampler,
-		1,
-		vk::ShaderStageFlagBits::eFragment,
-		nullptr
-	);
-
-	std::array<vk::DescriptorSetLayoutBinding, 2> bindings = {ubo_layout_binding, sampler_layout_binding};
-
-	vk::DescriptorSetLayoutCreateInfo layout_info(
-		vk::DescriptorSetLayoutCreateFlags(),
-		static_cast<uint32_t>(bindings.size()),
-		bindings.data()
-	);
-
-	if (VulkanDevice::get_instance()->get_logical_device()->createDescriptorSetLayout(
-			&layout_info, nullptr, &descriptor_set_layout_)
+	if (VulkanDevice::get_instance()->get_logical_device()->createPipelineLayout(
+		&create_info, nullptr, &pipeline_layout_)
 		!= vk::Result::eSuccess)
 	{
-		throw std::runtime_error("StandardDescriptorSet: Failed to create descriptor set layout!");
+		throw std::runtime_error("ShadowmappingDescriptorSet: Failed to create pipeline layout!");
 	}
 }
 
-void ScrapEngine::Render::StandardDescriptorSet::create_descriptor_sets(vk::DescriptorPool* descriptor_pool,
+void ScrapEngine::Render::ShadowmappingDescriptorSet::create_descriptor_sets(vk::DescriptorPool* descriptor_pool,
                                                                         const std::vector<vk::Image>* swap_chain_images,
                                                                         const std::vector<vk::Buffer>* uniform_buffers,
                                                                         vk::ImageView* texture_image_view,
@@ -55,7 +37,7 @@ void ScrapEngine::Render::StandardDescriptorSet::create_descriptor_sets(vk::Desc
 	if (VulkanDevice::get_instance()->get_logical_device()->allocateDescriptorSets(&alloc_info, &descriptor_sets_[0])
 		!= vk::Result::eSuccess)
 	{
-		throw std::runtime_error("StandardDescriptorSet - DescriptorSetLayout: Failed to allocate descriptor sets!");
+		throw std::runtime_error("ShadowmappingDescriptorSet - DescriptorSetLayout: Failed to allocate descriptor sets!");
 	}
 
 	for (size_t i = 0; i < swap_chain_images->size(); i++)

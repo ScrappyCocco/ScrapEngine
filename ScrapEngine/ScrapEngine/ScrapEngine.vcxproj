@@ -84,7 +84,10 @@
     <ClCompile Include="Engine\Rendering\Buffer\StagingBuffer\ImageStagingBuffer\ImageStagingBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\StagingBuffer\IndicesStagingBuffer\IndicesStagingBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\StagingBuffer\VertexStagingBuffer\VertexStagingBuffer.cpp" />
-    <ClCompile Include="Engine\Rendering\Buffer\UniformBuffer\UniformBuffer.cpp" />
+    <ClCompile Include="Engine\Rendering\Buffer\UniformBuffer\BaseUniformBuffer.cpp" />
+    <ClCompile Include="Engine\Rendering\Buffer\UniformBuffer\ShadowmappingUniformBuffer\DebugQuadUniformBuffer.cpp" />
+    <ClCompile Include="Engine\Rendering\Buffer\UniformBuffer\ShadowmappingUniformBuffer\ShadowmappingUniformBuffer.cpp" />
+    <ClCompile Include="Engine\Rendering\Buffer\UniformBuffer\StandardUniformBuffer\StandardUniformBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\VertexBuffer\VertexBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Camera\Camera.cpp" />
     <ClCompile Include="Engine\Rendering\Camera\CameraFrustum.cpp" />
@@ -97,6 +100,8 @@
     <ClCompile Include="Engine\Rendering\Descriptor\DescriptorPool\StandardDescriptorPool\StandardDescriptorPool.cpp" />
     <ClCompile Include="Engine\Rendering\Descriptor\DescriptorSet\BaseDescriptorSet.cpp" />
     <ClCompile Include="Engine\Rendering\Descriptor\DescriptorSet\GuiDescriptorSet\GuiDescriptorSet.cpp" />
+    <ClCompile Include="Engine\Rendering\Descriptor\DescriptorSet\ShadowmappingDescriptorSet\DebugQuadDescriptorSet.cpp" />
+    <ClCompile Include="Engine\Rendering\Descriptor\DescriptorSet\ShadowmappingDescriptorSet\ShadowmappingDescriptorSet.cpp" />
     <ClCompile Include="Engine\Rendering\Descriptor\DescriptorSet\StandardDescriptorSet\StandardDescriptorSet.cpp" />
     <ClCompile Include="Engine\Rendering\Device\VulkanDevice.cpp" />
     <ClCompile Include="Engine\Rendering\Gui\VulkanImGui.cpp" />
@@ -214,7 +219,10 @@
     <ClInclude Include="Engine\Rendering\Buffer\StagingBuffer\ImageStagingBuffer\ImageStagingBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\StagingBuffer\IndicesStagingBuffer\IndicesStagingBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\StagingBuffer\VertexStagingBuffer\VertexStagingBuffer.h" />
-    <ClInclude Include="Engine\Rendering\Buffer\UniformBuffer\UniformBuffer.h" />
+    <ClInclude Include="Engine\Rendering\Buffer\UniformBuffer\BaseUniformBuffer.h" />
+    <ClInclude Include="Engine\Rendering\Buffer\UniformBuffer\ShadowmappingUniformBuffer\DebugQuadUniformBuffer.h" />
+    <ClInclude Include="Engine\Rendering\Buffer\UniformBuffer\ShadowmappingUniformBuffer\ShadowmappingUniformBuffer.h" />
+    <ClInclude Include="Engine\Rendering\Buffer\UniformBuffer\StandardUniformBuffer\StandardUniformBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\VertexBuffer\VertexBuffer.h" />
     <ClInclude Include="Engine\Rendering\Camera\Camera.h" />
     <ClInclude Include="Engine\Rendering\Camera\CameraFrustum.h" />
@@ -227,6 +235,8 @@
     <ClInclude Include="Engine\Rendering\Descriptor\DescriptorPool\StandardDescriptorPool\StandardDescriptorPool.h" />
     <ClInclude Include="Engine\Rendering\Descriptor\DescriptorSet\BaseDescriptorSet.h" />
     <ClInclude Include="Engine\Rendering\Descriptor\DescriptorSet\GuiDescriptorSet\GuiDescriptorSet.h" />
+    <ClInclude Include="Engine\Rendering\Descriptor\DescriptorSet\ShadowmappingDescriptorSet\DebugQuadDescriptorSet.h" />
+    <ClInclude Include="Engine\Rendering\Descriptor\DescriptorSet\ShadowmappingDescriptorSet\ShadowmappingDescriptorSet.h" />
     <ClInclude Include="Engine\Rendering\Descriptor\DescriptorSet\StandardDescriptorSet\StandardDescriptorSet.h" />
     <ClInclude Include="Engine\Rendering\Device\VulkanDevice.h" />
     <ClInclude Include="Engine\Rendering\Gui\VulkanImGui.h" />
