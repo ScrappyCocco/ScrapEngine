@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Engine/Rendering/Descriptor/DescriptorSet/BaseDescriptorSet.h>
-#include <Engine/Rendering/Buffer/UniformBuffer/UniformBuffer.h>
+#include <Engine/Rendering/Buffer/UniformBuffer/StandardUniformBuffer/StandardUniformBuffer.h>
 
 namespace ScrapEngine
 {
@@ -10,7 +10,7 @@ namespace ScrapEngine
 		class DebugQuadDescriptorSet : public BaseDescriptorSet
 		{
 		public:
-			DebugQuadDescriptorSet(vk::DescriptorSetLayout* layout);
+			DebugQuadDescriptorSet();
 			~DebugQuadDescriptorSet() = default;
 
 			void create_descriptor_sets(vk::DescriptorPool* descriptor_pool,

@@ -22,30 +22,157 @@ ScrapEngine::Render::StandardCommandBuffer::StandardCommandBuffer(VulkanCommandP
 	}
 }
 
+void ScrapEngine::Render::StandardCommandBuffer::init_shadow_map(StandardShadowmapping* shadowmapping)
+{
+	std::array<vk::ClearValue, 1> clear_values = {
+		vk::ClearDepthStencilValue(1.0f, 0)
+	};
+	const std::vector<vk::Framebuffer>* swap_chain_framebuffers = shadowmapping
+	                                                              ->get_offscreen_frame_buffer()->
+	                                                              get_swap_chain_framebuffers_vector();
+	const vk::Extent2D shadow_map_extent = shadowmapping->get_shadow_map_extent();
+	vk::Rect2D rect = vk::Rect2D(vk::Offset2D(), shadow_map_extent);
+
+	for (size_t i = 0; i < command_buffers_.size(); i++)
+	{
+		//Begin
+
+		vk::RenderPassBeginInfo begin_info(
+			*shadowmapping->get_offscreen_render_pass()->get_render_pass(),
+			(*swap_chain_framebuffers)[i],
+			rect
+		);
+
+		render_pass_info_.clearValueCount = static_cast<uint32_t>(clear_values.size());
+		render_pass_info_.pClearValues = clear_values.data();
+
+		command_buffers_[i].beginRenderPass(&render_pass_info_, vk::SubpassContents::eInline);
+
+		//Prepare
+
+		vk::Viewport viewport;
+		viewport.setMinDepth(0.0f);
+		viewport.setMaxDepth(1.0f);
+		viewport.setWidth(shadow_map_extent.width);
+		viewport.setHeight(shadow_map_extent.height);
+		command_buffers_[i].setViewport(0, 1, &viewport);
+
+		command_buffers_[i].setScissor(0, 1, &rect);
+
+		// Set depth bias
+		// Required to avoid shadow mapping artefacts
+		command_buffers_[i].setDepthBias(
+			shadowmapping->get_depth_bias_constant(),
+			0.0f,
+			shadowmapping->get_depth_bias_slope()
+		);
+	}
+}
+
+void ScrapEngine::Render::StandardCommandBuffer::load_mesh_shadow_map(StandardShadowmapping* shadowmapping,
+                                                                      VulkanMeshInstance* mesh)
+{
+	vk::DeviceSize offsets[] = {0};
+	auto buffers_vector = (*mesh->get_mesh_buffers());
+	auto materials_vector = (*mesh->get_mesh_materials());
+
+	for (size_t i = 0; i < command_buffers_.size(); i++)
+	{
+		bool mesh_has_multi_material = false;
+		auto materials_iterator = materials_vector.begin();
+		if (mesh->get_mesh_materials()->size() > 1)
+		{
+			mesh_has_multi_material = true;
+		}
+		BasicMaterial* current_mat = *materials_iterator;
+		for (const auto mesh_buffer : buffers_vector)
+		{
+			command_buffers_[i].bindPipeline(vk::PipelineBindPoint::eGraphics,
+			                                 *shadowmapping->get_offscreen_pipeline()->get_graphics_pipeline()
+			);
+
+			command_buffers_[i].bindDescriptorSets(vk::PipelineBindPoint::eGraphics,
+			                                       *shadowmapping
+			                                        ->get_offscreen_descriptor_set()->get_pipeline_layout(),
+			                                       0,
+			                                       1,
+			                                       &(*shadowmapping
+			                                          ->get_offscreen_descriptor_set()->get_descriptor_sets())[i],
+			                                       0,
+			                                       nullptr
+			);
+
+			vk::Buffer vertex_buffers[] = {*(mesh_buffer.first)};
+
+			command_buffers_[i].bindVertexBuffers(0, 1, vertex_buffers, offsets);
+
+			command_buffers_[i].bindIndexBuffer(*(mesh_buffer.second), 0, vk::IndexType::eUint32);
+
+			command_buffers_[i].drawIndexed(static_cast<uint32_t>((mesh_buffer.second->get_vector()->size())), 1, 0, 0,
+			                                0);
+
+			if (mesh_has_multi_material)
+			{
+				++materials_iterator;
+				if (materials_iterator != materials_vector.end())
+				{
+					current_mat = *materials_iterator;
+				}
+			}
+		}
+	}
+}
+
+void ScrapEngine::Render::StandardCommandBuffer::draw_debug_quad_shadowmap(StandardShadowmapping* shadowmapping)
+{
+	vk::DeviceSize offsets[] = {0};
+	vk::Buffer* vertex_buffer = shadowmapping->get_debug_quad_vertices()->get_vertex_buffer();
+	vk::Buffer* index_buffer = shadowmapping->get_debug_quad_indices()->get_index_buffer();
+
+	for (size_t i = 0; i < command_buffers_.size(); i++)
+	{
+		command_buffers_[i].bindPipeline(vk::PipelineBindPoint::eGraphics,
+		                                 *shadowmapping->get_quad_pipeline()->get_graphics_pipeline()
+		);
+
+		command_buffers_[i].bindDescriptorSets(vk::PipelineBindPoint::eGraphics,
+		                                       *shadowmapping->get_debug_quad_descriptor_set()->get_pipeline_layout(),
+		                                       0,
+		                                       1,
+		                                       &(*shadowmapping->get_debug_quad_descriptor_set()->get_descriptor_sets())
+		                                       [i],
+		                                       0,
+		                                       nullptr
+		);
+
+		command_buffers_[i].bindVertexBuffers(0, 1, vertex_buffer, offsets);
+
+		command_buffers_[i].bindIndexBuffer(*index_buffer, 0, vk::IndexType::eUint32);
+
+		command_buffers_[i].drawIndexed(static_cast<uint32_t>(shadowmapping->get_quad_index_count()), 1, 0, 0,
+		                                0);
+	}
+}
+
 void ScrapEngine::Render::StandardCommandBuffer::init_command_buffer(
 	vk::Extent2D* input_swap_chain_extent_ref, BaseFrameBuffer* swap_chain_frame_buffer)
 {
+	const std::vector<vk::Framebuffer>* swap_chain_framebuffers = swap_chain_frame_buffer->
+		get_swap_chain_framebuffers_vector();
+
+	std::array<vk::ClearValue, 2> clear_values = {
+		vk::ClearValue(vk::ClearColorValue(std::array<float, 4>{0.0f, 0.0f, 0.0f, 1.0f})),
+		vk::ClearDepthStencilValue(1.0f, 0)
+	};
+
 	for (size_t i = 0; i < command_buffers_.size(); i++)
 	{
-		vk::CommandBufferBeginInfo begin_info(vk::CommandBufferUsageFlagBits::eSimultaneousUse);
-
-		if (command_buffers_[i].begin(&begin_info) != vk::Result::eSuccess)
-		{
-			throw std::runtime_error("[VulkanCommandBuffer] Failed to begin recording command buffer!");
-		}
-
-		const std::vector<vk::Framebuffer>* swap_chain_framebuffers = swap_chain_frame_buffer->
-			get_swap_chain_framebuffers_vector();
 		render_pass_info_ = vk::RenderPassBeginInfo(
 			*StandardRenderPass::get_instance(),
 			(*swap_chain_framebuffers)[i],
 			vk::Rect2D(vk::Offset2D(), *input_swap_chain_extent_ref)
 		);
 
-		std::array<vk::ClearValue, 2> clear_values = {
-			vk::ClearValue(vk::ClearColorValue(std::array<float, 4>{0.0f, 0.0f, 0.0f, 1.0f})),
-			vk::ClearDepthStencilValue(1.0f, 0)
-		};
 		render_pass_info_.clearValueCount = static_cast<uint32_t>(clear_values.size());
 		render_pass_info_.pClearValues = clear_values.data();
 

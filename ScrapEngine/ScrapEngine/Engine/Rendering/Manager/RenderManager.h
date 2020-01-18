@@ -13,7 +13,6 @@
 #include <Engine/Rendering/Buffer/CommandBuffer/GuiCommandBuffer/GuiCommandBuffer.h>
 #include <Engine/Rendering/Buffer/CommandBuffer/StandardCommandBuffer/StandardCommandBuffer.h>
 #include <Engine/Rendering/Semaphores/VulkanSemaphoresManager.h>
-#include <Engine/Rendering/Buffer/UniformBuffer/UniformBuffer.h>
 #include <Engine/Rendering/DepthResources/VulkanDepthResources.h>
 #include <Engine/Rendering/Texture/ColorResources/VulkanColorResources.h>
 #include <Engine/Rendering/Model/MeshInstance/VulkanMeshInstance.h>
@@ -21,6 +20,7 @@
 #include <Engine/Rendering/Gui/VulkanImGui.h>
 #include <TaskScheduler.h>
 #include <list>
+#include <Engine/Rendering/Shadowmapping/Standard/StandardShadowmapping.h>
 
 namespace ScrapEngine
 {
@@ -52,6 +52,8 @@ namespace ScrapEngine
 			Camera* default_camera_ = nullptr;
 
 			VulkanSkyboxInstance* skybox_ = nullptr;
+
+			StandardShadowmapping* shadowmapping_ = nullptr;
 
 			std::list<VulkanMeshInstance*> loaded_models_;
 

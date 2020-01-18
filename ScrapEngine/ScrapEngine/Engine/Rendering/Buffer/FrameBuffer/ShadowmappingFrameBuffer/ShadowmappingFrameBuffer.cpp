@@ -59,5 +59,17 @@ ScrapEngine::Render::ShadowmappingFrameBuffer::ShadowmappingFrameBuffer(const in
 
 ScrapEngine::Render::ShadowmappingFrameBuffer::~ShadowmappingFrameBuffer()
 {
+	VulkanDevice::get_instance()->get_logical_device()->destroySampler(depth_sampler_);
 	delete depth_attachment_;
+}
+
+vk::Sampler* ScrapEngine::Render::ShadowmappingFrameBuffer::get_depth_sampler()
+{
+	return &depth_sampler_;
+}
+
+ScrapEngine::Render::ShadowmappingFrameBufferAttachment* ScrapEngine::Render::ShadowmappingFrameBuffer::
+get_depth_attachment() const
+{
+	return depth_attachment_;
 }

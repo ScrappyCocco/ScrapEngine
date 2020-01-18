@@ -1,16 +1,11 @@
-#include <Engine/Rendering/Pipeline/StandardPipeline/StandardVulkanGraphicsPipeline.h>
+#include <Engine/Rendering/Pipeline/ShadowmappingPipeline/DebugQuadPipeline.h>
 #include <Engine/Rendering/Shader/ShaderManager.h>
-#include <Engine/Rendering/Base/Vertex.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
 #include <Engine/Rendering/RenderPass/StandardRenderPass/StandardRenderPass.h>
 
-ScrapEngine::Render::StandardVulkanGraphicsPipeline::StandardVulkanGraphicsPipeline(const char* vertex_shader,
-                                                                                    const char* fragment_shader,
-                                                                                    vk::Extent2D* swap_chain_extent,
-                                                                                    vk::DescriptorSetLayout*
-                                                                                    descriptor_set_layout,
-                                                                                    vk::SampleCountFlagBits
-                                                                                    msaa_samples)
+ScrapEngine::Render::DebugQuadPipeline::DebugQuadPipeline(const char* vertex_shader, const char* fragment_shader,
+                                                          vk::PipelineLayout* quad_layout,
+                                                          vk::Extent2D* swap_chain_extent)
 {
 	vk::ShaderModule vert_shader_module = ShaderManager::get_instance()->get_shader_module(vertex_shader);
 
@@ -32,23 +27,8 @@ ScrapEngine::Render::StandardVulkanGraphicsPipeline::StandardVulkanGraphicsPipel
 
 	vk::PipelineShaderStageCreateInfo shader_stages[] = {vert_shader_stage_info, frag_shader_stage_info};
 
-	//Parameter
-	uint32_t enable_pcf = 1;
-
-	vk::SpecializationMapEntry specialization_map_entry(0, 0, sizeof(uint32_t));
-	vk::SpecializationInfo specialization_info(1, &specialization_map_entry, sizeof(uint32_t), &enable_pcf);
-	shader_stages[1].setPSpecializationInfo(&specialization_info);
-
-	auto attribute_descriptions = Vertex::get_attribute_descriptions();
-	auto binding_description = Vertex::get_binding_description();
-
-	vk::PipelineVertexInputStateCreateInfo vertex_input_info(
-		vk::PipelineVertexInputStateCreateFlags(),
-		1,
-		&binding_description,
-		static_cast<uint32_t>(attribute_descriptions.size()),
-		attribute_descriptions.data()
-	);
+	//Empty
+	vk::PipelineVertexInputStateCreateInfo vertex_input_info;
 
 	vk::PipelineInputAssemblyStateCreateInfo input_assembly(
 		vk::PipelineInputAssemblyStateCreateFlags(),
@@ -82,14 +62,14 @@ ScrapEngine::Render::StandardVulkanGraphicsPipeline::StandardVulkanGraphicsPipel
 		false,
 		false,
 		vk::PolygonMode::eFill,
-		vk::CullModeFlagBits::eBack,
+		vk::CullModeFlagBits::eNone,
 		vk::FrontFace::eCounterClockwise
 	);
 	rasterizer.setLineWidth(1.0f);
 
 	vk::PipelineMultisampleStateCreateInfo multisampling(
 		vk::PipelineMultisampleStateCreateFlags(),
-		msaa_samples
+		vk::SampleCountFlagBits::e1
 	);
 
 	vk::PipelineDepthStencilStateCreateInfo depth_stencil(
@@ -99,10 +79,8 @@ ScrapEngine::Render::StandardVulkanGraphicsPipeline::StandardVulkanGraphicsPipel
 		vk::CompareOp::eLessOrEqual
 	);
 
+	//Empty?
 	vk::PipelineColorBlendAttachmentState color_blend_attachment;
-	color_blend_attachment.setColorWriteMask(
-		vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG | vk::ColorComponentFlagBits::eB | vk::
-		ColorComponentFlagBits::eA);
 
 	vk::PipelineColorBlendStateCreateInfo color_blending(
 		vk::PipelineColorBlendStateCreateFlags(),
@@ -111,19 +89,6 @@ ScrapEngine::Render::StandardVulkanGraphicsPipeline::StandardVulkanGraphicsPipel
 		1,
 		&color_blend_attachment
 	);
-
-	vk::PipelineLayoutCreateInfo pipeline_layout_info(
-		vk::PipelineLayoutCreateFlags(),
-		1,
-		&(*descriptor_set_layout)
-	);
-
-	if (VulkanDevice::get_instance()->get_logical_device()->createPipelineLayout(
-			&pipeline_layout_info, nullptr, &pipeline_layout_)
-		!= vk::Result::eSuccess)
-	{
-		throw std::runtime_error("StandardVulkanGraphicsPipeline: Failed to create pipeline layout!");
-	}
 
 	vk::GraphicsPipelineCreateInfo pipeline_info(
 		vk::PipelineCreateFlags(),
@@ -138,7 +103,7 @@ ScrapEngine::Render::StandardVulkanGraphicsPipeline::StandardVulkanGraphicsPipel
 		&depth_stencil,
 		&color_blending,
 		nullptr,
-		pipeline_layout_,
+		*quad_layout,
 		*StandardRenderPass::get_instance(),
 		0
 	);

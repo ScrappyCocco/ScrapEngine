@@ -19,7 +19,11 @@ namespace ScrapEngine
 
 			virtual ~BaseCommandBuffer() = 0;
 
+			void begin_command_buffer();
+			
 			void close_command_buffer();
+
+			void end_command_buffer_render_pass();
 
 			void reset_command_buffer();
 

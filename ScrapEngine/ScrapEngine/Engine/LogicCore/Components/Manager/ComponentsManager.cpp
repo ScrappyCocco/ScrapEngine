@@ -29,6 +29,20 @@ ScrapEngine::Core::MeshComponent* ScrapEngine::Core::ComponentsManager::create_n
 	return mesh_component;
 }
 
+ScrapEngine::Core::MeshComponent* ScrapEngine::Core::ComponentsManager::create_new_mesh_component(
+	const std::string& model_path, const std::vector<std::string>& textures_path)
+{
+	//Use default render_manager_ shader
+	Render::VulkanMeshInstance* mesh = render_manager_ref_->load_mesh(
+		model_path,
+		textures_path);
+	MeshComponent* mesh_component = new MeshComponent(mesh);
+
+	loaded_meshes_.insert({mesh_component, mesh});
+
+	return mesh_component;
+}
+
 void ScrapEngine::Core::ComponentsManager::destroy_mesh_component(
 	MeshComponent* component_to_destroy)
 {

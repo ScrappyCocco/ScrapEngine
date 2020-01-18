@@ -392,6 +392,9 @@
     <Filter Include="Engine\Rendering\Buffer\UniformBuffer\ShadowmappingUniformBuffer">
       <UniqueIdentifier>{b520435e-8d9f-4dcc-a8f9-5467d1239d20}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Rendering\Pipeline\ShadowmappingPipeline">
+      <UniqueIdentifier>{a78993c2-a7ef-48d5-af92-df933d861da6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Manager\EngineManager.cpp">
@@ -774,6 +777,12 @@
     </ClCompile>
     <ClCompile Include="Engine\Rendering\Buffer\UniformBuffer\ShadowmappingUniformBuffer\ShadowmappingUniformBuffer.cpp">
       <Filter>Engine\Rendering\Buffer\UniformBuffer\ShadowmappingUniformBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Pipeline\ShadowmappingPipeline\DebugQuadPipeline.cpp">
+      <Filter>Engine\Rendering\Pipeline\ShadowmappingPipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Pipeline\ShadowmappingPipeline\ShadowmappingPipeline.cpp">
+      <Filter>Engine\Rendering\Pipeline\ShadowmappingPipeline</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1181,6 +1190,12 @@
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Buffer\UniformBuffer\ShadowmappingUniformBuffer\ShadowmappingUniformBuffer.h">
       <Filter>Engine\Rendering\Buffer\UniformBuffer\ShadowmappingUniformBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Pipeline\ShadowmappingPipeline\DebugQuadPipeline.h">
+      <Filter>Engine\Rendering\Pipeline\ShadowmappingPipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Pipeline\ShadowmappingPipeline\ShadowmappingPipeline.h">
+      <Filter>Engine\Rendering\Pipeline\ShadowmappingPipeline</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

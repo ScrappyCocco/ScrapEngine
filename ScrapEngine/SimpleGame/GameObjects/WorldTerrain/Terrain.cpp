@@ -25,8 +25,6 @@ Terrain::Terrain(ScrapEngine::Core::ComponentsManager* input_component_manager,
 
 	//Mesh
 	ScrapEngine::Core::MeshComponent* mesh = input_component_manager->create_new_mesh_component(
-		"../assets/shader/compiled_shaders/shader_base.vert.spv",
-		"../assets/shader/compiled_shaders/shader_base.frag.spv",
 		"../assets/models/cube.obj",
 		{color_texture}
 	);

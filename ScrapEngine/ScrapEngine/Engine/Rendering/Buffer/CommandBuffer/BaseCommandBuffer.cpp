@@ -7,13 +7,32 @@ ScrapEngine::Render::BaseCommandBuffer::~BaseCommandBuffer()
 	free_command_buffers();
 }
 
+void ScrapEngine::Render::BaseCommandBuffer::begin_command_buffer()
+{
+	for (auto& command_buffer : command_buffers_)
+	{
+		vk::CommandBufferBeginInfo begin_info(vk::CommandBufferUsageFlagBits::eSimultaneousUse);
+
+		if (command_buffer.begin(&begin_info) != vk::Result::eSuccess)
+		{
+			throw std::runtime_error("[VulkanCommandBuffer] Failed to begin recording command buffer!");
+		}
+	}
+}
+
 void ScrapEngine::Render::BaseCommandBuffer::close_command_buffer()
 {
 	for (auto& command_buffer : command_buffers_)
 	{
-		command_buffer.endRenderPass();
-
 		command_buffer.end();
+	}
+}
+
+void ScrapEngine::Render::BaseCommandBuffer::end_command_buffer_render_pass()
+{
+	for (auto& command_buffer : command_buffers_)
+	{
+		command_buffer.endRenderPass();
 	}
 }
 

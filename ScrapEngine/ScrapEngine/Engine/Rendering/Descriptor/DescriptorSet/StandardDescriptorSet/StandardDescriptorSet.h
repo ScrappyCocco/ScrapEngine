@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Engine/Rendering/Descriptor/DescriptorSet/BaseDescriptorSet.h>
-#include <Engine/Rendering/Buffer/UniformBuffer/UniformBuffer.h>
+#include <Engine/Rendering/Buffer/UniformBuffer/StandardUniformBuffer/StandardUniformBuffer.h>
 
 namespace ScrapEngine
 {

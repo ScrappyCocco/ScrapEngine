@@ -240,6 +240,10 @@ void ScrapEngine::Render::RenderManager::initialize_vulkan(const game_base_info*
 	Debug::DebugLog::print_to_console_log("VulkanFrameBuffer created");
 	create_camera();
 	Debug::DebugLog::print_to_console_log("User View Camera created");
+	//Shadowmapping
+	Debug::DebugLog::print_to_console_log("Creating StandardShadowmapping...");
+	shadowmapping_ = new StandardShadowmapping(vulkan_render_swap_chain_);
+	Debug::DebugLog::print_to_console_log("StandardShadowmapping initialized!");
 	//Gui render
 	Debug::DebugLog::print_to_console_log("Creating gui render...");
 	initialize_gui(static_cast<float>(received_base_game_info->window_width),
@@ -404,6 +408,15 @@ void ScrapEngine::Render::RenderManager::create_command_buffer(const bool flip_f
 	const short int index = flip_flop ? 1 : 0;
 	//Reset the whole pool
 	command_buffers_[index].command_pool->reset_command_pool();
+	//Prepare shadow mapping
+	command_buffers_[index].command_buffer->init_shadow_map(shadowmapping_);
+	//Draw meshes for offscreen shadowmapping
+	for (auto mesh : loaded_models_)
+	{
+		command_buffers_[index].command_buffer->load_mesh_shadow_map(shadowmapping_, mesh);
+	}
+	//End the shadowmapping render pass
+	command_buffers_[index].command_buffer->end_command_buffer_render_pass();
 	//Re-create command buffer
 	command_buffers_[index].command_buffer->init_command_buffer(&vulkan_render_swap_chain_->get_swap_chain_extent(),
 	                                                            vulkan_render_frame_buffer_);
@@ -419,6 +432,10 @@ void ScrapEngine::Render::RenderManager::create_command_buffer(const bool flip_f
 	for (auto mesh : loaded_models_)
 	{
 		command_buffers_[index].command_buffer->load_mesh(mesh);
+	}
+	if (shadowmapping_->shadowmap_debug_enabled())
+	{
+		command_buffers_[index].command_buffer->draw_debug_quad_shadowmap(shadowmapping_);
 	}
 	//close
 	command_buffers_[index].command_buffer->close_command_buffer();
@@ -470,8 +487,8 @@ ScrapEngine::Render::VulkanMeshInstance* ScrapEngine::Render::RenderManager::loa
 ScrapEngine::Render::VulkanMeshInstance* ScrapEngine::Render::RenderManager::load_mesh(
 	const std::string& model_path, const std::vector<std::string>& textures_path)
 {
-	return load_mesh("../assets/shader/compiled_shaders/shader_base.vert.spv",
-	                 "../assets/shader/compiled_shaders/shader_base.frag.spv", model_path, textures_path);
+	return load_mesh("../assets/shader/compiled_shaders/shader_base_shadow.vert.spv",
+	                 "../assets/shader/compiled_shaders/shader_base_shadow.frag.spv", model_path, textures_path);
 }
 
 ScrapEngine::Render::VulkanSkyboxInstance* ScrapEngine::Render::RenderManager::load_skybox(
@@ -575,13 +592,19 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 	{
 		throw std::runtime_error("RenderManager: Failed to acquire swap chain image!");
 	}
+	//-----------------
 	//Update objects and uniform buffers
 	//Camera
 	render_camera_->execute_camera_update();
+	//Shadowmapping update
+	shadowmapping_->test_update_light(0.15f);
+	shadowmapping_->update_uniform_buffers(image_index_, render_camera_);
+	const glm::vec3 light_pos = shadowmapping_->get_light_pos();
+	const glm::mat4 depth_bias = shadowmapping_->get_depth_bias();
 	//Models
 	for (auto& loaded_model : loaded_models_)
 	{
-		loaded_model->update_uniform_buffer(image_index_, render_camera_);
+		loaded_model->update_uniform_buffer(image_index_, render_camera_, light_pos, depth_bias);
 	}
 	//Skybox
 	if (skybox_)
@@ -590,6 +613,7 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 	}
 	//Cancel dirty matrix
 	render_camera_->cancel_dirty_matrix();
+	//-----------------
 	//Submit the command buffer and the frame
 	vk::SubmitInfo submit_info;
 

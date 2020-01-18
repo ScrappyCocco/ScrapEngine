@@ -70,9 +70,12 @@ namespace ScrapEngine
 
 			//----------------------------------------
 			//MeshStuff
+			//Currently the engine doesn't support custom shaders, so specify the path is kinda useless
 			MeshComponent* create_new_mesh_component(const std::string& vertex_shader_path,
 			                                         const std::string& fragment_shader_path,
 			                                         const std::string& model_path,
+			                                         const std::vector<std::string>& textures_path);
+			MeshComponent* create_new_mesh_component(const std::string& model_path,
 			                                         const std::vector<std::string>& textures_path);
 			void destroy_mesh_component(MeshComponent* component_to_destroy);
 			//----------------------------------------

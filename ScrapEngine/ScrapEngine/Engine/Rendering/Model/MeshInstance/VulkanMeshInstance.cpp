@@ -10,8 +10,7 @@ ScrapEngine::Render::VulkanMeshInstance::VulkanMeshInstance(const std::string& v
                                                             VulkanSwapChain* swap_chain)
 {
 	//CREATE UNIFORM BUFFER
-	vulkan_render_uniform_buffer_ = new UniformBuffer(swap_chain->get_swap_chain_images_vector(),
-	                                                  swap_chain->get_swap_chain_extent());
+	vulkan_render_uniform_buffer_ = new StandardUniformBuffer(swap_chain->get_swap_chain_images_vector()->size());
 	vulkan_render_model_ = VulkanModelPool::get_instance()->get_model(model_path);
 	if (vulkan_render_model_->get_meshes()->size() != textures_path.size() && textures_path.size() > 1)
 	{
@@ -112,24 +111,45 @@ uint16_t ScrapEngine::Render::VulkanMeshInstance::get_deletion_counter() const
 }
 
 void ScrapEngine::Render::VulkanMeshInstance::update_uniform_buffer(const uint32_t& current_image,
-                                                                    Camera* render_camera)
+                                                                    Camera* render_camera,
+                                                                    const glm::vec3& light_pos,
+                                                                    const glm::mat4& depth_bias_m)
 {
-	if(is_static_){
-		if(transform_dirty_)
-		{
-			vulkan_render_uniform_buffer_->update_uniform_buffer(current_image, object_location_, render_camera);
-			transform_dirty_ = false;
-		}else
-		{
-			vulkan_render_uniform_buffer_->update_uniform_buffer(current_image, object_location_, render_camera, false);
-		}
-	}else
+	if (is_static_)
 	{
-		vulkan_render_uniform_buffer_->update_uniform_buffer(current_image, object_location_, render_camera);
+		if (transform_dirty_)
+		{
+			vulkan_render_uniform_buffer_->update_uniform_buffer(current_image,
+			                                                     object_location_,
+			                                                     render_camera,
+			                                                     light_pos,
+			                                                     depth_bias_m
+			);
+			transform_dirty_ = false;
+		}
+		else
+		{
+			vulkan_render_uniform_buffer_->update_uniform_buffer(current_image,
+			                                                     object_location_,
+			                                                     render_camera,
+			                                                     light_pos, depth_bias_m,
+			                                                     false
+			);
+		}
+	}
+	else
+	{
+		vulkan_render_uniform_buffer_->update_uniform_buffer(current_image,
+		                                                     object_location_,
+		                                                     render_camera,
+		                                                     light_pos,
+		                                                     depth_bias_m
+		);
 	}
 }
 
-ScrapEngine::Render::UniformBuffer* ScrapEngine::Render::VulkanMeshInstance::get_vulkan_render_uniform_buffer() const
+ScrapEngine::Render::StandardUniformBuffer* ScrapEngine::Render::VulkanMeshInstance::
+get_vulkan_render_uniform_buffer() const
 {
 	return vulkan_render_uniform_buffer_;
 }

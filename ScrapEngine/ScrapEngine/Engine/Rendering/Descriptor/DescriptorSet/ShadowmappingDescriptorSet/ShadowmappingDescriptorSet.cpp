@@ -20,8 +20,6 @@ ScrapEngine::Render::ShadowmappingDescriptorSet::ShadowmappingDescriptorSet(vk::
 void ScrapEngine::Render::ShadowmappingDescriptorSet::create_descriptor_sets(vk::DescriptorPool* descriptor_pool,
                                                                         const std::vector<vk::Image>* swap_chain_images,
                                                                         const std::vector<vk::Buffer>* uniform_buffers,
-                                                                        vk::ImageView* texture_image_view,
-                                                                        vk::Sampler* texture_sampler,
                                                                         const vk::DeviceSize& buffer_info_size)
 {
 	std::vector<vk::DescriptorSetLayout> layouts(swap_chain_images->size(), descriptor_set_layout_);
@@ -48,13 +46,7 @@ void ScrapEngine::Render::ShadowmappingDescriptorSet::create_descriptor_sets(vk:
 			buffer_info_size
 		);
 
-		vk::DescriptorImageInfo image_info(
-			*texture_sampler,
-			*texture_image_view,
-			vk::ImageLayout::eShaderReadOnlyOptimal
-		);
-
-		std::array<vk::WriteDescriptorSet, 2> descriptor_writes = {
+		std::array<vk::WriteDescriptorSet, 1> descriptor_writes = {
 			vk::WriteDescriptorSet(
 				descriptor_sets_[i],
 				0,
@@ -63,14 +55,6 @@ void ScrapEngine::Render::ShadowmappingDescriptorSet::create_descriptor_sets(vk:
 				vk::DescriptorType::eUniformBuffer,
 				nullptr,
 				&buffer_info
-			),
-			vk::WriteDescriptorSet(
-				descriptor_sets_[i],
-				1,
-				0,
-				1,
-				vk::DescriptorType::eCombinedImageSampler,
-				&image_info
 			)
 		};
 

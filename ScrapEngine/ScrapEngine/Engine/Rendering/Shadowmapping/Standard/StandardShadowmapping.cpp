@@ -1,35 +1,62 @@
 #include <Engine/Rendering/Shadowmapping/Standard/StandardShadowmapping.h>
-#include <Engine/Debug/DebugLog.h>
 #include <Engine/Rendering/Base/Vertex.h>
-#include <Engine/Rendering/Descriptor/DescriptorSet/ShadowmappingDescriptorSet/DebugQuadDescriptorSet.h>
-#include <Engine/Rendering/Descriptor/DescriptorSet/ShadowmappingDescriptorSet/ShadowmappingDescriptorSet.h>
 
-ScrapEngine::Render::StandardShadowmapping::StandardShadowmapping(BaseDescriptorSet* scene_descriptor,
-                                                                  const size_t swap_chain_images_size)
+ScrapEngine::Render::StandardShadowmapping::StandardShadowmapping(VulkanSwapChain* swap_chain)
 {
-	Debug::DebugLog::print_to_console_log("Creating StandardShadowmapping()...");
+	const std::vector<vk::Image>* swap_chain_vector = swap_chain->get_swap_chain_images_vector();
+	descriptor_pool_ = new StandardDescriptorPool(swap_chain_vector);
+
 	generate_debug_quad();
+
 	offscreen_render_pass_ = new ShadowmappingRenderPass(depth_format_);
 	offscreen_frame_buffer_ = new ShadowmappingFrameBuffer(SHADOWMAP_DIM, SHADOWMAP_DIM,
 	                                                       depth_format_, shadowmap_filter_, offscreen_render_pass_);
 
-	debug_quad_descriptor_set_ = new DebugQuadDescriptorSet(scene_descriptor->get_descriptor_set_layout());
-	offscreen_descriptor_set_ = new ShadowmappingDescriptorSet(scene_descriptor->get_descriptor_set_layout());
+	debug_quad_descriptor_set_ = new DebugQuadDescriptorSet();
+	offscreen_descriptor_set_ = new ShadowmappingDescriptorSet(debug_quad_descriptor_set_->get_descriptor_set_layout());
 
-	quad_ubo_ = new DebugQuadUniformBuffer(swap_chain_images_size);
-	offscreen_ubo_ = new ShadowmappingUniformBuffer(swap_chain_images_size);
+
+	quad_ubo_ = new DebugQuadUniformBuffer(swap_chain_vector->size());
+	offscreen_ubo_ = new ShadowmappingUniformBuffer(swap_chain_vector->size());
+
+	vk::Extent2D swap_chain_extent = swap_chain->get_swap_chain_extent();
+	quad_pipeline_ = new DebugQuadPipeline("../assets/shader/compiled_shaders/quad.vert.spv",
+	                                       "../assets/shader/compiled_shaders/quad.vert.spv",
+	                                       debug_quad_descriptor_set_->get_pipeline_layout(),
+	                                       &swap_chain_extent
+	);
+	offscreen_pipeline_ = new ShadowmappingPipeline("../assets/shader/compiled_shaders/offscreen.vert.spv",
+	                                                offscreen_descriptor_set_->get_pipeline_layout(),
+	                                                &swap_chain_extent,
+	                                                offscreen_render_pass_
+	);
+
+	debug_quad_descriptor_set_->create_descriptor_sets(descriptor_pool_->get_descriptor_pool(),
+	                                                   swap_chain->get_swap_chain_images_vector(),
+	                                                   quad_ubo_->get_uniform_buffers(),
+	                                                   offscreen_frame_buffer_
+	                                                   ->get_depth_attachment()->get_image_view(),
+	                                                   offscreen_frame_buffer_->get_depth_sampler()
+	);
+	offscreen_descriptor_set_->create_descriptor_sets(descriptor_pool_->get_descriptor_pool(),
+	                                                  swap_chain->get_swap_chain_images_vector(),
+	                                                  offscreen_ubo_->get_uniform_buffers()
+	);
 }
 
 ScrapEngine::Render::StandardShadowmapping::~StandardShadowmapping()
 {
-	delete offscreen_render_pass_;
-	delete offscreen_frame_buffer_;
 	delete quad_vertices_;
 	delete quad_indices_;
-	delete debug_quad_descriptor_set_;
-	delete offscreen_descriptor_set_;
 	delete quad_ubo_;
 	delete offscreen_ubo_;
+	delete quad_pipeline_;
+	delete offscreen_pipeline_;
+	delete offscreen_render_pass_;
+	delete offscreen_frame_buffer_;
+	delete debug_quad_descriptor_set_;
+	delete offscreen_descriptor_set_;
+	delete descriptor_pool_;
 }
 
 void ScrapEngine::Render::StandardShadowmapping::update_uniform_buffers(const uint32_t& current_image,
@@ -52,6 +79,75 @@ void ScrapEngine::Render::StandardShadowmapping::set_light_post(const glm::vec3&
 glm::mat4 ScrapEngine::Render::StandardShadowmapping::get_depth_bias() const
 {
 	return offscreen_ubo_->get_depth_bias();
+}
+
+float ScrapEngine::Render::StandardShadowmapping::get_depth_bias_constant() const
+{
+	return depth_bias_constant_;
+}
+
+float ScrapEngine::Render::StandardShadowmapping::get_depth_bias_slope() const
+{
+	return depth_bias_slope_;
+}
+
+ScrapEngine::Render::ShadowmappingFrameBuffer* ScrapEngine::Render::StandardShadowmapping::
+get_offscreen_frame_buffer() const
+{
+	return offscreen_frame_buffer_;
+}
+
+ScrapEngine::Render::ShadowmappingRenderPass* ScrapEngine::Render::StandardShadowmapping::
+get_offscreen_render_pass() const
+{
+	return offscreen_render_pass_;
+}
+
+ScrapEngine::Render::DebugQuadDescriptorSet* ScrapEngine::Render::StandardShadowmapping::
+get_debug_quad_descriptor_set() const
+{
+	return debug_quad_descriptor_set_;
+}
+
+ScrapEngine::Render::ShadowmappingDescriptorSet* ScrapEngine::Render::StandardShadowmapping::
+get_offscreen_descriptor_set() const
+{
+	return offscreen_descriptor_set_;
+}
+
+ScrapEngine::Render::DebugQuadPipeline* ScrapEngine::Render::StandardShadowmapping::get_quad_pipeline() const
+{
+	return quad_pipeline_;
+}
+
+ScrapEngine::Render::ShadowmappingPipeline* ScrapEngine::Render::StandardShadowmapping::get_offscreen_pipeline() const
+{
+	return offscreen_pipeline_;
+}
+
+ScrapEngine::Render::VertexBuffer* ScrapEngine::Render::StandardShadowmapping::get_debug_quad_vertices() const
+{
+	return quad_vertices_;
+}
+
+ScrapEngine::Render::IndexBuffer* ScrapEngine::Render::StandardShadowmapping::get_debug_quad_indices() const
+{
+	return quad_indices_;
+}
+
+uint32_t ScrapEngine::Render::StandardShadowmapping::get_quad_index_count() const
+{
+	return quad_index_count_;
+}
+
+vk::Extent2D ScrapEngine::Render::StandardShadowmapping::get_shadow_map_extent()
+{
+	return vk::Extent2D(SHADOWMAP_DIM, SHADOWMAP_DIM);
+}
+
+bool ScrapEngine::Render::StandardShadowmapping::shadowmap_debug_enabled()
+{
+	return ENABLE_SHADOWMAP_DEBUG;
 }
 
 void ScrapEngine::Render::StandardShadowmapping::test_update_light(const float time)
@@ -104,4 +200,6 @@ void ScrapEngine::Render::StandardShadowmapping::generate_debug_quad()
 
 	std::vector<uint32_t> index_buffer = {0, 1, 2, 2, 3, 0};
 	quad_indices_ = new IndexBuffer(&index_buffer);
+
+	quad_index_count_ = index_buffer.size();
 }

@@ -18,6 +18,9 @@ namespace ScrapEngine
 			ShadowmappingFrameBuffer(int32_t width, int32_t height, vk::Format depth_format,
 			                         vk::Filter shadowmap_filter, BaseRenderPass* render_pass);
 			~ShadowmappingFrameBuffer();
+
+			vk::Sampler* get_depth_sampler();
+			ShadowmappingFrameBufferAttachment* get_depth_attachment() const;
 		};
 	}
 }

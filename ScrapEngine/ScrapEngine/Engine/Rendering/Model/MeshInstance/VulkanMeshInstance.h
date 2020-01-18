@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Engine/Rendering/Buffer/UniformBuffer/UniformBuffer.h>
+#include <Engine/Rendering/Buffer/UniformBuffer/StandardUniformBuffer/StandardUniformBuffer.h>
 #include <Engine/Rendering/Model/Model/VulkanModel.h>
 #include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
 #include <Engine/Rendering/Buffer/BufferContainer/VertexBufferContainer/VertexBufferContainer.h>
@@ -16,7 +16,7 @@ namespace ScrapEngine
 		{
 		private:
 			std::shared_ptr<VulkanModel> vulkan_render_model_ = nullptr;
-			UniformBuffer* vulkan_render_uniform_buffer_ = nullptr;
+			StandardUniformBuffer* vulkan_render_uniform_buffer_ = nullptr;
 			std::vector<BasicMaterial*> model_materials_;
 
 			std::shared_ptr<std::vector<
@@ -66,9 +66,10 @@ namespace ScrapEngine
 			void increase_deletion_counter();
 			uint16_t get_deletion_counter() const;
 
-			void update_uniform_buffer(const uint32_t& current_image, Camera* render_camera);
+			void update_uniform_buffer(const uint32_t& current_image, Camera* render_camera,
+			                           const glm::vec3& light_pos, const glm::mat4& depth_bias_m);
 
-			UniformBuffer* get_vulkan_render_uniform_buffer() const;
+			StandardUniformBuffer* get_vulkan_render_uniform_buffer() const;
 			const std::vector<BasicMaterial*>* get_mesh_materials() const;
 
 			std::shared_ptr<std::vector<
