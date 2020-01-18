@@ -66,7 +66,7 @@ ScrapEngine::Render::ShadowmappingRenderPass::ShadowmappingRenderPass(const vk::
 	if (VulkanDevice::get_instance()->get_logical_device()->createRenderPass(&render_pass_info, nullptr, &render_pass_)
 		!= vk::Result::eSuccess)
 	{
-		throw std::runtime_error("VulkanRenderPass: Failed to create render pass!");
+		throw std::runtime_error("ShadowmappingRenderPass: Failed to create render pass!");
 	}
 }
 

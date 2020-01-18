@@ -19,8 +19,9 @@ namespace ScrapEngine
 
 			virtual ~BaseCommandBuffer() = 0;
 
-			void begin_command_buffer();
-			
+			void begin_command_buffer(vk::CommandBufferUsageFlagBits flag =
+				vk::CommandBufferUsageFlagBits::eSimultaneousUse);
+
 			void close_command_buffer();
 
 			void end_command_buffer_render_pass();

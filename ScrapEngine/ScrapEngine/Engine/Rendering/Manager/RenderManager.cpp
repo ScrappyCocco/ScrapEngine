@@ -347,6 +347,7 @@ void ScrapEngine::Render::RenderManager::rebuild_gui_command_buffer(const bool f
 	{
 		image_index_to_use = last_image_index_;
 	}
+	gui_command_buffer_->begin_command_buffer(vk::CommandBufferUsageFlagBits::eOneTimeSubmit);
 	gui_command_buffer_->init_command_buffer(vulkan_render_frame_buffer_,
 	                                         &vulkan_render_swap_chain_->get_swap_chain_extent(),
 	                                         image_index_to_use);
@@ -406,8 +407,9 @@ void ScrapEngine::Render::RenderManager::create_command_buffer(const bool flip_f
 {
 	//Init
 	const short int index = flip_flop ? 1 : 0;
-	//Reset the whole pool
+	//Reset the whole pool and begin the command buffer
 	command_buffers_[index].command_pool->reset_command_pool();
+	command_buffers_[index].command_buffer->begin_command_buffer();
 	//Prepare shadow mapping
 	command_buffers_[index].command_buffer->init_shadow_map(shadowmapping_);
 	//Draw meshes for offscreen shadowmapping
@@ -433,7 +435,7 @@ void ScrapEngine::Render::RenderManager::create_command_buffer(const bool flip_f
 	{
 		command_buffers_[index].command_buffer->load_mesh(mesh);
 	}
-	if (shadowmapping_->shadowmap_debug_enabled())
+	if (StandardShadowmapping::shadowmap_debug_enabled())
 	{
 		command_buffers_[index].command_buffer->draw_debug_quad_shadowmap(shadowmapping_);
 	}

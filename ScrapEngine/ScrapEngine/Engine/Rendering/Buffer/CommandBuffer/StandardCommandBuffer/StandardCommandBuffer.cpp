@@ -30,7 +30,7 @@ void ScrapEngine::Render::StandardCommandBuffer::init_shadow_map(StandardShadowm
 	const std::vector<vk::Framebuffer>* swap_chain_framebuffers = shadowmapping
 	                                                              ->get_offscreen_frame_buffer()->
 	                                                              get_swap_chain_framebuffers_vector();
-	const vk::Extent2D shadow_map_extent = shadowmapping->get_shadow_map_extent();
+	const vk::Extent2D shadow_map_extent = StandardShadowmapping::get_shadow_map_extent();
 	vk::Rect2D rect = vk::Rect2D(vk::Offset2D(), shadow_map_extent);
 
 	for (size_t i = 0; i < command_buffers_.size(); i++)
@@ -39,14 +39,14 @@ void ScrapEngine::Render::StandardCommandBuffer::init_shadow_map(StandardShadowm
 
 		vk::RenderPassBeginInfo begin_info(
 			*shadowmapping->get_offscreen_render_pass()->get_render_pass(),
-			(*swap_chain_framebuffers)[i],
+			(*swap_chain_framebuffers)[0],
 			rect
 		);
 
-		render_pass_info_.clearValueCount = static_cast<uint32_t>(clear_values.size());
-		render_pass_info_.pClearValues = clear_values.data();
+		begin_info.clearValueCount = static_cast<uint32_t>(clear_values.size());
+		begin_info.pClearValues = clear_values.data();
 
-		command_buffers_[i].beginRenderPass(&render_pass_info_, vk::SubpassContents::eInline);
+		command_buffers_[i].beginRenderPass(&begin_info, vk::SubpassContents::eInline);
 
 		//Prepare
 

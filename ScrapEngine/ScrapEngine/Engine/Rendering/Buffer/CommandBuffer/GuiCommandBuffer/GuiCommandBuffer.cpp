@@ -35,13 +35,6 @@ void ScrapEngine::Render::GuiCommandBuffer::init_command_buffer(
 
 	for (auto& command_buffer : command_buffers_)
 	{
-		vk::CommandBufferBeginInfo begin_info(vk::CommandBufferUsageFlagBits::eOneTimeSubmit);
-
-		if (command_buffer.begin(&begin_info) != vk::Result::eSuccess)
-		{
-			throw std::runtime_error("[VulkanCommandBuffer] Failed to begin recording command buffer!");
-		}
-
 		render_pass_info_ = vk::RenderPassBeginInfo(
 			*render_pass_ref_,
 			//So here i read the frame buffer corresponding to the next image frame
