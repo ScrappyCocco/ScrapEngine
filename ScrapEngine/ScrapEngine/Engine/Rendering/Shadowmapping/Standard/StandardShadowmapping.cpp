@@ -4,7 +4,8 @@
 ScrapEngine::Render::StandardShadowmapping::StandardShadowmapping(VulkanSwapChain* swap_chain)
 {
 	const std::vector<vk::Image>* swap_chain_vector = swap_chain->get_swap_chain_images_vector();
-	descriptor_pool_ = new StandardDescriptorPool(swap_chain_vector);
+	debug_quad_descriptor_pool_ = new StandardDescriptorPool(swap_chain_vector);
+	offscreen_descriptor_pool_ = new StandardDescriptorPool(swap_chain_vector);
 
 	generate_debug_quad();
 
@@ -31,14 +32,14 @@ ScrapEngine::Render::StandardShadowmapping::StandardShadowmapping(VulkanSwapChai
 	                                                offscreen_render_pass_
 	);
 
-	debug_quad_descriptor_set_->create_descriptor_sets(descriptor_pool_->get_descriptor_pool(),
+	debug_quad_descriptor_set_->create_descriptor_sets(debug_quad_descriptor_pool_->get_descriptor_pool(),
 	                                                   swap_chain->get_swap_chain_images_vector(),
 	                                                   quad_ubo_->get_uniform_buffers(),
 	                                                   offscreen_frame_buffer_
 	                                                   ->get_depth_attachment()->get_image_view(),
 	                                                   offscreen_frame_buffer_->get_depth_sampler()
 	);
-	offscreen_descriptor_set_->create_descriptor_sets(descriptor_pool_->get_descriptor_pool(),
+	offscreen_descriptor_set_->create_descriptor_sets(offscreen_descriptor_pool_->get_descriptor_pool(),
 	                                                  swap_chain->get_swap_chain_images_vector(),
 	                                                  offscreen_ubo_->get_uniform_buffers()
 	);
@@ -56,7 +57,8 @@ ScrapEngine::Render::StandardShadowmapping::~StandardShadowmapping()
 	delete offscreen_frame_buffer_;
 	delete debug_quad_descriptor_set_;
 	delete offscreen_descriptor_set_;
-	delete descriptor_pool_;
+	delete debug_quad_descriptor_pool_;
+	delete offscreen_descriptor_pool_;
 }
 
 void ScrapEngine::Render::StandardShadowmapping::update_uniform_buffers(const uint32_t& current_image,

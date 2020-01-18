@@ -38,7 +38,8 @@ namespace ScrapEngine
 			DebugQuadPipeline* quad_pipeline_ = nullptr;
 			ShadowmappingPipeline* offscreen_pipeline_ = nullptr;
 
-			StandardDescriptorPool* descriptor_pool_ = nullptr;
+			StandardDescriptorPool* debug_quad_descriptor_pool_ = nullptr;
+			StandardDescriptorPool* offscreen_descriptor_pool_ = nullptr;
 		public:
 			StandardShadowmapping(VulkanSwapChain* swap_chain);
 			~StandardShadowmapping();

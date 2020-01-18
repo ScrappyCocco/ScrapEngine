@@ -31,7 +31,7 @@ ScrapEngine::Render::DebugQuadDescriptorSet::DebugQuadDescriptorSet()
 		&layout_info, nullptr, &descriptor_set_layout_)
 		!= vk::Result::eSuccess)
 	{
-		throw std::runtime_error("StandardDescriptorSet: Failed to create descriptor set layout!");
+		throw std::runtime_error("DebugQuadDescriptorSet: Failed to create descriptor set layout!");
 	}
 	
 	vk::PipelineLayoutCreateInfo create_info(
@@ -65,7 +65,7 @@ void ScrapEngine::Render::DebugQuadDescriptorSet::create_descriptor_sets(vk::Des
 	if (VulkanDevice::get_instance()->get_logical_device()->allocateDescriptorSets(&alloc_info, &descriptor_sets_[0])
 		!= vk::Result::eSuccess)
 	{
-		throw std::runtime_error("ShadowmappingDescriptorSet - DescriptorSetLayout: Failed to allocate descriptor sets!");
+		throw std::runtime_error("DebugQuadDescriptorSet - DescriptorSetLayout: Failed to allocate descriptor sets!");
 	}
 
 	for (size_t i = 0; i < swap_chain_images->size(); i++)
