@@ -28,7 +28,7 @@ void ScrapEngine::Render::SimpleMaterial::create_texture(const std::string& text
 }
 
 void ScrapEngine::Render::SimpleMaterial::create_descriptor_sets(VulkanSwapChain* swap_chain,
-                                                                 UniformBuffer* uniform_buffer)
+                                                                 StandardUniformBuffer* uniform_buffer)
 {
 	vulkan_render_descriptor_pool_ = new StandardDescriptorPool(swap_chain->get_swap_chain_images_vector());
 	vulkan_render_descriptor_set_->create_descriptor_sets(vulkan_render_descriptor_pool_->get_descriptor_pool(),

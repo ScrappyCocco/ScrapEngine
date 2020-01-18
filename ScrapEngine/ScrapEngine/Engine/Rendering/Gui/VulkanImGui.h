@@ -8,6 +8,7 @@
 #include <Engine/Rendering/Descriptor/DescriptorSet/GuiDescriptorSet/GuiDescriptorSet.h>
 #include <Engine/Rendering/Pipeline/GuiPipeline/GuiVulkanGraphicsPipeline.h>
 #include <Engine/Rendering/Buffer/GenericBuffer/GenericBuffer.h>
+#include <glm/vec2.hpp>
 
 namespace ScrapEngine
 {

@@ -53,8 +53,8 @@ void ScrapEngine::Render::StandardCommandBuffer::init_shadow_map(StandardShadowm
 		vk::Viewport viewport;
 		viewport.setMinDepth(0.0f);
 		viewport.setMaxDepth(1.0f);
-		viewport.setWidth(shadow_map_extent.width);
-		viewport.setHeight(shadow_map_extent.height);
+		viewport.setWidth(static_cast<float>(shadow_map_extent.width));
+		viewport.setHeight(static_cast<float>(shadow_map_extent.height));
 		command_buffers_[i].setViewport(0, 1, &viewport);
 
 		command_buffers_[i].setScissor(0, 1, &rect);

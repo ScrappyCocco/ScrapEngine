@@ -13,6 +13,8 @@ ScrapEngine::Render::StandardRenderPass* ScrapEngine::Render::StandardRenderPass
 void ScrapEngine::Render::StandardRenderPass::init(const vk::Format& swap_chain_image_format,
                                                    const vk::SampleCountFlagBits msaa_samples)
 {
+	msaa_samples_ = msaa_samples;
+	
 	const vk::AttachmentDescription color_attachment(
 		vk::AttachmentDescriptionFlags(),
 		swap_chain_image_format,
@@ -110,4 +112,9 @@ ScrapEngine::Render::StandardRenderPass* ScrapEngine::Render::StandardRenderPass
 		instance_ = new StandardRenderPass();
 	}
 	return instance_;
+}
+
+vk::SampleCountFlagBits ScrapEngine::Render::StandardRenderPass::get_msaa_samples() const
+{
+	return msaa_samples_;
 }

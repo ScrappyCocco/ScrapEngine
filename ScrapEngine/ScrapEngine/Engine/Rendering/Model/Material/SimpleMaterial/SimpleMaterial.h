@@ -28,7 +28,7 @@ namespace ScrapEngine
 			void create_texture(const std::string& texture_path);
 
 			void create_descriptor_sets(VulkanSwapChain* swap_chain,
-			                            UniformBuffer* uniform_buffer);
+			                            StandardUniformBuffer* uniform_buffer);
 		};
 	}
 }

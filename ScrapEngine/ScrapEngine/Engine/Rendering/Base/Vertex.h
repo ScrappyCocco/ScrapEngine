@@ -10,32 +10,29 @@
 
 namespace ScrapEngine
 {
-	class Vertex
+	namespace Render
 	{
-	public:
-		glm::vec3 pos;
-		glm::vec3 color;
-		glm::vec2 tex_coord;
-		glm::vec3 normal;
-
-		static vk::VertexInputBindingDescription get_binding_description()
+		class Vertex
 		{
-			const vk::VertexInputBindingDescription
-				binding_description(0, sizeof(Vertex), vk::VertexInputRate::eVertex);
+		public:
+			glm::vec3 pos;
+			glm::vec3 color;
+			glm::vec2 tex_coord;
+			glm::vec3 normal;
 
-			return binding_description;
-		}
+			static vk::VertexInputBindingDescription get_binding_description();
 
-		static std::array<vk::VertexInputAttributeDescription, 4> get_attribute_descriptions()
+			static std::array<vk::VertexInputAttributeDescription, 4> get_attribute_descriptions();
+		};
+
+		class OffscreenVertex
 		{
-			const std::array<vk::VertexInputAttributeDescription, 4> attribute_descriptions = {
-				vk::VertexInputAttributeDescription(0, 0, vk::Format::eR32G32B32Sfloat, offsetof(Vertex, pos)),
-				vk::VertexInputAttributeDescription(1, 0, vk::Format::eR32G32B32Sfloat, offsetof(Vertex, color)),
-				vk::VertexInputAttributeDescription(2, 0, vk::Format::eR32G32Sfloat, offsetof(Vertex, tex_coord)),
-				vk::VertexInputAttributeDescription(3, 0, vk::Format::eR32G32B32Sfloat, offsetof(Vertex, normal)),
-			};
+		public:
+			glm::vec3 pos;
 
-			return attribute_descriptions;
-		}
-	};
+			static vk::VertexInputBindingDescription get_binding_description();
+
+			static std::array<vk::VertexInputAttributeDescription, 1> get_attribute_descriptions();
+		};
+	}
 }

@@ -67,6 +67,7 @@
     <ClCompile Include="Engine\Physics\Raycast\SingleRaycast\SingleRaycast.cpp" />
     <ClCompile Include="Engine\Physics\RigidBody\RigidBody.cpp" />
     <ClCompile Include="Engine\Physics\Utils\ConversionUtils.cpp" />
+    <ClCompile Include="Engine\Rendering\Base\Vertex.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\BaseBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\BufferContainer\BufferContainer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\BufferContainer\IndicesBufferContainer\IndicesBufferContainer.cpp" />
@@ -87,6 +88,7 @@
     <ClCompile Include="Engine\Rendering\Buffer\UniformBuffer\BaseUniformBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\UniformBuffer\ShadowmappingUniformBuffer\DebugQuadUniformBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\UniformBuffer\ShadowmappingUniformBuffer\ShadowmappingUniformBuffer.cpp" />
+    <ClCompile Include="Engine\Rendering\Buffer\UniformBuffer\SkyboxUniformBuffer\SkyboxUniformBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\UniformBuffer\StandardUniformBuffer\StandardUniformBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\VertexBuffer\VertexBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Camera\Camera.cpp" />
@@ -224,6 +226,7 @@
     <ClInclude Include="Engine\Rendering\Buffer\UniformBuffer\BaseUniformBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\UniformBuffer\ShadowmappingUniformBuffer\DebugQuadUniformBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\UniformBuffer\ShadowmappingUniformBuffer\ShadowmappingUniformBuffer.h" />
+    <ClInclude Include="Engine\Rendering\Buffer\UniformBuffer\SkyboxUniformBuffer\SkyboxUniformBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\UniformBuffer\StandardUniformBuffer\StandardUniformBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\VertexBuffer\VertexBuffer.h" />
     <ClInclude Include="Engine\Rendering\Camera\Camera.h" />

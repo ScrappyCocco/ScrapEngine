@@ -395,6 +395,9 @@
     <Filter Include="Engine\Rendering\Pipeline\ShadowmappingPipeline">
       <UniqueIdentifier>{a78993c2-a7ef-48d5-af92-df933d861da6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Rendering\Buffer\UniformBuffer\SkyboxUniformBuffer">
+      <UniqueIdentifier>{dc99e110-70c2-4481-b9ff-4563535f0f47}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Manager\EngineManager.cpp">
@@ -783,6 +786,12 @@
     </ClCompile>
     <ClCompile Include="Engine\Rendering\Pipeline\ShadowmappingPipeline\ShadowmappingPipeline.cpp">
       <Filter>Engine\Rendering\Pipeline\ShadowmappingPipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Buffer\UniformBuffer\SkyboxUniformBuffer\SkyboxUniformBuffer.cpp">
+      <Filter>Engine\Rendering\Buffer\UniformBuffer\SkyboxUniformBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Base\Vertex.cpp">
+      <Filter>Engine\Rendering\Base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1196,6 +1205,9 @@
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Pipeline\ShadowmappingPipeline\ShadowmappingPipeline.h">
       <Filter>Engine\Rendering\Pipeline\ShadowmappingPipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Buffer\UniformBuffer\SkyboxUniformBuffer\SkyboxUniformBuffer.h">
+      <Filter>Engine\Rendering\Buffer\UniformBuffer\SkyboxUniformBuffer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -5,7 +5,7 @@
 #include <Engine/Rendering/Buffer/BufferContainer/VertexBufferContainer/VertexBufferContainer.h>
 #include <Engine/Rendering/Buffer/BufferContainer/IndicesBufferContainer/IndicesBufferContainer.h>
 #include <Engine/Rendering/Model/Material/SkyboxMaterial/SkyboxMaterial.h>
-#include <Engine/Rendering/Buffer/UniformBuffer/UniformBuffer.h>
+#include <Engine/Rendering/Buffer/UniformBuffer/StandardUniformBuffer/StandardUniformBuffer.h>
 
 namespace ScrapEngine
 {
@@ -15,7 +15,7 @@ namespace ScrapEngine
 		{
 		private:
 			std::shared_ptr<VulkanModel> vulkan_render_model_ = nullptr;
-			UniformBuffer* vulkan_render_uniform_buffer_ = nullptr;
+			SkyboxUniformBuffer* vulkan_render_uniform_buffer_ = nullptr;
 			SkyboxMaterial* skybox_material_ = nullptr;
 
 			std::shared_ptr<std::vector<
@@ -37,7 +37,7 @@ namespace ScrapEngine
 			int get_cubemap_size() const;
 			void set_cubemap_size(unsigned int new_size);
 
-			UniformBuffer* get_vulkan_render_uniform_buffer() const;
+			SkyboxUniformBuffer* get_vulkan_render_uniform_buffer() const;
 			BasicMaterial* get_skybox_material() const;
 			const std::pair<VertexBufferContainer*, IndicesBufferContainer*>* get_mesh_buffers() const;
 		};

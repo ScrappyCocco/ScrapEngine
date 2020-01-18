@@ -6,7 +6,7 @@ ScrapEngine::Render::VertexBufferContainer::VertexBufferContainer(vk::Buffer* in
 {
 }
 
-const std::vector<ScrapEngine::Vertex>* ScrapEngine::Render::VertexBufferContainer::get_vector() const
+const std::vector<ScrapEngine::Render::Vertex>* ScrapEngine::Render::VertexBufferContainer::get_vector() const
 {
 	return vertices_;
 }

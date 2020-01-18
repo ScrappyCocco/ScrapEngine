@@ -10,8 +10,7 @@ ScrapEngine::Render::VulkanSkyboxInstance::VulkanSkyboxInstance(const std::strin
                                                                 VulkanSwapChain* swap_chain)
 {
 	//CREATE UNIFORM BUFFER
-	vulkan_render_uniform_buffer_ = new UniformBuffer(swap_chain->get_swap_chain_images_vector(),
-	                                                  swap_chain->get_swap_chain_extent());
+	vulkan_render_uniform_buffer_ = new SkyboxUniformBuffer(swap_chain->get_swap_chain_images_vector()->size());
 	Debug::DebugLog::print_to_console_log("UniformBuffer created");
 	//CREATE MATERIAL(S)
 	skybox_material_ = new SkyboxMaterial();
@@ -57,7 +56,7 @@ void ScrapEngine::Render::VulkanSkyboxInstance::set_cubemap_size(const unsigned 
 	skybox_transform_updated_ = true;
 }
 
-ScrapEngine::Render::UniformBuffer* ScrapEngine::Render::VulkanSkyboxInstance::get_vulkan_render_uniform_buffer() const
+ScrapEngine::Render::SkyboxUniformBuffer* ScrapEngine::Render::VulkanSkyboxInstance::get_vulkan_render_uniform_buffer() const
 {
 	return vulkan_render_uniform_buffer_;
 }

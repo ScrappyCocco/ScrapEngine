@@ -6,6 +6,7 @@
 #include <Engine/Rendering/Descriptor/DescriptorPool/BaseDescriptorPool.h>
 #include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
 #include <Engine/Rendering/Texture/Texture/BaseTexture.h>
+#include <Engine/Rendering/Buffer/UniformBuffer/SkyboxUniformBuffer/SkyboxUniformBuffer.h>
 
 namespace ScrapEngine
 {
@@ -28,7 +29,7 @@ namespace ScrapEngine
 			void create_skybox_texture(const std::array<std::string, 6>& textures_path);
 
 			void create_descriptor_sets(VulkanSwapChain* swap_chain,
-			                            UniformBuffer* uniform_buffer);
+			                            SkyboxUniformBuffer* uniform_buffer);
 		};
 	}
 }

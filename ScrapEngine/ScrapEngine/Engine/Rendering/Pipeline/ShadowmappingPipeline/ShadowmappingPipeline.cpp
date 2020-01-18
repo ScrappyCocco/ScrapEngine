@@ -20,8 +20,8 @@ ScrapEngine::Render::ShadowmappingPipeline::ShadowmappingPipeline(const char* ve
 
 	vk::PipelineShaderStageCreateInfo shader_stages[] = {vert_shader_stage_info};
 
-	auto attribute_descriptions = Vertex::get_attribute_descriptions();
-	auto binding_description = Vertex::get_binding_description();
+	auto attribute_descriptions = OffscreenVertex::get_attribute_descriptions();
+	auto binding_description = OffscreenVertex::get_binding_description();
 
 	vk::PipelineVertexInputStateCreateInfo vertex_input_info(
 		vk::PipelineVertexInputStateCreateFlags(),

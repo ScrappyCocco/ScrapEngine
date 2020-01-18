@@ -21,7 +21,7 @@ ScrapEngine::Render::StandardShadowmapping::StandardShadowmapping(VulkanSwapChai
 
 	vk::Extent2D swap_chain_extent = swap_chain->get_swap_chain_extent();
 	quad_pipeline_ = new DebugQuadPipeline("../assets/shader/compiled_shaders/quad.vert.spv",
-	                                       "../assets/shader/compiled_shaders/quad.vert.spv",
+	                                       "../assets/shader/compiled_shaders/quad.frag.spv",
 	                                       debug_quad_descriptor_set_->get_pipeline_layout(),
 	                                       &swap_chain_extent
 	);
@@ -201,5 +201,5 @@ void ScrapEngine::Render::StandardShadowmapping::generate_debug_quad()
 	std::vector<uint32_t> index_buffer = {0, 1, 2, 2, 3, 0};
 	quad_indices_ = new IndexBuffer(&index_buffer);
 
-	quad_index_count_ = index_buffer.size();
+	quad_index_count_ = static_cast<uint32_t>(index_buffer.size());
 }

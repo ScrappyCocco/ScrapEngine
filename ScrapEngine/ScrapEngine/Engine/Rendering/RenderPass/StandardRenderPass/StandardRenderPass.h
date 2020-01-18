@@ -14,6 +14,8 @@ namespace ScrapEngine
 
 			//The constructor is private because this class is a Singleton
 			StandardRenderPass() = default;
+
+			vk::SampleCountFlagBits msaa_samples_;
 		public:
 			//Method used to init the class with parameters because the constructor is private
 			void init(const vk::Format& swap_chain_image_format, vk::SampleCountFlagBits msaa_samples);
@@ -21,6 +23,8 @@ namespace ScrapEngine
 			~StandardRenderPass() = default;
 
 			static StandardRenderPass* get_instance();
+
+			vk::SampleCountFlagBits get_msaa_samples() const;
 		};
 	}
 }

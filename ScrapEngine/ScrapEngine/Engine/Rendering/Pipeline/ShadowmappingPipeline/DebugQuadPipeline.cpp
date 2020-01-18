@@ -69,7 +69,7 @@ ScrapEngine::Render::DebugQuadPipeline::DebugQuadPipeline(const char* vertex_sha
 
 	vk::PipelineMultisampleStateCreateInfo multisampling(
 		vk::PipelineMultisampleStateCreateFlags(),
-		vk::SampleCountFlagBits::e1
+		StandardRenderPass::get_instance()->get_msaa_samples()
 	);
 
 	vk::PipelineDepthStencilStateCreateInfo depth_stencil(
