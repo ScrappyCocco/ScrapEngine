@@ -25,6 +25,18 @@ namespace ScrapEngine
 			static std::array<vk::VertexInputAttributeDescription, 4> get_attribute_descriptions();
 		};
 
+		class SkyboxVertex
+		{
+		public:
+			glm::vec3 pos;
+			glm::vec3 color;
+			glm::vec2 tex_coord;
+
+			static vk::VertexInputBindingDescription get_binding_description();
+
+			static std::array<vk::VertexInputAttributeDescription, 3> get_attribute_descriptions();
+		};
+
 		class OffscreenVertex
 		{
 		public:

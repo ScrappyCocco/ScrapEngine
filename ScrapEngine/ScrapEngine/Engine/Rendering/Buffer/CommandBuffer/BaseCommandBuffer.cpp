@@ -7,7 +7,7 @@ ScrapEngine::Render::BaseCommandBuffer::~BaseCommandBuffer()
 	free_command_buffers();
 }
 
-void ScrapEngine::Render::BaseCommandBuffer::begin_command_buffer(vk::CommandBufferUsageFlagBits flag)
+void ScrapEngine::Render::BaseCommandBuffer::begin_command_buffer(const vk::CommandBufferUsageFlagBits flag)
 {
 	for (auto& command_buffer : command_buffers_)
 	{

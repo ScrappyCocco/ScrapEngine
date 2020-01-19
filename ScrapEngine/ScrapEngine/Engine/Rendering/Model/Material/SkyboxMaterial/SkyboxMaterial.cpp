@@ -52,5 +52,6 @@ void ScrapEngine::Render::SkyboxMaterial::create_descriptor_sets(VulkanSwapChain
 	                                                      swap_chain->get_swap_chain_images_vector(),
 	                                                      uniform_buffer->get_uniform_buffers(),
 	                                                      vulkan_texture_image_view_->get_texture_image_view(),
-	                                                      vulkan_texture_sampler_->get_texture_sampler());
+	                                                      vulkan_texture_sampler_->get_texture_sampler(),
+	                                                      sizeof(SkyboxUniformBufferObject));
 }

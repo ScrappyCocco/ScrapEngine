@@ -17,7 +17,7 @@
 
 // 16 bits of depth is enough for such a small scene
 #define SHADOWMAP_DIM 2048
-#define ENABLE_SHADOWMAP_DEBUG true
+#define ENABLE_SHADOWMAP_DEBUG false
 
 namespace ScrapEngine
 {
@@ -69,8 +69,6 @@ namespace ScrapEngine
 			// 16 bits of depth is enough for such a small scene
 			vk::Format depth_format_ = vk::Format::eD16Unorm;
 			vk::Filter shadowmap_filter_ = vk::Filter::eLinear;
-
-			bool filter_pcf_ = true;
 
 			// Keep depth range as small as possible
 			// for better shadow map precision

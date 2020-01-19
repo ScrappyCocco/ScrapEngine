@@ -354,6 +354,7 @@ void ScrapEngine::Render::RenderManager::rebuild_gui_command_buffer(const bool f
 	//Load ui
 	gui_command_buffer_->load_ui(gui_render_);
 	//close
+	gui_command_buffer_->end_command_buffer_render_pass();
 	gui_command_buffer_->close_command_buffer();
 }
 
@@ -419,7 +420,7 @@ void ScrapEngine::Render::RenderManager::create_command_buffer(const bool flip_f
 	}
 	//End the shadowmapping render pass
 	command_buffers_[index].command_buffer->end_command_buffer_render_pass();
-	//Re-create command buffer
+	//Re-init the command buffer
 	command_buffers_[index].command_buffer->init_command_buffer(&vulkan_render_swap_chain_->get_swap_chain_extent(),
 	                                                            vulkan_render_frame_buffer_);
 	//Set camera
@@ -437,8 +438,11 @@ void ScrapEngine::Render::RenderManager::create_command_buffer(const bool flip_f
 	}
 	if (StandardShadowmapping::shadowmap_debug_enabled())
 	{
+		//WARNING - Vertex Buffers WARNINGS after this call are ok because of the shadowmap debug quad!
 		command_buffers_[index].command_buffer->draw_debug_quad_shadowmap(shadowmapping_);
 	}
+	//End the main render pass
+	command_buffers_[index].command_buffer->end_command_buffer_render_pass();
 	//close
 	command_buffers_[index].command_buffer->close_command_buffer();
 }

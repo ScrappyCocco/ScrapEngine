@@ -15,7 +15,7 @@ ScrapEngine::Render::ShadowmappingRenderPass::ShadowmappingRenderPass(const vk::
 		vk::AttachmentLoadOp::eDontCare,
 		vk::AttachmentStoreOp::eDontCare,
 		vk::ImageLayout::eUndefined,
-		vk::ImageLayout::eDepthAttachmentStencilReadOnlyOptimal
+		vk::ImageLayout::eDepthStencilReadOnlyOptimal
 	);
 
 	vk::AttachmentReference depth_attachment_ref(
