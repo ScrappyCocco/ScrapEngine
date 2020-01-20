@@ -3,7 +3,7 @@
 
 ScrapEngine::Render::BaseFrameBuffer::~BaseFrameBuffer()
 {
-	for (auto const framebuffer : framebuffers_)
+	for (auto& framebuffer : framebuffers_)
 	{
 		VulkanDevice::get_instance()->get_logical_device()->destroyFramebuffer(framebuffer);
 	}

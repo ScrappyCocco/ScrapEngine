@@ -5,7 +5,6 @@
 #include <Engine/Rendering/Buffer/BufferContainer/VertexBufferContainer/VertexBufferContainer.h>
 #include <Engine/Rendering/Buffer/BufferContainer/IndicesBufferContainer/IndicesBufferContainer.h>
 #include <Engine/Rendering/Model/Material/SkyboxMaterial/SkyboxMaterial.h>
-#include <Engine/Rendering/Buffer/UniformBuffer/StandardUniformBuffer/StandardUniformBuffer.h>
 
 namespace ScrapEngine
 {

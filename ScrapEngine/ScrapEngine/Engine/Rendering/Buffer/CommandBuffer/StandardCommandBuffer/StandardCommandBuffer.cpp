@@ -148,7 +148,7 @@ void ScrapEngine::Render::StandardCommandBuffer::draw_debug_quad_shadowmap(Stand
 
 		command_buffers_[i].bindIndexBuffer(*index_buffer, 0, vk::IndexType::eUint32);
 
-		command_buffers_[i].drawIndexed(static_cast<uint32_t>(shadowmapping->get_quad_index_count()), 1, 0, 0,
+		command_buffers_[i].drawIndexed(shadowmapping->get_quad_index_count(), 1, 0, 0,
 		                                0);
 	}
 }
