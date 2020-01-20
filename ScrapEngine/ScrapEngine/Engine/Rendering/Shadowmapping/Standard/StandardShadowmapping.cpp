@@ -23,11 +23,11 @@ ScrapEngine::Render::StandardShadowmapping::StandardShadowmapping(VulkanSwapChai
 	vk::Extent2D swap_chain_extent = swap_chain->get_swap_chain_extent();
 	quad_pipeline_ = new DebugQuadPipeline("../assets/shader/compiled_shaders/quad.vert.spv",
 	                                       "../assets/shader/compiled_shaders/quad.frag.spv",
-	                                       debug_quad_descriptor_set_->get_pipeline_layout(),
+	                                       debug_quad_descriptor_set_->get_descriptor_set_layout(),
 	                                       &swap_chain_extent
 	);
 	offscreen_pipeline_ = new ShadowmappingPipeline("../assets/shader/compiled_shaders/offscreen.vert.spv",
-	                                                offscreen_descriptor_set_->get_pipeline_layout(),
+	                                                offscreen_descriptor_set_->get_descriptor_set_layout(),
 	                                                &swap_chain_extent,
 	                                                offscreen_render_pass_
 	);
@@ -51,14 +51,14 @@ ScrapEngine::Render::StandardShadowmapping::~StandardShadowmapping()
 	delete quad_indices_;
 	delete quad_ubo_;
 	delete offscreen_ubo_;
-	delete quad_pipeline_;
-	delete offscreen_pipeline_;
 	delete offscreen_render_pass_;
 	delete offscreen_frame_buffer_;
 	delete debug_quad_descriptor_set_;
 	delete offscreen_descriptor_set_;
 	delete debug_quad_descriptor_pool_;
 	delete offscreen_descriptor_pool_;
+	delete quad_pipeline_;
+	delete offscreen_pipeline_;
 }
 
 void ScrapEngine::Render::StandardShadowmapping::update_uniform_buffers(const uint32_t& current_image,

@@ -7,11 +7,14 @@
 #include <Engine/Rendering/Buffer/BufferContainer/IndicesBufferContainer/IndicesBufferContainer.h>
 #include <Engine/Rendering/Model/Material/SimpleMaterial/SimpleMaterial.h>
 #include <Engine/LogicCore/Math/Transform/STransform.h>
+#include <Engine/Rendering/Shadowmapping/Standard/StandardShadowmapping.h>
 
 namespace ScrapEngine
 {
 	namespace Render
 	{
+		class StandardShadowmapping;
+
 		class VulkanMeshInstance
 		{
 		private:
@@ -65,6 +68,8 @@ namespace ScrapEngine
 			bool get_pending_deletion() const;
 			void increase_deletion_counter();
 			uint16_t get_deletion_counter() const;
+
+			void write_depth_descriptor(StandardShadowmapping* shadowmapping);
 
 			void update_uniform_buffer(const uint32_t& current_image, Camera* render_camera,
 			                           const glm::vec3& light_pos, const glm::mat4& depth_bias_m);

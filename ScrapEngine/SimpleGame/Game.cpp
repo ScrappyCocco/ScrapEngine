@@ -29,7 +29,7 @@ int main()
 		//Set the world skybox
 		ScrapEngine::Core::SceneManager* scene_manager_ref = scrap_engine_manager
 		                                                     ->logic_manager_view->get_scene_manager();
-		scene_manager_ref->set_skybox(
+		/*scene_manager_ref->set_skybox(
 			std::array<std::string, 6>{
 				"../assets/skybox/stormydays_ft.png", //FRONT TEXTURE
 				"../assets/skybox/stormydays_bk.png", //BACK TEXTURE
@@ -39,7 +39,7 @@ int main()
 				"../assets/skybox/stormydays_lf.png", //LEFT TEXTURE
 			}
 		);
-		scene_manager_ref->set_skybox_size(500);
+		scene_manager_ref->set_skybox_size(500);*/
 		//Set world gravity
 		component_manager_ref->set_gravity(ScrapEngine::Core::SVector3(0, -50, 0));
 		//Create the first game object

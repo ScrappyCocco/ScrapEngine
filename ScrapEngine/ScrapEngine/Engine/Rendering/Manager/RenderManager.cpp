@@ -134,6 +134,8 @@ void ScrapEngine::Render::RenderManager::cleanup_swap_chain()
 	delete gui_render_pass_;
 	delete vulkan_render_image_view_;
 	delete vulkan_render_swap_chain_;
+	//Delete shadowmapping stuff
+	delete shadowmapping_;
 	Debug::DebugLog::print_to_console_log("---cleanupSwapChain() completed---");
 }
 
@@ -485,6 +487,8 @@ ScrapEngine::Render::VulkanMeshInstance* ScrapEngine::Render::RenderManager::loa
 
 	//Wait and block if necessary until the list loaded_models_ is editable
 	wait_pre_frame_tasks();
+	//Write descriptor to mesh
+	new_mesh->write_depth_descriptor(shadowmapping_);
 	//Push mesh into vector and return it
 	loaded_models_.push_back(new_mesh);
 	return new_mesh;

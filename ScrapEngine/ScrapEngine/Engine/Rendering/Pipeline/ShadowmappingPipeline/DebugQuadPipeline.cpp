@@ -4,7 +4,7 @@
 #include <Engine/Rendering/RenderPass/StandardRenderPass/StandardRenderPass.h>
 
 ScrapEngine::Render::DebugQuadPipeline::DebugQuadPipeline(const char* vertex_shader, const char* fragment_shader,
-                                                          vk::PipelineLayout* quad_layout,
+                                                          vk::DescriptorSetLayout* descriptor_set_layout,
                                                           vk::Extent2D* swap_chain_extent)
 {
 	vk::ShaderModule vert_shader_module = ShaderManager::get_instance()->get_shader_module(vertex_shader);
@@ -90,6 +90,19 @@ ScrapEngine::Render::DebugQuadPipeline::DebugQuadPipeline(const char* vertex_sha
 		&color_blend_attachment
 	);
 
+	vk::PipelineLayoutCreateInfo pipeline_layout_info(
+		vk::PipelineLayoutCreateFlags(),
+		1,
+		&(*descriptor_set_layout)
+	);
+
+	if (VulkanDevice::get_instance()->get_logical_device()->createPipelineLayout(
+			&pipeline_layout_info, nullptr, &pipeline_layout_)
+		!= vk::Result::eSuccess)
+	{
+		throw std::runtime_error("DebugQuadPipeline: Failed to create pipeline layout!");
+	}
+
 	vk::GraphicsPipelineCreateInfo pipeline_info(
 		vk::PipelineCreateFlags(),
 		2,
@@ -103,7 +116,7 @@ ScrapEngine::Render::DebugQuadPipeline::DebugQuadPipeline(const char* vertex_sha
 		&depth_stencil,
 		&color_blending,
 		nullptr,
-		*quad_layout,
+		pipeline_layout_,
 		*StandardRenderPass::get_instance(),
 		0
 	);

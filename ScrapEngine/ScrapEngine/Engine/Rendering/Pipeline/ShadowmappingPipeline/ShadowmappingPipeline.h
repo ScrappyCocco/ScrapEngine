@@ -12,7 +12,7 @@ namespace ScrapEngine
 		{
 		public:
 			ShadowmappingPipeline(const char* vertex_shader,
-			                      vk::PipelineLayout* offscreen_layout, vk::Extent2D* swap_chain_extent,
+			                      vk::DescriptorSetLayout* descriptor_set_layout, vk::Extent2D* swap_chain_extent,
 			                      BaseRenderPass* render_pass);
 			~ShadowmappingPipeline() = default;
 		};

@@ -110,6 +110,23 @@ uint16_t ScrapEngine::Render::VulkanMeshInstance::get_deletion_counter() const
 	return deletion_counter_;
 }
 
+void ScrapEngine::Render::VulkanMeshInstance::write_depth_descriptor(StandardShadowmapping* shadowmapping)
+{
+	vk::ImageView* imageview = shadowmapping->get_offscreen_frame_buffer()->get_depth_attachment()->get_image_view();
+	vk::Sampler* sampler = shadowmapping->get_offscreen_frame_buffer()->get_depth_sampler();
+
+	const vk::DescriptorImageInfo image_info(
+		*sampler,
+		*imageview,
+		vk::ImageLayout::eDepthStencilReadOnlyOptimal
+	);
+	
+	for(auto& material : model_materials_)
+	{
+		material->get_vulkan_render_descriptor_set()->write_image_info(image_info, 1);
+	}
+}
+
 void ScrapEngine::Render::VulkanMeshInstance::update_uniform_buffer(const uint32_t& current_image,
                                                                     Camera* render_camera,
                                                                     const glm::vec3& light_pos,

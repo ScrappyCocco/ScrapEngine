@@ -11,15 +11,27 @@ ScrapEngine::Render::StandardDescriptorSet::StandardDescriptorSet()
 		nullptr
 	);
 
-	const vk::DescriptorSetLayoutBinding sampler_layout_binding(
+	const vk::DescriptorSetLayoutBinding depth_layout_binding(
 		1,
 		vk::DescriptorType::eCombinedImageSampler,
 		1,
 		vk::ShaderStageFlagBits::eFragment,
 		nullptr
 	);
+	
+	const vk::DescriptorSetLayoutBinding sampler_layout_binding(
+		2,
+		vk::DescriptorType::eCombinedImageSampler,
+		1,
+		vk::ShaderStageFlagBits::eFragment,
+		nullptr
+	);
 
-	std::array<vk::DescriptorSetLayoutBinding, 2> bindings = {ubo_layout_binding, sampler_layout_binding};
+	std::array<vk::DescriptorSetLayoutBinding, 3> bindings = {
+		ubo_layout_binding,
+		sampler_layout_binding,
+		depth_layout_binding
+	};
 
 	vk::DescriptorSetLayoutCreateInfo layout_info(
 		vk::DescriptorSetLayoutCreateFlags(),
@@ -84,7 +96,7 @@ void ScrapEngine::Render::StandardDescriptorSet::create_descriptor_sets(vk::Desc
 			),
 			vk::WriteDescriptorSet(
 				descriptor_sets_[i],
-				1,
+				2,
 				0,
 				1,
 				vk::DescriptorType::eCombinedImageSampler,

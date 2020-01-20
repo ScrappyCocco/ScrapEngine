@@ -28,7 +28,10 @@ void ScrapEngine::Render::ShadowmappingUniformBuffer::update_uniform_buffer(
 	const float z_near, const float z_far)
 {
 	// Matrix from light's point of view
-	const glm::mat4 depth_projection_matrix = glm::perspective(glm::radians(light_fov), 1.0f, z_near, z_far);
+	glm::mat4 depth_projection_matrix = glm::perspective(glm::radians(light_fov), 1.0f, z_near, z_far);
+	//Invert image for openGL style
+	depth_projection_matrix[1][1] *= -1;
+
 	const glm::mat4 depth_view_matrix = glm::lookAt(light_pos, glm::vec3(0.0f), glm::vec3(0, 1, 0));
 	const glm::mat4 depth_model_matrix = glm::mat4(1.0f);
 

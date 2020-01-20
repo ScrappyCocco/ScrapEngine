@@ -11,7 +11,7 @@ namespace ScrapEngine
 		{
 		public:
 			DebugQuadPipeline(const char* vertex_shader, const char* fragment_shader,
-			                  vk::PipelineLayout* quad_layout, vk::Extent2D* swap_chain_extent);
+			                  vk::DescriptorSetLayout* descriptor_set_layout, vk::Extent2D* swap_chain_extent);
 			~DebugQuadPipeline() = default;
 		};
 	}
