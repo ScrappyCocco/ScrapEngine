@@ -117,7 +117,6 @@ std::vector<const char*> ScrapEngine::Render::VukanInstance::get_required_extens
 	if (validation_layers_manager_)
 	{
 		extensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
-		extensions.push_back(VK_EXT_VALIDATION_FEATURES_EXTENSION_NAME);
 	}
 
 	return extensions;
