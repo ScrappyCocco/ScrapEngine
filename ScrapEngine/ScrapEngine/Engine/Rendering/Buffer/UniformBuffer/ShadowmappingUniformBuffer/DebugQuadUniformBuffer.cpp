@@ -28,9 +28,12 @@ ScrapEngine::Render::DebugQuadUniformBuffer::DebugQuadUniformBuffer(const size_t
 void ScrapEngine::Render::DebugQuadUniformBuffer::update_uniform_buffer(const uint32_t& current_image,
                                                                         Camera* render_camera)
 {
-	const float aspect_rastio = render_camera->get_camera_aspect_ratio();
+	const float aspect_ratio = render_camera->get_camera_aspect_ratio();
 
-	ubo_debug_quad_.proj = glm::ortho(2.5f / aspect_rastio, 0.0f, 0.0f, 2.5f, -1.0f, 1.0f);
+	ubo_debug_quad_.proj = glm::ortho(2.5f / aspect_ratio, 0.0f, 0.0f, 2.5f, -1.0f, 1.0f);
+	//Invert image for openGL style
+	ubo_debug_quad_.proj[1][1] *= -1;
+	
 	ubo_debug_quad_.model = glm::mat4(1.0f);
 
 	std::memcpy(mapped_memory_[current_image], &ubo_debug_quad_, sizeof(ubo_debug_quad_));

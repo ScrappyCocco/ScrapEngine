@@ -52,9 +52,9 @@ ScrapEngine::Render::ShadowmappingFrameBufferAttachment::~ShadowmappingFrameBuff
 	VulkanMemoryAllocator::get_instance()->destroy_image(image_, image_memory_);
 }
 
-vk::Image ScrapEngine::Render::ShadowmappingFrameBufferAttachment::get_image() const
+vk::Image* ScrapEngine::Render::ShadowmappingFrameBufferAttachment::get_image()
 {
-	return image_;
+	return &image_;
 }
 
 vk::ImageView* ScrapEngine::Render::ShadowmappingFrameBufferAttachment::get_image_view()

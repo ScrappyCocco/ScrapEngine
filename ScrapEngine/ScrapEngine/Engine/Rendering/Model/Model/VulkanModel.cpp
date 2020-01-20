@@ -48,7 +48,7 @@ ScrapEngine::Render::VulkanModel::VulkanModel(const std::string& input_model_pat
 			vertex.pos = {p_pos->x, p_pos->y, p_pos->z};
 			vertex.tex_coord = {p_tex_coord->x, 1 - p_tex_coord->y};
 			vertex.color = {p_color.r, p_color.g, p_color.b};
-			vertex.normal = { p_normal->x, -p_normal->y, p_normal->z };
+			vertex.normal = { p_normal->x, p_normal->y, p_normal->z };
 			mesh_vertices.push_back(vertex);
 		}
 		//LOADING INDICES

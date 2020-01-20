@@ -81,6 +81,15 @@ ScrapEngine::Render::ShadowmappingPipeline::ShadowmappingPipeline(const char* ve
 		vk::CompareOp::eLessOrEqual
 	);
 
+	std::vector<vk::DynamicState> dynamic_states_enable;
+	dynamic_states_enable.push_back(vk::DynamicState::eDepthBias);
+
+	vk::PipelineDynamicStateCreateInfo dynamic_state_create_info(
+		vk::PipelineDynamicStateCreateFlags(),
+		static_cast<uint32_t>(dynamic_states_enable.size()),
+		dynamic_states_enable.data()
+	);
+
 	//Empty
 	vk::PipelineColorBlendStateCreateInfo color_blending;
 
@@ -109,7 +118,7 @@ ScrapEngine::Render::ShadowmappingPipeline::ShadowmappingPipeline(const char* ve
 		&multisampling,
 		&depth_stencil,
 		&color_blending,
-		nullptr,
+		&dynamic_state_create_info,
 		pipeline_layout_,
 		*render_pass,
 		0

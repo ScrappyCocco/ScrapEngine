@@ -84,6 +84,8 @@ void ScrapEngine::Render::StandardDescriptorSet::create_descriptor_sets(vk::Desc
 			vk::ImageLayout::eShaderReadOnlyOptimal
 		);
 
+		//Depth write on RenderManager
+
 		std::array<vk::WriteDescriptorSet, 2> descriptor_writes = {
 			vk::WriteDescriptorSet(
 				descriptor_sets_[i],

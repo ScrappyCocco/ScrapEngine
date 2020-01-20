@@ -92,8 +92,7 @@ void ScrapEngine::Render::StandardCommandBuffer::load_mesh_shadow_map(StandardSh
 			);
 
 			command_buffers_[i].bindDescriptorSets(vk::PipelineBindPoint::eGraphics,
-			                                       *shadowmapping
-			                                        ->get_offscreen_descriptor_set()->get_pipeline_layout(),
+			                                       *shadowmapping->get_offscreen_pipeline()->get_pipeline_layout(),
 			                                       0,
 			                                       1,
 			                                       &(*shadowmapping
@@ -136,7 +135,7 @@ void ScrapEngine::Render::StandardCommandBuffer::draw_debug_quad_shadowmap(Stand
 		);
 
 		command_buffers_[i].bindDescriptorSets(vk::PipelineBindPoint::eGraphics,
-		                                       *shadowmapping->get_debug_quad_descriptor_set()->get_pipeline_layout(),
+		                                       *shadowmapping->get_quad_pipeline()->get_pipeline_layout(),
 		                                       0,
 		                                       1,
 		                                       &(*shadowmapping->get_debug_quad_descriptor_set()->get_descriptor_sets())

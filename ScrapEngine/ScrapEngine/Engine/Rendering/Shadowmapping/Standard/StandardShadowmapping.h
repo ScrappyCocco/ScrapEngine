@@ -17,7 +17,6 @@
 
 // 16 bits of depth is enough for such a small scene
 #define SHADOWMAP_DIM 2048
-#define ENABLE_SHADOWMAP_DEBUG false
 
 namespace ScrapEngine
 {
@@ -41,7 +40,7 @@ namespace ScrapEngine
 			StandardDescriptorPool* debug_quad_descriptor_pool_ = nullptr;
 			StandardDescriptorPool* offscreen_descriptor_pool_ = nullptr;
 		public:
-			StandardShadowmapping(VulkanSwapChain* swap_chain);
+			StandardShadowmapping(VulkanSwapChain* swap_chain, bool debug_enabled = false);
 			~StandardShadowmapping();
 
 			void update_uniform_buffers(const uint32_t& current_image, Camera* render_camera) const;
@@ -64,7 +63,7 @@ namespace ScrapEngine
 			IndexBuffer* get_debug_quad_indices() const;
 			uint32_t get_quad_index_count() const;
 			static vk::Extent2D get_shadow_map_extent();
-			static bool shadowmap_debug_enabled();
+			bool shadowmap_debug_enabled() const;
 		private:
 			// 16 bits of depth is enough for such a small scene
 			vk::Format depth_format_ = vk::Format::eD16Unorm;
@@ -83,6 +82,8 @@ namespace ScrapEngine
 
 			glm::vec3 light_pos_ = glm::vec3();
 			float light_fov_ = 45.0f;
+
+			bool debug_enabled_ = false;
 
 			VertexBuffer* quad_vertices_ = nullptr;
 			IndexBuffer* quad_indices_ = nullptr;

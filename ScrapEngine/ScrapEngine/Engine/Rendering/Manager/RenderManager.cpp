@@ -244,7 +244,7 @@ void ScrapEngine::Render::RenderManager::initialize_vulkan(const game_base_info*
 	Debug::DebugLog::print_to_console_log("User View Camera created");
 	//Shadowmapping
 	Debug::DebugLog::print_to_console_log("Creating StandardShadowmapping...");
-	shadowmapping_ = new StandardShadowmapping(vulkan_render_swap_chain_);
+	shadowmapping_ = new StandardShadowmapping(vulkan_render_swap_chain_, true);
 	Debug::DebugLog::print_to_console_log("StandardShadowmapping initialized!");
 	//Gui render
 	Debug::DebugLog::print_to_console_log("Creating gui render...");
@@ -438,7 +438,7 @@ void ScrapEngine::Render::RenderManager::create_command_buffer(const bool flip_f
 	{
 		command_buffers_[index].command_buffer->load_mesh(mesh);
 	}
-	if (StandardShadowmapping::shadowmap_debug_enabled())
+	if (shadowmapping_->shadowmap_debug_enabled())
 	{
 		//WARNING - Vertex Buffers WARNINGS after this call are ok because of the shadowmap debug quad!
 		command_buffers_[index].command_buffer->draw_debug_quad_shadowmap(shadowmapping_);
@@ -607,9 +607,10 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 	//Camera
 	render_camera_->execute_camera_update();
 	//Shadowmapping update
-	shadowmapping_->test_update_light(0.15f);
+	shadowmapping_->set_light_post(render_camera_->get_camera_location().get_glm_vector());
 	shadowmapping_->update_uniform_buffers(image_index_, render_camera_);
 	const glm::vec3 light_pos = shadowmapping_->get_light_pos();
+	Debug::DebugLog::print_to_console_log(light_pos);
 	const glm::mat4 depth_bias = shadowmapping_->get_depth_bias();
 	//Models
 	for (auto& loaded_model : loaded_models_)

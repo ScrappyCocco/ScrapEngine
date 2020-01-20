@@ -16,7 +16,7 @@ namespace ScrapEngine
 			ShadowmappingFrameBufferAttachment(int32_t width, int32_t height, vk::Format depth_format);
 			~ShadowmappingFrameBufferAttachment();
 
-			vk::Image get_image() const;
+			vk::Image* get_image();
 			vk::ImageView* get_image_view();
 		};
 	}

@@ -1,8 +1,10 @@
 #include <Engine/Rendering/Shadowmapping/Standard/StandardShadowmapping.h>
 #include <Engine/Rendering/Base/Vertex.h>
 
-ScrapEngine::Render::StandardShadowmapping::StandardShadowmapping(VulkanSwapChain* swap_chain)
+ScrapEngine::Render::StandardShadowmapping::StandardShadowmapping(VulkanSwapChain* swap_chain, bool debug_enabled)
 {
+	debug_enabled_ = debug_enabled;
+	
 	const std::vector<vk::Image>* swap_chain_vector = swap_chain->get_swap_chain_images_vector();
 	debug_quad_descriptor_pool_ = new StandardDescriptorPool(swap_chain_vector);
 	offscreen_descriptor_pool_ = new StandardDescriptorPool(swap_chain_vector);
@@ -147,9 +149,9 @@ vk::Extent2D ScrapEngine::Render::StandardShadowmapping::get_shadow_map_extent()
 	return vk::Extent2D(SHADOWMAP_DIM, SHADOWMAP_DIM);
 }
 
-bool ScrapEngine::Render::StandardShadowmapping::shadowmap_debug_enabled()
+bool ScrapEngine::Render::StandardShadowmapping::shadowmap_debug_enabled() const
 {
-	return ENABLE_SHADOWMAP_DEBUG;
+	return debug_enabled_;
 }
 
 void ScrapEngine::Render::StandardShadowmapping::test_update_light(const float time)

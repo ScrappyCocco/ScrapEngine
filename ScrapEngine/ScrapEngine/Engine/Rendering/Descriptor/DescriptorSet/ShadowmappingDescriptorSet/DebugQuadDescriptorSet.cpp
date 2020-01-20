@@ -33,19 +33,6 @@ ScrapEngine::Render::DebugQuadDescriptorSet::DebugQuadDescriptorSet()
 	{
 		throw std::runtime_error("DebugQuadDescriptorSet: Failed to create descriptor set layout!");
 	}
-	
-	vk::PipelineLayoutCreateInfo create_info(
-		vk::PipelineLayoutCreateFlags(),
-		1,
-		&descriptor_set_layout_
-	);
-
-	if (VulkanDevice::get_instance()->get_logical_device()->createPipelineLayout(
-			&create_info, nullptr, &pipeline_layout_)
-		!= vk::Result::eSuccess)
-	{
-		throw std::runtime_error("DebugQuadDescriptorSet: Failed to create pipeline layout!");
-	}
 }
 
 void ScrapEngine::Render::DebugQuadDescriptorSet::create_descriptor_sets(vk::DescriptorPool* descriptor_pool,
