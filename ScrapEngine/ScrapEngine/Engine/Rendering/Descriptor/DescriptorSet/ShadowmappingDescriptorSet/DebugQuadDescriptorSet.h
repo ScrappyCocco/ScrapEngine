@@ -1,7 +1,6 @@
 #pragma once
 
 #include <Engine/Rendering/Descriptor/DescriptorSet/BaseDescriptorSet.h>
-#include <Engine/Rendering/Buffer/UniformBuffer/StandardUniformBuffer/StandardUniformBuffer.h>
 
 namespace ScrapEngine
 {
@@ -17,7 +16,7 @@ namespace ScrapEngine
 				const std::vector<vk::Image>* swap_chain_images,
 				const std::vector<vk::Buffer>* uniform_buffers,
 				vk::ImageView* texture_image_view, vk::Sampler* texture_sampler,
-				const vk::DeviceSize& buffer_info_size = sizeof(UniformBufferObject));
+				const vk::DeviceSize& buffer_info_size);
 		};
 	}
 }

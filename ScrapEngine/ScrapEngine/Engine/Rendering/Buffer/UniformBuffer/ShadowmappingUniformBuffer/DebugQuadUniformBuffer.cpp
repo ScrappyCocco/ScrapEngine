@@ -5,7 +5,7 @@
 
 ScrapEngine::Render::DebugQuadUniformBuffer::DebugQuadUniformBuffer(const size_t swap_chain_images_size)
 {
-	const vk::DeviceSize buffer_size(sizeof(UniformBufferObject));
+	const vk::DeviceSize buffer_size(sizeof(OffscreenDebugQuadUniformBufferObject));
 
 	swap_chain_images_size_ = swap_chain_images_size;
 	uniform_buffers_.resize(swap_chain_images_size_);
@@ -30,9 +30,9 @@ void ScrapEngine::Render::DebugQuadUniformBuffer::update_uniform_buffer(const ui
 {
 	const float aspect_ratio = render_camera->get_camera_aspect_ratio();
 
-	ubo_debug_quad_.proj = glm::ortho(2.5f / aspect_ratio, 0.0f, 0.0f, 2.5f, -1.0f, 1.0f);
+	ubo_debug_quad_.projection = glm::ortho(2.5f / aspect_ratio, 0.0f, 0.0f, 2.5f, -1.0f, 1.0f);
 	//Invert image for openGL style
-	ubo_debug_quad_.proj[1][1] *= -1;
+	ubo_debug_quad_.projection[1][1] *= -1;
 	
 	ubo_debug_quad_.model = glm::mat4(1.0f);
 

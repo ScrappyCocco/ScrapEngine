@@ -92,6 +92,7 @@ ScrapEngine::Render::ShadowmappingPipeline::ShadowmappingPipeline(const char* ve
 
 	//Empty
 	vk::PipelineColorBlendStateCreateInfo color_blending;
+	color_blending.setAttachmentCount(0);
 
 	vk::PipelineLayoutCreateInfo pipeline_layout_info(
 		vk::PipelineLayoutCreateFlags(),

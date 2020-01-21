@@ -582,6 +582,7 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 	wait_cleanup_task();
 	//Check if i can build another command buffer in background
 	check_start_new_thread();
+	//-----------------
 	//Prepare draw frame
 	VulkanDevice::get_instance()->get_logical_device()->waitForFences(1, &(*in_flight_fences_ref_)[current_frame_],
 	                                                                  true,
@@ -604,26 +605,7 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 	}
 	//-----------------
 	//Update objects and uniform buffers
-	//Camera
-	render_camera_->execute_camera_update();
-	//Shadowmapping update
-	shadowmapping_->set_light_post(render_camera_->get_camera_location().get_glm_vector());
-	shadowmapping_->update_uniform_buffers(image_index_, render_camera_);
-	const glm::vec3 light_pos = shadowmapping_->get_light_pos();
-	Debug::DebugLog::print_to_console_log(light_pos);
-	const glm::mat4 depth_bias = shadowmapping_->get_depth_bias();
-	//Models
-	for (auto& loaded_model : loaded_models_)
-	{
-		loaded_model->update_uniform_buffer(image_index_, render_camera_, light_pos, depth_bias);
-	}
-	//Skybox
-	if (skybox_)
-	{
-		skybox_->update_uniform_buffer(image_index_, render_camera_);
-	}
-	//Cancel dirty matrix
-	render_camera_->cancel_dirty_matrix();
+	update_objects_and_buffers();
 	//-----------------
 	//Submit the command buffer and the frame
 	vk::SubmitInfo submit_info;
@@ -653,7 +635,7 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 	submit_info.setSignalSemaphoreCount(1);
 	submit_info.setPSignalSemaphores(signal_semaphores);
 	VulkanDevice::get_instance()->get_logical_device()->resetFences(1, &(*in_flight_fences_ref_)[current_frame_]);
-
+	//-----------------
 	//Queue submit
 	result_ = vulkan_graphics_queue_->get_queue()->submit(1, &submit_info,
 	                                                      (*in_flight_fences_ref_)[current_frame_]);
@@ -686,7 +668,7 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 	{
 		throw std::runtime_error("RenderManager: Failed to present swap chain image!");
 	}
-
+	//-----------------
 	//Check if if the other command buffer is ready
 	//If yes i can swap the command buffers
 	if (swap_command_buffers())
@@ -711,6 +693,31 @@ void ScrapEngine::Render::RenderManager::recreate_swap_chain()
 	VulkanDevice::get_instance()->get_logical_device()->waitIdle();
 	//TODO https://vulkan-tutorial.com/Drawing_a_triangle/Swap_chain_recreation
 	//This will probably be done in the future
+}
+
+void ScrapEngine::Render::RenderManager::update_objects_and_buffers()
+{
+	//Camera
+	render_camera_->execute_camera_update();
+	//Shadowmapping update
+	//TODO REMOVE TESTING
+	shadowmapping_->set_light_pos(render_camera_->get_camera_location().get_glm_vector());
+	shadowmapping_->update_uniform_buffers(image_index_, render_camera_);
+	const glm::vec3 light_pos = shadowmapping_->get_light_pos();
+	Debug::DebugLog::print_to_console_log(light_pos);
+	const glm::mat4 depth_bias = shadowmapping_->get_depth_bias();
+	//Models
+	for (auto& loaded_model : loaded_models_)
+	{
+		loaded_model->update_uniform_buffer(image_index_, render_camera_, light_pos, depth_bias);
+	}
+	//Skybox
+	if (skybox_)
+	{
+		skybox_->update_uniform_buffer(image_index_, render_camera_);
+	}
+	//Cancel dirty matrix
+	render_camera_->cancel_dirty_matrix();
 }
 
 void ScrapEngine::Render::RenderManager::create_camera()

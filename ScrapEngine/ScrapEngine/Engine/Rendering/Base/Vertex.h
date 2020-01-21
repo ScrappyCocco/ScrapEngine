@@ -40,7 +40,11 @@ namespace ScrapEngine
 		class OffscreenVertex
 		{
 		public:
+			//The OffscreenVertex must have the same sizeof() of standard Vertex to not break the bindings
 			glm::vec3 pos;
+			glm::vec3 color;
+			glm::vec2 tex_coord;
+			glm::vec3 normal;
 
 			static vk::VertexInputBindingDescription get_binding_description();
 

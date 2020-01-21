@@ -47,7 +47,7 @@ namespace ScrapEngine
 			void test_update_light(float time);
 
 			glm::vec3 get_light_pos() const;
-			void set_light_post(const glm::vec3& light_pos_new);
+			void set_light_pos(const glm::vec3& light_pos_new);
 
 			glm::mat4 get_depth_bias() const;
 			float get_depth_bias_constant() const;

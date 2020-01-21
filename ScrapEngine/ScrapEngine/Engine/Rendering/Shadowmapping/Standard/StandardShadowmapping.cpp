@@ -4,7 +4,7 @@
 ScrapEngine::Render::StandardShadowmapping::StandardShadowmapping(VulkanSwapChain* swap_chain, bool debug_enabled)
 {
 	debug_enabled_ = debug_enabled;
-	
+
 	const std::vector<vk::Image>* swap_chain_vector = swap_chain->get_swap_chain_images_vector();
 	debug_quad_descriptor_pool_ = new StandardDescriptorPool(swap_chain_vector);
 	offscreen_descriptor_pool_ = new StandardDescriptorPool(swap_chain_vector);
@@ -34,16 +34,20 @@ ScrapEngine::Render::StandardShadowmapping::StandardShadowmapping(VulkanSwapChai
 	                                                offscreen_render_pass_
 	);
 
+	const vk::DeviceSize debug_quad_ubo_size = sizeof(OffscreenDebugQuadUniformBufferObject);
 	debug_quad_descriptor_set_->create_descriptor_sets(debug_quad_descriptor_pool_->get_descriptor_pool(),
 	                                                   swap_chain->get_swap_chain_images_vector(),
 	                                                   quad_ubo_->get_uniform_buffers(),
 	                                                   offscreen_frame_buffer_
 	                                                   ->get_depth_attachment()->get_image_view(),
-	                                                   offscreen_frame_buffer_->get_depth_sampler()
+	                                                   offscreen_frame_buffer_->get_depth_sampler(),
+	                                                   debug_quad_ubo_size
 	);
+	const vk::DeviceSize offscreen_ubo_dize = sizeof(OffscreenUniformBufferObject);
 	offscreen_descriptor_set_->create_descriptor_sets(offscreen_descriptor_pool_->get_descriptor_pool(),
 	                                                  swap_chain->get_swap_chain_images_vector(),
-	                                                  offscreen_ubo_->get_uniform_buffers()
+	                                                  offscreen_ubo_->get_uniform_buffers(),
+	                                                  offscreen_ubo_dize
 	);
 }
 
@@ -75,7 +79,7 @@ glm::vec3 ScrapEngine::Render::StandardShadowmapping::get_light_pos() const
 	return light_pos_;
 }
 
-void ScrapEngine::Render::StandardShadowmapping::set_light_post(const glm::vec3& light_pos_new)
+void ScrapEngine::Render::StandardShadowmapping::set_light_pos(const glm::vec3& light_pos_new)
 {
 	light_pos_ = light_pos_new;
 }

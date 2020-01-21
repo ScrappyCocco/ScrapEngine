@@ -31,9 +31,9 @@ void ScrapEngine::Render::StandardCommandBuffer::init_shadow_map(StandardShadowm
 	                                                              ->get_offscreen_frame_buffer()->
 	                                                              get_swap_chain_framebuffers_vector();
 	const vk::Extent2D shadow_map_extent = StandardShadowmapping::get_shadow_map_extent();
-	vk::Rect2D rect = vk::Rect2D(vk::Offset2D(), shadow_map_extent);
+	const vk::Rect2D rect = vk::Rect2D(vk::Offset2D(), shadow_map_extent);
 
-	for (size_t i = 0; i < command_buffers_.size(); i++)
+	for (auto& command_buffer : command_buffers_)
 	{
 		//Begin
 
@@ -46,22 +46,11 @@ void ScrapEngine::Render::StandardCommandBuffer::init_shadow_map(StandardShadowm
 		begin_info.clearValueCount = static_cast<uint32_t>(clear_values.size());
 		begin_info.pClearValues = clear_values.data();
 
-		command_buffers_[i].beginRenderPass(&begin_info, vk::SubpassContents::eInline);
-
-		//Prepare
-
-		vk::Viewport viewport;
-		viewport.setMinDepth(0.0f);
-		viewport.setMaxDepth(1.0f);
-		viewport.setWidth(static_cast<float>(shadow_map_extent.width));
-		viewport.setHeight(static_cast<float>(shadow_map_extent.height));
-		command_buffers_[i].setViewport(0, 1, &viewport);
-
-		command_buffers_[i].setScissor(0, 1, &rect);
+		command_buffer.beginRenderPass(&begin_info, vk::SubpassContents::eInline);
 
 		// Set depth bias
 		// Required to avoid shadow mapping artefacts
-		command_buffers_[i].setDepthBias(
+		command_buffer.setDepthBias(
 			shadowmapping->get_depth_bias_constant(),
 			0.0f,
 			shadowmapping->get_depth_bias_slope()
@@ -72,19 +61,11 @@ void ScrapEngine::Render::StandardCommandBuffer::init_shadow_map(StandardShadowm
 void ScrapEngine::Render::StandardCommandBuffer::load_mesh_shadow_map(StandardShadowmapping* shadowmapping,
                                                                       VulkanMeshInstance* mesh)
 {
-	vk::DeviceSize offsets[] = {0};
+	const vk::DeviceSize offsets[] = {0};
 	auto buffers_vector = (*mesh->get_mesh_buffers());
-	auto materials_vector = (*mesh->get_mesh_materials());
 
 	for (size_t i = 0; i < command_buffers_.size(); i++)
 	{
-		bool mesh_has_multi_material = false;
-		auto materials_iterator = materials_vector.begin();
-		if (mesh->get_mesh_materials()->size() > 1)
-		{
-			mesh_has_multi_material = true;
-		}
-		BasicMaterial* current_mat = *materials_iterator;
 		for (const auto mesh_buffer : buffers_vector)
 		{
 			command_buffers_[i].bindPipeline(vk::PipelineBindPoint::eGraphics,
@@ -109,15 +90,6 @@ void ScrapEngine::Render::StandardCommandBuffer::load_mesh_shadow_map(StandardSh
 
 			command_buffers_[i].drawIndexed(static_cast<uint32_t>((mesh_buffer.second->get_vector()->size())), 1, 0, 0,
 			                                0);
-
-			if (mesh_has_multi_material)
-			{
-				++materials_iterator;
-				if (materials_iterator != materials_vector.end())
-				{
-					current_mat = *materials_iterator;
-				}
-			}
 		}
 	}
 }
@@ -234,11 +206,12 @@ void ScrapEngine::Render::StandardCommandBuffer::load_mesh(VulkanMeshInstance* m
 		return;
 	}
 	//Add the drawcall for the mesh
-	vk::DeviceSize offsets[] = {0};
+	const vk::DeviceSize offsets[] = {0};
+	auto buffers_vector = (*mesh->get_mesh_buffers());
+	auto materials_vector = (*mesh->get_mesh_materials());
+	
 	for (size_t i = 0; i < command_buffers_.size(); i++)
 	{
-		auto buffers_vector = (*mesh->get_mesh_buffers());
-		auto materials_vector = (*mesh->get_mesh_materials());
 		bool mesh_has_multi_material = false;
 		auto materials_iterator = materials_vector.begin();
 		if (mesh->get_mesh_materials()->size() > 1)

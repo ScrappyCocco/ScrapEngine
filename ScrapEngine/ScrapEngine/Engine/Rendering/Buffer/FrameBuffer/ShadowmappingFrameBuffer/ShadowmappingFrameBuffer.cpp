@@ -53,7 +53,7 @@ ScrapEngine::Render::ShadowmappingFrameBuffer::ShadowmappingFrameBuffer(const in
 	                                                                          &framebuffers_[0])
 		!= vk::Result::eSuccess)
 	{
-		throw std::runtime_error("VulkanFrameBuffer: Failed to create framebuffer!");
+		throw std::runtime_error("ShadowmappingFrameBuffer: Failed to create framebuffer!");
 	}
 }
 

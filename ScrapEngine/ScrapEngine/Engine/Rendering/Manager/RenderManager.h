@@ -161,6 +161,8 @@ namespace ScrapEngine
 			void cleanup_swap_chain();
 			void recreate_swap_chain();
 
+			void update_objects_and_buffers();
+
 			void create_camera();
 		public:
 			//Rebuild the command buffer

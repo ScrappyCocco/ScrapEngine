@@ -19,7 +19,7 @@ ScrapEngine::Render::DebugQuadDescriptorSet::DebugQuadDescriptorSet()
 		nullptr
 	);
 
-	std::array<vk::DescriptorSetLayoutBinding, 2> bindings = { ubo_layout_binding, sampler_layout_binding };
+	std::array<vk::DescriptorSetLayoutBinding, 2> bindings = {ubo_layout_binding, sampler_layout_binding};
 
 	vk::DescriptorSetLayoutCreateInfo layout_info(
 		vk::DescriptorSetLayoutCreateFlags(),
@@ -28,7 +28,7 @@ ScrapEngine::Render::DebugQuadDescriptorSet::DebugQuadDescriptorSet()
 	);
 
 	if (VulkanDevice::get_instance()->get_logical_device()->createDescriptorSetLayout(
-		&layout_info, nullptr, &descriptor_set_layout_)
+			&layout_info, nullptr, &descriptor_set_layout_)
 		!= vk::Result::eSuccess)
 	{
 		throw std::runtime_error("DebugQuadDescriptorSet: Failed to create descriptor set layout!");
@@ -36,8 +36,12 @@ ScrapEngine::Render::DebugQuadDescriptorSet::DebugQuadDescriptorSet()
 }
 
 void ScrapEngine::Render::DebugQuadDescriptorSet::create_descriptor_sets(vk::DescriptorPool* descriptor_pool,
-	const std::vector<vk::Image>* swap_chain_images, const std::vector<vk::Buffer>* uniform_buffers,
-	vk::ImageView* texture_image_view, vk::Sampler* texture_sampler, const vk::DeviceSize& buffer_info_size)
+                                                                         const std::vector<vk::Image>*
+                                                                         swap_chain_images,
+                                                                         const std::vector<vk::Buffer>* uniform_buffers,
+                                                                         vk::ImageView* texture_image_view,
+                                                                         vk::Sampler* texture_sampler,
+                                                                         const vk::DeviceSize& buffer_info_size)
 {
 	std::vector<vk::DescriptorSetLayout> layouts(swap_chain_images->size(), descriptor_set_layout_);
 
