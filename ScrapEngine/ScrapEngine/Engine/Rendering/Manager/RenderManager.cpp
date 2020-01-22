@@ -298,8 +298,7 @@ void ScrapEngine::Render::RenderManager::initialize_command_buffers()
 		command_buffers_[i].command_pool = new StandardCommandPool();
 		command_buffers_[i].command_pool->init(vulkan_render_device_->get_cached_queue_family_indices());
 		//Command buffer
-		const int16_t cb_size = static_cast<int16_t>(vulkan_render_frame_buffer_
-		                                             ->get_swap_chain_framebuffers_vector()->size());
+		const int16_t cb_size = static_cast<int16_t>(vulkan_render_frame_buffer_->get_framebuffers_vector_size());
 		command_buffers_[i].command_buffer = new StandardCommandBuffer(command_buffers_[i].command_pool, cb_size);
 		//Add a task
 		command_buffers_tasks_.push_back(new ParallelCommandBufferCreation());

@@ -13,11 +13,11 @@ ScrapEngine::Render::StandardShadowmapping::StandardShadowmapping(VulkanSwapChai
 
 	offscreen_descriptor_set_ = new ShadowmappingDescriptorSet();
 
-	vk::Extent2D swap_chain_extent = swap_chain->get_swap_chain_extent();
+	vk::Extent2D shadowmapping_extent(SHADOWMAP_DIM, SHADOWMAP_DIM);
 
 	offscreen_pipeline_ = new ShadowmappingPipeline("../assets/shader/compiled_shaders/offscreen.vert.spv",
 	                                                offscreen_descriptor_set_->get_descriptor_set_layout(),
-	                                                &swap_chain_extent,
+	                                                &shadowmapping_extent,
 	                                                offscreen_render_pass_
 	);
 }

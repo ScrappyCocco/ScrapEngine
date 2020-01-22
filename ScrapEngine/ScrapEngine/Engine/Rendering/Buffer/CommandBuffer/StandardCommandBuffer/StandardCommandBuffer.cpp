@@ -25,11 +25,11 @@ ScrapEngine::Render::StandardCommandBuffer::StandardCommandBuffer(VulkanCommandP
 void ScrapEngine::Render::StandardCommandBuffer::init_shadow_map(StandardShadowmapping* shadowmapping)
 {
 	std::array<vk::ClearValue, 1> clear_values = {
-		vk::ClearDepthStencilValue(1.0f, 0)
+		vk::ClearValue(vk::ClearDepthStencilValue(1.0f, 0))
 	};
-	const std::vector<vk::Framebuffer>* swap_chain_framebuffers = shadowmapping
-	                                                              ->get_offscreen_frame_buffer()->
-	                                                              get_swap_chain_framebuffers_vector();
+	const std::vector<vk::Framebuffer>* offscreen_framebuffers = shadowmapping
+	                                                             ->get_offscreen_frame_buffer()->
+	                                                             get_framebuffers_vector();
 	const vk::Extent2D shadow_map_extent = StandardShadowmapping::get_shadow_map_extent();
 	const vk::Rect2D rect = vk::Rect2D(vk::Offset2D(), shadow_map_extent);
 
@@ -39,7 +39,7 @@ void ScrapEngine::Render::StandardCommandBuffer::init_shadow_map(StandardShadowm
 
 		vk::RenderPassBeginInfo begin_info(
 			*shadowmapping->get_offscreen_render_pass()->get_render_pass(),
-			(*swap_chain_framebuffers)[0],
+			(*offscreen_framebuffers)[0],
 			rect
 		);
 
@@ -49,7 +49,7 @@ void ScrapEngine::Render::StandardCommandBuffer::init_shadow_map(StandardShadowm
 		command_buffer.beginRenderPass(&begin_info, vk::SubpassContents::eInline);
 
 		//Viewport
-		
+
 		vk::Viewport viewport;
 		viewport.setWidth(static_cast<float>(shadow_map_extent.width));
 		viewport.setHeight(static_cast<float>(shadow_map_extent.height));
@@ -60,7 +60,7 @@ void ScrapEngine::Render::StandardCommandBuffer::init_shadow_map(StandardShadowm
 
 		//Scissors
 		command_buffer.setScissor(0, 1, &rect);
-		
+
 		// Set depth bias
 		// Required to avoid shadow mapping artefacts
 		command_buffer.setDepthBias(
@@ -89,7 +89,8 @@ void ScrapEngine::Render::StandardCommandBuffer::load_mesh_shadow_map(StandardSh
 			                                       *shadowmapping->get_offscreen_pipeline()->get_pipeline_layout(),
 			                                       0,
 			                                       1,
-			                                       &(*mesh->get_shadowmapping_descriptor_set()->get_descriptor_sets())[i],
+			                                       &(*mesh->get_shadowmapping_descriptor_set()->
+			                                                get_descriptor_sets())[i],
 			                                       0,
 			                                       nullptr
 			);
@@ -110,11 +111,11 @@ void ScrapEngine::Render::StandardCommandBuffer::init_command_buffer(
 	vk::Extent2D* input_swap_chain_extent_ref, BaseFrameBuffer* swap_chain_frame_buffer)
 {
 	const std::vector<vk::Framebuffer>* swap_chain_framebuffers = swap_chain_frame_buffer->
-		get_swap_chain_framebuffers_vector();
+		get_framebuffers_vector();
 
 	std::array<vk::ClearValue, 2> clear_values = {
 		vk::ClearValue(vk::ClearColorValue(std::array<float, 4>{0.0f, 0.0f, 0.0f, 1.0f})),
-		vk::ClearDepthStencilValue(1.0f, 0)
+		vk::ClearValue(vk::ClearDepthStencilValue(1.0f, 0))
 	};
 
 	for (size_t i = 0; i < command_buffers_.size(); i++)
@@ -190,7 +191,7 @@ void ScrapEngine::Render::StandardCommandBuffer::load_mesh(VulkanMeshInstance* m
 	const vk::DeviceSize offsets[] = {0};
 	auto buffers_vector = (*mesh->get_mesh_buffers());
 	auto materials_vector = (*mesh->get_mesh_materials());
-	
+
 	for (size_t i = 0; i < command_buffers_.size(); i++)
 	{
 		bool mesh_has_multi_material = false;

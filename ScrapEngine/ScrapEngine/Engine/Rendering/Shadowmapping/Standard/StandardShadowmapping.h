@@ -4,8 +4,6 @@
 #include <glm/vec3.hpp>
 #include <Engine/Rendering/RenderPass/ShadowmappingRenderPass/ShadowmappingRenderPass.h>
 #include <Engine/Rendering/Buffer/FrameBuffer/ShadowmappingFrameBuffer/ShadowmappingFrameBuffer.h>
-#include <Engine/Rendering/Buffer/VertexBuffer/VertexBuffer.h>
-#include <Engine/Rendering/Buffer/IndexBuffer/IndexBuffer.h>
 #include <Engine/Rendering/Descriptor/DescriptorSet/ShadowmappingDescriptorSet/ShadowmappingDescriptorSet.h>
 #include <Engine/Rendering/Buffer/UniformBuffer/ShadowmappingUniformBuffer/ShadowmappingUniformBuffer.h>
 #include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
