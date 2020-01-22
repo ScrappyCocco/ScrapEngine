@@ -38,6 +38,10 @@ ScrapEngine::Render::VulkanMeshInstance::~VulkanMeshInstance()
 	}
 	// Delete the uniform buffer
 	delete vulkan_render_uniform_buffer_;
+	//Shadowmapping resources
+	delete shadowmapping_descriptor_set_;
+	delete shadowmapping_descriptor_pool_;
+	delete shadowmapping_uniform_buffer_;
 }
 
 void ScrapEngine::Render::VulkanMeshInstance::set_mesh_location(const Core::SVector3& location)
@@ -110,6 +114,24 @@ uint16_t ScrapEngine::Render::VulkanMeshInstance::get_deletion_counter() const
 	return deletion_counter_;
 }
 
+void ScrapEngine::Render::VulkanMeshInstance::init_shadowmapping_resources(StandardShadowmapping* shadowmapping)
+{
+	const size_t size = vulkan_render_uniform_buffer_->get_uniform_buffers()->size();
+	
+	shadowmapping_uniform_buffer_ = new ShadowmappingUniformBuffer(size);
+	shadowmapping_descriptor_set_ = new ShadowmappingDescriptorSet();
+	
+	shadowmapping_descriptor_pool_ = new StandardDescriptorPool(size);
+	shadowmapping_descriptor_set_->create_descriptor_sets(
+		shadowmapping_descriptor_pool_->get_descriptor_pool(),
+		size,
+		shadowmapping_uniform_buffer_->get_uniform_buffers(),
+		sizeof(OffscreenUniformBufferObject)
+	);
+
+	write_depth_descriptor(shadowmapping);
+}
+
 void ScrapEngine::Render::VulkanMeshInstance::write_depth_descriptor(StandardShadowmapping* shadowmapping)
 {
 	vk::ImageView* imageview = shadowmapping->get_offscreen_frame_buffer()->get_depth_attachment()->get_image_view();
@@ -120,8 +142,8 @@ void ScrapEngine::Render::VulkanMeshInstance::write_depth_descriptor(StandardSha
 		*imageview,
 		vk::ImageLayout::eDepthStencilReadOnlyOptimal
 	);
-	
-	for(auto& material : model_materials_)
+
+	for (auto& material : model_materials_)
 	{
 		material->get_vulkan_render_descriptor_set()->write_image_info(image_info, 1);
 	}
@@ -129,9 +151,11 @@ void ScrapEngine::Render::VulkanMeshInstance::write_depth_descriptor(StandardSha
 
 void ScrapEngine::Render::VulkanMeshInstance::update_uniform_buffer(const uint32_t& current_image,
                                                                     Camera* render_camera,
-                                                                    const glm::vec3& light_pos,
-                                                                    const glm::mat4& depth_bias_m)
+                                                                    const glm::vec3& light_pos)
 {
+	//update_shadowmap_uniform_buffer should be called first to update shadow_depth_bias
+	const glm::mat4 shadow_depth_bias = shadowmapping_uniform_buffer_->get_depth_bias();
+	//Standard update
 	if (is_static_)
 	{
 		if (transform_dirty_)
@@ -140,7 +164,7 @@ void ScrapEngine::Render::VulkanMeshInstance::update_uniform_buffer(const uint32
 			                                                     object_location_,
 			                                                     render_camera,
 			                                                     light_pos,
-			                                                     depth_bias_m
+			                                                     shadow_depth_bias
 			);
 			transform_dirty_ = false;
 		}
@@ -149,7 +173,7 @@ void ScrapEngine::Render::VulkanMeshInstance::update_uniform_buffer(const uint32
 			vulkan_render_uniform_buffer_->update_uniform_buffer(current_image,
 			                                                     object_location_,
 			                                                     render_camera,
-			                                                     light_pos, depth_bias_m,
+			                                                     light_pos, shadow_depth_bias,
 			                                                     false
 			);
 		}
@@ -160,7 +184,56 @@ void ScrapEngine::Render::VulkanMeshInstance::update_uniform_buffer(const uint32
 		                                                     object_location_,
 		                                                     render_camera,
 		                                                     light_pos,
-		                                                     depth_bias_m
+		                                                     shadow_depth_bias
+		);
+	}
+}
+
+void ScrapEngine::Render::VulkanMeshInstance::update_shadowmap_uniform_buffer(const uint32_t& current_image,
+                                                                              StandardShadowmapping* shadowmap_info) const
+{
+	const glm::vec3 light_pos = shadowmap_info->get_light_pos();
+	const float light_fov = shadowmap_info->get_light_fov();
+	const float z_far = shadowmap_info->get_z_far();
+	const float z_near = shadowmap_info->get_z_near();
+
+	if (is_static_)
+	{
+		if (transform_dirty_)
+		{
+			shadowmapping_uniform_buffer_->update_uniform_buffer(
+				current_image,
+				object_location_,
+				true,
+				light_fov,
+				light_pos,
+				z_near,
+				z_far
+			);
+		}
+		else
+		{
+			shadowmapping_uniform_buffer_->update_uniform_buffer(
+				current_image,
+				object_location_,
+				false,
+				light_fov,
+				light_pos,
+				z_near,
+				z_far
+			);
+		}
+	}
+	else
+	{
+		shadowmapping_uniform_buffer_->update_uniform_buffer(
+			current_image,
+			object_location_,
+			true,
+			light_fov,
+			light_pos,
+			z_near,
+			z_far
 		);
 	}
 }
@@ -175,6 +248,18 @@ const std::vector<ScrapEngine::Render::BasicMaterial*>* ScrapEngine::Render::Vul
 get_mesh_materials() const
 {
 	return &model_materials_;
+}
+
+ScrapEngine::Render::ShadowmappingUniformBuffer* ScrapEngine::Render::VulkanMeshInstance::
+get_shadowmapping_uniform_buffer() const
+{
+	return shadowmapping_uniform_buffer_;
+}
+
+ScrapEngine::Render::ShadowmappingDescriptorSet* ScrapEngine::Render::VulkanMeshInstance::
+get_shadowmapping_descriptor_set() const
+{
+	return shadowmapping_descriptor_set_;
 }
 
 std::shared_ptr<std::vector<

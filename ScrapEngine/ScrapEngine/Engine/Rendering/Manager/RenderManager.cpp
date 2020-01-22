@@ -244,7 +244,7 @@ void ScrapEngine::Render::RenderManager::initialize_vulkan(const game_base_info*
 	Debug::DebugLog::print_to_console_log("User View Camera created");
 	//Shadowmapping
 	Debug::DebugLog::print_to_console_log("Creating StandardShadowmapping...");
-	shadowmapping_ = new StandardShadowmapping(vulkan_render_swap_chain_, true);
+	shadowmapping_ = new StandardShadowmapping(vulkan_render_swap_chain_);
 	Debug::DebugLog::print_to_console_log("StandardShadowmapping initialized!");
 	//Gui render
 	Debug::DebugLog::print_to_console_log("Creating gui render...");
@@ -422,7 +422,7 @@ void ScrapEngine::Render::RenderManager::create_command_buffer(const bool flip_f
 	}
 	//End the shadowmapping render pass
 	command_buffers_[index].command_buffer->end_command_buffer_render_pass();
-	//Re-init the command buffer
+	//Re-init the standard command buffer render pass
 	command_buffers_[index].command_buffer->init_command_buffer(&vulkan_render_swap_chain_->get_swap_chain_extent(),
 	                                                            vulkan_render_frame_buffer_);
 	//Set camera
@@ -432,16 +432,11 @@ void ScrapEngine::Render::RenderManager::create_command_buffer(const bool flip_f
 	{
 		command_buffers_[index].command_buffer->load_skybox(skybox_);
 	}
-	//3d models
+	//3D models
 	//Now render the meshes
 	for (auto mesh : loaded_models_)
 	{
 		command_buffers_[index].command_buffer->load_mesh(mesh);
-	}
-	if (shadowmapping_->shadowmap_debug_enabled())
-	{
-		//WARNING - Vertex Buffers WARNINGS after this call are ok because of the shadowmap debug quad!
-		command_buffers_[index].command_buffer->draw_debug_quad_shadowmap(shadowmapping_);
 	}
 	//End the main render pass
 	command_buffers_[index].command_buffer->end_command_buffer_render_pass();
@@ -488,7 +483,7 @@ ScrapEngine::Render::VulkanMeshInstance* ScrapEngine::Render::RenderManager::loa
 	//Wait and block if necessary until the list loaded_models_ is editable
 	wait_pre_frame_tasks();
 	//Write descriptor to mesh
-	new_mesh->write_depth_descriptor(shadowmapping_);
+	new_mesh->init_shadowmapping_resources(shadowmapping_);
 	//Push mesh into vector and return it
 	loaded_models_.push_back(new_mesh);
 	return new_mesh;
@@ -702,14 +697,13 @@ void ScrapEngine::Render::RenderManager::update_objects_and_buffers()
 	//Shadowmapping update
 	//TODO REMOVE TESTING
 	shadowmapping_->set_light_pos(render_camera_->get_camera_location().get_glm_vector());
-	shadowmapping_->update_uniform_buffers(image_index_, render_camera_);
 	const glm::vec3 light_pos = shadowmapping_->get_light_pos();
 	Debug::DebugLog::print_to_console_log(light_pos);
-	const glm::mat4 depth_bias = shadowmapping_->get_depth_bias();
 	//Models
 	for (auto& loaded_model : loaded_models_)
 	{
-		loaded_model->update_uniform_buffer(image_index_, render_camera_, light_pos, depth_bias);
+		loaded_model->update_shadowmap_uniform_buffer(image_index_, shadowmapping_);
+		loaded_model->update_uniform_buffer(image_index_, render_camera_, light_pos);
 	}
 	//Skybox
 	if (skybox_)

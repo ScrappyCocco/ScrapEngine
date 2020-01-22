@@ -48,6 +48,19 @@ void ScrapEngine::Render::StandardCommandBuffer::init_shadow_map(StandardShadowm
 
 		command_buffer.beginRenderPass(&begin_info, vk::SubpassContents::eInline);
 
+		//Viewport
+		
+		vk::Viewport viewport;
+		viewport.setWidth(static_cast<float>(shadow_map_extent.width));
+		viewport.setHeight(static_cast<float>(shadow_map_extent.height));
+		viewport.setMinDepth(0.0f);
+		viewport.setMaxDepth(1.0f);
+
+		command_buffer.setViewport(0, 1, &viewport);
+
+		//Scissors
+		command_buffer.setScissor(0, 1, &rect);
+		
 		// Set depth bias
 		// Required to avoid shadow mapping artefacts
 		command_buffer.setDepthBias(
@@ -76,8 +89,7 @@ void ScrapEngine::Render::StandardCommandBuffer::load_mesh_shadow_map(StandardSh
 			                                       *shadowmapping->get_offscreen_pipeline()->get_pipeline_layout(),
 			                                       0,
 			                                       1,
-			                                       &(*shadowmapping
-			                                          ->get_offscreen_descriptor_set()->get_descriptor_sets())[i],
+			                                       &(*mesh->get_shadowmapping_descriptor_set()->get_descriptor_sets())[i],
 			                                       0,
 			                                       nullptr
 			);
@@ -91,37 +103,6 @@ void ScrapEngine::Render::StandardCommandBuffer::load_mesh_shadow_map(StandardSh
 			command_buffers_[i].drawIndexed(static_cast<uint32_t>((mesh_buffer.second->get_vector()->size())), 1, 0, 0,
 			                                0);
 		}
-	}
-}
-
-void ScrapEngine::Render::StandardCommandBuffer::draw_debug_quad_shadowmap(StandardShadowmapping* shadowmapping)
-{
-	vk::DeviceSize offsets[] = {0};
-	vk::Buffer* vertex_buffer = shadowmapping->get_debug_quad_vertices()->get_vertex_buffer();
-	vk::Buffer* index_buffer = shadowmapping->get_debug_quad_indices()->get_index_buffer();
-
-	for (size_t i = 0; i < command_buffers_.size(); i++)
-	{
-		command_buffers_[i].bindPipeline(vk::PipelineBindPoint::eGraphics,
-		                                 *shadowmapping->get_quad_pipeline()->get_graphics_pipeline()
-		);
-
-		command_buffers_[i].bindDescriptorSets(vk::PipelineBindPoint::eGraphics,
-		                                       *shadowmapping->get_quad_pipeline()->get_pipeline_layout(),
-		                                       0,
-		                                       1,
-		                                       &(*shadowmapping->get_debug_quad_descriptor_set()->get_descriptor_sets())
-		                                       [i],
-		                                       0,
-		                                       nullptr
-		);
-
-		command_buffers_[i].bindVertexBuffers(0, 1, vertex_buffer, offsets);
-
-		command_buffers_[i].bindIndexBuffer(*index_buffer, 0, vk::IndexType::eUint32);
-
-		command_buffers_[i].drawIndexed(shadowmapping->get_quad_index_count(), 1, 0, 0,
-		                                0);
 	}
 }
 

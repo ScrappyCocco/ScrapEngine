@@ -47,9 +47,10 @@ void ScrapEngine::Render::SkyboxMaterial::create_skybox_texture(const std::array
 void ScrapEngine::Render::SkyboxMaterial::create_descriptor_sets(VulkanSwapChain* swap_chain,
                                                                  SkyboxUniformBuffer* uniform_buffer)
 {
-	vulkan_render_descriptor_pool_ = new StandardDescriptorPool(swap_chain->get_swap_chain_images_vector());
+	const size_t size = swap_chain->get_swap_chain_images_vector()->size();
+	vulkan_render_descriptor_pool_ = new StandardDescriptorPool(size);
 	vulkan_render_descriptor_set_->create_descriptor_sets(vulkan_render_descriptor_pool_->get_descriptor_pool(),
-	                                                      swap_chain->get_swap_chain_images_vector(),
+	                                                      size,
 	                                                      uniform_buffer->get_uniform_buffers(),
 	                                                      vulkan_texture_image_view_->get_texture_image_view(),
 	                                                      vulkan_texture_sampler_->get_texture_sampler(),

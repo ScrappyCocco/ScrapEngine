@@ -6,12 +6,9 @@
 #include <Engine/Rendering/Buffer/FrameBuffer/ShadowmappingFrameBuffer/ShadowmappingFrameBuffer.h>
 #include <Engine/Rendering/Buffer/VertexBuffer/VertexBuffer.h>
 #include <Engine/Rendering/Buffer/IndexBuffer/IndexBuffer.h>
-#include <Engine/Rendering/Descriptor/DescriptorSet/ShadowmappingDescriptorSet/DebugQuadDescriptorSet.h>
 #include <Engine/Rendering/Descriptor/DescriptorSet/ShadowmappingDescriptorSet/ShadowmappingDescriptorSet.h>
-#include <Engine/Rendering/Buffer/UniformBuffer/ShadowmappingUniformBuffer/DebugQuadUniformBuffer.h>
 #include <Engine/Rendering/Buffer/UniformBuffer/ShadowmappingUniformBuffer/ShadowmappingUniformBuffer.h>
 #include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
-#include <Engine/Rendering/Pipeline/ShadowmappingPipeline/DebugQuadPipeline.h>
 #include <Engine/Rendering/Pipeline/ShadowmappingPipeline/ShadowmappingPipeline.h>
 #include <Engine/Rendering/Descriptor/DescriptorPool/StandardDescriptorPool/StandardDescriptorPool.h>
 
@@ -28,42 +25,30 @@ namespace ScrapEngine
 			ShadowmappingRenderPass* offscreen_render_pass_ = nullptr;
 			ShadowmappingFrameBuffer* offscreen_frame_buffer_ = nullptr;
 
-			DebugQuadDescriptorSet* debug_quad_descriptor_set_ = nullptr;
 			ShadowmappingDescriptorSet* offscreen_descriptor_set_ = nullptr;
 
-			DebugQuadUniformBuffer* quad_ubo_ = nullptr;
-			ShadowmappingUniformBuffer* offscreen_ubo_ = nullptr;
-
-			DebugQuadPipeline* quad_pipeline_ = nullptr;
 			ShadowmappingPipeline* offscreen_pipeline_ = nullptr;
 
 			StandardDescriptorPool* debug_quad_descriptor_pool_ = nullptr;
 			StandardDescriptorPool* offscreen_descriptor_pool_ = nullptr;
 		public:
-			StandardShadowmapping(VulkanSwapChain* swap_chain, bool debug_enabled = false);
+			StandardShadowmapping(VulkanSwapChain* swap_chain);
 			~StandardShadowmapping();
-
-			void update_uniform_buffers(const uint32_t& current_image, Camera* render_camera) const;
-			void test_update_light(float time);
 
 			glm::vec3 get_light_pos() const;
 			void set_light_pos(const glm::vec3& light_pos_new);
 
-			glm::mat4 get_depth_bias() const;
+			//glm::mat4 get_depth_bias() const;
 			float get_depth_bias_constant() const;
 			float get_depth_bias_slope() const;
 
 			ShadowmappingFrameBuffer* get_offscreen_frame_buffer() const;
 			ShadowmappingRenderPass* get_offscreen_render_pass() const;
-			DebugQuadDescriptorSet* get_debug_quad_descriptor_set() const;
-			ShadowmappingDescriptorSet* get_offscreen_descriptor_set() const;
-			DebugQuadPipeline* get_quad_pipeline() const;
 			ShadowmappingPipeline* get_offscreen_pipeline() const;
-			VertexBuffer* get_debug_quad_vertices() const;
-			IndexBuffer* get_debug_quad_indices() const;
-			uint32_t get_quad_index_count() const;
 			static vk::Extent2D get_shadow_map_extent();
-			bool shadowmap_debug_enabled() const;
+			float get_z_near() const;
+			float get_z_far() const;
+			float get_light_fov() const;
 		private:
 			// 16 bits of depth is enough for such a small scene
 			vk::Format depth_format_ = vk::Format::eD16Unorm;
@@ -82,13 +67,6 @@ namespace ScrapEngine
 
 			glm::vec3 light_pos_ = glm::vec3();
 			float light_fov_ = 45.0f;
-
-			bool debug_enabled_ = false;
-
-			VertexBuffer* quad_vertices_ = nullptr;
-			IndexBuffer* quad_indices_ = nullptr;
-			uint32_t quad_index_count_ = 0;
-			void generate_debug_quad();
 		};
 	}
 }

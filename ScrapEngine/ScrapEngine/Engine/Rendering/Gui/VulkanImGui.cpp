@@ -96,11 +96,12 @@ void ScrapEngine::Render::VulkanImGui::init_resources(VulkanSwapChain* swap_chai
 	                              vk::BorderColor::eFloatOpaqueWhite);
 
 	// Descriptor pool
-	descriptor_pool_ = new GuiDescriptorPool(swap_chain->get_swap_chain_images_vector());
+	const size_t size = swap_chain->get_swap_chain_images_vector()->size();
+	descriptor_pool_ = new GuiDescriptorPool(size);
 	// Descriptor set
 	descriptor_set_ = new GuiDescriptorSet();
 	descriptor_set_->create_descriptor_sets(descriptor_pool_->get_descriptor_pool(),
-	                                        swap_chain->get_swap_chain_images_vector(),
+	                                        size,
 	                                        sampler_->get_texture_sampler(), front_view_->get_texture_image_view());
 
 	//Create pipeline

@@ -763,9 +763,6 @@
     <ClCompile Include="Engine\Rendering\Buffer\FrameBuffer\ShadowmappingFrameBuffer\ShadowmappingFrameBufferAttachment.cpp">
       <Filter>Engine\Rendering\Buffer\FrameBuffer\ShadowmappingFrameBuffer</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Rendering\Descriptor\DescriptorSet\ShadowmappingDescriptorSet\DebugQuadDescriptorSet.cpp">
-      <Filter>Engine\Rendering\Descriptor\DescriptorSet\ShadowmappingDescriptorSet</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Rendering\Descriptor\DescriptorSet\ShadowmappingDescriptorSet\ShadowmappingDescriptorSet.cpp">
       <Filter>Engine\Rendering\Descriptor\DescriptorSet\ShadowmappingDescriptorSet</Filter>
     </ClCompile>
@@ -775,14 +772,8 @@
     <ClCompile Include="Engine\Rendering\Buffer\UniformBuffer\StandardUniformBuffer\StandardUniformBuffer.cpp">
       <Filter>Engine\Rendering\Buffer\UniformBuffer\StandardUniformBuffer</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Rendering\Buffer\UniformBuffer\ShadowmappingUniformBuffer\DebugQuadUniformBuffer.cpp">
-      <Filter>Engine\Rendering\Buffer\UniformBuffer\ShadowmappingUniformBuffer</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Rendering\Buffer\UniformBuffer\ShadowmappingUniformBuffer\ShadowmappingUniformBuffer.cpp">
       <Filter>Engine\Rendering\Buffer\UniformBuffer\ShadowmappingUniformBuffer</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Rendering\Pipeline\ShadowmappingPipeline\DebugQuadPipeline.cpp">
-      <Filter>Engine\Rendering\Pipeline\ShadowmappingPipeline</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Rendering\Pipeline\ShadowmappingPipeline\ShadowmappingPipeline.cpp">
       <Filter>Engine\Rendering\Pipeline\ShadowmappingPipeline</Filter>
@@ -1182,9 +1173,6 @@
     <ClInclude Include="Engine\Rendering\Buffer\FrameBuffer\ShadowmappingFrameBuffer\ShadowmappingFrameBufferAttachment.h">
       <Filter>Engine\Rendering\Buffer\FrameBuffer\ShadowmappingFrameBuffer</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Rendering\Descriptor\DescriptorSet\ShadowmappingDescriptorSet\DebugQuadDescriptorSet.h">
-      <Filter>Engine\Rendering\Descriptor\DescriptorSet\ShadowmappingDescriptorSet</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Rendering\Descriptor\DescriptorSet\ShadowmappingDescriptorSet\ShadowmappingDescriptorSet.h">
       <Filter>Engine\Rendering\Descriptor\DescriptorSet\ShadowmappingDescriptorSet</Filter>
     </ClInclude>
@@ -1194,14 +1182,8 @@
     <ClInclude Include="Engine\Rendering\Buffer\UniformBuffer\StandardUniformBuffer\StandardUniformBuffer.h">
       <Filter>Engine\Rendering\Buffer\UniformBuffer\StandardUniformBuffer</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Rendering\Buffer\UniformBuffer\ShadowmappingUniformBuffer\DebugQuadUniformBuffer.h">
-      <Filter>Engine\Rendering\Buffer\UniformBuffer\ShadowmappingUniformBuffer</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Rendering\Buffer\UniformBuffer\ShadowmappingUniformBuffer\ShadowmappingUniformBuffer.h">
       <Filter>Engine\Rendering\Buffer\UniformBuffer\ShadowmappingUniformBuffer</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Rendering\Pipeline\ShadowmappingPipeline\DebugQuadPipeline.h">
-      <Filter>Engine\Rendering\Pipeline\ShadowmappingPipeline</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Pipeline\ShadowmappingPipeline\ShadowmappingPipeline.h">
       <Filter>Engine\Rendering\Pipeline\ShadowmappingPipeline</Filter>
