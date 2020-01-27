@@ -6,7 +6,7 @@ void ScrapEngine::Render::StandardCommandBuffer::pre_shadow_mesh_commands(Standa
 {
 	const vk::Extent2D shadow_map_extent = StandardShadowmapping::get_shadow_map_extent();
 	const vk::Rect2D rect = vk::Rect2D(vk::Offset2D(), shadow_map_extent);
-	
+
 	for (auto& command_buffer : command_buffers_)
 	{
 		//Viewport
@@ -83,6 +83,33 @@ void ScrapEngine::Render::StandardCommandBuffer::init_shadow_map(StandardShadowm
 void ScrapEngine::Render::StandardCommandBuffer::load_mesh_shadow_map(StandardShadowmapping* shadowmapping,
                                                                       VulkanMeshInstance* mesh)
 {
+	//Do not include mesh to delete
+	if (mesh->get_pending_deletion())
+	{
+		//Do NOT increase the deletion counter in the shadow map loading
+		return;
+	}
+	//Check if the mesh is visible
+	if (!mesh->get_is_visible())
+	{
+		return;
+	}
+	//Check if the mesh has shadow rendering
+	if (!mesh->get_cast_shadows())
+	{
+		return;
+	}
+	if (mesh->get_frustum_check())
+	{
+		//Check if the mesh is in view
+		if (!current_camera_->frustum_check_sphere(
+			mesh->get_mesh_location().get_glm_vector(),
+			mesh->get_mesh_scale().get_max_value() * frustum_sphere_radius_multiplier_ * 2))
+		{
+			return;
+		}
+	}
+	//Add the drawcall for the mesh in the depth pass (shadow rendering)
 	const vk::DeviceSize offsets[] = {0};
 	auto buffers_vector = (*mesh->get_mesh_buffers());
 
@@ -191,12 +218,15 @@ void ScrapEngine::Render::StandardCommandBuffer::load_mesh(VulkanMeshInstance* m
 	{
 		return;
 	}
-	//Check if the mesh is in view
-	if (!current_camera_->frustum_check_sphere(
-		mesh->get_mesh_location().get_glm_vector(),
-		mesh->get_mesh_scale().get_max_value() * 7.5f))
+	if (mesh->get_frustum_check())
 	{
-		return;
+		//Check if the mesh is in view
+		if (!current_camera_->frustum_check_sphere(
+			mesh->get_mesh_location().get_glm_vector(),
+			mesh->get_mesh_scale().get_max_value() * frustum_sphere_radius_multiplier_))
+		{
+			return;
+		}
 	}
 	//Add the drawcall for the mesh
 	const vk::DeviceSize offsets[] = {0};

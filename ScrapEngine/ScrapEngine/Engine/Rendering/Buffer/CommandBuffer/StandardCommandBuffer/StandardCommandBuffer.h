@@ -17,6 +17,10 @@ namespace ScrapEngine
 			Camera* current_camera_ = nullptr;
 
 			void pre_shadow_mesh_commands(StandardShadowmapping* shadowmapping);
+
+			//This is the sphere radius multiplier that will be used to check if a mesh is in the camera frustum
+			//Shadow frustum check double this value to avoid (possibly) to remove objects that still have the shadow visible
+			const float frustum_sphere_radius_multiplier_ = 7.5f;
 		public:
 			explicit StandardCommandBuffer(VulkanCommandPool* command_pool, int16_t cb_size);
 

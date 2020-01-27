@@ -37,6 +37,10 @@ namespace ScrapEngine
 			bool is_static_ = false;
 			bool transform_dirty_ = true;
 
+			//Value to set if the mesh should be hidden when out of view or not
+			//Remember that a mesh with this value set to false will be always drawn
+			bool frustum_check_ = true;
+
 			//Set that the mesh will be deleted as soon as possible
 			//During command buffer re-creation
 			//This is necessary because the mesh can't be deleted during command buffer creation
@@ -73,6 +77,9 @@ namespace ScrapEngine
 
 			bool get_cast_shadows() const;
 			void set_cast_shadows(bool cast);
+
+			bool get_frustum_check() const;
+			void set_frustum_check(bool should_check);
 
 			void set_for_deletion();
 			bool get_pending_deletion() const;

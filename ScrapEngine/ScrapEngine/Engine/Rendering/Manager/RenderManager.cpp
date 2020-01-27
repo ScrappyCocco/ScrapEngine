@@ -416,6 +416,8 @@ void ScrapEngine::Render::RenderManager::create_command_buffer(const bool flip_f
 	const short int index = flip_flop ? 1 : 0;
 	//Reset the whole pool and begin the command buffer
 	command_buffers_[index].command_pool->reset_command_pool();
+	//Set camera
+	command_buffers_[index].command_buffer->init_current_camera(render_camera_);
 	command_buffers_[index].command_buffer->begin_command_buffer();
 	//Prepare shadow mapping
 	command_buffers_[index].command_buffer->init_shadow_map(shadowmapping_);
@@ -429,8 +431,6 @@ void ScrapEngine::Render::RenderManager::create_command_buffer(const bool flip_f
 	//Re-init the standard command buffer render pass
 	command_buffers_[index].command_buffer->init_command_buffer(&vulkan_render_swap_chain_->get_swap_chain_extent(),
 	                                                            vulkan_render_frame_buffer_);
-	//Set camera
-	command_buffers_[index].command_buffer->init_current_camera(render_camera_);
 	//Skybox
 	if (skybox_)
 	{

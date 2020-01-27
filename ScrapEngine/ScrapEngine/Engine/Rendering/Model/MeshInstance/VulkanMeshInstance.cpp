@@ -104,6 +104,16 @@ void ScrapEngine::Render::VulkanMeshInstance::set_cast_shadows(const bool cast)
 	cast_shadows_ = cast;
 }
 
+bool ScrapEngine::Render::VulkanMeshInstance::get_frustum_check() const
+{
+	return frustum_check_;
+}
+
+void ScrapEngine::Render::VulkanMeshInstance::set_frustum_check(const bool should_check)
+{
+	frustum_check_ = should_check;
+}
+
 void ScrapEngine::Render::VulkanMeshInstance::set_for_deletion()
 {
 	pending_deletion_ = true;

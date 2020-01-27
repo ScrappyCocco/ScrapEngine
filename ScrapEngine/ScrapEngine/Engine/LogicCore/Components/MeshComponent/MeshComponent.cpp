@@ -59,6 +59,16 @@ void ScrapEngine::Core::MeshComponent::set_cast_shadows(const bool cast_shadows)
 	return vulkan_mesh_->set_cast_shadows(cast_shadows);
 }
 
+bool ScrapEngine::Core::MeshComponent::get_frustum_check() const
+{
+	return vulkan_mesh_->get_frustum_check();
+}
+
+void ScrapEngine::Core::MeshComponent::set_frustum_check(const bool should_check) const
+{
+	vulkan_mesh_->set_frustum_check(should_check);
+}
+
 void ScrapEngine::Core::MeshComponent::update_component_location()
 {
 	SComponent::update_component_location();
