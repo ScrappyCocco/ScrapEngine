@@ -2,52 +2,13 @@
 #include <Engine/Rendering/RenderPass/StandardRenderPass/StandardRenderPass.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
 
-ScrapEngine::Render::StandardCommandBuffer::StandardCommandBuffer(VulkanCommandPool* command_pool,
-                                                                  const int16_t cb_size)
+void ScrapEngine::Render::StandardCommandBuffer::pre_shadow_mesh_commands(StandardShadowmapping* shadowmapping)
 {
-	command_pool_ref_ = command_pool;
-
-	command_buffers_.resize(cb_size);
-
-	vk::CommandBufferAllocateInfo alloc_info(
-		*command_pool_ref_,
-		vk::CommandBufferLevel::ePrimary,
-		static_cast<uint32_t>(command_buffers_.size())
-	);
-
-	if (VulkanDevice::get_instance()->get_logical_device()->allocateCommandBuffers(&alloc_info, command_buffers_.data())
-		!= vk::Result::eSuccess)
-	{
-		throw std::runtime_error("[VulkanCommandBuffer] Failed to allocate command buffers!");
-	}
-}
-
-void ScrapEngine::Render::StandardCommandBuffer::init_shadow_map(StandardShadowmapping* shadowmapping)
-{
-	std::array<vk::ClearValue, 1> clear_values = {
-		vk::ClearValue(vk::ClearDepthStencilValue(1.0f, 0))
-	};
-	const std::vector<vk::Framebuffer>* offscreen_framebuffers = shadowmapping
-	                                                             ->get_offscreen_frame_buffer()->
-	                                                             get_framebuffers_vector();
 	const vk::Extent2D shadow_map_extent = StandardShadowmapping::get_shadow_map_extent();
 	const vk::Rect2D rect = vk::Rect2D(vk::Offset2D(), shadow_map_extent);
-
+	
 	for (auto& command_buffer : command_buffers_)
 	{
-		//Begin
-
-		vk::RenderPassBeginInfo begin_info(
-			*shadowmapping->get_offscreen_render_pass()->get_render_pass(),
-			(*offscreen_framebuffers)[0],
-			rect
-		);
-
-		begin_info.clearValueCount = static_cast<uint32_t>(clear_values.size());
-		begin_info.pClearValues = clear_values.data();
-
-		command_buffer.beginRenderPass(&begin_info, vk::SubpassContents::eInline);
-
 		//Viewport
 
 		vk::Viewport viewport;
@@ -71,11 +32,61 @@ void ScrapEngine::Render::StandardCommandBuffer::init_shadow_map(StandardShadowm
 	}
 }
 
+ScrapEngine::Render::StandardCommandBuffer::StandardCommandBuffer(VulkanCommandPool* command_pool,
+                                                                  const int16_t cb_size)
+{
+	command_pool_ref_ = command_pool;
+
+	command_buffers_.resize(cb_size);
+
+	vk::CommandBufferAllocateInfo alloc_info(
+		*command_pool_ref_,
+		vk::CommandBufferLevel::ePrimary,
+		static_cast<uint32_t>(command_buffers_.size())
+	);
+
+	if (VulkanDevice::get_instance()->get_logical_device()->allocateCommandBuffers(&alloc_info, command_buffers_.data())
+		!= vk::Result::eSuccess)
+	{
+		throw std::runtime_error("[VulkanCommandBuffer] Failed to allocate command buffers!");
+	}
+}
+
+void ScrapEngine::Render::StandardCommandBuffer::init_shadow_map(StandardShadowmapping* shadowmapping)
+{
+	std::array<vk::ClearValue, 1> clear_values = {
+		vk::ClearDepthStencilValue(1.0f, 0)
+	};
+	const std::vector<vk::Framebuffer>* offscreen_framebuffers = shadowmapping
+	                                                             ->get_offscreen_frame_buffer()->
+	                                                             get_framebuffers_vector();
+	const vk::Extent2D shadow_map_extent = StandardShadowmapping::get_shadow_map_extent();
+	const vk::Rect2D rect = vk::Rect2D(vk::Offset2D(), shadow_map_extent);
+
+	for (auto& command_buffer : command_buffers_)
+	{
+		//Begin
+
+		vk::RenderPassBeginInfo begin_info(
+			*shadowmapping->get_offscreen_render_pass()->get_render_pass(),
+			(*offscreen_framebuffers)[0],
+			rect
+		);
+
+		begin_info.clearValueCount = static_cast<uint32_t>(clear_values.size());
+		begin_info.pClearValues = clear_values.data();
+
+		command_buffer.beginRenderPass(&begin_info, vk::SubpassContents::eInline);
+	}
+}
+
 void ScrapEngine::Render::StandardCommandBuffer::load_mesh_shadow_map(StandardShadowmapping* shadowmapping,
                                                                       VulkanMeshInstance* mesh)
 {
 	const vk::DeviceSize offsets[] = {0};
 	auto buffers_vector = (*mesh->get_mesh_buffers());
+
+	pre_shadow_mesh_commands(shadowmapping);
 
 	for (size_t i = 0; i < command_buffers_.size(); i++)
 	{
@@ -114,8 +125,8 @@ void ScrapEngine::Render::StandardCommandBuffer::init_command_buffer(
 		get_framebuffers_vector();
 
 	std::array<vk::ClearValue, 2> clear_values = {
-		vk::ClearValue(vk::ClearColorValue(std::array<float, 4>{0.0f, 0.0f, 0.0f, 1.0f})),
-		vk::ClearValue(vk::ClearDepthStencilValue(1.0f, 0))
+		vk::ClearColorValue(std::array<float, 4>{0.0f, 0.0f, 0.0f, 1.0f}),
+		vk::ClearDepthStencilValue(1.0f, 0)
 	};
 
 	for (size_t i = 0; i < command_buffers_.size(); i++)

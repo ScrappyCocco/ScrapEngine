@@ -94,6 +94,16 @@ void ScrapEngine::Render::VulkanMeshInstance::set_is_visible(const bool visible)
 	is_visible_ = visible;
 }
 
+bool ScrapEngine::Render::VulkanMeshInstance::get_cast_shadows() const
+{
+	return cast_shadows_;
+}
+
+void ScrapEngine::Render::VulkanMeshInstance::set_cast_shadows(const bool cast)
+{
+	cast_shadows_ = cast;
+}
+
 void ScrapEngine::Render::VulkanMeshInstance::set_for_deletion()
 {
 	pending_deletion_ = true;

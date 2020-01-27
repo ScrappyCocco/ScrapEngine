@@ -83,9 +83,9 @@ ScrapEngine::Render::ShadowmappingPipeline::ShadowmappingPipeline(const char* ve
 	);
 
 	std::vector<vk::DynamicState> dynamic_states_enable;
-	dynamic_states_enable.push_back(vk::DynamicState::eDepthBias);
 	dynamic_states_enable.push_back(vk::DynamicState::eViewport);
 	dynamic_states_enable.push_back(vk::DynamicState::eScissor);
+	dynamic_states_enable.push_back(vk::DynamicState::eDepthBias);
 
 	vk::PipelineDynamicStateCreateInfo dynamic_state_create_info(
 		vk::PipelineDynamicStateCreateFlags(),

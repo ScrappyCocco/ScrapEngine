@@ -15,6 +15,8 @@ namespace ScrapEngine
 		{
 		private:
 			Camera* current_camera_ = nullptr;
+
+			void pre_shadow_mesh_commands(StandardShadowmapping* shadowmapping);
 		public:
 			explicit StandardCommandBuffer(VulkanCommandPool* command_pool, int16_t cb_size);
 

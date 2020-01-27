@@ -7,9 +7,9 @@ ScrapEngine::Render::StandardShadowmapping::StandardShadowmapping(VulkanSwapChai
 	debug_quad_descriptor_pool_ = new StandardDescriptorPool(size);
 	offscreen_descriptor_pool_ = new StandardDescriptorPool(size);
 
-	offscreen_render_pass_ = new ShadowmappingRenderPass(depth_format_);
+	offscreen_render_pass_ = new ShadowmappingRenderPass(depth_format);
 	offscreen_frame_buffer_ = new ShadowmappingFrameBuffer(SHADOWMAP_DIM, SHADOWMAP_DIM,
-	                                                       depth_format_, shadowmap_filter_, offscreen_render_pass_);
+	                                                       depth_format, shadowmap_filter_, offscreen_render_pass_);
 
 	offscreen_descriptor_set_ = new ShadowmappingDescriptorSet();
 
@@ -41,11 +41,6 @@ void ScrapEngine::Render::StandardShadowmapping::set_light_pos(const glm::vec3& 
 {
 	light_pos_ = light_pos_new;
 }
-
-/*glm::mat4 ScrapEngine::Render::StandardShadowmapping::get_depth_bias() const
-{
-	return offscreen_ubo_->get_depth_bias();
-}*/
 
 float ScrapEngine::Render::StandardShadowmapping::get_depth_bias_constant() const
 {
@@ -89,7 +84,22 @@ float ScrapEngine::Render::StandardShadowmapping::get_z_far() const
 	return z_far_;
 }
 
+void ScrapEngine::Render::StandardShadowmapping::set_z_near(const float z_near)
+{
+	z_near_ = z_near;
+}
+
+void ScrapEngine::Render::StandardShadowmapping::set_z_far(const float z_far)
+{
+	z_far_ = z_far;
+}
+
 float ScrapEngine::Render::StandardShadowmapping::get_light_fov() const
 {
 	return light_fov_;
+}
+
+vk::Format ScrapEngine::Render::StandardShadowmapping::get_depth_format()
+{
+	return depth_format;
 }

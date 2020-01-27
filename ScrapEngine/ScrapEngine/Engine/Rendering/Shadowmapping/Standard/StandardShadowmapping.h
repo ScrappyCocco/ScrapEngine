@@ -46,16 +46,19 @@ namespace ScrapEngine
 			static vk::Extent2D get_shadow_map_extent();
 			float get_z_near() const;
 			float get_z_far() const;
+			void set_z_near(float z_near);
+			void set_z_far(float z_far);
 			float get_light_fov() const;
+			static vk::Format get_depth_format();
 		private:
 			// 16 bits of depth is enough for such a small scene
-			vk::Format depth_format_ = vk::Format::eD16Unorm;
+			static const vk::Format depth_format = vk::Format::eD16Unorm;
 			vk::Filter shadowmap_filter_ = vk::Filter::eLinear;
 
 			// Keep depth range as small as possible
 			// for better shadow map precision
 			float z_near_ = 1.0f;
-			float z_far_ = 96.0f;
+			float z_far_ = 1024.0f;
 
 			// Depth bias (and slope) are used to avoid shadowing artefacts
 			// Constant depth bias factor (always applied)

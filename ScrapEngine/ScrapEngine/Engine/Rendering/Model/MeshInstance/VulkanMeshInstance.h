@@ -30,6 +30,7 @@ namespace ScrapEngine
 
 			Core::STransform object_location_;
 			bool is_visible_ = true;
+			bool cast_shadows_ = true;
 
 			//If this is true, the transform matrices not will be updated
 			//The other flag says if i already updated the uniform buffer once
@@ -69,6 +70,9 @@ namespace ScrapEngine
 
 			bool get_is_visible() const;
 			void set_is_visible(bool visible);
+
+			bool get_cast_shadows() const;
+			void set_cast_shadows(bool cast);
 
 			void set_for_deletion();
 			bool get_pending_deletion() const;
