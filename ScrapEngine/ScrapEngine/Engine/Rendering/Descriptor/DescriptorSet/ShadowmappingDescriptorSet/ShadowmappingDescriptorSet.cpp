@@ -1,7 +1,7 @@
 #include <Engine/Rendering/Descriptor/DescriptorSet/ShadowmappingDescriptorSet/ShadowmappingDescriptorSet.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
 
-ScrapEngine::Render::ShadowmappingDescriptorSet::ShadowmappingDescriptorSet(vk::DescriptorSetLayout* layout)
+ScrapEngine::Render::ShadowmappingDescriptorSet::ShadowmappingDescriptorSet()
 {
 	const vk::DescriptorSetLayoutBinding ubo_layout_binding(
 		0,
@@ -19,7 +19,7 @@ ScrapEngine::Render::ShadowmappingDescriptorSet::ShadowmappingDescriptorSet(vk::
 		nullptr
 	);
 
-	std::array<vk::DescriptorSetLayoutBinding, 2> bindings = { ubo_layout_binding, sampler_layout_binding };
+	std::array<vk::DescriptorSetLayoutBinding, 2> bindings = {ubo_layout_binding, sampler_layout_binding};
 
 	vk::DescriptorSetLayoutCreateInfo layout_info(
 		vk::DescriptorSetLayoutCreateFlags(),
@@ -28,7 +28,7 @@ ScrapEngine::Render::ShadowmappingDescriptorSet::ShadowmappingDescriptorSet(vk::
 	);
 
 	if (VulkanDevice::get_instance()->get_logical_device()->createDescriptorSetLayout(
-		&layout_info, nullptr, &descriptor_set_layout_)
+			&layout_info, nullptr, &descriptor_set_layout_)
 		!= vk::Result::eSuccess)
 	{
 		throw std::runtime_error("ShadowmappingDescriptorSet: Failed to create descriptor set layout!");
@@ -36,30 +36,30 @@ ScrapEngine::Render::ShadowmappingDescriptorSet::ShadowmappingDescriptorSet(vk::
 }
 
 void ScrapEngine::Render::ShadowmappingDescriptorSet::create_descriptor_sets(vk::DescriptorPool* descriptor_pool,
-                                                                             const std::vector<vk::Image>*
-                                                                             swap_chain_images,
+                                                                             const size_t swap_chain_images_size,
                                                                              const std::vector<vk::Buffer>*
                                                                              uniform_buffers,
                                                                              const vk::DeviceSize& buffer_info_size)
 {
-	std::vector<vk::DescriptorSetLayout> layouts(swap_chain_images->size(), descriptor_set_layout_);
+	std::vector<vk::DescriptorSetLayout> layouts(swap_chain_images_size, descriptor_set_layout_);
 
 	vk::DescriptorSetAllocateInfo alloc_info(
 		*descriptor_pool,
-		static_cast<uint32_t>(swap_chain_images->size()),
+		static_cast<uint32_t>(swap_chain_images_size),
 		layouts.data()
 	);
 
-	descriptor_sets_.resize(swap_chain_images->size());
+	descriptor_sets_.resize(swap_chain_images_size);
 
-	const vk::Result result = VulkanDevice::get_instance()->get_logical_device()->allocateDescriptorSets(&alloc_info, &descriptor_sets_[0]);
+	const vk::Result result = VulkanDevice::get_instance()->get_logical_device()->allocateDescriptorSets(
+		&alloc_info, &descriptor_sets_[0]);
 	if (result != vk::Result::eSuccess)
 	{
 		throw std::runtime_error(
 			"ShadowmappingDescriptorSet - DescriptorSetLayout: Failed to allocate descriptor sets!");
 	}
 
-	for (size_t i = 0; i < swap_chain_images->size(); i++)
+	for (size_t i = 0; i < swap_chain_images_size; i++)
 	{
 		vk::DescriptorBufferInfo buffer_info(
 			(*uniform_buffers)[i],

@@ -2,6 +2,36 @@
 #include <Engine/Rendering/RenderPass/StandardRenderPass/StandardRenderPass.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
 
+void ScrapEngine::Render::StandardCommandBuffer::pre_shadow_mesh_commands(StandardShadowmapping* shadowmapping)
+{
+	const vk::Extent2D shadow_map_extent = StandardShadowmapping::get_shadow_map_extent();
+	const vk::Rect2D rect = vk::Rect2D(vk::Offset2D(), shadow_map_extent);
+	
+	for (auto& command_buffer : command_buffers_)
+	{
+		//Viewport
+
+		vk::Viewport viewport;
+		viewport.setWidth(static_cast<float>(shadow_map_extent.width));
+		viewport.setHeight(static_cast<float>(shadow_map_extent.height));
+		viewport.setMinDepth(0.0f);
+		viewport.setMaxDepth(1.0f);
+
+		command_buffer.setViewport(0, 1, &viewport);
+
+		//Scissors
+		command_buffer.setScissor(0, 1, &rect);
+
+		// Set depth bias
+		// Required to avoid shadow mapping artefacts
+		command_buffer.setDepthBias(
+			shadowmapping->get_depth_bias_constant(),
+			0.0f,
+			shadowmapping->get_depth_bias_slope()
+		);
+	}
+}
+
 ScrapEngine::Render::StandardCommandBuffer::StandardCommandBuffer(VulkanCommandPool* command_pool,
                                                                   const int16_t cb_size)
 {
@@ -27,9 +57,9 @@ void ScrapEngine::Render::StandardCommandBuffer::init_shadow_map(StandardShadowm
 	std::array<vk::ClearValue, 1> clear_values = {
 		vk::ClearDepthStencilValue(1.0f, 0)
 	};
-	const std::vector<vk::Framebuffer>* swap_chain_framebuffers = shadowmapping
-	                                                              ->get_offscreen_frame_buffer()->
-	                                                              get_swap_chain_framebuffers_vector();
+	const std::vector<vk::Framebuffer>* offscreen_framebuffers = shadowmapping
+	                                                             ->get_offscreen_frame_buffer()->
+	                                                             get_framebuffers_vector();
 	const vk::Extent2D shadow_map_extent = StandardShadowmapping::get_shadow_map_extent();
 	const vk::Rect2D rect = vk::Rect2D(vk::Offset2D(), shadow_map_extent);
 
@@ -39,7 +69,7 @@ void ScrapEngine::Render::StandardCommandBuffer::init_shadow_map(StandardShadowm
 
 		vk::RenderPassBeginInfo begin_info(
 			*shadowmapping->get_offscreen_render_pass()->get_render_pass(),
-			(*swap_chain_framebuffers)[0],
+			(*offscreen_framebuffers)[0],
 			rect
 		);
 
@@ -47,14 +77,6 @@ void ScrapEngine::Render::StandardCommandBuffer::init_shadow_map(StandardShadowm
 		begin_info.pClearValues = clear_values.data();
 
 		command_buffer.beginRenderPass(&begin_info, vk::SubpassContents::eInline);
-
-		// Set depth bias
-		// Required to avoid shadow mapping artefacts
-		command_buffer.setDepthBias(
-			shadowmapping->get_depth_bias_constant(),
-			0.0f,
-			shadowmapping->get_depth_bias_slope()
-		);
 	}
 }
 
@@ -63,6 +85,8 @@ void ScrapEngine::Render::StandardCommandBuffer::load_mesh_shadow_map(StandardSh
 {
 	const vk::DeviceSize offsets[] = {0};
 	auto buffers_vector = (*mesh->get_mesh_buffers());
+
+	pre_shadow_mesh_commands(shadowmapping);
 
 	for (size_t i = 0; i < command_buffers_.size(); i++)
 	{
@@ -76,8 +100,8 @@ void ScrapEngine::Render::StandardCommandBuffer::load_mesh_shadow_map(StandardSh
 			                                       *shadowmapping->get_offscreen_pipeline()->get_pipeline_layout(),
 			                                       0,
 			                                       1,
-			                                       &(*shadowmapping
-			                                          ->get_offscreen_descriptor_set()->get_descriptor_sets())[i],
+			                                       &(*mesh->get_shadowmapping_descriptor_set()->
+			                                                get_descriptor_sets())[i],
 			                                       0,
 			                                       nullptr
 			);
@@ -94,45 +118,14 @@ void ScrapEngine::Render::StandardCommandBuffer::load_mesh_shadow_map(StandardSh
 	}
 }
 
-void ScrapEngine::Render::StandardCommandBuffer::draw_debug_quad_shadowmap(StandardShadowmapping* shadowmapping)
-{
-	vk::DeviceSize offsets[] = {0};
-	vk::Buffer* vertex_buffer = shadowmapping->get_debug_quad_vertices()->get_vertex_buffer();
-	vk::Buffer* index_buffer = shadowmapping->get_debug_quad_indices()->get_index_buffer();
-
-	for (size_t i = 0; i < command_buffers_.size(); i++)
-	{
-		command_buffers_[i].bindPipeline(vk::PipelineBindPoint::eGraphics,
-		                                 *shadowmapping->get_quad_pipeline()->get_graphics_pipeline()
-		);
-
-		command_buffers_[i].bindDescriptorSets(vk::PipelineBindPoint::eGraphics,
-		                                       *shadowmapping->get_quad_pipeline()->get_pipeline_layout(),
-		                                       0,
-		                                       1,
-		                                       &(*shadowmapping->get_debug_quad_descriptor_set()->get_descriptor_sets())
-		                                       [i],
-		                                       0,
-		                                       nullptr
-		);
-
-		command_buffers_[i].bindVertexBuffers(0, 1, vertex_buffer, offsets);
-
-		command_buffers_[i].bindIndexBuffer(*index_buffer, 0, vk::IndexType::eUint32);
-
-		command_buffers_[i].drawIndexed(shadowmapping->get_quad_index_count(), 1, 0, 0,
-		                                0);
-	}
-}
-
 void ScrapEngine::Render::StandardCommandBuffer::init_command_buffer(
 	vk::Extent2D* input_swap_chain_extent_ref, BaseFrameBuffer* swap_chain_frame_buffer)
 {
 	const std::vector<vk::Framebuffer>* swap_chain_framebuffers = swap_chain_frame_buffer->
-		get_swap_chain_framebuffers_vector();
+		get_framebuffers_vector();
 
 	std::array<vk::ClearValue, 2> clear_values = {
-		vk::ClearValue(vk::ClearColorValue(std::array<float, 4>{0.0f, 0.0f, 0.0f, 1.0f})),
+		vk::ClearColorValue(std::array<float, 4>{0.0f, 0.0f, 0.0f, 1.0f}),
 		vk::ClearDepthStencilValue(1.0f, 0)
 	};
 
@@ -209,7 +202,7 @@ void ScrapEngine::Render::StandardCommandBuffer::load_mesh(VulkanMeshInstance* m
 	const vk::DeviceSize offsets[] = {0};
 	auto buffers_vector = (*mesh->get_mesh_buffers());
 	auto materials_vector = (*mesh->get_mesh_materials());
-	
+
 	for (size_t i = 0; i < command_buffers_.size(); i++)
 	{
 		bool mesh_has_multi_material = false;

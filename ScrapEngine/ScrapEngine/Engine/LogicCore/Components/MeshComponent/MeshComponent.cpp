@@ -49,6 +49,16 @@ void ScrapEngine::Core::MeshComponent::set_is_static(const bool is_static) const
 	vulkan_mesh_->set_is_static(is_static);
 }
 
+bool ScrapEngine::Core::MeshComponent::get_cast_shadows() const
+{
+	return vulkan_mesh_->get_cast_shadows();
+}
+
+void ScrapEngine::Core::MeshComponent::set_cast_shadows(const bool cast_shadows) const
+{
+	return vulkan_mesh_->set_cast_shadows(cast_shadows);
+}
+
 void ScrapEngine::Core::MeshComponent::update_component_location()
 {
 	SComponent::update_component_location();

@@ -10,6 +10,7 @@ namespace ScrapEngine
 	{
 		struct OffscreenUniformBufferObject
 		{
+			glm::mat4 model;
 			glm::mat4 depth_mvp;
 		};
 
@@ -23,7 +24,8 @@ namespace ScrapEngine
 			ShadowmappingUniformBuffer(size_t swap_chain_images_size);
 			~ShadowmappingUniformBuffer() = default;
 
-			void update_uniform_buffer(const uint32_t& current_image, float light_fov, const glm::vec3& light_pos, float z_near, float z_far);
+			void update_uniform_buffer(const uint32_t& current_image, const Core::STransform& object_transform,
+			                           bool update_transform, float light_fov, const glm::vec3& light_pos, float z_near, float z_far);
 
 			glm::mat4 get_depth_bias() const;
 		};

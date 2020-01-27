@@ -86,7 +86,6 @@
     <ClCompile Include="Engine\Rendering\Buffer\StagingBuffer\IndicesStagingBuffer\IndicesStagingBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\StagingBuffer\VertexStagingBuffer\VertexStagingBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\UniformBuffer\BaseUniformBuffer.cpp" />
-    <ClCompile Include="Engine\Rendering\Buffer\UniformBuffer\ShadowmappingUniformBuffer\DebugQuadUniformBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\UniformBuffer\ShadowmappingUniformBuffer\ShadowmappingUniformBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\UniformBuffer\SkyboxUniformBuffer\SkyboxUniformBuffer.cpp" />
     <ClCompile Include="Engine\Rendering\Buffer\UniformBuffer\StandardUniformBuffer\StandardUniformBuffer.cpp" />
@@ -102,7 +101,6 @@
     <ClCompile Include="Engine\Rendering\Descriptor\DescriptorPool\StandardDescriptorPool\StandardDescriptorPool.cpp" />
     <ClCompile Include="Engine\Rendering\Descriptor\DescriptorSet\BaseDescriptorSet.cpp" />
     <ClCompile Include="Engine\Rendering\Descriptor\DescriptorSet\GuiDescriptorSet\GuiDescriptorSet.cpp" />
-    <ClCompile Include="Engine\Rendering\Descriptor\DescriptorSet\ShadowmappingDescriptorSet\DebugQuadDescriptorSet.cpp" />
     <ClCompile Include="Engine\Rendering\Descriptor\DescriptorSet\ShadowmappingDescriptorSet\ShadowmappingDescriptorSet.cpp" />
     <ClCompile Include="Engine\Rendering\Descriptor\DescriptorSet\StandardDescriptorSet\StandardDescriptorSet.cpp" />
     <ClCompile Include="Engine\Rendering\Device\VulkanDevice.cpp" />
@@ -123,7 +121,6 @@
     <ClCompile Include="Engine\Rendering\Model\SkyboxInstance\VulkanSkyboxInstance.cpp" />
     <ClCompile Include="Engine\Rendering\Pipeline\BaseVulkanGraphicsPipeline.cpp" />
     <ClCompile Include="Engine\Rendering\Pipeline\GuiPipeline\GuiVulkanGraphicsPipeline.cpp" />
-    <ClCompile Include="Engine\Rendering\Pipeline\ShadowmappingPipeline\DebugQuadPipeline.cpp" />
     <ClCompile Include="Engine\Rendering\Pipeline\ShadowmappingPipeline\ShadowmappingPipeline.cpp" />
     <ClCompile Include="Engine\Rendering\Pipeline\SkyboxPipeline\SkyboxVulkanGraphicsPipeline.cpp" />
     <ClCompile Include="Engine\Rendering\Pipeline\StandardPipeline\StandardVulkanGraphicsPipeline.cpp" />
@@ -224,7 +221,6 @@
     <ClInclude Include="Engine\Rendering\Buffer\StagingBuffer\IndicesStagingBuffer\IndicesStagingBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\StagingBuffer\VertexStagingBuffer\VertexStagingBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\UniformBuffer\BaseUniformBuffer.h" />
-    <ClInclude Include="Engine\Rendering\Buffer\UniformBuffer\ShadowmappingUniformBuffer\DebugQuadUniformBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\UniformBuffer\ShadowmappingUniformBuffer\ShadowmappingUniformBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\UniformBuffer\SkyboxUniformBuffer\SkyboxUniformBuffer.h" />
     <ClInclude Include="Engine\Rendering\Buffer\UniformBuffer\StandardUniformBuffer\StandardUniformBuffer.h" />
@@ -240,7 +236,6 @@
     <ClInclude Include="Engine\Rendering\Descriptor\DescriptorPool\StandardDescriptorPool\StandardDescriptorPool.h" />
     <ClInclude Include="Engine\Rendering\Descriptor\DescriptorSet\BaseDescriptorSet.h" />
     <ClInclude Include="Engine\Rendering\Descriptor\DescriptorSet\GuiDescriptorSet\GuiDescriptorSet.h" />
-    <ClInclude Include="Engine\Rendering\Descriptor\DescriptorSet\ShadowmappingDescriptorSet\DebugQuadDescriptorSet.h" />
     <ClInclude Include="Engine\Rendering\Descriptor\DescriptorSet\ShadowmappingDescriptorSet\ShadowmappingDescriptorSet.h" />
     <ClInclude Include="Engine\Rendering\Descriptor\DescriptorSet\StandardDescriptorSet\StandardDescriptorSet.h" />
     <ClInclude Include="Engine\Rendering\Device\VulkanDevice.h" />
@@ -261,7 +256,6 @@
     <ClInclude Include="Engine\Rendering\Model\SkyboxInstance\VulkanSkyboxInstance.h" />
     <ClInclude Include="Engine\Rendering\Pipeline\BaseVulkanGraphicsPipeline.h" />
     <ClInclude Include="Engine\Rendering\Pipeline\GuiPipeline\GuiVulkanGraphicsPipeline.h" />
-    <ClInclude Include="Engine\Rendering\Pipeline\ShadowmappingPipeline\DebugQuadPipeline.h" />
     <ClInclude Include="Engine\Rendering\Pipeline\ShadowmappingPipeline\ShadowmappingPipeline.h" />
     <ClInclude Include="Engine\Rendering\Pipeline\SkyboxPipeline\SkyboxVulkanGraphicsPipeline.h" />
     <ClInclude Include="Engine\Rendering\Pipeline\StandardPipeline\StandardVulkanGraphicsPipeline.h" />

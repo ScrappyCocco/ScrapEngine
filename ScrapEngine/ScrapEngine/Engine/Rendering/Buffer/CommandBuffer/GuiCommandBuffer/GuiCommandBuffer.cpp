@@ -31,7 +31,7 @@ void ScrapEngine::Render::GuiCommandBuffer::init_command_buffer(
 	const uint32_t current_image)
 {
 	const std::vector<vk::Framebuffer>* swap_chain_framebuffers = swap_chain_frame_buffer->
-		get_swap_chain_framebuffers_vector();
+		get_framebuffers_vector();
 
 	for (auto& command_buffer : command_buffers_)
 	{

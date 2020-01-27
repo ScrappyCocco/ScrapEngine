@@ -9,12 +9,12 @@ ScrapEngine::Render::BaseFrameBuffer::~BaseFrameBuffer()
 	}
 }
 
-const std::vector<vk::Framebuffer>* ScrapEngine::Render::BaseFrameBuffer::get_swap_chain_framebuffers_vector() const
+const std::vector<vk::Framebuffer>* ScrapEngine::Render::BaseFrameBuffer::get_framebuffers_vector() const
 {
 	return &framebuffers_;
 }
 
-size_t ScrapEngine::Render::BaseFrameBuffer::get_swap_chain_framebuffers_vector_size() const
+size_t ScrapEngine::Render::BaseFrameBuffer::get_framebuffers_vector_size() const
 {
 	return framebuffers_.size();
 }
