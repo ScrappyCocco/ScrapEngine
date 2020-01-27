@@ -48,3 +48,13 @@ void ScrapEngine::Core::SceneManager::set_light_fov(const float fov) const
 {
 	shadowmapping_manager_->set_light_fov(fov);
 }
+
+float ScrapEngine::Core::SceneManager::get_light_far_distance() const
+{
+	return shadowmapping_manager_->get_z_far();
+}
+
+void ScrapEngine::Core::SceneManager::set_light_far_distance(const float distance) const
+{
+	shadowmapping_manager_->set_z_far(distance);
+}

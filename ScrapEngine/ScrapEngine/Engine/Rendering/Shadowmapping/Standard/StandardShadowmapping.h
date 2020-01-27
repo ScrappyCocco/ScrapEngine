@@ -61,7 +61,7 @@ namespace ScrapEngine
 			// Keep depth range as small as possible
 			// for better shadow map precision
 			float z_near_ = 1.0f;
-			float z_far_ = 2048.0f;
+			float z_far_ = 1024.0f;
 
 			// Depth bias (and slope) are used to avoid shadowing artefacts
 			// Constant depth bias factor (always applied)

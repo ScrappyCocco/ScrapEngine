@@ -28,6 +28,8 @@ namespace ScrapEngine
 			SVector3 get_light_lookat() const;
 			float get_light_fov() const;
 			void set_light_fov(float fov) const;
+			float get_light_far_distance() const;
+			void set_light_far_distance(float distance) const;
 		};
 	}
 }
