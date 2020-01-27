@@ -16,9 +16,10 @@ layout(location = 3) in vec3 inNormal;
 
 layout(location = 0) out vec3 outNormal;
 layout(location = 1) out vec3 outColor;
-layout(location = 2) out vec3 outViewVec;
-layout(location = 3) out vec3 outLightVec;
-layout(location = 4) out vec4 outShadowCoord;
+layout(location = 2) out vec2 fragTexCoord;
+layout(location = 3) out vec3 outViewVec;
+layout(location = 4) out vec3 outLightVec;
+layout(location = 5) out vec4 outShadowCoord;
 
 out gl_PerVertex {
     vec4 gl_Position;
@@ -35,6 +36,7 @@ void main()
 {
 	outColor = inColor;
 	outNormal = inNormal;
+    fragTexCoord = inTexCoord;
 
 	gl_Position = ubo.proj * ubo.view * ubo.model * vec4(inPosition, 1.0);
 	

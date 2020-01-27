@@ -127,10 +127,10 @@ uint16_t ScrapEngine::Render::VulkanMeshInstance::get_deletion_counter() const
 void ScrapEngine::Render::VulkanMeshInstance::init_shadowmapping_resources(StandardShadowmapping* shadowmapping)
 {
 	const size_t size = vulkan_render_uniform_buffer_->get_uniform_buffers()->size();
-	
+
 	shadowmapping_uniform_buffer_ = new ShadowmappingUniformBuffer(size);
 	shadowmapping_descriptor_set_ = new ShadowmappingDescriptorSet();
-	
+
 	shadowmapping_descriptor_pool_ = new StandardDescriptorPool(size);
 	shadowmapping_descriptor_set_->create_descriptor_sets(
 		shadowmapping_descriptor_pool_->get_descriptor_pool(),
@@ -200,9 +200,11 @@ void ScrapEngine::Render::VulkanMeshInstance::update_uniform_buffer(const uint32
 }
 
 void ScrapEngine::Render::VulkanMeshInstance::update_shadowmap_uniform_buffer(const uint32_t& current_image,
-                                                                              StandardShadowmapping* shadowmap_info) const
+                                                                              StandardShadowmapping* shadowmap_info)
+const
 {
 	const glm::vec3 light_pos = shadowmap_info->get_light_pos();
+	const glm::vec3 light_look_at = shadowmap_info->get_light_look_at();
 	const float light_fov = shadowmap_info->get_light_fov();
 	const float z_far = shadowmap_info->get_z_far();
 	const float z_near = shadowmap_info->get_z_near();
@@ -217,6 +219,7 @@ void ScrapEngine::Render::VulkanMeshInstance::update_shadowmap_uniform_buffer(co
 				true,
 				light_fov,
 				light_pos,
+				light_look_at,
 				z_near,
 				z_far
 			);
@@ -229,6 +232,7 @@ void ScrapEngine::Render::VulkanMeshInstance::update_shadowmap_uniform_buffer(co
 				false,
 				light_fov,
 				light_pos,
+				light_look_at,
 				z_near,
 				z_far
 			);
@@ -242,6 +246,7 @@ void ScrapEngine::Render::VulkanMeshInstance::update_shadowmap_uniform_buffer(co
 			true,
 			light_fov,
 			light_pos,
+			light_look_at,
 			z_near,
 			z_far
 		);

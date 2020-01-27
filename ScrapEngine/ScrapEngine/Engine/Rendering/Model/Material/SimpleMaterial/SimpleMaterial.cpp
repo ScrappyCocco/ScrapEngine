@@ -31,7 +31,8 @@ void ScrapEngine::Render::SimpleMaterial::create_descriptor_sets(VulkanSwapChain
                                                                  StandardUniformBuffer* uniform_buffer)
 {
 	const size_t size = swap_chain->get_swap_chain_images_vector()->size();
-	vulkan_render_descriptor_pool_ = new StandardDescriptorPool(size);
+	//A standard model has two images, one for the depth pass and one texture, so double the size of possible descriptors
+	vulkan_render_descriptor_pool_ = new StandardDescriptorPool(size * 2);
 	vulkan_render_descriptor_set_->create_descriptor_sets(vulkan_render_descriptor_pool_->get_descriptor_pool(),
 	                                                      size,
 	                                                      uniform_buffer->get_uniform_buffers(),

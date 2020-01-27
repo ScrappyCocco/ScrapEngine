@@ -25,10 +25,12 @@ ScrapEngine::Render::ShadowmappingUniformBuffer::ShadowmappingUniformBuffer(cons
 }
 
 void ScrapEngine::Render::ShadowmappingUniformBuffer::update_uniform_buffer(
-	const uint32_t& current_image, const Core::STransform& object_transform, const bool update_transform, 
-	const float light_fov, const glm::vec3& light_pos, const float z_near, const float z_far)
+	const uint32_t& current_image, const Core::STransform& object_transform, const bool update_transform,
+	const float light_fov, const glm::vec3& light_pos, const glm::vec3& light_lookat, const float z_near,
+	const float z_far)
 {
-	if (update_transform) {
+	if (update_transform)
+	{
 		//Traslate
 		offscreen_ubo_.model = translate(glm::mat4(1.0f), object_transform.get_position().get_glm_vector());
 
@@ -39,13 +41,13 @@ void ScrapEngine::Render::ShadowmappingUniformBuffer::update_uniform_buffer(
 		//Scale
 		offscreen_ubo_.model = scale(offscreen_ubo_.model, object_transform.get_scale().get_glm_vector());
 	}
-	
+
 	// Matrix from light's point of view
 	glm::mat4 depth_projection_matrix = glm::perspective(glm::radians(light_fov), 1.0f, z_near, z_far);
 	//Invert image for openGL style
 	depth_projection_matrix[1][1] *= -1;
 
-	const glm::mat4 depth_view_matrix = glm::lookAt(light_pos, glm::vec3(0.0f), glm::vec3(0, 1, 0));
+	const glm::mat4 depth_view_matrix = glm::lookAt(light_pos, light_lookat, glm::vec3(0, 1, 0));
 
 	offscreen_ubo_.depth_mvp = depth_projection_matrix * depth_view_matrix;
 

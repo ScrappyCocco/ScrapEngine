@@ -160,6 +160,11 @@ ScrapEngine::Render::GameWindow* ScrapEngine::Render::RenderManager::get_game_wi
 	return game_window_;
 }
 
+ScrapEngine::Render::StandardShadowmapping* ScrapEngine::Render::RenderManager::get_shadowmapping_manager() const
+{
+	return shadowmapping_;
+}
+
 ScrapEngine::Render::Camera* ScrapEngine::Render::RenderManager::get_render_camera() const
 {
 	return render_camera_;
@@ -693,12 +698,9 @@ void ScrapEngine::Render::RenderManager::update_objects_and_buffers()
 {
 	//Camera
 	render_camera_->execute_camera_update();
-	//Shadowmapping update
-	//TODO REMOVE TESTING
-	shadowmapping_->set_light_pos(render_camera_->get_camera_location().get_glm_vector());
+	//Save current light pos
 	const glm::vec3 light_pos = shadowmapping_->get_light_pos();
-	Debug::DebugLog::print_to_console_log(light_pos);
-	//Models
+	//Models Shadowmapping update and standard update
 	for (auto& loaded_model : loaded_models_)
 	{
 		loaded_model->update_shadowmap_uniform_buffer(image_index_, shadowmapping_);

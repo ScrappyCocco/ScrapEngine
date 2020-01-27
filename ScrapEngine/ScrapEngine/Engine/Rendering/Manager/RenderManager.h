@@ -193,6 +193,9 @@ namespace ScrapEngine
 			//User-Window stuff
 			GameWindow* get_game_window() const;
 
+			//Shadow manager
+			StandardShadowmapping* get_shadowmapping_manager() const;
+
 			//View-Camera stuff
 			Camera* get_render_camera() const;
 			Camera* get_default_render_camera() const;

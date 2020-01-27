@@ -25,7 +25,8 @@ namespace ScrapEngine
 			~ShadowmappingUniformBuffer() = default;
 
 			void update_uniform_buffer(const uint32_t& current_image, const Core::STransform& object_transform,
-			                           bool update_transform, float light_fov, const glm::vec3& light_pos, float z_near, float z_far);
+			                           bool update_transform, float light_fov, const glm::vec3& light_pos,
+			                           const glm::vec3& light_lookat, float z_near, float z_far);
 
 			glm::mat4 get_depth_bias() const;
 		};

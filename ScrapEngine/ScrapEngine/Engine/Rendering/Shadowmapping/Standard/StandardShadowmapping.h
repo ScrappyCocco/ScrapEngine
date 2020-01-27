@@ -9,9 +9,10 @@
 #include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
 #include <Engine/Rendering/Pipeline/ShadowmappingPipeline/ShadowmappingPipeline.h>
 #include <Engine/Rendering/Descriptor/DescriptorPool/StandardDescriptorPool/StandardDescriptorPool.h>
+#include <Engine/Rendering/DepthResources/VulkanDepthResources.h>
 
-// 16 bits of depth is enough for such a small scene
-#define SHADOWMAP_DIM 2048
+// Shadowmap texture resolution
+#define SHADOWMAP_DIM 8192
 
 namespace ScrapEngine
 {
@@ -27,7 +28,6 @@ namespace ScrapEngine
 
 			ShadowmappingPipeline* offscreen_pipeline_ = nullptr;
 
-			StandardDescriptorPool* debug_quad_descriptor_pool_ = nullptr;
 			StandardDescriptorPool* offscreen_descriptor_pool_ = nullptr;
 		public:
 			StandardShadowmapping(VulkanSwapChain* swap_chain);
@@ -36,7 +36,9 @@ namespace ScrapEngine
 			glm::vec3 get_light_pos() const;
 			void set_light_pos(const glm::vec3& light_pos_new);
 
-			//glm::mat4 get_depth_bias() const;
+			glm::vec3 get_light_look_at() const;
+			void set_light_look_at(const glm::vec3& light_look_new);
+
 			float get_depth_bias_constant() const;
 			float get_depth_bias_slope() const;
 
@@ -49,16 +51,17 @@ namespace ScrapEngine
 			void set_z_near(float z_near);
 			void set_z_far(float z_far);
 			float get_light_fov() const;
+			void set_light_fov(float fov);
 			static vk::Format get_depth_format();
 		private:
-			// 16 bits of depth is enough for such a small scene
-			static const vk::Format depth_format = vk::Format::eD16Unorm;
-			vk::Filter shadowmap_filter_ = vk::Filter::eLinear;
+			// Get the best possible depth format calling VulkanDepthResources::find_depth_format
+			const vk::Format depth_format_;
+			const vk::Filter shadowmap_filter_ = vk::Filter::eLinear;
 
 			// Keep depth range as small as possible
 			// for better shadow map precision
 			float z_near_ = 1.0f;
-			float z_far_ = 1024.0f;
+			float z_far_ = 2048.0f;
 
 			// Depth bias (and slope) are used to avoid shadowing artefacts
 			// Constant depth bias factor (always applied)
@@ -67,6 +70,7 @@ namespace ScrapEngine
 			float depth_bias_slope_ = 1.75f;
 
 			glm::vec3 light_pos_ = glm::vec3();
+			glm::vec3 light_look_at_ = glm::vec3(0.0f);
 			float light_fov_ = 45.0f;
 		};
 	}

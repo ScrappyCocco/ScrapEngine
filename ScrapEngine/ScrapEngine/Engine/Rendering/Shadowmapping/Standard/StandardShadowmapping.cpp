@@ -2,14 +2,14 @@
 #include <Engine/Rendering/Base/Vertex.h>
 
 ScrapEngine::Render::StandardShadowmapping::StandardShadowmapping(VulkanSwapChain* swap_chain)
+	: depth_format_(VulkanDepthResources::find_depth_format())
 {
 	const size_t size = swap_chain->get_swap_chain_images_vector()->size();
-	debug_quad_descriptor_pool_ = new StandardDescriptorPool(size);
 	offscreen_descriptor_pool_ = new StandardDescriptorPool(size);
 
-	offscreen_render_pass_ = new ShadowmappingRenderPass(depth_format);
+	offscreen_render_pass_ = new ShadowmappingRenderPass(depth_format_);
 	offscreen_frame_buffer_ = new ShadowmappingFrameBuffer(SHADOWMAP_DIM, SHADOWMAP_DIM,
-	                                                       depth_format, shadowmap_filter_, offscreen_render_pass_);
+	                                                       depth_format_, shadowmap_filter_, offscreen_render_pass_);
 
 	offscreen_descriptor_set_ = new ShadowmappingDescriptorSet();
 
@@ -27,7 +27,6 @@ ScrapEngine::Render::StandardShadowmapping::~StandardShadowmapping()
 	delete offscreen_render_pass_;
 	delete offscreen_frame_buffer_;
 	delete offscreen_descriptor_set_;
-	delete debug_quad_descriptor_pool_;
 	delete offscreen_descriptor_pool_;
 	delete offscreen_pipeline_;
 }
@@ -40,6 +39,16 @@ glm::vec3 ScrapEngine::Render::StandardShadowmapping::get_light_pos() const
 void ScrapEngine::Render::StandardShadowmapping::set_light_pos(const glm::vec3& light_pos_new)
 {
 	light_pos_ = light_pos_new;
+}
+
+glm::vec3 ScrapEngine::Render::StandardShadowmapping::get_light_look_at() const
+{
+	return light_look_at_;
+}
+
+void ScrapEngine::Render::StandardShadowmapping::set_light_look_at(const glm::vec3& light_look_new)
+{
+	light_look_at_ = light_look_new;
 }
 
 float ScrapEngine::Render::StandardShadowmapping::get_depth_bias_constant() const
@@ -99,7 +108,12 @@ float ScrapEngine::Render::StandardShadowmapping::get_light_fov() const
 	return light_fov_;
 }
 
+void ScrapEngine::Render::StandardShadowmapping::set_light_fov(const float fov)
+{
+	light_fov_ = fov;
+}
+
 vk::Format ScrapEngine::Render::StandardShadowmapping::get_depth_format()
 {
-	return depth_format;
+	return VulkanDepthResources::find_depth_format();
 }

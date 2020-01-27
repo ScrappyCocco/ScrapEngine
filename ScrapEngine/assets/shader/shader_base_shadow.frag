@@ -6,9 +6,10 @@ layout(binding = 2) uniform sampler2D texSampler;
 
 layout (location = 0) in vec3 inNormal;
 layout (location = 1) in vec3 inColor;
-layout (location = 2) in vec3 inViewVec;
-layout (location = 3) in vec3 inLightVec;
-layout (location = 4) in vec4 inShadowCoord;
+layout (location = 2) in vec2 fragTexCoord;
+layout (location = 3) in vec3 inViewVec;
+layout (location = 4) in vec3 inLightVec;
+layout (location = 5) in vec4 inShadowCoord;
 
 layout (constant_id = 0) const int enablePCF = 0;
 
@@ -61,7 +62,7 @@ void main()
 	vec3 L = normalize(inLightVec);
 	vec3 V = normalize(inViewVec);
 	vec3 R = normalize(-reflect(L, N));
-	vec3 diffuse = max(dot(N, L), ambient) * inColor;
+	vec3 diffuse = texture(texSampler, fragTexCoord).xyz * max(dot(N, L), ambient);
 
 	outFragColor = vec4(diffuse * shadow, 1.0);
 

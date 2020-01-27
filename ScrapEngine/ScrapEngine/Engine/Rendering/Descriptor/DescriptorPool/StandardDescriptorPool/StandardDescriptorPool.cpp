@@ -6,7 +6,7 @@ ScrapEngine::Render::StandardDescriptorPool::StandardDescriptorPool(const size_t
 {
 	std::array<vk::DescriptorPoolSize, 2> pool_sizes = {
 		vk::DescriptorPoolSize(vk::DescriptorType::eUniformBuffer, static_cast<uint32_t>(size)),
-		vk::DescriptorPoolSize(vk::DescriptorType::eCombinedImageSampler, static_cast<uint32_t>(size)),
+		vk::DescriptorPoolSize(vk::DescriptorType::eCombinedImageSampler, static_cast<uint32_t>(size))
 	};
 
 	vk::DescriptorPoolCreateInfo pool_info(
