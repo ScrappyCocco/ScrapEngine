@@ -20,7 +20,7 @@ namespace ScrapEngine
 			TextureSampler* vulkan_texture_sampler_ = nullptr;
 			BaseDescriptorPool* vulkan_render_descriptor_pool_ = nullptr;
 		public:
-			SkyboxMaterial() = default;
+			SkyboxMaterial();
 			~SkyboxMaterial();
 
 			void create_pipeline(const std::string& vertex_shader_path, const std::string& fragment_shader_path,

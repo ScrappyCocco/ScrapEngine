@@ -102,6 +102,7 @@
     <ClCompile Include="Engine\Rendering\Descriptor\DescriptorSet\BaseDescriptorSet.cpp" />
     <ClCompile Include="Engine\Rendering\Descriptor\DescriptorSet\GuiDescriptorSet\GuiDescriptorSet.cpp" />
     <ClCompile Include="Engine\Rendering\Descriptor\DescriptorSet\ShadowmappingDescriptorSet\ShadowmappingDescriptorSet.cpp" />
+    <ClCompile Include="Engine\Rendering\Descriptor\DescriptorSet\SkyboxDescriptorSet\SkyboxDescriptorSet.cpp" />
     <ClCompile Include="Engine\Rendering\Descriptor\DescriptorSet\StandardDescriptorSet\StandardDescriptorSet.cpp" />
     <ClCompile Include="Engine\Rendering\Device\VulkanDevice.cpp" />
     <ClCompile Include="Engine\Rendering\Gui\VulkanImGui.cpp" />
@@ -237,6 +238,7 @@
     <ClInclude Include="Engine\Rendering\Descriptor\DescriptorSet\BaseDescriptorSet.h" />
     <ClInclude Include="Engine\Rendering\Descriptor\DescriptorSet\GuiDescriptorSet\GuiDescriptorSet.h" />
     <ClInclude Include="Engine\Rendering\Descriptor\DescriptorSet\ShadowmappingDescriptorSet\ShadowmappingDescriptorSet.h" />
+    <ClInclude Include="Engine\Rendering\Descriptor\DescriptorSet\SkyboxDescriptorSet\SkyboxDescriptorSet.h" />
     <ClInclude Include="Engine\Rendering\Descriptor\DescriptorSet\StandardDescriptorSet\StandardDescriptorSet.h" />
     <ClInclude Include="Engine\Rendering\Device\VulkanDevice.h" />
     <ClInclude Include="Engine\Rendering\Gui\VulkanImGui.h" />

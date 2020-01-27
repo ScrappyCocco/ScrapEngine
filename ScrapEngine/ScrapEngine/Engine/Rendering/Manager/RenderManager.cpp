@@ -507,7 +507,7 @@ ScrapEngine::Render::VulkanSkyboxInstance* ScrapEngine::Render::RenderManager::l
 
 	skybox_ = new VulkanSkyboxInstance("../assets/shader/compiled_shaders/skybox.vert.spv",
 	                                   "../assets/shader/compiled_shaders/skybox.frag.spv",
-	                                   "../assets/models/cube.obj",
+	                                   "../assets/models/skybox_cube.obj",
 	                                   files_path, vulkan_render_swap_chain_);
 	return skybox_;
 }

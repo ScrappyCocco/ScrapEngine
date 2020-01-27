@@ -3,6 +3,12 @@
 #include <Engine/Rendering/Device/VulkanDevice.h>
 #include <Engine/Rendering/Model/ObjectPool/VulkanSimpleMaterialPool/VulkanSimpleMaterialPool.h>
 #include <Engine/Rendering/Descriptor/DescriptorPool/StandardDescriptorPool/StandardDescriptorPool.h>
+#include <Engine/Rendering/Descriptor/DescriptorSet/StandardDescriptorSet/StandardDescriptorSet.h>
+
+ScrapEngine::Render::SimpleMaterial::SimpleMaterial()
+{
+	vulkan_render_descriptor_set_ = new StandardDescriptorSet();
+}
 
 ScrapEngine::Render::SimpleMaterial::~SimpleMaterial()
 {
@@ -33,9 +39,10 @@ void ScrapEngine::Render::SimpleMaterial::create_descriptor_sets(VulkanSwapChain
 	const size_t size = swap_chain->get_swap_chain_images_vector()->size();
 	//A standard model has two images, one for the depth pass and one texture, so double the size of possible descriptors
 	vulkan_render_descriptor_pool_ = new StandardDescriptorPool(size * 2);
-	vulkan_render_descriptor_set_->create_descriptor_sets(vulkan_render_descriptor_pool_->get_descriptor_pool(),
-	                                                      size,
-	                                                      uniform_buffer->get_uniform_buffers(),
-	                                                      vulkan_texture_image_view_->get_texture_image_view(),
-	                                                      vulkan_texture_sampler_->get_texture_sampler());
+	StandardDescriptorSet* standard_descriptor_set = static_cast<StandardDescriptorSet*>(vulkan_render_descriptor_set_);
+	standard_descriptor_set->create_descriptor_sets(vulkan_render_descriptor_pool_->get_descriptor_pool(),
+	                                                size,
+	                                                uniform_buffer->get_uniform_buffers(),
+	                                                vulkan_texture_image_view_->get_texture_image_view(),
+	                                                vulkan_texture_sampler_->get_texture_sampler());
 }
