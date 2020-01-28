@@ -1,5 +1,6 @@
 #include <Engine/Rendering/Shadowmapping/Standard/StandardShadowmapping.h>
 #include <Engine/Rendering/Base/Vertex.h>
+#include <Engine/Rendering/DepthResources/VulkanDepthResources.h>
 
 ScrapEngine::Render::StandardShadowmapping::StandardShadowmapping(VulkanSwapChain* swap_chain)
 	: depth_format_(VulkanDepthResources::find_depth_format())

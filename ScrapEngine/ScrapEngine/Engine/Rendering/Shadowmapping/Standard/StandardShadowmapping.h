@@ -9,7 +9,6 @@
 #include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
 #include <Engine/Rendering/Pipeline/ShadowmappingPipeline/ShadowmappingPipeline.h>
 #include <Engine/Rendering/Descriptor/DescriptorPool/StandardDescriptorPool/StandardDescriptorPool.h>
-#include <Engine/Rendering/DepthResources/VulkanDepthResources.h>
 
 // Shadowmap texture resolution
 #define SHADOWMAP_DIM 8192
