@@ -36,19 +36,18 @@ ScrapEngine::Render::VulkanModel::VulkanModel(const std::string& input_model_pat
 		{
 			aiColor3D p_color(0.f, 0.f, 0.f);
 			scene->mMaterials[scene->mMeshes[k]->mMaterialIndex]->Get(AI_MATKEY_COLOR_DIFFUSE, p_color);
-			
+
 			const aiVector3D* p_pos = &(scene->mMeshes[k]->mVertices[i]);
 			const aiVector3D* p_normal = scene->mMeshes[k]->HasNormals() ? &(scene->mMeshes[k]->mNormals[i]) : &zero_3d;
 			const aiVector3D* p_tex_coord = scene->mMeshes[k]->HasTextureCoords(0)
 				                                ? &(scene->mMeshes[k]->mTextureCoords[0][i])
 				                                : &zero_3d;
 
-			//Todo check, normal -?
 			Vertex vertex = {};
 			vertex.pos = {p_pos->x, p_pos->y, p_pos->z};
 			vertex.tex_coord = {p_tex_coord->x, 1 - p_tex_coord->y};
 			vertex.color = {p_color.r, p_color.g, p_color.b};
-			vertex.normal = { p_normal->x, p_normal->y, p_normal->z };
+			vertex.normal = {p_normal->x, p_normal->y, p_normal->z};
 			mesh_vertices.push_back(vertex);
 		}
 		//LOADING INDICES

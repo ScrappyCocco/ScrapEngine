@@ -8,7 +8,7 @@ ScrapEngine::Render::ShadowmappingFrameBufferAttachment::ShadowmappingFrameBuffe
                                                                                             depth_format)
 {
 	// Create the image
-	
+
 	const vk::ImageCreateInfo image_info(
 		vk::ImageCreateFlags(),
 		vk::ImageType::e2D,
@@ -31,7 +31,7 @@ ScrapEngine::Render::ShadowmappingFrameBufferAttachment::ShadowmappingFrameBuffe
 		image_,
 		vk::ImageViewType::e2D,
 		depth_format
-		);
+	);
 
 	const vk::ImageSubresourceRange depth_stencil_view_sbr(
 		vk::ImageAspectFlagBits::eDepth,

@@ -15,7 +15,7 @@ void ScrapEngine::Render::BaseCommandBuffer::begin_command_buffer(const vk::Comm
 		vk::CommandBufferBeginInfo begin_info(flag);
 
 		const vk::Result result = command_buffer.begin(&begin_info);
-		
+
 		if (result != vk::Result::eSuccess)
 		{
 			Debug::DebugLog::fatal_error(result, "[VulkanCommandBuffer] Failed to begin recording command buffer!");

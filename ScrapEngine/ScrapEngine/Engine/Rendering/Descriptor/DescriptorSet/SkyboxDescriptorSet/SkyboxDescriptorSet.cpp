@@ -41,11 +41,11 @@ ScrapEngine::Render::SkyboxDescriptorSet::SkyboxDescriptorSet()
 }
 
 void ScrapEngine::Render::SkyboxDescriptorSet::create_descriptor_sets(vk::DescriptorPool* descriptor_pool,
-                                                                        const size_t swap_chain_images_size,
-                                                                        const std::vector<vk::Buffer>* uniform_buffers,
-                                                                        vk::ImageView* texture_image_view,
-                                                                        vk::Sampler* texture_sampler,
-                                                                        const vk::DeviceSize& buffer_info_size)
+                                                                      const size_t swap_chain_images_size,
+                                                                      const std::vector<vk::Buffer>* uniform_buffers,
+                                                                      vk::ImageView* texture_image_view,
+                                                                      vk::Sampler* texture_sampler,
+                                                                      const vk::DeviceSize& buffer_info_size)
 {
 	std::vector<vk::DescriptorSetLayout> layouts(swap_chain_images_size, descriptor_set_layout_);
 
@@ -57,11 +57,13 @@ void ScrapEngine::Render::SkyboxDescriptorSet::create_descriptor_sets(vk::Descri
 
 	descriptor_sets_.resize(swap_chain_images_size);
 
-	const vk::Result result = VulkanDevice::get_instance()->get_logical_device()->allocateDescriptorSets(&alloc_info, &descriptor_sets_[0]);
+	const vk::Result result = VulkanDevice::get_instance()->get_logical_device()->allocateDescriptorSets(
+		&alloc_info, &descriptor_sets_[0]);
 
 	if (result != vk::Result::eSuccess)
 	{
-		Debug::DebugLog::fatal_error(result, "SkyboxDescriptorSet - DescriptorSetLayout: Failed to allocate descriptor sets!");
+		Debug::DebugLog::fatal_error(
+			result, "SkyboxDescriptorSet - DescriptorSetLayout: Failed to allocate descriptor sets!");
 	}
 
 	for (size_t i = 0; i < swap_chain_images_size; i++)

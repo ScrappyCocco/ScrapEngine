@@ -44,7 +44,7 @@ Terrain::Terrain(ScrapEngine::Core::ComponentsManager* input_component_manager,
 	mesh_->set_is_static(true);
 
 	//By default disable terrain shadows to save resources
-	mesh_->set_cast_shadows(false);
+	disable_shadows();
 }
 
 void Terrain::disable_shadows() const

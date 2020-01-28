@@ -57,7 +57,8 @@ void ScrapEngine::Render::ShadowmappingDescriptorSet::create_descriptor_sets(vk:
 		&alloc_info, &descriptor_sets_[0]);
 	if (result != vk::Result::eSuccess)
 	{
-		Debug::DebugLog::fatal_error(result, "ShadowmappingDescriptorSet - DescriptorSetLayout: Failed to allocate descriptor sets!");
+		Debug::DebugLog::fatal_error(
+			result, "ShadowmappingDescriptorSet - DescriptorSetLayout: Failed to allocate descriptor sets!");
 	}
 
 	for (size_t i = 0; i < swap_chain_images_size; i++)

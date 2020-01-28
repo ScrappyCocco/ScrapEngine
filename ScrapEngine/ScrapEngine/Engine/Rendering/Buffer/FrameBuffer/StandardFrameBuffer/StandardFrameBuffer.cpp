@@ -32,9 +32,10 @@ ScrapEngine::Render::StandardFrameBuffer::StandardFrameBuffer(VulkanImageView* i
 			1
 		);
 
-		const vk::Result result = VulkanDevice::get_instance()->get_logical_device()->createFramebuffer(&framebuffer_info, nullptr,
+		const vk::Result result = VulkanDevice::get_instance()->get_logical_device()->createFramebuffer(
+			&framebuffer_info, nullptr,
 			&framebuffers_[i]);
-		
+
 		if (result != vk::Result::eSuccess)
 		{
 			Debug::DebugLog::fatal_error(result, "StandardFrameBuffer: Failed to create framebuffer!");

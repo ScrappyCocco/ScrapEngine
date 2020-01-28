@@ -28,9 +28,9 @@ ScrapEngine::Render::SkyboxUniformBuffer::SkyboxUniformBuffer(const size_t swap_
 }
 
 void ScrapEngine::Render::SkyboxUniformBuffer::update_uniform_buffer(const uint32_t& current_image,
-                                                                       const Core::STransform& object_transform,
-                                                                       Camera* render_camera,
-                                                                       const bool update_transform)
+                                                                     const Core::STransform& object_transform,
+                                                                     Camera* render_camera,
+                                                                     const bool update_transform)
 {
 	if (update_transform)
 	{

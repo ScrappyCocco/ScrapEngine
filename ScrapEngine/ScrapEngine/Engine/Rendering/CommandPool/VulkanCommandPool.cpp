@@ -8,8 +8,9 @@ void ScrapEngine::Render::VulkanCommandPool::init(const BaseQueue::QueueFamilyIn
 {
 	vk::CommandPoolCreateInfo pool_info(flags, queue_family_indices.graphics_family);
 
-	const vk::Result result = VulkanDevice::get_instance()->get_logical_device()->createCommandPool(&pool_info, nullptr, &command_pool_);
-	
+	const vk::Result result = VulkanDevice::get_instance()->get_logical_device()->createCommandPool(
+		&pool_info, nullptr, &command_pool_);
+
 	if (result != vk::Result::eSuccess)
 	{
 		Debug::DebugLog::fatal_error(result, "VulkanCommandPool: Failed to create command pool!");

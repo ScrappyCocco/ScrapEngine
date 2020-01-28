@@ -6,11 +6,13 @@ ScrapEngine::Render::BaseDescriptorSet::~BaseDescriptorSet()
 	VulkanDevice::get_instance()->get_logical_device()->destroyDescriptorSetLayout(descriptor_set_layout_);
 }
 
-void ScrapEngine::Render::BaseDescriptorSet::write_image_info(vk::DescriptorImageInfo image_info, const uint32_t dst_binding)
+void ScrapEngine::Render::BaseDescriptorSet::write_image_info(vk::DescriptorImageInfo image_info,
+                                                              const uint32_t dst_binding)
 {
-	for (auto& descriptor : descriptor_sets_) {
+	for (auto& descriptor : descriptor_sets_)
+	{
 		std::array<vk::WriteDescriptorSet, 1> descriptor_writes = {
-				vk::WriteDescriptorSet(
+			vk::WriteDescriptorSet(
 				descriptor,
 				dst_binding,
 				0,
@@ -26,19 +28,21 @@ void ScrapEngine::Render::BaseDescriptorSet::write_image_info(vk::DescriptorImag
 	}
 }
 
-void ScrapEngine::Render::BaseDescriptorSet::write_buffer_info(vk::DescriptorBufferInfo buffer_info, const uint32_t dst_binding)
+void ScrapEngine::Render::BaseDescriptorSet::write_buffer_info(vk::DescriptorBufferInfo buffer_info,
+                                                               const uint32_t dst_binding)
 {
-	for (auto& descriptor : descriptor_sets_) {
+	for (auto& descriptor : descriptor_sets_)
+	{
 		std::array<vk::WriteDescriptorSet, 1> descriptor_writes = {
-				vk::WriteDescriptorSet(
-					descriptor,
-					dst_binding,
-					0,
-					1,
-					vk::DescriptorType::eUniformBuffer,
-					nullptr,
-					&buffer_info
-				)
+			vk::WriteDescriptorSet(
+				descriptor,
+				dst_binding,
+				0,
+				1,
+				vk::DescriptorType::eUniformBuffer,
+				nullptr,
+				&buffer_info
+			)
 		};
 
 		VulkanDevice::get_instance()->get_logical_device()->updateDescriptorSets(

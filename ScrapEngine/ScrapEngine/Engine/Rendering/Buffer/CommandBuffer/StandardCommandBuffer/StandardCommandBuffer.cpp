@@ -46,7 +46,8 @@ ScrapEngine::Render::StandardCommandBuffer::StandardCommandBuffer(VulkanCommandP
 		static_cast<uint32_t>(command_buffers_.size())
 	);
 
-	const vk::Result result = VulkanDevice::get_instance()->get_logical_device()->allocateCommandBuffers(&alloc_info, command_buffers_.data());
+	const vk::Result result = VulkanDevice::get_instance()->get_logical_device()->allocateCommandBuffers(
+		&alloc_info, command_buffers_.data());
 
 	if (result != vk::Result::eSuccess)
 	{

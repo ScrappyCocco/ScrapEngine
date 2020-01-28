@@ -37,7 +37,8 @@ vk::ShaderModule ScrapEngine::Render::ShaderManager::create_shader_module(const 
 	);
 
 	vk::ShaderModule shader_module;
-	const vk::Result result = VulkanDevice::get_instance()->get_logical_device()->createShaderModule(&create_info, nullptr, &shader_module);
+	const vk::Result result = VulkanDevice::get_instance()->get_logical_device()->createShaderModule(
+		&create_info, nullptr, &shader_module);
 	if (result != vk::Result::eSuccess)
 	{
 		Debug::DebugLog::fatal_error(result, "ShaderManager: Failed to create shader module!");

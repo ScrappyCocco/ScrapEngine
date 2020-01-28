@@ -16,7 +16,8 @@ ScrapEngine::Render::StandardDescriptorPool::StandardDescriptorPool(const size_t
 		static_cast<uint32_t>(pool_sizes.size()), pool_sizes.data()
 	);
 
-	const vk::Result result = VulkanDevice::get_instance()->get_logical_device()->createDescriptorPool(&pool_info, nullptr, &descriptor_pool_);
+	const vk::Result result = VulkanDevice::get_instance()->get_logical_device()->createDescriptorPool(
+		&pool_info, nullptr, &descriptor_pool_);
 
 	if (result != vk::Result::eSuccess)
 	{

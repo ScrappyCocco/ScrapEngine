@@ -33,7 +33,8 @@ void ScrapEngine::Render::RenderManager::ParallelCommandBufferCreation::ExecuteR
 		}
 		else
 		{
-			Debug::DebugLog::fatal_error(result, "[ParallelCommandBufferCreation] An error occurred while waiting a fence...");
+			Debug::DebugLog::fatal_error(
+				result, "[ParallelCommandBufferCreation] An error occurred while waiting a fence...");
 		}
 	}
 	owner->create_command_buffer(flip_flop);
@@ -58,7 +59,8 @@ void ScrapEngine::Render::RenderManager::ParallelGuiCommandBufferCreation::Execu
 		}
 		else
 		{
-			Debug::DebugLog::fatal_error(result, "[ParallelGuiCommandBufferCreation] An error occurred while waiting a fence...");
+			Debug::DebugLog::fatal_error(
+				result, "[ParallelGuiCommandBufferCreation] An error occurred while waiting a fence...");
 		}
 	}
 	owner->rebuild_gui_command_buffer();

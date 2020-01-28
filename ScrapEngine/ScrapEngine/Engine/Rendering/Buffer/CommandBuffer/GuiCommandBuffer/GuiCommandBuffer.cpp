@@ -19,7 +19,8 @@ ScrapEngine::Render::GuiCommandBuffer::GuiCommandBuffer(BaseRenderPass* render_p
 		static_cast<uint32_t>(1)
 	);
 
-	const vk::Result result = VulkanDevice::get_instance()->get_logical_device()->allocateCommandBuffers(&alloc_info, command_buffers_.data());
+	const vk::Result result = VulkanDevice::get_instance()->get_logical_device()->allocateCommandBuffers(
+		&alloc_info, command_buffers_.data());
 
 	if (result != vk::Result::eSuccess)
 	{
