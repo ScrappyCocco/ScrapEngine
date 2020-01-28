@@ -4,6 +4,7 @@
 #include <Engine/Rendering/DepthResources/VulkanDepthResources.h>
 #include <Engine/Rendering/Memory/VulkanMemoryAllocator.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
+#include <Engine/Debug/DebugLog.h>
 
 ScrapEngine::Render::BaseTexture::~BaseTexture()
 {
@@ -116,7 +117,7 @@ void ScrapEngine::Render::BaseTexture::generate_mipmaps(vk::Image* image, const 
 
 	if (!(format_properties.optimalTilingFeatures & vk::FormatFeatureFlagBits::eSampledImageFilterLinear))
 	{
-		throw std::runtime_error("TextureImage: Texture image format does not support linear blitting!");
+		Debug::DebugLog::fatal_error(vk::Result(-13), "TextureImage: Texture image format does not support linear blitting!");
 	}
 
 	const std::unique_ptr<vk::CommandBuffer> command_buffer = BaseBuffer::begin_single_time_command();

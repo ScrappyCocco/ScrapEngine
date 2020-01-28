@@ -1,6 +1,6 @@
 #include <Engine/Utility/UsefulMethods.h>
-
 #include <stb_image.h>
+#include <Engine/Debug/DebugLog.h>
 
 GLFWimage ScrapEngine::Utility::UsefulMethods::load_icon(const std::string& path_to_file)
 {
@@ -9,7 +9,7 @@ GLFWimage ScrapEngine::Utility::UsefulMethods::load_icon(const std::string& path
 
 	if (!icon.pixels)
 	{
-		throw std::runtime_error("TextureImage: Failed to load texture image! (pixels not valid) - " + path_to_file);
+		Debug::DebugLog::fatal_error(vk::Result(-13), "TextureImage: Failed to load texture image! (pixels not valid) - " + path_to_file);
 	}
 
 	return icon;

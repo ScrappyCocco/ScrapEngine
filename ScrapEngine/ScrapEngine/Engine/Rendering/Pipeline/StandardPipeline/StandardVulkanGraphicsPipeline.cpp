@@ -3,6 +3,7 @@
 #include <Engine/Rendering/Base/Vertex.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
 #include <Engine/Rendering/RenderPass/StandardRenderPass/StandardRenderPass.h>
+#include <Engine/Debug/DebugLog.h>
 
 ScrapEngine::Render::StandardVulkanGraphicsPipeline::StandardVulkanGraphicsPipeline(const char* vertex_shader,
                                                                                     const char* fragment_shader,
@@ -31,6 +32,13 @@ ScrapEngine::Render::StandardVulkanGraphicsPipeline::StandardVulkanGraphicsPipel
 	);
 
 	vk::PipelineShaderStageCreateInfo shader_stages[] = {vert_shader_stage_info, frag_shader_stage_info};
+
+	//Parameter
+	uint32_t enable_pcf = 1;
+
+	vk::SpecializationMapEntry specialization_map_entry(0, 0, sizeof(uint32_t));
+	vk::SpecializationInfo specialization_info(1, &specialization_map_entry, sizeof(uint32_t), &enable_pcf);
+	shader_stages[1].setPSpecializationInfo(&specialization_info);
 
 	auto attribute_descriptions = Vertex::get_attribute_descriptions();
 	auto binding_description = Vertex::get_binding_description();
@@ -111,11 +119,12 @@ ScrapEngine::Render::StandardVulkanGraphicsPipeline::StandardVulkanGraphicsPipel
 		&(*descriptor_set_layout)
 	);
 
-	if (VulkanDevice::get_instance()->get_logical_device()->createPipelineLayout(
-			&pipeline_layout_info, nullptr, &pipeline_layout_)
-		!= vk::Result::eSuccess)
+	const vk::Result result_layout = VulkanDevice::get_instance()->get_logical_device()->createPipelineLayout(
+		&pipeline_layout_info, nullptr, &pipeline_layout_);
+
+	if (result_layout != vk::Result::eSuccess)
 	{
-		throw std::runtime_error("StandardVulkanGraphicsPipeline: Failed to create pipeline layout!");
+		Debug::DebugLog::fatal_error(result_layout, "StandardVulkanGraphicsPipeline: Failed to create pipeline layout!");
 	}
 
 	vk::GraphicsPipelineCreateInfo pipeline_info(
@@ -136,10 +145,12 @@ ScrapEngine::Render::StandardVulkanGraphicsPipeline::StandardVulkanGraphicsPipel
 		0
 	);
 
-	if (VulkanDevice::get_instance()->get_logical_device()->createGraphicsPipelines(nullptr, 1, &pipeline_info, nullptr,
-	                                                                                &graphics_pipeline_) != vk::Result::
-		eSuccess)
+	const vk::Result result = VulkanDevice::get_instance()->get_logical_device()->createGraphicsPipelines(
+		nullptr, 1, &pipeline_info, nullptr,
+		&graphics_pipeline_);
+
+	if (result != vk::Result::eSuccess)
 	{
-		throw std::runtime_error("StandardVulkanGraphicsPipeline: Failed to create graphics pipeline!");
+		Debug::DebugLog::fatal_error(result, "StandardVulkanGraphicsPipeline: Failed to create graphics pipeline!");
 	}
 }

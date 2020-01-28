@@ -1,6 +1,7 @@
 #include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
 #include <algorithm>
 #include <Engine/Rendering/Device/VulkanDevice.h>
+#include <Engine/Debug/DebugLog.h>
 
 ScrapEngine::Render::VulkanSwapChain::VulkanSwapChain(const SwapChainSupportDetails& swap_chain_support,
                                                       const BaseQueue::QueueFamilyIndices indices,
@@ -52,10 +53,11 @@ ScrapEngine::Render::VulkanSwapChain::VulkanSwapChain(const SwapChainSupportDeta
 	create_info.setPresentMode(present_mode);
 	create_info.setClipped(true);
 
-	if (VulkanDevice::get_instance()->get_logical_device()->createSwapchainKHR(&create_info, nullptr, &swap_chain_)
-		!= vk::Result::eSuccess)
+	const vk::Result result = VulkanDevice::get_instance()->get_logical_device()->createSwapchainKHR(&create_info, nullptr, &swap_chain_);
+	
+	if (result != vk::Result::eSuccess)
 	{
-		throw std::runtime_error("VulkanSwapChain: Failed to create swap chain!");
+		Debug::DebugLog::fatal_error(result, "VulkanSwapChain: Failed to create swap chain!");
 	}
 
 	swap_chain_images_ = VulkanDevice::get_instance()->get_logical_device()->getSwapchainImagesKHR(swap_chain_);

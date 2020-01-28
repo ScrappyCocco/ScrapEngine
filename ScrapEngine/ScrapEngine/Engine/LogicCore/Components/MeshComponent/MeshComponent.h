@@ -26,6 +26,14 @@ namespace ScrapEngine
 			bool get_is_static() const;
 			void set_is_static(bool is_static) const;
 
+			bool get_cast_shadows() const;
+			void set_cast_shadows(bool cast_shadows) const;
+
+			//Value to set if the mesh should be hidden when out of view or not
+			//Remember that a mesh with this value set to false will be always drawn
+			bool get_frustum_check() const;
+			void set_frustum_check(bool should_check) const;
+
 			//Call the standard implementation, then update vulkan_mesh_ values
 			void update_component_location() override;
 			void update_component_rotation() override;

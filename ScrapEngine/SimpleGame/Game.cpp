@@ -40,6 +40,11 @@ int main()
 			}
 		);
 		scene_manager_ref->set_skybox_size(500);
+		//Set sun position and look at
+		scene_manager_ref->set_light_far_distance(2048.0f);
+		scene_manager_ref->set_light_fov(60.f);
+		scene_manager_ref->set_light_pos(ScrapEngine::Core::SVector3(488.517f, 412.948f, 307.194f));
+		scene_manager_ref->set_light_lookat(ScrapEngine::Core::SVector3(223.693f, -36.6775f, -52.6496f));
 		//Set world gravity
 		component_manager_ref->set_gravity(ScrapEngine::Core::SVector3(0, -50, 0));
 		//Create the first game object

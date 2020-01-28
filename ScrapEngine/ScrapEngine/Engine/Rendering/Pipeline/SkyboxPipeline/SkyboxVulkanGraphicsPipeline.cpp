@@ -3,6 +3,7 @@
 #include <Engine/Rendering/Shader/ShaderManager.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
 #include <Engine/Rendering/RenderPass/StandardRenderPass/StandardRenderPass.h>
+#include <Engine/Debug/DebugLog.h>
 
 ScrapEngine::Render::SkyboxVulkanGraphicsPipeline::SkyboxVulkanGraphicsPipeline(const char* vertex_shader,
                                                                                 const char* fragment_shader,
@@ -31,8 +32,8 @@ ScrapEngine::Render::SkyboxVulkanGraphicsPipeline::SkyboxVulkanGraphicsPipeline(
 
 	vk::PipelineShaderStageCreateInfo shader_stages[] = {vert_shader_stage_info, frag_shader_stage_info};
 
-	auto attribute_descriptions = Vertex::get_attribute_descriptions();
-	auto binding_description = Vertex::get_binding_description();
+	auto attribute_descriptions = SkyboxVertex::get_attribute_descriptions();
+	auto binding_description = SkyboxVertex::get_binding_description();
 
 	vk::PipelineVertexInputStateCreateInfo vertex_input_info(
 		vk::PipelineVertexInputStateCreateFlags(),
@@ -110,11 +111,12 @@ ScrapEngine::Render::SkyboxVulkanGraphicsPipeline::SkyboxVulkanGraphicsPipeline(
 		&(*descriptor_set_layout)
 	);
 
-	if (VulkanDevice::get_instance()->get_logical_device()->createPipelineLayout(
-			&pipeline_layout_info, nullptr, &pipeline_layout_)
-		!= vk::Result::eSuccess)
+	const vk::Result result_layout = VulkanDevice::get_instance()->get_logical_device()->createPipelineLayout(
+		&pipeline_layout_info, nullptr, &pipeline_layout_);
+
+	if (result_layout != vk::Result::eSuccess)
 	{
-		throw std::runtime_error("SkyboxVulkanGraphicsPipeline: Failed to create pipeline layout!");
+		Debug::DebugLog::fatal_error(result_layout, "SkyboxVulkanGraphicsPipeline: Failed to create pipeline layout!");
 	}
 
 	vk::GraphicsPipelineCreateInfo pipeline_info(
@@ -135,10 +137,11 @@ ScrapEngine::Render::SkyboxVulkanGraphicsPipeline::SkyboxVulkanGraphicsPipeline(
 		0
 	);
 
-	if (VulkanDevice::get_instance()->get_logical_device()->createGraphicsPipelines(nullptr, 1, &pipeline_info, nullptr,
-	                                                                                &graphics_pipeline_)
-		!= vk::Result::eSuccess)
+	const vk::Result result = VulkanDevice::get_instance()->get_logical_device()->createGraphicsPipelines(nullptr, 1, &pipeline_info, nullptr,
+		&graphics_pipeline_);
+	
+	if (result != vk::Result::eSuccess)
 	{
-		throw std::runtime_error("SkyboxVulkanGraphicsPipeline: Failed to create graphics pipeline!");
+		Debug::DebugLog::fatal_error(result, "SkyboxVulkanGraphicsPipeline: Failed to create graphics pipeline!");
 	}
 }

@@ -7,6 +7,7 @@ Music::Music(ScrapEngine::Core::ComponentsManager* input_component_manager)
 	set_should_update(false);
 
 	//Load audio 3D, example code
+	//You can see Coin.cpp for this (it has a 3D sound)
 	/*audio_ = input_ComponentManager->create_3d_sound("../assets/sounds/mono_test_shot.wav");
 	audio_->set_component_location(ScrapEngine::Core::SVector3(0, 0, 0));
 	audio_->set_source_gain(100);

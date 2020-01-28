@@ -7,7 +7,7 @@ ScrapEngine::Render::Mesh::Mesh(const std::vector<Vertex>& input_mesh_vertices,
 {
 }
 
-const std::vector<ScrapEngine::Vertex>* ScrapEngine::Render::Mesh::get_vertices() const
+const std::vector<ScrapEngine::Render::Vertex>* ScrapEngine::Render::Mesh::get_vertices() const
 {
 	return &vertices_;
 }

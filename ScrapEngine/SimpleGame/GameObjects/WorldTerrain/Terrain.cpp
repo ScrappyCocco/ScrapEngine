@@ -24,13 +24,11 @@ Terrain::Terrain(ScrapEngine::Core::ComponentsManager* input_component_manager,
 	}
 
 	//Mesh
-	ScrapEngine::Core::MeshComponent* mesh = input_component_manager->create_new_mesh_component(
-		"../assets/shader/compiled_shaders/shader_base.vert.spv",
-		"../assets/shader/compiled_shaders/shader_base.frag.spv",
-		"../assets/models/cube.obj",
+	mesh_ = input_component_manager->create_new_mesh_component(
+		"../assets/models/terrain_cube.obj",
 		{color_texture}
 	);
-	add_component(mesh);
+	add_component(mesh_);
 
 	//Collider
 	ScrapEngine::Core::RigidBodyComponent* box_collider = input_component_manager->create_box_rigidbody_component(
@@ -43,5 +41,18 @@ Terrain::Terrain(ScrapEngine::Core::ComponentsManager* input_component_manager,
 
 	//Disable update()
 	set_should_update(false);
-	mesh->set_is_static(true);
+	mesh_->set_is_static(true);
+
+	//By default disable terrain shadows to save resources
+	disable_shadows();
+}
+
+void Terrain::disable_shadows() const
+{
+	mesh_->set_cast_shadows(false);
+}
+
+void Terrain::enable_shadows() const
+{
+	mesh_->set_cast_shadows(true);
 }

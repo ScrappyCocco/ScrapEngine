@@ -1,8 +1,8 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <Engine/Rendering/Texture/Texture/StandardTexture/StandardTexture.h>
-#include <stdexcept>
 #include <Engine/Rendering/Buffer/StagingBuffer/ImageStagingBuffer/ImageStagingBuffer.h>
 #include <Engine/Rendering/Memory/VulkanMemoryAllocator.h>
+#include <Engine/Debug/DebugLog.h>
 
 ScrapEngine::Render::StandardTexture::StandardTexture(const std::string& file_path)
 {
@@ -13,7 +13,7 @@ ScrapEngine::Render::StandardTexture::StandardTexture(const std::string& file_pa
 
 	if (!pixels)
 	{
-		throw std::runtime_error("TextureImage: Failed to load texture image! (pixels not valid) - " + file_path);
+		Debug::DebugLog::fatal_error(vk::Result(-13), "TextureImage: Failed to load texture image! (pixels not valid) - " + file_path);
 	}
 
 	const std::unique_ptr<BaseStagingBuffer> staginf_buffer_ref =

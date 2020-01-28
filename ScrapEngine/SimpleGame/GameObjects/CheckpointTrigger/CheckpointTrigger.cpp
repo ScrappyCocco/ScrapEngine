@@ -23,8 +23,6 @@ CheckpointTrigger::CheckpointTrigger(ScrapEngine::Core::LogicManagerView* logic_
 
 	//Create Mesh
 	ScrapEngine::Core::MeshComponent* mesh = logic_view->get_components_manager()->create_new_mesh_component(
-		"../assets/shader/compiled_shaders/shader_base.vert.spv",
-		"../assets/shader/compiled_shaders/shader_base.frag.spv",
 		"../assets/models/SimpleCheckpoint.obj",
 		{
 			"../assets/textures/SimpleDarkGreyTexture.png",

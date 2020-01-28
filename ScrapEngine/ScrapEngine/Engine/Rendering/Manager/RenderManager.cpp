@@ -12,6 +12,7 @@
 #include <Engine/Rendering/RenderPass/StandardRenderPass/StandardRenderPass.h>
 #include <Engine/Rendering/Buffer/CommandBuffer/StandardCommandBuffer/StandardCommandBuffer.h>
 #include <Engine/Rendering/Buffer/CommandBuffer/GuiCommandBuffer/GuiCommandBuffer.h>
+#include <Engine/Rendering/Buffer/FrameBuffer/StandardFrameBuffer/StandardFrameBuffer.h>
 
 void ScrapEngine::Render::RenderManager::ParallelCommandBufferCreation::ExecuteRange(enki::TaskSetPartition range,
                                                                                      uint32_t threadnum)
@@ -28,11 +29,12 @@ void ScrapEngine::Render::RenderManager::ParallelCommandBufferCreation::ExecuteR
 		}
 		else if (result == vk::Result::eTimeout)
 		{
-			throw std::runtime_error("[ParallelCommandBufferCreation] Fence timeout");
+			Debug::DebugLog::fatal_error(result, "[ParallelCommandBufferCreation] Fence timeout");
 		}
 		else
 		{
-			throw std::runtime_error("[ParallelCommandBufferCreation] An error occurred while waiting a fence...");
+			Debug::DebugLog::fatal_error(
+				result, "[ParallelCommandBufferCreation] An error occurred while waiting a fence...");
 		}
 	}
 	owner->create_command_buffer(flip_flop);
@@ -53,11 +55,12 @@ void ScrapEngine::Render::RenderManager::ParallelGuiCommandBufferCreation::Execu
 		}
 		else if (result == vk::Result::eTimeout)
 		{
-			throw std::runtime_error("[ParallelGuiCommandBufferCreation] Fence timeout");
+			Debug::DebugLog::fatal_error(result, "[ParallelGuiCommandBufferCreation] Fence timeout");
 		}
 		else
 		{
-			throw std::runtime_error("[ParallelGuiCommandBufferCreation] An error occurred while waiting a fence...");
+			Debug::DebugLog::fatal_error(
+				result, "[ParallelGuiCommandBufferCreation] An error occurred while waiting a fence...");
 		}
 	}
 	owner->rebuild_gui_command_buffer();
@@ -133,6 +136,8 @@ void ScrapEngine::Render::RenderManager::cleanup_swap_chain()
 	delete gui_render_pass_;
 	delete vulkan_render_image_view_;
 	delete vulkan_render_swap_chain_;
+	//Delete shadowmapping stuff
+	delete shadowmapping_;
 	Debug::DebugLog::print_to_console_log("---cleanupSwapChain() completed---");
 }
 
@@ -155,6 +160,11 @@ void ScrapEngine::Render::RenderManager::delete_command_buffers() const
 ScrapEngine::Render::GameWindow* ScrapEngine::Render::RenderManager::get_game_window() const
 {
 	return game_window_;
+}
+
+ScrapEngine::Render::StandardShadowmapping* ScrapEngine::Render::RenderManager::get_shadowmapping_manager() const
+{
+	return shadowmapping_;
 }
 
 ScrapEngine::Render::Camera* ScrapEngine::Render::RenderManager::get_render_camera() const
@@ -214,10 +224,8 @@ void ScrapEngine::Render::RenderManager::initialize_vulkan(const game_base_info*
 	vulkan_rendering_pass->init(vulkan_render_swap_chain_->get_swap_chain_image_format(),
 	                            vulkan_render_device_->get_msaa_samples());
 	//Gui
-	GuiRenderPass* gui_render_pass = new GuiRenderPass();
-	gui_render_pass->init(vulkan_render_swap_chain_->get_swap_chain_image_format(),
-	                      vulkan_render_device_->get_msaa_samples());
-	gui_render_pass_ = gui_render_pass;
+	gui_render_pass_ = new GuiRenderPass(vulkan_render_swap_chain_->get_swap_chain_image_format(),
+	                                     vulkan_render_device_->get_msaa_samples());
 	Debug::DebugLog::print_to_console_log("VulkanRenderPass created");
 	//Create command pools
 	//Main command pool used to generate resources
@@ -234,13 +242,17 @@ void ScrapEngine::Render::RenderManager::initialize_vulkan(const game_base_info*
 	vulkan_render_depth_ = new VulkanDepthResources(&vulkan_render_swap_chain_->get_swap_chain_extent(),
 	                                                vulkan_render_device_->get_msaa_samples());
 	Debug::DebugLog::print_to_console_log("VulkanDepthResources created");
-	vulkan_render_frame_buffer_ = new VulkanFrameBuffer(vulkan_render_image_view_,
-	                                                    &vulkan_render_swap_chain_->get_swap_chain_extent(),
-	                                                    vulkan_render_depth_->get_depth_image_view(),
-	                                                    vulkan_render_color_->get_color_image_view());
+	vulkan_render_frame_buffer_ = new StandardFrameBuffer(vulkan_render_image_view_,
+	                                                      &vulkan_render_swap_chain_->get_swap_chain_extent(),
+	                                                      vulkan_render_depth_->get_depth_image_view(),
+	                                                      vulkan_render_color_->get_color_image_view());
 	Debug::DebugLog::print_to_console_log("VulkanFrameBuffer created");
 	create_camera();
 	Debug::DebugLog::print_to_console_log("User View Camera created");
+	//Shadowmapping
+	Debug::DebugLog::print_to_console_log("Creating StandardShadowmapping...");
+	shadowmapping_ = new StandardShadowmapping(vulkan_render_swap_chain_);
+	Debug::DebugLog::print_to_console_log("StandardShadowmapping initialized!");
 	//Gui render
 	Debug::DebugLog::print_to_console_log("Creating gui render...");
 	initialize_gui(static_cast<float>(received_base_game_info->window_width),
@@ -293,8 +305,7 @@ void ScrapEngine::Render::RenderManager::initialize_command_buffers()
 		command_buffers_[i].command_pool = new StandardCommandPool();
 		command_buffers_[i].command_pool->init(vulkan_render_device_->get_cached_queue_family_indices());
 		//Command buffer
-		const int16_t cb_size = static_cast<int16_t>(vulkan_render_frame_buffer_
-		                                             ->get_swap_chain_framebuffers_vector()->size());
+		const int16_t cb_size = static_cast<int16_t>(vulkan_render_frame_buffer_->get_framebuffers_vector_size());
 		command_buffers_[i].command_buffer = new StandardCommandBuffer(command_buffers_[i].command_pool, cb_size);
 		//Add a task
 		command_buffers_tasks_.push_back(new ParallelCommandBufferCreation());
@@ -344,12 +355,14 @@ void ScrapEngine::Render::RenderManager::rebuild_gui_command_buffer(const bool f
 	{
 		image_index_to_use = last_image_index_;
 	}
+	gui_command_buffer_->begin_command_buffer(vk::CommandBufferUsageFlagBits::eOneTimeSubmit);
 	gui_command_buffer_->init_command_buffer(vulkan_render_frame_buffer_,
 	                                         &vulkan_render_swap_chain_->get_swap_chain_extent(),
 	                                         image_index_to_use);
 	//Load ui
 	gui_command_buffer_->load_ui(gui_render_);
 	//close
+	gui_command_buffer_->end_command_buffer_render_pass();
 	gui_command_buffer_->close_command_buffer();
 }
 
@@ -403,24 +416,36 @@ void ScrapEngine::Render::RenderManager::create_command_buffer(const bool flip_f
 {
 	//Init
 	const short int index = flip_flop ? 1 : 0;
-	//Reset the whole pool
+	//Reset the whole pool and begin the command buffer
 	command_buffers_[index].command_pool->reset_command_pool();
-	//Re-create command buffer
-	command_buffers_[index].command_buffer->init_command_buffer(&vulkan_render_swap_chain_->get_swap_chain_extent(),
-	                                                            vulkan_render_frame_buffer_);
 	//Set camera
 	command_buffers_[index].command_buffer->init_current_camera(render_camera_);
+	command_buffers_[index].command_buffer->begin_command_buffer();
+	//Prepare shadow mapping
+	command_buffers_[index].command_buffer->init_shadow_map(shadowmapping_);
+	//Draw meshes for offscreen shadowmapping
+	for (auto mesh : loaded_models_)
+	{
+		command_buffers_[index].command_buffer->load_mesh_shadow_map(shadowmapping_, mesh);
+	}
+	//End the shadowmapping render pass
+	command_buffers_[index].command_buffer->end_command_buffer_render_pass();
+	//Re-init the standard command buffer render pass
+	command_buffers_[index].command_buffer->init_command_buffer(&vulkan_render_swap_chain_->get_swap_chain_extent(),
+	                                                            vulkan_render_frame_buffer_);
 	//Skybox
 	if (skybox_)
 	{
 		command_buffers_[index].command_buffer->load_skybox(skybox_);
 	}
-	//3d models
+	//3D models
 	//Now render the meshes
 	for (auto mesh : loaded_models_)
 	{
 		command_buffers_[index].command_buffer->load_mesh(mesh);
 	}
+	//End the main render pass
+	command_buffers_[index].command_buffer->end_command_buffer_render_pass();
 	//close
 	command_buffers_[index].command_buffer->close_command_buffer();
 }
@@ -463,6 +488,8 @@ ScrapEngine::Render::VulkanMeshInstance* ScrapEngine::Render::RenderManager::loa
 
 	//Wait and block if necessary until the list loaded_models_ is editable
 	wait_pre_frame_tasks();
+	//Write descriptor to mesh
+	new_mesh->init_shadowmapping_resources(shadowmapping_);
 	//Push mesh into vector and return it
 	loaded_models_.push_back(new_mesh);
 	return new_mesh;
@@ -471,8 +498,8 @@ ScrapEngine::Render::VulkanMeshInstance* ScrapEngine::Render::RenderManager::loa
 ScrapEngine::Render::VulkanMeshInstance* ScrapEngine::Render::RenderManager::load_mesh(
 	const std::string& model_path, const std::vector<std::string>& textures_path)
 {
-	return load_mesh("../assets/shader/compiled_shaders/shader_base.vert.spv",
-	                 "../assets/shader/compiled_shaders/shader_base.frag.spv", model_path, textures_path);
+	return load_mesh("../assets/shader/compiled_shaders/shader_base_shadow.vert.spv",
+	                 "../assets/shader/compiled_shaders/shader_base_shadow.frag.spv", model_path, textures_path);
 }
 
 ScrapEngine::Render::VulkanSkyboxInstance* ScrapEngine::Render::RenderManager::load_skybox(
@@ -482,7 +509,7 @@ ScrapEngine::Render::VulkanSkyboxInstance* ScrapEngine::Render::RenderManager::l
 
 	skybox_ = new VulkanSkyboxInstance("../assets/shader/compiled_shaders/skybox.vert.spv",
 	                                   "../assets/shader/compiled_shaders/skybox.frag.spv",
-	                                   "../assets/models/cube.obj",
+	                                   "../assets/models/skybox_cube.obj",
 	                                   files_path, vulkan_render_swap_chain_);
 	return skybox_;
 }
@@ -498,11 +525,11 @@ void ScrapEngine::Render::RenderManager::draw_loading_frame()
 	if (result_ == vk::Result::eErrorOutOfDateKHR)
 	{
 		//recreateSwapChain();
-		throw std::runtime_error("recreateSwapChain() not ready!");
+		Debug::DebugLog::fatal_error(vk::Result(-13), "recreateSwapChain() not ready!");
 	}
 	else if (result_ != vk::Result::eSuccess && result_ != vk::Result::eSuboptimalKHR)
 	{
-		throw std::runtime_error("RenderManager: Failed to acquire swap chain image!");
+		Debug::DebugLog::fatal_error(result_, "RenderManager: Failed to acquire swap chain image!");
 	}
 
 	vk::SubmitInfo submit_info;
@@ -532,8 +559,7 @@ void ScrapEngine::Render::RenderManager::draw_loading_frame()
 	                                                      (*in_flight_fences_ref_)[current_frame_]);
 	if (result_ != vk::Result::eSuccess)
 	{
-		std::cout << "RESULT TYPE:" << result_ << std::endl;
-		throw std::runtime_error("RenderManager: Failed to submit draw command buffer!");
+		Debug::DebugLog::fatal_error(result_, "RenderManager: Failed to submit draw command buffer!");
 	}
 
 	vk::PresentInfoKHR present_info;
@@ -556,6 +582,7 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 	wait_cleanup_task();
 	//Check if i can build another command buffer in background
 	check_start_new_thread();
+	//-----------------
 	//Prepare draw frame
 	VulkanDevice::get_instance()->get_logical_device()->waitForFences(1, &(*in_flight_fences_ref_)[current_frame_],
 	                                                                  true,
@@ -570,27 +597,16 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 	if (result_ == vk::Result::eErrorOutOfDateKHR)
 	{
 		//recreateSwapChain();
-		throw std::runtime_error("recreateSwapChain() not ready!");
+		Debug::DebugLog::fatal_error(vk::Result(-13), "recreateSwapChain() not ready!");
 	}
 	else if (result_ != vk::Result::eSuccess && result_ != vk::Result::eSuboptimalKHR)
 	{
-		throw std::runtime_error("RenderManager: Failed to acquire swap chain image!");
+		Debug::DebugLog::fatal_error(result_, "RenderManager: Failed to acquire swap chain image!");
 	}
+	//-----------------
 	//Update objects and uniform buffers
-	//Camera
-	render_camera_->execute_camera_update();
-	//Models
-	for (auto& loaded_model : loaded_models_)
-	{
-		loaded_model->update_uniform_buffer(image_index_, render_camera_);
-	}
-	//Skybox
-	if (skybox_)
-	{
-		skybox_->update_uniform_buffer(image_index_, render_camera_);
-	}
-	//Cancel dirty matrix
-	render_camera_->cancel_dirty_matrix();
+	update_objects_and_buffers();
+	//-----------------
 	//Submit the command buffer and the frame
 	vk::SubmitInfo submit_info;
 
@@ -619,14 +635,13 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 	submit_info.setSignalSemaphoreCount(1);
 	submit_info.setPSignalSemaphores(signal_semaphores);
 	VulkanDevice::get_instance()->get_logical_device()->resetFences(1, &(*in_flight_fences_ref_)[current_frame_]);
-
+	//-----------------
 	//Queue submit
 	result_ = vulkan_graphics_queue_->get_queue()->submit(1, &submit_info,
 	                                                      (*in_flight_fences_ref_)[current_frame_]);
 	if (result_ != vk::Result::eSuccess)
 	{
-		std::cout << "RESULT TYPE:" << result_ << std::endl;
-		throw std::runtime_error("RenderManager: Failed to submit draw command buffer!");
+		Debug::DebugLog::fatal_error(result_, "RenderManager: Failed to submit draw command buffer!");
 	}
 
 	vk::PresentInfoKHR present_info;
@@ -646,13 +661,13 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 	{
 		//framebufferResized = false;
 		//recreateSwapChain();
-		throw std::runtime_error("recreateSwapChain() not ready!");
+		Debug::DebugLog::fatal_error(vk::Result(-13), "recreateSwapChain() not ready!");
 	}
 	else if (result_ != vk::Result::eSuccess)
 	{
-		throw std::runtime_error("RenderManager: Failed to present swap chain image!");
+		Debug::DebugLog::fatal_error(result_, "RenderManager: Failed to present swap chain image!");
 	}
-
+	//-----------------
 	//Check if if the other command buffer is ready
 	//If yes i can swap the command buffers
 	if (swap_command_buffers())
@@ -677,6 +692,27 @@ void ScrapEngine::Render::RenderManager::recreate_swap_chain()
 	VulkanDevice::get_instance()->get_logical_device()->waitIdle();
 	//TODO https://vulkan-tutorial.com/Drawing_a_triangle/Swap_chain_recreation
 	//This will probably be done in the future
+}
+
+void ScrapEngine::Render::RenderManager::update_objects_and_buffers()
+{
+	//Camera
+	render_camera_->execute_camera_update();
+	//Save current light pos
+	const glm::vec3 light_pos = shadowmapping_->get_light_pos();
+	//Models Shadowmapping update and standard update
+	for (auto& loaded_model : loaded_models_)
+	{
+		loaded_model->update_shadowmap_uniform_buffer(image_index_, shadowmapping_);
+		loaded_model->update_uniform_buffer(image_index_, render_camera_, light_pos);
+	}
+	//Skybox
+	if (skybox_)
+	{
+		skybox_->update_uniform_buffer(image_index_, render_camera_);
+	}
+	//Cancel dirty matrix
+	render_camera_->cancel_dirty_matrix();
 }
 
 void ScrapEngine::Render::RenderManager::create_camera()

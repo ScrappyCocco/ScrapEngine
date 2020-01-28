@@ -1,6 +1,7 @@
 #include <Engine/Rendering/Buffer/CommandBuffer/GuiCommandBuffer/GuiCommandBuffer.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
 #include <imgui.h>
+#include <Engine/Debug/DebugLog.h>
 
 ScrapEngine::Render::GuiCommandBuffer::GuiCommandBuffer(BaseRenderPass* render_pass, VulkanCommandPool* command_pool)
 	: render_pass_ref_(render_pass)
@@ -18,30 +19,25 @@ ScrapEngine::Render::GuiCommandBuffer::GuiCommandBuffer(BaseRenderPass* render_p
 		static_cast<uint32_t>(1)
 	);
 
-	if (VulkanDevice::get_instance()->get_logical_device()->allocateCommandBuffers(&alloc_info, command_buffers_.data())
-		!= vk::Result::eSuccess)
+	const vk::Result result = VulkanDevice::get_instance()->get_logical_device()->allocateCommandBuffers(
+		&alloc_info, command_buffers_.data());
+
+	if (result != vk::Result::eSuccess)
 	{
-		throw std::runtime_error("[VulkanCommandBuffer] Failed to allocate command buffers!");
+		Debug::DebugLog::fatal_error(result, "[GuiCommandBuffer] Failed to allocate command buffers!");
 	}
 }
 
 void ScrapEngine::Render::GuiCommandBuffer::init_command_buffer(
-	VulkanFrameBuffer* swap_chain_frame_buffer,
+	BaseFrameBuffer* swap_chain_frame_buffer,
 	vk::Extent2D* input_swap_chain_extent_ref,
 	const uint32_t current_image)
 {
 	const std::vector<vk::Framebuffer>* swap_chain_framebuffers = swap_chain_frame_buffer->
-		get_swap_chain_framebuffers_vector();
+		get_framebuffers_vector();
 
 	for (auto& command_buffer : command_buffers_)
 	{
-		vk::CommandBufferBeginInfo begin_info(vk::CommandBufferUsageFlagBits::eOneTimeSubmit);
-
-		if (command_buffer.begin(&begin_info) != vk::Result::eSuccess)
-		{
-			throw std::runtime_error("[VulkanCommandBuffer] Failed to begin recording command buffer!");
-		}
-
 		render_pass_info_ = vk::RenderPassBeginInfo(
 			*render_pass_ref_,
 			//So here i read the frame buffer corresponding to the next image frame

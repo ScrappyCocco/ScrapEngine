@@ -2,6 +2,7 @@
 #include <Engine/Rendering/Shader/ShaderManager.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
 #include <imgui.h>
+#include <Engine/Debug/DebugLog.h>
 
 ScrapEngine::Render::GuiVulkanGraphicsPipeline::GuiVulkanGraphicsPipeline(const char* vertex_shader,
                                                                           const char* fragment_shader,
@@ -22,11 +23,12 @@ ScrapEngine::Render::GuiVulkanGraphicsPipeline::GuiVulkanGraphicsPipeline(const 
 	pipeline_layout_create_info.setPushConstantRangeCount(1);
 	pipeline_layout_create_info.setPPushConstantRanges(&push_constant_range);
 
-	if (VulkanDevice::get_instance()->get_logical_device()->createPipelineLayout(
-			&pipeline_layout_create_info, nullptr, &pipeline_layout_)
-		!= vk::Result::eSuccess)
+	const vk::Result result_layout = VulkanDevice::get_instance()->get_logical_device()->createPipelineLayout(
+		&pipeline_layout_create_info, nullptr, &pipeline_layout_);
+	
+	if (result_layout != vk::Result::eSuccess)
 	{
-		throw std::runtime_error("GuiVulkanGraphicsPipeline: Failed to create pipeline layout!");
+		Debug::DebugLog::fatal_error(result_layout, "GuiVulkanGraphicsPipeline: Failed to create pipeline layout!");
 	}
 
 	// Setup graphics pipeline for UI rendering
@@ -144,11 +146,12 @@ ScrapEngine::Render::GuiVulkanGraphicsPipeline::GuiVulkanGraphicsPipeline(const 
 		0
 	);
 
-	if (VulkanDevice::get_instance()->get_logical_device()->createGraphicsPipelines(
-			nullptr, 1, &pipeline_info, nullptr,
-			&graphics_pipeline_)
-		!= vk::Result::eSuccess)
+	const vk::Result result = VulkanDevice::get_instance()->get_logical_device()->createGraphicsPipelines(
+		nullptr, 1, &pipeline_info, nullptr,
+		&graphics_pipeline_);
+
+	if (result != vk::Result::eSuccess)
 	{
-		throw std::runtime_error("GuiVulkanGraphicsPipeline: Failed to create graphics pipeline!");
+		Debug::DebugLog::fatal_error(result, "GuiVulkanGraphicsPipeline: Failed to create graphics pipeline!");
 	}
 }

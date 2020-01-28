@@ -5,6 +5,8 @@
 
 class Terrain : public ScrapEngine::Core::SGameObject
 {
+private:
+	ScrapEngine::Core::MeshComponent* mesh_ = nullptr;
 public:
 	enum class color
 	{
@@ -18,4 +20,7 @@ public:
 	        const ScrapEngine::Core::SVector3& scale,
 	        color c = color::white);
 	~Terrain() = default;
+
+	void disable_shadows() const;
+	void enable_shadows() const;
 };

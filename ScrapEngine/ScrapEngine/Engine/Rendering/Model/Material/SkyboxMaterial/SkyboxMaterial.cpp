@@ -4,6 +4,12 @@
 #include <Engine/Rendering/Texture/Texture/SkyboxTexture/SkyboxTexture.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
 #include <Engine/Rendering/Descriptor/DescriptorPool/StandardDescriptorPool/StandardDescriptorPool.h>
+#include <Engine/Rendering/Descriptor/DescriptorSet/SkyboxDescriptorSet/SkyboxDescriptorSet.h>
+
+ScrapEngine::Render::SkyboxMaterial::SkyboxMaterial()
+{
+	vulkan_render_descriptor_set_ = new SkyboxDescriptorSet();
+}
 
 ScrapEngine::Render::SkyboxMaterial::~SkyboxMaterial()
 {
@@ -45,12 +51,15 @@ void ScrapEngine::Render::SkyboxMaterial::create_skybox_texture(const std::array
 }
 
 void ScrapEngine::Render::SkyboxMaterial::create_descriptor_sets(VulkanSwapChain* swap_chain,
-                                                                 UniformBuffer* uniform_buffer)
+                                                                 SkyboxUniformBuffer* uniform_buffer)
 {
-	vulkan_render_descriptor_pool_ = new StandardDescriptorPool(swap_chain->get_swap_chain_images_vector());
-	vulkan_render_descriptor_set_->create_descriptor_sets(vulkan_render_descriptor_pool_->get_descriptor_pool(),
-	                                                      swap_chain->get_swap_chain_images_vector(),
-	                                                      uniform_buffer->get_uniform_buffers(),
-	                                                      vulkan_texture_image_view_->get_texture_image_view(),
-	                                                      vulkan_texture_sampler_->get_texture_sampler());
+	const size_t size = swap_chain->get_swap_chain_images_vector()->size();
+	vulkan_render_descriptor_pool_ = new StandardDescriptorPool(size);
+	SkyboxDescriptorSet* skybox_descriptor_set = static_cast<SkyboxDescriptorSet*>(vulkan_render_descriptor_set_);
+	skybox_descriptor_set->create_descriptor_sets(vulkan_render_descriptor_pool_->get_descriptor_pool(),
+	                                              size,
+	                                              uniform_buffer->get_uniform_buffers(),
+	                                              vulkan_texture_image_view_->get_texture_image_view(),
+	                                              vulkan_texture_sampler_->get_texture_sampler(),
+	                                              sizeof(SkyboxUniformBufferObject));
 }

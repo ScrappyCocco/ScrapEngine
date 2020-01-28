@@ -8,12 +8,11 @@
 #include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
 #include <Engine/Rendering/SwapChain/VulkanImageView.h>
 #include <Engine/Rendering/RenderPass/BaseRenderPass.h>
-#include <Engine/Rendering/Buffer/FrameBuffer/VulkanFrameBuffer.h>
+#include <Engine/Rendering/Buffer/FrameBuffer/BaseFrameBuffer.h>
 #include <Engine/Rendering/CommandPool/VulkanCommandPool.h>
 #include <Engine/Rendering/Buffer/CommandBuffer/GuiCommandBuffer/GuiCommandBuffer.h>
 #include <Engine/Rendering/Buffer/CommandBuffer/StandardCommandBuffer/StandardCommandBuffer.h>
 #include <Engine/Rendering/Semaphores/VulkanSemaphoresManager.h>
-#include <Engine/Rendering/Buffer/UniformBuffer/UniformBuffer.h>
 #include <Engine/Rendering/DepthResources/VulkanDepthResources.h>
 #include <Engine/Rendering/Texture/ColorResources/VulkanColorResources.h>
 #include <Engine/Rendering/Model/MeshInstance/VulkanMeshInstance.h>
@@ -21,6 +20,7 @@
 #include <Engine/Rendering/Gui/VulkanImGui.h>
 #include <TaskScheduler.h>
 #include <list>
+#include <Engine/Rendering/Shadowmapping/Standard/StandardShadowmapping.h>
 
 namespace ScrapEngine
 {
@@ -34,7 +34,7 @@ namespace ScrapEngine
 			VulkanDevice* vulkan_render_device_ = nullptr;
 			VulkanSwapChain* vulkan_render_swap_chain_ = nullptr;
 			VulkanImageView* vulkan_render_image_view_ = nullptr;
-			VulkanFrameBuffer* vulkan_render_frame_buffer_ = nullptr;
+			BaseFrameBuffer* vulkan_render_frame_buffer_ = nullptr;
 			
 			VulkanCommandPool* singleton_command_pool_ = nullptr;
 			VulkanCommandPool* gui_buffer_command_pool_ = nullptr;
@@ -52,6 +52,8 @@ namespace ScrapEngine
 			Camera* default_camera_ = nullptr;
 
 			VulkanSkyboxInstance* skybox_ = nullptr;
+
+			StandardShadowmapping* shadowmapping_ = nullptr;
 
 			std::list<VulkanMeshInstance*> loaded_models_;
 
@@ -159,6 +161,8 @@ namespace ScrapEngine
 			void cleanup_swap_chain();
 			void recreate_swap_chain();
 
+			void update_objects_and_buffers();
+
 			void create_camera();
 		public:
 			//Rebuild the command buffer
@@ -188,6 +192,9 @@ namespace ScrapEngine
 
 			//User-Window stuff
 			GameWindow* get_game_window() const;
+
+			//Shadow manager
+			StandardShadowmapping* get_shadowmapping_manager() const;
 
 			//View-Camera stuff
 			Camera* get_render_camera() const;

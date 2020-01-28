@@ -44,20 +44,24 @@ WorldTerrainCreator::WorldTerrainCreator(ScrapEngine::Core::ComponentsManager* i
 		ScrapEngine::Core::SVector3(5, 0.5f, 25));
 
 	//Wall(s)
-	new Terrain(input_component_manager,
+	//Enable shadows for walls because they are visible
+	Terrain* wall1 = new Terrain(input_component_manager,
 		ScrapEngine::Core::SVector3(435, -10, -400),
 		ScrapEngine::Core::SVector3(2, 1.5f, 0.5f),
 		Terrain::color::green);
+	wall1->enable_shadows();
 
-	new Terrain(input_component_manager,
+	Terrain* wall2 = new Terrain(input_component_manager,
 		ScrapEngine::Core::SVector3(465, -10, -350),
 		ScrapEngine::Core::SVector3(2, 1.5f, 0.5f),
 		Terrain::color::green);
+	wall2->enable_shadows();
 
-	new Terrain(input_component_manager,
+	Terrain* wall3 = new Terrain(input_component_manager,
 		ScrapEngine::Core::SVector3(450, -10, -300),
 		ScrapEngine::Core::SVector3(2, 1.5f, 0.5f),
 		Terrain::color::green);
+	wall3->enable_shadows();
 
 	//Left terrain
 	new Terrain(input_component_manager,

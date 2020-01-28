@@ -1,6 +1,7 @@
 #define VMA_IMPLEMENTATION
 
 #include <Engine/Rendering/Memory/VulkanMemoryAllocator.h>
+#include <Engine/Debug/DebugLog.h>
 
 //Init static instance reference
 
@@ -48,7 +49,7 @@ void ScrapEngine::Render::VulkanMemoryAllocator::map_buffer_allocation(VmaAlloca
 
 	if (res != VK_SUCCESS)
 	{
-		throw std::runtime_error("[VulkanMemoryAllocator][map_buffer_allocation] Unable to map buffer memory!");
+		Debug::DebugLog::fatal_error(res, "[VulkanMemoryAllocator][map_buffer_allocation] Unable to map buffer memory!");
 	}
 }
 
@@ -71,7 +72,7 @@ void ScrapEngine::Render::VulkanMemoryAllocator::bind_buffer(vk::Buffer& buffer,
 
 	if (res != VK_SUCCESS)
 	{
-		throw std::runtime_error("[VulkanMemoryAllocator][bind_buffer] Unable to bind buffer memory!");
+		Debug::DebugLog::fatal_error(res, "[VulkanMemoryAllocator][bind_buffer] Unable to bind buffer memory!");
 	}
 }
 
@@ -87,7 +88,7 @@ void ScrapEngine::Render::VulkanMemoryAllocator::create_generic_buffer(const vk:
 
 	if (res != VK_SUCCESS)
 	{
-		throw std::runtime_error("[VulkanMemoryAllocator][create_generic_buffer] Unable to create buffer!");
+		Debug::DebugLog::fatal_error(res, "[VulkanMemoryAllocator][create_generic_buffer] Unable to create buffer!");
 	}
 
 	//Copy the allocated buffer to the c++ bindings
@@ -153,7 +154,7 @@ void ScrapEngine::Render::VulkanMemoryAllocator::create_generic_image(const vk::
 
 	if (res != VK_SUCCESS)
 	{
-		throw std::runtime_error("[VulkanMemoryAllocator][create_generic_image] Unable to create image!");
+		Debug::DebugLog::fatal_error(res, "[VulkanMemoryAllocator][create_generic_image] Unable to create image!");
 	}
 
 	//Copy the allocated buffer to the c++ bindings

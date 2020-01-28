@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Engine/Rendering/Buffer/CommandBuffer/BaseCommandBuffer.h>
-#include <Engine/Rendering/Buffer/FrameBuffer/VulkanFrameBuffer.h>
+#include <Engine/Rendering/Buffer/FrameBuffer/BaseFrameBuffer.h>
 #include <Engine/Rendering/Gui/VulkanImGui.h>
 #include <Engine/Rendering/RenderPass/BaseRenderPass.h>
 
@@ -19,7 +19,7 @@ namespace ScrapEngine
 
 			~GuiCommandBuffer() = default;
 
-			void init_command_buffer(VulkanFrameBuffer* swap_chain_frame_buffer,
+			void init_command_buffer(BaseFrameBuffer* swap_chain_frame_buffer,
 			                         vk::Extent2D* input_swap_chain_extent_ref,
 			                         uint32_t current_image);
 

@@ -1,11 +1,5 @@
 #include <Engine/Rendering/Model/Material/BasicMaterial.h>
-#include <Engine/Debug/DebugLog.h>
 #include <Engine/Rendering/Descriptor/DescriptorSet/StandardDescriptorSet/StandardDescriptorSet.h>
-
-ScrapEngine::Render::BasicMaterial::BasicMaterial()
-{
-	vulkan_render_descriptor_set_ = new StandardDescriptorSet();
-}
 
 ScrapEngine::Render::BasicMaterial::~BasicMaterial()
 {

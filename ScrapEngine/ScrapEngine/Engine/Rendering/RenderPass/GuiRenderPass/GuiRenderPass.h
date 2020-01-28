@@ -9,9 +9,7 @@ namespace ScrapEngine
 		class GuiRenderPass : public BaseRenderPass
 		{
 		public:
-			GuiRenderPass() = default;
-
-			void init(const vk::Format& swap_chain_image_format, vk::SampleCountFlagBits msaa_samples);
+			GuiRenderPass(const vk::Format& swap_chain_image_format, vk::SampleCountFlagBits msaa_samples);
 
 			~GuiRenderPass() = default;
 		};

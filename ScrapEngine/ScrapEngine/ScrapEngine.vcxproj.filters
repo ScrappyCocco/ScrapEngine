@@ -368,6 +368,39 @@
     <Filter Include="Engine\LogicCore\Components\CameraComponent">
       <UniqueIdentifier>{05cd57cc-9333-4299-a33e-b307a70313de}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Rendering\Shadowmapping">
+      <UniqueIdentifier>{a9e3a928-19c0-4135-9456-f5194d7b8eca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Shadowmapping\Standard">
+      <UniqueIdentifier>{471cc78a-3884-4e79-9f46-cdb9b9a3cc17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\RenderPass\ShadowmappingRenderPass">
+      <UniqueIdentifier>{12efe8a7-c3fd-4df4-a83d-51e48a98768c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Buffer\FrameBuffer\StandardFrameBuffer">
+      <UniqueIdentifier>{ea8c8e4a-7520-4bf5-a06a-3d357a8a6f7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Buffer\FrameBuffer\ShadowmappingFrameBuffer">
+      <UniqueIdentifier>{a16b2d6d-bd04-4837-8cea-e7248d9223f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Descriptor\DescriptorSet\ShadowmappingDescriptorSet">
+      <UniqueIdentifier>{9bc2b027-1f4c-404c-a5e6-0c687157f9c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Buffer\UniformBuffer\StandardUniformBuffer">
+      <UniqueIdentifier>{60dea6fb-4774-4917-a29d-47b17f670589}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Buffer\UniformBuffer\ShadowmappingUniformBuffer">
+      <UniqueIdentifier>{b520435e-8d9f-4dcc-a8f9-5467d1239d20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Pipeline\ShadowmappingPipeline">
+      <UniqueIdentifier>{a78993c2-a7ef-48d5-af92-df933d861da6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Buffer\UniformBuffer\SkyboxUniformBuffer">
+      <UniqueIdentifier>{dc99e110-70c2-4481-b9ff-4563535f0f47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Descriptor\DescriptorSet\SkyboxDescriptorSet">
+      <UniqueIdentifier>{48ee1541-7133-4923-8020-44dcb99c9178}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Manager\EngineManager.cpp">
@@ -448,17 +481,11 @@
     <ClCompile Include="Engine\LogicCore\Scene\SceneManager.cpp">
       <Filter>Engine\LogicCore\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Rendering\Buffer\FrameBuffer\VulkanFrameBuffer.cpp">
-      <Filter>Engine\Rendering\Buffer\FrameBuffer</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Rendering\Buffer\IndexBuffer\IndexBuffer.cpp">
       <Filter>Engine\Rendering\Buffer\IndexBuffer</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Rendering\Buffer\VertexBuffer\VertexBuffer.cpp">
       <Filter>Engine\Rendering\Buffer\VertexBuffer</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Rendering\Buffer\UniformBuffer\UniformBuffer.cpp">
-      <Filter>Engine\Rendering\Buffer\UniformBuffer</Filter>
     </ClCompile>
     <ClCompile Include="Engine\LogicCore\Math\Vector\SVector3.cpp">
       <Filter>Engine\LogicCore\Math\Vector</Filter>
@@ -721,6 +748,48 @@
     <ClCompile Include="Engine\Rendering\Texture\Texture\SkyboxTexture\SkyboxStagingTexture.cpp">
       <Filter>Engine\Rendering\Texture\Texture\SkyboxTexture</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Rendering\Shadowmapping\Standard\StandardShadowmapping.cpp">
+      <Filter>Engine\Rendering\Shadowmapping\Standard</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\RenderPass\ShadowmappingRenderPass\ShadowmappingRenderPass.cpp">
+      <Filter>Engine\Rendering\RenderPass\ShadowmappingRenderPass</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Buffer\FrameBuffer\BaseFrameBuffer.cpp">
+      <Filter>Engine\Rendering\Buffer\FrameBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Buffer\FrameBuffer\StandardFrameBuffer\StandardFrameBuffer.cpp">
+      <Filter>Engine\Rendering\Buffer\FrameBuffer\StandardFrameBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Buffer\FrameBuffer\ShadowmappingFrameBuffer\ShadowmappingFrameBuffer.cpp">
+      <Filter>Engine\Rendering\Buffer\FrameBuffer\ShadowmappingFrameBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Buffer\FrameBuffer\ShadowmappingFrameBuffer\ShadowmappingFrameBufferAttachment.cpp">
+      <Filter>Engine\Rendering\Buffer\FrameBuffer\ShadowmappingFrameBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Descriptor\DescriptorSet\ShadowmappingDescriptorSet\ShadowmappingDescriptorSet.cpp">
+      <Filter>Engine\Rendering\Descriptor\DescriptorSet\ShadowmappingDescriptorSet</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Buffer\UniformBuffer\BaseUniformBuffer.cpp">
+      <Filter>Engine\Rendering\Buffer\UniformBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Buffer\UniformBuffer\StandardUniformBuffer\StandardUniformBuffer.cpp">
+      <Filter>Engine\Rendering\Buffer\UniformBuffer\StandardUniformBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Buffer\UniformBuffer\ShadowmappingUniformBuffer\ShadowmappingUniformBuffer.cpp">
+      <Filter>Engine\Rendering\Buffer\UniformBuffer\ShadowmappingUniformBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Pipeline\ShadowmappingPipeline\ShadowmappingPipeline.cpp">
+      <Filter>Engine\Rendering\Pipeline\ShadowmappingPipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Buffer\UniformBuffer\SkyboxUniformBuffer\SkyboxUniformBuffer.cpp">
+      <Filter>Engine\Rendering\Buffer\UniformBuffer\SkyboxUniformBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Base\Vertex.cpp">
+      <Filter>Engine\Rendering\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Descriptor\DescriptorSet\SkyboxDescriptorSet\SkyboxDescriptorSet.cpp">
+      <Filter>Engine\Rendering\Descriptor\DescriptorSet\SkyboxDescriptorSet</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Manager\EngineManager.h">
@@ -816,17 +885,11 @@
     <ClInclude Include="Engine\Rendering\Base\Vertex.h">
       <Filter>Engine\Rendering\Base</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Rendering\Buffer\FrameBuffer\VulkanFrameBuffer.h">
-      <Filter>Engine\Rendering\Buffer\FrameBuffer</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Rendering\Buffer\IndexBuffer\IndexBuffer.h">
       <Filter>Engine\Rendering\Buffer\IndexBuffer</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Buffer\VertexBuffer\VertexBuffer.h">
       <Filter>Engine\Rendering\Buffer\VertexBuffer</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Rendering\Buffer\UniformBuffer\UniformBuffer.h">
-      <Filter>Engine\Rendering\Buffer\UniformBuffer</Filter>
     </ClInclude>
     <ClInclude Include="Engine\LogicCore\Math\Vector\SVector3.h">
       <Filter>Engine\LogicCore\Math\Vector</Filter>
@@ -1097,6 +1160,45 @@
     </ClInclude>
     <ClInclude Include="Engine\Rendering\Texture\Texture\SkyboxTexture\SkyboxStagingTexture.h">
       <Filter>Engine\Rendering\Texture\Texture\SkyboxTexture</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Shadowmapping\Standard\StandardShadowmapping.h">
+      <Filter>Engine\Rendering\Shadowmapping\Standard</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\RenderPass\ShadowmappingRenderPass\ShadowmappingRenderPass.h">
+      <Filter>Engine\Rendering\RenderPass\ShadowmappingRenderPass</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Buffer\FrameBuffer\BaseFrameBuffer.h">
+      <Filter>Engine\Rendering\Buffer\FrameBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Buffer\FrameBuffer\StandardFrameBuffer\StandardFrameBuffer.h">
+      <Filter>Engine\Rendering\Buffer\FrameBuffer\StandardFrameBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Buffer\FrameBuffer\ShadowmappingFrameBuffer\ShadowmappingFrameBuffer.h">
+      <Filter>Engine\Rendering\Buffer\FrameBuffer\ShadowmappingFrameBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Buffer\FrameBuffer\ShadowmappingFrameBuffer\ShadowmappingFrameBufferAttachment.h">
+      <Filter>Engine\Rendering\Buffer\FrameBuffer\ShadowmappingFrameBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Descriptor\DescriptorSet\ShadowmappingDescriptorSet\ShadowmappingDescriptorSet.h">
+      <Filter>Engine\Rendering\Descriptor\DescriptorSet\ShadowmappingDescriptorSet</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Buffer\UniformBuffer\BaseUniformBuffer.h">
+      <Filter>Engine\Rendering\Buffer\UniformBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Buffer\UniformBuffer\StandardUniformBuffer\StandardUniformBuffer.h">
+      <Filter>Engine\Rendering\Buffer\UniformBuffer\StandardUniformBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Buffer\UniformBuffer\ShadowmappingUniformBuffer\ShadowmappingUniformBuffer.h">
+      <Filter>Engine\Rendering\Buffer\UniformBuffer\ShadowmappingUniformBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Pipeline\ShadowmappingPipeline\ShadowmappingPipeline.h">
+      <Filter>Engine\Rendering\Pipeline\ShadowmappingPipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Buffer\UniformBuffer\SkyboxUniformBuffer\SkyboxUniformBuffer.h">
+      <Filter>Engine\Rendering\Buffer\UniformBuffer\SkyboxUniformBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Descriptor\DescriptorSet\SkyboxDescriptorSet\SkyboxDescriptorSet.h">
+      <Filter>Engine\Rendering\Descriptor\DescriptorSet\SkyboxDescriptorSet</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

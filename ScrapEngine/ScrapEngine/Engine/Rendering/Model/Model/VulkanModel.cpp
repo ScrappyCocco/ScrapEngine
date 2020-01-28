@@ -18,7 +18,7 @@ ScrapEngine::Render::VulkanModel::VulkanModel(const std::string& input_model_pat
 	// If the import failed, report it
 	if (!scene)
 	{
-		throw std::runtime_error(importer.GetErrorString());
+		Debug::DebugLog::fatal_error(vk::Result(-13), importer.GetErrorString());
 	}
 
 	const aiVector3D zero_3d(0.0f, 0.0f, 0.0f);
@@ -34,6 +34,9 @@ ScrapEngine::Render::VulkanModel::VulkanModel(const std::string& input_model_pat
 		Debug::DebugLog::print_to_console_log("[VulkanModel] Mesh " + std::to_string(k) + " - Loading vertices...");
 		for (unsigned int i = 0; i < scene->mMeshes[k]->mNumVertices; i++)
 		{
+			aiColor3D p_color(0.f, 0.f, 0.f);
+			scene->mMaterials[scene->mMeshes[k]->mMaterialIndex]->Get(AI_MATKEY_COLOR_DIFFUSE, p_color);
+
 			const aiVector3D* p_pos = &(scene->mMeshes[k]->mVertices[i]);
 			const aiVector3D* p_normal = scene->mMeshes[k]->HasNormals() ? &(scene->mMeshes[k]->mNormals[i]) : &zero_3d;
 			const aiVector3D* p_tex_coord = scene->mMeshes[k]->HasTextureCoords(0)
@@ -43,7 +46,8 @@ ScrapEngine::Render::VulkanModel::VulkanModel(const std::string& input_model_pat
 			Vertex vertex = {};
 			vertex.pos = {p_pos->x, p_pos->y, p_pos->z};
 			vertex.tex_coord = {p_tex_coord->x, 1 - p_tex_coord->y};
-			vertex.color = {p_normal->x, p_normal->y, p_normal->z};
+			vertex.color = {p_color.r, p_color.g, p_color.b};
+			vertex.normal = {p_normal->x, p_normal->y, p_normal->z};
 			mesh_vertices.push_back(vertex);
 		}
 		//LOADING INDICES

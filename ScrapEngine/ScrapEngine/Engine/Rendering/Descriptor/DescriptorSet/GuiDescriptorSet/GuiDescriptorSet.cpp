@@ -1,5 +1,6 @@
 #include <Engine/Rendering/Descriptor/DescriptorSet/GuiDescriptorSet/GuiDescriptorSet.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
+#include <Engine/Debug/DebugLog.h>
 
 ScrapEngine::Render::GuiDescriptorSet::GuiDescriptorSet() : BaseDescriptorSet()
 {
@@ -18,36 +19,40 @@ ScrapEngine::Render::GuiDescriptorSet::GuiDescriptorSet() : BaseDescriptorSet()
 		bindings.data()
 	);
 
-	if (VulkanDevice::get_instance()->get_logical_device()->createDescriptorSetLayout(
-			&layout_info, nullptr, &descriptor_set_layout_)
-		!= vk::Result::eSuccess)
+	const vk::Result result = VulkanDevice::get_instance()->get_logical_device()->createDescriptorSetLayout(
+		&layout_info, nullptr, &descriptor_set_layout_);
+
+	if (result != vk::Result::eSuccess)
 	{
-		throw std::runtime_error("GuiDescriptorSet: Failed to create descriptor set layout!");
+		Debug::DebugLog::fatal_error(result, "GuiDescriptorSet: Failed to create descriptor set layout!");
 	}
 }
 
 void ScrapEngine::Render::GuiDescriptorSet::create_descriptor_sets(vk::DescriptorPool* descriptor_pool,
-                                                                   const std::vector<vk::Image>* swap_chain_images,
+                                                                   const size_t swap_chain_images_size,
                                                                    vk::Sampler* texture_sampler,
                                                                    vk::ImageView* texture_image_view)
 {
-	std::vector<vk::DescriptorSetLayout> layouts(swap_chain_images->size(), descriptor_set_layout_);
+	std::vector<vk::DescriptorSetLayout> layouts(swap_chain_images_size, descriptor_set_layout_);
 
 	vk::DescriptorSetAllocateInfo alloc_info(
 		*descriptor_pool,
-		static_cast<uint32_t>(swap_chain_images->size()),
+		static_cast<uint32_t>(swap_chain_images_size),
 		layouts.data()
 	);
 
-	descriptor_sets_.resize(swap_chain_images->size());
+	descriptor_sets_.resize(swap_chain_images_size);
 
-	if (VulkanDevice::get_instance()->get_logical_device()->allocateDescriptorSets(&alloc_info, &descriptor_sets_[0])
-		!= vk::Result::eSuccess)
+	const vk::Result result = VulkanDevice::get_instance()->get_logical_device()->allocateDescriptorSets(
+		&alloc_info, &descriptor_sets_[0]);
+
+	if (result != vk::Result::eSuccess)
 	{
-		throw std::runtime_error("GuiDescriptorSet - DescriptorSetLayout: Failed to allocate descriptor sets!");
+		Debug::DebugLog::fatal_error(
+			result, "GuiDescriptorSet - DescriptorSetLayout: Failed to allocate descriptor sets!");
 	}
 
-	for (size_t i = 0; i < swap_chain_images->size(); i++)
+	for (size_t i = 0; i < swap_chain_images_size; i++)
 	{
 		vk::DescriptorImageInfo image_info(
 			*texture_sampler,

@@ -10,8 +10,6 @@ Ball::Ball(ScrapEngine::Core::ComponentsManager* input_component_manager,
 	set_spawnpoint(ScrapEngine::Core::SVector3(0, -10, 0));
 
 	mesh_ = input_component_manager->create_new_mesh_component(
-		"../assets/shader/compiled_shaders/shader_base.vert.spv",
-		"../assets/shader/compiled_shaders/shader_base.frag.spv",
 		"../assets/models/sphere.obj",
 		{"../assets/textures/SimpleBallTexture.png"}
 	);

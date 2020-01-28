@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Engine/Rendering/Pipeline/BaseVulkanGraphicsPipeline.h>
-#include <Engine/Rendering/Descriptor/DescriptorSet/StandardDescriptorSet/StandardDescriptorSet.h>
+#include <Engine/Rendering/Descriptor/DescriptorSet/BaseDescriptorSet.h>
 
 namespace ScrapEngine
 {
@@ -11,9 +11,9 @@ namespace ScrapEngine
 		{
 		protected:
 			std::shared_ptr<BaseVulkanGraphicsPipeline> vulkan_render_graphics_pipeline_ = nullptr;
-			StandardDescriptorSet* vulkan_render_descriptor_set_ = nullptr;
+			BaseDescriptorSet* vulkan_render_descriptor_set_ = nullptr;
 		public:
-			BasicMaterial();
+			BasicMaterial() = default;
 			virtual ~BasicMaterial() = 0;
 
 			void delete_graphics_pipeline();
