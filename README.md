@@ -25,12 +25,15 @@ There may be other parts of the engine that do not work perfectly or as expected
 I will try to make it better and to fix all the issues about it.
 
 # What's next
-After checking that few parts of the engine code are ok, slowly, i want to add basic directional light and shadows, followed by omnidirectional shadow mapping.
+- [x] Directional light and Shadow-Mapping;
+- [ ] Omnidirectional light and Shadow-Mapping;
+- [ ] [...]
 
 # Special thanks
 * [SaschaWillems](https://github.com/SaschaWillems/) for all his Vulkan examples and for his suggestions on Discord;
 * [Charles](https://github.com/WubiCookie) for all his support during the whole development, helping me understanding where and what the problem was, and for all his help and suggestions;
 * My friends [frncscdf](https://github.com/frncscdf) and [davidepi](https://github.com/davidepi) for their suggestions and support;
+* All the people in the [Vulkan Discord server](https://discordapp.com/invite/tFdvbEj).
 
 # Example game gameplay gif
 
