@@ -3,6 +3,7 @@
 #include <Engine/Rendering/Base/Vertex.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
 #include <Engine/Rendering/RenderPass/StandardRenderPass/StandardRenderPass.h>
+#include <Engine/Debug/DebugLog.h>
 
 ScrapEngine::Render::ShadowmappingPipeline::ShadowmappingPipeline(const char* vertex_shader,
                                                                   vk::DescriptorSetLayout* descriptor_set_layout,
@@ -103,11 +104,12 @@ ScrapEngine::Render::ShadowmappingPipeline::ShadowmappingPipeline(const char* ve
 		&(*descriptor_set_layout)
 	);
 
-	if (VulkanDevice::get_instance()->get_logical_device()->createPipelineLayout(
-			&pipeline_layout_info, nullptr, &pipeline_layout_)
-		!= vk::Result::eSuccess)
+	const vk::Result result_layout = VulkanDevice::get_instance()->get_logical_device()->createPipelineLayout(
+		&pipeline_layout_info, nullptr, &pipeline_layout_);
+
+	if (result_layout != vk::Result::eSuccess)
 	{
-		throw std::runtime_error("ShadowmappingPipeline: Failed to create pipeline layout!");
+		Debug::DebugLog::fatal_error(result_layout, "ShadowmappingPipeline: Failed to create pipeline layout!");
 	}
 
 	vk::GraphicsPipelineCreateInfo pipeline_info(
@@ -128,10 +130,11 @@ ScrapEngine::Render::ShadowmappingPipeline::ShadowmappingPipeline(const char* ve
 		0
 	);
 
-	if (VulkanDevice::get_instance()->get_logical_device()->createGraphicsPipelines(nullptr, 1, &pipeline_info, nullptr,
-	                                                                                &graphics_pipeline_)
-		!= vk::Result::eSuccess)
+	const vk::Result result = VulkanDevice::get_instance()->get_logical_device()->createGraphicsPipelines(nullptr, 1, &pipeline_info, nullptr,
+		&graphics_pipeline_);
+
+	if (result != vk::Result::eSuccess)
 	{
-		throw std::runtime_error("StandardVulkanGraphicsPipeline: Failed to create graphics pipeline!");
+		Debug::DebugLog::fatal_error(result, "ShadowmappingPipeline: Failed to create graphics pipeline!");
 	}
 }

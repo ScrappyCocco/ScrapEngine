@@ -1,8 +1,8 @@
 #include <Engine/Rendering/RenderPass/GuiRenderPass/GuiRenderPass.h>
-#include <stdexcept>
 #include <array>
 #include <Engine/Rendering/DepthResources/VulkanDepthResources.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
+#include <Engine/Debug/DebugLog.h>
 
 //Class
 
@@ -92,9 +92,10 @@ ScrapEngine::Render::GuiRenderPass::GuiRenderPass(const vk::Format& swap_chain_i
 		&dependency
 	);
 
-	if (VulkanDevice::get_instance()->get_logical_device()->createRenderPass(&render_pass_info, nullptr, &render_pass_)
-		!= vk::Result::eSuccess)
+	const vk::Result result = VulkanDevice::get_instance()->get_logical_device()->createRenderPass(&render_pass_info, nullptr, &render_pass_);
+
+	if (result != vk::Result::eSuccess)
 	{
-		throw std::runtime_error("VulkanRenderPass: Failed to create render pass!");
+		Debug::DebugLog::fatal_error(result, "VulkanRenderPass: Failed to create render pass!");
 	}
 }

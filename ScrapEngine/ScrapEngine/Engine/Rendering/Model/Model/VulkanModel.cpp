@@ -18,7 +18,7 @@ ScrapEngine::Render::VulkanModel::VulkanModel(const std::string& input_model_pat
 	// If the import failed, report it
 	if (!scene)
 	{
-		throw std::runtime_error(importer.GetErrorString());
+		Debug::DebugLog::fatal_error(vk::Result(-13), importer.GetErrorString());
 	}
 
 	const aiVector3D zero_3d(0.0f, 0.0f, 0.0f);

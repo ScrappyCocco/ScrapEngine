@@ -5,6 +5,14 @@
 #include <Engine/LogicCore/Math/Vector/SVector3.h>
 #include <Engine/LogicCore/Math/Quaternion/SQuaternion.h>
 
+//Use forward declaration to not include all vulkan
+namespace vk
+{
+	enum class Result;
+}
+
+enum VkResult;
+
 namespace ScrapEngine
 {
 	namespace Debug
@@ -14,7 +22,7 @@ namespace ScrapEngine
 		public:
 			//Print basic info before starting the engine
 			static void print_init_message();
-			
+
 			//Print the message to console log with time
 			static void print_to_console_log(const std::string&);
 
@@ -36,6 +44,11 @@ namespace ScrapEngine
 			//Print the error to console
 			static void print_exception_to_console_log(const std::string& message_severity,
 			                                           const std::string& exception_string);
+
+			//Launch an exeption printing the error message and the vkresult error code
+			//So it's visible what error caused the crash
+			static void fatal_error(vk::Result error_result, const std::string& error_message);
+			static void fatal_error(VkResult error_result, const std::string& error_message);
 
 		private:
 			//Return a string with the current date and time

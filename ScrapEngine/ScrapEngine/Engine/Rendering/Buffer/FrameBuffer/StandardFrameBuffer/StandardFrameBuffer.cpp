@@ -2,6 +2,7 @@
 #include <array>
 #include <Engine/Rendering/RenderPass/StandardRenderPass/StandardRenderPass.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
+#include <Engine/Debug/DebugLog.h>
 
 ScrapEngine::Render::StandardFrameBuffer::StandardFrameBuffer(VulkanImageView* input_image_view_ref,
                                                               const vk::Extent2D* input_swap_chain_extent,
@@ -31,11 +32,12 @@ ScrapEngine::Render::StandardFrameBuffer::StandardFrameBuffer(VulkanImageView* i
 			1
 		);
 
-		if (VulkanDevice::get_instance()->get_logical_device()->createFramebuffer(&framebuffer_info, nullptr,
-		                                                                          &framebuffers_[i])
-			!= vk::Result::eSuccess)
+		const vk::Result result = VulkanDevice::get_instance()->get_logical_device()->createFramebuffer(&framebuffer_info, nullptr,
+			&framebuffers_[i]);
+		
+		if (result != vk::Result::eSuccess)
 		{
-			throw std::runtime_error("VulkanFrameBuffer: Failed to create framebuffer!");
+			Debug::DebugLog::fatal_error(result, "StandardFrameBuffer: Failed to create framebuffer!");
 		}
 	}
 }

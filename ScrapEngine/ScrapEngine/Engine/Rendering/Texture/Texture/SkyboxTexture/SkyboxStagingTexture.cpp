@@ -1,7 +1,7 @@
 #include <Engine/Rendering/Texture/Texture/SkyboxTexture/SkyboxStagingTexture.h>
-#include <stdexcept>
 #include <Engine/Rendering/DepthResources/VulkanDepthResources.h>
 #include <Engine/Rendering/Buffer/StagingBuffer/ImageStagingBuffer/ImageStagingBuffer.h>
+#include <Engine/Debug/DebugLog.h>
 
 ScrapEngine::Render::SkyboxStagingTexture::SkyboxStagingTexture(const std::string& file_path)
 {
@@ -12,7 +12,7 @@ ScrapEngine::Render::SkyboxStagingTexture::SkyboxStagingTexture(const std::strin
 
 	if (!pixels)
 	{
-		throw std::runtime_error("SkyboxStagingTexture: Failed to load texture image! (pixels not valid) - " + file_path);
+		Debug::DebugLog::fatal_error(vk::Result(-13), "SkyboxStagingTexture: Failed to load texture image! (pixels not valid) - " + file_path);
 	}
 
 	staginf_buffer_ref_ = new ImageStagingBuffer(image_size, pixels);

@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <chrono>
 #include <string>
+#include <Engine/Rendering/VulkanInclude.h>
 
 void ScrapEngine::Debug::DebugLog::print_to_console_log(const std::string& log_string)
 {
@@ -65,6 +66,24 @@ void ScrapEngine::Debug::DebugLog::print_exception_to_console_log(const std::str
 	std::cout << "print_exception_to_console_log() call" << std::endl;
 	std::cout << std::endl << now_to_string() << message_severity << exception_string << std::endl << std::endl;
 	std::cout << "--------------------" << std::endl;
+}
+
+void ScrapEngine::Debug::DebugLog::fatal_error(vk::Result error_result, const std::string& error_message)
+{
+	VkResult* res = reinterpret_cast<VkResult*>(&error_result);
+	fatal_error(*res, error_message);
+}
+
+void ScrapEngine::Debug::DebugLog::fatal_error(const VkResult error_result, const std::string& error_message)
+{
+	const int error_code = error_result;
+	if(error_code == -13)
+	{
+		throw std::runtime_error(error_message + " - (ERROR_UNKNOWN)");
+	}
+	else {
+		throw std::runtime_error(error_message + " - Error code(VkResult):" + std::to_string(error_code));
+	}
 }
 
 std::string ScrapEngine::Debug::DebugLog::now_to_string()

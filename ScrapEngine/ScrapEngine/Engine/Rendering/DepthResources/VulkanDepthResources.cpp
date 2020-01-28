@@ -1,9 +1,9 @@
 #include <Engine/Rendering/DepthResources/VulkanDepthResources.h>
-
 #include <Engine/Rendering/Texture/Texture/BaseTexture.h>
 #include <Engine/Rendering/Texture/TextureImageView/TextureImageView.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
 #include <Engine/Rendering/Memory/VulkanMemoryAllocator.h>
+#include <Engine/Debug/DebugLog.h>
 
 ScrapEngine::Render::VulkanDepthResources::VulkanDepthResources(const vk::Extent2D* swap_chain_extent,
                                                                 const vk::SampleCountFlagBits msaa_samples)
@@ -59,7 +59,8 @@ vk::Format ScrapEngine::Render::VulkanDepthResources::find_supported_format(
 		}
 	}
 
-	throw std::runtime_error("VulkanDepthResources: Failed to find supported format!");
+	Debug::DebugLog::fatal_error(vk::Result(-13), "VulkanDepthResources: Failed to find supported format!");
+	return vk::Format();
 }
 
 vk::Format ScrapEngine::Render::VulkanDepthResources::find_depth_format()

@@ -1,6 +1,7 @@
 #include <Engine/Rendering/Buffer/CommandBuffer/StandardCommandBuffer/StandardCommandBuffer.h>
 #include <Engine/Rendering/RenderPass/StandardRenderPass/StandardRenderPass.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
+#include <Engine/Debug/DebugLog.h>
 
 void ScrapEngine::Render::StandardCommandBuffer::pre_shadow_mesh_commands(StandardShadowmapping* shadowmapping)
 {
@@ -45,10 +46,11 @@ ScrapEngine::Render::StandardCommandBuffer::StandardCommandBuffer(VulkanCommandP
 		static_cast<uint32_t>(command_buffers_.size())
 	);
 
-	if (VulkanDevice::get_instance()->get_logical_device()->allocateCommandBuffers(&alloc_info, command_buffers_.data())
-		!= vk::Result::eSuccess)
+	const vk::Result result = VulkanDevice::get_instance()->get_logical_device()->allocateCommandBuffers(&alloc_info, command_buffers_.data());
+
+	if (result != vk::Result::eSuccess)
 	{
-		throw std::runtime_error("[VulkanCommandBuffer] Failed to allocate command buffers!");
+		Debug::DebugLog::fatal_error(result, "[VulkanCommandBuffer] Failed to allocate command buffers!");
 	}
 }
 

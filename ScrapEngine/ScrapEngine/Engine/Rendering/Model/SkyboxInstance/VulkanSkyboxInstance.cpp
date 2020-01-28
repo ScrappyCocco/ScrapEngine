@@ -23,7 +23,7 @@ ScrapEngine::Render::VulkanSkyboxInstance::VulkanSkyboxInstance(const std::strin
 	Debug::DebugLog::print_to_console_log("VulkanModel loaded");
 	if (vulkan_render_model_->get_meshes()->size() > 1)
 	{
-		throw std::runtime_error("Cannot use a cubemap with a model containing more than one mesh!");
+		Debug::DebugLog::fatal_error(vk::Result(-13), "Cannot use a cubemap with a model containing more than one mesh!");
 	}
 	mesh_buffers_ = VulkanModelBuffersPool::get_instance()->get_model_buffers(model_path, vulkan_render_model_);
 	skybox_transform_.set_position(Core::SVector3());

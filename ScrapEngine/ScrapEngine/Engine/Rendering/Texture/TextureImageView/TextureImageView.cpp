@@ -1,6 +1,6 @@
 #include <Engine/Rendering/Texture/TextureImageView/TextureImageView.h>
-#include <stdexcept>
 #include <Engine/Rendering/Device/VulkanDevice.h>
+#include <Engine/Debug/DebugLog.h>
 
 ScrapEngine::Render::TextureImageView::TextureImageView(vk::Image* texture_image, const uint32_t& mip_levels_data,
                                                         const bool iscubemap, const int layer_count)
@@ -36,11 +36,12 @@ vk::ImageView ScrapEngine::Render::TextureImageView::create_image_view(vk::Image
 	);
 
 	vk::ImageView image_view;
-	if (VulkanDevice::get_instance()->get_logical_device()->createImageView(
-			&view_info, nullptr, &image_view) !=
-		vk::Result::eSuccess)
+
+	const vk::Result result = VulkanDevice::get_instance()->get_logical_device()->createImageView(
+		&view_info, nullptr, &image_view);
+	if (result != vk::Result::eSuccess)
 	{
-		throw std::runtime_error("TextureImageView: Failed to create texture image view!");
+		Debug::DebugLog::fatal_error(result, "TextureImageView: Failed to create texture image view!");
 	}
 
 	return image_view;
@@ -61,10 +62,11 @@ vk::ImageView ScrapEngine::Render::TextureImageView::create_cube_map_image_view(
 	);
 
 	vk::ImageView image_view;
-	if (VulkanDevice::get_instance()->get_logical_device()->createImageView(&view_info, nullptr, &image_view)
-		!= vk::Result::eSuccess)
+
+	const vk::Result result = VulkanDevice::get_instance()->get_logical_device()->createImageView(&view_info, nullptr, &image_view);
+	if (result != vk::Result::eSuccess)
 	{
-		throw std::runtime_error("TextureImageView: Failed to create texture image view!");
+		Debug::DebugLog::fatal_error(result, "TextureImageView: Failed to create texture image view!");
 	}
 
 	return image_view;

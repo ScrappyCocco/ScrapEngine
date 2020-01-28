@@ -1,6 +1,7 @@
 #include <Engine/Rendering/Buffer/CommandBuffer/BaseCommandBuffer.h>
 #include <Engine/Rendering/RenderPass/BaseRenderPass.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
+#include <Engine/Debug/DebugLog.h>
 
 ScrapEngine::Render::BaseCommandBuffer::~BaseCommandBuffer()
 {
@@ -13,9 +14,11 @@ void ScrapEngine::Render::BaseCommandBuffer::begin_command_buffer(const vk::Comm
 	{
 		vk::CommandBufferBeginInfo begin_info(flag);
 
-		if (command_buffer.begin(&begin_info) != vk::Result::eSuccess)
+		const vk::Result result = command_buffer.begin(&begin_info);
+		
+		if (result != vk::Result::eSuccess)
 		{
-			throw std::runtime_error("[VulkanCommandBuffer] Failed to begin recording command buffer!");
+			Debug::DebugLog::fatal_error(result, "[VulkanCommandBuffer] Failed to begin recording command buffer!");
 		}
 	}
 }

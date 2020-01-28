@@ -2,6 +2,7 @@
 #include <array>
 #include <Engine/Rendering/RenderPass/ShadowmappingRenderPass/ShadowmappingRenderPass.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
+#include <Engine/Debug/DebugLog.h>
 
 ScrapEngine::Render::ShadowmappingFrameBuffer::ShadowmappingFrameBuffer(const int32_t width,
                                                                         const int32_t height,
@@ -49,11 +50,13 @@ ScrapEngine::Render::ShadowmappingFrameBuffer::ShadowmappingFrameBuffer(const in
 		1
 	);
 
-	if (VulkanDevice::get_instance()->get_logical_device()->createFramebuffer(&create_info, nullptr,
-	                                                                          &framebuffers_[0])
-		!= vk::Result::eSuccess)
+	const vk::Result result = VulkanDevice::get_instance()->get_logical_device()->createFramebuffer(
+		&create_info, nullptr,
+		&framebuffers_[0]);
+
+	if (result != vk::Result::eSuccess)
 	{
-		throw std::runtime_error("ShadowmappingFrameBuffer: Failed to create framebuffer!");
+		Debug::DebugLog::fatal_error(result, "ShadowmappingFrameBuffer: Failed to create framebuffer!");
 	}
 }
 

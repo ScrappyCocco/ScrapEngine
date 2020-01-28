@@ -1,8 +1,8 @@
 #include <Engine/Rendering/RenderPass/ShadowmappingRenderPass/ShadowmappingRenderPass.h>
-#include <stdexcept>
 #include <array>
 #include <Engine/Rendering/DepthResources/VulkanDepthResources.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
+#include <Engine/Debug/DebugLog.h>
 
 ScrapEngine::Render::ShadowmappingRenderPass::ShadowmappingRenderPass(const vk::Format& depth_format)
 {
@@ -63,10 +63,11 @@ ScrapEngine::Render::ShadowmappingRenderPass::ShadowmappingRenderPass(const vk::
 		dependencies.data()
 	);
 
-	if (VulkanDevice::get_instance()->get_logical_device()->createRenderPass(&render_pass_info, nullptr, &render_pass_)
-		!= vk::Result::eSuccess)
+	const vk::Result result = VulkanDevice::get_instance()->get_logical_device()->createRenderPass(&render_pass_info, nullptr, &render_pass_);
+	
+	if (result != vk::Result::eSuccess)
 	{
-		throw std::runtime_error("ShadowmappingRenderPass: Failed to create render pass!");
+		Debug::DebugLog::fatal_error(result, "ShadowmappingRenderPass: Failed to create render pass!");
 	}
 }
 

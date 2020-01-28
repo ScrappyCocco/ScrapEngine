@@ -1,6 +1,7 @@
 #include <Engine/Rendering/Descriptor/DescriptorPool/StandardDescriptorPool/StandardDescriptorPool.h>
 #include <array>
 #include <Engine/Rendering/Device/VulkanDevice.h>
+#include <Engine/Debug/DebugLog.h>
 
 ScrapEngine::Render::StandardDescriptorPool::StandardDescriptorPool(const size_t size)
 {
@@ -15,9 +16,10 @@ ScrapEngine::Render::StandardDescriptorPool::StandardDescriptorPool(const size_t
 		static_cast<uint32_t>(pool_sizes.size()), pool_sizes.data()
 	);
 
-	if (VulkanDevice::get_instance()->get_logical_device()->createDescriptorPool(&pool_info, nullptr, &descriptor_pool_)
-		!= vk::Result::eSuccess)
+	const vk::Result result = VulkanDevice::get_instance()->get_logical_device()->createDescriptorPool(&pool_info, nullptr, &descriptor_pool_);
+
+	if (result != vk::Result::eSuccess)
 	{
-		throw std::runtime_error("StandardDescriptorPool: Failed to create descriptor pool!");
+		Debug::DebugLog::fatal_error(result, "StandardDescriptorPool: Failed to create descriptor pool!");
 	}
 }

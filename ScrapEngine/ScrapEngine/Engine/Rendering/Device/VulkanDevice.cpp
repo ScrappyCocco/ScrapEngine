@@ -39,7 +39,7 @@ void ScrapEngine::Render::VulkanDevice::choose_physical_device()
 
 	if (devices.empty())
 	{
-		throw std::runtime_error("VulkanDevice: Failed to find GPUs with Vulkan support!");
+		Debug::DebugLog::fatal_error(vk::Result(-13), "VulkanDevice: Failed to find GPUs with Vulkan support!");
 	}
 
 	for (auto& entry_device : devices)
@@ -54,7 +54,7 @@ void ScrapEngine::Render::VulkanDevice::choose_physical_device()
 
 	if (!physical_device_)
 	{
-		throw std::runtime_error("VulkanDevice: Failed to find a suitable GPU!");
+		Debug::DebugLog::fatal_error(vk::Result(-13), "VulkanDevice: Failed to find a suitable GPU!");
 	}
 }
 
@@ -102,10 +102,10 @@ void ScrapEngine::Render::VulkanDevice::create_logical_device()
 		create_info.setPpEnabledLayerNames(validation_layers_list.data());
 
 		//Use the validation layer dynamic dispatcher
-		if (physical_device_.createDevice(&create_info, nullptr, &device_, *validation_layers->get_dynamic_dispatcher())
-			!= vk::Result::eSuccess)
+		const vk::Result result = physical_device_.createDevice(&create_info, nullptr, &device_, *validation_layers->get_dynamic_dispatcher());
+		if (result != vk::Result::eSuccess)
 		{
-			throw std::runtime_error("VulkanDevice: Failed to create logical device!");
+			Debug::DebugLog::fatal_error(result, "VulkanDevice: Failed to create logical device!");
 		}
 
 		//Init the dispatcher with the device
@@ -114,10 +114,10 @@ void ScrapEngine::Render::VulkanDevice::create_logical_device()
 	else
 	{
 		//No dispatcher
-		if (physical_device_.createDevice(&create_info, nullptr, &device_)
-			!= vk::Result::eSuccess)
+		const vk::Result result = physical_device_.createDevice(&create_info, nullptr, &device_);
+		if (result != vk::Result::eSuccess)
 		{
-			throw std::runtime_error("VulkanDevice: Failed to create logical device!");
+			Debug::DebugLog::fatal_error(result, "VulkanDevice: Failed to create logical device!");
 		}
 	}
 }

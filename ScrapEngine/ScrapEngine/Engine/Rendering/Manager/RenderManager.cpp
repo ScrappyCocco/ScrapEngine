@@ -29,11 +29,11 @@ void ScrapEngine::Render::RenderManager::ParallelCommandBufferCreation::ExecuteR
 		}
 		else if (result == vk::Result::eTimeout)
 		{
-			throw std::runtime_error("[ParallelCommandBufferCreation] Fence timeout");
+			Debug::DebugLog::fatal_error(result, "[ParallelCommandBufferCreation] Fence timeout");
 		}
 		else
 		{
-			throw std::runtime_error("[ParallelCommandBufferCreation] An error occurred while waiting a fence...");
+			Debug::DebugLog::fatal_error(result, "[ParallelCommandBufferCreation] An error occurred while waiting a fence...");
 		}
 	}
 	owner->create_command_buffer(flip_flop);
@@ -54,11 +54,11 @@ void ScrapEngine::Render::RenderManager::ParallelGuiCommandBufferCreation::Execu
 		}
 		else if (result == vk::Result::eTimeout)
 		{
-			throw std::runtime_error("[ParallelGuiCommandBufferCreation] Fence timeout");
+			Debug::DebugLog::fatal_error(result, "[ParallelGuiCommandBufferCreation] Fence timeout");
 		}
 		else
 		{
-			throw std::runtime_error("[ParallelGuiCommandBufferCreation] An error occurred while waiting a fence...");
+			Debug::DebugLog::fatal_error(result, "[ParallelGuiCommandBufferCreation] An error occurred while waiting a fence...");
 		}
 	}
 	owner->rebuild_gui_command_buffer();
@@ -523,11 +523,11 @@ void ScrapEngine::Render::RenderManager::draw_loading_frame()
 	if (result_ == vk::Result::eErrorOutOfDateKHR)
 	{
 		//recreateSwapChain();
-		throw std::runtime_error("recreateSwapChain() not ready!");
+		Debug::DebugLog::fatal_error(vk::Result(-13), "recreateSwapChain() not ready!");
 	}
 	else if (result_ != vk::Result::eSuccess && result_ != vk::Result::eSuboptimalKHR)
 	{
-		throw std::runtime_error("RenderManager: Failed to acquire swap chain image!");
+		Debug::DebugLog::fatal_error(result_, "RenderManager: Failed to acquire swap chain image!");
 	}
 
 	vk::SubmitInfo submit_info;
@@ -557,8 +557,7 @@ void ScrapEngine::Render::RenderManager::draw_loading_frame()
 	                                                      (*in_flight_fences_ref_)[current_frame_]);
 	if (result_ != vk::Result::eSuccess)
 	{
-		std::cout << "RESULT TYPE:" << result_ << std::endl;
-		throw std::runtime_error("RenderManager: Failed to submit draw command buffer!");
+		Debug::DebugLog::fatal_error(result_, "RenderManager: Failed to submit draw command buffer!");
 	}
 
 	vk::PresentInfoKHR present_info;
@@ -596,11 +595,11 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 	if (result_ == vk::Result::eErrorOutOfDateKHR)
 	{
 		//recreateSwapChain();
-		throw std::runtime_error("recreateSwapChain() not ready!");
+		Debug::DebugLog::fatal_error(vk::Result(-13), "recreateSwapChain() not ready!");
 	}
 	else if (result_ != vk::Result::eSuccess && result_ != vk::Result::eSuboptimalKHR)
 	{
-		throw std::runtime_error("RenderManager: Failed to acquire swap chain image!");
+		Debug::DebugLog::fatal_error(result_, "RenderManager: Failed to acquire swap chain image!");
 	}
 	//-----------------
 	//Update objects and uniform buffers
@@ -640,8 +639,7 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 	                                                      (*in_flight_fences_ref_)[current_frame_]);
 	if (result_ != vk::Result::eSuccess)
 	{
-		std::cout << "RESULT TYPE:" << result_ << std::endl;
-		throw std::runtime_error("RenderManager: Failed to submit draw command buffer!");
+		Debug::DebugLog::fatal_error(result_, "RenderManager: Failed to submit draw command buffer!");
 	}
 
 	vk::PresentInfoKHR present_info;
@@ -661,11 +659,11 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 	{
 		//framebufferResized = false;
 		//recreateSwapChain();
-		throw std::runtime_error("recreateSwapChain() not ready!");
+		Debug::DebugLog::fatal_error(vk::Result(-13), "recreateSwapChain() not ready!");
 	}
 	else if (result_ != vk::Result::eSuccess)
 	{
-		throw std::runtime_error("RenderManager: Failed to present swap chain image!");
+		Debug::DebugLog::fatal_error(result_, "RenderManager: Failed to present swap chain image!");
 	}
 	//-----------------
 	//Check if if the other command buffer is ready

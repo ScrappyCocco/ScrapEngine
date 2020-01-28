@@ -1,6 +1,7 @@
 #include <Engine/Rendering/Buffer/CommandBuffer/GuiCommandBuffer/GuiCommandBuffer.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
 #include <imgui.h>
+#include <Engine/Debug/DebugLog.h>
 
 ScrapEngine::Render::GuiCommandBuffer::GuiCommandBuffer(BaseRenderPass* render_pass, VulkanCommandPool* command_pool)
 	: render_pass_ref_(render_pass)
@@ -18,10 +19,11 @@ ScrapEngine::Render::GuiCommandBuffer::GuiCommandBuffer(BaseRenderPass* render_p
 		static_cast<uint32_t>(1)
 	);
 
-	if (VulkanDevice::get_instance()->get_logical_device()->allocateCommandBuffers(&alloc_info, command_buffers_.data())
-		!= vk::Result::eSuccess)
+	const vk::Result result = VulkanDevice::get_instance()->get_logical_device()->allocateCommandBuffers(&alloc_info, command_buffers_.data());
+
+	if (result != vk::Result::eSuccess)
 	{
-		throw std::runtime_error("[VulkanCommandBuffer] Failed to allocate command buffers!");
+		Debug::DebugLog::fatal_error(result, "[GuiCommandBuffer] Failed to allocate command buffers!");
 	}
 }
 

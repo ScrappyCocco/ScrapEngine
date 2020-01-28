@@ -1,6 +1,6 @@
 #include <Engine/Rendering/CommandPool/VulkanCommandPool.h>
-#include <stdexcept>
 #include <Engine/Rendering/Device/VulkanDevice.h>
+#include "Engine/Debug/DebugLog.h"
 //Class
 
 void ScrapEngine::Render::VulkanCommandPool::init(const BaseQueue::QueueFamilyIndices queue_family_indices,
@@ -8,10 +8,11 @@ void ScrapEngine::Render::VulkanCommandPool::init(const BaseQueue::QueueFamilyIn
 {
 	vk::CommandPoolCreateInfo pool_info(flags, queue_family_indices.graphics_family);
 
-	if (VulkanDevice::get_instance()->get_logical_device()->createCommandPool(&pool_info, nullptr, &command_pool_)
-		!= vk::Result::eSuccess)
+	const vk::Result result = VulkanDevice::get_instance()->get_logical_device()->createCommandPool(&pool_info, nullptr, &command_pool_);
+	
+	if (result != vk::Result::eSuccess)
 	{
-		throw std::runtime_error("VulkanCommandPool: Failed to create command pool!");
+		Debug::DebugLog::fatal_error(result, "VulkanCommandPool: Failed to create command pool!");
 	}
 }
 

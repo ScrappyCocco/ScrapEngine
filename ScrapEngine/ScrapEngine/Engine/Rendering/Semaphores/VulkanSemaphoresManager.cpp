@@ -1,7 +1,6 @@
 #include <Engine/Rendering/Semaphores/VulkanSemaphoresManager.h>
-
-#include <stdexcept>
 #include <Engine/Rendering/Device/VulkanDevice.h>
+#include <Engine/Debug/DebugLog.h>
 
 ScrapEngine::Render::VulkanSemaphoresManager::VulkanSemaphoresManager(
 	const uint32_t input_image_count)
@@ -17,16 +16,27 @@ ScrapEngine::Render::VulkanSemaphoresManager::VulkanSemaphoresManager(
 
 	for (size_t i = 0; i < image_count_; i++)
 	{
-		if (VulkanDevice::get_instance()->get_logical_device()->createSemaphore(&semaphore_info, nullptr,
-		                                                                        &image_available_semaphores_[i])
-			!= vk::Result::eSuccess ||
-			VulkanDevice::get_instance()->get_logical_device()->createSemaphore(&semaphore_info, nullptr,
-			                                                                    &render_finished_semaphores_[i])
-			!= vk::Result::eSuccess ||
-			VulkanDevice::get_instance()->get_logical_device()->createFence(&fence_info, nullptr, &in_flight_fences_[i])
-			!= vk::Result::eSuccess)
+		const vk::Result result1 = VulkanDevice::get_instance()->get_logical_device()->createSemaphore(
+			&semaphore_info, nullptr,
+			&image_available_semaphores_[i]);
+		if (result1 != vk::Result::eSuccess)
 		{
-			throw std::runtime_error("Failed to create VulkanSemaphoresManager for a frame!");
+			Debug::DebugLog::fatal_error(result1, "Failed to create (result1) VulkanSemaphoresManager for a frame!");
+		}
+
+		const vk::Result result2 = VulkanDevice::get_instance()->get_logical_device()->createSemaphore(
+			&semaphore_info, nullptr,
+			&render_finished_semaphores_[i]);
+		if (result2 != vk::Result::eSuccess)
+		{
+			Debug::DebugLog::fatal_error(result2, "Failed to create (result2) VulkanSemaphoresManager for a frame!");
+		}
+
+		const vk::Result result3 = VulkanDevice::get_instance()->get_logical_device()->createFence(
+			&fence_info, nullptr, &in_flight_fences_[i]);
+		if (result3 != vk::Result::eSuccess)
+		{
+			Debug::DebugLog::fatal_error(result3, "Failed to create (result3) VulkanSemaphoresManager for a frame!");
 		}
 	}
 }

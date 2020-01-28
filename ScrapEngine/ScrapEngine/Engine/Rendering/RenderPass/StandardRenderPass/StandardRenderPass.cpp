@@ -1,9 +1,9 @@
 #include <Engine/Rendering/RenderPass/StandardRenderPass/StandardRenderPass.h>
-#include <stdexcept>
 #include <array>
 #include <Engine/Rendering/DepthResources/VulkanDepthResources.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
 #include <Engine/Rendering/Shadowmapping/Standard/StandardShadowmapping.h>
+#include <Engine/Debug/DebugLog.h>
 
 //Init static instance reference
 
@@ -108,10 +108,11 @@ void ScrapEngine::Render::StandardRenderPass::init(const vk::Format& swap_chain_
 		dependencies.data()
 	);
 
-	if (VulkanDevice::get_instance()->get_logical_device()->createRenderPass(&render_pass_info, nullptr, &render_pass_)
-		!= vk::Result::eSuccess)
+	const vk::Result result = VulkanDevice::get_instance()->get_logical_device()->createRenderPass(&render_pass_info, nullptr, &render_pass_);
+
+	if (result != vk::Result::eSuccess)
 	{
-		throw std::runtime_error("VulkanRenderPass: Failed to create render pass!");
+		Debug::DebugLog::fatal_error(result, "VulkanRenderPass: Failed to create render pass!");
 	}
 }
 

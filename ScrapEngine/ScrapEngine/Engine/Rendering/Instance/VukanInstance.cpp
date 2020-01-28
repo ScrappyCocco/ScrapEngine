@@ -4,6 +4,7 @@
 #define GLFW_INCLUDE_VULKAN
 #endif
 #include <GLFW/glfw3.h>
+#include <Engine/Debug/DebugLog.h>
 
 //Init static instance reference
 
@@ -81,9 +82,11 @@ void ScrapEngine::Render::VukanInstance::create_vulkan_instance(const std::strin
 		create_info.setPNext(&additional_features);
 	}
 
-	if (vk::createInstance(&create_info, nullptr, &vulkan_instance_) != vk::Result::eSuccess)
+	const vk::Result result = vk::createInstance(&create_info, nullptr, &vulkan_instance_);
+
+	if (result != vk::Result::eSuccess)
 	{
-		throw std::runtime_error("VukanInstance: Failed to create instance!");
+		Debug::DebugLog::fatal_error(result, "VukanInstance: Failed to create instance!");
 	}
 }
 

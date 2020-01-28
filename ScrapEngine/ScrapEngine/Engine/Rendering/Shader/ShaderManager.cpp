@@ -37,10 +37,10 @@ vk::ShaderModule ScrapEngine::Render::ShaderManager::create_shader_module(const 
 	);
 
 	vk::ShaderModule shader_module;
-	if (VulkanDevice::get_instance()->get_logical_device()->createShaderModule(&create_info, nullptr, &shader_module)
-		!= vk::Result::eSuccess)
+	const vk::Result result = VulkanDevice::get_instance()->get_logical_device()->createShaderModule(&create_info, nullptr, &shader_module);
+	if (result != vk::Result::eSuccess)
 	{
-		throw std::runtime_error("ShaderManager: Failed to create shader module!");
+		Debug::DebugLog::fatal_error(result, "ShaderManager: Failed to create shader module!");
 	}
 
 	return shader_module;
@@ -52,7 +52,7 @@ std::vector<char> ScrapEngine::Render::ShaderManager::read_file(const std::strin
 
 	if (!file.is_open())
 	{
-		throw std::runtime_error("ShaderManager: Failed to open file '" + filename + "'!");
+		Debug::DebugLog::fatal_error(vk::Result(-13), "ShaderManager: Failed to open file '" + filename + "'!");
 	}
 
 	const size_t file_size = static_cast<size_t>(file.tellg());

@@ -6,7 +6,7 @@ ScrapEngine::Render::VulkanValidationLayers::VulkanValidationLayers()
 {
 	if (enable_validation_layers && !check_validation_layer_support())
 	{
-		throw std::runtime_error("VulkanValidationLayers: validation layers requested, but not available!");
+		Debug::DebugLog::fatal_error(vk::Result(-13), "VulkanValidationLayers: validation layers requested, but not available!");
 	}
 }
 

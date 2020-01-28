@@ -1,5 +1,6 @@
 #include <Engine/Rendering/Descriptor/DescriptorSet/StandardDescriptorSet/StandardDescriptorSet.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
+#include <Engine/Debug/DebugLog.h>
 
 ScrapEngine::Render::StandardDescriptorSet::StandardDescriptorSet()
 {
@@ -39,11 +40,12 @@ ScrapEngine::Render::StandardDescriptorSet::StandardDescriptorSet()
 		bindings.data()
 	);
 
-	if (VulkanDevice::get_instance()->get_logical_device()->createDescriptorSetLayout(
-			&layout_info, nullptr, &descriptor_set_layout_)
-		!= vk::Result::eSuccess)
+	const vk::Result result = VulkanDevice::get_instance()->get_logical_device()->createDescriptorSetLayout(
+		&layout_info, nullptr, &descriptor_set_layout_);
+
+	if (result != vk::Result::eSuccess)
 	{
-		throw std::runtime_error("StandardDescriptorSet: Failed to create descriptor set layout!");
+		Debug::DebugLog::fatal_error(result, "StandardDescriptorSet: Failed to create descriptor set layout!");
 	}
 }
 
@@ -64,10 +66,11 @@ void ScrapEngine::Render::StandardDescriptorSet::create_descriptor_sets(vk::Desc
 
 	descriptor_sets_.resize(swap_chain_images_size);
 
-	if (VulkanDevice::get_instance()->get_logical_device()->allocateDescriptorSets(&alloc_info, &descriptor_sets_[0])
-		!= vk::Result::eSuccess)
+	const vk::Result result = VulkanDevice::get_instance()->get_logical_device()->allocateDescriptorSets(&alloc_info, &descriptor_sets_[0]);
+
+	if (result != vk::Result::eSuccess)
 	{
-		throw std::runtime_error("StandardDescriptorSet - DescriptorSetLayout: Failed to allocate descriptor sets!");
+		Debug::DebugLog::fatal_error(result, "StandardDescriptorSet - DescriptorSetLayout: Failed to allocate descriptor sets!");
 	}
 
 	for (size_t i = 0; i < swap_chain_images_size; i++)

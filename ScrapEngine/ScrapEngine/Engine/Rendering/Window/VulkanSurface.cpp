@@ -1,4 +1,5 @@
 #include <Engine/Rendering/Window/VulkanSurface.h>
+#include <Engine/Debug/DebugLog.h>
 
 //Init static instance reference
 
@@ -31,7 +32,7 @@ void ScrapEngine::Render::VulkanSurface::create_surface(GameWindow* window_ref)
 	if (glfwCreateWindowSurface(*VukanInstance::get_instance(), window_ref->window_, nullptr,
 	                            reinterpret_cast<VkSurfaceKHR*>(&surface_)) != VK_SUCCESS)
 	{
-		throw std::runtime_error("VulkanSurface: Failed to create window surface!");
+		Debug::DebugLog::fatal_error(vk::Result(-13), "VulkanSurface: Failed to create window surface!");
 	}
 }
 

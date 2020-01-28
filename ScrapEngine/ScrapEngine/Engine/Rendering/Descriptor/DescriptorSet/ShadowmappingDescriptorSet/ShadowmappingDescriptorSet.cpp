@@ -1,5 +1,6 @@
 #include <Engine/Rendering/Descriptor/DescriptorSet/ShadowmappingDescriptorSet/ShadowmappingDescriptorSet.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
+#include <Engine/Debug/DebugLog.h>
 
 ScrapEngine::Render::ShadowmappingDescriptorSet::ShadowmappingDescriptorSet()
 {
@@ -27,11 +28,12 @@ ScrapEngine::Render::ShadowmappingDescriptorSet::ShadowmappingDescriptorSet()
 		bindings.data()
 	);
 
-	if (VulkanDevice::get_instance()->get_logical_device()->createDescriptorSetLayout(
-			&layout_info, nullptr, &descriptor_set_layout_)
-		!= vk::Result::eSuccess)
+	const vk::Result result = VulkanDevice::get_instance()->get_logical_device()->createDescriptorSetLayout(
+		&layout_info, nullptr, &descriptor_set_layout_);
+
+	if (result != vk::Result::eSuccess)
 	{
-		throw std::runtime_error("ShadowmappingDescriptorSet: Failed to create descriptor set layout!");
+		Debug::DebugLog::fatal_error(result, "ShadowmappingDescriptorSet: Failed to create descriptor set layout!");
 	}
 }
 
@@ -55,8 +57,7 @@ void ScrapEngine::Render::ShadowmappingDescriptorSet::create_descriptor_sets(vk:
 		&alloc_info, &descriptor_sets_[0]);
 	if (result != vk::Result::eSuccess)
 	{
-		throw std::runtime_error(
-			"ShadowmappingDescriptorSet - DescriptorSetLayout: Failed to allocate descriptor sets!");
+		Debug::DebugLog::fatal_error(result, "ShadowmappingDescriptorSet - DescriptorSetLayout: Failed to allocate descriptor sets!");
 	}
 
 	for (size_t i = 0; i < swap_chain_images_size; i++)
