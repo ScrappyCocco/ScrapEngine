@@ -36,7 +36,7 @@ void GameCamera::game_update(const float time)
 			free_camera_ = !free_camera_;
 			if (!free_camera_) //Reset rotation
 			{
-				set_object_rotation(ScrapEngine::Core::SVector3(-40.f, -90, 0));
+				camera_component_->set_component_rotation(ScrapEngine::Core::SVector3(-40.f, -90, 0));
 			}
 		}
 	}
