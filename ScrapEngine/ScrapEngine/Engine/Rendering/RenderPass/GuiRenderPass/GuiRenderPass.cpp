@@ -13,11 +13,11 @@ ScrapEngine::Render::GuiRenderPass::GuiRenderPass(const vk::Format& swap_chain_i
 		vk::AttachmentDescriptionFlags(),
 		swap_chain_image_format,
 		msaa_samples,
-		vk::AttachmentLoadOp::eDontCare,
+		vk::AttachmentLoadOp::eLoad,
 		vk::AttachmentStoreOp::eStore,
 		vk::AttachmentLoadOp::eDontCare,
 		vk::AttachmentStoreOp::eDontCare,
-		vk::ImageLayout::eUndefined,
+		vk::ImageLayout::eColorAttachmentOptimal,
 		vk::ImageLayout::eColorAttachmentOptimal
 	);
 
