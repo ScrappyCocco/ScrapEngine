@@ -9,7 +9,7 @@ Crate::Crate(ScrapEngine::Core::LogicManagerView* logic_manager_ref,
 {
 	//Add mesh to that GameObject
 	mesh_ = component_manager_ref_->create_new_mesh_component(
-		"../assets/models/cube.obj",
+		"../assets/models/crate.obj",
 		{"../assets/textures/Simple_Wood_Crate_Color.png"}
 	);
 	add_component(mesh_);
