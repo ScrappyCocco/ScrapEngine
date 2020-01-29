@@ -4,7 +4,7 @@
 CheckpointTrigger::CheckpointTrigger(ScrapEngine::Core::LogicManagerView* logic_view,
                                      Ball* player,
                                      const ScrapEngine::Core::SVector3& pos)
-	: SGameObject("Main menu Gui manager"), player_ref_(player)
+	: SGameObject("Checkpoint game object"), player_ref_(player)
 {
 	set_object_location(pos);
 	pos_ = pos;
@@ -53,6 +53,7 @@ CheckpointTrigger::CheckpointTrigger(ScrapEngine::Core::LogicManagerView* logic_
 	box_collider->set_rigidbody_type(ScrapEngine::Physics::RigidBody_Types::static_rigidbody);
 	box_collider->set_bounciness(0);
 	box_collider->set_friction_coefficient(1);
+	add_component(box_collider, false);
 
 	//Arrow angles Collider
 
@@ -67,6 +68,7 @@ CheckpointTrigger::CheckpointTrigger(ScrapEngine::Core::LogicManagerView* logic_
 	right_angle_collider->set_rigidbody_type(ScrapEngine::Physics::RigidBody_Types::static_rigidbody);
 	right_angle_collider->set_bounciness(0);
 	right_angle_collider->set_friction_coefficient(1);
+	add_component(right_angle_collider, false);
 
 	const ScrapEngine::Core::SVector3 left_angle = pos + ScrapEngine::Core::SVector3(-25, 1, 0);
 	ScrapEngine::Core::RigidBodyComponent* left_angle_collider = logic_view
@@ -77,6 +79,7 @@ CheckpointTrigger::CheckpointTrigger(ScrapEngine::Core::LogicManagerView* logic_
 	left_angle_collider->set_rigidbody_type(ScrapEngine::Physics::RigidBody_Types::static_rigidbody);
 	left_angle_collider->set_bounciness(0);
 	left_angle_collider->set_friction_coefficient(1);
+	add_component(left_angle_collider, false);
 
 	const ScrapEngine::Core::SVector3 up_angle = pos + ScrapEngine::Core::SVector3(0, 1, -25);
 	ScrapEngine::Core::RigidBodyComponent* up_angle_collider = logic_view
@@ -87,6 +90,7 @@ CheckpointTrigger::CheckpointTrigger(ScrapEngine::Core::LogicManagerView* logic_
 	up_angle_collider->set_rigidbody_type(ScrapEngine::Physics::RigidBody_Types::static_rigidbody);
 	up_angle_collider->set_bounciness(0);
 	up_angle_collider->set_friction_coefficient(1);
+	add_component(up_angle_collider, false);
 
 	const ScrapEngine::Core::SVector3 bottom_angle = pos + ScrapEngine::Core::SVector3(0, 1, 25);
 	ScrapEngine::Core::RigidBodyComponent* bottom_angle_collider = logic_view
@@ -97,6 +101,7 @@ CheckpointTrigger::CheckpointTrigger(ScrapEngine::Core::LogicManagerView* logic_
 	bottom_angle_collider->set_rigidbody_type(ScrapEngine::Physics::RigidBody_Types::static_rigidbody);
 	bottom_angle_collider->set_bounciness(0);
 	bottom_angle_collider->set_friction_coefficient(1);
+	add_component(bottom_angle_collider, false);
 }
 
 void CheckpointTrigger::game_update(const float time)

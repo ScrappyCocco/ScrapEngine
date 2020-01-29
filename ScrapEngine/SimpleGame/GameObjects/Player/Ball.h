@@ -7,6 +7,7 @@ class Ball : public ScrapEngine::Core::SGameObject
 {
 private:
 	//Utils
+	ScrapEngine::Core::ComponentsManager* component_manager_ref_ = nullptr;
 	ScrapEngine::Input::InputManager* input_manager_ref_ = nullptr;
 	//Collider
 	ScrapEngine::Core::RigidBodyComponent* collider_ = nullptr;
@@ -28,4 +29,6 @@ public:
 	void set_spawnpoint(const ScrapEngine::Core::SVector3& pos);
 
 	ScrapEngine::Core::SVector3 get_rigidbody_location() const;
+private:
+	bool is_on_ground() const;
 };

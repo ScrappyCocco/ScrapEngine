@@ -3,7 +3,7 @@
 Coin::Coin(ScrapEngine::Core::LogicManagerView* logic_manager_ref,
            const ScrapEngine::Core::SVector3& start_pos,
            ScoreManager* score_manager)
-	: SGameObject("Crate game object"), logic_manager_view_(logic_manager_ref),
+	: SGameObject("Coin game object"), logic_manager_view_(logic_manager_ref),
 	  component_manager_ref_(logic_manager_ref->get_components_manager()),
 	  score_manager_ref_(score_manager)
 {
@@ -22,6 +22,7 @@ Coin::Coin(ScrapEngine::Core::LogicManagerView* logic_manager_ref,
 	box_trigger_ = component_manager_ref_->create_box_trigger_component(
 		ScrapEngine::Core::SVector3(8, 8, 8),
 		start_pos);
+	add_component(box_trigger_);
 
 	//Sound
 	coin_sound_ = component_manager_ref_->create_3d_sound("../assets/sounds/coin_sound.wav");

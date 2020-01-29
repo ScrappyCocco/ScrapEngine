@@ -54,7 +54,9 @@ namespace ScrapEngine
 			SVector3 get_object_rotation() const;
 			SVector3 get_object_scale() const;
 
-			void add_component(SComponent* component);
+			//By default when a component is added its position is set as the gameobj pos
+			//To avoid this and keep the component in its position, set this to false
+			void add_component(SComponent* component, bool update_position = true);
 			void remove_component(SComponent* component);
 			const std::vector<SComponent*>* get_components() const;
 

@@ -3,9 +3,11 @@
 
 FinishTriggerMenu::FinishTriggerMenu(ScrapEngine::Core::LogicManagerView* logic_view, Ball* player,
                                      ScrapEngine::Render::GameWindow* window_ref, ScoreManager* score_manager)
-	: SGameObject("Main menu Gui manager"), player_ref_(player),
+	: SGameObject("Finish trigger"), player_ref_(player),
 	  window_ref_(window_ref), score_manager_ref_(score_manager)
 {
+	set_object_location(ScrapEngine::Core::SVector3(425, -20, 75));
+	
 	//Get component
 	ScrapEngine::Core::RigidBodyComponent* component = dynamic_cast<ScrapEngine::Core::RigidBodyComponent*>((*
 		player_ref_->get_components())[1]);
@@ -17,6 +19,7 @@ FinishTriggerMenu::FinishTriggerMenu(ScrapEngine::Core::LogicManagerView* logic_
 	box_trigger_ = logic_view->get_components_manager()->create_box_trigger_component(
 		ScrapEngine::Core::SVector3(40, 50, 40),
 		ScrapEngine::Core::SVector3(425, -20, 75));
+	add_component(box_trigger_);
 }
 
 void FinishTriggerMenu::game_update(float time)

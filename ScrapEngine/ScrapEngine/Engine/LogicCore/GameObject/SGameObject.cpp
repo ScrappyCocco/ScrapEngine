@@ -201,14 +201,17 @@ void ScrapEngine::Core::SGameObject::update_object_scale()
 	object_transform_.set_scale(father_object_->object_transform_.get_scale() + object_relative_transform_.get_scale());
 }
 
-void ScrapEngine::Core::SGameObject::add_component(SComponent* component)
+void ScrapEngine::Core::SGameObject::add_component(SComponent* component, const bool update_position)
 {
 	object_components_.push_back(component);
 	component->owner_ = this;
-	//Set component default values same as object
-	component->set_component_location(object_transform_.get_position());
-	component->set_component_rotation(object_transform_.get_rotation());
-	component->set_component_scale(object_transform_.get_scale());
+	if (update_position)
+	{
+		//Set component default values same as object
+		component->set_component_location(object_transform_.get_position());
+		component->set_component_rotation(object_transform_.get_rotation());
+		component->set_component_scale(object_transform_.get_scale());
+	}
 }
 
 void ScrapEngine::Core::SGameObject::remove_component(SComponent* component)
