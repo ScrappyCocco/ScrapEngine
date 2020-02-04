@@ -72,7 +72,7 @@ void ScrapEngine::Render::VulkanImGui::init_resources(VulkanSwapChain* swap_chai
 	BaseTexture::transition_image_layout(&font_image_, vk::Format::eR8G8B8A8Unorm, vk::ImageLayout::eUndefined,
 	                                     vk::ImageLayout::eTransferDstOptimal, 1);
 	//Prepare buffer
-	ImageStagingBuffer* staginf_buffer_ref = new ImageStagingBuffer(upload_size, font_data);
+	std::unique_ptr<ImageStagingBuffer> staging_buffer = std::make_unique<ImageStagingBuffer>(upload_size, font_data);
 	//Set copy region data
 	vk::BufferImageCopy buffer_copy_region;
 	vk::ImageSubresourceLayers image_subresource_layer;
@@ -81,10 +81,8 @@ void ScrapEngine::Render::VulkanImGui::init_resources(VulkanSwapChain* swap_chai
 	buffer_copy_region.setImageSubresource(image_subresource_layer);
 	buffer_copy_region.setImageExtent(vk::Extent3D(tex_width, tex_height, 1));
 	//Copy
-	ImageStagingBuffer::copy_buffer_to_image(staginf_buffer_ref->get_staging_buffer(), &font_image_,
+	ImageStagingBuffer::copy_buffer_to_image(staging_buffer->get_staging_buffer(), &font_image_,
 	                                         &buffer_copy_region, 1, vk::ImageLayout::eTransferDstOptimal);
-	delete staginf_buffer_ref;
-	staginf_buffer_ref = nullptr;
 	// Prepare for shader read
 	BaseTexture::transition_image_layout(&font_image_, vk::Format::eR8G8B8A8Unorm,
 	                                     vk::ImageLayout::eTransferDstOptimal,
