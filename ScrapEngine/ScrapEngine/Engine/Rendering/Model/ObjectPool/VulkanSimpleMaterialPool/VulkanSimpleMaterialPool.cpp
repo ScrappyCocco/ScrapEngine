@@ -1,5 +1,4 @@
 #include <Engine/Rendering/Model/ObjectPool/VulkanSimpleMaterialPool/VulkanSimpleMaterialPool.h>
-#include <memory>
 #include <Engine/Debug/DebugLog.h>
 #include <numeric>
 #include <Engine/Rendering/Model/Material/SimpleMaterial/SimpleMaterial.h>
