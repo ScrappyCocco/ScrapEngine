@@ -1,5 +1,6 @@
 #include <Engine/Physics/Raycast/SingleRaycast/SingleRaycast.h>
 #include <Engine/Physics/Utils/ConversionUtils.h>
+#include <Engine/Physics/RigidBody/RigidBody.h>
 
 ScrapEngine::Physics::SingleRaycast::SingleRaycast(rp3d::DynamicsWorld* world_ref)
 	: world_ref_(world_ref)

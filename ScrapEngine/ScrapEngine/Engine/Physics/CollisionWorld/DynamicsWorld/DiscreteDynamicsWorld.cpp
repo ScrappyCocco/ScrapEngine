@@ -1,5 +1,5 @@
 #include <Engine/Physics/CollisionWorld/DynamicsWorld/DiscreteDynamicsWorld.h>
-
+#include <Engine/LogicCore/Math/Vector/SVector3.h>
 
 ScrapEngine::Physics::DiscreteDynamicsWorld::DiscreteDynamicsWorld()
 {

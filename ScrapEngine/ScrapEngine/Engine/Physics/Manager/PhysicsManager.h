@@ -1,16 +1,19 @@
 #pragma once
 
-#include <Engine/Physics/CollisionWorld/DynamicsWorld/DiscreteDynamicsWorld.h>
-#include <Engine/Physics/RigidBody/RigidBody.h>
 #include <vector>
-#include <Engine/Physics/CollisionBody/CollisionBody.h>
-#include <Engine/Physics/Raycast/SingleRaycast/SingleRaycast.h>
-#include <Engine/Physics/Raycast/MultiRaycast/MultiRaycast.h>
+#include <Engine/Physics/Raycast/RaycastResultInfo.h>
 
 namespace ScrapEngine
 {
 	namespace Physics
 	{
+		class CollisionShape;
+		class MultiRaycast;
+		class SingleRaycast;
+		class CollisionBody;
+		class RigidBody;
+		class DiscreteDynamicsWorld;
+
 		class PhysicsManager
 		{
 		private:

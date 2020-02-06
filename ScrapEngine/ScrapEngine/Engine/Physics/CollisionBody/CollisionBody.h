@@ -1,12 +1,14 @@
 #pragma once
 
-#include <Engine/Physics/CollisionShape/CollisionShape.h>
+#include <Engine/Physics/PhysicsInclude.h>
 #include <Engine/LogicCore/Math/Transform/STransform.h>
 
 namespace ScrapEngine
 {
 	namespace Physics
 	{
+		class CollisionShape;
+
 		class CollisionBody
 		{
 		private:

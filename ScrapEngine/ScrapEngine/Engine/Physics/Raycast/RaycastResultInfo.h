@@ -1,12 +1,14 @@
 ﻿#pragma once
 
 #include <Engine/LogicCore/Math/Vector/SVector3.h>
-#include <Engine/Physics/RigidBody/RigidBody.h>
 
 namespace ScrapEngine
 {
 	namespace Physics
 	{
+		class CollisionShape;
+		class RigidBody;
+
 		/**
 		 * \brief This class is used by the engine to return a raycast result
 		 */

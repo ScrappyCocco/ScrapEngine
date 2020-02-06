@@ -1,4 +1,5 @@
 #include <Engine/Physics/CollisionShape/CollisionShape.h>
+#include <Engine/Physics/PhysicsInclude.h>
 
 ScrapEngine::Physics::CollisionShape::CollisionShape(reactphysics3d::CollisionShape* collision_shape)
 	: collision_shape_(collision_shape)
