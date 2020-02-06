@@ -1,13 +1,21 @@
 #pragma once
 
 #include <Engine/LogicCore/Components/SComponent.h>
-#include <Engine/LogicCore/Components/RigidBodyComponent/RigidBodyComponent.h>
-#include <Engine/Physics/CollisionBody/CollisionBody.h>
+
+namespace ScrapEngine
+{
+	namespace Physics
+	{
+		class CollisionBody;
+	}
+}
 
 namespace ScrapEngine
 {
 	namespace Core
 	{
+		class RigidBodyComponent;
+
 		class TriggerComponent : public SComponent
 		{
 		private:

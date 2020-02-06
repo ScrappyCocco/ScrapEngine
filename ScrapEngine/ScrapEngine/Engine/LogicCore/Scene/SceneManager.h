@@ -1,12 +1,22 @@
 #pragma once
+#include <array>
 
-#include <Engine/Rendering/Manager/RenderManager.h>
-#include <Engine/Rendering/Model/SkyboxInstance/VulkanSkyboxInstance.h>
+namespace ScrapEngine
+{
+	namespace Render
+	{
+		class StandardShadowmapping;
+		class VulkanSkyboxInstance;
+		class RenderManager;
+	}
+}
 
 namespace ScrapEngine
 {
 	namespace Core
 	{
+		class SVector3;
+
 		class SceneManager
 		{
 		private:

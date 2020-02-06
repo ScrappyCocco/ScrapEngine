@@ -1,4 +1,6 @@
 #include <Engine/LogicCore/Scene/SceneManager.h>
+#include <Engine/Rendering/Manager/RenderManager.h>
+#include <Engine/Rendering/Model/SkyboxInstance/VulkanSkyboxInstance.h>
 
 ScrapEngine::Core::SceneManager::SceneManager(Render::RenderManager* input_render_manager_ref) :
 	render_manager_ref_(input_render_manager_ref)

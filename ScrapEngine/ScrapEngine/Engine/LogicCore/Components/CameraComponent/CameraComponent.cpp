@@ -1,4 +1,5 @@
 #include <Engine/LogicCore/Components/CameraComponent/CameraComponent.h>
+#include <Engine/Rendering/Camera/Camera.h>
 
 void ScrapEngine::Core::CameraComponent::set_rotation(const SVector3& rotation) const
 {

@@ -1,4 +1,5 @@
 #include <Engine/LogicCore/Components/MeshComponent/MeshComponent.h>
+#include <Engine/Rendering/Model/MeshInstance/VulkanMeshInstance.h>
 
 ScrapEngine::Core::MeshComponent::MeshComponent(Render::VulkanMeshInstance* input_vulkan_mesh)
 	: SComponent("MeshComponent"), vulkan_mesh_(input_vulkan_mesh)

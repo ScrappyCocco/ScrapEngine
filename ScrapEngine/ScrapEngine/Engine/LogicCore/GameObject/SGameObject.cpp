@@ -1,6 +1,7 @@
 #include <Engine/LogicCore/GameObject/SGameObject.h>
 #include <Engine/LogicCore/Components/SComponent.h>
 #include <algorithm>
+#include <Engine/LogicCore/Math/Vector/SVector3.h>
 
 ScrapEngine::Core::SGameObject::SGameObject(const std::string& object_name,
                                             const STransform& input_object_transform)

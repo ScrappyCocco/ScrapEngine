@@ -1,4 +1,17 @@
 #include <Engine/LogicCore/Components/Manager/ComponentsManager.h>
+#include <Engine/Rendering/Manager/RenderManager.h>
+#include <Engine/LogicCore/Components/MeshComponent/MeshComponent.h>
+#include <Engine/Physics/Manager/PhysicsManager.h>
+#include <Engine/LogicCore/Components/TriggerComponent/TriggerComponent.h>
+#include <Engine/LogicCore/Components/TriggerComponent/BoxTriggerComponent/BoxTriggerComponent.h>
+#include <Engine/LogicCore/Components/RigidBodyComponent/RigidBodyComponent.h>
+#include <Engine/LogicCore/Components/RigidBodyComponent/BoxRigidBodyComponent/BoxRigidBodyComponent.h>
+#include <Engine/LogicCore/Components/RigidBodyComponent/CapsuleRigidBodyComponent/CapsuleRigidBodyComponent.h>
+#include <Engine/LogicCore/Components/RigidBodyComponent/SphereRigidBodyComponent/SphereRigidBodyComponent.h>
+#include <Engine/Audio/Manager/AudioManager.h>
+#include <Engine/LogicCore/Components/AudioComponent/2dAudioComponent/2DAudioComponent.h>
+#include <Engine/LogicCore/Components/AudioComponent/3dAudioComponent/3DAudioComponent.h>
+#include <Engine/LogicCore/Components/CameraComponent/CameraComponent.h>
 
 void ScrapEngine::Core::ComponentsManager::set_render_manager(Render::RenderManager* input_render_manager_ref)
 {

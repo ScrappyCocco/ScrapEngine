@@ -1,11 +1,48 @@
 #pragma once
 
 #include <Engine/Utility/UsefulTypes.h>
-#include <Engine/Rendering/Manager/RenderManager.h>
-#include <Engine/Rendering/Manager/RenderManagerView.h>
-#include <Engine/LogicCore/Manager/LogicManager.h>
-#include <Engine/LogicCore/Manager/LogicManagerView.h>
-#include <Engine/Audio/Manager/AudioManager.h>
+
+namespace ScrapEngine
+{
+	namespace Audio
+	{
+		class AudioManager;
+	}
+}
+
+namespace ScrapEngine
+{
+	namespace Physics
+	{
+		class PhysicsManager;
+	}
+}
+
+namespace ScrapEngine
+{
+	namespace Input
+	{
+		class InputManager;
+	}
+}
+
+namespace ScrapEngine
+{
+	namespace Core
+	{
+		class LogicManagerView;
+		class LogicManager;
+	}
+}
+
+namespace ScrapEngine
+{
+	namespace Render
+	{
+		class RenderManagerView;
+		class RenderManager;
+	}
+}
 
 namespace ScrapEngine
 {
@@ -25,7 +62,8 @@ namespace ScrapEngine
 			Audio::AudioManager* audio_manager_ = nullptr;
 
 		public:
-			EngineManager(const std::string& app_name = "ScrapEngine Game", int app_version = 1, uint32_t window_width = 800,
+			EngineManager(const std::string& app_name = "ScrapEngine Game", int app_version = 1,
+			              uint32_t window_width = 800,
 			              uint32_t window_height = 600, bool fullscreen = false, bool vsync = true);
 			~EngineManager();
 

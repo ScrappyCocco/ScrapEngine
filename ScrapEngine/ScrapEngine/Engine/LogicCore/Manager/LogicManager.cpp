@@ -1,4 +1,5 @@
 #include <Engine/LogicCore/Manager/LogicManager.h>
+#include <Engine/LogicCore/GameObject/SGameObject.h>
 
 ScrapEngine::Core::LogicManager::~LogicManager()
 {

@@ -1,24 +1,51 @@
 ﻿#pragma once
 
-#include <Engine/Rendering/Manager/RenderManager.h>
-#include <Engine/LogicCore/Components/MeshComponent/MeshComponent.h>
-#include <Engine/Physics/Manager/PhysicsManager.h>
-#include <Engine/LogicCore/Components/TriggerComponent/TriggerComponent.h>
-#include <Engine/LogicCore/Components/TriggerComponent/BoxTriggerComponent/BoxTriggerComponent.h>
-#include <Engine/LogicCore/Components/RigidBodyComponent/RigidBodyComponent.h>
-#include <Engine/LogicCore/Components/RigidBodyComponent/BoxRigidBodyComponent/BoxRigidBodyComponent.h>
-#include <Engine/LogicCore/Components/RigidBodyComponent/CapsuleRigidBodyComponent/CapsuleRigidBodyComponent.h>
-#include <Engine/LogicCore/Components/RigidBodyComponent/SphereRigidBodyComponent/SphereRigidBodyComponent.h>
-#include <Engine/Audio/Manager/AudioManager.h>
-#include <Engine/LogicCore/Components/AudioComponent/2dAudioComponent/2DAudioComponent.h>
-#include <Engine/LogicCore/Components/AudioComponent/3dAudioComponent/3DAudioComponent.h>
-#include <Engine/LogicCore/Components/CameraComponent/CameraComponent.h>
 #include <unordered_map>
+#include <Engine/LogicCore/Math/Vector/SVector3.h>
+
+namespace ScrapEngine
+{
+	namespace Audio
+	{
+		class AudioManager;
+	}
+}
+
+namespace ScrapEngine
+{
+	namespace Physics
+	{
+		class CollisionBody;
+		class RigidBody;
+		class PhysicsManager;
+	}
+}
+
+namespace ScrapEngine
+{
+	namespace Render
+	{
+		class VulkanMeshInstance;
+		class RenderManager;
+	}
+}
 
 namespace ScrapEngine
 {
 	namespace Core
 	{
+		class MeshComponent;
+		class CameraComponent;
+		class TriggerComponent;
+		class RigidBodyComponent;
+		class AudioComponent2D;
+		class AudioComponent3D;
+		class AudioComponent;
+		class BoxTriggerComponent;
+		class BoxRigidBodyComponent;
+		class CapsuleRigidBodyComponent;
+		class SphereRigidBodyComponent;
+
 		/**
 		 * \brief Struct used to return the raycast result to the user
 		 */

@@ -1,7 +1,14 @@
 #pragma once
 
 #include <Engine/LogicCore/Components/SComponent.h>
-#include <Engine/Audio/Source/AudioSource.h>
+
+namespace ScrapEngine
+{
+	namespace Audio
+	{
+		class AudioSource;
+	}
+}
 
 namespace ScrapEngine
 {
