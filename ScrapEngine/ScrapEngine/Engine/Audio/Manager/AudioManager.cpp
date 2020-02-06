@@ -1,5 +1,11 @@
 #include <Engine/Audio/Manager/AudioManager.h>
 #include <Engine/Audio/Buffer/Wav/WavAudioBuffer.h>
+#include <Engine/Audio/Device/AudioDevice.h>
+#include <Engine/Audio/Context/AudioContext.h>
+#include <Engine/Rendering/Camera/Camera.h>
+#include <Engine/Audio/Source/AudioSource.h>
+#include <Engine/Audio/Buffer/AudioBuffer.h>
+#include <Engine/Audio/Listener/AudioListener.h>
 
 ScrapEngine::Audio::AudioBuffer* ScrapEngine::Audio::AudioManager::build_buffer(const std::string& filename)
 {
@@ -111,6 +117,6 @@ void ScrapEngine::Audio::AudioManager::unload_sound(AudioSource* sound)
 
 void ScrapEngine::Audio::AudioManager::audio_update(const Render::Camera* camera_ref) const
 {
-	listener_.set_listener_location(camera_ref->get_camera_location());
-	listener_.set_listener_orientation(camera_ref->get_camera_front(), camera_ref->get_camera_up());
+	AudioListener::set_listener_location(camera_ref->get_camera_location());
+	AudioListener::set_listener_orientation(camera_ref->get_camera_front(), camera_ref->get_camera_up());
 }

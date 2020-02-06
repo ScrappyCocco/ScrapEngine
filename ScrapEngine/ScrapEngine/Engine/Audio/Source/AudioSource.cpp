@@ -1,4 +1,5 @@
 #include <Engine/Audio/Source/AudioSource.h>
+#include <Engine/LogicCore/Math/Vector/SVector3.h>
 
 ScrapEngine::Audio::AudioSource::AudioSource(const ALuint* audio_buffer)
 {
