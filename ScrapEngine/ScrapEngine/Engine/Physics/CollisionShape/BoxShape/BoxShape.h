@@ -1,7 +1,12 @@
 #pragma once
 
-#include <Engine/LogicCore/Math/Vector/SVector3.h>
 #include <Engine/Physics/CollisionShape/CollisionShape.h>
+
+namespace ScrapEngine {
+	namespace Core {
+		class SVector3;
+	}
+}
 
 namespace ScrapEngine
 {

@@ -1,8 +1,8 @@
 #pragma once
 
 #include <Engine/LogicCore/SObject.h>
-#include <vector>
 #include <Engine/LogicCore/Math/Transform/STransform.h>
+#include <vector>
 
 namespace ScrapEngine
 {

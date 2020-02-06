@@ -1,8 +1,8 @@
 #pragma once
 
+#include <Engine/Rendering/Texture/Texture/BaseTexture.h>
 #include <string>
 #include <vector>
-#include <Engine/Rendering/Texture/Texture/BaseTexture.h>
 
 namespace ScrapEngine
 {

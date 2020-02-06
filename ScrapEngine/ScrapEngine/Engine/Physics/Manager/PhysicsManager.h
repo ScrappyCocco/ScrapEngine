@@ -1,7 +1,7 @@
 #pragma once
 
-#include <vector>
 #include <Engine/Physics/Raycast/RaycastResultInfo.h>
+#include <vector>
 
 namespace ScrapEngine
 {

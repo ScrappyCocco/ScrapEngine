@@ -1,7 +1,7 @@
 #pragma once
 
-#include <string>
 #include <Engine/Rendering/Texture/Texture/BaseTexture.h>
+#include <string>
 
 namespace ScrapEngine
 {
