@@ -100,7 +100,6 @@ namespace ScrapEngine
 			//---gui
 			//The gui command buffer, is rebuilt every frame
 			GuiCommandBuffer* gui_command_buffer_;
-			BaseRenderPass* gui_render_pass_ = nullptr;
 
 			//Parallel task used to create gui command buffer while other updates() execute
 			//It's started at post_gui_render() and run during audio and physics update

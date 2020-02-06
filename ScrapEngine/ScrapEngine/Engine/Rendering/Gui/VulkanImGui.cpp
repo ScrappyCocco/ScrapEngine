@@ -5,6 +5,7 @@
 #include <Engine/Rendering/Device/VulkanDevice.h>
 #include <Engine/Rendering/Descriptor/DescriptorPool/GuiDescriptorPool/GuiDescriptorPool.h>
 #include <Engine/Rendering/Memory/VulkanMemoryAllocator.h>
+#include <Engine/Rendering/RenderPass/GuiRenderPass/GuiRenderPass.h>
 
 ScrapEngine::Render::VulkanImGui::VulkanImGui()
 {
@@ -18,6 +19,8 @@ ScrapEngine::Render::VulkanImGui::~VulkanImGui()
 {
 	ImGui::DestroyContext();
 	// Release all Vulkan resources required for rendering imGui
+	//Delete render pass
+	delete gui_render_pass_;
 	//Clear buffers
 	delete vertex_buffer_;
 	delete index_buffer_;
@@ -38,9 +41,13 @@ void ScrapEngine::Render::VulkanImGui::init(const float width, const float heigh
 	io.DisplayFramebufferScale = ImVec2(1.0f, 1.0f);
 }
 
-void ScrapEngine::Render::VulkanImGui::init_resources(VulkanSwapChain* swap_chain, BaseRenderPass* render_pass)
+void ScrapEngine::Render::VulkanImGui::init_resources(VulkanSwapChain* swap_chain)
 {
 	ImGuiIO& io = ImGui::GetIO();
+
+	//Create render pass
+	gui_render_pass_ = new GuiRenderPass(swap_chain->get_swap_chain_image_format(),
+	                                     VulkanDevice::get_instance()->get_msaa_samples());
 
 	// Create font texture
 	unsigned char* font_data;
@@ -106,7 +113,7 @@ void ScrapEngine::Render::VulkanImGui::init_resources(VulkanSwapChain* swap_chai
 	pipeline_ = new GuiVulkanGraphicsPipeline("../assets/shader/compiled_shaders/ui.vert.spv",
 	                                          "../assets/shader/compiled_shaders/ui.frag.spv",
 	                                          descriptor_set_->get_descriptor_set_layout(), sizeof(PushConstBlock),
-	                                          render_pass);
+	                                          gui_render_pass_);
 
 	//Empty frame initialization
 	generate_empty_gui_frame();
@@ -244,4 +251,9 @@ ScrapEngine::Render::GenericBuffer* ScrapEngine::Render::VulkanImGui::get_index_
 ScrapEngine::Render::VulkanImGui::PushConstBlock* ScrapEngine::Render::VulkanImGui::get_push_const_block()
 {
 	return &push_const_block_;
+}
+
+ScrapEngine::Render::BaseRenderPass* ScrapEngine::Render::VulkanImGui::get_render_pass() const
+{
+	return gui_render_pass_;
 }

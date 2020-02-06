@@ -133,7 +133,6 @@ void ScrapEngine::Render::RenderManager::cleanup_swap_chain()
 	}
 	ShaderManager::get_instance()->cleanup_shaders();
 	delete StandardRenderPass::get_instance();
-	delete gui_render_pass_;
 	delete vulkan_render_image_view_;
 	delete vulkan_render_swap_chain_;
 	//Delete shadowmapping stuff
@@ -223,9 +222,6 @@ void ScrapEngine::Render::RenderManager::initialize_vulkan(const game_base_info*
 	StandardRenderPass* vulkan_rendering_pass = StandardRenderPass::get_instance();
 	vulkan_rendering_pass->init(vulkan_render_swap_chain_->get_swap_chain_image_format(),
 	                            vulkan_render_device_->get_msaa_samples());
-	//Gui
-	gui_render_pass_ = new GuiRenderPass(vulkan_render_swap_chain_->get_swap_chain_image_format(),
-	                                     vulkan_render_device_->get_msaa_samples());
 	Debug::DebugLog::print_to_console_log("VulkanRenderPass created");
 	//Create command pools
 	//Main command pool used to generate resources
@@ -291,7 +287,7 @@ void ScrapEngine::Render::RenderManager::initialize_gui(const float width, const
 {
 	gui_render_ = new VulkanImGui();
 	gui_render_->init(width, height);
-	gui_render_->init_resources(vulkan_render_swap_chain_, gui_render_pass_);
+	gui_render_->init_resources(vulkan_render_swap_chain_);
 	gui_render_->generate_loading_gui_frame();
 }
 
@@ -317,7 +313,7 @@ void ScrapEngine::Render::RenderManager::initialize_command_buffers()
 
 void ScrapEngine::Render::RenderManager::initialize_gui_command_buffers()
 {
-	gui_command_buffer_ = new GuiCommandBuffer(gui_render_pass_, gui_buffer_command_pool_);
+	gui_command_buffer_ = new GuiCommandBuffer(gui_render_->get_render_pass(), gui_buffer_command_pool_);
 	gui_command_buffer_task_ = new ParallelGuiCommandBufferCreation();
 	gui_command_buffer_task_->owner = this;
 }

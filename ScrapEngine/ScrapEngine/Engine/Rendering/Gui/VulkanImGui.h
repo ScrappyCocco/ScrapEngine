@@ -31,6 +31,7 @@ namespace ScrapEngine
 			BaseDescriptorPool* descriptor_pool_ = nullptr;
 			GuiDescriptorSet* descriptor_set_ = nullptr;
 			GuiVulkanGraphicsPipeline* pipeline_ = nullptr;
+			BaseRenderPass* gui_render_pass_ = nullptr;
 			//Buffers
 			//I need vectors because i need one for each command buffer (2 in total)
 			GenericBuffer* vertex_buffer_;
@@ -44,7 +45,7 @@ namespace ScrapEngine
 			~VulkanImGui();
 
 			void init(float width, float height);
-			void init_resources(VulkanSwapChain* swap_chain, BaseRenderPass* render_pass);
+			void init_resources(VulkanSwapChain* swap_chain);
 
 			void update_buffers();
 
@@ -60,6 +61,7 @@ namespace ScrapEngine
 			GenericBuffer* get_vertex_buffer() const;
 			GenericBuffer* get_index_buffer() const;
 			PushConstBlock* get_push_const_block();
+			BaseRenderPass* get_render_pass() const;
 		};
 	}
 }
