@@ -2,6 +2,19 @@
 #include <Engine/Rendering/RenderPass/StandardRenderPass/StandardRenderPass.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
 #include <Engine/Debug/DebugLog.h>
+#include <Engine/Rendering/Buffer/FrameBuffer/BaseFrameBuffer.h>
+#include <Engine/Rendering/Model/SkyboxInstance/VulkanSkyboxInstance.h>
+#include <Engine/Rendering/Model/MeshInstance/VulkanMeshInstance.h>
+#include <Engine/Rendering/CommandPool/VulkanCommandPool.h>
+#include <Engine/Rendering/Shadowmapping/Standard/StandardShadowmapping.h>
+#include <Engine/Rendering/RenderPass/ShadowmappingRenderPass/ShadowmappingRenderPass.h>
+#include <Engine/Rendering/Buffer/FrameBuffer/ShadowmappingFrameBuffer/ShadowmappingFrameBuffer.h>
+#include <Engine/Rendering/Pipeline/ShadowmappingPipeline/ShadowmappingPipeline.h>
+#include <Engine/Rendering/Descriptor/DescriptorSet/ShadowmappingDescriptorSet/ShadowmappingDescriptorSet.h>
+#include <Engine/Rendering/Buffer/BufferContainer/IndicesBufferContainer/IndicesBufferContainer.h>
+#include <Engine/Rendering/Buffer/BufferContainer//VertexBufferContainer/VertexBufferContainer.h>
+#include <Engine/Rendering/Camera/Camera.h>
+#include <Engine/Rendering/Model/Material/BasicMaterial.h>
 
 void ScrapEngine::Render::StandardCommandBuffer::pre_shadow_mesh_commands(StandardShadowmapping* shadowmapping)
 {

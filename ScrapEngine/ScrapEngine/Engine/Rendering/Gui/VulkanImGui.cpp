@@ -6,6 +6,13 @@
 #include <Engine/Rendering/Descriptor/DescriptorPool/GuiDescriptorPool/GuiDescriptorPool.h>
 #include <Engine/Rendering/Memory/VulkanMemoryAllocator.h>
 #include <Engine/Rendering/RenderPass/GuiRenderPass/GuiRenderPass.h>
+#include <Engine/Rendering/Texture/TextureImageView/TextureImageView.h>
+#include <Engine/Rendering/Texture/TextureSampler/TextureSampler.h>
+#include <Engine/Rendering/Descriptor/DescriptorPool/BaseDescriptorPool.h>
+#include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
+#include <Engine/Rendering/Descriptor/DescriptorSet/GuiDescriptorSet/GuiDescriptorSet.h>
+#include <Engine/Rendering/Pipeline/GuiPipeline/GuiVulkanGraphicsPipeline.h>
+#include <Engine/Rendering/Buffer/GenericBuffer/GenericBuffer.h>
 
 ScrapEngine::Render::VulkanImGui::VulkanImGui()
 {

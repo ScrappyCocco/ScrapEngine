@@ -1,6 +1,9 @@
 #pragma once
 
-#include <Engine/Rendering/VulkanInclude.h>
+namespace vk
+{
+	class Buffer;
+}
 
 namespace ScrapEngine
 {

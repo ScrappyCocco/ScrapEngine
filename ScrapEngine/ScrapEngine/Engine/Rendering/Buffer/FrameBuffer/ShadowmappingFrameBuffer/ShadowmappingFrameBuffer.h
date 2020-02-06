@@ -1,13 +1,14 @@
 #pragma once
 
 #include <Engine/Rendering/Buffer/FrameBuffer/BaseFrameBuffer.h>
-#include <Engine/Rendering/Buffer/FrameBuffer/ShadowmappingFrameBuffer/ShadowmappingFrameBufferAttachment.h>
-#include <Engine/Rendering/RenderPass/BaseRenderPass.h>
 
 namespace ScrapEngine
 {
 	namespace Render
 	{
+		class BaseRenderPass;
+		class ShadowmappingFrameBufferAttachment;
+
 		class ShadowmappingFrameBuffer : public BaseFrameBuffer
 		{
 		private:

@@ -1,18 +1,21 @@
 #pragma once
 
-#include <Engine/Rendering/Buffer/UniformBuffer/StandardUniformBuffer/StandardUniformBuffer.h>
 #include <Engine/Rendering/Model/Model/VulkanModel.h>
-#include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
-#include <Engine/Rendering/Buffer/BufferContainer/VertexBufferContainer/VertexBufferContainer.h>
-#include <Engine/Rendering/Buffer/BufferContainer/IndicesBufferContainer/IndicesBufferContainer.h>
-#include <Engine/Rendering/Model/Material/SimpleMaterial/SimpleMaterial.h>
 #include <Engine/LogicCore/Math/Transform/STransform.h>
-#include <Engine/Rendering/Shadowmapping/Standard/StandardShadowmapping.h>
 
 namespace ScrapEngine
 {
 	namespace Render
 	{
+		class Camera;
+		class VulkanSwapChain;
+		class StandardDescriptorPool;
+		class ShadowmappingDescriptorSet;
+		class ShadowmappingUniformBuffer;
+		class StandardUniformBuffer;
+		class IndicesBufferContainer;
+		class VertexBufferContainer;
+		class BasicMaterial;
 		class StandardShadowmapping;
 
 		class VulkanMeshInstance

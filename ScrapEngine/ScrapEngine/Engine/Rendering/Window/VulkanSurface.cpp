@@ -1,5 +1,7 @@
 #include <Engine/Rendering/Window/VulkanSurface.h>
 #include <Engine/Debug/DebugLog.h>
+#include <Engine/Rendering/Window/GameWindow.h>
+#include <Engine/Rendering/Instance/VukanInstance.h>
 
 //Init static instance reference
 

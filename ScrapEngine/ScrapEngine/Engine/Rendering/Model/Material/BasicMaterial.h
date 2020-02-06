@@ -1,12 +1,13 @@
 #pragma once
 
 #include <Engine/Rendering/Pipeline/BaseVulkanGraphicsPipeline.h>
-#include <Engine/Rendering/Descriptor/DescriptorSet/BaseDescriptorSet.h>
 
 namespace ScrapEngine
 {
 	namespace Render
 	{
+		class BaseDescriptorSet;
+
 		class BasicMaterial
 		{
 		protected:

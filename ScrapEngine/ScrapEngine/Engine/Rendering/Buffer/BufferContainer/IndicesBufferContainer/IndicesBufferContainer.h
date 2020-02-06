@@ -1,7 +1,7 @@
 #pragma once
 
-#include <Engine/Rendering/VulkanInclude.h>
 #include <Engine/Rendering/Buffer/BufferContainer/BufferContainer.h>
+#include <vector>
 
 namespace ScrapEngine
 {

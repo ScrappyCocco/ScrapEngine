@@ -1,6 +1,5 @@
 #pragma once
 
-#include <Engine/Rendering/VulkanInclude.h>
 #include <Engine/Rendering/Pipeline/BaseVulkanGraphicsPipeline.h>
 
 namespace ScrapEngine

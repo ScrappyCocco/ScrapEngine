@@ -3,12 +3,12 @@
 #include <Engine/Rendering/VulkanInclude.h>
 #include <vector>
 
-#include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
-
 namespace ScrapEngine
 {
 	namespace Render
 	{
+		class VulkanSwapChain;
+
 		class VulkanImageView
 		{
 		private:

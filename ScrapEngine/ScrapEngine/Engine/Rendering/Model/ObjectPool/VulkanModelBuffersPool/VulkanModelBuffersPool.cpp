@@ -3,6 +3,10 @@
 #include <Engine/Rendering/Buffer/VertexBuffer/VertexBuffer.h>
 #include <Engine/Debug/DebugLog.h>
 #include <Engine/Rendering/Buffer/IndexBuffer/IndexBuffer.h>
+#include <Engine/Rendering/Buffer/BufferContainer/VertexBufferContainer/VertexBufferContainer.h>
+#include <Engine/Rendering/Buffer/BufferContainer/IndicesBufferContainer/IndicesBufferContainer.h>
+#include <Engine/Rendering/Model/Model/VulkanModel.h>
+#include <Engine/Rendering/Model/Model/Mesh/Mesh.h>
 
 //Init static instance reference
 

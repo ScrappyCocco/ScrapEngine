@@ -1,10 +1,12 @@
 #pragma once
-#include <Engine/Rendering/Manager/RenderManager.h>
 
 namespace ScrapEngine
 {
 	namespace Render
 	{
+		class RenderManager;
+		class GameWindow;
+
 		class RenderManagerView
 		{
 		private:

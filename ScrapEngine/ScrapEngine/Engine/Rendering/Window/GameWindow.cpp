@@ -1,6 +1,7 @@
 #include <Engine/Rendering/Window/GameWindow.h>
 #include <stb_image.h>
 #include <Engine/Utility/UsefulMethods.h>
+#include <Engine/Input/Manager/InputManager.h>
 
 ScrapEngine::Render::GameWindow::GameWindow(
 	const uint32_t input_width, const uint32_t input_height, const std::string& input_window_title)

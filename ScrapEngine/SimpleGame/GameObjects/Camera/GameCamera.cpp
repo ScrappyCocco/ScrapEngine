@@ -5,6 +5,7 @@
 #include <Engine/Input/Manager/InputManager.h>
 #include <Engine/LogicCore/Components/Manager/ComponentsManager.h>
 #include <Engine/LogicCore/Components/CameraComponent/CameraComponent.h>
+#include <Engine/Rendering/Window/GameWindow.h>
 
 GameCamera::GameCamera(ScrapEngine::Input::InputManager* created_input_managerf,
                        ScrapEngine::Core::ComponentsManager* components_manager,

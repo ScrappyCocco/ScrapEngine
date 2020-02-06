@@ -2,12 +2,13 @@
 
 #include <Engine/Rendering/VulkanInclude.h>
 #include <vector>
-#include <Engine/Rendering/CommandPool/VulkanCommandPool.h>
 
 namespace ScrapEngine
 {
 	namespace Render
 	{
+		class VulkanCommandPool;
+
 		class BaseCommandBuffer
 		{
 		protected:

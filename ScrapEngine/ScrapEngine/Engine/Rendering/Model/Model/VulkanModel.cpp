@@ -3,6 +3,7 @@
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h> // Post processing flags
+#include <Engine/Rendering/Model/Model/Mesh/Mesh.h>
 
 ScrapEngine::Render::VulkanModel::VulkanModel(const std::string& input_model_path)
 {

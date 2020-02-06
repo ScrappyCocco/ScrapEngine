@@ -1,31 +1,34 @@
 #pragma once
 
+#include <Engine/Rendering/VulkanInclude.h>
 #include <Engine/Utility/UsefulTypes.h>
-#include <Engine/Rendering/Window/GameWindow.h>
-#include <Engine/Rendering/Window/VulkanSurface.h>
-#include <Engine/Rendering/Instance/VukanInstance.h>
-#include <Engine/Rendering/Device/VulkanDevice.h>
-#include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
-#include <Engine/Rendering/SwapChain/VulkanImageView.h>
-#include <Engine/Rendering/RenderPass/BaseRenderPass.h>
-#include <Engine/Rendering/Buffer/FrameBuffer/BaseFrameBuffer.h>
-#include <Engine/Rendering/CommandPool/VulkanCommandPool.h>
-#include <Engine/Rendering/Buffer/CommandBuffer/GuiCommandBuffer/GuiCommandBuffer.h>
-#include <Engine/Rendering/Buffer/CommandBuffer/StandardCommandBuffer/StandardCommandBuffer.h>
-#include <Engine/Rendering/Semaphores/VulkanSemaphoresManager.h>
-#include <Engine/Rendering/DepthResources/VulkanDepthResources.h>
-#include <Engine/Rendering/Texture/ColorResources/VulkanColorResources.h>
-#include <Engine/Rendering/Model/MeshInstance/VulkanMeshInstance.h>
-#include <Engine/Rendering/Model/SkyboxInstance/VulkanSkyboxInstance.h>
-#include <Engine/Rendering/Gui/VulkanImGui.h>
 #include <TaskScheduler.h>
 #include <list>
-#include <Engine/Rendering/Shadowmapping/Standard/StandardShadowmapping.h>
 
 namespace ScrapEngine
 {
 	namespace Render
 	{
+		class GuiCommandBuffer;
+		class StandardCommandBuffer;
+		class StandardShadowmapping;
+		class VulkanMeshInstance;
+		class VulkanSkyboxInstance;
+		class Camera;
+		class VulkanImGui;
+		class VulkanSurface;
+		class VulkanColorResources;
+		class VulkanDepthResources;
+		class VulkanSemaphoresManager;
+		class BaseQueue;
+		class VulkanCommandPool;
+		class BaseFrameBuffer;
+		class VulkanImageView;
+		class VulkanSwapChain;
+		class VulkanDevice;
+		class VukanInstance;
+		class GameWindow;
+
 		class RenderManager
 		{
 		private:

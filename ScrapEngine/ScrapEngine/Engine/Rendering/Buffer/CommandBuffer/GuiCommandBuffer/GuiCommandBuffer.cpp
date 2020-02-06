@@ -2,6 +2,13 @@
 #include <Engine/Rendering/Device/VulkanDevice.h>
 #include <imgui.h>
 #include <Engine/Debug/DebugLog.h>
+#include <Engine/Rendering/Buffer/FrameBuffer/BaseFrameBuffer.h>
+#include <Engine/Rendering/Gui/VulkanImGui.h>
+#include <Engine/Rendering/RenderPass/BaseRenderPass.h>
+#include <Engine/Rendering/CommandPool/VulkanCommandPool.h>
+#include <Engine/Rendering/Pipeline/GuiPipeline/GuiVulkanGraphicsPipeline.h>
+#include <Engine/Rendering/Buffer/GenericBuffer/GenericBuffer.h>
+#include <Engine/Rendering/Descriptor/DescriptorSet/GuiDescriptorSet/GuiDescriptorSet.h>
 
 ScrapEngine::Render::GuiCommandBuffer::GuiCommandBuffer(BaseRenderPass* render_pass, VulkanCommandPool* command_pool)
 	: render_pass_ref_(render_pass)

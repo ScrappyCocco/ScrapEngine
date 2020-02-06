@@ -3,6 +3,7 @@
 #include <Engine/Rendering/RenderPass/StandardRenderPass/StandardRenderPass.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
 #include <Engine/Debug/DebugLog.h>
+#include <Engine/Rendering/SwapChain/VulkanImageView.h>
 
 ScrapEngine::Render::StandardFrameBuffer::StandardFrameBuffer(VulkanImageView* input_image_view_ref,
                                                               const vk::Extent2D* input_swap_chain_extent,

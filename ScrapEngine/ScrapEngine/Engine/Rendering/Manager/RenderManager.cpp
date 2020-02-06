@@ -8,11 +8,27 @@
 #include <Engine/Rendering/CommandPool/Singleton/SingletonCommandPool.h>
 #include <Engine/Rendering/CommandPool/Standard/StandardCommandPool.h>
 #include <Engine/Rendering/Shader/ShaderManager.h>
-#include <Engine/Rendering/RenderPass/GuiRenderPass/GuiRenderPass.h>
 #include <Engine/Rendering/RenderPass/StandardRenderPass/StandardRenderPass.h>
 #include <Engine/Rendering/Buffer/CommandBuffer/StandardCommandBuffer/StandardCommandBuffer.h>
 #include <Engine/Rendering/Buffer/CommandBuffer/GuiCommandBuffer/GuiCommandBuffer.h>
 #include <Engine/Rendering/Buffer/FrameBuffer/StandardFrameBuffer/StandardFrameBuffer.h>
+#include <Engine/Rendering/Window/GameWindow.h>
+#include <Engine/Rendering/Window/VulkanSurface.h>
+#include <Engine/Rendering/Instance/VukanInstance.h>
+#include <Engine/Rendering/Device/VulkanDevice.h>
+#include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
+#include <Engine/Rendering/SwapChain/VulkanImageView.h>
+#include <Engine/Rendering/Buffer/FrameBuffer/BaseFrameBuffer.h>
+#include <Engine/Rendering/CommandPool/VulkanCommandPool.h>
+#include <Engine/Rendering/Semaphores/VulkanSemaphoresManager.h>
+#include <Engine/Rendering/DepthResources/VulkanDepthResources.h>
+#include <Engine/Rendering/Texture/ColorResources/VulkanColorResources.h>
+#include <Engine/Rendering/Model/MeshInstance/VulkanMeshInstance.h>
+#include <Engine/Rendering/Model/SkyboxInstance/VulkanSkyboxInstance.h>
+#include <Engine/Rendering/Gui/VulkanImGui.h>
+#include <Engine/Rendering/Shadowmapping/Standard/StandardShadowmapping.h>
+#include <Engine/Rendering/Camera/Camera.h>
+#include <Engine/Rendering/Model/Material/BasicMaterial.h>
 
 void ScrapEngine::Render::RenderManager::ParallelCommandBufferCreation::ExecuteRange(enki::TaskSetPartition range,
                                                                                      uint32_t threadnum)

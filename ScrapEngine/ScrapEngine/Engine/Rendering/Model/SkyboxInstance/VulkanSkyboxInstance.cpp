@@ -2,6 +2,11 @@
 #include <Engine/Debug/DebugLog.h>
 #include <Engine/Rendering/Model/ObjectPool/VulkanModelPool/VulkanModelPool.h>
 #include <Engine/Rendering/Model/ObjectPool/VulkanModelBuffersPool/VulkanModelBuffersPool.h>
+#include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
+#include <Engine/Rendering/Buffer/BufferContainer/VertexBufferContainer/VertexBufferContainer.h>
+#include <Engine/Rendering/Buffer/BufferContainer/IndicesBufferContainer/IndicesBufferContainer.h>
+#include <Engine/Rendering/Model/Material/SkyboxMaterial/SkyboxMaterial.h>
+#include <Engine/Rendering/Buffer/UniformBuffer/SkyboxUniformBuffer/SkyboxUniformBuffer.h>
 
 ScrapEngine::Render::VulkanSkyboxInstance::VulkanSkyboxInstance(const std::string& vertex_shader_path,
                                                                 const std::string& fragment_shader_path,

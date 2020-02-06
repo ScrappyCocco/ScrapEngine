@@ -12,6 +12,7 @@
 #include <Engine/LogicCore/Components/AudioComponent/2dAudioComponent/2DAudioComponent.h>
 #include <Engine/LogicCore/Components/AudioComponent/3dAudioComponent/3DAudioComponent.h>
 #include <Engine/LogicCore/Components/CameraComponent/CameraComponent.h>
+#include <Engine/Rendering/Model/MeshInstance/VulkanMeshInstance.h>
 
 void ScrapEngine::Core::ComponentsManager::set_render_manager(Render::RenderManager* input_render_manager_ref)
 {

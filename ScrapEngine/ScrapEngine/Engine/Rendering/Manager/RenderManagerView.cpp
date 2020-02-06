@@ -1,4 +1,5 @@
 #include <Engine/Rendering/Manager/RenderManagerView.h>
+#include <Engine/Rendering/Manager/RenderManager.h>
 
 ScrapEngine::Render::RenderManagerView::
 RenderManagerView(RenderManager* input_render_manager_ref)

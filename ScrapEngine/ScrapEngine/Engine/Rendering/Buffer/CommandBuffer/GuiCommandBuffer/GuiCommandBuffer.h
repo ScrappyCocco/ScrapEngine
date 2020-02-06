@@ -1,15 +1,15 @@
 #pragma once
 
 #include <Engine/Rendering/Buffer/CommandBuffer/BaseCommandBuffer.h>
-#include <Engine/Rendering/Buffer/FrameBuffer/BaseFrameBuffer.h>
-#include <Engine/Rendering/Gui/VulkanImGui.h>
-#include <Engine/Rendering/RenderPass/BaseRenderPass.h>
-
 
 namespace ScrapEngine
 {
 	namespace Render
 	{
+		class VulkanImGui;
+		class BaseFrameBuffer;
+		class BaseRenderPass;
+
 		class GuiCommandBuffer : public BaseCommandBuffer
 		{
 		private:

@@ -1,13 +1,13 @@
 #pragma once
 
 #include <Engine/Rendering/VulkanInclude.h>
-#include <Engine/Rendering/Buffer/StagingBuffer/BaseStagingBuffer.h>
-
 
 namespace ScrapEngine
 {
 	namespace Render
 	{
+		class BaseStagingBuffer;
+		
 		class BaseTexture
 		{
 		protected:

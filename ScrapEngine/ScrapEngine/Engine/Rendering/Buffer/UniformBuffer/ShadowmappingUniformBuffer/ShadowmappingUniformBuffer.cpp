@@ -1,6 +1,7 @@
 #include <Engine/Rendering/Buffer/UniformBuffer/ShadowmappingUniformBuffer/ShadowmappingUniformBuffer.h>
 #include <Engine/Rendering/Memory/VulkanMemoryAllocator.h>
 #include <glm/gtx/quaternion.hpp>
+#include <Engine/LogicCore/Math/Transform/STransform.h>
 
 ScrapEngine::Render::ShadowmappingUniformBuffer::ShadowmappingUniformBuffer(const size_t swap_chain_images_size)
 {

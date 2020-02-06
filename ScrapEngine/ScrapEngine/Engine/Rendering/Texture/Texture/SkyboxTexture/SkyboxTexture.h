@@ -1,6 +1,5 @@
 #pragma once
 
-#include <Engine/Rendering/VulkanInclude.h>
 #include <string>
 #include <vector>
 #include <Engine/Rendering/Texture/Texture/BaseTexture.h>

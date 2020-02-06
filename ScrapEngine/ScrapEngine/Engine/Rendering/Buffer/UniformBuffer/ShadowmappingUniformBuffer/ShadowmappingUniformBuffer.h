@@ -1,8 +1,15 @@
 #pragma once
 
 #include <Engine/Rendering/Buffer/UniformBuffer/BaseUniformBuffer.h>
-#include <Engine/LogicCore/Math/Transform/STransform.h>
 #include <glm/mat4x4.hpp>
+
+namespace ScrapEngine
+{
+	namespace Core
+	{
+		class STransform;
+	}
+}
 
 namespace ScrapEngine
 {

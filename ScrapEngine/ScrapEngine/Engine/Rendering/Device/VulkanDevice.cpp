@@ -3,6 +3,7 @@
 #include <set>
 #include <Engine/Debug/DebugLog.h>
 #include <Engine/Rendering/Memory/VulkanMemoryAllocator.h>
+#include <Engine/Rendering/ValidationLayers/VulkanValidationLayers.h>
 
 //Init static instance reference
 
