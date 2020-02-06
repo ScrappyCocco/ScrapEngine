@@ -4,7 +4,7 @@
 #include <glm/vec3.hpp>
 
 // Shadowmap texture resolution
-#define SHADOWMAP_DIM 8192
+constexpr int shadowmap_dim = 8192;
 
 namespace ScrapEngine
 {

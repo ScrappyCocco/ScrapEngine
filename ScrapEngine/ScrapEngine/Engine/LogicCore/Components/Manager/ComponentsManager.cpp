@@ -145,7 +145,7 @@ std::vector<ScrapEngine::Core::raycast_result> ScrapEngine::Core::ComponentsMana
 	const std::vector<Physics::RaycastResultInfo> result = physics_manager_ref_->execute_multi_raycast(start, end);
 	std::vector<ScrapEngine::Core::raycast_result> return_info;
 
-	if (result.size() > 0)
+	if (!result.empty())
 	{
 		for (auto element : result)
 		{

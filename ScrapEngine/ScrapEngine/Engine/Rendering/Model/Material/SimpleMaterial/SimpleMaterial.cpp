@@ -1,5 +1,4 @@
 #include <Engine/Rendering/Model/Material/SimpleMaterial/SimpleMaterial.h>
-#include <Engine/Rendering/Pipeline/StandardPipeline/StandardVulkanGraphicsPipeline.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
 #include <Engine/Rendering/Model/ObjectPool/VulkanSimpleMaterialPool/VulkanSimpleMaterialPool.h>
 #include <Engine/Rendering/Descriptor/DescriptorPool/StandardDescriptorPool/StandardDescriptorPool.h>
