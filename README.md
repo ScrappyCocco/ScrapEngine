@@ -2,7 +2,9 @@
 
 ## An engine made of scrap code [/s](https://www.urbandictionary.com/define.php?term=%2Fs)
 
-[![Build Status](https://travis-ci.org/ScrappyCocco/ScrapEngine.svg?branch=master)](https://travis-ci.org/ScrappyCocco/ScrapEngine)
+| Build command  | Status |
+| :---: | :---: |
+| cppcheck | [![Build Status](https://travis-ci.org/ScrappyCocco/ScrapEngine.svg?branch=master)](https://travis-ci.org/ScrappyCocco/ScrapEngine) |
 
 # Description
 I have always been passionate about game development and rendering, and i wanted to go deeper into it. With the arrival of Vulkan, i thought it was a good time to start learning how a game engine works. The development of his game engine started on July 2018, and at the beginning of August 2018 it was able to render the basic triangle. Since then i had to slow down for a few months because of University and its projects, but on August 2019 this repository has been made public with the release of the first working small game tagged as [demo 1](https://github.com/ScrappyCocco/ScrapEngine/releases/tag/demo_1).
@@ -11,7 +13,7 @@ I followed mostly [Alexander Vulkan tutorial](https://vulkan-tutorial.com/) and 
 
 It is a very simple game engine, made mostly to understand the basics of rendering and how to connect multiple parts between them (input-render-audio-physics).
 
-It is not perfect and is not intended to be used in production, is a personal project made to study Vulkan, feel free to modify it if you want.
+It is not perfect and is not intended to be used in production, is a personal project made to study Vulkan, feel free to modify it if you want. If you have any question feel free to open an Issue.
 
 # How to build the engine
 To see how to build the engine from the source code, please read the [wiki page](https://github.com/ScrappyCocco/ScrapEngine/wiki/How-to-build-the-engine).
