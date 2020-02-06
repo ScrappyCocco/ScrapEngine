@@ -1,6 +1,6 @@
 #include "GameCamera.h"
 #include <Engine/Input/KeyboardKeys.h>
-#include "Engine/Debug/DebugLog.h"
+#include <Engine/Debug/DebugLog.h>
 
 GameCamera::GameCamera(ScrapEngine::Input::InputManager* created_input_managerf,
                        ScrapEngine::Core::ComponentsManager* components_manager,

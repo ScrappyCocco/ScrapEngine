@@ -3,6 +3,8 @@
 #include <chrono>
 #include <string>
 #include <Engine/Rendering/VulkanInclude.h>
+#include <Engine/LogicCore/Math/Vector/SVector3.h>
+#include <Engine/LogicCore/Math/Quaternion/SQuaternion.h>
 
 void ScrapEngine::Debug::DebugLog::print_to_console_log(const std::string& log_string)
 {

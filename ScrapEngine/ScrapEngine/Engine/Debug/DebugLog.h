@@ -1,9 +1,17 @@
 #pragma once
 
 #include <iostream>
-#include <glm/mat4x4.hpp>
-#include <Engine/LogicCore/Math/Vector/SVector3.h>
-#include <Engine/LogicCore/Math/Quaternion/SQuaternion.h>
+#include <glm/vec3.hpp>
+#include <glm/ext/quaternion_float.hpp>
+
+namespace ScrapEngine
+{
+	namespace Core
+	{
+		class SQuaternion;
+		class SVector3;
+	}
+}
 
 //Use forward declaration to not include all vulkan
 namespace vk
