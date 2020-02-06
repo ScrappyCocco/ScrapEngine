@@ -1,5 +1,6 @@
 #include <Engine/LogicCore/Math/Quaternion/SQuaternion.h>
 #include <glm/gtc/quaternion.inl>
+#include <Engine/LogicCore/Math/Vector/SVector3.h>
 
 ScrapEngine::Core::SQuaternion::SQuaternion(const glm::quat input)
 {

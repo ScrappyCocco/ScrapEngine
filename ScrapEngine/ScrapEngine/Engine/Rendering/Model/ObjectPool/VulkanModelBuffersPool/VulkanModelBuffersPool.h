@@ -1,15 +1,18 @@
 #pragma once
+
 #include <unordered_map>
-#include <Engine/Rendering/Buffer/BufferContainer/VertexBufferContainer/VertexBufferContainer.h>
-#include <Engine/Rendering/Buffer/BufferContainer/IndicesBufferContainer/IndicesBufferContainer.h>
-#include <Engine/Rendering/Model/Model/VulkanModel.h>
-#include <Engine/Rendering/Buffer/VertexBuffer/VertexBuffer.h>
-#include <Engine/Rendering/Buffer/IndexBuffer/IndexBuffer.h>
+#include <memory>
 
 namespace ScrapEngine
 {
 	namespace Render
 	{
+		class VulkanModel;
+		class IndexBuffer;
+		class VertexBuffer;
+		class IndicesBufferContainer;
+		class VertexBufferContainer;
+
 		class VulkanModelBuffersPool
 		{
 		private:

@@ -1,15 +1,15 @@
 #pragma once
 
 #include <Engine/Rendering/Buffer/CommandBuffer/BaseCommandBuffer.h>
-#include <Engine/Rendering/Buffer/FrameBuffer/BaseFrameBuffer.h>
-#include <Engine/Rendering/Gui/VulkanImGui.h>
-#include <Engine/Rendering/RenderPass/BaseRenderPass.h>
-
 
 namespace ScrapEngine
 {
 	namespace Render
 	{
+		class VulkanImGui;
+		class BaseFrameBuffer;
+		class BaseRenderPass;
+
 		class GuiCommandBuffer : public BaseCommandBuffer
 		{
 		private:
@@ -20,7 +20,7 @@ namespace ScrapEngine
 			~GuiCommandBuffer() = default;
 
 			void init_command_buffer(BaseFrameBuffer* swap_chain_frame_buffer,
-			                         vk::Extent2D* input_swap_chain_extent_ref,
+			                         const vk::Extent2D& input_swap_chain_extent_ref,
 			                         uint32_t current_image);
 
 			void load_ui(VulkanImGui* gui);

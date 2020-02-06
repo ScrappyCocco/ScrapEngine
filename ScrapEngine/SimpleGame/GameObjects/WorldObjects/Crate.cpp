@@ -1,4 +1,8 @@
 #include "Crate.h"
+#include <Engine/LogicCore/Manager/LogicManagerView.h>
+#include <Engine/LogicCore/Components/RigidBodyComponent/BoxRigidBodyComponent/BoxRigidBodyComponent.h>
+#include <Engine/LogicCore/Components/Manager/ComponentsManager.h>
+#include <Engine/LogicCore/Components/MeshComponent/MeshComponent.h>
 
 Crate::Crate(ScrapEngine::Core::LogicManagerView* logic_manager_ref,
              const ScrapEngine::Core::SVector3& start_pos,

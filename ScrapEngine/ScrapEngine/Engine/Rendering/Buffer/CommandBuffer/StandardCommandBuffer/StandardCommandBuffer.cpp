@@ -2,6 +2,19 @@
 #include <Engine/Rendering/RenderPass/StandardRenderPass/StandardRenderPass.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
 #include <Engine/Debug/DebugLog.h>
+#include <Engine/Rendering/Buffer/FrameBuffer/BaseFrameBuffer.h>
+#include <Engine/Rendering/Model/SkyboxInstance/VulkanSkyboxInstance.h>
+#include <Engine/Rendering/Model/MeshInstance/VulkanMeshInstance.h>
+#include <Engine/Rendering/CommandPool/VulkanCommandPool.h>
+#include <Engine/Rendering/Shadowmapping/Standard/StandardShadowmapping.h>
+#include <Engine/Rendering/RenderPass/ShadowmappingRenderPass/ShadowmappingRenderPass.h>
+#include <Engine/Rendering/Buffer/FrameBuffer/ShadowmappingFrameBuffer/ShadowmappingFrameBuffer.h>
+#include <Engine/Rendering/Pipeline/ShadowmappingPipeline/ShadowmappingPipeline.h>
+#include <Engine/Rendering/Descriptor/DescriptorSet/ShadowmappingDescriptorSet/ShadowmappingDescriptorSet.h>
+#include <Engine/Rendering/Buffer/BufferContainer/IndicesBufferContainer/IndicesBufferContainer.h>
+#include <Engine/Rendering/Buffer/BufferContainer//VertexBufferContainer/VertexBufferContainer.h>
+#include <Engine/Rendering/Camera/Camera.h>
+#include <Engine/Rendering/Model/Material/BasicMaterial.h>
 
 void ScrapEngine::Render::StandardCommandBuffer::pre_shadow_mesh_commands(StandardShadowmapping* shadowmapping)
 {
@@ -149,7 +162,7 @@ void ScrapEngine::Render::StandardCommandBuffer::load_mesh_shadow_map(StandardSh
 }
 
 void ScrapEngine::Render::StandardCommandBuffer::init_command_buffer(
-	vk::Extent2D* input_swap_chain_extent_ref, BaseFrameBuffer* swap_chain_frame_buffer)
+	const vk::Extent2D& input_swap_chain_extent_ref, BaseFrameBuffer* swap_chain_frame_buffer)
 {
 	const std::vector<vk::Framebuffer>* swap_chain_framebuffers = swap_chain_frame_buffer->
 		get_framebuffers_vector();
@@ -164,7 +177,7 @@ void ScrapEngine::Render::StandardCommandBuffer::init_command_buffer(
 		render_pass_info_ = vk::RenderPassBeginInfo(
 			*StandardRenderPass::get_instance(),
 			(*swap_chain_framebuffers)[i],
-			vk::Rect2D(vk::Offset2D(), *input_swap_chain_extent_ref)
+			vk::Rect2D(vk::Offset2D(), input_swap_chain_extent_ref)
 		);
 
 		render_pass_info_.clearValueCount = static_cast<uint32_t>(clear_values.size());

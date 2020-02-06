@@ -1,12 +1,13 @@
 #pragma once
 
-#include <Engine/Rendering/SwapChain/VulkanImageView.h>
 #include <Engine/Rendering/Buffer/FrameBuffer/BaseFrameBuffer.h>
 
 namespace ScrapEngine
 {
 	namespace Render
 	{
+		class VulkanImageView;
+
 		class StandardFrameBuffer : public BaseFrameBuffer
 		{
 		public:

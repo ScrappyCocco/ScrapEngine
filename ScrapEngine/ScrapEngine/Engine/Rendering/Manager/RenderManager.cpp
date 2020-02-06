@@ -8,11 +8,27 @@
 #include <Engine/Rendering/CommandPool/Singleton/SingletonCommandPool.h>
 #include <Engine/Rendering/CommandPool/Standard/StandardCommandPool.h>
 #include <Engine/Rendering/Shader/ShaderManager.h>
-#include <Engine/Rendering/RenderPass/GuiRenderPass/GuiRenderPass.h>
 #include <Engine/Rendering/RenderPass/StandardRenderPass/StandardRenderPass.h>
 #include <Engine/Rendering/Buffer/CommandBuffer/StandardCommandBuffer/StandardCommandBuffer.h>
 #include <Engine/Rendering/Buffer/CommandBuffer/GuiCommandBuffer/GuiCommandBuffer.h>
 #include <Engine/Rendering/Buffer/FrameBuffer/StandardFrameBuffer/StandardFrameBuffer.h>
+#include <Engine/Rendering/Window/GameWindow.h>
+#include <Engine/Rendering/Window/VulkanSurface.h>
+#include <Engine/Rendering/Instance/VukanInstance.h>
+#include <Engine/Rendering/Device/VulkanDevice.h>
+#include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
+#include <Engine/Rendering/SwapChain/VulkanImageView.h>
+#include <Engine/Rendering/Buffer/FrameBuffer/BaseFrameBuffer.h>
+#include <Engine/Rendering/CommandPool/VulkanCommandPool.h>
+#include <Engine/Rendering/Semaphores/VulkanSemaphoresManager.h>
+#include <Engine/Rendering/DepthResources/VulkanDepthResources.h>
+#include <Engine/Rendering/Texture/ColorResources/VulkanColorResources.h>
+#include <Engine/Rendering/Model/MeshInstance/VulkanMeshInstance.h>
+#include <Engine/Rendering/Model/SkyboxInstance/VulkanSkyboxInstance.h>
+#include <Engine/Rendering/Gui/VulkanImGui.h>
+#include <Engine/Rendering/Shadowmapping/Standard/StandardShadowmapping.h>
+#include <Engine/Rendering/Camera/Camera.h>
+#include <Engine/Rendering/Model/Material/BasicMaterial.h>
 
 void ScrapEngine::Render::RenderManager::ParallelCommandBufferCreation::ExecuteRange(enki::TaskSetPartition range,
                                                                                      uint32_t threadnum)
@@ -235,11 +251,12 @@ void ScrapEngine::Render::RenderManager::initialize_vulkan(const game_base_info*
 	vulkan_render_color_ = new VulkanColorResources(vulkan_render_device_->get_msaa_samples(),
 	                                                vulkan_render_swap_chain_);
 	Debug::DebugLog::print_to_console_log("VulkanRenderColor created");
-	vulkan_render_depth_ = new VulkanDepthResources(&vulkan_render_swap_chain_->get_swap_chain_extent(),
+	const vk::Extent2D swap_chain_extent = vulkan_render_swap_chain_->get_swap_chain_extent();
+	vulkan_render_depth_ = new VulkanDepthResources(&swap_chain_extent,
 	                                                vulkan_render_device_->get_msaa_samples());
 	Debug::DebugLog::print_to_console_log("VulkanDepthResources created");
 	vulkan_render_frame_buffer_ = new StandardFrameBuffer(vulkan_render_image_view_,
-	                                                      &vulkan_render_swap_chain_->get_swap_chain_extent(),
+	                                                      &swap_chain_extent,
 	                                                      vulkan_render_depth_->get_depth_image_view(),
 	                                                      vulkan_render_color_->get_color_image_view());
 	Debug::DebugLog::print_to_console_log("VulkanFrameBuffer created");
@@ -352,8 +369,9 @@ void ScrapEngine::Render::RenderManager::rebuild_gui_command_buffer(const bool f
 		image_index_to_use = last_image_index_;
 	}
 	gui_command_buffer_->begin_command_buffer(vk::CommandBufferUsageFlagBits::eOneTimeSubmit);
+	const vk::Extent2D swap_chain_extent = vulkan_render_swap_chain_->get_swap_chain_extent();
 	gui_command_buffer_->init_command_buffer(vulkan_render_frame_buffer_,
-	                                         &vulkan_render_swap_chain_->get_swap_chain_extent(),
+	                                         swap_chain_extent,
 	                                         image_index_to_use);
 	//Load ui
 	gui_command_buffer_->load_ui(gui_render_);
@@ -427,7 +445,8 @@ void ScrapEngine::Render::RenderManager::create_command_buffer(const bool flip_f
 	//End the shadowmapping render pass
 	command_buffers_[index].command_buffer->end_command_buffer_render_pass();
 	//Re-init the standard command buffer render pass
-	command_buffers_[index].command_buffer->init_command_buffer(&vulkan_render_swap_chain_->get_swap_chain_extent(),
+	const vk::Extent2D swap_chain_extent = vulkan_render_swap_chain_->get_swap_chain_extent();
+	command_buffers_[index].command_buffer->init_command_buffer(vulkan_render_swap_chain_->get_swap_chain_extent(),
 	                                                            vulkan_render_frame_buffer_);
 	//Skybox
 	if (skybox_)

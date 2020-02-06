@@ -1,7 +1,6 @@
 #pragma once
 
-#include <Engine/LogicCore/Math/Vector/SVector3.h>
-#include <Engine/Physics/RigidBody/RigidBody.h>
+#include <Engine/Physics/PhysicsInclude.h>
 #include <Engine/Physics/Raycast/RaycastResultInfo.h>
 #include <vector>
 

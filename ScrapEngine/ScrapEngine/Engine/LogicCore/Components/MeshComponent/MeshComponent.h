@@ -1,7 +1,14 @@
 #pragma once
 
 #include <Engine/LogicCore/Components/SComponent.h>
-#include <Engine/Rendering/Model/MeshInstance/VulkanMeshInstance.h>
+
+namespace ScrapEngine
+{
+	namespace Render
+	{
+		class VulkanMeshInstance;
+	}
+}
 
 namespace ScrapEngine
 {

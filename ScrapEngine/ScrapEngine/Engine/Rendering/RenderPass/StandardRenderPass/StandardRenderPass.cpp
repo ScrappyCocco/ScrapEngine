@@ -2,7 +2,6 @@
 #include <array>
 #include <Engine/Rendering/DepthResources/VulkanDepthResources.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
-#include <Engine/Rendering/Shadowmapping/Standard/StandardShadowmapping.h>
 #include <Engine/Debug/DebugLog.h>
 
 //Init static instance reference

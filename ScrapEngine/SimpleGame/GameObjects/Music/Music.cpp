@@ -1,4 +1,6 @@
 #include "Music.h"
+#include <Engine/LogicCore/Components/Manager/ComponentsManager.h>
+#include <Engine/LogicCore/Components/AudioComponent/2dAudioComponent/2DAudioComponent.h>
 
 Music::Music(ScrapEngine::Core::ComponentsManager* input_component_manager)
 	: SGameObject("Music object")

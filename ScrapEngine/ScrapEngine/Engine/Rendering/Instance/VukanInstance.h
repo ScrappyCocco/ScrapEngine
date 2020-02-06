@@ -1,7 +1,6 @@
 #pragma once
 
 #include <Engine/Rendering/VulkanInclude.h>
-#include <Engine/Rendering/ValidationLayers/VulkanValidationLayers.h>
 #include <string>
 #include <vector>
 
@@ -9,6 +8,8 @@ namespace ScrapEngine
 {
 	namespace Render
 	{
+		class VulkanValidationLayers;
+
 		class VukanInstance
 		{
 		private:

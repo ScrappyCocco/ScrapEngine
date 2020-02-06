@@ -1,12 +1,13 @@
 #pragma once
 
 #include <Engine/Rendering/VulkanInclude.h>
-#include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
 
 namespace ScrapEngine
 {
 	namespace Render
 	{
+		class VulkanSwapChain;
+
 		class VulkanColorResources
 		{
 		private:

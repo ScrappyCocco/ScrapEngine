@@ -2,6 +2,15 @@
 #include <chrono>
 #include <Engine/Debug/DebugLog.h>
 #include <Engine/Input/Gui/GuiInput.h>
+#include <Engine/Rendering/Manager/RenderManager.h>
+#include <Engine/Rendering/Manager/RenderManagerView.h>
+#include <Engine/LogicCore/Manager/LogicManager.h>
+#include <Engine/LogicCore/Manager/LogicManagerView.h>
+#include <Engine/Audio/Manager/AudioManager.h>
+#include <Engine/Physics/Manager/PhysicsManager.h>
+#include <Engine/LogicCore/Components/Manager/ComponentsManager.h>
+#include <Engine/Rendering/Window/GameWindow.h>
+#include <Engine/Input/Manager/InputManager.h>
 
 ScrapEngine::Manager::EngineManager::EngineManager(const std::string& app_name, const int app_version,
                                                    const uint32_t window_width,

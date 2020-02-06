@@ -1,4 +1,5 @@
 #include <Engine/LogicCore/Components/AudioComponent/AudioComponent.h>
+#include <Engine/Audio/Source/AudioSource.h>
 
 ScrapEngine::Core::AudioComponent::AudioComponent(Audio::AudioSource* input_audio_source)
 	: SComponent("AudioComponent"), audio_source_(input_audio_source)

@@ -1,8 +1,8 @@
 #pragma once
 
 #include <Engine/Rendering/VulkanInclude.h>
-#include <vector>
 #include <Engine/Rendering/Base/Vertex.h>
+#include <vector>
 
 namespace ScrapEngine
 {

@@ -2,12 +2,13 @@
 
 #include <string>
 #include <vector>
-#include <Engine/Rendering/Model/Model/Mesh/Mesh.h>
 
 namespace ScrapEngine
 {
 	namespace Render
 	{
+		class Mesh;
+
 		class VulkanModel
 		{
 		private:

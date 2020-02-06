@@ -1,6 +1,6 @@
 #include <Engine/Physics/CollisionBody/CollisionBody.h>
 #include <Engine/Physics/Utils/ConversionUtils.h>
-
+#include <Engine/Physics/CollisionShape/CollisionShape.h>
 
 ScrapEngine::Physics::CollisionBody::~CollisionBody()
 {

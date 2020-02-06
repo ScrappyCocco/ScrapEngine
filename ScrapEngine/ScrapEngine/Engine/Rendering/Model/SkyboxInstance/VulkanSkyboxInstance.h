@@ -1,15 +1,20 @@
 #pragma once
 
 #include <Engine/Rendering/Model/Model/VulkanModel.h>
-#include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
-#include <Engine/Rendering/Buffer/BufferContainer/VertexBufferContainer/VertexBufferContainer.h>
-#include <Engine/Rendering/Buffer/BufferContainer/IndicesBufferContainer/IndicesBufferContainer.h>
-#include <Engine/Rendering/Model/Material/SkyboxMaterial/SkyboxMaterial.h>
+#include <Engine/LogicCore/Math/Transform/STransform.h>
 
 namespace ScrapEngine
 {
 	namespace Render
 	{
+		class Camera;
+		class VulkanSwapChain;
+		class IndicesBufferContainer;
+		class VertexBufferContainer;
+		class SkyboxMaterial;
+		class SkyboxUniformBuffer;
+		class BasicMaterial;
+
 		class VulkanSkyboxInstance
 		{
 		private:

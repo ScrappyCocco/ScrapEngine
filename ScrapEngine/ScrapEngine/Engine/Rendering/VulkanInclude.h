@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef SCRAPENGINE_INCLUDE_VULKAN
+#define SCRAPENGINE_INCLUDE_VULKAN
+
 //---------------------------
 // VULKAN HPP
 // 
@@ -28,3 +31,5 @@
 //---------------------------
 
 #include <vk_mem_alloc.h>
+
+#endif

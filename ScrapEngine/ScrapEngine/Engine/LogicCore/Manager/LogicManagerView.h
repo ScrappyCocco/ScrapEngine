@@ -1,14 +1,38 @@
 #pragma once
 
-#include <Engine/Rendering/Manager/RenderManager.h>
-#include <Engine/LogicCore/Components/Manager/ComponentsManager.h>
-#include <Engine/LogicCore/Scene/SceneManager.h>
-#include <Engine/LogicCore/Manager/LogicManager.h>
+namespace ScrapEngine
+{
+	namespace Audio
+	{
+		class AudioManager;
+	}
+}
+
+namespace ScrapEngine
+{
+	namespace Physics
+	{
+		class PhysicsManager;
+	}
+}
+
+namespace ScrapEngine
+{
+	namespace Render
+	{
+		class RenderManager;
+	}
+}
 
 namespace ScrapEngine
 {
 	namespace Core
 	{
+		class SGameObject;
+		class SceneManager;
+		class ComponentsManager;
+		class LogicManager;
+
 		class LogicManagerView
 		{
 		private:

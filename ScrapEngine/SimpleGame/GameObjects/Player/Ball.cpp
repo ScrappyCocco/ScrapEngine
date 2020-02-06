@@ -1,5 +1,9 @@
 #include "Ball.h"
 #include <Engine/Input/KeyboardKeys.h>
+#include <Engine/Input/Manager/InputManager.h>
+#include <Engine/LogicCore/Components/RigidBodyComponent/SphereRigidBodyComponent/SphereRigidBodyComponent.h>
+#include <Engine/LogicCore/Components/MeshComponent/MeshComponent.h>
+#include <Engine/LogicCore/Components/Manager/ComponentsManager.h>
 
 Ball::Ball(ScrapEngine::Core::ComponentsManager* input_component_manager,
            ScrapEngine::Input::InputManager* created_input_managerf)

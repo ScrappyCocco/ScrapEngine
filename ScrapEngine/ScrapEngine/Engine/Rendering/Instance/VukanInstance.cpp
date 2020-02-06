@@ -2,9 +2,11 @@
 
 #ifndef GLFW_INCLUDE_VULKAN
 #define GLFW_INCLUDE_VULKAN
-#endif
 #include <GLFW/glfw3.h>
+#endif
+
 #include <Engine/Debug/DebugLog.h>
+#include <Engine/Rendering/ValidationLayers/VulkanValidationLayers.h>
 
 //Init static instance reference
 

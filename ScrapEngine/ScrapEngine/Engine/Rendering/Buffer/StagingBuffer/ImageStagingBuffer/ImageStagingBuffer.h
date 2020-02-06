@@ -1,6 +1,5 @@
 #pragma once
 
-#include <Engine/Rendering/VulkanInclude.h>
 #include <stb_image.h>
 #include <Engine/Rendering/Buffer/StagingBuffer/BaseStagingBuffer.h>
 

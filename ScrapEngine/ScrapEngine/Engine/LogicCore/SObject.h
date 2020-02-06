@@ -2,12 +2,13 @@
 
 #include <string>
 #include <glm/mat4x4.hpp>
-#include <Engine/LogicCore/Math/Transform/STransform.h>
 
 namespace ScrapEngine
 {
 	namespace Core
 	{
+		class STransform;
+
 		class SObject
 		{
 		private:

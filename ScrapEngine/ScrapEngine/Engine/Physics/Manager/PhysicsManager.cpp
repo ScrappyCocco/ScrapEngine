@@ -2,6 +2,11 @@
 #include <Engine/Physics/CollisionShape/BoxShape/BoxShape.h>
 #include <Engine/Physics/CollisionShape/SphereShape/SphereShape.h>
 #include <Engine/Physics/CollisionShape/CapsuleShape/CapsuleShape.h>
+#include <Engine/Physics/CollisionBody/CollisionBody.h>
+#include <Engine/Physics/Raycast/SingleRaycast/SingleRaycast.h>
+#include <Engine/Physics/Raycast/MultiRaycast/MultiRaycast.h>
+#include <Engine/Physics/CollisionWorld/DynamicsWorld/DiscreteDynamicsWorld.h>
+#include <Engine/Physics/RigidBody/RigidBody.h>
 #include <algorithm>
 
 ScrapEngine::Physics::RigidBody* ScrapEngine::Physics::PhysicsManager::create_rigidbody(

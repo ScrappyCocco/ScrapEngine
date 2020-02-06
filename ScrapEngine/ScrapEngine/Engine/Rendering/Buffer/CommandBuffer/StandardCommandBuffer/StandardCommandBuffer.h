@@ -1,16 +1,17 @@
 #pragma once
 
 #include <Engine/Rendering/Buffer/CommandBuffer/BaseCommandBuffer.h>
-#include <Engine/Rendering/Buffer/FrameBuffer/BaseFrameBuffer.h>
-#include <Engine/Rendering/Model/SkyboxInstance/VulkanSkyboxInstance.h>
-#include <Engine/Rendering/Model/MeshInstance/VulkanMeshInstance.h>
-#include <Engine/Rendering/CommandPool/VulkanCommandPool.h>
-#include <Engine/Rendering/Shadowmapping/Standard/StandardShadowmapping.h>
 
 namespace ScrapEngine
 {
 	namespace Render
 	{
+		class VulkanSkyboxInstance;
+		class BaseFrameBuffer;
+		class VulkanMeshInstance;
+		class StandardShadowmapping;
+		class Camera;
+
 		class StandardCommandBuffer : public BaseCommandBuffer
 		{
 		private:
@@ -30,7 +31,7 @@ namespace ScrapEngine
 			void load_mesh_shadow_map(StandardShadowmapping* shadowmapping,
 			                          VulkanMeshInstance* mesh);
 
-			void init_command_buffer(vk::Extent2D* input_swap_chain_extent_ref,
+			void init_command_buffer(const vk::Extent2D& input_swap_chain_extent_ref,
 			                         BaseFrameBuffer* swap_chain_frame_buffer);
 			void init_current_camera(Camera* current_camera);
 

@@ -1,5 +1,12 @@
 #include <Engine/Rendering/Shadowmapping/Standard/StandardShadowmapping.h>
 #include <Engine/Rendering/Base/Vertex.h>
+#include <Engine/Rendering/RenderPass/ShadowmappingRenderPass/ShadowmappingRenderPass.h>
+#include <Engine/Rendering/Buffer/FrameBuffer/ShadowmappingFrameBuffer/ShadowmappingFrameBuffer.h>
+#include <Engine/Rendering/Descriptor/DescriptorSet/ShadowmappingDescriptorSet/ShadowmappingDescriptorSet.h>
+#include <Engine/Rendering/Buffer/UniformBuffer/ShadowmappingUniformBuffer/ShadowmappingUniformBuffer.h>
+#include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
+#include <Engine/Rendering/Pipeline/ShadowmappingPipeline/ShadowmappingPipeline.h>
+#include <Engine/Rendering/Descriptor/DescriptorPool/StandardDescriptorPool/StandardDescriptorPool.h>
 #include <Engine/Rendering/DepthResources/VulkanDepthResources.h>
 
 ScrapEngine::Render::StandardShadowmapping::StandardShadowmapping(VulkanSwapChain* swap_chain)
@@ -9,16 +16,16 @@ ScrapEngine::Render::StandardShadowmapping::StandardShadowmapping(VulkanSwapChai
 	offscreen_descriptor_pool_ = new StandardDescriptorPool(size);
 
 	offscreen_render_pass_ = new ShadowmappingRenderPass(depth_format_);
-	offscreen_frame_buffer_ = new ShadowmappingFrameBuffer(SHADOWMAP_DIM, SHADOWMAP_DIM,
+	offscreen_frame_buffer_ = new ShadowmappingFrameBuffer(shadowmap_dim, shadowmap_dim,
 	                                                       depth_format_, shadowmap_filter_, offscreen_render_pass_);
 
 	offscreen_descriptor_set_ = new ShadowmappingDescriptorSet();
 
-	vk::Extent2D shadowmapping_extent(SHADOWMAP_DIM, SHADOWMAP_DIM);
+	const vk::Extent2D shadowmapping_extent(shadowmap_dim, shadowmap_dim);
 
 	offscreen_pipeline_ = new ShadowmappingPipeline("../assets/shader/compiled_shaders/offscreen.vert.spv",
 	                                                offscreen_descriptor_set_->get_descriptor_set_layout(),
-	                                                &shadowmapping_extent,
+	                                                shadowmapping_extent,
 	                                                offscreen_render_pass_
 	);
 }
@@ -81,7 +88,7 @@ ScrapEngine::Render::ShadowmappingPipeline* ScrapEngine::Render::StandardShadowm
 
 vk::Extent2D ScrapEngine::Render::StandardShadowmapping::get_shadow_map_extent()
 {
-	return vk::Extent2D(SHADOWMAP_DIM, SHADOWMAP_DIM);
+	return vk::Extent2D(shadowmap_dim, shadowmap_dim);
 }
 
 float ScrapEngine::Render::StandardShadowmapping::get_z_near() const

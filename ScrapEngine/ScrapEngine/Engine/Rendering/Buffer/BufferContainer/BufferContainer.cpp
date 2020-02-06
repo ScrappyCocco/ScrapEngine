@@ -1,4 +1,5 @@
 #include <Engine/Rendering/Buffer/BufferContainer/BufferContainer.h>
+#include <Engine/Rendering/VulkanInclude.h>
 
 ScrapEngine::Render::BufferContainer::BufferContainer(vk::Buffer* input_buffer) : buffer_(input_buffer)
 {

@@ -1,4 +1,8 @@
 #include "Terrain.h"
+#include <Engine/LogicCore/Components/RigidBodyComponent/BoxRigidBodyComponent/BoxRigidBodyComponent.h>
+#include <Engine/LogicCore/Components/Manager/ComponentsManager.h>
+#include <Engine/LogicCore/Components/MeshComponent/MeshComponent.h>
+#include <Engine/Physics/RigidBody/RigidBody.h>
 
 Terrain::Terrain(ScrapEngine::Core::ComponentsManager* input_component_manager,
                  const ScrapEngine::Core::SVector3& position,

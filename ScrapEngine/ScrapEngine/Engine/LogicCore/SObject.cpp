@@ -1,5 +1,6 @@
 #include <Engine/LogicCore/SObject.h>
 #include <glm/gtx/transform.hpp>
+#include <Engine/LogicCore/Math/Transform/STransform.h>
 
 glm::mat4 ScrapEngine::Core::SObject::generate_transform_matrix(const STransform& transform) const
 {

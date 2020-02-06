@@ -1,8 +1,6 @@
 #pragma once
 
-#include <Engine/Physics/RigidBody/RigidBody.h>
 #include <Engine/LogicCore/Components/RigidBodyComponent/RigidBodyComponent.h>
-
 
 namespace ScrapEngine
 {

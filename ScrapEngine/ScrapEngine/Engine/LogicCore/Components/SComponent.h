@@ -7,7 +7,6 @@ namespace ScrapEngine
 {
 	namespace Core
 	{
-		//Forward declaration to avoid include-loop
 		class SGameObject;
 
 		class SComponent : public SObject

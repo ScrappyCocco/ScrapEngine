@@ -3,6 +3,7 @@
 #include <Engine/Rendering/Device/VulkanDevice.h>
 #include <imgui.h>
 #include <Engine/Debug/DebugLog.h>
+#include <Engine/Rendering/RenderPass/BaseRenderPass.h>
 
 ScrapEngine::Render::GuiVulkanGraphicsPipeline::GuiVulkanGraphicsPipeline(const char* vertex_shader,
                                                                           const char* fragment_shader,

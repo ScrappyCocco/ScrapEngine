@@ -1,12 +1,13 @@
 #pragma once
 
-#include <Engine/Rendering/Window/GameWindow.h>
-#include <Engine/Rendering/Instance/VukanInstance.h>
+#include <Engine/Rendering/VulkanInclude.h>
 
 namespace ScrapEngine
 {
 	namespace Render
 	{
+		class GameWindow;
+
 		class VulkanSurface
 		{
 		private:

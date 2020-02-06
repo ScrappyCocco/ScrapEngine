@@ -1,19 +1,21 @@
 #pragma once
 
 #include <Engine/Rendering/VulkanInclude.h>
-#include <Engine/Rendering/Texture/TextureImageView/TextureImageView.h>
-#include <Engine/Rendering/Texture/TextureSampler/TextureSampler.h>
-#include <Engine/Rendering/Descriptor/DescriptorPool/BaseDescriptorPool.h>
-#include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
-#include <Engine/Rendering/Descriptor/DescriptorSet/GuiDescriptorSet/GuiDescriptorSet.h>
-#include <Engine/Rendering/Pipeline/GuiPipeline/GuiVulkanGraphicsPipeline.h>
-#include <Engine/Rendering/Buffer/GenericBuffer/GenericBuffer.h>
 #include <glm/vec2.hpp>
 
 namespace ScrapEngine
 {
 	namespace Render
 	{
+		class VulkanSwapChain;
+		class GenericBuffer;
+		class BaseRenderPass;
+		class GuiVulkanGraphicsPipeline;
+		class GuiDescriptorSet;
+		class BaseDescriptorPool;
+		class TextureSampler;
+		class TextureImageView;
+
 		class VulkanImGui
 		{
 		public:

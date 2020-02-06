@@ -1,4 +1,8 @@
 #include <Engine/LogicCore/Manager/LogicManagerView.h>
+#include <Engine/Rendering/Manager/RenderManager.h>
+#include <Engine/LogicCore/Components/Manager/ComponentsManager.h>
+#include <Engine/LogicCore/Scene/SceneManager.h>
+#include <Engine/LogicCore/Manager/LogicManager.h>
 
 ScrapEngine::Core::LogicManagerView::LogicManagerView(Render::RenderManager* input_render_manager_ref,
                                                       LogicManager* input_logic_manager_ref)

@@ -1,14 +1,22 @@
 #pragma once
 
+//This MUST remain here for macro definitions
 #include <Engine/Rendering/Instance/VukanInstance.h>
 
 #ifndef GLFW_INCLUDE_VULKAN
 #define GLFW_INCLUDE_VULKAN
-#endif
 #include <GLFW/glfw3.h>
+#endif
 
-#include <Engine/Input/Manager/InputManager.h>
 #include <string>
+
+namespace ScrapEngine
+{
+	namespace Input
+	{
+		class InputManager;
+	}
+}
 
 namespace ScrapEngine
 {

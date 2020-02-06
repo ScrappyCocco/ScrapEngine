@@ -1,11 +1,13 @@
 #pragma once
-#include <Engine/LogicCore/Math/Vector/SVector3.h>
+
 #include <glm/ext/quaternion_float.hpp>
 
 namespace ScrapEngine
 {
 	namespace Core
 	{
+		class SVector3;
+
 		class SQuaternion
 		{
 		private:

@@ -1,12 +1,14 @@
 #pragma once
 
-#include <Engine/Physics/CollisionShape/CollisionShape.h>
+#include <Engine/Physics/PhysicsInclude.h>
 #include <Engine/LogicCore/Math/Transform/STransform.h>
 
 namespace ScrapEngine
 {
 	namespace Physics
 	{
+		class CollisionShape;
+
 		enum class RigidBody_Types
 		{
 			static_rigidbody = static_cast<int>(rp3d::BodyType::STATIC),
@@ -43,7 +45,7 @@ namespace ScrapEngine
 			//Utils functions for engine
 			rp3d::RigidBody* get_rigidbody() const;
 			CollisionShape* get_collision_shape() const;
-			
+
 			Core::STransform get_updated_transform(float factor);
 			void set_new_transform(const Core::STransform& transform) const;
 			void set_new_location(const Core::SVector3& location) const;

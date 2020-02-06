@@ -1,4 +1,7 @@
 #include "Trigger.h"
+#include <Engine/LogicCore/Components/Manager/ComponentsManager.h>
+#include <Engine/LogicCore/Components/TriggerComponent/BoxTriggerComponent/BoxTriggerComponent.h>
+#include <Engine/LogicCore/Components/RigidBodyComponent/RigidBodyComponent.h>
 
 Trigger::Trigger(ScrapEngine::Core::ComponentsManager* input_component_manager)
 	: SGameObject("Respawn Trigger game object")

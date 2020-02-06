@@ -1,5 +1,10 @@
 #include "FinishMenu.h"
 #include "imgui.h"
+#include <Engine/LogicCore/Manager/LogicManagerView.h>
+#include <Engine/LogicCore/Components/TriggerComponent/BoxTriggerComponent/BoxTriggerComponent.h>
+#include <Engine/Rendering/Window/GameWindow.h>
+#include <Engine/LogicCore/Components/RigidBodyComponent/RigidBodyComponent.h>
+#include <Engine/LogicCore/Components/Manager/ComponentsManager.h>
 
 FinishTriggerMenu::FinishTriggerMenu(ScrapEngine::Core::LogicManagerView* logic_view, Ball* player,
                                      ScrapEngine::Render::GameWindow* window_ref, ScoreManager* score_manager)

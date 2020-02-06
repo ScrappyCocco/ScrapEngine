@@ -1,13 +1,14 @@
 #pragma once
 
 #include <Engine/LogicCore/SObject.h>
+#include <Engine/LogicCore/Math/Transform/STransform.h>
 #include <vector>
 
 namespace ScrapEngine
 {
 	namespace Core
 	{
-		//Forward declaration to avoid include-loop
+		class SVector3;
 		class SComponent;
 
 		class SGameObject : public SObject

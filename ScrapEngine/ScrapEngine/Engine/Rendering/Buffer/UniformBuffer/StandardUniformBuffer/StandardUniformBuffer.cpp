@@ -1,9 +1,10 @@
 #include <Engine/Rendering/Buffer/UniformBuffer/StandardUniformBuffer/StandardUniformBuffer.h>
-#include <Engine/Debug/DebugLog.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include <Engine/Rendering/Device/VulkanDevice.h>
 #include <glm/gtx/quaternion.hpp>
 #include <Engine/Rendering/Memory/VulkanMemoryAllocator.h>
+#include <Engine/LogicCore/Math/Transform/STransform.h>
+#include <Engine/Rendering/Camera/Camera.h>
 
 ScrapEngine::Render::StandardUniformBuffer::StandardUniformBuffer(const size_t swap_chain_images_size)
 {

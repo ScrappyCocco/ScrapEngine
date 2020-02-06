@@ -1,17 +1,18 @@
 #pragma once
 
 #include <Engine/Rendering/Model/Material/BasicMaterial.h>
-#include <Engine/Rendering/Texture/TextureSampler/TextureSampler.h>
-#include <Engine/Rendering/Texture/TextureImageView/TextureImageView.h>
-#include <Engine/Rendering/Descriptor/DescriptorPool/BaseDescriptorPool.h>
-#include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
-#include <Engine/Rendering/Texture/Texture/BaseTexture.h>
-#include <Engine/Rendering/Buffer/UniformBuffer/SkyboxUniformBuffer/SkyboxUniformBuffer.h>
 
 namespace ScrapEngine
 {
 	namespace Render
 	{
+		class SkyboxUniformBuffer;
+		class VulkanSwapChain;
+		class BaseDescriptorPool;
+		class TextureSampler;
+		class TextureImageView;
+		class BaseTexture;
+
 		class SkyboxMaterial : public BasicMaterial
 		{
 		private:

@@ -1,4 +1,7 @@
 #include <Engine/LogicCore/Components/RigidBodyComponent/RigidBodyComponent.h>
+#include <Engine/LogicCore/Components/MeshComponent/MeshComponent.h>
+#include <Engine/Physics/RigidBody/RigidBody.h>
+#include <Engine/LogicCore/Math/Vector/SVector3.h>
 
 ScrapEngine::Core::RigidBodyComponent::RigidBodyComponent(Physics::RigidBody* rigidbody)
 	: SComponent("RigidbodyComponent"), rigidbody_(rigidbody)

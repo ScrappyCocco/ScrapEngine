@@ -1,4 +1,10 @@
 #include "Coin.h"
+#include <Engine/LogicCore/Manager/LogicManagerView.h>
+#include <Engine/LogicCore/Components/Manager/ComponentsManager.h>
+#include <Engine/LogicCore/Components/AudioComponent/3dAudioComponent/3DAudioComponent.h>
+#include <Engine/LogicCore/Components/MeshComponent/MeshComponent.h>
+#include <Engine/LogicCore/Components//RigidBodyComponent/RigidBodyComponent.h>
+#include <Engine/LogicCore/Components/TriggerComponent/BoxTriggerComponent/BoxTriggerComponent.h>
 
 Coin::Coin(ScrapEngine::Core::LogicManagerView* logic_manager_ref,
            const ScrapEngine::Core::SVector3& start_pos,

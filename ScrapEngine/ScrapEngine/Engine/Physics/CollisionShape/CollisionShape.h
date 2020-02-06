@@ -1,6 +1,9 @@
 #pragma once
 
-#include <Engine/Physics/PhysicsInclude.h>
+namespace reactphysics3d
+{
+	class CollisionShape;
+}
 
 namespace ScrapEngine
 {

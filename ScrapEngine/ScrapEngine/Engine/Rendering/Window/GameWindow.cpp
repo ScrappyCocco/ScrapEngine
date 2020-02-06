@@ -1,6 +1,7 @@
 #include <Engine/Rendering/Window/GameWindow.h>
 #include <stb_image.h>
 #include <Engine/Utility/UsefulMethods.h>
+#include <Engine/Input/Manager/InputManager.h>
 
 ScrapEngine::Render::GameWindow::GameWindow(
 	const uint32_t input_width, const uint32_t input_height, const std::string& input_window_title)
@@ -72,7 +73,8 @@ void ScrapEngine::Render::GameWindow::set_window_title(const std::string& title)
 
 void ScrapEngine::Render::GameWindow::set_window_icon(const std::string& path_to_file) const
 {
-	glfwSetWindowIcon(window_, 1, &Utility::UsefulMethods::load_icon(path_to_file));
+	GLFWimage icon = Utility::UsefulMethods::load_icon(path_to_file);
+	glfwSetWindowIcon(window_, 1, &icon);
 }
 
 void ScrapEngine::Render::GameWindow::close_window() const

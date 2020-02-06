@@ -1,6 +1,6 @@
 #include <Engine/Physics/RigidBody/RigidBody.h>
-#include <Engine/Debug/DebugLog.h>
 #include <glm/gtc/quaternion.inl>
+#include <Engine/Physics/CollisionShape/CollisionShape.h>
 #include <Engine/Physics/Utils/ConversionUtils.h>
 
 ScrapEngine::Physics::RigidBody::~RigidBody()

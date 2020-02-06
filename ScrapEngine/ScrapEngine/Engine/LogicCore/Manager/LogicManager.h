@@ -1,11 +1,13 @@
 #pragma once
 
-#include <Engine/LogicCore/GameObject/SGameObject.h>
+#include <vector>
 
 namespace ScrapEngine
 {
 	namespace Core
 	{
+		class SGameObject;
+
 		class LogicManager
 		{
 		private:

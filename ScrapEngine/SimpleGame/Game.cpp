@@ -1,6 +1,12 @@
 #include <iostream>
 #include <Engine/Manager/EngineManager.h>
 #include <Engine/Input/Manager/InputManager.h>
+#include <Engine/LogicCore/Scene/SceneManager.h>
+#include <Engine/Rendering/Window/GameWindow.h>
+#include <Engine/Rendering/Manager/RenderManagerView.h>
+#include <Engine/LogicCore/Manager/LogicManagerView.h>
+#include <Engine/LogicCore/Components/Manager/ComponentsManager.h>
+
 #include "GameObjects/Camera/GameCamera.h"
 #include "GameObjects/Player/Ball.h"
 #include "GameObjects/RespawnTrigger/Trigger.h"

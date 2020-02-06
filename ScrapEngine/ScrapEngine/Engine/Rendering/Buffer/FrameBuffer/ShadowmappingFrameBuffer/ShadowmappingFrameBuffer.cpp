@@ -1,8 +1,9 @@
 #include <Engine/Rendering/Buffer/FrameBuffer/ShadowmappingFrameBuffer/ShadowmappingFrameBuffer.h>
 #include <array>
-#include <Engine/Rendering/RenderPass/ShadowmappingRenderPass/ShadowmappingRenderPass.h>
 #include <Engine/Rendering/Device/VulkanDevice.h>
 #include <Engine/Debug/DebugLog.h>
+#include <Engine/Rendering/Buffer/FrameBuffer/ShadowmappingFrameBuffer/ShadowmappingFrameBufferAttachment.h>
+#include <Engine/Rendering/RenderPass/BaseRenderPass.h>
 
 ScrapEngine::Render::ShadowmappingFrameBuffer::ShadowmappingFrameBuffer(const int32_t width,
                                                                         const int32_t height,

@@ -1,5 +1,8 @@
 #include "MainMenu.h"
 #include "imgui.h"
+#include <Engine/LogicCore/Manager/LogicManagerView.h>
+#include <Engine/Input/Manager/InputManager.h>
+#include <Engine/Rendering/Window/GameWindow.h>
 
 MainMenu::MainMenu(ScrapEngine::Core::LogicManagerView* logic_view, Ball* player,
                    ScrapEngine::Render::GameWindow* window_ref,

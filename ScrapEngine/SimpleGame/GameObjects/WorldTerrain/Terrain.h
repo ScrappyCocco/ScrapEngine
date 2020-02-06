@@ -1,7 +1,15 @@
 #pragma once
 
 #include <Engine/LogicCore/GameObject/SGameObject.h>
-#include <Engine/LogicCore/Components/Manager/ComponentsManager.h>
+
+namespace ScrapEngine
+{
+	namespace Core
+	{
+		class ComponentsManager;
+		class MeshComponent;
+	}
+}
 
 class Terrain : public ScrapEngine::Core::SGameObject
 {

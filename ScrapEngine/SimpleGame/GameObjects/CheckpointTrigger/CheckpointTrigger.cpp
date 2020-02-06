@@ -1,5 +1,11 @@
 #include "CheckpointTrigger.h"
 #include "imgui.h"
+#include <Engine/LogicCore/Manager/LogicManagerView.h>
+#include <Engine/LogicCore/Components/Manager/ComponentsManager.h>
+#include <Engine/Physics/RigidBody/RigidBody.h>
+#include <Engine/LogicCore/Components/MeshComponent/MeshComponent.h>
+#include <Engine/LogicCore/Components/RigidBodyComponent/BoxRigidBodyComponent/BoxRigidBodyComponent.h>
+#include <Engine/LogicCore/Components/TriggerComponent/BoxTriggerComponent/BoxTriggerComponent.h>
 
 CheckpointTrigger::CheckpointTrigger(ScrapEngine::Core::LogicManagerView* logic_view,
                                      Ball* player,

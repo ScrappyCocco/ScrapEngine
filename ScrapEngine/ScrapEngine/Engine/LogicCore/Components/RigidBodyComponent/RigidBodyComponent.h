@@ -1,13 +1,22 @@
 #pragma once
 
 #include <Engine/LogicCore/Components/SComponent.h>
-#include <Engine/LogicCore/Components/MeshComponent/MeshComponent.h>
-#include <Engine/Physics/RigidBody/RigidBody.h>
+
+namespace ScrapEngine
+{
+	namespace Physics
+	{
+		enum class RigidBody_Types;
+		class RigidBody;
+	}
+}
 
 namespace ScrapEngine
 {
 	namespace Core
 	{
+		class MeshComponent;
+
 		class RigidBodyComponent : public SComponent
 		{
 		private:

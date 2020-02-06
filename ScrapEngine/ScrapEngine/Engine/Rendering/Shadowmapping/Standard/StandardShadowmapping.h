@@ -2,21 +2,21 @@
 
 #include <Engine/Rendering/VulkanInclude.h>
 #include <glm/vec3.hpp>
-#include <Engine/Rendering/RenderPass/ShadowmappingRenderPass/ShadowmappingRenderPass.h>
-#include <Engine/Rendering/Buffer/FrameBuffer/ShadowmappingFrameBuffer/ShadowmappingFrameBuffer.h>
-#include <Engine/Rendering/Descriptor/DescriptorSet/ShadowmappingDescriptorSet/ShadowmappingDescriptorSet.h>
-#include <Engine/Rendering/Buffer/UniformBuffer/ShadowmappingUniformBuffer/ShadowmappingUniformBuffer.h>
-#include <Engine/Rendering/SwapChain/VulkanSwapChain.h>
-#include <Engine/Rendering/Pipeline/ShadowmappingPipeline/ShadowmappingPipeline.h>
-#include <Engine/Rendering/Descriptor/DescriptorPool/StandardDescriptorPool/StandardDescriptorPool.h>
 
 // Shadowmap texture resolution
-#define SHADOWMAP_DIM 8192
+constexpr int shadowmap_dim = 8192;
 
 namespace ScrapEngine
 {
 	namespace Render
 	{
+		class VulkanSwapChain;
+		class StandardDescriptorPool;
+		class ShadowmappingPipeline;
+		class ShadowmappingDescriptorSet;
+		class ShadowmappingFrameBuffer;
+		class ShadowmappingRenderPass;
+
 		class StandardShadowmapping
 		{
 		private:
