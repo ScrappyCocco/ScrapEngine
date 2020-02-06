@@ -3,6 +3,13 @@
 #include <Engine/LogicCore/GameObject/SGameObject.h>
 #include "../Player/Ball.h"
 
+namespace ScrapEngine
+{
+	namespace Render
+	{
+		class GameWindow;
+	}
+}
 
 class ScoreManager : public ScrapEngine::Core::SGameObject
 {

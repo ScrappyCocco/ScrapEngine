@@ -2,6 +2,7 @@
 #include "Crate.h"
 #include "Coin.h"
 #include "../CheckpointTrigger/CheckpointTrigger.h"
+#include <Engine/LogicCore/Manager/LogicManagerView.h>
 
 void WorldObjectsCreator::create_crate(const ScrapEngine::Core::SVector3& pos)
 {

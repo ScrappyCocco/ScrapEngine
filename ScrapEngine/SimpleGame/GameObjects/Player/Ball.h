@@ -1,7 +1,24 @@
 #pragma once
 
 #include <Engine/LogicCore/GameObject/SGameObject.h>
-#include <Engine/LogicCore/Components/Manager/ComponentsManager.h>
+
+namespace ScrapEngine
+{
+	namespace Core
+	{
+		class MeshComponent;
+		class RigidBodyComponent;
+		class ComponentsManager;
+	}
+}
+
+namespace ScrapEngine
+{
+	namespace Input
+	{
+		class InputManager;
+	}
+}
 
 class Ball : public ScrapEngine::Core::SGameObject
 {

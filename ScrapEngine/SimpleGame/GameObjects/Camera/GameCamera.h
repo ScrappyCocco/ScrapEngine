@@ -1,9 +1,23 @@
 #pragma once
 
 #include <Engine/LogicCore/GameObject/SGameObject.h>
-#include <Engine/Rendering/Manager/RenderManager.h>
-#include <Engine/Input/Manager/InputManager.h>
 #include "../Player/Ball.h"
+
+namespace ScrapEngine
+{
+	namespace Render
+	{
+		class GameWindow;
+	}
+}
+
+namespace ScrapEngine
+{
+	namespace Core
+	{
+		class CameraComponent;
+	}
+}
 
 class GameCamera : public ScrapEngine::Core::SGameObject
 {

@@ -1,9 +1,16 @@
 #pragma once
 
-#include <Engine/LogicCore/Manager/LogicManagerView.h>
 #include <Engine/LogicCore/GameObject/SGameObject.h>
 #include "../Player/Ball.h"
 
+namespace ScrapEngine
+{
+	namespace Core
+	{
+		class LogicManagerView;
+		class TriggerComponent;
+	}
+}
 
 class CheckpointTrigger : public ScrapEngine::Core::SGameObject
 {

@@ -1,5 +1,6 @@
 #include "ScoreManager.h"
 #include "imgui.h"
+#include <Engine/Rendering/Window/GameWindow.h>
 
 ScoreManager::ScoreManager(Ball* player, ScrapEngine::Render::GameWindow* window_ref)
 	: SGameObject("Score & relative Gui manager"),

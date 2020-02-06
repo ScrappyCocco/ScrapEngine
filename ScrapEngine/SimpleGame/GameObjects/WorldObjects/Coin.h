@@ -1,8 +1,17 @@
 #pragma once
 
 #include <Engine/LogicCore/GameObject/SGameObject.h>
-#include <Engine/LogicCore/Manager/LogicManagerView.h>
 #include "../ScoreManager/ScoreManager.h"
+
+namespace ScrapEngine
+{
+	namespace Core
+	{
+		class AudioComponent3D;
+		class TriggerComponent;
+		class LogicManagerView;
+	}
+}
 
 class Coin : public ScrapEngine::Core::SGameObject
 {

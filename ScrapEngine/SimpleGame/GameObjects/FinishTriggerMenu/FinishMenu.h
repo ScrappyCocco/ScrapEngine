@@ -1,10 +1,26 @@
 #pragma once
 
-#include <Engine/LogicCore/Manager/LogicManagerView.h>
 #include <Engine/LogicCore/GameObject/SGameObject.h>
 #include "../Player/Ball.h"
 #include "../ScoreManager/ScoreManager.h"
 
+
+namespace ScrapEngine
+{
+	namespace Core
+	{
+		class LogicManagerView;
+		class TriggerComponent;
+	}
+}
+
+namespace ScrapEngine
+{
+	namespace Render
+	{
+		class GameWindow;
+	}
+}
 
 class FinishTriggerMenu : public ScrapEngine::Core::SGameObject
 {

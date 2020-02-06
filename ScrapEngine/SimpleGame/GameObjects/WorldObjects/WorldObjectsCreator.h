@@ -1,8 +1,16 @@
 #pragma once
 
-#include <Engine/LogicCore/Manager/LogicManagerView.h>
 #include "../RespawnTrigger/Trigger.h"
 #include "../ScoreManager/ScoreManager.h"
+#include <list>
+
+namespace ScrapEngine
+{
+	namespace Core
+	{
+		class LogicManagerView;
+	}
+}
 
 class WorldObjectsCreator
 {
