@@ -28,10 +28,11 @@ get_pipeline(const std::string& vertex_shader_path, const std::string& fragment_
 	if (pipeline_pool_.find(key_string) == pipeline_pool_.end())
 	{
 		// Pipeline not found, create it
+		const vk::Extent2D swap_chain_extent = swap_chain->get_swap_chain_extent();
 		pipeline_pool_[key_string] = std::make_shared<StandardVulkanGraphicsPipeline>(
 			vertex_shader_path.c_str(),
 			fragment_shader_path.c_str(),
-			&swap_chain->get_swap_chain_extent(),
+			swap_chain_extent,
 			descriptor_set_layout,
 			VulkanDevice::get_instance()->
 			get_msaa_samples());

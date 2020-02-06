@@ -29,10 +29,10 @@ void ScrapEngine::Render::SkyboxMaterial::create_pipeline(const std::string& ver
                                                           const std::string& fragment_shader_path,
                                                           VulkanSwapChain* swap_chain)
 {
+	const vk::Extent2D swap_chain_extent = swap_chain->get_swap_chain_extent();
 	vulkan_render_graphics_pipeline_ = std::make_shared<SkyboxVulkanGraphicsPipeline>(vertex_shader_path.c_str(),
 	                                                                                  fragment_shader_path.c_str(),
-	                                                                                  &swap_chain->
-	                                                                                  get_swap_chain_extent(),
+	                                                                                  swap_chain_extent,
 	                                                                                  vulkan_render_descriptor_set_->
 	                                                                                  get_descriptor_set_layout(),
 	                                                                                  VulkanDevice::get_instance()->

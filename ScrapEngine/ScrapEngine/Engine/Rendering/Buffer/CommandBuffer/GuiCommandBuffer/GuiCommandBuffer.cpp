@@ -37,7 +37,7 @@ ScrapEngine::Render::GuiCommandBuffer::GuiCommandBuffer(BaseRenderPass* render_p
 
 void ScrapEngine::Render::GuiCommandBuffer::init_command_buffer(
 	BaseFrameBuffer* swap_chain_frame_buffer,
-	vk::Extent2D* input_swap_chain_extent_ref,
+	const vk::Extent2D& input_swap_chain_extent_ref,
 	const uint32_t current_image)
 {
 	const std::vector<vk::Framebuffer>* swap_chain_framebuffers = swap_chain_frame_buffer->
@@ -50,7 +50,7 @@ void ScrapEngine::Render::GuiCommandBuffer::init_command_buffer(
 			//So here i read the frame buffer corresponding to the next image frame
 			//It must be passed as parameter from the Render Manager
 			(*swap_chain_framebuffers)[current_image],
-			vk::Rect2D(vk::Offset2D(), *input_swap_chain_extent_ref)
+			vk::Rect2D(vk::Offset2D(), input_swap_chain_extent_ref)
 		);
 
 		//Don't clear the frame

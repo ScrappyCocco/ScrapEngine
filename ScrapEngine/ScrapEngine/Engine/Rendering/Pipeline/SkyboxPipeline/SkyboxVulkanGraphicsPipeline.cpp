@@ -7,7 +7,7 @@
 
 ScrapEngine::Render::SkyboxVulkanGraphicsPipeline::SkyboxVulkanGraphicsPipeline(const char* vertex_shader,
                                                                                 const char* fragment_shader,
-                                                                                vk::Extent2D* swap_chain_extent,
+                                                                                const vk::Extent2D& swap_chain_extent,
                                                                                 vk::DescriptorSetLayout*
                                                                                 descriptor_set_layout,
                                                                                 vk::SampleCountFlagBits msaa_samples)
@@ -52,14 +52,14 @@ ScrapEngine::Render::SkyboxVulkanGraphicsPipeline::SkyboxVulkanGraphicsPipeline(
 	vk::Viewport viewport(
 		0,
 		0,
-		static_cast<float>(swap_chain_extent->width),
-		static_cast<float>(swap_chain_extent->height),
+		static_cast<float>(swap_chain_extent.width),
+		static_cast<float>(swap_chain_extent.height),
 		0.0f,
 		1.0f);
 
 	vk::Rect2D scissor(
 		vk::Offset2D(),
-		*swap_chain_extent
+		swap_chain_extent
 	);
 
 	vk::PipelineViewportStateCreateInfo viewport_state(

@@ -31,7 +31,8 @@ void ScrapEngine::Input::InputManager::load_new_cursor(const std::string& path_t
 	glfwSetCursor(window_ref_, nullptr);
 	glfwDestroyCursor(cursor_);
 
-	cursor_ = glfwCreateCursor(&Utility::UsefulMethods::load_icon(path_to_file), xhot, yhot);
+	GLFWimage icon = Utility::UsefulMethods::load_icon(path_to_file);
+	cursor_ = glfwCreateCursor(&icon, xhot, yhot);
 
 	glfwSetCursor(window_ref_, cursor_);
 }

@@ -7,7 +7,7 @@
 
 ScrapEngine::Render::ShadowmappingPipeline::ShadowmappingPipeline(const char* vertex_shader,
                                                                   vk::DescriptorSetLayout* descriptor_set_layout,
-                                                                  vk::Extent2D* shadowmapping_extent,
+                                                                  const vk::Extent2D& shadowmapping_extent,
                                                                   BaseRenderPass* render_pass)
 {
 	vk::ShaderModule vert_shader_module = ShaderManager::get_instance()->get_shader_module(vertex_shader);
@@ -41,15 +41,15 @@ ScrapEngine::Render::ShadowmappingPipeline::ShadowmappingPipeline(const char* ve
 	vk::Viewport viewport(
 		0,
 		0,
-		static_cast<float>(shadowmapping_extent->width),
-		static_cast<float>(shadowmapping_extent->height),
+		static_cast<float>(shadowmapping_extent.width),
+		static_cast<float>(shadowmapping_extent.height),
 		0.0f,
 		1.0f
 	);
 
 	vk::Rect2D scissor(
 		vk::Offset2D(),
-		*shadowmapping_extent
+		shadowmapping_extent
 	);
 
 	vk::PipelineViewportStateCreateInfo viewport_state(
