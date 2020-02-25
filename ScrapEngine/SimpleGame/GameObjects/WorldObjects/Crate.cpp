@@ -11,11 +11,21 @@ Crate::Crate(ScrapEngine::Core::LogicManagerView* logic_manager_ref,
 	: SGameObject("Crate game object"), logic_manager_view_(logic_manager_ref),
 	  component_manager_ref_(logic_manager_ref->get_components_manager())
 {
+	//Example code to load a crate that is not affected by sun
+	//It keep the standard vertex shader, but use a different fragment shader
+	/*mesh_ = component_manager_ref_->create_new_mesh_component(
+		"../assets/shader/compiled_shaders/shader_base_shadow.vert.spv",
+		"../assets/shader/compiled_shaders/shader_base_NO_shadow.frag.spv",
+		"../assets/models/crate.obj",
+		{ "../assets/textures/Simple_Wood_Crate_Color.png" }
+	);*/
+
 	//Add mesh to that GameObject
 	mesh_ = component_manager_ref_->create_new_mesh_component(
 		"../assets/models/crate.obj",
-		{"../assets/textures/Simple_Wood_Crate_Color.png"}
+		{ "../assets/textures/Simple_Wood_Crate_Color.png" }
 	);
+	
 	add_component(mesh_);
 
 	box_collider_ = component_manager_ref_->create_box_rigidbody_component(
