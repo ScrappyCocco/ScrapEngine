@@ -28,7 +28,8 @@ ScrapEngine::Render::VulkanSkyboxInstance::VulkanSkyboxInstance(const std::strin
 	Debug::DebugLog::print_to_console_log("VulkanModel loaded");
 	if (vulkan_render_model_->get_meshes()->size() > 1)
 	{
-		Debug::DebugLog::fatal_error(vk::Result(-13), "Cannot use a cubemap with a model containing more than one mesh!");
+		Debug::DebugLog::fatal_error(vk::Result(-13),
+		                             "Cannot use a cubemap with a model containing more than one mesh!");
 	}
 	mesh_buffers_ = VulkanModelBuffersPool::get_instance()->get_model_buffers(model_path, vulkan_render_model_);
 	skybox_transform_.set_position(Core::SVector3());
@@ -42,11 +43,21 @@ ScrapEngine::Render::VulkanSkyboxInstance::~VulkanSkyboxInstance()
 	delete vulkan_render_uniform_buffer_;
 }
 
-void ScrapEngine::Render::VulkanSkyboxInstance::update_uniform_buffer(const uint32_t& current_image,
+void ScrapEngine::Render::VulkanSkyboxInstance::update_uniform_buffer(uint32_t current_image,
                                                                       Camera* render_camera)
 {
-	vulkan_render_uniform_buffer_->update_uniform_buffer(current_image, skybox_transform_, render_camera, skybox_transform_updated_);
-	skybox_transform_updated_ = false;
+	//Update transform when necessary
+	if (skybox_transform_updated_)
+	{
+		vulkan_render_uniform_buffer_->update_uniform_buffer_transform(skybox_transform_);
+		skybox_transform_updated_ = false;
+	}
+
+	//Update camera info
+	vulkan_render_uniform_buffer_->update_uniform_buffer_camera_data(render_camera);
+
+	//Update the uniform buffer
+	vulkan_render_uniform_buffer_->finish_update_uniform_buffer(current_image);
 }
 
 int ScrapEngine::Render::VulkanSkyboxInstance::get_cubemap_size() const
@@ -61,7 +72,8 @@ void ScrapEngine::Render::VulkanSkyboxInstance::set_cubemap_size(const unsigned 
 	skybox_transform_updated_ = true;
 }
 
-ScrapEngine::Render::SkyboxUniformBuffer* ScrapEngine::Render::VulkanSkyboxInstance::get_vulkan_render_uniform_buffer() const
+ScrapEngine::Render::SkyboxUniformBuffer* ScrapEngine::Render::VulkanSkyboxInstance::
+get_vulkan_render_uniform_buffer() const
 {
 	return vulkan_render_uniform_buffer_;
 }

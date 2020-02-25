@@ -24,16 +24,15 @@ namespace ScrapEngine
 		class ShadowmappingUniformBuffer : public BaseUniformBuffer
 		{
 		private:
-			size_t swap_chain_images_size_;
-
 			OffscreenUniformBufferObject offscreen_ubo_ = {};
 		public:
 			ShadowmappingUniformBuffer(size_t swap_chain_images_size);
 			~ShadowmappingUniformBuffer() = default;
 
-			void update_uniform_buffer(const uint32_t& current_image, const Core::STransform& object_transform,
-			                           bool update_transform, float light_fov, const glm::vec3& light_pos,
-			                           const glm::vec3& light_lookat, float z_near, float z_far);
+			void update_uniform_buffer_transform(const Core::STransform& object_transform);
+			void update_uniform_buffer_light(float light_fov, const glm::vec3& light_pos, const glm::vec3& light_lookat,
+			                                 float z_near, float z_far);
+			void finish_update_uniform_buffer(uint32_t current_image) override;
 
 			glm::mat4 get_depth_bias() const;
 		};

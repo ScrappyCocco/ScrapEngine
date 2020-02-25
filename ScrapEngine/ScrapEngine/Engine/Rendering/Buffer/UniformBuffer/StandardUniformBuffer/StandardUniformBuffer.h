@@ -29,20 +29,15 @@ namespace ScrapEngine
 		class StandardUniformBuffer : public BaseUniformBuffer
 		{
 		private:
-			//Used to force update of camera matrices the first time
-			//Otherwise an object created at runtime will see matrices not dirty
-			bool first_update_ = true;
-
-			size_t swap_chain_images_size_;
-
 			UniformBufferObject ubo_ = {};
 		public:
 			StandardUniformBuffer(size_t swap_chain_images_size);
 			~StandardUniformBuffer() = default;
 
-			void update_uniform_buffer(const uint32_t& current_image, const Core::STransform& object_transform,
-			                           Camera* render_camera, const glm::vec3& light_pos, const glm::mat4& depth_bias_m,
-			                           bool update_transform = true);
+			void update_uniform_buffer_transform(const Core::STransform& object_transform);
+			void update_uniform_buffer_camera_data(Camera* render_camera);
+			void update_uniform_buffer_light_data(const glm::vec3& light_pos, const glm::mat4& depth_bias_m);
+			void finish_update_uniform_buffer(uint32_t current_image) override;
 		};
 	}
 }

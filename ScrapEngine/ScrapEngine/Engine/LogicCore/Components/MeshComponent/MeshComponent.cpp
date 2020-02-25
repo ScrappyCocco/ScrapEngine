@@ -70,6 +70,16 @@ void ScrapEngine::Core::MeshComponent::set_frustum_check(const bool should_check
 	vulkan_mesh_->set_frustum_check(should_check);
 }
 
+float ScrapEngine::Core::MeshComponent::get_frustum_check_radius() const
+{
+	return vulkan_mesh_->get_frustum_check_radius();
+}
+
+void ScrapEngine::Core::MeshComponent::set_frustum_check_radius(const float radius) const
+{
+	vulkan_mesh_->set_frustum_check_radius(radius);
+}
+
 void ScrapEngine::Core::MeshComponent::update_component_location()
 {
 	SComponent::update_component_location();

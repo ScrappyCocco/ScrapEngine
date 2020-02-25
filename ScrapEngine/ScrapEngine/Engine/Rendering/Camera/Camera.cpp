@@ -129,22 +129,6 @@ void ScrapEngine::Render::Camera::set_camera_roll(const float roll)
 	generate_look_matrix();
 }
 
-bool ScrapEngine::Render::Camera::get_projection_matrix_dirty() const
-{
-	return projection_matrix_dirty_;
-}
-
-bool ScrapEngine::Render::Camera::get_look_matrix_dirt() const
-{
-	return look_matrix_dirty_;
-}
-
-void ScrapEngine::Render::Camera::cancel_dirty_matrix()
-{
-	projection_matrix_dirty_ = false;
-	look_matrix_dirty_ = false;
-}
-
 float ScrapEngine::Render::Camera::get_mouse_sensivity() const
 {
 	return mouse_sensivity_;
@@ -221,7 +205,6 @@ void ScrapEngine::Render::Camera::generate_matrices()
 
 void ScrapEngine::Render::Camera::generate_projection_matrix()
 {
-	projection_matrix_dirty_ = true;
 	//Perspective stuff
 	projection_matrix_ = glm::perspective(glm::radians(fov_),
 	                                      get_camera_aspect_ratio(),
@@ -233,7 +216,6 @@ void ScrapEngine::Render::Camera::generate_projection_matrix()
 
 void ScrapEngine::Render::Camera::generate_look_matrix()
 {
-	look_matrix_dirty_ = true;
 	look_matrix_ = lookAt(camera_location_.get_glm_vector(),
 	                      camera_location_.get_glm_vector() + camera_front_,
 	                      camera_up_);

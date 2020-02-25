@@ -40,9 +40,6 @@ namespace ScrapEngine
 			glm::vec3 camera_front_ = glm::vec3(0.0f, 0.0f, -1.0f);
 			glm::vec3 camera_up_ = glm::vec3(0.0f, 1.0f, 0.0f);
 
-			bool projection_matrix_dirty_ = true;
-			bool look_matrix_dirty_ = true;
-
 			virtual void update_camera_vectors();
 			virtual void update_frustum();
 			void generate_matrices();
@@ -68,10 +65,6 @@ namespace ScrapEngine
 			void set_camera_yaw(float yaw);
 			void set_camera_pitch(float pitch);
 			void set_camera_roll(float roll);
-
-			bool get_projection_matrix_dirty() const;
-			bool get_look_matrix_dirt() const;
-			void cancel_dirty_matrix();
 
 			float get_mouse_sensivity() const;
 			float get_camera_min_draw_distance() const;
