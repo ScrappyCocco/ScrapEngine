@@ -718,7 +718,7 @@ void ScrapEngine::Render::RenderManager::update_objects_and_buffers()
 	//Models Shadowmapping update and standard update
 	for (auto& loaded_model : loaded_models_)
 	{
-		//Check model frustum
+		//Check and update model frustum according to current view
 		loaded_model->view_frustum_check(render_camera_);
 		//Checks to see if is necessary to update the buffers are inside each call
 		loaded_model->update_shadowmap_uniform_buffer(image_index_, shadowmapping_);

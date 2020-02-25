@@ -158,15 +158,18 @@ uint16_t ScrapEngine::Render::VulkanMeshInstance::get_deletion_counter() const
 
 void ScrapEngine::Render::VulkanMeshInstance::view_frustum_check(Camera* render_camera)
 {
+	//Check if the frustum should be checked
 	if(!frustum_check_)
 	{
 		return;
 	}
-	
+
+	//Update the frustum
 	is_in_current_frustum_ = render_camera->frustum_check_sphere(
 		object_location_.get_position().get_glm_vector(),
 		object_location_.get_scale().get_max_value() * frustum_sphere_radius_multiplier_);
 
+	//Update shadow frustum
 	directional_light_frustum_check(render_camera);
 }
 

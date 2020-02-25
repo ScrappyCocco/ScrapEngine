@@ -37,7 +37,7 @@ namespace ScrapEngine
 			void update_uniform_buffer_transform(const Core::STransform& object_transform);
 			void update_uniform_buffer_camera_data(Camera* render_camera);
 			void update_uniform_buffer_light_data(const glm::vec3& light_pos, const glm::mat4& depth_bias_m);
-			void finish_update_uniform_buffer(uint32_t current_image);
+			void finish_update_uniform_buffer(uint32_t current_image) override;
 		};
 	}
 }

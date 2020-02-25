@@ -34,7 +34,7 @@ namespace ScrapEngine
 
 			void update_uniform_buffer_transform(const Core::STransform& object_transform);
 			void update_uniform_buffer_camera_data(Camera* render_camera);
-			void finish_update_uniform_buffer(uint32_t current_image);
+			void finish_update_uniform_buffer(uint32_t current_image) override;
 		};
 	}
 }

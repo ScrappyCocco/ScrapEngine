@@ -52,6 +52,7 @@ namespace ScrapEngine
 			bool sun_shadow_is_in_current_frustum_ = true;
 			//This is the sphere radius multiplier that will be used to check if a mesh is in the camera frustum
 			//Shadow frustum check double this value to avoid (possibly) to remove objects that still have the shadow visible
+			//There are better ways to check this, this is a way to keep it simple & basic
 			//If necessary increase this value using the set() method
 			float frustum_sphere_radius_multiplier_ = 20.f;
 
