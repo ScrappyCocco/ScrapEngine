@@ -48,6 +48,7 @@ Terrain::Terrain(ScrapEngine::Core::ComponentsManager* input_component_manager,
 	mesh_->set_is_static(true);
 
 	//By default disable terrain shadows to save resources
+	//Also because terrain doesn't project shadows on anything
 	disable_shadows();
 }
 
