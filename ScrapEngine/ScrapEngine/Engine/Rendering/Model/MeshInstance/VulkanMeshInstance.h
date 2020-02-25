@@ -53,7 +53,7 @@ namespace ScrapEngine
 			//This is the sphere radius multiplier that will be used to check if a mesh is in the camera frustum
 			//Shadow frustum check double this value to avoid (possibly) to remove objects that still have the shadow visible
 			//If necessary increase this value using the set() method
-			float frustum_sphere_radius_multiplier_ = 10.f;
+			float frustum_sphere_radius_multiplier_ = 20.f;
 
 			//Set that the mesh will be deleted as soon as possible
 			//During command buffer re-creation
