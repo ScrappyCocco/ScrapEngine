@@ -98,7 +98,7 @@ namespace ScrapEngine
 			//----------------------------------------
 			//MeshStuff
 			//Currently the engine doesn't support custom shaders, so specify the path is kinda useless
-			//Unless someone load a shader with the same parameters and bindings, that should work
+			//Unless you load a shader with the same parameters and bindings, that should work
 			MeshComponent* create_new_mesh_component(const std::string& vertex_shader_path,
 			                                         const std::string& fragment_shader_path,
 			                                         const std::string& model_path,
