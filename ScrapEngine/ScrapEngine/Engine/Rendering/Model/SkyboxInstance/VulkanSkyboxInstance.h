@@ -27,7 +27,7 @@ namespace ScrapEngine
 					VertexBufferContainer*,
 					IndicesBufferContainer*>
 			>> mesh_buffers_;
-			
+
 			Core::STransform skybox_transform_;
 			bool skybox_transform_updated_ = false;
 		public:
@@ -36,7 +36,7 @@ namespace ScrapEngine
 			                     VulkanSwapChain* swap_chain);
 			~VulkanSkyboxInstance();
 
-			void update_uniform_buffer(const uint32_t& current_image, Camera* render_camera);
+			void update_uniform_buffer(uint32_t current_image, Camera* render_camera);
 
 			int get_cubemap_size() const;
 			void set_cubemap_size(unsigned int new_size);

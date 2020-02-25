@@ -32,7 +32,11 @@ namespace ScrapEngine
 			>> mesh_buffers_;
 
 			Core::STransform object_location_;
+
+			//Value that set if the mesh is currently visible
 			bool is_visible_ = true;
+
+			//Value that set if the mesh should be considered for shadow rendering
 			bool cast_shadows_ = true;
 
 			//If this is true, the transform matrices not will be updated
@@ -43,6 +47,13 @@ namespace ScrapEngine
 			//Value to set if the mesh should be hidden when out of view or not
 			//Remember that a mesh with this value set to false will be always drawn
 			bool frustum_check_ = true;
+			//Value to know if the mesh is in the current view-frustum
+			bool is_in_current_frustum_ = true;
+			bool sun_shadow_is_in_current_frustum_ = true;
+			//This is the sphere radius multiplier that will be used to check if a mesh is in the camera frustum
+			//Shadow frustum check double this value to avoid (possibly) to remove objects that still have the shadow visible
+			//If necessary increase this value using the set() method
+			float frustum_sphere_radius_multiplier_ = 10.f;
 
 			//Set that the mesh will be deleted as soon as possible
 			//During command buffer re-creation
@@ -57,13 +68,19 @@ namespace ScrapEngine
 			ShadowmappingUniformBuffer* shadowmapping_uniform_buffer_ = nullptr;
 			ShadowmappingDescriptorSet* shadowmapping_descriptor_set_ = nullptr;
 			StandardDescriptorPool* shadowmapping_descriptor_pool_ = nullptr;
+			
 			void write_depth_descriptor(StandardShadowmapping* shadowmapping);
+			void directional_light_frustum_check(Camera* render_camera);
 		public:
 			VulkanMeshInstance(const std::string& vertex_shader_path, const std::string& fragment_shader_path,
 			                   const std::string& model_path, const std::vector<std::string>& textures_path,
 			                   VulkanSwapChain* swap_chain);
 			~VulkanMeshInstance();
 
+			//-------------------------------------
+			//USER FEATURES
+			//-------------------------------------
+			
 			void set_mesh_location(const Core::SVector3& location);
 			void set_mesh_rotation(const Core::SVector3& rotation);
 			void set_mesh_scale(const Core::SVector3& scale);
@@ -84,20 +101,29 @@ namespace ScrapEngine
 			bool get_frustum_check() const;
 			void set_frustum_check(bool should_check);
 
+			float get_frustum_check_radius() const;
+			void set_frustum_check_radius(float radius);
+
+			//-------------------------------------
+			//ENGINE UTILS
+			//-------------------------------------
+			
 			void set_for_deletion();
 			bool get_pending_deletion() const;
 			void increase_deletion_counter();
 			uint16_t get_deletion_counter() const;
 
+			void view_frustum_check(Camera* render_camera);
+			bool get_is_in_current_frustum() const;
+			bool get_sun_shadow_is_in_current_frustum() const;
+
 			void init_shadowmapping_resources(StandardShadowmapping* shadowmapping);
 
-			void update_uniform_buffer(const uint32_t& current_image, Camera* render_camera,
+			void update_uniform_buffer(uint32_t current_image, Camera* render_camera,
 			                           const glm::vec3& light_pos);
-			void update_shadowmap_uniform_buffer(const uint32_t& current_image, StandardShadowmapping* shadowmap_info) const;
+			void update_shadowmap_uniform_buffer(uint32_t current_image, StandardShadowmapping* shadowmap_info) const;
 
-			StandardUniformBuffer* get_vulkan_render_uniform_buffer() const;
 			const std::vector<BasicMaterial*>* get_mesh_materials() const;
-			ShadowmappingUniformBuffer* get_shadowmapping_uniform_buffer() const;
 			ShadowmappingDescriptorSet* get_shadowmapping_descriptor_set() const;
 
 			std::shared_ptr<std::vector<

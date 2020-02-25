@@ -718,6 +718,9 @@ void ScrapEngine::Render::RenderManager::update_objects_and_buffers()
 	//Models Shadowmapping update and standard update
 	for (auto& loaded_model : loaded_models_)
 	{
+		//Check model frustum
+		loaded_model->view_frustum_check(render_camera_);
+		//Checks to see if is necessary to update the buffers are inside each call
 		loaded_model->update_shadowmap_uniform_buffer(image_index_, shadowmapping_);
 		loaded_model->update_uniform_buffer(image_index_, render_camera_, light_pos);
 	}
@@ -726,8 +729,6 @@ void ScrapEngine::Render::RenderManager::update_objects_and_buffers()
 	{
 		skybox_->update_uniform_buffer(image_index_, render_camera_);
 	}
-	//Cancel dirty matrix
-	render_camera_->cancel_dirty_matrix();
 }
 
 void ScrapEngine::Render::RenderManager::create_camera()

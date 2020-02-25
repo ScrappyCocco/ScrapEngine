@@ -13,6 +13,7 @@
 #include <Engine/Rendering/Descriptor/DescriptorSet/ShadowmappingDescriptorSet/ShadowmappingDescriptorSet.h>
 #include <Engine/Rendering/Descriptor/DescriptorPool/StandardDescriptorPool/StandardDescriptorPool.h>
 #include <Engine/Rendering/Buffer/FrameBuffer/ShadowmappingFrameBuffer/ShadowmappingFrameBuffer.h>
+#include <Engine/Rendering/Camera/Camera.h>
 
 ScrapEngine::Render::VulkanMeshInstance::VulkanMeshInstance(const std::string& vertex_shader_path,
                                                             const std::string& fragment_shader_path,
@@ -125,6 +126,16 @@ void ScrapEngine::Render::VulkanMeshInstance::set_frustum_check(const bool shoul
 	frustum_check_ = should_check;
 }
 
+float ScrapEngine::Render::VulkanMeshInstance::get_frustum_check_radius() const
+{
+	return frustum_sphere_radius_multiplier_;
+}
+
+void ScrapEngine::Render::VulkanMeshInstance::set_frustum_check_radius(const float radius)
+{
+	frustum_sphere_radius_multiplier_ = radius;
+}
+
 void ScrapEngine::Render::VulkanMeshInstance::set_for_deletion()
 {
 	pending_deletion_ = true;
@@ -143,6 +154,37 @@ void ScrapEngine::Render::VulkanMeshInstance::increase_deletion_counter()
 uint16_t ScrapEngine::Render::VulkanMeshInstance::get_deletion_counter() const
 {
 	return deletion_counter_;
+}
+
+void ScrapEngine::Render::VulkanMeshInstance::view_frustum_check(Camera* render_camera)
+{
+	if(!frustum_check_)
+	{
+		return;
+	}
+	
+	is_in_current_frustum_ = render_camera->frustum_check_sphere(
+		object_location_.get_position().get_glm_vector(),
+		object_location_.get_scale().get_max_value() * frustum_sphere_radius_multiplier_);
+
+	directional_light_frustum_check(render_camera);
+}
+
+void ScrapEngine::Render::VulkanMeshInstance::directional_light_frustum_check(Camera* render_camera)
+{
+	sun_shadow_is_in_current_frustum_ = render_camera->frustum_check_sphere(
+		object_location_.get_position().get_glm_vector(),
+		object_location_.get_scale().get_max_value() * frustum_sphere_radius_multiplier_ * 2);
+}
+
+bool ScrapEngine::Render::VulkanMeshInstance::get_is_in_current_frustum() const
+{
+	return is_in_current_frustum_;
+}
+
+bool ScrapEngine::Render::VulkanMeshInstance::get_sun_shadow_is_in_current_frustum() const
+{
+	return sun_shadow_is_in_current_frustum_;
 }
 
 void ScrapEngine::Render::VulkanMeshInstance::init_shadowmapping_resources(StandardShadowmapping* shadowmapping)
@@ -180,116 +222,96 @@ void ScrapEngine::Render::VulkanMeshInstance::write_depth_descriptor(StandardSha
 	}
 }
 
-void ScrapEngine::Render::VulkanMeshInstance::update_uniform_buffer(const uint32_t& current_image,
+void ScrapEngine::Render::VulkanMeshInstance::update_uniform_buffer(const uint32_t current_image,
                                                                     Camera* render_camera,
                                                                     const glm::vec3& light_pos)
 {
+	//Pre-update check
+	if (!transform_dirty_) {
+		if (!is_visible_ || !is_in_current_frustum_ || pending_deletion_)
+		{
+			return;
+		}
+	}
+	//Can update - continue
+
 	//update_shadowmap_uniform_buffer should be called first to update shadow_depth_bias
 	const glm::mat4 shadow_depth_bias = shadowmapping_uniform_buffer_->get_depth_bias();
-	//Standard update
+
+	//Update transform when necessary
 	if (is_static_)
 	{
 		if (transform_dirty_)
 		{
-			vulkan_render_uniform_buffer_->update_uniform_buffer(current_image,
-			                                                     object_location_,
-			                                                     render_camera,
-			                                                     light_pos,
-			                                                     shadow_depth_bias
-			);
+			vulkan_render_uniform_buffer_->update_uniform_buffer_transform(object_location_);
 			transform_dirty_ = false;
-		}
-		else
-		{
-			vulkan_render_uniform_buffer_->update_uniform_buffer(current_image,
-			                                                     object_location_,
-			                                                     render_camera,
-			                                                     light_pos, shadow_depth_bias,
-			                                                     false
-			);
 		}
 	}
 	else
 	{
-		vulkan_render_uniform_buffer_->update_uniform_buffer(current_image,
-		                                                     object_location_,
-		                                                     render_camera,
-		                                                     light_pos,
-		                                                     shadow_depth_bias
-		);
+		vulkan_render_uniform_buffer_->update_uniform_buffer_transform(object_location_);
 	}
+
+	//Update camera info
+	vulkan_render_uniform_buffer_->update_uniform_buffer_camera_data(render_camera);
+
+	//Update depth/shadow info
+	vulkan_render_uniform_buffer_->update_uniform_buffer_light_data(light_pos, shadow_depth_bias);
+
+	//Update the uniform buffer
+	vulkan_render_uniform_buffer_->finish_update_uniform_buffer(current_image);
 }
 
-void ScrapEngine::Render::VulkanMeshInstance::update_shadowmap_uniform_buffer(const uint32_t& current_image,
+void ScrapEngine::Render::VulkanMeshInstance::update_shadowmap_uniform_buffer(const uint32_t current_image,
                                                                               StandardShadowmapping* shadowmap_info)
 const
 {
+	//Pre-update check
+	if (!transform_dirty_) {
+		if (!is_visible_ || !sun_shadow_is_in_current_frustum_ || pending_deletion_)
+		{
+			return;
+		}
+	}
+	//Can update - continue
+	
 	const glm::vec3 light_pos = shadowmap_info->get_light_pos();
 	const glm::vec3 light_look_at = shadowmap_info->get_light_look_at();
 	const float light_fov = shadowmap_info->get_light_fov();
 	const float z_far = shadowmap_info->get_z_far();
 	const float z_near = shadowmap_info->get_z_near();
 
+	//Update transform when necessary
 	if (is_static_)
 	{
 		if (transform_dirty_)
 		{
-			shadowmapping_uniform_buffer_->update_uniform_buffer(
-				current_image,
-				object_location_,
-				true,
-				light_fov,
-				light_pos,
-				light_look_at,
-				z_near,
-				z_far
-			);
-		}
-		else
-		{
-			shadowmapping_uniform_buffer_->update_uniform_buffer(
-				current_image,
-				object_location_,
-				false,
-				light_fov,
-				light_pos,
-				light_look_at,
-				z_near,
-				z_far
-			);
+			shadowmapping_uniform_buffer_->update_uniform_buffer_transform(object_location_);
+			//Do NOT cancel transform_dirty_ in the update_shadowmap_uniform_buffer
 		}
 	}
 	else
 	{
-		shadowmapping_uniform_buffer_->update_uniform_buffer(
-			current_image,
-			object_location_,
-			true,
-			light_fov,
-			light_pos,
-			light_look_at,
-			z_near,
-			z_far
-		);
+		shadowmapping_uniform_buffer_->update_uniform_buffer_transform(object_location_);
 	}
-}
 
-ScrapEngine::Render::StandardUniformBuffer* ScrapEngine::Render::VulkanMeshInstance::
-get_vulkan_render_uniform_buffer() const
-{
-	return vulkan_render_uniform_buffer_;
+	//Update light info
+	shadowmapping_uniform_buffer_->update_uniform_buffer_light(
+		light_fov,
+		light_pos,
+		light_look_at,
+		z_near,
+		z_far
+	);
+
+	//Update the uniform buffer
+	shadowmapping_uniform_buffer_->finish_update_uniform_buffer(current_image);
 }
 
 const std::vector<ScrapEngine::Render::BasicMaterial*>* ScrapEngine::Render::VulkanMeshInstance::
 get_mesh_materials() const
 {
 	return &model_materials_;
-}
-
-ScrapEngine::Render::ShadowmappingUniformBuffer* ScrapEngine::Render::VulkanMeshInstance::
-get_shadowmapping_uniform_buffer() const
-{
-	return shadowmapping_uniform_buffer_;
 }
 
 ScrapEngine::Render::ShadowmappingDescriptorSet* ScrapEngine::Render::VulkanMeshInstance::

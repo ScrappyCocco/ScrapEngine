@@ -115,15 +115,10 @@ void ScrapEngine::Render::StandardCommandBuffer::load_mesh_shadow_map(StandardSh
 	{
 		return;
 	}
-	if (mesh->get_frustum_check())
+	//Check if the mesh is in view
+	if (mesh->get_frustum_check() && !mesh->get_sun_shadow_is_in_current_frustum())
 	{
-		//Check if the mesh is in view
-		if (!current_camera_->frustum_check_sphere(
-			mesh->get_mesh_location().get_glm_vector(),
-			mesh->get_mesh_scale().get_max_value() * frustum_sphere_radius_multiplier_ * 2))
-		{
-			return;
-		}
+		return;
 	}
 	//Add the drawcall for the mesh in the depth pass (shadow rendering)
 	const vk::DeviceSize offsets[] = {0};
@@ -234,15 +229,10 @@ void ScrapEngine::Render::StandardCommandBuffer::load_mesh(VulkanMeshInstance* m
 	{
 		return;
 	}
-	if (mesh->get_frustum_check())
+	//Check if the mesh is in view
+	if (mesh->get_frustum_check() && !mesh->get_is_in_current_frustum())
 	{
-		//Check if the mesh is in view
-		if (!current_camera_->frustum_check_sphere(
-			mesh->get_mesh_location().get_glm_vector(),
-			mesh->get_mesh_scale().get_max_value() * frustum_sphere_radius_multiplier_))
-		{
-			return;
-		}
+		return;
 	}
 	//Add the drawcall for the mesh
 	const vk::DeviceSize offsets[] = {0};
