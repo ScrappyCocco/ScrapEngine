@@ -53,7 +53,7 @@ int main()
 		scene_manager_ref->set_light_lookat(ScrapEngine::Core::SVector3(223.693f, -36.6775f, -52.6496f));
 		//Set world gravity
 		component_manager_ref->set_gravity(ScrapEngine::Core::SVector3(0, -50, 0));
-		//Create the first game object
+		//Create world game objects
 		//Ball - Player
 		Ball* ball_game_object = new Ball(component_manager_ref, inputmanager);
 		scrap_engine_manager->logic_manager_view->register_game_object(ball_game_object);

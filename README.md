@@ -28,8 +28,9 @@ I will try to make it better and to fix all the issues about it.
 
 # What's next
 - [x] Directional light and Shadow-Mapping;
+- [ ] (Should improve Forward Rendering structure or move to Deferred Rendering before adding more lights);
 - [ ] Omnidirectional light and Shadow-Mapping;
-- [ ] [...]
+- [ ] [...?]
 
 # Special thanks
 * [SaschaWillems](https://github.com/SaschaWillems/) for all his Vulkan examples and for his suggestions on Discord;

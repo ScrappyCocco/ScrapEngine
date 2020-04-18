@@ -38,13 +38,13 @@ namespace ScrapEngine
 			VulkanSwapChain* vulkan_render_swap_chain_ = nullptr;
 			VulkanImageView* vulkan_render_image_view_ = nullptr;
 			BaseFrameBuffer* vulkan_render_frame_buffer_ = nullptr;
-			
+
 			VulkanCommandPool* singleton_command_pool_ = nullptr;
 			VulkanCommandPool* gui_buffer_command_pool_ = nullptr;
-			
+
 			BaseQueue* vulkan_graphics_queue_ = nullptr;
 			BaseQueue* vulkan_presentation_queue_ = nullptr;
-			
+
 			VulkanSemaphoresManager* vulkan_render_semaphores_ = nullptr;
 			VulkanSurface* vulkan_window_surface_ = nullptr;
 			VulkanDepthResources* vulkan_render_depth_ = nullptr;
@@ -62,7 +62,6 @@ namespace ScrapEngine
 
 			size_t current_frame_ = 0;
 			uint32_t image_index_;
-			vk::Result result_;
 
 			uint32_t image_count_ = -1;
 			bool framebuffer_resized_ = false;

@@ -531,20 +531,24 @@ ScrapEngine::Render::VulkanSkyboxInstance* ScrapEngine::Render::RenderManager::l
 
 void ScrapEngine::Render::RenderManager::draw_loading_frame()
 {
-	result_ = VulkanDevice::get_instance()->get_logical_device()->acquireNextImageKHR(
-		vulkan_render_swap_chain_->get_swap_chain(),
+	const vk::Result acquire_image_result = VulkanDevice::get_instance()->get_logical_device()->acquireNextImageKHR(
+		vulkan_render_swap_chain_->
+		get_swap_chain(),
 		std::numeric_limits<uint64_t>::max(),
-		(*image_available_semaphores_ref_)[current_frame_], vk::Fence(),
-		&image_index_);
+		(*image_available_semaphores_ref_)[
+			current_frame_],
+		vk::Fence(),
+		&image_index_
+	);
 
-	if (result_ == vk::Result::eErrorOutOfDateKHR)
+	if (acquire_image_result == vk::Result::eErrorOutOfDateKHR)
 	{
 		//recreateSwapChain();
 		Debug::DebugLog::fatal_error(vk::Result(-13), "recreateSwapChain() not ready!");
 	}
-	else if (result_ != vk::Result::eSuccess && result_ != vk::Result::eSuboptimalKHR)
+	else if (acquire_image_result != vk::Result::eSuccess && acquire_image_result != vk::Result::eSuboptimalKHR)
 	{
-		Debug::DebugLog::fatal_error(result_, "RenderManager: Failed to acquire swap chain image!");
+		Debug::DebugLog::fatal_error(acquire_image_result, "RenderManager: Failed to acquire swap chain image!");
 	}
 
 	vk::SubmitInfo submit_info;
@@ -570,11 +574,12 @@ void ScrapEngine::Render::RenderManager::draw_loading_frame()
 
 	VulkanDevice::get_instance()->get_logical_device()->resetFences(1, &(*in_flight_fences_ref_)[current_frame_]);
 
-	result_ = vulkan_graphics_queue_->get_queue()->submit(1, &submit_info,
-	                                                      (*in_flight_fences_ref_)[current_frame_]);
-	if (result_ != vk::Result::eSuccess)
+	const vk::Result queue_submit_result = vulkan_graphics_queue_->get_queue()->submit(1, &submit_info,
+	                                                                                   (*in_flight_fences_ref_)[
+		                                                                                   current_frame_]);
+	if (queue_submit_result != vk::Result::eSuccess)
 	{
-		Debug::DebugLog::fatal_error(result_, "RenderManager: Failed to submit draw command buffer!");
+		Debug::DebugLog::fatal_error(queue_submit_result, "RenderManager: Failed to submit draw command buffer!");
 	}
 
 	vk::PresentInfoKHR present_info;
@@ -588,7 +593,12 @@ void ScrapEngine::Render::RenderManager::draw_loading_frame()
 
 	present_info.setPImageIndices(&image_index_);
 
-	result_ = vulkan_presentation_queue_->get_queue()->presentKHR(&present_info);
+	const vk::Result queue_present_result = vulkan_presentation_queue_->get_queue()->presentKHR(&present_info);
+
+	if (queue_present_result != vk::Result::eSuccess)
+	{
+		Debug::DebugLog::fatal_error(queue_present_result, "RenderManager: Failed to present swap chain image!");
+	}
 }
 
 void ScrapEngine::Render::RenderManager::draw_frame()
@@ -603,20 +613,22 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 	                                                                  true,
 	                                                                  std::numeric_limits<uint64_t>::max());
 
-	result_ = VulkanDevice::get_instance()->get_logical_device()->acquireNextImageKHR(
-		vulkan_render_swap_chain_->get_swap_chain(),
+	const vk::Result acquire_image_result = VulkanDevice::get_instance()->get_logical_device()->acquireNextImageKHR(
+		vulkan_render_swap_chain_->
+		get_swap_chain(),
 		std::numeric_limits<uint64_t>::max(),
-		(*image_available_semaphores_ref_)[current_frame_], vk::Fence(),
+		(*image_available_semaphores_ref_)[
+			current_frame_], vk::Fence(),
 		&image_index_);
 
-	if (result_ == vk::Result::eErrorOutOfDateKHR)
+	if (acquire_image_result == vk::Result::eErrorOutOfDateKHR)
 	{
 		//recreateSwapChain();
 		Debug::DebugLog::fatal_error(vk::Result(-13), "recreateSwapChain() not ready!");
 	}
-	else if (result_ != vk::Result::eSuccess && result_ != vk::Result::eSuboptimalKHR)
+	else if (acquire_image_result != vk::Result::eSuccess && acquire_image_result != vk::Result::eSuboptimalKHR)
 	{
-		Debug::DebugLog::fatal_error(result_, "RenderManager: Failed to acquire swap chain image!");
+		Debug::DebugLog::fatal_error(acquire_image_result, "RenderManager: Failed to acquire swap chain image!");
 	}
 	//-----------------
 	//Update objects and uniform buffers
@@ -652,11 +664,12 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 	VulkanDevice::get_instance()->get_logical_device()->resetFences(1, &(*in_flight_fences_ref_)[current_frame_]);
 	//-----------------
 	//Queue submit
-	result_ = vulkan_graphics_queue_->get_queue()->submit(1, &submit_info,
-	                                                      (*in_flight_fences_ref_)[current_frame_]);
-	if (result_ != vk::Result::eSuccess)
+	const vk::Result queue_submit_result = vulkan_graphics_queue_->get_queue()->submit(1, &submit_info,
+	                                                                                   (*in_flight_fences_ref_)[
+		                                                                                   current_frame_]);
+	if (queue_submit_result != vk::Result::eSuccess)
 	{
-		Debug::DebugLog::fatal_error(result_, "RenderManager: Failed to submit draw command buffer!");
+		Debug::DebugLog::fatal_error(queue_submit_result, "RenderManager: Failed to submit draw command buffer!");
 	}
 
 	vk::PresentInfoKHR present_info;
@@ -670,17 +683,18 @@ void ScrapEngine::Render::RenderManager::draw_frame()
 
 	present_info.setPImageIndices(&image_index_);
 
-	result_ = vulkan_presentation_queue_->get_queue()->presentKHR(&present_info);
+	const vk::Result queue_present_result = vulkan_presentation_queue_->get_queue()->presentKHR(&present_info);
 
-	if (result_ == vk::Result::eErrorOutOfDateKHR || result_ == vk::Result::eSuboptimalKHR || framebuffer_resized_)
+	if (queue_present_result == vk::Result::eErrorOutOfDateKHR || queue_present_result == vk::Result::eSuboptimalKHR ||
+		framebuffer_resized_)
 	{
 		//framebufferResized = false;
 		//recreateSwapChain();
 		Debug::DebugLog::fatal_error(vk::Result(-13), "recreateSwapChain() not ready!");
 	}
-	else if (result_ != vk::Result::eSuccess)
+	else if (queue_present_result != vk::Result::eSuccess)
 	{
-		Debug::DebugLog::fatal_error(result_, "RenderManager: Failed to present swap chain image!");
+		Debug::DebugLog::fatal_error(queue_present_result, "RenderManager: Failed to present swap chain image!");
 	}
 	//-----------------
 	//Check if if the other command buffer is ready
