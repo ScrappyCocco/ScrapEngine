@@ -38,6 +38,10 @@ I will try to make it better and to fix all the issues about it.
 * My friends [frncscdf](https://github.com/frncscdf) and [davidepi](https://github.com/davidepi) for their suggestions and support;
 * All the people in the [Vulkan Discord server](https://discordapp.com/invite/tFdvbEj).
 
+# Vulkan FAQ
+* How do you render multiple objects? How do you render the UI?
+  * See the discussion on [Issue#38](https://github.com/ScrappyCocco/ScrapEngine/issues/38).
+
 # Example game gameplay gif
 
 You can download this example game [here](https://github.com/ScrappyCocco/ScrapEngine/releases)
