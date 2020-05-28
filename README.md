@@ -41,6 +41,8 @@ I will try to make it better and to fix all the issues about it.
 # Vulkan FAQ
 * How do you render multiple objects? How do you render the UI?
   * See the discussion on [Issue#38](https://github.com/ScrappyCocco/ScrapEngine/issues/38).
+* Resources to understand the basics of lights/shadows
+  * See the discussion on [Issue#40](https://github.com/ScrappyCocco/ScrapEngine/issues/40).
 
 # Example game gameplay gif
 
