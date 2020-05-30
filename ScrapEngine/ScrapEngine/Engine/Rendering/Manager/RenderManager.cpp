@@ -434,7 +434,7 @@ void ScrapEngine::Render::RenderManager::create_command_buffer(const bool flip_f
 	command_buffers_[index].command_pool->reset_command_pool();
 	//Set camera
 	command_buffers_[index].command_buffer->init_current_camera(render_camera_);
-	command_buffers_[index].command_buffer->begin_command_buffer();
+	command_buffers_[index].command_buffer->begin_command_buffer(vk::CommandBufferUsageFlagBits::eOneTimeSubmit);
 	//Prepare shadow mapping
 	command_buffers_[index].command_buffer->init_shadow_map(shadowmapping_);
 	//Draw meshes for offscreen shadowmapping
