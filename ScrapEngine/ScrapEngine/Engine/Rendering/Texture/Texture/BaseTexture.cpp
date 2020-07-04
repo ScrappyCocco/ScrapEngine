@@ -33,7 +33,15 @@ void ScrapEngine::Render::BaseTexture::transition_image_layout(vk::Image* image,
 {
 	const std::unique_ptr<vk::CommandBuffer> command_buffer = BaseBuffer::begin_single_time_command();
 
-	vk::ImageMemoryBarrier barrier(vk::AccessFlags(), vk::AccessFlags(), old_layout, new_layout, 0, 0, *image);
+	vk::ImageMemoryBarrier barrier(
+		vk::AccessFlags(),
+		vk::AccessFlags(),
+		old_layout,
+		new_layout,
+		0,
+		0,
+		*image
+	);
 
 	if (new_layout == vk::ImageLayout::eDepthStencilAttachmentOptimal)
 	{
@@ -92,7 +100,8 @@ void ScrapEngine::Render::BaseTexture::transition_image_layout(vk::Image* image,
 	}
 	else
 	{
-		throw std::invalid_argument("unsupported layout transition!");
+		Debug::DebugLog::fatal_error(vk::Result(-13),
+		                             "TextureImage: Unsupported layout transition! Can't continue!");
 	}
 
 	command_buffer->pipelineBarrier(
@@ -117,7 +126,8 @@ void ScrapEngine::Render::BaseTexture::generate_mipmaps(vk::Image* image, const 
 
 	if (!(format_properties.optimalTilingFeatures & vk::FormatFeatureFlagBits::eSampledImageFilterLinear))
 	{
-		Debug::DebugLog::fatal_error(vk::Result(-13), "TextureImage: Texture image format does not support linear blitting!");
+		Debug::DebugLog::fatal_error(vk::Result(-13),
+		                             "TextureImage: Texture image format does not support linear blitting!");
 	}
 
 	const std::unique_ptr<vk::CommandBuffer> command_buffer = BaseBuffer::begin_single_time_command();
@@ -150,42 +160,83 @@ void ScrapEngine::Render::BaseTexture::generate_mipmaps(vk::Image* image, const 
 			vk::DependencyFlags(),
 			0, nullptr,
 			0, nullptr,
-			1, &barrier);
-		vk::ImageBlit blit(
-			vk::ImageSubresourceLayers(
-				vk::ImageAspectFlagBits::eColor,
-				i - 1,
-				0,
-				1),
-			std::array<vk::Offset3D, 2>{
-				vk::Offset3D(),
-				vk::Offset3D(mip_width, mip_height, 1)
-			},
-			vk::ImageSubresourceLayers(
-				vk::ImageAspectFlagBits::eColor,
-				i,
-				0,
-				1),
-			std::array<vk::Offset3D, 2>{
-				vk::Offset3D(),
-				vk::Offset3D(mip_width > 1 ? mip_width / 2 : 1, mip_height > 1 ? mip_height / 2 : 1, 1)
-			}
+			1, &barrier
 		);
 
-		command_buffer->blitImage(*image, vk::ImageLayout::eTransferSrcOptimal, *image,
-		                          vk::ImageLayout::eTransferDstOptimal, 1, &blit, vk::Filter::eLinear);
+		const vk::ImageSubresourceLayers srcSubresource(
+			vk::ImageAspectFlagBits::eColor,
+			i - 1,
+			0,
+			1
+		);
+
+		const std::array<vk::Offset3D, 2> srcOffset{
+			vk::Offset3D(),
+			vk::Offset3D(
+				mip_width,
+				mip_height,
+				1
+			)
+		};
+
+		const vk::ImageSubresourceLayers dstSubresource(
+			vk::ImageAspectFlagBits::eColor,
+			i,
+			0,
+			1
+		);
+
+		const std::array<vk::Offset3D, 2> dstOffset{
+			vk::Offset3D(),
+			vk::Offset3D(
+				mip_width > 1 ? mip_width / 2 : 1,
+				mip_height > 1 ? mip_height / 2 : 1,
+				1
+			)
+		};
+
+		vk::ImageBlit blit(
+			srcSubresource,
+			srcOffset,
+			dstSubresource,
+			dstOffset
+		);
+
+		command_buffer->blitImage(
+			*image,
+			vk::ImageLayout::eTransferSrcOptimal,
+			*image,
+			vk::ImageLayout::eTransferDstOptimal,
+			1,
+			&blit,
+			vk::Filter::eLinear
+		);
 
 		barrier.oldLayout = vk::ImageLayout::eTransferSrcOptimal;
 		barrier.newLayout = vk::ImageLayout::eShaderReadOnlyOptimal;
 		barrier.srcAccessMask = vk::AccessFlagBits::eTransferRead;
 		barrier.dstAccessMask = vk::AccessFlagBits::eShaderRead;
 
-		command_buffer->pipelineBarrier(vk::PipelineStageFlagBits::eTransfer,
-		                                vk::PipelineStageFlagBits::eFragmentShader, vk::DependencyFlags(), 0, nullptr,
-		                                0, nullptr, 1, &barrier);
+		command_buffer->pipelineBarrier(
+			vk::PipelineStageFlagBits::eTransfer,
+			vk::PipelineStageFlagBits::eFragmentShader,
+			vk::DependencyFlags(),
+			0,
+			nullptr,
+			0,
+			nullptr,
+			1,
+			&barrier
+		);
 
-		if (mip_width > 1) mip_width /= 2;
-		if (mip_height > 1) mip_height /= 2;
+		if (mip_width > 1)
+		{
+			mip_width /= 2;
+		}
+		if (mip_height > 1)
+		{
+			mip_height /= 2;
+		}
 	}
 
 	barrier.subresourceRange.baseMipLevel = mip_levels - 1;
@@ -194,8 +245,17 @@ void ScrapEngine::Render::BaseTexture::generate_mipmaps(vk::Image* image, const 
 	barrier.srcAccessMask = vk::AccessFlagBits::eTransferWrite;
 	barrier.dstAccessMask = vk::AccessFlagBits::eShaderRead;
 
-	command_buffer->pipelineBarrier(vk::PipelineStageFlagBits::eTransfer, vk::PipelineStageFlagBits::eFragmentShader,
-	                                vk::DependencyFlags(), 0, nullptr, 0, nullptr, 1, &barrier);
+	command_buffer->pipelineBarrier(
+		vk::PipelineStageFlagBits::eTransfer,
+		vk::PipelineStageFlagBits::eFragmentShader,
+		vk::DependencyFlags(),
+		0,
+		nullptr,
+		0,
+		nullptr,
+		1,
+		&barrier
+	);
 
 	BaseBuffer::end_and_submit_single_time_command(command_buffer);
 }
