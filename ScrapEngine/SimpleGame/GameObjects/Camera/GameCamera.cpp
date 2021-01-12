@@ -15,7 +15,7 @@ GameCamera::GameCamera(ScrapEngine::Input::InputManager* created_input_managerf,
 	  player_ref_(player)
 {
 	camera_component_ = components_manager->get_camera();
-	//Use something smaller than INT_MAX that's not necessary
+	//Use something smaller than INT_MAX that's not necessary, but big enough for the skybox
 	camera_component_->set_max_render_distance(5000);
 	add_component(camera_component_);
 }
