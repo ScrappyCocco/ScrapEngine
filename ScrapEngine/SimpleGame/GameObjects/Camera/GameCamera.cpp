@@ -15,7 +15,8 @@ GameCamera::GameCamera(ScrapEngine::Input::InputManager* created_input_managerf,
 	  player_ref_(player)
 {
 	camera_component_ = components_manager->get_camera();
-	camera_component_->set_max_render_distance(static_cast<float>(INT_MAX));
+	//Use something smaller than INT_MAX that's not necessary
+	camera_component_->set_max_render_distance(5000);
 	add_component(camera_component_);
 }
 
