@@ -11,7 +11,7 @@ namespace ScrapEngine
 	}
 }
 
-class Terrain : public ScrapEngine::Core::SGameObject
+class Terrain final : public ScrapEngine::Core::SGameObject
 {
 private:
 	ScrapEngine::Core::MeshComponent* mesh_ = nullptr;

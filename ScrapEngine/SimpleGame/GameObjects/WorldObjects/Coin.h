@@ -13,7 +13,7 @@ namespace ScrapEngine
 	}
 }
 
-class Coin : public ScrapEngine::Core::SGameObject
+class Coin final : public ScrapEngine::Core::SGameObject
 {
 private:
 	//Utils

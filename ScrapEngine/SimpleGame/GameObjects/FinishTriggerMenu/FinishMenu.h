@@ -22,7 +22,7 @@ namespace ScrapEngine
 	}
 }
 
-class FinishTriggerMenu : public ScrapEngine::Core::SGameObject
+class FinishTriggerMenu final : public ScrapEngine::Core::SGameObject
 {
 private:
 	//Player

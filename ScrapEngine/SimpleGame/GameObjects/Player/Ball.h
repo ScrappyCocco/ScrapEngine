@@ -20,7 +20,7 @@ namespace ScrapEngine
 	}
 }
 
-class Ball : public ScrapEngine::Core::SGameObject
+class Ball final : public ScrapEngine::Core::SGameObject
 {
 private:
 	//Utils

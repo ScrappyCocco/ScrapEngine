@@ -11,7 +11,7 @@ namespace ScrapEngine
 	}
 }
 
-class Music : public ScrapEngine::Core::SGameObject
+class Music final : public ScrapEngine::Core::SGameObject
 {
 private:
 	ScrapEngine::Core::AudioComponent* audio_;

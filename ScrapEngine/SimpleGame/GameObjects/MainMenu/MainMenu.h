@@ -19,7 +19,7 @@ namespace ScrapEngine
 	}
 }
 
-class MainMenu : public ScrapEngine::Core::SGameObject
+class MainMenu final : public ScrapEngine::Core::SGameObject
 {
 private:
 	ScrapEngine::Core::LogicManagerView* logic_view_ref_ = nullptr;

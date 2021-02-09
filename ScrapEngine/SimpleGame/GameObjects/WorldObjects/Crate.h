@@ -13,7 +13,7 @@ namespace ScrapEngine
 	}
 }
 
-class Crate : public ScrapEngine::Core::SGameObject
+class Crate final : public ScrapEngine::Core::SGameObject
 {
 private:
 	//Utils

@@ -12,7 +12,7 @@ namespace ScrapEngine
 	}
 }
 
-class CheckpointTrigger : public ScrapEngine::Core::SGameObject
+class CheckpointTrigger final : public ScrapEngine::Core::SGameObject
 {
 private:
 	//Player

@@ -12,7 +12,7 @@ namespace ScrapEngine
 	}
 }
 
-class Trigger : public ScrapEngine::Core::SGameObject
+class Trigger final : public ScrapEngine::Core::SGameObject
 {
 private:
 	//Trigger

@@ -11,7 +11,7 @@ namespace ScrapEngine
 	}
 }
 
-class ScoreManager : public ScrapEngine::Core::SGameObject
+class ScoreManager final : public ScrapEngine::Core::SGameObject
 {
 private:
 	//Player

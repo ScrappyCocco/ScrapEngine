@@ -19,7 +19,7 @@ namespace ScrapEngine
 	}
 }
 
-class GameCamera : public ScrapEngine::Core::SGameObject
+class GameCamera final : public ScrapEngine::Core::SGameObject
 {
 private:
 	ScrapEngine::Core::CameraComponent* camera_component_ = nullptr;
