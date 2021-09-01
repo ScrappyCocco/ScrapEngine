@@ -1,0 +1,15 @@
+name: cppcheck
+
+on: [push, pull_request]
+
+jobs:
+  cppcheck:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install cppcheck
+      run: sudo apt-get install -qq cppcheck
+    - name: Run cppcheck
+      run: cppcheck -j 4 --language=c++ --platform=win64 --suppress='*:external/*' --error-exitcode=1 ./ScrapEngine/ScrapEngine/Engine/**
